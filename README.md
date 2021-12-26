@@ -1,4 +1,4 @@
-<h1><img src="logo.png" width="100px" align="left" style="margin-right: 10px;"> Causal Decision Making: An Tutorial for Personalized Decision-Making</h1>
+<h1><img src="logo.png" width="90px" align="left" style="margin-right: 10px;"> Causal Decision Making: An Tutorial for Personalized Decision-Making</h1>
 
 This repository contains the source code of [Causal Decision Making](http://causaldm.com/), an online tutorial with the goal of providing practitioners a systematic review, map, and handbook for finding the appropriate solutions for their problems. 
 The tutorial surveys and discusses classic methods and recent advanced in the the off-policy learning literature, and complements the [CausalDM](https://github.com/CausalDM/CausalDM) Python package where open-source implementations are provided under a unified API. 
