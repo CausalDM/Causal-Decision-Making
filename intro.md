@@ -7,4 +7,4 @@ structured.
 
 ## 1
 
-\[\mathbb{E}()\]
+\[3^2\]
