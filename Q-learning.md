@@ -1,9 +1,13 @@
-# Causal Decision Making
-
+# Q-learning
 
 This is a small sample book to give you a feel for how book content is
 structured.
 
 
-## 1
+## Formulation
+
+```
+1ert
+```
+
 
