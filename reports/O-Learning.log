@@ -1,0 +1,53 @@
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/opt/anaconda3/lib/python3.8/site-packages/nbclient/client.py", line 1112, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/anaconda3/lib/python3.8/site-packages/nbclient/util.py", line 74, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/opt/anaconda3/lib/python3.8/site-packages/nbclient/util.py", line 53, in just_run
+    return loop.run_until_complete(coro)
+  File "/opt/anaconda3/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "/opt/anaconda3/lib/python3.8/site-packages/nbclient/client.py", line 553, in async_execute
+    await self.async_execute_cell(
+  File "/opt/anaconda3/lib/python3.8/site-packages/nbclient/client.py", line 857, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "/opt/anaconda3/lib/python3.8/site-packages/nbclient/client.py", line 760, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# initialize the learner
+owl = OWL.OutcomeWeightedLearning()
+# specify the classifier you would like to use
+from sklearn.svm import LinearSVC, SVC
+from sklearn.model_selection import GridSearchCV, cross_val_score
+clf = SVC(kernel='linear') # fit_intercept = True, 
+# Cs = np.logspace(-6, -1, 10)
+# clf = GridSearchCV(estimator=clf, param_grid=dict(C=Cs),
+#                    n_jobs=-1)
+
+# specify the assignment_prob probability, if your data is from an experiment 
+assignment_prob = np.ones(len(A)) / 0.5
+
+# train the policy
+owl.train(X, A, Y, classifier = clf, assignment_prob = assignment_prob)
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mAttributeError[0m                            Traceback (most recent call last)
+[0;32m<ipython-input-4-76e90ddbbc5d>[0m in [0;36m<module>[0;34m[0m
+[1;32m     13[0m [0;34m[0m[0m
+[1;32m     14[0m [0;31m# train the policy[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 15[0;31m [0mowl[0m[0;34m.[0m[0mtrain[0m[0;34m([0m[0mX[0m[0;34m,[0m [0mA[0m[0;34m,[0m [0mY[0m[0;34m,[0m [0mclassifier[0m [0;34m=[0m [0mclf[0m[0;34m,[0m [0massignment_prob[0m [0;34m=[0m [0massignment_prob[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m
+[0;32m~/Documents/CausalDM/causaldm/learners/OWL.py[0m in [0;36mtrain[0;34m(self, X, A, Y, model_propensity, model_outcome, classifier, assignment_prob, positive_const, CV)[0m
+[1;32m     32[0m         [0mself[0m[0;34m.[0m[0mpolicy[0m [0;34m=[0m [0mclassifier[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     33[0m         [0mself[0m[0;34m.[0m[0mpolicy[0m[0;34m.[0m[0mfit[0m[0;34m([0m[0mX[0m [0;34m=[0m [0mX[0m[0;34m,[0m [0my[0m [0;34m=[0m [0mself[0m[0;34m.[0m[0m_class[0m[0;34m,[0m [0msample_weight[0m [0;34m=[0m [0mself[0m[0;34m.[0m[0mweight[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 34[0;31m         [0;32mif[0m [0mself[0m[0;34m.[0m[0mCV[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     35[0m             [0mself[0m[0;34m.[0m[0mpolicy[0m [0;34m=[0m [0mself[0m[0;34m.[0m[0mpolicy[0m[0;34m.[0m[0mbest_estimator_[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     36[0m [0;34m[0m[0m
+
+[0;31mAttributeError[0m: 'OutcomeWeightedLearning' object has no attribute 'CV'
+AttributeError: 'OutcomeWeightedLearning' object has no attribute 'CV'
+
