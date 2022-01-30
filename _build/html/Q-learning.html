@@ -42,6 +42,8 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -51,6 +53,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Policy Search" href="Policy%20Search.html" />
     <link rel="prev" title="Map" href="Map.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -95,10 +98,20 @@
   </a>
  </li>
 </ul>
-<ul class="current nav bd-sidenav">
+<p class="caption">
+ <span class="caption-text">
+  Introduction
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Introduction.html">
    Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Examples.html">
+   Motivating Examples
   </a>
  </li>
  <li class="toctree-l1 has-children">
@@ -133,9 +146,97 @@
    Map
   </a>
  </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Policy Learner
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Q-learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Policy%20Search.html">
+   Policy Search
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="A-learning.html">
+   Advantage learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Concordance.html">
+   Concordance-assisted learning
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="Classification.html">
+   Reduction to Classification Problems
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Classification/O-Learning.html">
+     Outcome Weighted Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Classification/E-learning.html">
+     Entropy learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Continuous.html">
+   Continuous Action Space
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="Miscellaneous.html">
+   Miscellaneous
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Miscellaneous/Survival.html">
+     Time-to-Event Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Miscellaneous/Quantile.html">
+     Quantile-Optimal Policies
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Miscellaneous/Adaptively%20Collected%20Data.html">
+     Adaptively Collected Data
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Inference
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Inference/VariableSelection.html">
+   Variable Selection
   </a>
  </li>
 </ul>
@@ -179,9 +280,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/Q-learning.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/Q-learning.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
+                data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -215,24 +316,28 @@
 
             <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/Q-learning.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
         </div>
 
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
-            </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#formulation">
-   Formulation
-  </a>
- </li>
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -243,14 +348,7 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="q-learning">
 <h1>Q-learning<a class="headerlink" href="#q-learning" title="Permalink to this headline">¶</a></h1>
-<p>This is a small sample book to give you a feel for how book content is
-structured.</p>
-<div class="section" id="formulation">
-<h2>Formulation<a class="headerlink" href="#formulation" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="n">ert</span>
-</pre></div>
-</div>
-</div>
+<p><span class="math notranslate nohighlight">\(3^2 = 9\)</span></p>
 </div>
 
     <script type="text/x-thebe-config">
@@ -285,6 +383,13 @@ structured.</p>
             <p class="prev-next-title">Map</p>
         </div>
     </a>
+    <a class='right-next' id="next-link" href="Policy%20Search.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Policy Search</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
         
         </div>
@@ -293,7 +398,7 @@ structured.</p>
     <div class="container">
       <p>
         
-          By The Jupyter Book Community<br/>
+          By Causal Decision Making Team<br/>
         
             &copy; Copyright 2021.<br/>
       </p>

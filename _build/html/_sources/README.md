@@ -5,6 +5,11 @@
 This repository contains the source code of [Causal Decision Making](http://causaldm.com/), an online tutorial with the goal of providing practitioners a systematic review, map, and handbook for finding the appropriate solutions for their problems. 
 The tutorial surveys and discusses classic methods and recent advanced in the the off-policy learning literature, and complements the [CausalDM](https://github.com/CausalDM/CausalDM) Python package where open-source implementations are provided under a unified API. 
 
+## Content of every notebook
+1. Describe the main ideas, advantages, and appropriate use cases (theoretical guarantee?)
+2. Introduce the key formulae (not be heavy in notation) and algorithms (pseudo code)
+3. Demo of how to use the package
+
 ## How to contribute
 
 This book is powered by a package call [Jupyter Book](https://jupyterbook.org/intro.html). 

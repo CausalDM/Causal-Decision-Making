@@ -6,8 +6,3 @@ structured.
 
 
 ## 1
-
-
-\\[
-A^T_S = B
-\\]
