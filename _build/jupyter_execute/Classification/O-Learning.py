@@ -56,7 +56,7 @@ from causaldm.metric import metric
 import numpy as np
 
 
-# In[15]:
+# In[3]:
 
 
 # generate sample data
@@ -64,7 +64,7 @@ instance = OWL_simu.generate_test_case(setup = 'case1', N = 1000, seed = 0, p = 
 X, A, Y = instance['XAY']
 
 
-# In[16]:
+# In[4]:
 
 
 # initialize the learner
@@ -84,7 +84,7 @@ assignment_prob = np.ones(len(A)) / 0.5
 owl.train(X, A, Y, classifier = clf, assignment_prob = assignment_prob)
 
 
-# In[19]:
+# In[5]:
 
 
 # recommend action

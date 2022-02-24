@@ -45,15 +45,14 @@
     <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Policy Search" href="Policy%20Search.html" />
@@ -602,12 +601,12 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span>\<span class="n">ipykernel_47668</span>\<span class="mf">2982377520.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">lj</span><span class="o">/</span><span class="mi">55</span><span class="n">rs1m_n5gv3_0cy812ml6lh0000gq</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_82684</span><span class="o">/</span><span class="mf">2982377520.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
 <span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
 
-<span class="ne">FileNotFoundError</span>: [WinError 2] 系统找不到指定的文件。: &#39;../CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;../CausalDM&#39;
 </pre></div>
 </div>
 </div>
@@ -622,12 +621,12 @@
 <li><p><strong>Application Situation</strong>: Suppose we have a dataset containing observations from <span class="math notranslate nohighlight">\(N\)</span> individuals. For each individual <span class="math notranslate nohighlight">\(i\)</span>, we have <span class="math notranslate nohighlight">\(\{\mathbf{X}_{i},A_{i},Y_{i}\}\)</span>, <span class="math notranslate nohighlight">\(i=1,\cdots,N\)</span>. <span class="math notranslate nohighlight">\(\mathbf{X}_{i}\)</span> includes the feature information, <span class="math notranslate nohighlight">\(A_{i}\)</span> is the action taken, and <span class="math notranslate nohighlight">\(Y_{i}\)</span> is the observed reward received. The target of Q-learning is to find an optimal policy <span class="math notranslate nohighlight">\(\pi\)</span> that can maximize the expected reward received. In other words, by training a model with the observed dataset, we want to find an optimal policy that can help us determine the optimal action for each individual to optimize the reward.</p></li>
 <li><p><strong>Basic Logic</strong>: Q-learning with a single decision point is mainly a regression modeling problem, as the major component is to find the relationship between <span class="math notranslate nohighlight">\(Y\)</span> and <span class="math notranslate nohighlight">\(\{X,A\}\)</span>. Let’s first define a Q-function, such that</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-8b73b472-23d9-41af-8b8b-5d10d8bee4ab">
-<span class="eqno">(1)<a class="headerlink" href="#equation-8b73b472-23d9-41af-8b8b-5d10d8bee4ab" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a84a14b7-1e16-48bf-abaa-ba5113c0f0c3">
+<span class="eqno">(2)<a class="headerlink" href="#equation-a84a14b7-1e16-48bf-abaa-ba5113c0f0c3" title="Permalink to this equation">¶</a></span>\[\begin{align}
     Q(x,a) = E(Y|X=x, A=a).
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-5fb652ab-5d0b-45d5-93b1-f55d461cb1b2">
-<span class="eqno">(2)<a class="headerlink" href="#equation-5fb652ab-5d0b-45d5-93b1-f55d461cb1b2" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-29cf9af7-0ec4-464d-89f7-7fd50aaaaa66">
+<span class="eqno">(3)<a class="headerlink" href="#equation-29cf9af7-0ec4-464d-89f7-7fd50aaaaa66" title="Permalink to this equation">¶</a></span>\[\begin{align}
     \text{arg max}_{\pi}Q(x_{i},\pi(x_{i})).
 \end{align}\]</div>
 <ul class="simple">
@@ -966,15 +965,15 @@ opt value: 140.06857615909965
 <ul class="simple">
 <li><p><strong>Application Situation</strong>: Suppose we have a dataset containning observations from <span class="math notranslate nohighlight">\(N\)</span> individuals. For each individual <span class="math notranslate nohighlight">\(i\)</span>, the observed data is structured as follows</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-9890c79f-1f7f-4b24-88b4-e8ea28354b9c">
-<span class="eqno">(3)<a class="headerlink" href="#equation-9890c79f-1f7f-4b24-88b4-e8ea28354b9c" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1c27bbc9-5719-4fc8-9977-c4cc1a0192dd">
+<span class="eqno">(4)<a class="headerlink" href="#equation-1c27bbc9-5719-4fc8-9977-c4cc1a0192dd" title="Permalink to this equation">¶</a></span>\[\begin{align}
 (X_{1i},A_{1i},\cdots,X_{Ti},A_{Ti},Y), i=1,\cdots, N.
 \end{align}\]</div>
 <ul class="simple">
 <li><p><strong>Basic Logic</strong>: For multistage cases, we apply a backward iterative approach, which means that we start from the final decision point T and work our way backward to the initial decision point. At the final step <span class="math notranslate nohighlight">\(T\)</span>, it is again a standard regression modeling problem that is the same as what we did for the single decision point case. Particularly, we posit a model <span class="math notranslate nohighlight">\(Q_{T}(h_{T},a_{T})\)</span> for the observed outcome <span class="math notranslate nohighlight">\(Y\)</span>, and then the optimal policy at step <span class="math notranslate nohighlight">\(T\)</span> is derived as <span class="math notranslate nohighlight">\(\text{arg max}_{\pi_{T}}Q_{T}(h_{T},\pi_{T}(h_{T}))\)</span>. For the decision point <span class="math notranslate nohighlight">\(T-1\)</span> till the decision point <span class="math notranslate nohighlight">\(1\)</span>, a new term is introduced, which is the pseudo-outcome <span class="math notranslate nohighlight">\(\tilde{Y}_{t}\)</span>.</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-6bb5330b-6db3-4184-88f1-fd68b86eb759">
-<span class="eqno">(4)<a class="headerlink" href="#equation-6bb5330b-6db3-4184-88f1-fd68b86eb759" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f3128679-40d4-4cc8-ab5a-9d48f28f2d73">
+<span class="eqno">(5)<a class="headerlink" href="#equation-f3128679-40d4-4cc8-ab5a-9d48f28f2d73" title="Permalink to this equation">¶</a></span>\[\begin{align}
 \tilde{Y}_{t} = \text{max}_{\pi_{t}}\hat{Q}_{t}(h_{t},\pi_{t}(h_{t}),\hat{\beta}_{t})
 \end{align}\]</div>
 <ul class="simple">
