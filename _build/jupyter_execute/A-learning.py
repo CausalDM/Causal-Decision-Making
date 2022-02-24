@@ -23,36 +23,39 @@ os.chdir('../CausalDM')
 # contrast-based A-learning, as the name suggested, aims to learn and estimate the constrast function, $C_{tj}(h_{t})$. Here, $h_{t}=\{X_{1i},A_{1i},\cdots,X_{ti}\})$ includes all the information observed till step t. Furthermore, we also need to posit a model for the conditional expected outcome for the control option (treatment $0$), $Q_t(h_t,0)$, and the propensity function $\omega(h_{t},a_{t})$. Detailed definitions are provided in the following. Suppose there are $m_t$ number of options, and the action space $\mathcal{A}_t=\{0,1,\dots,m_t-1\}$ for each step t. With decision point $t$, we define thoes key functions as follows:
 # *   Q-function:
 #     For the final step $T$, 
-#     $$
+#     \begin{align}
 #     Q_T(h_T,a_{T})=E[Y|H_{T}=h_{T}, A_{T}=a_{T}],
-#     $$
+#     \end{align}
+#     
 #     If there is a multi-stage case with total step $T>1$, for the step $t=1,\cdots,T-1$,
-#     $$
+#     \begin{align}
 #     Q_t(h_t,a_{t})=E[V_{t+1}|H_{t}=h_{t}, A_{t}=a_{t}],
-#     $$
+#     \end{align}
 #     where 
-#     $$
+#     \begin{align}
 #     V_{t}(h_{t}) = \max_{j\in\mathcal{A}_t}Q_{t}(h_t,j)
-#     $$
+#     \end{align}
 #     Alternatively, with the contrast function defined in the follwing,
-#     $$
+#     \begin{align}
 #     Q_t(h_t,j) = Q_t(h_t,0) + C_{tj}(h_t),\quad j=0,\dots,m_k-1,\quad t=1,\dots,T.
-#     $$
+#     \end{align}
 # *   Contrast functions (optimal blip to zero functions)
-#     $$
+#     \begin{align}
 #     C_{tj}(h_t)=Q_t(h_t,j)-Q_t(h_t,0),\quad j=0,\dots,m_k-1,\quad t=1,\dots,T.
-#     $$
+#     \end{align}
 # *   Propensity score
-#     $$\omega_{t}(h_t,a_t)=P(A_t=a_t|H_t=h_t)$$
+#     \begin{align}
+#     \omega_{t}(h_t,a_t)=P(A_t=a_t|H_t=h_t)
+#     \end{align}
 # *   Optimal regime
-#     $$
+#     \begin{align}
 #     d_t^{opt}(h_t)=\arg\max_{j\in\mathcal{A}_t}C_{tj}(h_t)
-#     $$
+#     \end{align}
 # 
 # 
 # In the following, we would start from a simple case having only one decision point and then introduce the multistage case with multiple decision points. 
-# 
-# ### Single Decision Point
+
+# ## 1. Single Decision Point
 # 
 # - **Basic Logic**: Positting models, $C_{j}(h,\psi_{j})$,$Q(h,0,\phi)$,and $\omega(h,a,\gamma)$, A-learning aims to estimate $\psi_{j}$, $\phi$, and $\gamma$ by g-estimation. With the $\hat{\psi}_{j}$ in hand, the optimal decision is directly derived.
 # 
@@ -61,7 +64,82 @@ os.chdir('../CausalDM')
 #     2. Substituting the $\hat{\gamma}$, we estimate the $\hat{\psi}_{j}$ and $\gamma$ by solving the euqations in Appendix A.1 jointly.      
 #     2. For each individual find the optimal action $a_{i}$ such that $a_{i} = \arg\max_{j\in\mathcal{A}}C_{j}(h,\hat{\psi_{j}})$.
 # 
-# ### Multiple Decision Points
+
+# ### 1.1 Optimal Decision
+
+# In[1]:
+
+
+# A demo with code on how to use the package
+from causaldm.learners import ALearning
+import pandas as pd
+import numpy as np
+from sklift.datasets import fetch_hillstrom
+
+
+# #### Data preparation
+
+# In[2]:
+
+
+# continuous Y
+data, target, treatment = fetch_hillstrom(target_col='spend', return_X_y_t=True)
+# use pd.concat to join the new columns with your original dataframe
+data = pd.concat([data,pd.get_dummies(data['zip_code'], prefix='zip_code')],axis=1)
+data = pd.concat([data,pd.get_dummies(data['channel'], prefix='channel')],axis=1)
+# now drop the original 'country' column (you don't need it anymore)
+data.drop(['zip_code'],axis=1, inplace=True)
+data.drop(['channel'],axis=1, inplace=True)
+data.drop(['history_segment'],axis=1, inplace=True)
+data.drop(['zip_code_Rural'],axis=1, inplace=True) # Rural as the reference group
+data.drop(['channel_Multichannel'],axis=1, inplace=True) # Multichannel as the reference group 
+
+Y = np.array(target)
+X = np.hstack([np.ones((len(data),1)),np.array(data)])# add an intercept column
+# convert the categorical variable into integers with treatment 0 = No emails
+treatment.replace(['Womens E-Mail', 'No E-Mail', 'Mens E-Mail'],[1, 0, 2], inplace=True) 
+treatment = np.array(treatment)
+#get the subset which has Y>0 == n=578
+X = X[Y>0]
+A = {}
+A[0] = treatment[Y>0]
+Y = Y[Y>0]
+
+
+# #### Train Policy
+
+# In[3]:
+
+
+# initialize the learner
+ALearn = ALearning.ALearning()
+p = X.shape[1]
+model_info = [{'X_prop': list(range(p)),
+              'X_q0': list(range(p)),
+               'X_C':{1:list(range(p)),2:list(range(p))},
+              'action_space': [0,1,2]}] #A in [0,1,2]
+# train the policy
+ALearn.train(X, A, Y, model_info, T=1)
+# Fitted Model
+ALearn.fitted_model
+
+
+# #### Recommend Optimal Decisions and Get the Estimated Value
+
+# In[4]:
+
+
+# recommend action
+opt_d = ALearn.recommend().head()
+# get the estimated value of the optimal regime
+V_hat = ALearn.estimate_value(X,A)
+print("opt regime:",opt_d)
+print("opt value:",V_hat)
+
+
+# ### 1.2 Policy Evaluation
+
+# ## 2. Multiple Decision Points
 # 
 # - **Basic Logic**: Similar to Q learning, a backward approach was proposed to find the optimized treatment regime at each decision point. 
 # 
@@ -69,13 +147,17 @@ os.chdir('../CausalDM')
 #     
 #     At Decision $t=T-1,\dots,1$, we use similar trick as decision $T$, except for changing $Y$ in the estimating eqautions to some pseudo outcome $\tilde{Y}_{t+1,i}$, such that:
 #     $$
+#     \begin{aligned}
 #     \tilde{Y}_{ti}=\tilde{Y}_{t+1,i}+\max_{j=0,\dots,m_t-1}C_{tj}(H_{ti},\hat{\psi}_{tj})-\sum_{j=1}^{m_k-1}\mathbb{I}\{A_{ti}=j\}C_{tj}(H_{ti},\hat{\psi}_{tj}),
+#     \end{aligned}
 #     $$ 
 #     where $\tilde{Y}_{T+1,i} = Y_{i}$.
 #     
 #     Estimating $\psi_{tj}$, $\phi_t$ and $\gamma_t$ iteratively for $t=T-1,\cdots,1$, we calculated the optimal decision at time $t$, $a_{ti}$ as
 #     $$
+#     \begin{aligned}
 #     a_{ti}=\arg\max_{j=0,\dots,m_t-1} C_{tj}(h_{ti};\hat{\psi}_{tj}).
+#     \end{aligned}
 #     $$
 # 
 # 
@@ -86,55 +168,72 @@ os.chdir('../CausalDM')
 #         1. fitted a model $\omega_{t}(h_{t},a,\hat{\gamma}_{t})$, and estimating $\psi_{tj}$, $\phi_{t}$ by solving the equations in A.3 jointly with the pseudo-outcome $\tilde{Y}_{t+1}$
 #         2. For each individual $i$, calculated the pseudo-outcome $\tilde{Y}_{ti}$, and the optimal action $a_{ti}$;
 
-# ## Demo
+# ### 2.1 Optimal Decision
 
-# ## Single Decision Point
+# In[5]:
 
-# In[45]:
 
+# TODO: there might be something wrong with the multiple step as the difference between A-learning and Q-learning is large
 
 # A demo with code on how to use the package
-from causaldm.learners import QLearning
+from causaldm.learners import ALearning
 from causaldm.test import shared_simulation
 import numpy as np
 
 
-# In[49]:
-
-
-#prepare the dataset (dataset from the DTR book)
-import pandas as pd
-file = pd.read_csv("hyper.txt", sep=',')
-file['Y'] = file['SBP0']-file['SBP6']
-hyper = file
-Y = hyper['Y']
-X = hyper[['W','K','Cr','Ch']]
-A = hyper['A']
-
-
-# ## Multiple Decision Point
-
-# In[54]:
-
-
-# TODO: test the function & feasible set
-
-# A demo with code on how to use the package
-from causaldm.learners import QLearning
-from causaldm.test import shared_simulation
-import numpy as np
-
-
-# In[55]:
+# In[15]:
 
 
 #prepare the dataset (dataset from the DTR book)
 import pandas as pd
 dataMDP = pd.read_csv("dataMDP_feasible.txt", sep=',')
-Y = dataMDP['Y']
-X = dataMDP[['CD4_0','CD4_6','CD4_12']]
-A = dataMDP[['A1','A2','A3']]
+Y = np.array(dataMDP['Y'])
+X = np.hstack([np.ones((len(Y),1)),np.array(dataMDP[['CD4_0','CD4_6','CD4_12']])])
+A = {}
+A[0] = np.array(dataMDP['A1'])
+A[1] = np.array(dataMDP['A2'])
+A[2] = np.array(dataMDP['A3'])
 
+
+# In[27]:
+
+
+model_info = [{'X_prop': list(range(2)),
+              'X_q0': list(range(2)),
+               'X_C':{1:list(range(2))},
+              'action_space': [0,1]},
+             {'X_prop': list(range(3)),
+              'X_q0': list(range(3)),
+               'X_C':{1:list(range(3))},
+              'action_space': [0,1]},
+             {'X_prop': list(range(4)),
+              'X_q0': list(range(4)),
+               'X_C':{1:list(range(4))},
+              'action_space': [0,1]}]
+# train the policy
+ALearn.train(X, A, Y, model_info, T=3)
+# Fitted Model
+ALearn.fitted_model
+
+
+# In[28]:
+
+
+# recommend action
+opt_d = ALearn.recommend().head()
+# get the estimated value of the optimal regime
+V_hat = ALearn.estimate_value(X,A)
+print("opt regime:",opt_d)
+print("opt value:",V_hat)
+
+
+# ### 2.2 Policy Evaluation
+
+# ## 3. Infinite Horizon
+
+# ### 3.1 Optimal Decision
+
+# ### 3.2 Policy Evaluation
 
 # ## References
 # 1. Schulte, P. J., Tsiatis, A. A., Laber, E. B., & Davidian, M. (2014). Q-and A-learning methods for estimating optimal dynamic treatment regimes. Statistical science: a review journal of the Institute of Mathematical Statistics, 29(4), 640.
@@ -144,12 +243,12 @@ A = dataMDP[['A1','A2','A3']]
 # 5. Shi, C., Fan, A., Song, R., & Lu, W. (2018). High-dimensional A-learning for optimal dynamic treatment regimes. Annals of statistics, 46(3), 925.
 
 # ## A.1
-# \begin{align}
-# \sum_{i=1}^n \frac{\partial C_{j}(H_{i};\psi_{j})}{\partial \psi_{j}}\{\mathbb{I}\{A_{i}=j\}-\omega(H_{i},j;\hat{\gamma})\}\times \Big\{Y_i-\sum_{j'=1}^{m-1} \mathbb{I}\{A_{i}=j'\}C_{j'}(H_{i;\psi_{j'}})-Q(H_{i},0;\phi)\Big\}=0
-# \end{align}
-# \begin{align}
-# \sum_{i=1}^n \frac{\partial Q(H_{i},0;\phi)}{\partial \phi}\Big\{Y_i-\sum_{j'=1}^{m-1} \mathbb{I}\{A_{i}=j'\}C_{j'}(H_{i};\psi_{j'}) Q(H_{i}0;\phi)\Big\}=0
-# \end{align}
+# $$
+# \begin{aligned}
+# &\sum_{i=1}^n \frac{\partial C_{j}(H_{i};\psi_{j})}{\partial \psi_{j}}\{\mathbb{I}\{A_{i}=j\}-\omega(H_{i},j;\hat{\gamma})\}\times \Big\{Y_i-\sum_{j'=1}^{m-1} \mathbb{I}\{A_{i}=j'\}C_{j'}(H_{i;\psi_{j'}})-Q(H_{i},0;\phi)\Big\}=0\\
+# &\sum_{i=1}^n \frac{\partial Q(H_{i},0;\phi)}{\partial \phi}\Big\{Y_i-\sum_{j'=1}^{m-1} \mathbb{I}\{A_{i}=j'\}C_{j'}(H_{i};\psi_{j'}) Q(H_{i}0;\phi)\Big\}=0
+# \end{aligned}
+# $$
 # 
 # ## A.2
 # $$
