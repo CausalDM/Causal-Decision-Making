@@ -29,7 +29,7 @@ pip install -U jupyter-book
 ### Publish a new version
 4. `cd Causal-Decision-Making`
 3. `ghp-import -n -p -f _build/html`
-4. push the gh-pages branch
+4. push both the gh-pages branch
 
 
 One command line for the two steps: 
