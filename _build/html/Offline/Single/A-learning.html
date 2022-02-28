@@ -1,0 +1,1064 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A-Learning &#8212; Causal Decision Making</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Concordance-assisted learning" href="Concordance.html" />
+    <link rel="prev" title="Policy Search" href="Policy%20Search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Causal Decision Making</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../intro.html">
+   Causal Decision Making
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Introduction.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Examples.html">
+   Motivating Examples
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../Preliminary.html">
+   Preliminary
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Preliminary/Causal%20Inference%20101.html">
+     Causal Inference 101
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Preliminary/Heterogenous%20Treatement%20Effect.html">
+     Heterogenous Treatement Effect
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Preliminary/Off-policy%20Evaluation%20and%20Optimization.html">
+     Off-policy Evaluation and Optimization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Map.html">
+   Map
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Offline Policy Learner
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../Single%20Stage.html">
+   Single Stage
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="Q-learning.html">
+     Q-Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Policy%20Search.html">
+     Policy Search
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     A-Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Concordance.html">
+     Concordance-assisted learning
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="Classification.html">
+     Reduction to Classification Problems
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Classification/O-Learning.html">
+       Outcome Weighted Learning
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Classification/E-learning.html">
+       Entropy learning
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Continuous.html">
+     Continuous Action Space
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="Miscellaneous.html">
+     Miscellaneous
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Miscellaneous/Survival.html">
+       Time-to-Event Data
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Miscellaneous/QuantileOTR.html">
+       <strong>
+        Quantile Optimal Treatment Regime
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Miscellaneous/Adaptively%20Collected%20Data.html">
+       Adaptively Collected Data
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Multiple%20Stage.html">
+   Multiple Stages
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Multiple/Q-learning.html">
+     Q-Learning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Multiple/A-learning.html">
+     A-Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Infinite%20Horizon.html">
+   Infinite Horizon
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Online Policy Learner
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Online/Online.html">
+   Online Learning
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Inference
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Inference/VariableSelection.html">
+   Variable Selection
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/Offline/Single/A-learning.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FOffline/Single/A-learning.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/Offline/Single/A-learning.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#main-idea">
+   Main Idea
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#single-decision-point">
+   1. Single Decision Point
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optimal-decision">
+     1.1 Optimal Decision
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#data-preparation">
+       Data preparation
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#train-policy">
+       Train Policy
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#recommend-optimal-decisions-and-get-the-estimated-value">
+       Recommend Optimal Decisions and Get the Estimated Value
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#policy-evaluation">
+     1.2 Policy Evaluation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#multiple-decision-points">
+   2. Multiple Decision Points
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     2.1 Optimal Decision
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     2.2 Policy Evaluation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#infinite-horizon">
+   3. Infinite Horizon
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     3.1 Optimal Decision
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     3.2 Policy Evaluation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-1">
+   A.1
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-2">
+   A.2
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-3">
+   A.3
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>A-Learning</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#main-idea">
+   Main Idea
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#single-decision-point">
+   1. Single Decision Point
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optimal-decision">
+     1.1 Optimal Decision
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#data-preparation">
+       Data preparation
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#train-policy">
+       Train Policy
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#recommend-optimal-decisions-and-get-the-estimated-value">
+       Recommend Optimal Decisions and Get the Estimated Value
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#policy-evaluation">
+     1.2 Policy Evaluation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#multiple-decision-points">
+   2. Multiple Decision Points
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     2.1 Optimal Decision
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     2.2 Policy Evaluation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#infinite-horizon">
+   3. Infinite Horizon
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     3.1 Optimal Decision
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     3.2 Policy Evaluation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-1">
+   A.1
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-2">
+   A.2
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-3">
+   A.3
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="a-learning">
+<h1>A-Learning<a class="headerlink" href="#a-learning" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># After we publish the pack age, we can directly import it</span>
+<span class="c1"># TODO: explore more efficient way</span>
+<span class="c1"># we can hide this cell later</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span>\<span class="n">ipykernel_61268</span>\<span class="mf">2982377520.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
+
+<span class="ne">FileNotFoundError</span>: [WinError 2] 系统找不到指定的文件。: &#39;../CausalDM&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="main-idea">
+<h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">¶</a></h2>
+<p>A-Learning, also known as Advantage Learning, is one of the main approaches to learning the optimal regime and works similarly to Q-learning. However, while Q-learning requires positing regression models to fit the expected outcome, A-learning models the contrasts between treatments and control, which can directly inform the optimal decision. A detailed comparison between Q-learning and A-learning can be found in [1]. While [1] mainly focus on the case with binary treatment options, a complete review of A-learning with multiple treatment options can be found in [2]. Here, following the algorithm in [1], we consider contrast-based A-learning. However, there is an alternative regret-based A-learning introduced in [3]. Some recent extensions to conventional A-learning, such as deep A-learning [4] and high-dimensional A-Learning [5], will be added soon.</p>
+<p>Note that, we assume the action space is either <strong>binary</strong> (i.e., 0,1) or <strong>multinomial</strong> (i.e., 0,1,2,3,4, where 0 stands for the control group by convention), and the outcome of interest Y is <strong>continuous</strong> and <strong>non-negative</strong>, where the larger the <span class="math notranslate nohighlight">\(Y\)</span> the better.</p>
+<p>contrast-based A-learning, as the name suggested, aims to learn and estimate the constrast function, <span class="math notranslate nohighlight">\(C_{tj}(h_{t})\)</span>. Here, <span class="math notranslate nohighlight">\(h_{t}=\{X_{1i},A_{1i},\cdots,X_{ti}\})\)</span> includes all the information observed till step t. Furthermore, we also need to posit a model for the conditional expected outcome for the control option (treatment <span class="math notranslate nohighlight">\(0\)</span>), <span class="math notranslate nohighlight">\(Q_t(h_t,0)\)</span>, and the propensity function <span class="math notranslate nohighlight">\(\omega(h_{t},a_{t})\)</span>. Detailed definitions are provided in the following. Suppose there are <span class="math notranslate nohighlight">\(m_t\)</span> number of options, and the action space <span class="math notranslate nohighlight">\(\mathcal{A}_t=\{0,1,\dots,m_t-1\}\)</span> for each step t. With decision point <span class="math notranslate nohighlight">\(t\)</span>, we define thoes key functions as follows:</p>
+<ul>
+<li><p>Q-function:
+For the final step <span class="math notranslate nohighlight">\(T\)</span>,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-0a871ffc-57f3-484d-a0ff-db6c95aa7e00">
+<span class="eqno">(6)<a class="headerlink" href="#equation-0a871ffc-57f3-484d-a0ff-db6c95aa7e00" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    Q_T(h_T,a_{T})=E[Y|H_{T}=h_{T}, A_{T}=a_{T}],
+    \end{align}\]</div>
+<p>If there is a multi-stage case with total step <span class="math notranslate nohighlight">\(T&gt;1\)</span>, for the step <span class="math notranslate nohighlight">\(t=1,\cdots,T-1\)</span>,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-7e73cce9-a72d-481e-84fe-4ca06cbc8e8d">
+<span class="eqno">(7)<a class="headerlink" href="#equation-7e73cce9-a72d-481e-84fe-4ca06cbc8e8d" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    Q_t(h_t,a_{t})=E[V_{t+1}|H_{t}=h_{t}, A_{t}=a_{t}],
+    \end{align}\]</div>
+<p>where</p>
+<div class="amsmath math notranslate nohighlight" id="equation-4f260069-ff76-4d18-b438-3fc1056e4838">
+<span class="eqno">(8)<a class="headerlink" href="#equation-4f260069-ff76-4d18-b438-3fc1056e4838" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    V_{t}(h_{t}) = \max_{j\in\mathcal{A}_t}Q_{t}(h_t,j)
+    \end{align}\]</div>
+<p>Alternatively, with the contrast function defined in the follwing,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-9f1e0884-0788-4f4f-81c2-2a18f9c8b062">
+<span class="eqno">(9)<a class="headerlink" href="#equation-9f1e0884-0788-4f4f-81c2-2a18f9c8b062" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    Q_t(h_t,j) = Q_t(h_t,0) + C_{tj}(h_t),\quad j=0,\dots,m_k-1,\quad t=1,\dots,T.
+    \end{align}\]</div>
+</li>
+<li><p>Contrast functions (optimal blip to zero functions)</p>
+<div class="amsmath math notranslate nohighlight" id="equation-73f78e25-b6c5-4c86-99e6-12c504d294d3">
+<span class="eqno">(10)<a class="headerlink" href="#equation-73f78e25-b6c5-4c86-99e6-12c504d294d3" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    C_{tj}(h_t)=Q_t(h_t,j)-Q_t(h_t,0),\quad j=0,\dots,m_k-1,\quad t=1,\dots,T.
+    \end{align}\]</div>
+</li>
+<li><p>Propensity score</p>
+<div class="amsmath math notranslate nohighlight" id="equation-7593ae61-a081-408e-ad37-aa7924b8e2eb">
+<span class="eqno">(11)<a class="headerlink" href="#equation-7593ae61-a081-408e-ad37-aa7924b8e2eb" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    \omega_{t}(h_t,a_t)=P(A_t=a_t|H_t=h_t)
+    \end{align}\]</div>
+</li>
+<li><p>Optimal regime</p>
+<div class="amsmath math notranslate nohighlight" id="equation-179b1102-f8c0-4899-bb64-b507771ac0cf">
+<span class="eqno">(12)<a class="headerlink" href="#equation-179b1102-f8c0-4899-bb64-b507771ac0cf" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    d_t^{opt}(h_t)=\arg\max_{j\in\mathcal{A}_t}C_{tj}(h_t)
+    \end{align}\]</div>
+</li>
+</ul>
+<p>In the following, we would start from a simple case having only one decision point and then introduce the multistage case with multiple decision points.</p>
+</div>
+<div class="section" id="single-decision-point">
+<h2>1. Single Decision Point<a class="headerlink" href="#single-decision-point" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Basic Logic</strong>: Positting models, <span class="math notranslate nohighlight">\(C_{j}(h,\psi_{j})\)</span>,<span class="math notranslate nohighlight">\(Q(h,0,\phi)\)</span>,and <span class="math notranslate nohighlight">\(\omega(h,a,\gamma)\)</span>, A-learning aims to estimate <span class="math notranslate nohighlight">\(\psi_{j}\)</span>, <span class="math notranslate nohighlight">\(\phi\)</span>, and <span class="math notranslate nohighlight">\(\gamma\)</span> by g-estimation. With the <span class="math notranslate nohighlight">\(\hat{\psi}_{j}\)</span> in hand, the optimal decision is directly derived.</p></li>
+<li><p><strong>Key Steps</strong>:</p>
+<ol class="simple">
+<li><p>Fitted a model <span class="math notranslate nohighlight">\(\omega_{1}(h_1,a_1,\gamma)\)</span>, which can be solved directly by existing approaches (i.e., logistic regression, .etc),</p></li>
+<li><p>Substituting the <span class="math notranslate nohighlight">\(\hat{\gamma}\)</span>, we estimate the <span class="math notranslate nohighlight">\(\hat{\psi}_{j}\)</span> and <span class="math notranslate nohighlight">\(\gamma\)</span> by solving the euqations in Appendix A.1 jointly.</p></li>
+<li><p>For each individual find the optimal action <span class="math notranslate nohighlight">\(a_{i}\)</span> such that <span class="math notranslate nohighlight">\(a_{i} = \arg\max_{j\in\mathcal{A}}C_{j}(h,\hat{\psi_{j}})\)</span>.</p></li>
+</ol>
+</li>
+</ul>
+<div class="section" id="optimal-decision">
+<h3>1.1 Optimal Decision<a class="headerlink" href="#optimal-decision" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A demo with code on how to use the package</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">ALearning</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklift.datasets</span> <span class="kn">import</span> <span class="n">fetch_hillstrom</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="data-preparation">
+<h4>Data preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># continuous Y</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">treatment</span> <span class="o">=</span> <span class="n">fetch_hillstrom</span><span class="p">(</span><span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;spend&#39;</span><span class="p">,</span> <span class="n">return_X_y_t</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># use pd.concat to join the new columns with your original dataframe</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">data</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;zip_code&#39;</span><span class="p">],</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;zip_code&#39;</span><span class="p">)],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">data</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;channel&#39;</span><span class="p">],</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;channel&#39;</span><span class="p">)],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># now drop the original &#39;country&#39; column (you don&#39;t need it anymore)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;zip_code&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;channel&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;history_segment&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;zip_code_Rural&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># Rural as the reference group</span>
+<span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;channel_Multichannel&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># Multichannel as the reference group </span>
+
+<span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span><span class="mi">1</span><span class="p">)),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">)])</span><span class="c1"># add an intercept column</span>
+<span class="c1"># convert the categorical variable into integers with treatment 0 = No emails</span>
+<span class="n">treatment</span><span class="o">.</span><span class="n">replace</span><span class="p">([</span><span class="s1">&#39;Womens E-Mail&#39;</span><span class="p">,</span> <span class="s1">&#39;No E-Mail&#39;</span><span class="p">,</span> <span class="s1">&#39;Mens E-Mail&#39;</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> 
+<span class="n">treatment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">treatment</span><span class="p">)</span>
+<span class="c1">#get the subset which has Y&gt;0 == n=578</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">Y</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">A</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">treatment</span><span class="p">[</span><span class="n">Y</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span><span class="p">[</span><span class="n">Y</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="train-policy">
+<h4>Train Policy<a class="headerlink" href="#train-policy" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># initialize the learner</span>
+<span class="n">ALearn</span> <span class="o">=</span> <span class="n">ALearning</span><span class="o">.</span><span class="n">ALearning</span><span class="p">()</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">model_info</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;X_prop&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span>
+              <span class="s1">&#39;X_q0&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span>
+               <span class="s1">&#39;X_C&#39;</span><span class="p">:{</span><span class="mi">1</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span><span class="mi">2</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">))},</span>
+              <span class="s1">&#39;action_space&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]}]</span> <span class="c1">#A in [0,1,2]</span>
+<span class="c1"># train the policy</span>
+<span class="n">ALearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># Fitted Model</span>
+<span class="n">ALearn</span><span class="o">.</span><span class="n">fitted_model</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 1.024084
+         Iterations 5
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;prop&#39;: {0: &lt;statsmodels.discrete.discrete_model.MultinomialResultsWrapper at 0x7fc636b4ec10&gt;},
+ &#39;Q0&#39;: {0: array([ 7.0107e+00,  3.6316e+00, -1.0577e-02,  5.8950e+01,  2.9656e+01,
+         -2.5558e+01,  5.5264e+01,  2.5197e+01,  2.0701e+01,  2.4073e+01])},
+ &#39;contrast&#39;: {0: {1: array([ 1.6399e+02, -3.6746e+00,  3.2799e-02, -9.1699e+01, -1.0692e+02,
+           2.6025e+01, -4.4841e+01,  1.0508e+01, -2.6366e+01, -3.3564e+01]),
+   2: array([ 7.8924e+01, -4.0368e+00,  6.0152e-03, -3.3001e+01, -2.3821e+01,
+           3.3728e+01, -5.1146e+01, -3.3706e+01, -1.2922e+01, -9.3451e+00])}}}
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="recommend-optimal-decisions-and-get-the-estimated-value">
+<h4>Recommend Optimal Decisions and Get the Estimated Value<a class="headerlink" href="#recommend-optimal-decisions-and-get-the-estimated-value" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># recommend action</span>
+<span class="n">opt_d</span> <span class="o">=</span> <span class="n">ALearn</span><span class="o">.</span><span class="n">recommend</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="c1"># get the estimated value of the optimal regime</span>
+<span class="n">V_hat</span> <span class="o">=</span> <span class="n">ALearn</span><span class="o">.</span><span class="n">estimate_value</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;opt regime:&quot;</span><span class="p">,</span><span class="n">opt_d</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;opt value:&quot;</span><span class="p">,</span><span class="n">V_hat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>opt regime:    A0
+0   1
+1   0
+2   0
+3   1
+4   0
+opt value: 140.72832928963362
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="policy-evaluation">
+<h3>1.2 Policy Evaluation<a class="headerlink" href="#policy-evaluation" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="multiple-decision-points">
+<h2>2. Multiple Decision Points<a class="headerlink" href="#multiple-decision-points" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p><strong>Basic Logic</strong>: Similar to Q learning, a backward approach was proposed to find the optimized treatment regime at each decision point.</p>
+<p>At Decision <span class="math notranslate nohighlight">\(T\)</span>, similar as what we did previously with single decision point, we estimate the <span class="math notranslate nohighlight">\(\psi_{Kj}\)</span>, <span class="math notranslate nohighlight">\(\phi_K\)</span> and <span class="math notranslate nohighlight">\(\gamma_K\)</span> by solving the eqautions in A.2 jointly, and the optimal decision at time <span class="math notranslate nohighlight">\(T\)</span> is calculated accordingly.</p>
+<p>At Decision <span class="math notranslate nohighlight">\(t=T-1,\dots,1\)</span>, we use similar trick as decision <span class="math notranslate nohighlight">\(T\)</span>, except for changing <span class="math notranslate nohighlight">\(Y\)</span> in the estimating eqautions to some pseudo outcome <span class="math notranslate nohighlight">\(\tilde{Y}_{t+1,i}\)</span>, such that:
+$<span class="math notranslate nohighlight">\(
+  \begin{aligned}
+  \tilde{Y}_{ti}=\tilde{Y}_{t+1,i}+\max_{j=0,\dots,m_t-1}C_{tj}(H_{ti},\hat{\psi}_{tj})-\sum_{j=1}^{m_k-1}\mathbb{I}\{A_{ti}=j\}C_{tj}(H_{ti},\hat{\psi}_{tj}),
+  \end{aligned}
+  \)</span><span class="math notranslate nohighlight">\( 
+  where \)</span>\tilde{Y}<em>{T+1,i} = Y</em>{i}$.</p>
+<p>Estimating <span class="math notranslate nohighlight">\(\psi_{tj}\)</span>, <span class="math notranslate nohighlight">\(\phi_t\)</span> and <span class="math notranslate nohighlight">\(\gamma_t\)</span> iteratively for <span class="math notranslate nohighlight">\(t=T-1,\cdots,1\)</span>, we calculated the optimal decision at time <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(a_{ti}\)</span> as
+$<span class="math notranslate nohighlight">\(
+  \begin{aligned}
+  a_{ti}=\arg\max_{j=0,\dots,m_t-1} C_{tj}(h_{ti};\hat{\psi}_{tj}).
+  \end{aligned}
+  \)</span>$</p>
+</li>
+<li><p><strong>Key Steps</strong>:</p>
+<ol class="simple">
+<li><p>At the final decision point <span class="math notranslate nohighlight">\(t=T\)</span>, fitted a model <span class="math notranslate nohighlight">\(\omega_{T}(h_{T},a,\hat{\gamma}_{T})\)</span>, and estimating <span class="math notranslate nohighlight">\(\psi_{Tj}\)</span>, <span class="math notranslate nohighlight">\(\phi_{T}\)</span> by solving the equations in A.2 jointly;</p></li>
+<li><p>For each individual <span class="math notranslate nohighlight">\(i\)</span>, calculated the pseudo-outcome <span class="math notranslate nohighlight">\(\tilde{Y}_{Ti}\)</span>, and the optimal action <span class="math notranslate nohighlight">\(a_{Ti}\)</span>;</p></li>
+<li><p>For decision point <span class="math notranslate nohighlight">\(t = T-1,\cdots, 1\)</span>,</p>
+<ol class="simple">
+<li><p>fitted a model <span class="math notranslate nohighlight">\(\omega_{t}(h_{t},a,\hat{\gamma}_{t})\)</span>, and estimating <span class="math notranslate nohighlight">\(\psi_{tj}\)</span>, <span class="math notranslate nohighlight">\(\phi_{t}\)</span> by solving the equations in A.3 jointly with the pseudo-outcome <span class="math notranslate nohighlight">\(\tilde{Y}_{t+1}\)</span></p></li>
+<li><p>For each individual <span class="math notranslate nohighlight">\(i\)</span>, calculated the pseudo-outcome <span class="math notranslate nohighlight">\(\tilde{Y}_{ti}\)</span>, and the optimal action <span class="math notranslate nohighlight">\(a_{ti}\)</span>;</p></li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+<div class="section" id="id1">
+<h3>2.1 Optimal Decision<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: there might be something wrong with the multiple step as the difference between A-learning and Q-learning is large</span>
+
+<span class="c1"># A demo with code on how to use the package</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">ALearning</span>
+<span class="kn">from</span> <span class="nn">causaldm.test</span> <span class="kn">import</span> <span class="n">shared_simulation</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#prepare the dataset (dataset from the DTR book)</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">dataMDP</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;dataMDP_feasible.txt&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dataMDP</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">])</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">Y</span><span class="p">),</span><span class="mi">1</span><span class="p">)),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dataMDP</span><span class="p">[[</span><span class="s1">&#39;CD4_0&#39;</span><span class="p">,</span><span class="s1">&#39;CD4_6&#39;</span><span class="p">,</span><span class="s1">&#39;CD4_12&#39;</span><span class="p">]])])</span>
+<span class="n">A</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dataMDP</span><span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">])</span>
+<span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dataMDP</span><span class="p">[</span><span class="s1">&#39;A2&#39;</span><span class="p">])</span>
+<span class="n">A</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dataMDP</span><span class="p">[</span><span class="s1">&#39;A3&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_info</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;X_prop&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span>
+              <span class="s1">&#39;X_q0&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span>
+               <span class="s1">&#39;X_C&#39;</span><span class="p">:{</span><span class="mi">1</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">))},</span>
+              <span class="s1">&#39;action_space&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]},</span>
+             <span class="p">{</span><span class="s1">&#39;X_prop&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)),</span>
+              <span class="s1">&#39;X_q0&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)),</span>
+               <span class="s1">&#39;X_C&#39;</span><span class="p">:{</span><span class="mi">1</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))},</span>
+              <span class="s1">&#39;action_space&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]},</span>
+             <span class="p">{</span><span class="s1">&#39;X_prop&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)),</span>
+              <span class="s1">&#39;X_q0&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)),</span>
+               <span class="s1">&#39;X_C&#39;</span><span class="p">:{</span><span class="mi">1</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))},</span>
+              <span class="s1">&#39;action_space&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]}]</span>
+<span class="c1"># train the policy</span>
+<span class="n">ALearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="c1"># Fitted Model</span>
+<span class="n">ALearn</span><span class="o">.</span><span class="n">fitted_model</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.650933
+         Iterations 5
+Optimization terminated successfully.
+         Current function value: 0.688144
+         Iterations 4
+Optimization terminated successfully.
+         Current function value: 0.637130
+         Iterations 5
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;prop&#39;: {2: &lt;statsmodels.discrete.discrete_model.MultinomialResultsWrapper at 0x7fc62c969b10&gt;,
+  1: &lt;statsmodels.discrete.discrete_model.MultinomialResultsWrapper at 0x7fc62c969ed0&gt;,
+  0: &lt;statsmodels.discrete.discrete_model.MultinomialResultsWrapper at 0x7fc62c969850&gt;},
+ &#39;Q0&#39;: {2: array([40.8924,  3.1455, -0.5109, -0.1229]),
+  1: array([158.0503,   2.9351,  -0.595 ]),
+  0: array([241.7725,   2.0474])},
+ &#39;contrast&#39;: {2: {1: array([ 3.5872e+02, -1.0493e+00,  4.9347e-03, -5.2010e-02])},
+  1: {1: array([-214.568 ,    1.1057,   -0.62  ])},
+  0: {1: array([-9.8412e+01,  9.2479e-02])}}}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># recommend action</span>
+<span class="n">opt_d</span> <span class="o">=</span> <span class="n">ALearn</span><span class="o">.</span><span class="n">recommend</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="c1"># get the estimated value of the optimal regime</span>
+<span class="n">V_hat</span> <span class="o">=</span> <span class="n">ALearn</span><span class="o">.</span><span class="n">estimate_value</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;opt regime:&quot;</span><span class="p">,</span><span class="n">opt_d</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;opt value:&quot;</span><span class="p">,</span><span class="n">V_hat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>opt regime:    A2  A1  A0
+0   0   0   0
+1   0   0   0
+2   0   0   0
+3   0   0   0
+4   0   0   0
+opt value: 1162.4662578531918
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>2.2 Policy Evaluation<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="infinite-horizon">
+<h2>3. Infinite Horizon<a class="headerlink" href="#infinite-horizon" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3>3.1 Optimal Decision<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id4">
+<h3>3.2 Policy Evaluation<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<ol class="simple">
+<li><p>Schulte, P. J., Tsiatis, A. A., Laber, E. B., &amp; Davidian, M. (2014). Q-and A-learning methods for estimating optimal dynamic treatment regimes. Statistical science: a review journal of the Institute of Mathematical Statistics, 29(4), 640.</p></li>
+<li><p>Robins, J. M. (2004). Optimal structural nested models for optimal sequential decisions. In Proceedings of the second seattle Symposium in Biostatistics (pp. 189-326). Springer, New York, NY.</p></li>
+<li><p>Murphy, S. A. (2003). Optimal dynamic treatment regimes. Journal of the Royal Statistical Society: Series B (Statistical Methodology), 65(2), 331-355.</p></li>
+<li><p>Liang, S., Lu, W., &amp; Song, R. (2018). Deep advantage learning for optimal dynamic treatment regime. Statistical theory and related fields, 2(1), 80-88.</p></li>
+<li><p>Shi, C., Fan, A., Song, R., &amp; Lu, W. (2018). High-dimensional A-learning for optimal dynamic treatment regimes. Annals of statistics, 46(3), 925.</p></li>
+</ol>
+</div>
+<div class="section" id="a-1">
+<h2>A.1<a class="headerlink" href="#a-1" title="Permalink to this headline">¶</a></h2>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+&amp;\sum_{i=1}^n \frac{\partial C_{j}(H_{i};\psi_{j})}{\partial \psi_{j}}\{\mathbb{I}\{A_{i}=j\}-\omega(H_{i},j;\hat{\gamma})\}\times \Big\{Y_i-\sum_{j'=1}^{m-1} \mathbb{I}\{A_{i}=j'\}C_{j'}(H_{i;\psi_{j'}})-Q(H_{i},0;\phi)\Big\}=0\\
+&amp;\sum_{i=1}^n \frac{\partial Q(H_{i},0;\phi)}{\partial \phi}\Big\{Y_i-\sum_{j'=1}^{m-1} \mathbb{I}\{A_{i}=j'\}C_{j'}(H_{i};\psi_{j'}) Q(H_{i}0;\phi)\Big\}=0
+\end{aligned}
+\end{split}\]</div>
+</div>
+<div class="section" id="a-2">
+<h2>A.2<a class="headerlink" href="#a-2" title="Permalink to this headline">¶</a></h2>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+&amp;\sum_{i=1}^n \left[\frac{\partial C_{Tj}(H_{Ti};\psi_{Tj})}{\partial \psi_{Tj}}\{\mathbb{I}\{A_{Ti}=j\}-\omega_T(H_{Ti},j;\gamma_T)\}\times \Big\{Y_i-\sum_{j'=1}^{m_T-1} \mathbb{I}\{A_{Ti}=j'\}C_{Tj'}(H_{Ti};\psi_{Tj'})-Q_T(H_{Ti},0;\phi_{T})\Big\}\right]=0\\
+&amp;\sum_{i=1}^n \left[\frac{\partial Q_T(H_{Ti},0;\phi_T)}{\partial \phi_T}\Big\{Y_i-\sum_{j'=1}^{m_T-1} \mathbb{I}\{A_{Ti}=j'\}C_{Tj'}(H_{Ti};\psi_{Tj'})-Q_T(H_{Ti},0;\phi_T)\Big\}\right]=0\\
+&amp;\sum_{i=1}^n \left[\frac{\partial \omega_T(H_{Ti},j;\gamma_T)}{\partial \gamma_T}\Big\{Y_i-\sum_{j'=1}^{m_T-1} \mathbb{I}\{A_{Ti}=j'\}C_{Tj'}(H_{Ti};\psi_{Tj'})-Q_T(H_{Ti},0;\phi_T)\Big\}\right]=0
+\end{aligned}
+\end{split}\]</div>
+</div>
+<div class="section" id="a-3">
+<h2>A.3<a class="headerlink" href="#a-3" title="Permalink to this headline">¶</a></h2>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+&amp;\sum_{i=1}^n \left[\frac{\partial C_{tj}(H_{ti};\psi_{tj})}{\partial \psi_{tj}}\{\mathbb{I}\{A_{ti}=j\}-\omega_T(H_{ti},j;\gamma_t)\}\times \Big\{\tilde{Y}_{t+1,i}-\sum_{j'=1}^{m_t-1} \mathbb{I}\{A_{ti}=j'\}C_{tj'}(H_{ti};\psi_{tj'})-Q_t(H_{ti},0;\phi_{t})\Big\}\right]=0\\
+&amp;\sum_{i=1}^n \left[\frac{\partial Q_t(H_{ti},0;\phi_t)}{\partial \phi_t}\Big\{\tilde{Y}_{t+1,i}-\sum_{j'=1}^{m_t-1} \mathbb{I}\{A_{ti}=j'\}C_{tj'}(H_{ti};\psi_{tj'})-Q_t(H_{ti},0;\phi_t)\Big\}\right]=0\\
+&amp;\sum_{i=1}^n \left[\frac{\partial \omega_t(H_{ti},j;\gamma_t)}{\partial \gamma_t}\Big\{\tilde{Y}_{t+1,i}-\sum_{j'=1}^{m_t-1} \mathbb{I}\{A_{ti}=j'\}C_{tj'}(H_{ti};\psi_{tj'})-Q_t(H_{ti},0;\phi_t)\Big\}\right]=0
+\end{aligned}
+\end{split}\]</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./Offline\Single"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="Policy%20Search.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Policy Search</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Concordance.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Concordance-assisted learning</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Causal Decision Making Team<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
