@@ -45,13 +45,14 @@
     <script src="../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Heterogenous Treatement Effect" href="Heterogenous%20Treatement%20Effect.html" />
@@ -281,9 +282,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/Preliminary/Causal Inference 101.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/Preliminary/Causal Inference 101.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
+                data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
                 onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -317,6 +318,23 @@
 
             <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/Preliminary/Causal Inference 101.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
         </div>
 
         <!-- Table of contents -->
@@ -328,33 +346,45 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#what-is-myst">
-   What is MyST?
+  <a class="reference internal nav-link" href="#potential-outcome">
+   Potential Outcome
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#what-are-roles-and-directives">
-   What are roles and directives?
+  <a class="reference internal nav-link" href="#assumptions">
+   Assumptions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#average-causal-effect">
+   Average Causal Effect
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#using-a-directive">
-     Using a directive
+    <a class="reference internal nav-link" href="#outcome-regression-models">
+     Outcome Regression Models
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#using-a-role">
-     Using a role
+    <a class="reference internal nav-link" href="#propensity-score">
+     Propensity Score
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#stratification">
+       Stratification
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#inverse-propensity-score-weighting">
+       Inverse Propensity Score Weighting
+      </a>
+     </li>
+    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#adding-a-citation">
-     Adding a citation
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#executing-code-in-your-markdown-files">
-     Executing code in your markdown files
+    <a class="reference internal nav-link" href="#doubly-robust-estimators">
+     Doubly Robust Estimators
     </a>
    </li>
   </ul>
@@ -380,33 +410,45 @@
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#what-is-myst">
-   What is MyST?
+  <a class="reference internal nav-link" href="#potential-outcome">
+   Potential Outcome
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#what-are-roles-and-directives">
-   What are roles and directives?
+  <a class="reference internal nav-link" href="#assumptions">
+   Assumptions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#average-causal-effect">
+   Average Causal Effect
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#using-a-directive">
-     Using a directive
+    <a class="reference internal nav-link" href="#outcome-regression-models">
+     Outcome Regression Models
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#using-a-role">
-     Using a role
+    <a class="reference internal nav-link" href="#propensity-score">
+     Propensity Score
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#stratification">
+       Stratification
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#inverse-propensity-score-weighting">
+       Inverse Propensity Score Weighting
+      </a>
+     </li>
+    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#adding-a-citation">
-     Adding a citation
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#executing-code-in-your-markdown-files">
-     Executing code in your markdown files
+    <a class="reference internal nav-link" href="#doubly-robust-estimators">
+     Doubly Robust Estimators
     </a>
    </li>
   </ul>
@@ -420,111 +462,80 @@
             
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="causal-inference-101">
+  <div class="section" id="causal-inference-101">
 <h1>Causal Inference 101<a class="headerlink" href="#causal-inference-101" title="Permalink to this headline">¶</a></h1>
-<p>Whether you write your book’s content in Jupyter Notebooks (<code class="docutils literal notranslate"><span class="pre">.ipynb</span></code>) or
-in regular markdown files (<code class="docutils literal notranslate"><span class="pre">.md</span></code>), you’ll write in the same flavor of markdown
-called <strong>MyST Markdown</strong>.</p>
-<div class="section" id="what-is-myst">
-<h2>What is MyST?<a class="headerlink" href="#what-is-myst" title="Permalink to this headline">¶</a></h2>
-<p>MyST stands for “Markedly Structured Text”. It
-is a slight variation on a flavor of markdown called “CommonMark” markdown,
-with small syntax extensions to allow you to write <strong>roles</strong> and <strong>directives</strong>
-in the Sphinx ecosystem.</p>
+<p>Classical statistical inference considers associational relationships of different variables in a population of interest. However, in scientific research, we are often interested in causal relationships. Does action <span class="math notranslate nohighlight">\(T\)</span> cause <span class="math notranslate nohighlight">\(Y\)</span>. In this section, we will focus on establishing and estimating causal relationships between actions or interventions and subsequent response, under the potential outcome framework advocated by Neyman, Rubin, Robins and others.</p>
+<p>We denote the treatment (intervention, action) by the variable <span class="math notranslate nohighlight">\(T\)</span>, which can be a vector of discrete, continuous random variables. For simplicity, we consider the simplest case where <span class="math notranslate nohighlight">\(T\)</span> is a binary indicator, i.e. <span class="math notranslate nohighlight">\(T \in \{0, 1\}\)</span> to denote two different interventions, say, for example, ad intervention versus no ad intervention for acquiring new users for new app. We will denote by <span class="math notranslate nohighlight">\(Y\)</span> the response of interest, say, convert (download the new app) or not. The ad of the new app may be randomly assigned to a sample of users in a randomized controlled experiment, or the users may be intervened by the ad according to baseline features in an observational study. The data that are available can be summarized as <span class="math notranslate nohighlight">\(Z_i = (X_i, T_i, Y_i), i=1, \cdots, n\)</span>, where for the <span class="math notranslate nohighlight">\(i-\)</span> th sample, <span class="math notranslate nohighlight">\(X_i\)</span> denotes the covariates that have been collected on the individual prior to the intervention, <span class="math notranslate nohighlight">\(T_i\)</span> is the treatment received, <span class="math notranslate nohighlight">\(Y_i\)</span> denotes the response. We are interested in establishing a causal relationship between <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>.</p>
+<div class="section" id="potential-outcome">
+<h2>Potential Outcome<a class="headerlink" href="#potential-outcome" title="Permalink to this headline">¶</a></h2>
+<p>Under the potential outcome framework, we will assume, for each treatment, that there exists a potential outcome <span class="math notranslate nohighlight">\(Y^*(t)\)</span> which will represent the response of a randomly chosen individual in our population if they are given treatment <span class="math notranslate nohighlight">\(T=t\)</span>. Hence, when there are two treatments, <span class="math notranslate nohighlight">\(Y^*(0)\)</span> and <span class="math notranslate nohighlight">\(Y^*(1)\)</span> will represent the responses of a randomly chosen individual from the population if they are given treatment <span class="math notranslate nohighlight">\(T=0\)</span> and <span class="math notranslate nohighlight">\(T=1\)</span>, respectively. <span class="math notranslate nohighlight">\(Y^*(0)\)</span> and <span class="math notranslate nohighlight">\(Y^*(1)\)</span> are sometimes referred to as counterfactual random variables because, in reality, they both cannot be observed and correspond to a hypothetical value if contrary to the fact the individual actually received a treatment different than the one considered. Using the notion of potential outcomes, we can define the causal treatment effect at the individual level by <span class="math notranslate nohighlight">\(\{Y^*(1) - Y^*(0)\}\)</span>. Because only one of <span class="math notranslate nohighlight">\(Y^*(0)\)</span> and <span class="math notranslate nohighlight">\(Y^*(1)\)</span> can be observed for any one individual, it is not possible to measure or estimate the subject-specific causal treatment effect.</p>
 </div>
-<div class="section" id="what-are-roles-and-directives">
-<h2>What are roles and directives?<a class="headerlink" href="#what-are-roles-and-directives" title="Permalink to this headline">¶</a></h2>
-<p>Roles and directives are two of the most powerful tools in Jupyter Book. They
-are kind of like functions, but written in a markup language. They both
-serve a similar purpose, but <strong>roles are written in one line</strong>, whereas
-<strong>directives span many lines</strong>. They both accept different kinds of inputs,
-and what they do with those inputs depends on the specific role or directive
-that is being called.</p>
-<div class="section" id="using-a-directive">
-<h3>Using a directive<a class="headerlink" href="#using-a-directive" title="Permalink to this headline">¶</a></h3>
-<p>At its simplest, you can insert a directive into your book’s content like so:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```{mydirectivename}
-My directive content
-```
-</pre></div>
+<div class="section" id="assumptions">
+<h2>Assumptions<a class="headerlink" href="#assumptions" title="Permalink to this headline">¶</a></h2>
+<p>We now consider the necessary assumptions that allow us to deduce the distribution of <span class="math notranslate nohighlight">\(Y*(0)\)</span> and <span class="math notranslate nohighlight">\(Y^*(1)\)</span> from the distribution of <span class="math notranslate nohighlight">\((X, T, Y)\)</span>.</p>
+<ul class="simple">
+<li><p>SUTVA (stable unit treatment value assumption)
+$<span class="math notranslate nohighlight">\(Y_i = Y_i^*(1) T_i + Y_i^*(0) (1-T_i), i = 1, \cdots, n.\)</span><span class="math notranslate nohighlight">\(
+That is, the actual response that is observed for the \)</span>i<span class="math notranslate nohighlight">\(-th individual in our sample, \)</span>Y_i<span class="math notranslate nohighlight">\(, who received treatment \)</span>T_i$, is the same as the potential outcome for that assigned treatment regardless of the experimental conditions used to assign treatment. This assumption also indicates that there are not any interference between subjects in the population, that is, the observed response for any individual is not affected by the responses of other individuals</p></li>
+<li><p>No Unmeasured Confounders (Strong Ignorability)
+$<span class="math notranslate nohighlight">\(\{Y^*(0), Y^*(1)\} \perp\!\!\!\perp T|X\)</span><span class="math notranslate nohighlight">\(
+We cannot use the data in an observational study to either confirm or refute this assumption. However, if we believe that \)</span>X$ contained all the relevant information about the treatment assignment, then it will be reasonable to make the above assumption.</p></li>
+<li><p>Positivity Assumption
+$<span class="math notranslate nohighlight">\(0 &lt; P(T=1|X=x) &lt; 1\)</span><span class="math notranslate nohighlight">\(
+This assumption ensures that for any given individual in treatment group \)</span>1<span class="math notranslate nohighlight">\(, we are able to find a similar individual in treatment group \)</span>0$, and vice versa.</p></li>
+</ul>
 </div>
-<p>This will only work if a directive with name <code class="docutils literal notranslate"><span class="pre">mydirectivename</span></code> already exists
-(which it doesn’t). There are many pre-defined directives associated with
-Jupyter Book. For example, to insert a note box into your content, you can
-use the following directive:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```{note}
-Here is a note
-```
-</pre></div>
+<div class="section" id="average-causal-effect">
+<h2>Average Causal Effect<a class="headerlink" href="#average-causal-effect" title="Permalink to this headline">¶</a></h2>
+<p><span class="math notranslate nohighlight">\(\text{ATE} = E[Y^*(1) - Y^*(0)]\)</span>
+There are two general approaches to deriving estimators for the average causal treatment effect from observational data: outcome regression modeling and the use of propensity score.</p>
+<div class="section" id="outcome-regression-models">
+<h3>Outcome Regression Models<a class="headerlink" href="#outcome-regression-models" title="Permalink to this headline">¶</a></h3>
+<p>The use of outcome regression modeling to estimate the average causal treatment effect from observational data under the assumption of no unmeasured confouners and SUTVA comes from the following consideration:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a2419fc3-d797-4911-adc3-340969ad202e">
+<span class="eqno">(1)<a class="headerlink" href="#equation-a2419fc3-d797-4911-adc3-340969ad202e" title="Permalink to this equation">¶</a></span>\[\begin{align}
+E[Y^*(1)] &amp;= E_x [E\{Y^*(1)|X\}] \\
+&amp;= E_x[E\{Y^*(1)|T=1, X\}] \quad \text{No Unmeasured Confounders}\\
+&amp;= E_x[E\{Y|T=1, X\}] \quad \text{SUTVA}
+\end{align}\]</div>
+<p>Similarly, we can show that <span class="math notranslate nohighlight">\(E[Y^*(0)] = E_x[E\{Y|T=0, X\}].\)</span>
+Hence, the average causal treatment effect
+$<span class="math notranslate nohighlight">\(\text{ATE} = E_x[E\{Y|T=1, X\}] - E_x[E\{Y|T=0, X\}]\)</span>$</p>
+<p>We can posit a model for <span class="math notranslate nohighlight">\(E[Y|T, X] = \mu(X, T;\gamma)\)</span>, and estimate the parameter <span class="math notranslate nohighlight">\(\gamma\)</span> via MLE or least square estimation. Then,
+$<span class="math notranslate nohighlight">\(\hat{\text{ATE}} = n^{-1}\sum_{i=1}^n \{\mu(X_i, 1;\hat{\gamma}) - \mu(X_i, 0; \hat{\gamma})\}\)</span>$</p>
 </div>
-<p>This results in:</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Here is a note</p>
+<div class="section" id="propensity-score">
+<h3>Propensity Score<a class="headerlink" href="#propensity-score" title="Permalink to this headline">¶</a></h3>
+<p>Another class of estimators for the average causal treatment effect uses propensity score, defined as
+$<span class="math notranslate nohighlight">\(\pi(X) = P(T=1|X)\)</span><span class="math notranslate nohighlight">\(
+in the case where there are two treatments. It refers to the propensity of getting one of the treatments as a function of the covariates. One of the attractive features of the propensity score, that makes it useful for causal inference follows from the fact that given the `SUTVA` and `strong ignorability` assumptions, then
+\)</span><span class="math notranslate nohighlight">\(\{Y^*(1), Y^*(0)\} \perp\!\!\!\perp T|\pi(X)\)</span><span class="math notranslate nohighlight">\(
+It may be difficult to build an outcome regression model for \)</span>E[Y|T, X]<span class="math notranslate nohighlight">\( if \)</span>X<span class="math notranslate nohighlight">\( is high dimensional, however, based on the above result, we can simply build models for \)</span>E[Y|T, \pi(X)]$.</p>
+<div class="section" id="stratification">
+<h4>Stratification<a class="headerlink" href="#stratification" title="Permalink to this headline">¶</a></h4>
+<p>Rubin suggested the following to estimate ATE. Stratify the observations into groups based on the value of the estimated propensity scores <span class="math notranslate nohighlight">\(\hat{\pi}(X_i), i=1, \cdots, n\)</span>. That is, choose cutoff values,
+$<span class="math notranslate nohighlight">\(0 = C_0 &lt; C_1 &lt; \cdots &lt; C_K = 1,\)</span><span class="math notranslate nohighlight">\(
+then individual \)</span>i<span class="math notranslate nohighlight">\( belongs to group \)</span>k<span class="math notranslate nohighlight">\( if 
+\)</span><span class="math notranslate nohighlight">\(C_{k-1} &lt; \hat{\pi}(X_i) \le C_k, k=1, \cdots, K,\)</span><span class="math notranslate nohighlight">\(
+then
+\)</span><span class="math notranslate nohighlight">\(\text{ATE} = \sum_{k=1}^K (\bar{Y}_{1k} - \bar{Y}_{0k}) n_k /n\)</span><span class="math notranslate nohighlight">\(
+where \)</span>\hat{Y}<em>{1k}, \hat{Y}</em>{0k}<span class="math notranslate nohighlight">\( are the sample average responses among individuals in the \)</span>k-<span class="math notranslate nohighlight">\(th group receiving treatments \)</span>1<span class="math notranslate nohighlight">\( and \)</span>0<span class="math notranslate nohighlight">\( respectively, and \)</span>n_k<span class="math notranslate nohighlight">\( is the number of individuals from both treatments in the \)</span>k-$th group.</p>
 </div>
-<p>In your built book.</p>
-<p>For more information on writing directives, see the
-<a class="reference external" href="https://myst-parser.readthedocs.io/">MyST documentation</a>.</p>
+<div class="section" id="inverse-propensity-score-weighting">
+<h4>Inverse Propensity Score Weighting<a class="headerlink" href="#inverse-propensity-score-weighting" title="Permalink to this headline">¶</a></h4>
+<p>Another class of estimators with a more theoretical justification coming from semiparametric theory uses the inverse propensity score estimator and augmented inverse propensity score estimator for the average causal treatment effect.</p>
+<p>The motivation of IPW is as follows. Since the propensity (probability) of receiving treatment <span class="math notranslate nohighlight">\(1\)</span> is <span class="math notranslate nohighlight">\(\pi(X)\)</span> for an individual with baseline covariates <span class="math notranslate nohighlight">\(X\)</span>, then every individual with covariates <span class="math notranslate nohighlight">\(X_i\)</span> that was observed to receive treatment 1 in our sample is weighted by <span class="math notranslate nohighlight">\(1/\pi(X_i)\)</span> so that their response not only represent themselves but also other individuals who did not receive treatment 1. More formally, we will show that <span class="math notranslate nohighlight">\(\frac{TY}{\pi(X)}\)</span> is an unbiased estimator of <span class="math notranslate nohighlight">\(E[Y^*(1)]\)</span>. This follows that, given the <code class="docutils literal notranslate"><span class="pre">positivity</span></code> assumption,
+$<span class="math notranslate nohighlight">\(E\left[\frac{TY}{\pi(X)}\right] = E\left[\frac{TY^*(1)}{\pi(X)}\right] = E\left[E\left\{\frac{TY^*(1)}{\pi(X)}|X\right\}\right] = E\left[E\left\{\frac{T}{\pi(X)}|X\right\}Y^*(1)\right] = E[Y^*(1)].\)</span>$</p>
+<p>Similarly, we have
+$<span class="math notranslate nohighlight">\(E[Y^*(0)] = E\left[\frac{(1-T)Y}{1-\pi(X)} \right],\)</span><span class="math notranslate nohighlight">\(
+Consequently, then another unbiased estimator for the average causal treatment effect would be 
+\)</span><span class="math notranslate nohighlight">\(\hat{\text{ATE}} = n^{-1}\sum_{i=1}^n \left\{\frac{T_iY_i}{\pi(X_i)}  - \frac{(1-T_i)Y_i}{1-\pi(X_i)}  \right\}\)</span>$</p>
 </div>
-<div class="section" id="using-a-role">
-<h3>Using a role<a class="headerlink" href="#using-a-role" title="Permalink to this headline">¶</a></h3>
-<p>Roles are very similar to directives, but they are less-complex and written
-entirely on one line. You can insert a role into your book’s content with
-this pattern:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Some content {rolename}`and here is my role&#39;s content!`
-</pre></div>
 </div>
-<p>Again, roles will only work if <code class="docutils literal notranslate"><span class="pre">rolename</span></code> is a valid role’s name. For example,
-the <code class="docutils literal notranslate"><span class="pre">doc</span></code> role can be used to refer to another page in your book. You can
-refer directly to another page by its relative path. For example, the
-role syntax <code class="docutils literal notranslate"><span class="pre">{doc}`intro`</span></code> will result in: <span class="xref std std-doc">intro</span>.</p>
-<p>For more information on writing roles, see the
-<a class="reference external" href="https://myst-parser.readthedocs.io/">MyST documentation</a>.</p>
-</div>
-<div class="section" id="adding-a-citation">
-<h3>Adding a citation<a class="headerlink" href="#adding-a-citation" title="Permalink to this headline">¶</a></h3>
-<p>You can also cite references that are stored in a <code class="docutils literal notranslate"><span class="pre">bibtex</span></code> file. For example,
-the following syntax: <code class="docutils literal notranslate"><span class="pre">{cite}`holdgraf_evidence_2014`</span></code> will render like
-this: <span id="id1">[<a class="reference internal" href="#id3">HdHPK14</a>]</span>.</p>
-<p>Moreover, you can insert a bibliography into your page with this syntax:
-The <code class="docutils literal notranslate"><span class="pre">{bibliography}</span></code> directive must be used for all the <code class="docutils literal notranslate"><span class="pre">{cite}</span></code> roles to
-render properly.
-For example, if the references for your book are stored in <code class="docutils literal notranslate"><span class="pre">references.bib</span></code>,
-then the bibliography is inserted with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```{bibliography}
-```
-</pre></div>
-</div>
-<p>Resulting in a rendered bibliography that looks like:</p>
-<p id="id2"><dl class="citation">
-<dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id1">HdHPK14</a></span></dt>
-<dd><p>Christopher Ramsay Holdgraf, Wendy de Heer, Brian N. Pasley, and Robert T. Knight. Evidence for Predictive Coding in Human Auditory Cortex. In <em>International Conference on Cognitive Neuroscience</em>. Brisbane, Australia, Australia, 2014. Frontiers in Neuroscience.</p>
-</dd>
-</dl>
-</p>
-</div>
-<div class="section" id="executing-code-in-your-markdown-files">
-<h3>Executing code in your markdown files<a class="headerlink" href="#executing-code-in-your-markdown-files" title="Permalink to this headline">¶</a></h3>
-<p>If you’d like to include computational content inside these markdown files,
-you can use MyST Markdown to define cells that will be executed when your
-book is built. Jupyter Book uses <em>jupytext</em> to do this.</p>
-<p>First, add Jupytext metadata to the file. For example, to add Jupytext metadata
-to this markdown page, run this command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span><span class="o">-</span><span class="n">book</span> <span class="n">myst</span> <span class="n">init</span> <span class="n">markdown</span><span class="o">.</span><span class="n">md</span>
-</pre></div>
-</div>
-<p>Once a markdown file has Jupytext metadata in it, you can add the following
-directive to run the code at build time:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```{code-cell}
-print(&quot;Here is some code to execute&quot;)
-```
-</pre></div>
-</div>
-<p>When your book is built, the contents of any <code class="docutils literal notranslate"><span class="pre">{code-cell}</span></code> blocks will be
-executed with your default Jupyter kernel, and their outputs will be displayed
-in-line with the rest of your content.</p>
-<p>For more information about executing computational content with Jupyter Book,
-see <a class="reference external" href="https://myst-nb.readthedocs.io/">The MyST-NB documentation</a>.</p>
+<div class="section" id="doubly-robust-estimators">
+<h3>Doubly Robust Estimators<a class="headerlink" href="#doubly-robust-estimators" title="Permalink to this headline">¶</a></h3>
+<p>We are able to combine outcome regression estimator and the propensity score weighted estimator to obtain another so-called doubly robust estimator, as follows
+$<span class="math notranslate nohighlight">\(\hat{\text{ATE}} = n^{-1}\sum_{i=1}^n \left\{\mu(X_i,1;\hat{\gamma})+\frac{T_i(Y_i - \mu(X_i,1;\hat{\gamma}))}{\hat{\pi}(X_i)} - \mu(X_i,0;\hat{\gamma}) - \frac{(1-T_i)(Y_i-\mu(X_i,0;\hat{\gamma}))}{1-\hat{\pi}(X_i)} \right\}\)</span>$</p>
 </div>
 </div>
 </div>
