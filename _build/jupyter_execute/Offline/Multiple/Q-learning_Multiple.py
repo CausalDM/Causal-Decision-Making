@@ -172,6 +172,8 @@ QLearn.train(X, A, Y, model_info, T=3, regime = regime, evaluate = True)
 QLearn.estimate_value()
 
 
+# 💥 Placeholder for C.I.
+
 # ## References
 # 1. Murphy, S. A. (2005). A generalization error for Q-learning.
 # 2. Song, R., Wang, W., Zeng, D., & Kosorok, M. R. (2015). Penalized q-learning for dynamic treatment regimens. Statistica Sinica, 25(3), 901.

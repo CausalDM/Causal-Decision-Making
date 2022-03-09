@@ -211,6 +211,8 @@ ALearn.train(X, A, Y, model_info, T=3, regime = regime, evaluate = True)
 ALearn.estimate_value()
 
 
+# 💥 Placeholder for C.I.
+
 # ## References
 # 1. Schulte, P. J., Tsiatis, A. A., Laber, E. B., & Davidian, M. (2014). Q-and A-learning methods for estimating optimal dynamic treatment regimes. Statistical science: a review journal of the Institute of Mathematical Statistics, 29(4), 640.
 # 2. Robins, J. M. (2004). Optimal structural nested models for optimal sequential decisions. In Proceedings of the second seattle Symposium in Biostatistics (pp. 189-326). Springer, New York, NY.

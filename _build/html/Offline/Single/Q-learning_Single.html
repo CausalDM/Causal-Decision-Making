@@ -178,7 +178,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="A-learning_Single.html">
-     A-Learning
+     A-Learning (Single Stage)
     </a>
    </li>
    <li class="toctree-l2">
@@ -275,7 +275,17 @@
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul class="simple">
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Infinite/Q-learning_Infinite.html">
+     Q-Learning (Infinite Horizon)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Infinite/A-learning_Infinite.html">
+     A-Learning (Infinite Horizon)
+    </a>
+   </li>
   </ul>
  </li>
 </ul>
@@ -570,7 +580,7 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span>\<span class="n">ipykernel_110584</span>\<span class="mf">2982377520.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span>\<span class="n">ipykernel_25752</span>\<span class="mf">2982377520.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
 <span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
@@ -590,12 +600,12 @@
 <li><p><strong>Application Situation</strong>: Suppose we have a dataset containing observations from <span class="math notranslate nohighlight">\(N\)</span> individuals. For each individual <span class="math notranslate nohighlight">\(i\)</span>, we have <span class="math notranslate nohighlight">\(\{\mathbf{X}_{i},A_{i},Y_{i}\}\)</span>, <span class="math notranslate nohighlight">\(i=1,\cdots,N\)</span>. <span class="math notranslate nohighlight">\(\mathbf{X}_{i}\)</span> includes the feature information, <span class="math notranslate nohighlight">\(A_{i}\)</span> is the action taken, and <span class="math notranslate nohighlight">\(Y_{i}\)</span> is the observed reward received. The target of Q-learning is to find an optimal policy <span class="math notranslate nohighlight">\(\pi\)</span> that can maximize the expected reward received. In other words, by training a model with the observed dataset, we want to find an optimal policy that can help us determine the optimal action for each individual to optimize the reward.</p></li>
 <li><p><strong>Basic Logic</strong>: Q-learning with a single decision point is mainly a regression modeling problem, as the major component is to find the relationship between <span class="math notranslate nohighlight">\(Y\)</span> and <span class="math notranslate nohighlight">\(\{X,A\}\)</span>. Let’s first define a Q-function, such that</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-12669cc3-4d66-47fe-9e6e-2ca1fa3bc497">
-<span class="eqno">(2)<a class="headerlink" href="#equation-12669cc3-4d66-47fe-9e6e-2ca1fa3bc497" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-75b61892-500f-4f82-be98-cc20be192a56">
+<span class="eqno">(2)<a class="headerlink" href="#equation-75b61892-500f-4f82-be98-cc20be192a56" title="Permalink to this equation">¶</a></span>\[\begin{align}
     Q(x,a) = E(Y|X=x, A=a).
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-ed54a1ac-e0d8-4901-b132-b5e6050149c8">
-<span class="eqno">(3)<a class="headerlink" href="#equation-ed54a1ac-e0d8-4901-b132-b5e6050149c8" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-28276886-2190-4321-8441-c2f448c7efc2">
+<span class="eqno">(3)<a class="headerlink" href="#equation-28276886-2190-4321-8441-c2f448c7efc2" title="Permalink to this equation">¶</a></span>\[\begin{align}
     \text{arg max}_{\pi}Q(x_{i},\pi(x_{i})).
 \end{align}\]</div>
 <ul class="simple">

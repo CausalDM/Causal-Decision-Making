@@ -106,9 +106,15 @@ A[0] = treatment[Y>0]
 Y = Y[Y>0]
 
 
+# In[4]:
+
+
+X
+
+
 # #### Train Policy
 
-# In[3]:
+# In[5]:
 
 
 # initialize the learner
@@ -191,6 +197,50 @@ print('Value_hat:',value_avg,'Value_std:',value_std)
 ALearn.train(X, A, Y, model_info, T=1, regime = regime, evaluate = True)
 ALearn.estimate_value()
 
+
+# In[20]:
+
+
+def generate_test_case(setup, N, seed = 0):
+    if setup == 'random_binary':
+        np.random.seed(seed)
+        s1 = np.random.normal(0,1, N)
+        A1 = np.random.binomial(1,np.exp(-2*s1)/(1+np.exp(-2*s1)),size = N)
+        Y = np.random.normal(1+s1+A1*(1+.5*s1),3)
+        opt_true = (1+.5*s1 >0).astype(int)
+        X = np.hstack([np.ones(N)[:, np.newaxis], s1[:, np.newaxis]])
+        instance = {
+            'X' : X, 
+            'A' : A1, 
+            'Y' : Y, 
+            'optimal_A' : opt_true, 
+            'XAY' : [X, A1, Y]
+        }
+        return instance
+    
+instance = generate_test_case('random_binary', 10000, seed = 0)
+X,A1,Y = instance['XAY']
+A = {}
+A[0] = A1
+
+
+# In[23]:
+
+
+# initialize the learner
+ALearn = ALearning.ALearning()
+p = X.shape[1]
+model_info = [{'X_prop': list(range(p)),
+              'X_q0': list(range(p)),
+               'X_C':{1:list(range(p))},
+              'action_space': [0,1]}] #A in [0,1,2]
+# train the policy
+ALearn.train(X, A, Y, model_info, T=1)
+# Fitted Model
+ALearn.fitted_model['prop'][0].params
+
+
+# 💥 Placeholder for C.I.
 
 # ## References
 # 1. Schulte, P. J., Tsiatis, A. A., Laber, E. B., & Davidian, M. (2014). Q-and A-learning methods for estimating optimal dynamic treatment regimes. Statistical science: a review journal of the Institute of Mathematical Statistics, 29(4), 640.

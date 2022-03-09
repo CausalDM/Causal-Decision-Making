@@ -25,3 +25,21 @@ We aim to include the cited papers in this tutorial and also add the correspondi
 ## Off-Policy Optimization
 
 ## Statistical Inference
+
+💥The following are examples only
+## Supported Offline Algorithms
+![Offline.png](Offline.png)
+| Algorithm | Treatment Type | Outcome Type | Single Stage? | Multiple Stages? | Infinite Horizon? | Evaluation? | C.I.? | Advantages |
+|:-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| [Q-Learning]() | Discrete | Continuous (Mean) |✅|✅| ❗ TODO |✅|❗ TODO| |
+| [A-Learning]() | Discrete | Continuous (Mean) |✅|✅|  |✅|❗ TODO| |
+| [OWL]() | Discrete | Continuous (Mean) |✅|| ||| |
+| [Quatile-OTR](https://doi.org/10.1080/01621459.2017.1330204) | Discrete | Continuous (Quantiles) |✅|  |  || | |
+
+
+## Supported Online Algorithms
+![Online.png](Online.png)
+| algorithm | Action Type | Reward Type | Advantages |
+|:-|:-:|:-:|:-:|
+| [Multi-Armed Bandit]() |⛔| | |
+| [Contextual Multi-Armed Bandit]() |⛔| | |
