@@ -422,45 +422,28 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#single-decision-point">
-   Single Decision Point
+  <a class="reference internal nav-link" href="#algorithm-details">
+   Algorithm Details
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-steps">
+   Key Steps
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#demo-code">
+   Demo Code
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#optimal-decision">
-     1. Optimal Decision
+    <a class="reference internal nav-link" href="#policy-learning">
+     1. Policy Learning
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#import-the-learner">
-       import the learner
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#prepare-the-dataset-dataset-from-the-dtr-book">
-       prepare the dataset (dataset from the DTR book)
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#train-model">
-       train model
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#get-the-optimal-regime-and-the-optimal-value">
-       get the optimal regime and the optimal value
-      </a>
-     </li>
-    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#policy-evaluation">
      2. Policy Evaluation
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#todo">
-     TODO:
     </a>
    </li>
   </ul>
@@ -468,11 +451,6 @@
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
    References
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#functions-are-already-tested-with-the-data-and-results-provided-in-the-dtr-book">
-   !!Functions are already tested with the data and results provided in the DTR book
   </a>
  </li>
 </ul>
@@ -501,45 +479,28 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#single-decision-point">
-   Single Decision Point
+  <a class="reference internal nav-link" href="#algorithm-details">
+   Algorithm Details
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-steps">
+   Key Steps
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#demo-code">
+   Demo Code
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#optimal-decision">
-     1. Optimal Decision
+    <a class="reference internal nav-link" href="#policy-learning">
+     1. Policy Learning
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#import-the-learner">
-       import the learner
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#prepare-the-dataset-dataset-from-the-dtr-book">
-       prepare the dataset (dataset from the DTR book)
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#train-model">
-       train model
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#get-the-optimal-regime-and-the-optimal-value">
-       get the optimal regime and the optimal value
-      </a>
-     </li>
-    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#policy-evaluation">
      2. Policy Evaluation
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#todo">
-     TODO:
     </a>
    </li>
   </ul>
@@ -547,11 +508,6 @@
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
    References
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#functions-are-already-tested-with-the-data-and-results-provided-in-the-dtr-book">
-   !!Functions are already tested with the data and results provided in the DTR book
   </a>
  </li>
 </ul>
@@ -565,441 +521,209 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="q-learning-single-stage">
 <h1>Q-Learning (Single Stage)<a class="headerlink" href="#q-learning-single-stage" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="main-idea">
+<h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">¶</a></h2>
+<p>Early in 2000, as a classic method of Reinforcement Learning, Q-learning was adapted to decision-making problems[1] and kept evolving with various extensions, such as penalized Q-learning [2]. Q-learning with finite decision points is mainly a regression modeling problem based on positing regression models for outcome at each decision point. The target of Q-learning is to find an optimal policy <span class="math notranslate nohighlight">\(\pi\)</span> that can maximize the expected reward received. In other words, by training a model with the observed data, we hope to find an optimal policy to predict the optimal action for each individual to maximize rewards. For example, considering the motivating example <strong>Personalized Incentives</strong>, Q-learning aims to find the best policy to assign different incentives (<span class="math notranslate nohighlight">\(A\)</span>) to different users to optimize the return-on-investment (<span class="math notranslate nohighlight">\(Y\)</span>). Overall, Q-learning is practical and easy to understand, as it allows straightforward implementation of diverse established regression methods.</p>
+<p>Note that, we assume the action space is either <strong>binary</strong> (i.e., 0,1) or <strong>multinomial</strong> (i.e., A,B,C,D), and the outcome of interest Y is <strong>continuous</strong> and <strong>non-negative</strong>, where the larger the <span class="math notranslate nohighlight">\(Y\)</span> the better.</p>
+</div>
+<div class="section" id="algorithm-details">
+<h2>Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this headline">¶</a></h2>
+<p>Q-learning with a single decision point is mainly a regression modeling problem, as the major component is to find the relationship between <span class="math notranslate nohighlight">\(Y\)</span> and <span class="math notranslate nohighlight">\(\{X,A\}\)</span>. Let’s first define a Q-function, such that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-885e5d3a-b6ba-44e5-bfa3-19412a121d5c">
+<span class="eqno">(2)<a class="headerlink" href="#equation-885e5d3a-b6ba-44e5-bfa3-19412a121d5c" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    Q(x,a) = E(Y|X=x, A=a).
+\end{align}\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-edf18a88-2e39-4122-bbf2-1ead29e80375">
+<span class="eqno">(3)<a class="headerlink" href="#equation-edf18a88-2e39-4122-bbf2-1ead29e80375" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    \text{arg max}_{\pi}Q(x_{i},\pi(x_{i})).
+\end{align}\]</div>
+</div>
+<div class="section" id="key-steps">
+<h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">¶</a></h2>
+<p><strong>Policy Learning:</strong></p>
+<ol class="simple">
+<li><p>Fitted a model <span class="math notranslate nohighlight">\(\hat{Q}(x,a,\hat{\beta})\)</span>, which can be solved directly by existing approaches (i.e., OLS, .etc),</p></li>
+<li><p>For each individual find the optimal action <span class="math notranslate nohighlight">\(d^{opt}(x_{i})\)</span> such that <span class="math notranslate nohighlight">\(d^{opt}(x_{i}) = \text{arg max}_{a}\hat{Q}(x_{i},a,\hat{\beta})\)</span>.</p></li>
+</ol>
+<p><strong>Policy Evaluation:</strong></p>
+<ol class="simple">
+<li><p>Fitted the Q function <span class="math notranslate nohighlight">\(\hat{Q}(x,a,\hat{\beta})\)</span>, based on the sampled dataset</p></li>
+<li><p>Estimated the value of a given regime <span class="math notranslate nohighlight">\(d\)</span> using the estimated Q function, such that, <span class="math notranslate nohighlight">\(\hat{Y}_{i} = \hat{Q}(x_{i},d(x_{i}),\hat{\beta})\)</span></p></li>
+</ol>
+<p><strong>Note</strong> we also provide an option for bootstrapping. Particularly, for a given policy, we utilize bootstrap resampling to get the estimated value of the regime and the corresponding estimated standard error. For each round of bootstrapping, we first resample a dataset of the same size as the original dataset, then fit the Q function based on the sampled dataset, and finally estimate the value of a given regime based on the estimated Q function.</p>
+</div>
+<div class="section" id="demo-code">
+<h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">¶</a></h2>
+<p>In the following, we exhibit how to apply the learner on real data to do policy learning and policy evaluation, respectively.</p>
+<div class="section" id="policy-learning">
+<h3>1. Policy Learning<a class="headerlink" href="#policy-learning" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># After we publish the pack age, we can directly import it</span>
-<span class="c1"># TODO: explore more efficient way</span>
-<span class="c1"># we can hide this cell later</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import learner</span>
+<span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">QLearning</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span>\<span class="n">ipykernel_25752</span>\<span class="mf">2982377520.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span>\<span class="n">ipykernel_26116</span>\<span class="mf">3479176628.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># import learner</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">QLearning</span>
 
-<span class="ne">FileNotFoundError</span>: [WinError 2] 系统找不到指定的文件。: &#39;../CausalDM&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="main-idea">
-<h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">¶</a></h2>
-<p>Q-learning is a classic method of Reinforcement Learning. Early in 2000, it was adapted to decision-making problems[1] and kept evolving with various extensions, such as penalized Q-learning [2]. In the following, we would start from a simple case having only one decision point and then introduce the multistage case with multiple decision points. Note that, we assume the action space is either <strong>binary</strong> (i.e., 0,1) or <strong>multinomial</strong> (i.e., A,B,C,D), and the outcome of interest Y is <strong>continuous</strong> and <strong>non-negative</strong>, where the larger the <span class="math notranslate nohighlight">\(Y\)</span> the better.</p>
-</div>
-<div class="section" id="single-decision-point">
-<h2>Single Decision Point<a class="headerlink" href="#single-decision-point" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p><strong>Application Situation</strong>: Suppose we have a dataset containing observations from <span class="math notranslate nohighlight">\(N\)</span> individuals. For each individual <span class="math notranslate nohighlight">\(i\)</span>, we have <span class="math notranslate nohighlight">\(\{\mathbf{X}_{i},A_{i},Y_{i}\}\)</span>, <span class="math notranslate nohighlight">\(i=1,\cdots,N\)</span>. <span class="math notranslate nohighlight">\(\mathbf{X}_{i}\)</span> includes the feature information, <span class="math notranslate nohighlight">\(A_{i}\)</span> is the action taken, and <span class="math notranslate nohighlight">\(Y_{i}\)</span> is the observed reward received. The target of Q-learning is to find an optimal policy <span class="math notranslate nohighlight">\(\pi\)</span> that can maximize the expected reward received. In other words, by training a model with the observed dataset, we want to find an optimal policy that can help us determine the optimal action for each individual to optimize the reward.</p></li>
-<li><p><strong>Basic Logic</strong>: Q-learning with a single decision point is mainly a regression modeling problem, as the major component is to find the relationship between <span class="math notranslate nohighlight">\(Y\)</span> and <span class="math notranslate nohighlight">\(\{X,A\}\)</span>. Let’s first define a Q-function, such that</p></li>
-</ul>
-<div class="amsmath math notranslate nohighlight" id="equation-75b61892-500f-4f82-be98-cc20be192a56">
-<span class="eqno">(2)<a class="headerlink" href="#equation-75b61892-500f-4f82-be98-cc20be192a56" title="Permalink to this equation">¶</a></span>\[\begin{align}
-    Q(x,a) = E(Y|X=x, A=a).
-\end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-28276886-2190-4321-8441-c2f448c7efc2">
-<span class="eqno">(3)<a class="headerlink" href="#equation-28276886-2190-4321-8441-c2f448c7efc2" title="Permalink to this equation">¶</a></span>\[\begin{align}
-    \text{arg max}_{\pi}Q(x_{i},\pi(x_{i})).
-\end{align}\]</div>
-<ul class="simple">
-<li><p><strong>Key Steps</strong>:</p>
-<ol class="simple">
-<li><p>Fitted a model <span class="math notranslate nohighlight">\(\hat{Q}(x,a,\hat{\beta})\)</span>, which can be solved directly by existing approaches (i.e., OLS, .etc),</p></li>
-<li><p>For each individual find the optimal action <span class="math notranslate nohighlight">\(a_{i}\)</span> such that <span class="math notranslate nohighlight">\(a_{i} = \text{arg max}_{a}\hat{Q}(x_{i},a,\hat{\beta})\)</span>.</p></li>
-</ol>
-</li>
-</ul>
-<div class="section" id="optimal-decision">
-<h3>1. Optimal Decision<a class="headerlink" href="#optimal-decision" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="import-the-learner">
-<h4>import the learner<a class="headerlink" href="#import-the-learner" title="Permalink to this headline">¶</a></h4>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A demo with code on how to use the package</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">QLearning</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklift.datasets</span> <span class="kn">import</span> <span class="n">fetch_hillstrom</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="prepare-the-dataset-dataset-from-the-dtr-book">
-<h4>prepare the dataset (dataset from the DTR book)<a class="headerlink" href="#prepare-the-dataset-dataset-from-the-dtr-book" title="Permalink to this headline">¶</a></h4>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># continuous Y</span>
-<span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">treatment</span> <span class="o">=</span> <span class="n">fetch_hillstrom</span><span class="p">(</span><span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;spend&#39;</span><span class="p">,</span> <span class="n">return_X_y_t</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="c1"># use pd.concat to join the new columns with your original dataframe</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">data</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;zip_code&#39;</span><span class="p">],</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;zip_code&#39;</span><span class="p">)],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">data</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;channel&#39;</span><span class="p">],</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;channel&#39;</span><span class="p">)],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="c1"># now drop the original &#39;country&#39; column (you don&#39;t need it anymore)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;zip_code&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;channel&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;history_segment&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;zip_code_Rural&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># Rural as the reference group</span>
-<span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;channel_Multichannel&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># Multichannel as the reference group </span>
-
-<span class="n">Y</span> <span class="o">=</span> <span class="n">target</span>
-<span class="n">Y</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Y&#39;</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="c1"># add an intercept column</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">treatment</span>
-<span class="n">A</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;A&#39;</span>
-<span class="c1">#get the subset which has Y&gt;0 == n=578</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">Y</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">Y</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span><span class="p">[</span><span class="n">Y</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">X</span><span class="o">.</span><span class="n">columns</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;recency&#39;, &#39;history&#39;, &#39;mens&#39;, &#39;womens&#39;, &#39;newbie&#39;, &#39;zip_code_Surburban&#39;,
-       &#39;zip_code_Urban&#39;, &#39;channel_Phone&#39;, &#39;channel_Web&#39;],
-      dtype=&#39;object&#39;)
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;causaldm&#39;
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the data</span>
+<span class="n">X</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">Y</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="n">target_col</span> <span class="o">=</span> <span class="s1">&#39;spend&#39;</span><span class="p">,</span> <span class="n">binary_trt</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>recency</th>
-      <th>history</th>
-      <th>mens</th>
-      <th>womens</th>
-      <th>newbie</th>
-      <th>zip_code_Surburban</th>
-      <th>zip_code_Urban</th>
-      <th>channel_Phone</th>
-      <th>channel_Web</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>217</th>
-      <td>10</td>
-      <td>88.37</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>267</th>
-      <td>4</td>
-      <td>297.80</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>332</th>
-      <td>10</td>
-      <td>29.99</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>451</th>
-      <td>6</td>
-      <td>265.61</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>459</th>
-      <td>1</td>
-      <td>101.99</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>63466</th>
-      <td>9</td>
-      <td>536.80</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>63552</th>
-      <td>2</td>
-      <td>980.39</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>63743</th>
-      <td>5</td>
-      <td>210.12</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>63876</th>
-      <td>2</td>
-      <td>215.61</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>63883</th>
-      <td>1</td>
-      <td>239.70</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-  </tbody>
-</table>
-<p>578 rows × 9 columns</p>
-</div></div></div>
 </div>
-</div>
-<div class="section" id="train-model">
-<h4>train model<a class="headerlink" href="#train-model" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># initialize the learner</span>
-<span class="n">QLearn</span> <span class="o">=</span> <span class="n">QLearning</span><span class="o">.</span><span class="n">QLearning</span><span class="p">()</span>
-<span class="c1"># specify the model you would like to use</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#1. specify the model you would like to use</span>
 <span class="c1"># If want to include all the variable in X and A with no specific model structure, then use &quot;Y~.&quot;</span>
 <span class="c1"># Otherwise, specify the model structure by hand</span>
 <span class="c1"># Note: if the action space is not binary, use C(A) in the model instead of A</span>
-<span class="n">model_info</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;Y~C(A)*(recency+history+mens+womens+newbie+zip_code_Surburban+zip_code_Urban+channel_Phone+channel_Web)&quot;</span><span class="p">,</span> <span class="c1">#default is add an intercept!!!</span>
-              <span class="s1">&#39;action_space&#39;</span><span class="p">:{</span><span class="s1">&#39;A&#39;</span><span class="p">:[</span><span class="s1">&#39;Womens E-Mail&#39;</span><span class="p">,</span> <span class="s1">&#39;No E-Mail&#39;</span><span class="p">,</span> <span class="s1">&#39;Mens E-Mail&#39;</span><span class="p">]}}]</span>
-<span class="c1"># train the policy</span>
-<span class="n">QLearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="c1"># Fitted Model</span>
-<span class="n">QLearn</span><span class="o">.</span><span class="n">fitted_model</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">params</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept                                   86.340116
-C(A)[T.No E-Mail]                          -72.636541
-C(A)[T.Womens E-Mail]                       80.298265
-recency                                     -0.535940
-C(A)[T.No E-Mail]:recency                    3.667566
-C(A)[T.Womens E-Mail]:recency                0.938664
-history                                     -0.005399
-C(A)[T.No E-Mail]:history                   -0.006813
-C(A)[T.Womens E-Mail]:history                0.027592
-mens                                        25.143276
-C(A)[T.No E-Mail]:mens                      33.137982
-C(A)[T.Womens E-Mail]:mens                 -56.033031
-womens                                       6.923481
-C(A)[T.No E-Mail]:womens                    21.021383
-C(A)[T.Womens E-Mail]:womens               -85.180182
-newbie                                       9.657639
-C(A)[T.No E-Mail]:newbie                   -33.554932
-C(A)[T.Womens E-Mail]:newbie               -10.708279
-zip_code_Surburban                           4.722924
-C(A)[T.No E-Mail]:zip_code_Surburban        48.520623
-C(A)[T.Womens E-Mail]:zip_code_Surburban     7.496915
-zip_code_Urban                              -7.171190
-C(A)[T.No E-Mail]:zip_code_Urban            32.114015
-C(A)[T.Womens E-Mail]:zip_code_Urban        41.838176
-channel_Phone                                6.212860
-C(A)[T.No E-Mail]:channel_Phone             12.531739
-C(A)[T.Womens E-Mail]:channel_Phone         -8.744767
-channel_Web                                 13.713458
-C(A)[T.No E-Mail]:channel_Web                7.319584
-C(A)[T.Womens E-Mail]:channel_Web          -20.474710
-dtype: float64
+<span class="n">model_info</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;Y~C(A)*(recency+history)&quot;</span><span class="p">,</span> <span class="c1">#default is add an intercept!!!</span>
+              <span class="s1">&#39;action_space&#39;</span><span class="p">:{</span><span class="s1">&#39;A&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]}}]</span>
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="get-the-optimal-regime-and-the-optimal-value">
-<h4>get the optimal regime and the optimal value<a class="headerlink" href="#get-the-optimal-regime-and-the-optimal-value" title="Permalink to this headline">¶</a></h4>
+<p>By specifing the model_info, we assume a regression model that:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-f1cdb2f9-90e7-4de9-98e3-771127007e27">
+<span class="eqno">(4)<a class="headerlink" href="#equation-f1cdb2f9-90e7-4de9-98e3-771127007e27" title="Permalink to this equation">¶</a></span>\[\begin{align}
+Q(x,a,\beta) &amp;= \beta_{00}+\beta_{01}*recency+\beta_{02}*history\\
+&amp;+I(a=1)*\{\beta_{10}+\beta_{11}*recency+\beta_{12}*history\} \\
+&amp;+I(a=2)*\{\beta_{20}+\beta_{21}*recency+\beta_{22}*history\} 
+\end{align}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># recommend action</span>
-<span class="n">opt_d</span> <span class="o">=</span> <span class="n">QLearn</span><span class="o">.</span><span class="n">recommend</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-<span class="c1"># get the estimated value of the optimal regime</span>
-<span class="n">V_hat</span> <span class="o">=</span> <span class="n">QLearn</span><span class="o">.</span><span class="n">estimate_value</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#2. initialize the learner</span>
+<span class="n">QLearn</span> <span class="o">=</span> <span class="n">QLearning</span><span class="o">.</span><span class="n">QLearning</span><span class="p">()</span>
+<span class="c1">#3. train the policy</span>
+<span class="n">QLearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#4. recommend action</span>
+<span class="n">opt_d</span> <span class="o">=</span> <span class="n">QLearn</span><span class="o">.</span><span class="n">recommend_action</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="c1">#5. get the estimated value of the optimal regime</span>
+<span class="n">V_hat</span> <span class="o">=</span> <span class="n">QLearn</span><span class="o">.</span><span class="n">predict_value</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;fitted model:&quot;</span><span class="p">,</span><span class="n">QLearn</span><span class="o">.</span><span class="n">fitted_model</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;opt regime:&quot;</span><span class="p">,</span><span class="n">opt_d</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;opt value:&quot;</span><span class="p">,</span><span class="n">V_hat</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>opt regime:                  A
-217  Womens E-Mail
-267      No E-Mail
-332      No E-Mail
-451  Womens E-Mail
-459      No E-Mail
-opt value: 140.06857615909965
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fitted model: Intercept            94.202956
+C(A)[T.1]            23.239801
+C(A)[T.2]            20.611375
+recency               4.526133
+C(A)[T.1]:recency    -4.152892
+C(A)[T.2]:recency    -4.843148
+history               0.000549
+C(A)[T.1]:history     0.007584
+C(A)[T.2]:history     0.000416
+dtype: float64
+opt regime: A
+1    371
+0    207
+dtype: int64
+opt value: 126.48792828230047
 </pre></div>
 </div>
 </div>
 </div>
+<p><strong>Interpretation:</strong> the fitted model is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-532444d5-a799-4d01-85d0-e624d6adbb4a">
+<span class="eqno">(5)<a class="headerlink" href="#equation-532444d5-a799-4d01-85d0-e624d6adbb4a" title="Permalink to this equation">¶</a></span>\[\begin{align}
+Q(x,a,\beta) &amp;= 94.20+4.53*recency+0.0005*history\\
+&amp;+I(a=1)*\{23.24-4.15*recency+0.0076*history\} \\
+&amp;+I(a=2)*\{20.61-4.84*recency+0.0004history\}. 
+\end{align}\]</div>
+<p>Therefore, the estimated optimal regime is:</p>
+<ol class="simple">
+<li><p>We would recommend <span class="math notranslate nohighlight">\(A=0\)</span> (No E-mail) if <span class="math notranslate nohighlight">\(23.24-4.15*recency+0.0076*history&lt;0\)</span> and <span class="math notranslate nohighlight">\(20.61-4.84*recency+0.0004history&lt;0\)</span></p></li>
+<li><p>Else, we would recommend <span class="math notranslate nohighlight">\(A=1\)</span> (Womens E-mail) if <span class="math notranslate nohighlight">\(23.24-4.15*recency+0.0076*history&gt;20.61-4.84*recency+0.0004history\)</span></p></li>
+<li><p>Else, we would recommend <span class="math notranslate nohighlight">\(A=2\)</span> (Mens E-Mail).</p></li>
+</ol>
+<p>The estimated value for the estimated optimal regime is 126.49.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Optional: we also provide a bootstrap standard deviaiton of the optimal value estimation</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Optional: </span>
+<span class="c1">#we also provide a bootstrap standard deviaiton of the optimal value estimation</span>
 <span class="c1"># Warning: results amay not be reliable</span>
 <span class="n">QLearn</span> <span class="o">=</span> <span class="n">QLearning</span><span class="o">.</span><span class="n">QLearning</span><span class="p">()</span>
-<span class="n">model_info</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;Y~C(A)*(recency+history+mens+womens+newbie+zip_code_Surburban+zip_code_Urban+channel_Phone+channel_Web)&quot;</span><span class="p">,</span> <span class="c1">#default is add an intercept!!!</span>
-              <span class="s1">&#39;action_space&#39;</span><span class="p">:{</span><span class="s1">&#39;A&#39;</span><span class="p">:[</span><span class="s1">&#39;Womens E-Mail&#39;</span><span class="p">,</span> <span class="s1">&#39;No E-Mail&#39;</span><span class="p">,</span> <span class="s1">&#39;Mens E-Mail&#39;</span><span class="p">]}}]</span>
+<span class="n">model_info</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;Y~C(A)*(recency+history)&quot;</span><span class="p">,</span> <span class="c1">#default is add an intercept!!!</span>
+              <span class="s1">&#39;action_space&#39;</span><span class="p">:{</span><span class="s1">&#39;A&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]}}]</span>
 <span class="n">QLearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bootstrap</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">n_bs</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span>
-<span class="n">fitted_params</span><span class="p">,</span><span class="n">fitted_value</span><span class="p">,</span><span class="n">value_avg</span><span class="p">,</span><span class="n">value_std</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">QLearn</span><span class="o">.</span><span class="n">estimate_value_boots</span><span class="p">()</span>
+<span class="n">fitted_params</span><span class="p">,</span><span class="n">fitted_value</span><span class="p">,</span><span class="n">value_avg</span><span class="p">,</span><span class="n">value_std</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">QLearn</span><span class="o">.</span><span class="n">predict_value_boots</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Value_hat:&#39;</span><span class="p">,</span><span class="n">value_avg</span><span class="p">,</span><span class="s1">&#39;Value_std:&#39;</span><span class="p">,</span><span class="n">value_std</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 148.59510088839244 Value_std: 8.035500416430729
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 132.31352423343282 Value_std: 7.37323834017361
 </pre></div>
 </div>
 </div>
 </div>
-</div>
+<p><strong>Interpretation:</strong> Based on the boostrap with 200 replicates, the estimated optimal value is 132.31 with a standard error of 7.37.</p>
 </div>
 <div class="section" id="policy-evaluation">
 <h3>2. Policy Evaluation<a class="headerlink" href="#policy-evaluation" title="Permalink to this headline">¶</a></h3>
-<p>For a given policy, we utilze the boostrap resampling to get the estimated value of the regime and the corresponding estimated standard error. Basically, for each round of bootstrap, we resample a dataset of the same size as the original dataset with replacement, fitted the Q function based on the sampled dataset, and estimated the value of a given regime using the estimated Q function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#specify the fixed regime to be tested</span>
-<span class="c1"># For example, regime d = &#39;No E-Mail&#39; for all subjects</span>
-<span class="n">N</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#1. specify the fixed regime to be tested (For example, regime d = &#39;No E-Mail&#39; for all subjects)</span>
 <span class="c1"># !! IMPORTANT： index shold be the same as that of the X</span>
-<span class="n">regime</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:[</span><span class="s1">&#39;No E-Mail&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">N</span><span class="p">})</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
-<span class="c1">#evaluate the regime</span>
+<span class="n">N</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">regime</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">N</span><span class="p">})</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="c1">#2. evaluate the regime</span>
 <span class="n">QLearn</span> <span class="o">=</span> <span class="n">QLearning</span><span class="o">.</span><span class="n">QLearning</span><span class="p">()</span>
-<span class="n">model_info</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;Y~C(A)*(recency+history+mens+womens+newbie+zip_code_Surburban+zip_code_Urban+channel_Phone+channel_Web)&quot;</span><span class="p">,</span> <span class="c1">#default is add an intercept!!!</span>
-              <span class="s1">&#39;action_space&#39;</span><span class="p">:{</span><span class="s1">&#39;A&#39;</span><span class="p">:[</span><span class="s1">&#39;Womens E-Mail&#39;</span><span class="p">,</span> <span class="s1">&#39;No E-Mail&#39;</span><span class="p">,</span> <span class="s1">&#39;Mens E-Mail&#39;</span><span class="p">]}}]</span>
-<span class="n">QLearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">regime</span> <span class="o">=</span> <span class="n">regime</span><span class="p">,</span> <span class="n">evaluate</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">bootstrap</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">n_bs</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span>
-<span class="n">fitted_params</span><span class="p">,</span><span class="n">fitted_value</span><span class="p">,</span><span class="n">value_avg</span><span class="p">,</span><span class="n">value_std</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">QLearn</span><span class="o">.</span><span class="n">estimate_value_boots</span><span class="p">()</span>
+<span class="n">model_info</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;Y~C(A)*(recency+history)&quot;</span><span class="p">,</span> <span class="c1">#default is add an intercept!!!</span>
+              <span class="s1">&#39;action_space&#39;</span><span class="p">:{</span><span class="s1">&#39;A&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]}}]</span>
+<span class="n">QLearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">regime</span> <span class="o">=</span> <span class="n">regime</span><span class="p">,</span> <span class="n">evaluate</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">QLearn</span><span class="o">.</span><span class="n">predict_value</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>116.40675465960642
 </pre></div>
 </div>
 </div>
 </div>
+<p><strong>Interpretation:</strong> the estimated value of the regime that always sends no emails (<span class="math notranslate nohighlight">\(A=0\)</span>) is 116.41, under the specified model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># bootstrap average and the std of estimate value</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Optional: Boostrap</span>
+<span class="n">QLearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">regime</span> <span class="o">=</span> <span class="n">regime</span><span class="p">,</span> <span class="n">evaluate</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">bootstrap</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">n_bs</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">fitted_params</span><span class="p">,</span><span class="n">fitted_value</span><span class="p">,</span><span class="n">value_avg</span><span class="p">,</span><span class="n">value_std</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">QLearn</span><span class="o">.</span><span class="n">predict_value_boots</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="c1"># bootstrap average and the std of estimate value</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Value_hat:&#39;</span><span class="p">,</span><span class="n">value_avg</span><span class="p">,</span><span class="s1">&#39;Value_std:&#39;</span><span class="p">,</span><span class="n">value_std</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 112.21261479003178 Value_std: 9.989950778047078
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 115.95548975939548 Value_std: 10.502988081748748
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Otional: just estimate the value</span>
-<span class="n">QLearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">regime</span> <span class="o">=</span> <span class="n">regime</span><span class="p">,</span> <span class="n">evaluate</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-<span class="n">QLearn</span><span class="o">.</span><span class="n">estimate_value</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>113.1586653330154
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="todo">
-<h3>TODO:<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1. estimate the standard error for the binary case with sandwich formula;
-2. inference for the estimated optimal regime: projected confidence interval? m-out-of-n CI?....
-</pre></div>
-</div>
+<p><strong>Interpretation:</strong> the bootstrapped estimated value of the regime that always sends no emails is 115.96 with a bootstrapped standard error 10.50, under the specified model.</p>
 </div>
 </div>
 <div class="section" id="references">
@@ -1008,9 +732,10 @@ opt value: 140.06857615909965
 <li><p>Murphy, S. A. (2005). A generalization error for Q-learning.</p></li>
 <li><p>Song, R., Wang, W., Zeng, D., &amp; Kosorok, M. R. (2015). Penalized q-learning for dynamic treatment regimens. Statistica Sinica, 25(3), 901.</p></li>
 </ol>
-</div>
-<div class="section" id="functions-are-already-tested-with-the-data-and-results-provided-in-the-dtr-book">
-<h2>!!Functions are already tested with the data and results provided in the DTR book<a class="headerlink" href="#functions-are-already-tested-with-the-data-and-results-provided-in-the-dtr-book" title="Permalink to this headline">¶</a></h2>
+<p>!!Functions are already tested with the data and results provided in the DTR book</p>
+<p>TODO:
+1. estimate the standard error for the binary case with sandwich formula;
+2. inference for the estimated optimal regime: projected confidence interval? m-out-of-n CI?….</p>
 </div>
 </div>
 

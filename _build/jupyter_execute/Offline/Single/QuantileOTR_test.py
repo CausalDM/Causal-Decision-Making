@@ -69,6 +69,8 @@
 
 # ### **Demo on Simulation data**
 
+# #### Data Generation
+
 # In[1]:
 
 
@@ -124,6 +126,8 @@ data=pd.DataFrame(data)
 (data)
 
 
+# #### Quantile Optimal Treatment Regime
+
 # In[ ]:
 
 
@@ -134,6 +138,10 @@ Quantile_OTR=QuantileOTR()
 # when a=0, Y ~ 1-x1+2*x2
 moCondQuant_0 = ['X_1', 'X_2']
 moCondQuant_1 = ['X_1', 'X_2']
+
+
+# In[ ]:
+
 
 coefficient, coef_original_scale, Q_est=Quantile_OTR.DR_Qopt(data=data, tau=0.5, moCondQuant_0=moCondQuant_0, moCondQuant_1=moCondQuant_1,moPropen = "NotBinaryRandom")
 
@@ -154,7 +162,7 @@ Q_est
 
 # ### **Demo on Real dataset**
 
-# #### Data pre-processing
+# #### Data Pre-processing
 
 # In[ ]:
 
@@ -277,8 +285,39 @@ plt.grid(True)
 plt.show()
 
 
+# ##**Reference**
+# 
+# 
+# *   Lan Wang, Yu Zhou, Rui Song and Ben Sherwood. "Quantile-Optimal Treatment Regimes." Journal of the American Statistical Association 2018; 113(523): 1243–1254.
+# 
+# 
+# 
+
+# # **Quantile Off Policy Evaluation**
+# ---
+# When facing sequential decision-making problems, it is of particular interest to evaluate the performance of applying a given policy on the agent. In real
+# settings, we are interested in evaluating the outcome of some fixed policy $\pi$, i.e. the target policy, while the data we have is often offline and collected from another potentially different policy $b$, i.e. the behavior policy.
+# 
+# ---
+# ###**Main idea:**
+# The doubly robust estimator of quantile estimation as
+# \begin{equation}
+#     \hat{\eta}_n=\arg\min_{\eta} \frac{1}{n}\sum_{i=1}^n\left[\frac{C(A_i,X_i)}{\hat{K}_C(X_i)}\rho_{\tau}(R_i-\eta)+\left(1-\frac{C(A_i,X_i)}{\hat{K}_C(X_i)}\right)\hat{\mathbb{E}}[\rho_{\tau}(\hat{R}-\eta)|X=X_i,A=\pi(X_i)]\right],
+# \end{equation}
+# where $\hat{K}_C(X)=\hat{b}(X)\pi(X)+(1-\hat{b}(X))(1-\pi(X))$, and 
+# \begin{equation*}
+#     \hat{\mathbb{E}}[\rho_{\tau}(R-\eta)|A=\pi(X_i),X=X_i]=\frac{1}{M}\sum_{j=1}^M \rho(\hat{R}_j-\eta),
+# \end{equation*}
+# in which $\{\hat{R}_j\}_{j=1}^M$ are the random outcomes we generated from some estimated data generating model given $X_i$ and treatment $\pi$.
+# 
+# ---
+# ###**Demo:** 
+# 
+
+# ## **Single stage setting:**
+
 # In[ ]:
 
 
-np.percentile(Data['Y'], 0.5*100)
+
 

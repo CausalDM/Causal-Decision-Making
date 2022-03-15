@@ -422,35 +422,28 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#single-decision-point">
-   1. Single Decision Point
+  <a class="reference internal nav-link" href="#algorithm-details">
+   Algorithm Details
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-steps">
+   Key Steps
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#demo-code">
+   Demo Code
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#optimal-decision">
-     1.1 Optimal Decision
+    <a class="reference internal nav-link" href="#policy-learning">
+     1. Policy Learning
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#data-preparation">
-       Data preparation
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#train-policy">
-       Train Policy
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#recommend-optimal-decisions-and-get-the-estimated-value">
-       Recommend Optimal Decisions and Get the Estimated Value
-      </a>
-     </li>
-    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#policy-evaluation">
-     1.2 Policy Evaluation
+     2. Policy Evaluation
     </a>
    </li>
   </ul>
@@ -463,16 +456,6 @@
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#a-1">
    A.1
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#a-2">
-   A.2
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#a-3">
-   A.3
   </a>
  </li>
 </ul>
@@ -501,35 +484,28 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#single-decision-point">
-   1. Single Decision Point
+  <a class="reference internal nav-link" href="#algorithm-details">
+   Algorithm Details
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-steps">
+   Key Steps
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#demo-code">
+   Demo Code
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#optimal-decision">
-     1.1 Optimal Decision
+    <a class="reference internal nav-link" href="#policy-learning">
+     1. Policy Learning
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#data-preparation">
-       Data preparation
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#train-policy">
-       Train Policy
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#recommend-optimal-decisions-and-get-the-estimated-value">
-       Recommend Optimal Decisions and Get the Estimated Value
-      </a>
-     </li>
-    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#policy-evaluation">
-     1.2 Policy Evaluation
+     2. Policy Evaluation
     </a>
    </li>
   </ul>
@@ -544,16 +520,6 @@
    A.1
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#a-2">
-   A.2
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#a-3">
-   A.3
-  </a>
- </li>
 </ul>
 
                         </nav>
@@ -565,356 +531,241 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="a-learning-single-stage">
 <h1>A-Learning (Single Stage)<a class="headerlink" href="#a-learning-single-stage" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="main-idea">
+<h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">¶</a></h2>
+<p>A-Learning, also known as Advantage Learning, is one of the main approaches to learning the optimal regime and works similarly to Q-learning. However, while Q-learning requires positing regression models to fit the expected outcome, A-learning models the contrasts between treatments and control, directly informing the optimal decision. For example, in the case of <strong>Personalized Incentives</strong>, A-learning aims to find the optimal incentive (<span class="math notranslate nohighlight">\(A\)</span>) for each user by modeling the difference in expected return-on-investment (<span class="math notranslate nohighlight">\(Y\)</span>) between treatments. A detailed comparison between Q-learning and A-learning can be found in [1]. While [1] mainly focus on the case with binary treatment options, a complete review of A-learning with multiple treatment options can be found in [2]. Here, following the algorithm in [1], we consider contrast-based A-learning. However, there is an alternative regret-based A-learning introduced in [3]. Some recent extensions to conventional A-learning, such as deep A-learning [4] and high-dimensional A-Learning [5], will be added soon. Overall, A-learning is doubly-robust. In other words, it is less sensitive and more robust to model misspecification.</p>
+<p>Note that, we assume the action space is either <strong>binary</strong> (i.e., 0,1) or <strong>multinomial</strong> (i.e., 0,1,2,3,4, where 0 stands for the control group by convention), and the outcome of interest Y is <strong>continuous</strong> and <strong>non-negative</strong>, where the larger the <span class="math notranslate nohighlight">\(Y\)</span> the better.</p>
+</div>
+<div class="section" id="algorithm-details">
+<h2>Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this headline">¶</a></h2>
+<p>Suppose there are <span class="math notranslate nohighlight">\(m\)</span> number of options, and the action space <span class="math notranslate nohighlight">\(\mathcal{A}=\{0,1,\dots,m-1\}\)</span>. Contrast-based A-learning, as the name suggested, aims to learn and estimate the constrast function, <span class="math notranslate nohighlight">\(C_{j}(X)\)</span> for each treatment <span class="math notranslate nohighlight">\(j=1,2,\cdots, m-1\)</span>. Furthermore, we also need to posit a model for the conditional expected outcome for the control option (treatment <span class="math notranslate nohighlight">\(0\)</span>), <span class="math notranslate nohighlight">\(Q(X,0)\)</span>, and the propensity function <span class="math notranslate nohighlight">\(\omega(X,A)\)</span>, if the true values are not specified. Detailed definitions are provided in the following.</p>
+<ul>
+<li><p>Q-function:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-42a094d1-a2ec-4745-857a-a887258eceae">
+<span class="eqno">(6)<a class="headerlink" href="#equation-42a094d1-a2ec-4745-857a-a887258eceae" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    Q(x,a)=E[Y|X=x, A=a],
+    \end{align}\]</div>
+<p>Alternatively, with the contrast function <span class="math notranslate nohighlight">\(C_j(X)\)</span> which will be defined later,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-93240b38-20c8-4c93-a4ed-cfab121abef0">
+<span class="eqno">(7)<a class="headerlink" href="#equation-93240b38-20c8-4c93-a4ed-cfab121abef0" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    Q(x,j) = Q(x,0) + C_{j}(x),\quad j=0,\dots,m-1.
+    \end{align}\]</div>
+</li>
+<li><p>Contrast functions (optimal blip to zero functions)</p>
+<div class="amsmath math notranslate nohighlight" id="equation-38a911c2-56cc-4e7a-b704-45a38c7ee45d">
+<span class="eqno">(8)<a class="headerlink" href="#equation-38a911c2-56cc-4e7a-b704-45a38c7ee45d" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    C_{j}(x)=Q(x,j)-Q(x,0),\quad j=0,\dots,m-1,
+    \end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(C_{0}(x) = 0\)</span>.</p>
+</li>
+<li><p>Propensity score</p>
+<div class="amsmath math notranslate nohighlight" id="equation-5c6ba345-4576-4f01-a98c-2be82db638f8">
+<span class="eqno">(9)<a class="headerlink" href="#equation-5c6ba345-4576-4f01-a98c-2be82db638f8" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    \omega(x,a)=P(A=a|X=x)
+    \end{align}\]</div>
+</li>
+<li><p>Optimal regime</p>
+<div class="amsmath math notranslate nohighlight" id="equation-affde556-2784-4e94-b47f-d2fff041a9e7">
+<span class="eqno">(10)<a class="headerlink" href="#equation-affde556-2784-4e94-b47f-d2fff041a9e7" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    d^{opt}(x)=\arg\max_{j\in\mathcal{A}}C_{j}(X)
+    \end{align}\]</div>
+</li>
+</ul>
+<p>Positting models, <span class="math notranslate nohighlight">\(C_{j}(x,\psi_{j})\)</span>,<span class="math notranslate nohighlight">\(Q(x,0,\phi)\)</span>,and <span class="math notranslate nohighlight">\(\omega(x,a,\gamma)\)</span>, A-learning aims to estimate <span class="math notranslate nohighlight">\(\psi_{j}\)</span>, <span class="math notranslate nohighlight">\(\phi\)</span>, and <span class="math notranslate nohighlight">\(\gamma\)</span> by g-estimation. With the <span class="math notranslate nohighlight">\(\hat{\psi}_{j}\)</span> in hand, the optimal decision <span class="math notranslate nohighlight">\(d^{opt}(x)\)</span> can be directly derived.</p>
+</div>
+<div class="section" id="key-steps">
+<h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">¶</a></h2>
+<p><strong>Policy Learning:</strong></p>
+<ol class="simple">
+<li><p>Fitted a model <span class="math notranslate nohighlight">\(\omega(x,a,\gamma)\)</span>, which can be solved directly by existing approaches (i.e., logistic regression, .etc),</p></li>
+<li><p>Substituting the <span class="math notranslate nohighlight">\(\hat{\gamma}\)</span>, we estimate the <span class="math notranslate nohighlight">\(\hat{\psi}_{j}\)</span> and <span class="math notranslate nohighlight">\(\gamma\)</span> by solving the euqations in Appendix A.1 jointly.</p></li>
+<li><p>For each individual find the optimal action <span class="math notranslate nohighlight">\(d^{opt}(x_{i})\)</span> such that <span class="math notranslate nohighlight">\(d^{opt}(x_{i}) = \arg\max_{j\in\mathcal{A}}C_{j}(h,\hat{\psi_{j}})\)</span>.</p></li>
+</ol>
+<p><strong>Policy Evaluation:</strong></p>
+<ol class="simple">
+<li><p>Fitted the functions <span class="math notranslate nohighlight">\(\omega(x,a,\gamma)\)</span>， <span class="math notranslate nohighlight">\(\hat{Q}(x,0,\hat{\beta})\)</span>, and <span class="math notranslate nohighlight">\(\hat{C}_{j}(x,\hat{\psi}_{j})\)</span>, based on the sampled dataset</p></li>
+<li><p>Estimated the value of a given regime <span class="math notranslate nohighlight">\(d\)</span> using the estimated functions, such that, <span class="math notranslate nohighlight">\(\hat{Y}_{i} = \hat{Q}(x_{i},0,\hat{\beta})+I\{d(x_{i}=j)\}\hat{C}_{j}(x,\hat{\psi}_{j})\)</span></p></li>
+</ol>
+<p><strong>Note</strong> we also provide an option for bootstrapping. Particularly, for a given policy, we utilze the boostrap resampling to get the estimated value of the regime and the corresponding estimated standard error. Basically, for each round of bootstrap, we resample a dataset of the same size as the original dataset with replacement, fitted the <span class="math notranslate nohighlight">\(Q(x,0)\)</span> function and contrast functions based on the sampled dataset, and estimated the value of a given regime using the estimated <span class="math notranslate nohighlight">\(Q(x,0)\)</span> function and contrast functions function.</p>
+</div>
+<div class="section" id="demo-code">
+<h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">¶</a></h2>
+<p>In the following, we exhibit how to apply the learner on real data to do policy learning and policy evaluation, respectively.</p>
+<div class="section" id="policy-learning">
+<h3>1. Policy Learning<a class="headerlink" href="#policy-learning" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># After we publish the pack age, we can directly import it</span>
-<span class="c1"># TODO: explore more efficient way</span>
-<span class="c1"># we can hide this cell later</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import learner</span>
+<span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">ALearning</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span>\<span class="n">ipykernel_20916</span>\<span class="mf">2982377520.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span>\<span class="n">ipykernel_19572</span>\<span class="mf">1249134311.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># import learner</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">ALearning</span>
 
-<span class="ne">FileNotFoundError</span>: [WinError 2] 系统找不到指定的文件。: &#39;../CausalDM&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="main-idea">
-<h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">¶</a></h2>
-<p>A-Learning, also known as Advantage Learning, is one of the main approaches to learning the optimal regime and works similarly to Q-learning. However, while Q-learning requires positing regression models to fit the expected outcome, A-learning models the contrasts between treatments and control, which can directly inform the optimal decision. A detailed comparison between Q-learning and A-learning can be found in [1]. While [1] mainly focus on the case with binary treatment options, a complete review of A-learning with multiple treatment options can be found in [2]. Here, following the algorithm in [1], we consider contrast-based A-learning. However, there is an alternative regret-based A-learning introduced in [3]. Some recent extensions to conventional A-learning, such as deep A-learning [4] and high-dimensional A-Learning [5], will be added soon.</p>
-<p>Note that, we assume the action space is either <strong>binary</strong> (i.e., 0,1) or <strong>multinomial</strong> (i.e., 0,1,2,3,4, where 0 stands for the control group by convention), and the outcome of interest Y is <strong>continuous</strong> and <strong>non-negative</strong>, where the larger the <span class="math notranslate nohighlight">\(Y\)</span> the better.</p>
-<p>contrast-based A-learning, as the name suggested, aims to learn and estimate the constrast function, <span class="math notranslate nohighlight">\(C_{tj}(h_{t})\)</span>. Here, <span class="math notranslate nohighlight">\(h_{t}=\{X_{1i},A_{1i},\cdots,X_{ti}\})\)</span> includes all the information observed till step t. Furthermore, we also need to posit a model for the conditional expected outcome for the control option (treatment <span class="math notranslate nohighlight">\(0\)</span>), <span class="math notranslate nohighlight">\(Q_t(h_t,0)\)</span>, and the propensity function <span class="math notranslate nohighlight">\(\omega(h_{t},a_{t})\)</span>. Detailed definitions are provided in the following. Suppose there are <span class="math notranslate nohighlight">\(m_t\)</span> number of options, and the action space <span class="math notranslate nohighlight">\(\mathcal{A}_t=\{0,1,\dots,m_t-1\}\)</span> for each step t. With decision point <span class="math notranslate nohighlight">\(t\)</span>, we define thoes key functions as follows:</p>
-<ul>
-<li><p>Q-function:
-For the final step <span class="math notranslate nohighlight">\(T\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dab2c696-fba4-4025-a54a-47f7403880d4">
-<span class="eqno">(4)<a class="headerlink" href="#equation-dab2c696-fba4-4025-a54a-47f7403880d4" title="Permalink to this equation">¶</a></span>\[\begin{align}
-    Q_T(h_T,a_{T})=E[Y|H_{T}=h_{T}, A_{T}=a_{T}],
-    \end{align}\]</div>
-<p>If there is a multi-stage case with total step <span class="math notranslate nohighlight">\(T&gt;1\)</span>, for the step <span class="math notranslate nohighlight">\(t=1,\cdots,T-1\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7e5e7d31-c4b7-497d-a8a2-809927e41818">
-<span class="eqno">(5)<a class="headerlink" href="#equation-7e5e7d31-c4b7-497d-a8a2-809927e41818" title="Permalink to this equation">¶</a></span>\[\begin{align}
-    Q_t(h_t,a_{t})=E[V_{t+1}|H_{t}=h_{t}, A_{t}=a_{t}],
-    \end{align}\]</div>
-<p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ccc0c993-e1fa-4981-b737-9b95b4b5ea6f">
-<span class="eqno">(6)<a class="headerlink" href="#equation-ccc0c993-e1fa-4981-b737-9b95b4b5ea6f" title="Permalink to this equation">¶</a></span>\[\begin{align}
-    V_{t}(h_{t}) = \max_{j\in\mathcal{A}_t}Q_{t}(h_t,j)
-    \end{align}\]</div>
-<p>Alternatively, with the contrast function defined in the follwing,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aba9a211-c0ba-4619-ad24-d7ca1cfce1e5">
-<span class="eqno">(7)<a class="headerlink" href="#equation-aba9a211-c0ba-4619-ad24-d7ca1cfce1e5" title="Permalink to this equation">¶</a></span>\[\begin{align}
-    Q_t(h_t,j) = Q_t(h_t,0) + C_{tj}(h_t),\quad j=0,\dots,m_k-1,\quad t=1,\dots,T.
-    \end{align}\]</div>
-</li>
-<li><p>Contrast functions (optimal blip to zero functions)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c3bb4f85-a0fa-43d8-9001-f0568327cf8b">
-<span class="eqno">(8)<a class="headerlink" href="#equation-c3bb4f85-a0fa-43d8-9001-f0568327cf8b" title="Permalink to this equation">¶</a></span>\[\begin{align}
-    C_{tj}(h_t)=Q_t(h_t,j)-Q_t(h_t,0),\quad j=0,\dots,m_k-1,\quad t=1,\dots,T.
-    \end{align}\]</div>
-</li>
-<li><p>Propensity score</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a07cd4be-bf65-40f2-b9cb-c9c62ab58c96">
-<span class="eqno">(9)<a class="headerlink" href="#equation-a07cd4be-bf65-40f2-b9cb-c9c62ab58c96" title="Permalink to this equation">¶</a></span>\[\begin{align}
-    \omega_{t}(h_t,a_t)=P(A_t=a_t|H_t=h_t)
-    \end{align}\]</div>
-</li>
-<li><p>Optimal regime</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b2a63278-5394-45e4-b641-f3359dffc248">
-<span class="eqno">(10)<a class="headerlink" href="#equation-b2a63278-5394-45e4-b641-f3359dffc248" title="Permalink to this equation">¶</a></span>\[\begin{align}
-    d_t^{opt}(h_t)=\arg\max_{j\in\mathcal{A}_t}C_{tj}(h_t)
-    \end{align}\]</div>
-</li>
-</ul>
-<p>In the following, we would start from a simple case having only one decision point and then introduce the multistage case with multiple decision points.</p>
-</div>
-<div class="section" id="single-decision-point">
-<h2>1. Single Decision Point<a class="headerlink" href="#single-decision-point" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p><strong>Basic Logic</strong>: Positting models, <span class="math notranslate nohighlight">\(C_{j}(h,\psi_{j})\)</span>,<span class="math notranslate nohighlight">\(Q(h,0,\phi)\)</span>,and <span class="math notranslate nohighlight">\(\omega(h,a,\gamma)\)</span>, A-learning aims to estimate <span class="math notranslate nohighlight">\(\psi_{j}\)</span>, <span class="math notranslate nohighlight">\(\phi\)</span>, and <span class="math notranslate nohighlight">\(\gamma\)</span> by g-estimation. With the <span class="math notranslate nohighlight">\(\hat{\psi}_{j}\)</span> in hand, the optimal decision is directly derived.</p></li>
-<li><p><strong>Key Steps</strong>:</p>
-<ol class="simple">
-<li><p>Fitted a model <span class="math notranslate nohighlight">\(\omega_{1}(h_1,a_1,\gamma)\)</span>, which can be solved directly by existing approaches (i.e., logistic regression, .etc),</p></li>
-<li><p>Substituting the <span class="math notranslate nohighlight">\(\hat{\gamma}\)</span>, we estimate the <span class="math notranslate nohighlight">\(\hat{\psi}_{j}\)</span> and <span class="math notranslate nohighlight">\(\gamma\)</span> by solving the euqations in Appendix A.1 jointly.</p></li>
-<li><p>For each individual find the optimal action <span class="math notranslate nohighlight">\(a_{i}\)</span> such that <span class="math notranslate nohighlight">\(a_{i} = \arg\max_{j\in\mathcal{A}}C_{j}(h,\hat{\psi_{j}})\)</span>.</p></li>
-</ol>
-</li>
-</ul>
-<div class="section" id="optimal-decision">
-<h3>1.1 Optimal Decision<a class="headerlink" href="#optimal-decision" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A demo with code on how to use the package</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">ALearning</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklift.datasets</span> <span class="kn">import</span> <span class="n">fetch_hillstrom</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="data-preparation">
-<h4>Data preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">¶</a></h4>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># continuous Y</span>
-<span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">treatment</span> <span class="o">=</span> <span class="n">fetch_hillstrom</span><span class="p">(</span><span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;spend&#39;</span><span class="p">,</span> <span class="n">return_X_y_t</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="c1"># use pd.concat to join the new columns with your original dataframe</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">data</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;zip_code&#39;</span><span class="p">],</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;zip_code&#39;</span><span class="p">)],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">data</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;channel&#39;</span><span class="p">],</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;channel&#39;</span><span class="p">)],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="c1"># now drop the original &#39;country&#39; column (you don&#39;t need it anymore)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;zip_code&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;channel&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;history_segment&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;zip_code_Rural&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># Rural as the reference group</span>
-<span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;channel_Multichannel&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># Multichannel as the reference group </span>
-
-<span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span><span class="mi">1</span><span class="p">)),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">)])</span><span class="c1"># add an intercept column</span>
-<span class="c1"># convert the categorical variable into integers with treatment 0 = No emails</span>
-<span class="n">treatment</span><span class="o">.</span><span class="n">replace</span><span class="p">([</span><span class="s1">&#39;Womens E-Mail&#39;</span><span class="p">,</span> <span class="s1">&#39;No E-Mail&#39;</span><span class="p">,</span> <span class="s1">&#39;Mens E-Mail&#39;</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> 
-<span class="n">treatment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">treatment</span><span class="p">)</span>
-<span class="c1">#get the subset which has Y&gt;0 == n=578</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">Y</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">A</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">treatment</span><span class="p">[</span><span class="n">Y</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span><span class="p">[</span><span class="n">Y</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;causaldm&#39;
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[  1.  ,  10.  ,  88.37, ...,   1.  ,   1.  ,   0.  ],
-       [  1.  ,   4.  , 297.8 , ...,   1.  ,   1.  ,   0.  ],
-       [  1.  ,  10.  ,  29.99, ...,   0.  ,   0.  ,   1.  ],
-       ...,
-       [  1.  ,   5.  , 210.12, ...,   0.  ,   1.  ,   0.  ],
-       [  1.  ,   2.  , 215.61, ...,   0.  ,   0.  ,   1.  ],
-       [  1.  ,   1.  , 239.7 , ...,   1.  ,   0.  ,   1.  ]])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the data</span>
+<span class="n">X</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">Y</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="n">target_col</span> <span class="o">=</span> <span class="s1">&#39;spend&#39;</span><span class="p">,</span> <span class="n">binary_trt</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="train-policy">
-<h4>Train Policy<a class="headerlink" href="#train-policy" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># initialize the learner</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># transform the data into 2d numpy array</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">),</span><span class="mi">1</span><span class="p">)),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X</span><span class="p">)])</span><span class="c1"># add an intercept column</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">A</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#1. specify the model you would like to use</span>
+<span class="n">model_info</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;X_prop&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="c1">#[0,1,2] here stands for the intercept, recency and history</span>
+              <span class="s1">&#39;X_q0&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+               <span class="s1">&#39;X_C&#39;</span><span class="p">:{</span><span class="mi">1</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="mi">2</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]},</span>
+              <span class="s1">&#39;action_space&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]}}]</span> <span class="c1">#A in [0,1,2]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>By specifing the model_info, we assume  the following models:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-2149bf13-831e-4271-ada2-503e136e1b25">
+<span class="eqno">(11)<a class="headerlink" href="#equation-2149bf13-831e-4271-ada2-503e136e1b25" title="Permalink to this equation">¶</a></span>\[\begin{align}
+Q(x,0,\phi) &amp;= \phi_{00}+\phi_{01}*recency+\phi_{02}*history,\\
+C_{1}(x,\psi_{0}) &amp;= 0\\
+C_{1}(x,\psi_{1}) &amp;= \psi_{10}+\psi_{11}*recency+\psi_{12}*history,\\
+C_{2}(x,\psi_{2}) &amp;= \psi_{20}+\psi_{21}*recency+\psi_{22}*history,\\
+\omega(x,a=j,\gamma) &amp;= \frac{exp(\gamma_{j0}+\gamma_{j1}*recency+\gamma_{j2}*history)}{\sum_{j=0}^{2}exp(\gamma_{j0}+\gamma_{j1}*recency+\gamma_{j2}*history)},\\
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\gamma_{00}=\gamma_{01}=\gamma_{02}=0\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#2. initialize the learner</span>
 <span class="n">ALearn</span> <span class="o">=</span> <span class="n">ALearning</span><span class="o">.</span><span class="n">ALearning</span><span class="p">()</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">model_info</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;X_prop&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span>
-              <span class="s1">&#39;X_q0&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span>
-               <span class="s1">&#39;X_C&#39;</span><span class="p">:{</span><span class="mi">1</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span><span class="mi">2</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">))},</span>
-              <span class="s1">&#39;action_space&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]}]</span> <span class="c1">#A in [0,1,2]</span>
-<span class="c1"># train the policy</span>
+<span class="c1">#3. train the policy</span>
 <span class="n">ALearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="c1"># Fitted Model</span>
-<span class="n">ALearn</span><span class="o">.</span><span class="n">fitted_model</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;prop&#39;: {0: &lt;statsmodels.discrete.discrete_model.MultinomialResultsWrapper at 0x7f4426ce92d0&gt;},
- &#39;Q0&#39;: {0: array([ 7.0107e+00,  3.6316e+00, -1.0577e-02,  5.8950e+01,  2.9656e+01,
-         -2.5558e+01,  5.5264e+01,  2.5197e+01,  2.0701e+01,  2.4073e+01])},
- &#39;contrast&#39;: {0: {1: array([ 1.6399e+02, -3.6746e+00,  3.2799e-02, -9.1699e+01, -1.0692e+02,
-           2.6025e+01, -4.4841e+01,  1.0508e+01, -2.6366e+01, -3.3564e+01]),
-   2: array([ 7.8924e+01, -4.0368e+00,  6.0152e-03, -3.3001e+01, -2.3821e+01,
-           3.3728e+01, -5.1146e+01, -3.3706e+01, -1.2922e+01, -9.3451e+00])}}}
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="recommend-optimal-decisions-and-get-the-estimated-value">
-<h4>Recommend Optimal Decisions and Get the Estimated Value<a class="headerlink" href="#recommend-optimal-decisions-and-get-the-estimated-value" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># recommend action</span>
-<span class="n">opt_d</span> <span class="o">=</span> <span class="n">ALearn</span><span class="o">.</span><span class="n">recommend</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">opt_d</span> <span class="o">=</span> <span class="n">ALearn</span><span class="o">.</span><span class="n">recommend_action</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 <span class="c1"># get the estimated value of the optimal regime</span>
-<span class="n">V_hat</span> <span class="o">=</span> <span class="n">ALearn</span><span class="o">.</span><span class="n">estimate_value</span><span class="p">()</span>
+<span class="n">V_hat</span> <span class="o">=</span> <span class="n">ALearn</span><span class="o">.</span><span class="n">predict_value</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;fitted contrast model:&quot;</span><span class="p">,</span><span class="n">ALearn</span><span class="o">.</span><span class="n">fitted_model</span><span class="p">[</span><span class="s1">&#39;contrast&#39;</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;opt regime:&quot;</span><span class="p">,</span><span class="n">opt_d</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;opt value:&quot;</span><span class="p">,</span><span class="n">V_hat</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>opt regime:    A0
-0   1
-1   0
-2   0
-3   1
-4   0
-opt value: 140.72832928963362
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fitted contrast model: {0: {1: array([ 2.3389e+01, -4.0295e+00,  5.3272e-03]), 2: array([ 2.1025e+01, -4.7135e+00, -2.7582e-03])}}
+opt regime: A
+1    376
+0    202
+dtype: int64
+opt value: 126.18615811062617
 </pre></div>
 </div>
 </div>
 </div>
+<p><strong>Interpretation:</strong> the fitted contrast models are</p>
+<div class="amsmath math notranslate nohighlight" id="equation-fce4c138-7dcb-4333-a406-b80e866ed945">
+<span class="eqno">(12)<a class="headerlink" href="#equation-fce4c138-7dcb-4333-a406-b80e866ed945" title="Permalink to this equation">¶</a></span>\[\begin{align}
+C_{0}(x,\psi_{0}) &amp;= 0\\
+C_{1}(x,\psi_{1}) &amp;= 23.39-4.03*recency+.005*history,\\
+C_{2}(x,\psi_{2}) &amp;= 21.03-4.71*recency-.003*history,\\
+\end{align}\]</div>
+<p>Therefore, the estimated optimal regime is:</p>
+<ol class="simple">
+<li><p>We would recommend <span class="math notranslate nohighlight">\(A=0\)</span> (No E-mail) if <span class="math notranslate nohighlight">\(23.39-4.03*recency+.005*history&lt;0\)</span> and <span class="math notranslate nohighlight">\(21.03-4.71*recency-.003*history&lt;0\)</span></p></li>
+<li><p>Else, we would recommend <span class="math notranslate nohighlight">\(A=1\)</span> (Womens E-mail) if <span class="math notranslate nohighlight">\(23.39-4.03*recency+.005*history&gt;21.03-4.71*recency-.003*history\)</span></p></li>
+<li><p>Else, we would recommend <span class="math notranslate nohighlight">\(A=2\)</span> (Mens E-Mail).</p></li>
+</ol>
+<p>The estimated value for the estimated optimal regime is 126.19.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Optional: we also provide a bootstrap standard deviaiton of the optimal value estimation</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Optional: </span>
+<span class="c1">#we also provide a bootstrap standard deviaiton of the optimal value estimation</span>
 <span class="c1"># Warning: results amay not be reliable</span>
 <span class="n">ALearn</span> <span class="o">=</span> <span class="n">ALearning</span><span class="o">.</span><span class="n">ALearning</span><span class="p">()</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">model_info</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;X_prop&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span>
-              <span class="s1">&#39;X_q0&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span>
-               <span class="s1">&#39;X_C&#39;</span><span class="p">:{</span><span class="mi">1</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span><span class="mi">2</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">))},</span>
-              <span class="s1">&#39;action_space&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]}]</span> <span class="c1">#A in [0,1,2]</span>
+<span class="n">model_info</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;X_prop&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="c1">#[0,1,2] here stands for the intercept, recency and history</span>
+              <span class="s1">&#39;X_q0&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+               <span class="s1">&#39;X_C&#39;</span><span class="p">:{</span><span class="mi">1</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="mi">2</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]},</span>
+              <span class="s1">&#39;action_space&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]}}]</span> <span class="c1">#A in [0,1,2]</span>
 <span class="n">ALearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bootstrap</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">n_bs</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">fitted_params</span><span class="p">,</span><span class="n">fitted_value</span><span class="p">,</span><span class="n">value_avg</span><span class="p">,</span><span class="n">value_std</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">ALearn</span><span class="o">.</span><span class="n">estimate_value_boots</span><span class="p">()</span>
+<span class="n">fitted_params</span><span class="p">,</span><span class="n">fitted_value</span><span class="p">,</span><span class="n">value_avg</span><span class="p">,</span><span class="n">value_std</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">ALearn</span><span class="o">.</span><span class="n">predict_value_boots</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Value_hat:&#39;</span><span class="p">,</span><span class="n">value_avg</span><span class="p">,</span><span class="s1">&#39;Value_std:&#39;</span><span class="p">,</span><span class="n">value_std</span><span class="p">)</span>
-<span class="c1">##estimated contrast model</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;estimated_contrast:&#39;</span><span class="p">,</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;contrast&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 149.05980769890385 Value_std: 8.118207745378117
-estimated_contrast: {1:          Mean        std
-0  169.894627  62.026384
-1   -3.836917   4.239486
-2    0.025260   0.058109
-3  -91.730308  48.293958
-4 -105.905625  51.008528
-5   25.534935  24.834953
-6  -51.969912  27.520615
-7    5.588929  25.360780
-8  -23.852997  37.373339
-9  -33.165417  37.473663, 2:         Mean        std
-0  83.157094  61.783377
-1  -4.611978   4.247750
-2   0.005548   0.047884
-3 -31.733156  45.761740
-4 -21.923397  47.521361
-5  33.663992  26.512190
-6 -56.240389  32.394128
-7 -39.440176  30.410919
-8 -10.603243  37.554011
-9  -7.366659  31.932494}
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 132.3843662825924 Value_std: 6.989242109807423
 </pre></div>
 </div>
 </div>
 </div>
-</div>
+<p><strong>Interpretation:</strong> Based on the boostrap with 200 replicates, the estimated optimal value is 132.38 with a standard error of 6.99.</p>
 </div>
 <div class="section" id="policy-evaluation">
-<h3>1.2 Policy Evaluation<a class="headerlink" href="#policy-evaluation" title="Permalink to this headline">¶</a></h3>
-<p>For a given policy, we utilze the boostrap resampling to get the estimated value of the regime and the corresponding estimated standard error. Basically, for each round of bootstrap, we resample a dataset of the same size as the original dataset with replacement, fitted the Q0 function and contrast functions based on the sampled dataset, and estimated the value of a given regime using the estimated Q0 function and contrast functions function.</p>
+<h3>2. Policy Evaluation<a class="headerlink" href="#policy-evaluation" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#specify the fixed regime to be tested</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#1. specify the fixed regime to be tested</span>
 <span class="c1"># For example, regime d = 0 for all subjects</span>
-<span class="n">N</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+<span class="n">N</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">regime</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">N</span><span class="p">})</span>
+<span class="c1">#2. evaluate the regime</span>
 <span class="n">ALearn</span> <span class="o">=</span> <span class="n">ALearning</span><span class="o">.</span><span class="n">ALearning</span><span class="p">()</span>
-<span class="c1"># regime should be in the same format as A, which is a dict</span>
-<span class="n">regime</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="n">regime</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">N</span><span class="p">)</span>
-<span class="n">model_info</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;X_prop&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span>
-              <span class="s1">&#39;X_q0&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span>
-               <span class="s1">&#39;X_C&#39;</span><span class="p">:{</span><span class="mi">1</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span><span class="mi">2</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">))},</span>
-              <span class="s1">&#39;action_space&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]}]</span> <span class="c1">#A in [0,1,2]</span>
-<span class="n">ALearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">regime</span> <span class="o">=</span> <span class="n">regime</span><span class="p">,</span> <span class="n">evaluate</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">bootstrap</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">n_bs</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span>
-<span class="n">fitted_params</span><span class="p">,</span><span class="n">fitted_value</span><span class="p">,</span><span class="n">value_avg</span><span class="p">,</span><span class="n">value_std</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">ALearn</span><span class="o">.</span><span class="n">estimate_value_boots</span><span class="p">()</span>
+<span class="n">model_info</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;X_prop&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="c1">#[0,1,2] here stands for the intercept, recency and history</span>
+              <span class="s1">&#39;X_q0&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+               <span class="s1">&#39;X_C&#39;</span><span class="p">:{</span><span class="mi">1</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="mi">2</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]},</span>
+              <span class="s1">&#39;action_space&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]}}]</span> <span class="c1">#A in [0,1,2]</span>
+<span class="n">ALearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">regime</span> <span class="o">=</span> <span class="n">regime</span><span class="p">,</span> <span class="n">evaluate</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">ALearn</span><span class="o">.</span><span class="n">predict_value</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>116.37488160184647
 </pre></div>
 </div>
 </div>
 </div>
+<p><strong>Interpretation:</strong> the estimated value of the regime that always sends no emails (<span class="math notranslate nohighlight">\(A=0\)</span>) is 116.37, under the specified model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># bootstrap average and the std of estimate value</span>
+<span class="n">ALearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">regime</span> <span class="o">=</span> <span class="n">regime</span><span class="p">,</span> <span class="n">evaluate</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">bootstrap</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">n_bs</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">fitted_params</span><span class="p">,</span><span class="n">fitted_value</span><span class="p">,</span><span class="n">value_avg</span><span class="p">,</span><span class="n">value_std</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">ALearn</span><span class="o">.</span><span class="n">predict_value_boots</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Value_hat:&#39;</span><span class="p">,</span><span class="n">value_avg</span><span class="p">,</span><span class="s1">&#39;Value_std:&#39;</span><span class="p">,</span><span class="n">value_std</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 113.8592661549983 Value_std: 10.670525568174071
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 116.37127842161804 Value_std: 10.2024261616976
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Otional: just estimate the value</span>
-<span class="n">ALearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">regime</span> <span class="o">=</span> <span class="n">regime</span><span class="p">,</span> <span class="n">evaluate</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-<span class="n">ALearn</span><span class="o">.</span><span class="n">estimate_value</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>113.1744826376249
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_test_case</span><span class="p">(</span><span class="n">setup</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">setup</span> <span class="o">==</span> <span class="s1">&#39;random_binary&#39;</span><span class="p">:</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-        <span class="n">s1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
-        <span class="n">A1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">s1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">s1</span><span class="p">)),</span><span class="n">size</span> <span class="o">=</span> <span class="n">N</span><span class="p">)</span>
-        <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">s1</span><span class="o">+</span><span class="n">A1</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mf">.5</span><span class="o">*</span><span class="n">s1</span><span class="p">),</span><span class="mi">3</span><span class="p">)</span>
-        <span class="n">opt_true</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mf">.5</span><span class="o">*</span><span class="n">s1</span> <span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="n">s1</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]])</span>
-        <span class="n">instance</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;X&#39;</span> <span class="p">:</span> <span class="n">X</span><span class="p">,</span> 
-            <span class="s1">&#39;A&#39;</span> <span class="p">:</span> <span class="n">A1</span><span class="p">,</span> 
-            <span class="s1">&#39;Y&#39;</span> <span class="p">:</span> <span class="n">Y</span><span class="p">,</span> 
-            <span class="s1">&#39;optimal_A&#39;</span> <span class="p">:</span> <span class="n">opt_true</span><span class="p">,</span> 
-            <span class="s1">&#39;XAY&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="n">X</span><span class="p">,</span> <span class="n">A1</span><span class="p">,</span> <span class="n">Y</span><span class="p">]</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">instance</span>
-    
-<span class="n">instance</span> <span class="o">=</span> <span class="n">generate_test_case</span><span class="p">(</span><span class="s1">&#39;random_binary&#39;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">X</span><span class="p">,</span><span class="n">A1</span><span class="p">,</span><span class="n">Y</span> <span class="o">=</span> <span class="n">instance</span><span class="p">[</span><span class="s1">&#39;XAY&#39;</span><span class="p">]</span>
-<span class="n">A</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">A1</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># initialize the learner</span>
-<span class="n">ALearn</span> <span class="o">=</span> <span class="n">ALearning</span><span class="o">.</span><span class="n">ALearning</span><span class="p">()</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">model_info</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;X_prop&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span>
-              <span class="s1">&#39;X_q0&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span>
-               <span class="s1">&#39;X_C&#39;</span><span class="p">:{</span><span class="mi">1</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">))},</span>
-              <span class="s1">&#39;action_space&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]}]</span> <span class="c1">#A in [0,1,2]</span>
-<span class="c1"># train the policy</span>
-<span class="n">ALearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="c1"># Fitted Model</span>
-<span class="n">ALearn</span><span class="o">.</span><span class="n">fitted_model</span><span class="p">[</span><span class="s1">&#39;prop&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">params</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 0.016 ],
-       [-1.9631]])
-</pre></div>
-</div>
-</div>
-</div>
+<p><strong>Interpretation:</strong> the bootstrapped estimated value of the regime that always sends no emails is 116.37 with a bootstrapped standard error 10.20, under the specified model.</p>
 <p>💥 Placeholder for C.I.</p>
 </div>
 </div>
@@ -933,30 +784,8 @@ estimated_contrast: {1:          Mean        std
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{aligned}
-&amp;\sum_{i=1}^n \frac{\partial C_{j}(H_{i};\psi_{j})}{\partial \psi_{j}}\{\mathbb{I}\{A_{i}=j\}-\omega(H_{i},j;\hat{\gamma})\}\times \Big\{Y_i-\sum_{j'=1}^{m-1} \mathbb{I}\{A_{i}=j'\}C_{j'}(H_{i;\psi_{j'}})-Q(H_{i},0;\phi)\Big\}=0\\
-&amp;\sum_{i=1}^n \frac{\partial Q(H_{i},0;\phi)}{\partial \phi}\Big\{Y_i-\sum_{j'=1}^{m-1} \mathbb{I}\{A_{i}=j'\}C_{j'}(H_{i};\psi_{j'}) Q(H_{i}0;\phi)\Big\}=0
-\end{aligned}
-\end{split}\]</div>
-</div>
-<div class="section" id="a-2">
-<h2>A.2<a class="headerlink" href="#a-2" title="Permalink to this headline">¶</a></h2>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{aligned}
-&amp;\sum_{i=1}^n \left[\frac{\partial C_{Tj}(H_{Ti};\psi_{Tj})}{\partial \psi_{Tj}}\{\mathbb{I}\{A_{Ti}=j\}-\omega_T(H_{Ti},j;\gamma_T)\}\times \Big\{Y_i-\sum_{j'=1}^{m_T-1} \mathbb{I}\{A_{Ti}=j'\}C_{Tj'}(H_{Ti};\psi_{Tj'})-Q_T(H_{Ti},0;\phi_{T})\Big\}\right]=0\\
-&amp;\sum_{i=1}^n \left[\frac{\partial Q_T(H_{Ti},0;\phi_T)}{\partial \phi_T}\Big\{Y_i-\sum_{j'=1}^{m_T-1} \mathbb{I}\{A_{Ti}=j'\}C_{Tj'}(H_{Ti};\psi_{Tj'})-Q_T(H_{Ti},0;\phi_T)\Big\}\right]=0\\
-&amp;\sum_{i=1}^n \left[\frac{\partial \omega_T(H_{Ti},j;\gamma_T)}{\partial \gamma_T}\Big\{Y_i-\sum_{j'=1}^{m_T-1} \mathbb{I}\{A_{Ti}=j'\}C_{Tj'}(H_{Ti};\psi_{Tj'})-Q_T(H_{Ti},0;\phi_T)\Big\}\right]=0
-\end{aligned}
-\end{split}\]</div>
-</div>
-<div class="section" id="a-3">
-<h2>A.3<a class="headerlink" href="#a-3" title="Permalink to this headline">¶</a></h2>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{aligned}
-&amp;\sum_{i=1}^n \left[\frac{\partial C_{tj}(H_{ti};\psi_{tj})}{\partial \psi_{tj}}\{\mathbb{I}\{A_{ti}=j\}-\omega_T(H_{ti},j;\gamma_t)\}\times \Big\{\tilde{Y}_{t+1,i}-\sum_{j'=1}^{m_t-1} \mathbb{I}\{A_{ti}=j'\}C_{tj'}(H_{ti};\psi_{tj'})-Q_t(H_{ti},0;\phi_{t})\Big\}\right]=0\\
-&amp;\sum_{i=1}^n \left[\frac{\partial Q_t(H_{ti},0;\phi_t)}{\partial \phi_t}\Big\{\tilde{Y}_{t+1,i}-\sum_{j'=1}^{m_t-1} \mathbb{I}\{A_{ti}=j'\}C_{tj'}(H_{ti};\psi_{tj'})-Q_t(H_{ti},0;\phi_t)\Big\}\right]=0\\
-&amp;\sum_{i=1}^n \left[\frac{\partial \omega_t(H_{ti},j;\gamma_t)}{\partial \gamma_t}\Big\{\tilde{Y}_{t+1,i}-\sum_{j'=1}^{m_t-1} \mathbb{I}\{A_{ti}=j'\}C_{tj'}(H_{ti};\psi_{tj'})-Q_t(H_{ti},0;\phi_t)\Big\}\right]=0
+&amp;\sum_{i=1}^n \frac{\partial C_{j}(X_{i};\psi_{j})}{\partial \psi_{j}}\{\mathbb{I}\{A_{i}=j\}-\omega(X_{i},j;\hat{\gamma})\}\times \Big\{Y_i-\sum_{j'=1}^{m-1} \mathbb{I}\{A_{i}=j'\}C_{j'}(X_{i;\psi_{j'}})-Q(X_{i},0;\phi)\Big\}=0\\
+&amp;\sum_{i=1}^n \frac{\partial Q(X_{i},0;\phi)}{\partial \phi}\Big\{Y_i-\sum_{j'=1}^{m-1} \mathbb{I}\{A_{i}=j'\}C_{j'}(X_{i};\psi_{j'}) Q(X_{i},0;\phi)\Big\}=0
 \end{aligned}
 \end{split}\]</div>
 </div>
