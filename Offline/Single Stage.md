@@ -6,7 +6,7 @@ Suppose we have a dataset containing observations from $N$ individuals. For each
 ## Real Data
 **1. Fetch_hillstrom**
 
-Fetch_hillstrom is a dataset from the scikit-uplift package with a single decision point. This study aims to assess the effectiveness of an e-mail campaign ($A$). The primary outcome of the interest is the money spent by customers during the two weeks following the e-mail campaign. By selecting only the individuals who purchased merchandise (spend>0), the dataset we used in this chapter comprises 578 customers (N=578). For each customer, there are nine features available: 
+Fetch_hillstrom is a dataset from the scikit-uplift package with a single decision point. This study aims to assess the effectiveness of an e-mail campaign ($A$). The primary outcome of the interest is the money spent by customers during the two weeks following the e-mail campaign. By selecting only the individuals who purchased merchandise (spend>0), the dataset we used in this chapter comprises 578 customers ($N=578$). For each customer, there are nine features available: 
 - **recency**: # of months since the last purchase;
 - **history**: total dollars spent in the past year; 
 - **mens**: binary, =1 if purchased Men's merchandise in the past year;
