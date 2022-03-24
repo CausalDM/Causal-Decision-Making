@@ -730,7 +730,7 @@
 <hr class="docutils" />
 <div class="section" id="motivation">
 <h2><strong>Motivation:</strong><a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
-<p>Aside from evaluating the performance of a target policy or finding the optimal treatment regimes with respect to the <strong>mean outcome</strong>, it is natural to extend the mean outcome to exploring the whole reward distribution. The easiest way to conduct policy evaluation and optimization is to estimate the quantiles with respect to some quantile levels in <span class="math notranslate nohighlight">\([0,1]\)</span>. There are some cases when it is not satisfactory to only evaluate the mean outcome:</p>
+<p>Aside from evaluating the performance of a target policy or finding the optimal treatment regimes with respect to the <strong>mean outcome</strong>, it is natural to extendour goal to exploring the whole reward distribution. The easiest way to conduct policy evaluation and optimization is to estimate the quantiles with respect to some quantile levels in <span class="math notranslate nohighlight">\([0,1]\)</span>. There are some cases when it is not satisfactory to only evaluate the mean outcome:</p>
 <ol class="simple">
 <li><p><strong>The problem of our interest may not be limited to the mean outcome</strong>: For example, when evaluating the performance of a certain policy in prolonging customers watching time on a video platform, one may be interested in how well the policy is in stimulating the customers at the lower 25% tail, so as to improve the overall prevalence of this platform and attract more potential customers.</p></li>
 <li><p><strong>Heavy tails</strong>: In the case when the reward distribution is naturally heavy-tailed, the performance of directly estimating the mean outcome (or doing optimization) may be very unstable. In this case, we may want to know the whole picture of the outcome distribution in order to do further statistical inferences.</p></li>
@@ -840,7 +840,7 @@ Thus, the optimal policy to maximize a specific quantile of the outcome distribu
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span>\<span class="n">ipykernel_61632</span>\<span class="mf">478063769.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span>\<span class="n">ipykernel_175612</span>\<span class="mf">478063769.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">n0</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># the number of samples used to estimate the true reward distribution by MC</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> 
 <span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">223</span><span class="p">)</span>
@@ -1934,8 +1934,8 @@ settings, we are interested in evaluating the outcome of some fixed policy <span
 <hr class="docutils" />
 <p>###<strong>Main idea:</strong>
 The doubly robust estimator of quantile estimation is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-af558016-6b76-4cd3-9c37-6c515fb0562b">
-<span class="eqno">(14)<a class="headerlink" href="#equation-af558016-6b76-4cd3-9c37-6c515fb0562b" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-353b6f5b-cf9d-4f41-98e3-547a8830225b">
+<span class="eqno">(14)<a class="headerlink" href="#equation-353b6f5b-cf9d-4f41-98e3-547a8830225b" title="Permalink to this equation">¶</a></span>\[\begin{equation}
     \hat{\eta}_n=\arg\min_{\eta} \frac{1}{n}\sum_{i=1}^n\left[\frac{C(A_i,X_i)}{\hat{K}_C(X_i)}\rho_{\tau}(Y_i-\eta)+\left(1-\frac{C(A_i,X_i)}{\hat{K}_C(X_i)}\right)\hat{\mathbb{E}}[\rho_{\tau}(\hat{Y}-\eta)|X=X_i,A=\pi(X_i)]\right],
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\hat{K}_C(X)=\hat{b}(X)\pi(X)+(1-\hat{b}(X))(1-\pi(X))\)</span>, and</p>
