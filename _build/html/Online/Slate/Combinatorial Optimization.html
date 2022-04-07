@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Combinatorial Optimization &#8212; Causal Decision Making</title>
+    <title>Online Combinatorial Optimization &#8212; Causal Decision Making</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -45,6 +45,8 @@
     <script src="../../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -364,7 +366,7 @@
   <ul class="current">
    <li class="toctree-l2 has-children">
     <a class="reference internal" href="Learning%20to%20rank.html">
-     Learning to rank
+     Online Learning to Rank
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
     <label for="toctree-checkbox-10">
@@ -396,7 +398,7 @@
    </li>
    <li class="toctree-l2 current active has-children">
     <a class="current reference internal" href="#">
-     Combinatorial Optimization
+     Online Combinatorial Optimization
     </a>
     <input checked="" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
     <label for="toctree-checkbox-11">
@@ -425,15 +427,15 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="Combinatorial-Semi/MTSS-Comb.html">
-       MTSS-Comb
+      <a class="reference internal" href="Combinatorial-Semi/MTSS_Comb.html">
+       MTSS_Comb
       </a>
      </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
     <a class="reference internal" href="Assortment%20Optimization.html">
-     Assortment Optimization
+     Dynamic Assortment Optimization
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
     <label for="toctree-checkbox-12">
@@ -462,8 +464,8 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="MNL/MTSS-MNL.html">
-       MTSS-MNL
+      <a class="reference internal" href="MNL/MTSS_MNL.html">
+       MTSS_MNL
       </a>
      </li>
     </ul>
@@ -523,9 +525,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/Online/Slate/Combinatorial Optimization.md"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/Online/Slate/Combinatorial Optimization.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
+                data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
                 onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -559,11 +561,51 @@
 
             <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/Online/Slate/Combinatorial Optimization.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
         </div>
 
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-setting-combinatorial-semi-bandit">
+   Problem Setting (Combinatorial Semi-Bandit)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#supported-algorithms">
+   Supported Algorithms
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reference">
+   Reference
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -571,19 +613,102 @@
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Combinatorial Optimization</h1>
+                <h1>Online Combinatorial Optimization</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-setting-combinatorial-semi-bandit">
+   Problem Setting (Combinatorial Semi-Bandit)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#supported-algorithms">
+   Supported Algorithms
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reference">
+   Reference
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
             
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="combinatorial-optimization">
-<h1>Combinatorial Optimization<a class="headerlink" href="#combinatorial-optimization" title="Permalink to this headline">¶</a></h1>
+  <div class="tex2jax_ignore mathjax_ignore section" id="online-combinatorial-optimization">
+<h1>Online Combinatorial Optimization<a class="headerlink" href="#online-combinatorial-optimization" title="Permalink to this headline">¶</a></h1>
+<p>Online combinatorial optimization has a wide range of applications [1], including maximum weighted matching, ad allocation, and news page optimization, to name a few. This tutorial focuses on a typical application situation, where all chosen items will generate a separate observation, known as the semi-bandit problem [2].</p>
+<div class="section" id="problem-setting-combinatorial-semi-bandit">
+<h2>Problem Setting (Combinatorial Semi-Bandit)<a class="headerlink" href="#problem-setting-combinatorial-semi-bandit" title="Permalink to this headline">¶</a></h2>
+<p>Suppose that, at each round t, we need to recommend at most <span class="math notranslate nohighlight">\(K\)</span> items. Formally, the feasible set <span class="math notranslate nohighlight">\(\mathcal{A} \subseteq \{A \subseteq [N] : |A|\leq K\}\)</span> consists of subsets that satisfy the size constraint and other application-specific constraints. The agent will sequentially choose a subset <span class="math notranslate nohighlight">\(A_t\)</span> from <span class="math notranslate nohighlight">\(\mathcal{A}\)</span>, and then receive a separate reward <span class="math notranslate nohighlight">\(Y_{i, t}\)</span> for each chosen item <span class="math notranslate nohighlight">\(i \in A_t\)</span>, with the overall reward defined as <span class="math notranslate nohighlight">\(R_t = \sum_{i \in A_t} Y_{i,t}\)</span>. Mathematically, for each round <span class="math notranslate nohighlight">\(t\)</span>,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-fa261228-164c-4752-bc04-57859633a165">
+<span class="eqno">(28)<a class="headerlink" href="#equation-fa261228-164c-4752-bc04-57859633a165" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+    \begin{split}
+     Y_{i, t} &amp;\sim \mathcal{P}(\theta_{i}), \forall i \in A_{t},\\
+    R_t &amp;= \sum_{i \in A_t} Y_{i,t}, 
+    \end{split}
+\end{equation}\]</div>
+<p>When the mean reward of each item is known, the optimal action can be obtained from a combinatorial optimization problem, depending on the applications.</p>
+</div>
+<div class="section" id="supported-algorithms">
+<h2>Supported Algorithms<a class="headerlink" href="#supported-algorithms" title="Permalink to this headline">¶</a></h2>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:left head"><p>algorithm</p></th>
+<th class="text-align:center head"><p>Reward</p></th>
+<th class="text-align:center head"><p>with features?</p></th>
+<th class="text-align:center head"><p>Advantage</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:left"><p><a class="reference external" href="http://proceedings.mlr.press/v80/wang18a/wang18a.pdf">CombTS [4]</a></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p><a class="reference external" href="http://proceedings.mlr.press/v37/wen15.pdf">CombLinTS [5]</a></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p>✅</p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p><a class="reference external" href="http://proceedings.mlr.press/v28/chen13a.pdf">CombUCB1 [2]</a></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p><a class="reference external" href="http://proceedings.mlr.press/v37/wen15.pdf">CombLinUCB [5]</a></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p>✅</p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p><a class="reference external" href="https://arxiv.org/pdf/2202.13227.pdf">MTSS-Comb [3]</a></p></td>
+<td class="text-align:center"><p>Continuous</p></td>
+<td class="text-align:center"><p>✅</p></td>
+<td class="text-align:center"><p>Scalable, Robust, accounts for inter-item heterogeneity</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<p>[1] Sankararaman, K. A. (2016). Semi-bandit feedback: A survey of results.</p>
+<p>[2] Chen, W., Wang, Y., and Yuan, Y. (2013). Combinatorial multi-armed bandit: General framework and applications. In International conference on machine learning, pages 151–159. PMLR.</p>
+<p>[3] Wan, R., Ge, L., &amp; Song, R. (2022). Towards Scalable and Robust Structured Bandits: A Meta-Learning Framework. arXiv preprint arXiv:2202.13227.</p>
+<p>[4] Wang, S., &amp; Chen, W. (2018, July). Thompson sampling for combinatorial semi-bandits. In International Conference on Machine Learning (pp. 5114-5122). PMLR.</p>
+<p>[5] Wen, Z., Kveton, B., &amp; Ashkan, A. (2015, June). Efficient learning in large-scale combinatorial semi-bandits. In International Conference on Machine Learning (pp. 1113-1122). PMLR.</p>
+</div>
 <div class="toctree-wrapper compound">
 </div>
 </div>

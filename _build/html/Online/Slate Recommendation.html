@@ -45,6 +45,8 @@
     <script src="../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -54,7 +56,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Learning to rank" href="Slate/Learning%20to%20rank.html" />
+    <link rel="next" title="Online Learning to Rank" href="Slate/Learning%20to%20rank.html" />
     <link rel="prev" title="MTTS" href="Single/MultiTask/MTTS.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -364,7 +366,7 @@
   <ul>
    <li class="toctree-l2 has-children">
     <a class="reference internal" href="Slate/Learning%20to%20rank.html">
-     Learning to rank
+     Online Learning to Rank
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
     <label for="toctree-checkbox-10">
@@ -396,7 +398,7 @@
    </li>
    <li class="toctree-l2 has-children">
     <a class="reference internal" href="Slate/Combinatorial%20Optimization.html">
-     Combinatorial Optimization
+     Online Combinatorial Optimization
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
     <label for="toctree-checkbox-11">
@@ -425,15 +427,15 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="Slate/Combinatorial-Semi/MTSS-Comb.html">
-       MTSS-Comb
+      <a class="reference internal" href="Slate/Combinatorial-Semi/MTSS_Comb.html">
+       MTSS_Comb
       </a>
      </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
     <a class="reference internal" href="Slate/Assortment%20Optimization.html">
-     Assortment Optimization
+     Dynamic Assortment Optimization
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
     <label for="toctree-checkbox-12">
@@ -462,8 +464,8 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="Slate/MNL/MTSS-MNL.html">
-       MTSS-MNL
+      <a class="reference internal" href="Slate/MNL/MTSS_MNL.html">
+       MTSS_MNL
       </a>
      </li>
     </ul>
@@ -523,9 +525,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/Online/Slate Recommendation.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/Online/Slate Recommendation.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
+                data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
                 onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -559,11 +561,46 @@
 
             <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/Online/Slate Recommendation.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
         </div>
 
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-setting">
+   Problem Setting
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reference">
+   Reference
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -576,6 +613,24 @@
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-setting">
+   Problem Setting
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reference">
+   Reference
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -584,6 +639,34 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="slate-recommendation">
 <h1>Slate Recommendation<a class="headerlink" href="#slate-recommendation" title="Permalink to this headline">¶</a></h1>
+<p>This chapter focuses on slate recommendation problems, where the agent needs to recommend a slate of items at each round. Here, an item can be a product, a web page, a movie, etc., depending on the application.</p>
+<div class="section" id="problem-setting">
+<h2>Problem Setting<a class="headerlink" href="#problem-setting" title="Permalink to this headline">¶</a></h2>
+<p>Let <span class="math notranslate nohighlight">\(T\)</span> be the total number of rounds, and <span class="math notranslate nohighlight">\(N\)</span> be the total number of items that are available to recommend. The agent would choose a slate of items at each round <span class="math notranslate nohighlight">\(t = 1, \dots, T\)</span>. In other words, an action <span class="math notranslate nohighlight">\(a\)</span> is defined as a subset of items, and then the action space <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> consists of all subsets satisfied with some problem-specific constraints. Then we will receive the corresponding stochastic observations <span class="math notranslate nohighlight">\(\boldsymbol{Y}_t\)</span> from the environment, which further determines the reward <span class="math notranslate nohighlight">\(R_t\)</span>. We assume that the observation <span class="math notranslate nohighlight">\(\boldsymbol{Y}_t\)</span> is generated by a domain model <span class="math notranslate nohighlight">\(f\)</span>, and the reward <span class="math notranslate nohighlight">\(R_t\)</span> is determined through a deterministic function <span class="math notranslate nohighlight">\(f_r\)</span>. Mathematically, we consider the following popular and general class of bandit problems[1]:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-822fe4de-3ce6-49a0-9438-1f9e7463b84f">
+<span class="eqno">(26)<a class="headerlink" href="#equation-822fe4de-3ce6-49a0-9438-1f9e7463b84f" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+    \begin{split}
+    \boldsymbol{Y}_t &amp;\sim f(\boldsymbol{Y}_t |A_t, \boldsymbol{\theta}),\\
+    R_t &amp;= f_r(\boldsymbol{Y}_t; \boldsymbol{\eta}).
+    \end{split}
+    \label{eqn:main_raw_model}
+\end{equation}\]</div>
+<p>This problem setting subsumes many popular bandit problems, such as</p>
+<ul class="simple">
+<li><p><strong>Dynamic Assortment Optimization</strong>: Multinomial Logit Bandits [2] aims to solve the most profitable subset of items to offer, especially when there exist substitution effects;</p></li>
+<li><p><strong>Online Learning to Rank</strong>: Cascading Bandits [3] is used to characterize how a user interacts with an ordered list of <span class="math notranslate nohighlight">\(K\)</span> items;</p></li>
+<li><p><strong>Online Combinatorial Optimization</strong>: Combinatorial Semi-Bandits [4] which have numerous applications, including maximum weighted matching, ad allocation, and news page optimization;</p></li>
+<li><p>……</p></li>
+</ul>
+<p>Note that, for any positive integer <span class="math notranslate nohighlight">\(N\)</span>, we denote the set <span class="math notranslate nohighlight">\(\{1, \dots, N\}\)</span> by <span class="math notranslate nohighlight">\([N]\)</span>. Further, we denote the cardinality of set <span class="math notranslate nohighlight">\(A\)</span> as <span class="math notranslate nohighlight">\(|A|\)</span>. <span class="math notranslate nohighlight">\(\mathcal{H}_{t}\)</span> denotes a sequence of observations containing all the tuples of action and corresponding feedback received in previous rounds, excluding round <span class="math notranslate nohighlight">\(t\)</span>. Specifically, <span class="math notranslate nohighlight">\(\mathcal{H}_{t}=\{(A_{i},\boldsymbol{Y}_{i},R_{i})\}_{i=1}^{t-1}\)</span>. If feature information is avialable, we denote <span class="math notranslate nohighlight">\(\boldsymbol{x}_i\)</span> as a <span class="math notranslate nohighlight">\(d\)</span>-dimensional vector of item-specific features.</p>
+</div>
+<div class="section" id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<p>[1] Russo, D., Van Roy, B., Kazerouni, A., Osband, I., and Wen, Z. (2017). A tutorial on thompson sampling. arXiv preprint arXiv:1707.02038.</p>
+<p>[2] Luce, R. D. (2012). Individual choice behavior: A theoretical analysis. Courier Corporation.</p>
+<p>[3] Kveton, B., Szepesvari, C., Wen, Z., and Ashkan, A. (2015a). Cascading bandits: Learning to rank in the cascade model. In International Conference on Machine Learning, pages 767–776. PMLR.</p>
+<p>[4] Chen, W., Wang, Y., and Yuan, Y. (2013). Combinatorial multi-armed bandit: General framework and applications. In International conference on machine learning, pages 151–159. PMLR.</p>
+</div>
 <div class="toctree-wrapper compound">
 </div>
 </div>
@@ -623,7 +706,7 @@
     <a class='right-next' id="next-link" href="Slate/Learning%20to%20rank.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Learning to rank</p>
+        <p class="prev-next-title">Online Learning to Rank</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
