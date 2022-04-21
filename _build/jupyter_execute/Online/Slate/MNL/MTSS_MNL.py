@@ -33,7 +33,7 @@
 # \end{equation}where we adopt the mean-precision parameterization of the Beta distribution and $\psi$ and $\boldsymbol{\eta}$ are known. We choose this specific form as it is widely observed that $v_i < 1$ [2,3], i.e., no item is more popular than the no-purchase option. This is equal to $\theta_i \in (1/2, 1)$. Other generalization models are also possible with minor modifications to the posterior sampling code. 
 # The prior $Q(\boldsymbol{\gamma})$ can be chosen as many appropriate distributions. For instance, we choose the prior $\boldsymbol{\gamma} \sim \mathcal{N}(\boldsymbol{\mu}_{\boldsymbol{\gamma}}, {\boldsymbol{\Sigma}}_{\boldsymbol{\gamma}})$ with parameters as known. To update the posterior of $\boldsymbol{\gamma}$, we utilize the **Pymc3** package [4]. With a given $\boldsymbol{\gamma}$, the posterior of $\boldsymbol{\theta}$ enjoys the Beta-Geometric conjugate relationship and hence can be updated explicitly and efficiently. Finally, for each epoch $l$, $A^{l}$ is selected by linear programming as
 # \begin{equation}
-#     A_{l} = argmax_{a \in \mathcal{A}} \frac{\sum_{i\in a}\eta_{i}v_{i}}{1+\sum_{j\in a} v_{j}}.
+#     A^{l} = argmax_{a \in \mathcal{A}} \frac{\sum_{i\in a}\eta_{i}v_{i}}{1+\sum_{j\in a} v_{j}}.
 # \end{equation}
 # 
 # 
@@ -72,7 +72,7 @@ os.chdir('/nas/longleaf/home/lge/CausalDM')
 # code used to import the learner
 
 
-# In[2]:
+# In[5]:
 
 
 from causaldm.learners.Online.Slate.MNL import MTSS_MNL
@@ -80,7 +80,7 @@ from causaldm.learners.Online.Slate.MNL import _env_MNL
 import numpy as np
 
 
-# In[3]:
+# In[6]:
 
 
 T = 20000
@@ -103,7 +103,7 @@ seed = 0
 env = _env_MNL.MNL_env(L, K, T, mu_gamma, sigma_gamma, X_mu, X_sigma,                                       
                         phi_beta, same_reward = same_reward, 
                         seed = seed, p = p, with_intercept = with_intercept)
-MTSS_agent = MTSS_MNL.MTSS_MNL(L, env, K, env.Phi, phi_beta = phi_beta,n_init = n_init,
+MTSS_agent = MTSS_MNL.MTSS_MNL(L, env.r, K, env.Phi, phi_beta = phi_beta,n_init = n_init,
                                     gamma_prior_mean = mu_gamma, gamma_prior_cov = Sigma_gamma,
                                     update_freq=update_freq, seed = seed, pm_core = 1, same_reward = same_reward, clip = True)
 S = MTSS_agent.take_action(env.Phi)
@@ -112,7 +112,7 @@ c, exp_R, R = env.get_reward(S)
 MTSS_agent.receive_reward(S, c, R, exp_R)
 
 
-# In[4]:
+# In[7]:
 
 
 S
