@@ -4,6 +4,8 @@
 # # LinTS
 # 
 # ## Main Idea
+# (Need to rewrite)Thompson Sampling, also known as posterior sampling, solves the exploration-exploitation dilemma by selecting an action according to its posterior distribution [8].  At each round $t$, the agent sample the rewards from the corresponding posterior distributions and then select the action with the highest sampled reward greedily. It has been shown that, when the true reward distribution is known, a TS algorithm with the true reward distribution as the prior is nearly optimal [9]. However, such a distribution is always unknown in practice. Therefore, one of the major objectives of TS-based algorithms is to find an informative prior to guide the exploration.
+# 
 # 
 # ## Algorithms Details
 # Supposed there are $K$ options, and the action space is $\mathcal{A} = \{0,1,\cdots, K-1\}$. Noticing that feature information are commonly avialable, the LinTS algorithm consdiers modeling the mean reward with items' features. As an example, considering the Gaussian reward, we assume that 

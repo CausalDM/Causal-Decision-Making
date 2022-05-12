@@ -5,6 +5,7 @@
 # 
 # ## Main Idea
 # 
+# An intuitive algorithm to incorporate the exploration and exploitation is $\epsilon$-Greedy, which is simple and widely used [6]. Specifically, at each round $t$, we will select a random action with probability $\epsilon$, and select an action with the highest estimated mean reward based on the history so far with probability $1-\epsilon$. Here the parameter $\epsilon$ is pre-specified. A more adaptive variant is $\epsilon_{t}$-greedy, where the probability of taking a random action is defined as a decreasing function of $t$. Auer et al. [7] showed that $\epsilon_{t}$-greedy performs well in practice with $\epsilon_{t}$ decreases to 0 at a rate of $\frac{1}{t}$.
 # 
 # ## Algorithms Details
 # Supposed there are $K$ options, and the action space is $\mathcal{A} = \{0,1,\cdots, K-1\}$. The $\epsilon$-greedy algorithm start with initializing the estimated values $\theta_a^0$ and the count of being pulled $C_a^0$ for each action $a$ as 0. At each round $t$, we either take an action with the maximum estimated value $\theta_a$ with probability $1-\epsilon_{t}$ or randomly select an action with probability $\epsilon_t$. After observing the rewards corresponding to the selected action $A_t$, we updated the total number of being pulled for $A_t$, and estimated the $\theta_{A_{t}}$ by with the sample average for $A_t$.

@@ -23,6 +23,11 @@
 # 
 # Note that, for any positive integer $N$, we denote the set $\{1, \dots, N\}$ by $[N]$. Further, we denote the cardinality of set $A$ as $|A|$. $\mathcal{H}_{t}$ denotes a sequence of observations containing all the tuples of action and corresponding feedback received in previous rounds, excluding round $t$. Specifically, $\mathcal{H}_{t}=\{(A_{i},\boldsymbol{Y}_{i},R_{i})\}_{i=1}^{t-1}$. If feature information is avialable, we denote $\boldsymbol{x}_i$ as a $d$-dimensional vector of item-specific features.
 # 
+# ## Real Data
+# 
+# **MovieLens**
+# TODO: description of the dataset(how to cooked for three cases), and the code to get the data.
+# 
 
 # ## Reference
 # [1] Russo, D., Van Roy, B., Kazerouni, A., Osband, I., and Wen, Z. (2017). A tutorial on thompson sampling. arXiv preprint arXiv:1707.02038.

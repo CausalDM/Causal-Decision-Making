@@ -45,15 +45,14 @@
     <script src="../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Policy Evaluation and Optimization" href="Policy%20Evaluation%20and%20Optimization.html" />
@@ -334,7 +333,7 @@
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../Online/Single/Epsilon%20Greedy.html">
-     Epsilon Greedy
+     Epsilon_Greedy
     </a>
    </li>
    <li class="toctree-l2">
@@ -796,8 +795,8 @@ IE &amp;= E\{Y|do(A=a, M=m^{(a+1)})\}-E\{Y|do(A=a)\},
 <div class="section" id="causal-graphical-model-1-additive-noise-model">
 <h2>Causal Graphical Model 1: Additive Noise Model<a class="headerlink" href="#causal-graphical-model-1-additive-noise-model" title="Permalink to this headline">¶</a></h2>
 <p>Suppose there exists a weighted DAG <span class="math notranslate nohighlight">\(\mathcal{G}=(Z,E)\)</span> that characterizes the causal relationship among <span class="math notranslate nohighlight">\(|Z|=d\)</span> nodes. Each variable <span class="math notranslate nohighlight">\(Z_i\)</span> is associated with a node <span class="math notranslate nohighlight">\(i\)</span> in the DAG <span class="math notranslate nohighlight">\(\mathcal{G}\)</span>, and the observed value of <span class="math notranslate nohighlight">\(Z_i\)</span> is obtained as a function of its parents in the graph plus an independent additive noise <span class="math notranslate nohighlight">\(n_i\)</span>, i.e.,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-57e11cc3-5f9a-48b8-980d-f2fa3a4134ac">
-<span class="eqno">(2)<a class="headerlink" href="#equation-57e11cc3-5f9a-48b8-980d-f2fa3a4134ac" title="Permalink to this equation">¶</a></span>\[\begin{equation}\label{anm}
+<div class="amsmath math notranslate nohighlight" id="equation-d49474af-2569-4f6c-aa20-f3b0ca1e2c4c">
+<span class="eqno">(2)<a class="headerlink" href="#equation-d49474af-2569-4f6c-aa20-f3b0ca1e2c4c" title="Permalink to this equation">¶</a></span>\[\begin{equation}\label{anm}
 Z_i := f_i\{PA_{Z_i} (\mathcal{G})\} + n_i,i = 1,2,...,d, 
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(PA_{Z_i} (\mathcal{G})\)</span> denotes the set of parent variables of <span class="math notranslate nohighlight">\(Z_i\)</span> so that there is an edge from <span class="math notranslate nohighlight">\(Z_j\in PA_{Z_i} (\mathcal{G})\)</span> to <span class="math notranslate nohighlight">\(Z_i\)</span> in the graph, and the noises <span class="math notranslate nohighlight">\(n_i\)</span> are assumed to be jointly independent.</p>
@@ -805,8 +804,8 @@ Z_i := f_i\{PA_{Z_i} (\mathcal{G})\} + n_i,i = 1,2,...,d,
 <div class="section" id="causal-graphical-model-2-linear-structural-equation-model">
 <h2>Causal Graphical Model 2: Linear Structural Equation Model<a class="headerlink" href="#causal-graphical-model-2-linear-structural-equation-model" title="Permalink to this headline">¶</a></h2>
 <p>Let <span class="math notranslate nohighlight">\(B=\{b_{i,j}\}_{1\leq i\leq d,1\leq j\leq d}\)</span> be a <span class="math notranslate nohighlight">\(d\times d\)</span> matrix, where <span class="math notranslate nohighlight">\(b_{i,j}\)</span> is the weight of the edge <span class="math notranslate nohighlight">\(Z_i\rightarrow Z_j \in E\)</span>, and <span class="math notranslate nohighlight">\(b_{i,j}=0\)</span> otherwise. Then, we say that <span class="math notranslate nohighlight">\(\mathcal{G} =(Z,B)\)</span> is a weighted DAG with the node set <span class="math notranslate nohighlight">\(Z\)</span> and the weighted adjacency matrix <span class="math notranslate nohighlight">\(B\)</span> (the edge set <span class="math notranslate nohighlight">\(E\)</span> is nested in <span class="math notranslate nohighlight">\(B\)</span>). Under no unmeasured confounders, the Markov condition, the faithfulness condition, causal sufficiency assumption, and the linear structural equation model (LSEM) such that <span class="math notranslate nohighlight">\(Z\)</span> characterized by the pair (<span class="math notranslate nohighlight">\(\mathcal{G}\)</span>, <span class="math notranslate nohighlight">\(\epsilon\)</span>) is generated by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-036913a2-55da-4f8e-bdac-f8d248e97918">
-<span class="eqno">(3)<a class="headerlink" href="#equation-036913a2-55da-4f8e-bdac-f8d248e97918" title="Permalink to this equation">¶</a></span>\[\begin{equation}\label{lsem_x}
+<div class="amsmath math notranslate nohighlight" id="equation-5b1f322d-87e5-4ac8-9337-c4261b6b8497">
+<span class="eqno">(3)<a class="headerlink" href="#equation-5b1f322d-87e5-4ac8-9337-c4261b6b8497" title="Permalink to this equation">¶</a></span>\[\begin{equation}\label{lsem_x}
 Z=B^\top Z +\epsilon,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\epsilon \)</span> is a  random vector of jointly independent error variables.</p>

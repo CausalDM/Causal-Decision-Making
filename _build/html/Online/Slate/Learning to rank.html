@@ -45,15 +45,14 @@
     <script src="../../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="TS-Cascade" href="Cascade/TS-Cascade.html" />
@@ -699,8 +698,8 @@
 <p>Suppose that, at each round t, we need to recommend an ordered list of <span class="math notranslate nohighlight">\(K\)</span> items. In cascading bandits, <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> contains all the subsets of <span class="math notranslate nohighlight">\([N]\)</span> with length <span class="math notranslate nohighlight">\(K\)</span>, <span class="math notranslate nohighlight">\(A_t = (a_t^1, \dots, a_t^K) \in \mathcal{A}\)</span> is a sorted list of items being displayed with any element <span class="math notranslate nohighlight">\(a_t^k \in [N]\)</span>, <span class="math notranslate nohighlight">\(\boldsymbol{Y}_t\)</span> is an indicator vector with the <span class="math notranslate nohighlight">\(a\)</span>th entry equal to <span class="math notranslate nohighlight">\(1\)</span> when the <span class="math notranslate nohighlight">\(a\)</span>th displayed item is clicked, and <span class="math notranslate nohighlight">\(R_t\)</span> is the reward with <span class="math notranslate nohighlight">\(f_r(\boldsymbol{Y}_t) \equiv \sum_{k \in [K]} Y_{k,t}  \in \{0,1\}\)</span>, where <span class="math notranslate nohighlight">\(Y_{k,t}\)</span> is the <span class="math notranslate nohighlight">\(k\)</span>th entry of <span class="math notranslate nohighlight">\(\boldsymbol{Y}_t\)</span>.</p>
 <p>At each round <span class="math notranslate nohighlight">\(t\)</span>, the user will examine the <span class="math notranslate nohighlight">\(K\)</span> displayed items from top to bottom and stop to click one item once she is attracted (or leave if none of them is attractive). Let <span class="math notranslate nohighlight">\(I_t\)</span> be the index of the chosen item if it exists, and otherwise, let <span class="math notranslate nohighlight">\(I_t = K\)</span>. To formally define the model <span class="math notranslate nohighlight">\(f\)</span>, it is useful to introduce a latent binary variable <span class="math notranslate nohighlight">\(E_{k,t}\)</span> to indicate if the <span class="math notranslate nohighlight">\(k\)</span>th displayed item is examined by the <span class="math notranslate nohighlight">\(t\)</span>th user, and a latent variable <span class="math notranslate nohighlight">\(W_{k,t}\)</span> to indicate if the <span class="math notranslate nohighlight">\(k\)</span>th displayed item is attractive to the <span class="math notranslate nohighlight">\(t\)</span>th user. Therefore, the value of <span class="math notranslate nohighlight">\(W_{k,t}\)</span> is only visible when <span class="math notranslate nohighlight">\(k \le I_t\)</span>. Let <span class="math notranslate nohighlight">\(\theta_i\)</span> be the attractiveness of the item <span class="math notranslate nohighlight">\(i\)</span>. The key probabilistic assumption is that <span class="math notranslate nohighlight">\(W_{k, t} \sim Bernoulli(\theta_{a^k_t}), \forall k \in [K]\)</span>.</p>
 <p>Mathmatically,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-994314dd-bf61-4a26-b07c-37257da71efe">
-<span class="eqno">(41)<a class="headerlink" href="#equation-994314dd-bf61-4a26-b07c-37257da71efe" title="Permalink to this equation">¶</a></span>\[\begin{equation}\label{eqn:model_cascading}
+<div class="amsmath math notranslate nohighlight" id="equation-c3e25b1f-99f6-4a9c-8b15-6a7b85a5b157">
+<span class="eqno">(41)<a class="headerlink" href="#equation-c3e25b1f-99f6-4a9c-8b15-6a7b85a5b157" title="Permalink to this equation">¶</a></span>\[\begin{equation}\label{eqn:model_cascading}
     \begin{split}
     W_{k, t} &amp;\sim Bernoulli(\theta_{a^k_t}), \forall k \in [K], \\
     Y_{k,t} &amp;= W_{k,t} E_{k,t}, \forall k \in [K],\\

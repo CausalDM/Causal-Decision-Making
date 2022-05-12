@@ -45,15 +45,14 @@
     <script src="../../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Policy Search" href="Policy%20Search.html" />
@@ -334,7 +333,7 @@
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../../Online/Single/Epsilon%20Greedy.html">
-     Epsilon Greedy
+     Epsilon_Greedy
     </a>
    </li>
    <li class="toctree-l2">
@@ -745,12 +744,12 @@
 <div class="section" id="algorithm-details">
 <h2>Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this headline">¶</a></h2>
 <p>Q-learning with a single decision point is mainly a regression modeling problem, as the major component is to find the relationship between <span class="math notranslate nohighlight">\(Y\)</span> and <span class="math notranslate nohighlight">\(\{X,A\}\)</span>. Let’s first define a Q-function, such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-557d284c-6604-4cee-a916-02bfbd21bc39">
-<span class="eqno">(4)<a class="headerlink" href="#equation-557d284c-6604-4cee-a916-02bfbd21bc39" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-77e9226f-f751-45fe-9adc-60b27200d63a">
+<span class="eqno">(4)<a class="headerlink" href="#equation-77e9226f-f751-45fe-9adc-60b27200d63a" title="Permalink to this equation">¶</a></span>\[\begin{align}
     Q(x,a) = E(Y|X=x, A=a).
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-359573e7-ddaa-4fdc-b148-2e2b3bec393d">
-<span class="eqno">(5)<a class="headerlink" href="#equation-359573e7-ddaa-4fdc-b148-2e2b3bec393d" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b6b90eb3-d6b3-4725-b0cc-62820323a748">
+<span class="eqno">(5)<a class="headerlink" href="#equation-b6b90eb3-d6b3-4725-b0cc-62820323a748" title="Permalink to this equation">¶</a></span>\[\begin{align}
     \text{arg max}_{\pi}Q(x_{i},\pi(x_{i})).
 \end{align}\]</div>
 </div>
@@ -784,7 +783,7 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span>\<span class="n">ipykernel_175148</span>\<span class="mf">3479176628.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span><span class="o">/</span><span class="n">ipykernel_18224</span><span class="o">/</span><span class="mf">3479176628.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># import learner</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">QLearning</span>
@@ -815,8 +814,8 @@
 </div>
 </div>
 <p>By specifing the model_info, we assume a regression model that:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-221c8f96-7564-4d6b-84d1-49be6a32975d">
-<span class="eqno">(6)<a class="headerlink" href="#equation-221c8f96-7564-4d6b-84d1-49be6a32975d" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d7859341-366f-478e-9128-04157682dcc8">
+<span class="eqno">(6)<a class="headerlink" href="#equation-d7859341-366f-478e-9128-04157682dcc8" title="Permalink to this equation">¶</a></span>\[\begin{align}
 Q(x,a,\beta) &amp;= \beta_{00}+\beta_{01}*recency+\beta_{02}*history\\
 &amp;+I(a=1)*\{\beta_{10}+\beta_{11}*recency+\beta_{12}*history\} \\
 &amp;+I(a=2)*\{\beta_{20}+\beta_{21}*recency+\beta_{22}*history\} 
@@ -864,8 +863,8 @@ opt value: 126.48792828230047
 </div>
 </div>
 <p><strong>Interpretation:</strong> the fitted model is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cb6d2d3f-8c74-48f3-9fc1-11a15ced34e8">
-<span class="eqno">(7)<a class="headerlink" href="#equation-cb6d2d3f-8c74-48f3-9fc1-11a15ced34e8" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c6318310-c357-4bb0-92ab-3d066f5bd0e8">
+<span class="eqno">(7)<a class="headerlink" href="#equation-c6318310-c357-4bb0-92ab-3d066f5bd0e8" title="Permalink to this equation">¶</a></span>\[\begin{align}
 Q(x,a,\beta) &amp;= 94.20+4.53*recency+0.0005*history\\
 &amp;+I(a=1)*\{23.24-4.15*recency+0.0076*history\} \\
 &amp;+I(a=2)*\{20.61-4.84*recency+0.0004history\}. 

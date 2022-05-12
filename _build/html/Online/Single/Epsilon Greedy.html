@@ -45,15 +45,14 @@
     <script src="../../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="TS" href="TS.html" />
@@ -715,6 +714,7 @@
 <h1>Epsilon_Greedy<a class="headerlink" href="#epsilon-greedy" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">¶</a></h2>
+<p>An intuitive algorithm to incorporate the exploration and exploitation is <span class="math notranslate nohighlight">\(\epsilon\)</span>-Greedy, which is simple and widely used [6]. Specifically, at each round <span class="math notranslate nohighlight">\(t\)</span>, we will select a random action with probability <span class="math notranslate nohighlight">\(\epsilon\)</span>, and select an action with the highest estimated mean reward based on the history so far with probability <span class="math notranslate nohighlight">\(1-\epsilon\)</span>. Here the parameter <span class="math notranslate nohighlight">\(\epsilon\)</span> is pre-specified. A more adaptive variant is <span class="math notranslate nohighlight">\(\epsilon_{t}\)</span>-greedy, where the probability of taking a random action is defined as a decreasing function of <span class="math notranslate nohighlight">\(t\)</span>. Auer et al. [7] showed that <span class="math notranslate nohighlight">\(\epsilon_{t}\)</span>-greedy performs well in practice with <span class="math notranslate nohighlight">\(\epsilon_{t}\)</span> decreases to 0 at a rate of <span class="math notranslate nohighlight">\(\frac{1}{t}\)</span>.</p>
 </div>
 <div class="section" id="algorithms-details">
 <h2>Algorithms Details<a class="headerlink" href="#algorithms-details" title="Permalink to this headline">¶</a></h2>
@@ -728,8 +728,8 @@
 <li><p>For t = <span class="math notranslate nohighlight">\(0, 1,\cdots, T\)</span>:</p>
 <p>2.1. select action <span class="math notranslate nohighlight">\(A_t\)</span> as the arm with the maximum <span class="math notranslate nohighlight">\(\theta_a^t\)</span> with probability <span class="math notranslate nohighlight">\(1-\epsilon_t\)</span>, or randomly select an action <span class="math notranslate nohighlight">\(A_t\)</span> with probability <span class="math notranslate nohighlight">\(\epsilon_t\)</span></p>
 <p>2.2. Received the reward R, and update <span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(Q\)</span> with</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6463acba-69f7-49e8-8724-9ec06552e9c5">
-<span class="eqno">(34)<a class="headerlink" href="#equation-6463acba-69f7-49e8-8724-9ec06552e9c5" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d47e0676-7a7c-4c51-ba4a-1e1968850f0e">
+<span class="eqno">(33)<a class="headerlink" href="#equation-d47e0676-7a7c-4c51-ba4a-1e1968850f0e" title="Permalink to this equation">¶</a></span>\[\begin{align}
     C_{A_{t}}^{t+1} &amp;= C_{A_{t}}^{t} + 1 \\
     \theta_{A_{t}}^{t+1} &amp;=\theta_{A_{t}}^{t} + 1/C_{A_{t+1}}^{t+1}*(R-\theta_{A_{t}}^{t})
     \end{align}\]</div>
@@ -753,7 +753,7 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span>\<span class="n">ipykernel_2040</span>\<span class="mf">3636065689.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span><span class="o">/</span><span class="n">ipykernel_19148</span><span class="o">/</span><span class="mf">3636065689.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">os</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM&#39;</span><span class="p">)</span>

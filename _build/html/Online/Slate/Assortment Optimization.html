@@ -45,15 +45,14 @@
     <script src="../../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="MNL-Thompson-Beta" href="MNL/MNL-Thompson-Beta.html" />
@@ -698,18 +697,18 @@
 <h2>Problem Setting (Multinomial Logit Bandit)<a class="headerlink" href="#problem-setting-multinomial-logit-bandit" title="Permalink to this headline">¶</a></h2>
 <p><strong>Standard Offering:</strong> Suppose that, at each round t, we need to recommend at most <span class="math notranslate nohighlight">\(K\)</span> items. In assortment optimization, the agent needs to offer a subset (assortment) <span class="math notranslate nohighlight">\(A_t \in \mathcal{A} = \{A\subseteq[N]:|A|\leq K\}\)</span>, and the customer will then choose either one of them or no-purchase which is denoted as item <span class="math notranslate nohighlight">\(0\)</span>. Let <span class="math notranslate nohighlight">\(\boldsymbol{Y}_t=(Y_{0,t},\cdots,Y_{N,t})^{T}\)</span> be an indicator vector of length <span class="math notranslate nohighlight">\(N+1\)</span>, where <span class="math notranslate nohighlight">\(Y_{i,t}\)</span> equals to <span class="math notranslate nohighlight">\(1\)</span> if the item <span class="math notranslate nohighlight">\(i\)</span> is chosen. Let <span class="math notranslate nohighlight">\(\boldsymbol{eta} = (\eta_0, \eta_1, \dots,\eta_{N})^{T}\)</span>, where <span class="math notranslate nohighlight">\(\eta_k\)</span> is the revenue of the item <span class="math notranslate nohighlight">\(k\)</span>.  Conventionally, <span class="math notranslate nohighlight">\(\eta_0 = 0\)</span>. The collected revenue in round <span class="math notranslate nohighlight">\(t\)</span> is then <span class="math notranslate nohighlight">\(R_t = \sum_{i\in A_t} Y_{i,t} \eta_{i}\)</span>. In an MNL bandit, each item <span class="math notranslate nohighlight">\(i\)</span> has an utility factor <span class="math notranslate nohighlight">\(v_i\)</span>, and
 the choice behaviour is characterized by a multinomial distribution</p>
-<div class="amsmath math notranslate nohighlight" id="equation-678bd0dc-6a49-4217-8a3b-b570c7b490fd">
-<span class="eqno">(47)<a class="headerlink" href="#equation-678bd0dc-6a49-4217-8a3b-b570c7b490fd" title="Permalink to this equation">¶</a></span>\[\begin{equation}\label{MNLdist}
+<div class="amsmath math notranslate nohighlight" id="equation-88a0659a-9f4e-4e3f-8b67-2e6907664d97">
+<span class="eqno">(47)<a class="headerlink" href="#equation-88a0659a-9f4e-4e3f-8b67-2e6907664d97" title="Permalink to this equation">¶</a></span>\[\begin{equation}\label{MNLdist}
     \boldsymbol{Y}_t \sim Multinomial(1, \frac{v_i \mathcal{I}(i \in \{0\}\cup A_t)}{1 + \sum_{j \in A_t} v_i}),
 \end{equation}\]</div>
 <p><strong>Epoch-type Offering:</strong> Alternatively, since the direct inference under the above MNL model is intractable, an epoch-based algorithmic structure is introduced [4,5,7] for computational efficiency. Specifically, for each epoch <span class="math notranslate nohighlight">\(l\)</span>, we keep offering the same assortment <span class="math notranslate nohighlight">\(A^l\)</span> until the no-purchase appears. Let <span class="math notranslate nohighlight">\(v_i = \theta_i^{-1}-1\)</span>. Denote the number of purchases for the item <span class="math notranslate nohighlight">\(i\)</span> in each epoch as <span class="math notranslate nohighlight">\(Y_{i}^l\)</span>. Under this setup, it is easy to show that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-01cca51d-f697-4ad8-ba3c-1c06e3aab8db">
-<span class="eqno">(48)<a class="headerlink" href="#equation-01cca51d-f697-4ad8-ba3c-1c06e3aab8db" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2b7a25db-2d25-4adc-a08e-c342ccd7dd8e">
+<span class="eqno">(48)<a class="headerlink" href="#equation-2b7a25db-2d25-4adc-a08e-c342ccd7dd8e" title="Permalink to this equation">¶</a></span>\[\begin{equation}
     Y_{i}^l \sim Geometric(\theta_i), \forall i \in A^l,
 \end{equation}\]</div>
 <p>No matter what offering type is offered, for each round <span class="math notranslate nohighlight">\(t\)</span>, when <span class="math notranslate nohighlight">\(v_i\)</span>’s are known, the optimal assortment <span class="math notranslate nohighlight">\(A_{t}\)</span> can be determined efficiently through linear programming [4], such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-28579825-cf71-44c0-a787-c0b97de9f8eb">
-<span class="eqno">(49)<a class="headerlink" href="#equation-28579825-cf71-44c0-a787-c0b97de9f8eb" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8e9afbde-c2e5-4605-bc3e-a4affc8b4107">
+<span class="eqno">(49)<a class="headerlink" href="#equation-8e9afbde-c2e5-4605-bc3e-a4affc8b4107" title="Permalink to this equation">¶</a></span>\[\begin{equation}
     A_{t} = argmax_{a \in \mathcal{A}} \frac{\sum_{i\in a}\eta_{i}v_{i}}{1+\sum_{j\in a} v_{j}}.
 \end{equation}\]</div>
 </div>

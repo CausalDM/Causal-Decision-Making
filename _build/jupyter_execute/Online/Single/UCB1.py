@@ -4,6 +4,13 @@
 # # UCB1
 # 
 # ## Main Idea
+# As the name suggested, the UCB algorithm estimates the upper confidence bound $U_{i}^{t}$ of the mean rewards based on the observations and then choose the action has the highest estimates. The class of UCB-based algorithms is firstly introduced by Auer et al. [2]. Generally, at each round $t$, $U_{i}^{t}$ is calculated as the sum of the estimated reward (exploitation) and the estimated confidence radius (exploration) of item $i$ based on $\mathcal{H}_{t}$. Then, $A_{t}$ is selected as 
+# \begin{equation}
+#     A_t = argmax_{a \in \mathcal{A}} E(R_t \mid a,\{ U_{i}^{t}\}_{i=1}^{N}).
+# \end{equation} 
+# 
+# Doing so, either the item with a large average reward or the item with limited exploration will be selected.
+# 
 # 
 # ## Algorithms Details
 # Supposed there are $K$ options, and the action space is $\mathcal{A} = \{0,1,\cdots, K-1\}$. The UCB1 algorithm start with initializing the estimated upper confidence bound $U_a^{0}$ and the count of being pulled $C_a^{0}$ for each action $a$ as 0. At each round $t$, we greedily select an action $A_t$ as 
@@ -87,6 +94,9 @@ UCB_agent.Rs
 # ## References
 # 
 # [1] Russo, D. J., Van Roy, B., Kazerouni, A., Osband, I., & Wen, Z. (2018). A tutorial on thompson sampling. Foundations and Trends® in Machine Learning, 11(1), 1-96.
+# 
+# [2] Auer, P., Cesa-Bianchi, N., and Fischer, P. (2002). Finite-time analysis of the multiarmed bandit problem. Machine learning, 47(2):235–256.
+# 
 
 # In[ ]:
 

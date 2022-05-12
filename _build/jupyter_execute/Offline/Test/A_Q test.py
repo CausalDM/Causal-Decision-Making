@@ -35,26 +35,26 @@ def generate_test_case(setup, N, seed = 0, phi1=None, phi2=None,psi1=None,psi2=N
         return instance
 
 
-# In[46]:
+# In[2]:
 
 
 instance = generate_test_case('random_binary', 1000, seed = 0,  phi1=[2,-.006],phi2=[.8,-.004],psi1=[250,-1],psi2=[720,-2])
 X,A,Y = instance['XAY']
 
 
-# In[47]:
+# In[3]:
 
 
 instance['optimal_A'][0].sum()
 
 
-# In[55]:
+# In[4]:
 
 
 instance['optimal_V']
 
 
-# In[49]:
+# In[5]:
 
 
 # TODO: there might be something wrong with the multiple step as the difference between A-learning and Q-learning is large

@@ -45,15 +45,14 @@
     <script src="../../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="CombTS" href="Combinatorial-Semi/CombTS.html" />
@@ -697,8 +696,8 @@
 <div class="section" id="problem-setting-combinatorial-semi-bandit">
 <h2>Problem Setting (Combinatorial Semi-Bandit)<a class="headerlink" href="#problem-setting-combinatorial-semi-bandit" title="Permalink to this headline">¶</a></h2>
 <p>Suppose that, at each round t, we need to recommend at most <span class="math notranslate nohighlight">\(K\)</span> items. Formally, the feasible set <span class="math notranslate nohighlight">\(\mathcal{A} \subseteq \{A \subseteq [N] : |A|\leq K\}\)</span> consists of subsets that satisfy the size constraint and other application-specific constraints. The agent will sequentially choose a subset <span class="math notranslate nohighlight">\(A_t\)</span> from <span class="math notranslate nohighlight">\(\mathcal{A}\)</span>, and then receive a separate reward <span class="math notranslate nohighlight">\(Y_{i, t}\)</span> for each chosen item <span class="math notranslate nohighlight">\(i \in A_t\)</span>, with the overall reward defined as <span class="math notranslate nohighlight">\(R_t = \sum_{i \in A_t} Y_{i,t}\)</span>. Mathematically, for each round <span class="math notranslate nohighlight">\(t\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fa261228-164c-4752-bc04-57859633a165">
-<span class="eqno">(44)<a class="headerlink" href="#equation-fa261228-164c-4752-bc04-57859633a165" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7c285bd4-b4ab-4910-a346-a56a58e3cbca">
+<span class="eqno">(44)<a class="headerlink" href="#equation-7c285bd4-b4ab-4910-a346-a56a58e3cbca" title="Permalink to this equation">¶</a></span>\[\begin{equation}
     \begin{split}
      Y_{i, t} &amp;\sim \mathcal{P}(\theta_{i}), \forall i \in A_{t},\\
     R_t &amp;= \sum_{i \in A_t} Y_{i,t}, 
