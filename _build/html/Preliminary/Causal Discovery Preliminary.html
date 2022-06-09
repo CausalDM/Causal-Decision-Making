@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Causal Discovery Preliminary &#8212; Causal Decision Making</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet">
-  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,20 +20,16 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -39,20 +37,21 @@
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Policy Evaluation and Optimization" href="Policy%20Evaluation%20and%20Optimization.html" />
@@ -64,7 +63,21 @@ const thebe_selector_output = ".output, .cell_output"
     <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -73,9 +86,10 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
@@ -93,14 +107,15 @@ const thebe_selector_output = ".output, .cell_output"
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../intro.html">
-   Causal Decision Making
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Causal Decision Making
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Introduction
  </span>
@@ -524,7 +539,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../Causal%20Discovery/Causal%20Discovery%20Learning.html">
-   Infinite Horizon
+   Causal Discovery Learning
   </a>
  </li>
 </ul>
@@ -542,107 +557,209 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/Preliminary/Causal Discovery Preliminary.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FPreliminary/Causal Discovery Preliminary.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/Preliminary/Causal Discovery Preliminary.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/Preliminary/Causal Discovery Preliminary.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FPreliminary/Causal Discovery Preliminary.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/Preliminary/Causal Discovery Preliminary.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
    Causal Discovery Preliminary
@@ -692,12 +809,11 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1>Causal Discovery Preliminary</h1>
@@ -763,24 +879,25 @@ const thebe_selector_output = ".output, .cell_output"
                     </div>
                 </div>
             </div>
-            
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="section" id="causal-discovery-preliminary">
-<h1>Causal Discovery Preliminary<a class="headerlink" href="#causal-discovery-preliminary" title="Permalink to this headline">¶</a></h1>
+  <section id="causal-discovery-preliminary">
+<h1>Causal Discovery Preliminary<a class="headerlink" href="#causal-discovery-preliminary" title="Permalink to this headline">#</a></h1>
 <p>Most existing methodologies for average / heterogeneous treatment effects and personalized decision making rely on a known causal structure. This enables us to locate the right variables to control (e.g., confounders), to intervene (e.g., treatments), and to optimize (e.g., rewards). However, such a convenience is violated in many emerging real applications with unknown causal reasoning. Causal discovery thus attracts more and more attention recently to infer causal structure from data and disentangle the complex relationship among variables. In the following, we review the basic terminologies in causal discovery, discuss how these related to average / heterogeneous treatment effects and personalized decision making, and detail three classical ways of causal discovery.</p>
-<div class="section" id="general-causal-graph-terminology">
-<h2>General Causal Graph Terminology<a class="headerlink" href="#general-causal-graph-terminology" title="Permalink to this headline">¶</a></h2>
+<section id="general-causal-graph-terminology">
+<h2>General Causal Graph Terminology<a class="headerlink" href="#general-causal-graph-terminology" title="Permalink to this headline">#</a></h2>
 <p>Consider a graph <span class="math notranslate nohighlight">\(\mathcal{G} =(Z,E)\)</span> with a node set <span class="math notranslate nohighlight">\(Z\)</span> and an edge set <span class="math notranslate nohighlight">\(E\)</span>. A node <span class="math notranslate nohighlight">\(Z_i\)</span> is said to be a parent of <span class="math notranslate nohighlight">\(Z_j\)</span> if there is a directed edge from <span class="math notranslate nohighlight">\(Z_i\)</span> to <span class="math notranslate nohighlight">\(Z_j\)</span>. Let the set of all parents of node <span class="math notranslate nohighlight">\(Z_j\)</span> in <span class="math notranslate nohighlight">\(\mathcal{G}\)</span> as <span class="math notranslate nohighlight">\(PA_{Z_j} (\mathcal{G})\)</span>. A directed graph that does not contain directed cycles is called a directed acyclic graph (DAG). Suppose a DAG <span class="math notranslate nohighlight">\(\mathcal{G}=(Z,E)\)</span> that characterizes the causal relationship among <span class="math notranslate nohighlight">\(|Z|=d\)</span> nodes, where <span class="math notranslate nohighlight">\(Z=[Z_1,Z_2,\cdots,Z_d]^\top \)</span> represents a random vector and an edge <span class="math notranslate nohighlight">\(Z_i\rightarrow Z_j\)</span> means that <span class="math notranslate nohighlight">\(Z_i\)</span> is a direct cause of <span class="math notranslate nohighlight">\(Z_j\)</span>.</p>
-</div>
-<div class="section" id="toy-example-1-causal-graph-for-heterogeneous-treatment-effect-and-personalized-decision-making">
-<h2>Toy Example 1:  Causal Graph for Heterogeneous Treatment Effect and Personalized Decision Making<a class="headerlink" href="#toy-example-1-causal-graph-for-heterogeneous-treatment-effect-and-personalized-decision-making" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="toy-example-1-causal-graph-for-heterogeneous-treatment-effect-and-personalized-decision-making">
+<h2>Toy Example 1:  Causal Graph for Heterogeneous Treatment Effect and Personalized Decision Making<a class="headerlink" href="#toy-example-1-causal-graph-for-heterogeneous-treatment-effect-and-personalized-decision-making" title="Permalink to this headline">#</a></h2>
 <p>In this example, the feature <span class="math notranslate nohighlight">\(X\)</span> determines the treatment assignment <span class="math notranslate nohighlight">\(A\)</span> (i.e., <span class="math notranslate nohighlight">\(X\rightarrow A\)</span>) and the outcome <span class="math notranslate nohighlight">\(Y\)</span> (i.e., <span class="math notranslate nohighlight">\(X\rightarrow Y\)</span>), and the treatment assignment <span class="math notranslate nohighlight">\(A\)</span> further influences the outcome <span class="math notranslate nohighlight">\(Y\)</span> (i.e., <span class="math notranslate nohighlight">\(A\rightarrow Y\)</span>).
 <img alt="title" src="../_images/xay.png" /></p>
 <p>Based on this causal graph, to optimize the outcome of interest, the doctor should assign the right treatment according to different features. Thus, the methods for personalized decision making focus on modeling the conditional mean outcome and the propensity score.</p>
-</div>
-<div class="section" id="toy-example-2-causal-graph-for-causal-mediation-analysis">
-<h2>Toy Example 2:  Causal Graph for Causal Mediation Analysis<a class="headerlink" href="#toy-example-2-causal-graph-for-causal-mediation-analysis" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="toy-example-2-causal-graph-for-causal-mediation-analysis">
+<h2>Toy Example 2:  Causal Graph for Causal Mediation Analysis<a class="headerlink" href="#toy-example-2-causal-graph-for-causal-mediation-analysis" title="Permalink to this headline">#</a></h2>
 <p>Causal mediation analysis (CMA) is a method to dissect total effect of a treatment into direct and indirect effect. The direct effect is how the treatment directly affects the outcome, and the indirect effect is transmitted via mediator <span class="math notranslate nohighlight">\(M\)</span> to the outcome.</p>
 <p><img alt="title" src="../_images/amy.png" /></p>
 <p>Pearl et al. (2009) provided a comprehensive review of recent advances in causal mediation analysis using ‘do-operator’ by graphical methods. Let <span class="math notranslate nohighlight">\(M=[M_1,M_2,\cdots,M_p]^\top \)</span> be mediators with dimension <span class="math notranslate nohighlight">\(p\)</span>. Suppose there exists a weighted DAG <span class="math notranslate nohighlight">\(\mathcal{G}=(Z,E)\)</span> that characterizes the causal relationship among <span class="math notranslate nohighlight">\(Z=[A, M^\top, Y]^\top \)</span>.  The total effect (<span class="math notranslate nohighlight">\(TE\)</span>), the natural direct effect that is not mediated by mediators (<span class="math notranslate nohighlight">\(DE\)</span>), and the natural indirect effect that is regulated by mediators (<span class="math notranslate nohighlight">\(IE\)</span>) are defined as:</p>
@@ -793,9 +910,9 @@ IE &amp;= E\{Y|do(A=a, M=m^{(a+1)})\}-E\{Y|do(A=a)\},
 \end{split}
 \end{equation*}\]</div>
 <p>where <span class="math notranslate nohighlight">\(do(A=a)\)</span> is a mathematical operator to simulate physical interventions that hold <span class="math notranslate nohighlight">\(A\)</span> constant as <span class="math notranslate nohighlight">\(a\)</span> while keeping the rest of the model unchanged, which corresponds to remove edges into <span class="math notranslate nohighlight">\(A\)</span> and replace <span class="math notranslate nohighlight">\(A\)</span> by the constant <span class="math notranslate nohighlight">\(a\)</span> in <span class="math notranslate nohighlight">\(\mathcal{G}\)</span>. Here, <span class="math notranslate nohighlight">\(m^{(a)}\)</span> is the value of <span class="math notranslate nohighlight">\(M\)</span> if setting <span class="math notranslate nohighlight">\(do(A=a)\)</span>, and <span class="math notranslate nohighlight">\(m^{(a+1)}\)</span> is the value of <span class="math notranslate nohighlight">\(M\)</span> if setting <span class="math notranslate nohighlight">\(do(A=a+1)\)</span>. Refer to Pearl et al. (2009) for more details of `do-operator’.</p>
-</div>
-<div class="section" id="overview-of-causal-discovery">
-<h2>Overview of Causal Discovery<a class="headerlink" href="#overview-of-causal-discovery" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="overview-of-causal-discovery">
+<h2>Overview of Causal Discovery<a class="headerlink" href="#overview-of-causal-discovery" title="Permalink to this headline">#</a></h2>
 <p>The above two toy examples rely on the known causal structures, which is hardly satisfied in the real-world problems, such as unmeasured confounders, massive vairables, and unstructured data. To fill these gaps, causal discovery proposes to learn a plusible causal graph from data.</p>
 <p>Wide literature on causal discovery can be summarized in three classes.</p>
 <ul class="simple">
@@ -803,27 +920,27 @@ IE &amp;= E\{Y|do(A=a, M=m^{(a+1)})\}-E\{Y|do(A=a)\},
 <li><p>The second class specifies properly <strong>functional causal models with additional assumptions on data distribution</strong>, including the ICA-LiNGAM (Shimizu et al., 2006) and the causal additive model (CAM) (Bühlmann et al., 2014).</p></li>
 <li><p>The last class, <strong>the score-based method</strong>, includes the greedy equivalence search (GES) (Chickering, 2002) and the fast GES (fGES) (Ramsey et al., 2017) that use for example Bayesian scores in searching a space of causal models. Recently, Zheng et al. (2018) opened up another track of score-based methods by constructing an optimization with an acyclicity constraint under the linear structural equation model (LSEM), i.e. the NOTEARS. A follow-up work using a VAE parameterized by a graph neural network that generalizes LSEM was proposed in Yu et al. (2019) with a more computational friendly constraint, namely DAG-GNN. Also see Zhu &amp; Chen (2019) and Cai et al. (2021) for other cutting-edge structural learning methods.</p></li>
 </ul>
-</div>
-<div class="section" id="causal-graphical-model-1-additive-noise-model">
-<h2>Causal Graphical Model 1: Additive Noise Model<a class="headerlink" href="#causal-graphical-model-1-additive-noise-model" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="causal-graphical-model-1-additive-noise-model">
+<h2>Causal Graphical Model 1: Additive Noise Model<a class="headerlink" href="#causal-graphical-model-1-additive-noise-model" title="Permalink to this headline">#</a></h2>
 <p>Suppose there exists a weighted DAG <span class="math notranslate nohighlight">\(\mathcal{G}=(Z,E)\)</span> that characterizes the causal relationship among <span class="math notranslate nohighlight">\(|Z|=d\)</span> nodes. Each variable <span class="math notranslate nohighlight">\(Z_i\)</span> is associated with a node <span class="math notranslate nohighlight">\(i\)</span> in the DAG <span class="math notranslate nohighlight">\(\mathcal{G}\)</span>, and the observed value of <span class="math notranslate nohighlight">\(Z_i\)</span> is obtained as a function of its parents in the graph plus an independent additive noise <span class="math notranslate nohighlight">\(n_i\)</span>, i.e.,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d49474af-2569-4f6c-aa20-f3b0ca1e2c4c">
-<span class="eqno">(16)<a class="headerlink" href="#equation-d49474af-2569-4f6c-aa20-f3b0ca1e2c4c" title="Permalink to this equation">¶</a></span>\[\begin{equation}\label{anm}
+<div class="amsmath math notranslate nohighlight" id="equation-a5a8b71b-6874-4402-b569-1a1f42000844">
+<span class="eqno">(16)<a class="headerlink" href="#equation-a5a8b71b-6874-4402-b569-1a1f42000844" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{anm}
 Z_i := f_i\{PA_{Z_i} (\mathcal{G})\} + n_i,i = 1,2,...,d, 
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(PA_{Z_i} (\mathcal{G})\)</span> denotes the set of parent variables of <span class="math notranslate nohighlight">\(Z_i\)</span> so that there is an edge from <span class="math notranslate nohighlight">\(Z_j\in PA_{Z_i} (\mathcal{G})\)</span> to <span class="math notranslate nohighlight">\(Z_i\)</span> in the graph, and the noises <span class="math notranslate nohighlight">\(n_i\)</span> are assumed to be jointly independent.</p>
-</div>
-<div class="section" id="causal-graphical-model-2-linear-structural-equation-model">
-<h2>Causal Graphical Model 2: Linear Structural Equation Model<a class="headerlink" href="#causal-graphical-model-2-linear-structural-equation-model" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="causal-graphical-model-2-linear-structural-equation-model">
+<h2>Causal Graphical Model 2: Linear Structural Equation Model<a class="headerlink" href="#causal-graphical-model-2-linear-structural-equation-model" title="Permalink to this headline">#</a></h2>
 <p>Let <span class="math notranslate nohighlight">\(B=\{b_{i,j}\}_{1\leq i\leq d,1\leq j\leq d}\)</span> be a <span class="math notranslate nohighlight">\(d\times d\)</span> matrix, where <span class="math notranslate nohighlight">\(b_{i,j}\)</span> is the weight of the edge <span class="math notranslate nohighlight">\(Z_i\rightarrow Z_j \in E\)</span>, and <span class="math notranslate nohighlight">\(b_{i,j}=0\)</span> otherwise. Then, we say that <span class="math notranslate nohighlight">\(\mathcal{G} =(Z,B)\)</span> is a weighted DAG with the node set <span class="math notranslate nohighlight">\(Z\)</span> and the weighted adjacency matrix <span class="math notranslate nohighlight">\(B\)</span> (the edge set <span class="math notranslate nohighlight">\(E\)</span> is nested in <span class="math notranslate nohighlight">\(B\)</span>). Under no unmeasured confounders, the Markov condition, the faithfulness condition, causal sufficiency assumption, and the linear structural equation model (LSEM) such that <span class="math notranslate nohighlight">\(Z\)</span> characterized by the pair (<span class="math notranslate nohighlight">\(\mathcal{G}\)</span>, <span class="math notranslate nohighlight">\(\epsilon\)</span>) is generated by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5b1f322d-87e5-4ac8-9337-c4261b6b8497">
-<span class="eqno">(17)<a class="headerlink" href="#equation-5b1f322d-87e5-4ac8-9337-c4261b6b8497" title="Permalink to this equation">¶</a></span>\[\begin{equation}\label{lsem_x}
+<div class="amsmath math notranslate nohighlight" id="equation-c3cca276-dab9-4e5f-8f55-6b8389b7d674">
+<span class="eqno">(17)<a class="headerlink" href="#equation-c3cca276-dab9-4e5f-8f55-6b8389b7d674" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{lsem_x}
 Z=B^\top Z +\epsilon,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\epsilon \)</span> is a  random vector of jointly independent error variables.</p>
-</div>
-<div class="section" id="causal-discovery-methods-to-be-detailed">
-<h2>Causal Discovery Methods To Be Detailed<a class="headerlink" href="#causal-discovery-methods-to-be-detailed" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="causal-discovery-methods-to-be-detailed">
+<h2>Causal Discovery Methods To Be Detailed<a class="headerlink" href="#causal-discovery-methods-to-be-detailed" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p>PC algorithm (Spirtes et al., 2000): set the Fisher-z test for conditional independence testing. The implementation is available through the py-causal package at https://github.com/bd2kccd/py-causal, written in highly optimized Java codes. Also see examples here https://github.com/bd2kccd/py-causal/blob/development/example/py-causal%20-%20PC-ALL%20in%20Action.ipynb.</p></li>
 <li><p>ICA-LiNGAM (Shimizu et al., 2006): The ICA-LiNGAM assumes linear non-Gaussian additive model to recover the weighted adjacency matrix. The ICA-LiNGAM is implemented with default hyper-parameters through the lingam package for all settings. See their repository at https://github.com/cdt15/lingam.</p></li>
@@ -831,10 +948,10 @@ Z=B^\top Z +\epsilon,
 <li><p>DAG-GNN (Yu et al., 2019): The DAG-GNN incorporates the variational auto-encoder into causal discovery with a modified smooth characterization on acyclicity in the evidence lower bound as the loss function. Codes are available at their repository at https://github.com/ fishmoon1234/DAG-GNN based on PyTorch (Paszke et al., 2017).</p></li>
 <li><p>ANOCE-CVAE: The ANOCE-CVAE is constrained causal structure learning method by incorporating a novel identification constraint that specifies the temporal causal relationship of variables. The code is publicly available at an anonymous repository at https://github.com/anoce-cvae/ANOCE-CVAE.</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="references">
-<h1>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h1>
+</section>
+</section>
+<section id="references">
+<h1>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h1>
 <p>[1] Judea Pearl et al. Causal inference in statistics: An overview. Statistics surveys, 3:96–146, 2009.</p>
 <p>[2] Pater Spirtes, Clark Glymour, Richard Scheines, Stuart Kauffman, Valerio Aimale, and Frank Wimberly. Constructing bayesian network models of gene expression networks from microarray data. 2000.</p>
 <p>[3] Markus Kalisch and Peter Bühlmann. Estimating high-dimensional directed acyclic graphs with the pc-algorithm. Journal of Machine Learning Research, 8(Mar):613–636, 2007.</p>
@@ -848,7 +965,7 @@ Z=B^\top Z +\epsilon,
 arXiv preprint arXiv:1904.10098, 2019.</p>
 <p>[11] Shengyu Zhu and Zhitang Chen. Causal discovery with reinforcement learning. arXiv preprint arXiv:1906.04477, 2019.</p>
 <p>[12] Cai, Hengrui, Rui Song, and Wenbin Lu. “ANOCE: Analysis of Causal Effects with Multiple Mediators via Constrained Structural Learning.” International Conference on Learning Representations. 2020.</p>
-</div>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -872,9 +989,11 @@ arXiv preprint arXiv:1904.10098, 2019.</p>
 
               </div>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="Heterogenous%20Treatement%20Effect.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -890,24 +1009,28 @@ arXiv preprint arXiv:1904.10098, 2019.</p>
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-            
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-  <p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Causal Decision Making Team<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
     
-      By Causal Decision Making Team<br/>
-    
-        &copy; Copyright 2021.<br/>
-  </p>
-</footer>
-</main>
+</div>
 
 
       </div>
     </div>
   
-  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>

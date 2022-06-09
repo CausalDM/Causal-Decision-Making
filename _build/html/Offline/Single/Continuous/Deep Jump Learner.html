@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Deep Jump Learner for Continuous Actions &#8212; Causal Decision Making</title>
     
-  <link href="../../../_static/css/theme.css" rel="stylesheet">
-  <link href="../../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,20 +20,16 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="../../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
@@ -39,20 +37,21 @@
     <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../../../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="../../../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../../_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="Kernel-Based Learner" href="Kernel-Based%20Learner.html" />
@@ -64,7 +63,21 @@ const thebe_selector_output = ".output, .cell_output"
     <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -73,9 +86,10 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../../../index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
@@ -93,14 +107,15 @@ const thebe_selector_output = ".output, .cell_output"
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../../intro.html">
-   Causal Decision Making
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Causal Decision Making
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Introduction
  </span>
@@ -524,7 +539,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../../../Causal%20Discovery/Causal%20Discovery%20Learning.html">
-   Infinite Horizon
+   Causal Discovery Learning
   </a>
  </li>
 </ul>
@@ -542,107 +557,209 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../../_sources/Offline/Single/Continuous/Deep Jump Learner.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FOffline/Single/Continuous/Deep Jump Learner.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/Offline/Single/Continuous/Deep Jump Learner.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../../../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/Offline/Single/Continuous/Deep Jump Learner.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FOffline/Single/Continuous/Deep Jump Learner.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../../_sources/Offline/Single/Continuous/Deep Jump Learner.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#main-idea">
    Main Idea
@@ -689,12 +806,11 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1>Deep Jump Learner for Continuous Actions</h1>
@@ -757,11 +873,12 @@ const thebe_selector_output = ".output, .cell_output"
                     </div>
                 </div>
             </div>
-            
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="deep-jump-learner-for-continuous-actions">
-<h1>Deep Jump Learner for Continuous Actions<a class="headerlink" href="#deep-jump-learner-for-continuous-actions" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="deep-jump-learner-for-continuous-actions">
+<h1>Deep Jump Learner for Continuous Actions<a class="headerlink" href="#deep-jump-learner-for-continuous-actions" title="Permalink to this headline">#</a></h1>
 <p>Despite the popularity of developing methods for policy optimization and evaluation with discrete treatments, less attention has been paid to continuous action domains such as personalized dose-finding and dynamic pricing. We review the classical solutions for continous domains and detail the <strong>deep jump learner</strong> for continuous actions.</p>
 <p><em><strong>Application situations</strong></em>:</p>
 <ol class="simple">
@@ -783,55 +900,55 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 </ol>
-<div class="section" id="main-idea">
-<h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="overview">
-<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h3>
+<section id="main-idea">
+<h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h3>
 <p>To handle <strong>continuous treatment settings</strong>, we detail the jump interval-learning to develop an individualized interval-valued decision rule (I2DR) that maximizes the expected outcome. Unlike individualized decision rules (IDRs) that recommend a single treatment, the newly proposed I2DR yields an interval of treatment options for each individual, making it more flexible to implement in practice. On the other hand, for off-policy evaluation, we review the deep jump learning, of which the key ingredient lies in adaptively discretizing the treatment space using deep discretization, by leveraging deep learning and multi-scale change point detection. This allows us to apply existing off-policy evaluation methods in discrete treatments to handle continuous treatments, and overcome the limitations of kernel-based methods in the literature and handle both <strong>continuous/discontinuous value function</strong>.</p>
-</div>
-<div class="section" id="difficulties-in-continuous-actions">
-<h3>Difficulties in Continuous Actions<a class="headerlink" href="#difficulties-in-continuous-actions" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="difficulties-in-continuous-actions">
+<h3>Difficulties in Continuous Actions<a class="headerlink" href="#difficulties-in-continuous-actions" title="Permalink to this headline">#</a></h3>
 <p>Let the observed offline datasets as <span class="math notranslate nohighlight">\(\{(X_i,A_i,Y_i)\}_{1\le i\le n}\)</span> and <span class="math notranslate nohighlight">\(n\)</span> as the total sample size. A decision rule or policy <span class="math notranslate nohighlight">\(d: \mathcal{X} \to \mathcal{A}\)</span>. We use <span class="math notranslate nohighlight">\(b\)</span> to denote the propensity score and <span class="math notranslate nohighlight">\(p(\bullet|x)\)</span> denotes the probability density function of <span class="math notranslate nohighlight">\(A\)</span> given <span class="math notranslate nohighlight">\(X=x\)</span>. Define the <span class="math notranslate nohighlight">\(Q\)</span>-function as <span class="math notranslate nohighlight">\(Q(x, a) = E(Y|X=x,A=a).\)</span> The doubly robust (DR) estimator of value <span class="math notranslate nohighlight">\(V(d) = E [Q\{X, d(X)\}]\)</span> for discrete treatments is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-84736088-9536-48a6-9c94-842c85bbd613">
-<span class="eqno">(30)<a class="headerlink" href="#equation-84736088-9536-48a6-9c94-842c85bbd613" title="Permalink to this equation">¶</a></span>\[\begin{eqnarray}\label{eqn:DR}
+<div class="amsmath math notranslate nohighlight" id="equation-0cdc73df-0ece-4493-873e-43652fd45bef">
+<span class="eqno">(30)<a class="headerlink" href="#equation-0cdc73df-0ece-4493-873e-43652fd45bef" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:DR}
 \frac{1}{n}\sum_{i=1}^n \psi(O_i,d,\widehat{Q},\widehat{p})=\frac{1}{n}\sum_{i=1}^n \left[\widehat{Q}\{X_i,d(X_i)\}+\frac{\mathbb{I}\{A_i=d(X_i)\}}{\widehat{p}(A_i|X_i)}\{Y_i-\widehat{Q}(X_i,A_i)\}\right],
 \end{eqnarray}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathbb{I}(\bullet)\)</span> denotes the indicator function, <span class="math notranslate nohighlight">\(\widehat{Q}\)</span> and <span class="math notranslate nohighlight">\(\widehat{p}(a|x)\)</span> denote some estimators for the conditional mean function <span class="math notranslate nohighlight">\(Q\)</span> and the propensity score <span class="math notranslate nohighlight">\(b\)</span>, respectively. In continuous treatment domains, the indicator function <span class="math notranslate nohighlight">\(\mathbb{I}\{A_i=d(X_i)\}\)</span> equals zero almost surely. Consequently, naively applying the DR method yields a plug-in estimator <span class="math notranslate nohighlight">\(\sum_{i=1}^n \widehat{Q}\{X_i,d(X_i)\}/n\)</span>. To address this concern, the kernel-based methods proposed to replace the indicator function with a kernel function <span class="math notranslate nohighlight">\(K[\{A_i-d(X_i)\}/h]\)</span>, i.e.,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a41fecaf-22b5-4505-a5e5-5e793c4065bb">
-<span class="eqno">(31)<a class="headerlink" href="#equation-a41fecaf-22b5-4505-a5e5-5e793c4065bb" title="Permalink to this equation">¶</a></span>\[\begin{eqnarray}\label{eqn:kernel}
+<div class="amsmath math notranslate nohighlight" id="equation-f5248e6a-5f73-4f7f-9caa-7081c914509c">
+<span class="eqno">(31)<a class="headerlink" href="#equation-f5248e6a-5f73-4f7f-9caa-7081c914509c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:kernel}
 	\frac{1}{n}\sum_{i=1}^n \psi_h(O_i,d,\widehat{Q},\widehat{p})=\frac{1}{n}\sum_{i=1}^n \left[\widehat{Q}\{X_i,d(X_i)\}+\frac{K\{{A_i-d(X_i)\over h}\}}{\widehat{p}(A_i|X_i)}\{Y_i-\widehat{Q}(X_i,A_i)\}\right].
 \end{eqnarray}\]</div>
 <p>Here, the bandwidth <span class="math notranslate nohighlight">\(h\)</span> represents a trade-off. The variance of the resulting value estimator decays with <span class="math notranslate nohighlight">\(h\)</span>. Yet, its bias increases with <span class="math notranslate nohighlight">\(h\)</span>. This method requires the expected second derivative of the function <span class="math notranslate nohighlight">\(Q(x,a)\)</span> exists, and thus <span class="math notranslate nohighlight">\(Q(x,a)\)</span> needs to be a <strong>smooth</strong> function of <span class="math notranslate nohighlight">\(a\)</span>.</p>
-</div>
-<div class="section" id="details-of-deep-jump-learner">
-<h3>Details of Deep Jump Learner<a class="headerlink" href="#details-of-deep-jump-learner" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="details-of-deep-jump-learner">
+<h3>Details of Deep Jump Learner<a class="headerlink" href="#details-of-deep-jump-learner" title="Permalink to this headline">#</a></h3>
 <p>To overcome these difficulties, the deep jump learner proposes to adaptively discretizing the treatment space. We define <span class="math notranslate nohighlight">\(\mathcal{B}(m)\)</span> as the set of discretizations <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> such that each interval <span class="math notranslate nohighlight">\(\mathcal{I}\in \mathcal{D}\)</span> corresponds to a union of some of the <span class="math notranslate nohighlight">\(m\)</span> initial intervals.  Each discretization <span class="math notranslate nohighlight">\(\mathcal{D}\in \mathcal{B}(m)\)</span> is associated with a set of functions <span class="math notranslate nohighlight">\(\{q_{\mathcal{I}}\}_{\mathcal{I}\in \mathcal{D}}\)</span>. We model these <span class="math notranslate nohighlight">\(q_{\mathcal{I}}\)</span> using deep neural networks (DNNs), to capture the complex dependence between the outcome and features.  Thus, <span class="math notranslate nohighlight">\(\widehat{\mathcal{D}}\)</span> can be estimated by solving</p>
-<div class="amsmath math notranslate nohighlight" id="equation-81cc649a-823b-4d4f-bb80-7b3d2994e342">
-<span class="eqno">(32)<a class="headerlink" href="#equation-81cc649a-823b-4d4f-bb80-7b3d2994e342" title="Permalink to this equation">¶</a></span>\[\begin{eqnarray}\label{eqn:optimize}
+<div class="amsmath math notranslate nohighlight" id="equation-864b75fb-1af3-4f1d-ac34-10ad69b95f06">
+<span class="eqno">(32)<a class="headerlink" href="#equation-864b75fb-1af3-4f1d-ac34-10ad69b95f06" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:optimize}
  \left(\widehat{\mathcal{D}},\{\widehat{q}_{\mathcal{I}}:\mathcal{I}\in \widehat{\mathcal{D}} \}\right)=argmin_{\left(\substack{\mathcal{D}\in \mathcal{B}(m),\\ \{q_{\mathcal{I}}\in \mathcal{Q}_{\mathcal{I}}: \mathcal{I}\in \mathcal{D} \} }\right)}\left(\sum_{\mathcal{I}\in \mathcal{D}} \left[ {1\over n} \sum_{i=1}^{n} \mathbb{I}(A_i\in \mathcal{I})  \big\{Y_i - q_{\mathcal{I}}(X_i) \big\}^2\right]+\gamma_n |\mathcal{D}| \right),
 \end{eqnarray}\]</div>
 <p>for some regularization parameter <span class="math notranslate nohighlight">\(\gamma_n\)</span> and some function class of DNNs <span class="math notranslate nohighlight">\(\mathcal{Q}_{\mathcal{I}}\)</span>.</p>
 <p><em><strong>Policy Optimization</strong></em>:</p>
 <p>Given <span class="math notranslate nohighlight">\(\widehat{\mathcal{D}}\)</span> and <span class="math notranslate nohighlight">\(\{\widehat{q}_{\mathcal{I}}:\mathcal{I}\in \widehat{\mathcal{D}} \}\)</span>, to maximize the expected outcome of interest, our proposed I2DR is then given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e698e121-7190-4215-8a00-35691a666f62">
-<span class="eqno">(33)<a class="headerlink" href="#equation-e698e121-7190-4215-8a00-35691a666f62" title="Permalink to this equation">¶</a></span>\[\begin{eqnarray}\label{I2DR}
+<div class="amsmath math notranslate nohighlight" id="equation-6b6c69df-87f4-460a-87b8-b898c35e2f9f">
+<span class="eqno">(33)<a class="headerlink" href="#equation-6b6c69df-87f4-460a-87b8-b898c35e2f9f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{I2DR}
 	\widehat{d}(x)=argmax_{\mathcal{I}\in \widehat{\mathcal{D}}}  \widehat{q}_{\mathcal{I}}(x),\,\,\,\,\,\,\,\,\forall x\in \mathbb{X}.
 \end{eqnarray}\]</div>
 <p>When the argmax in the above equation is not unique, <span class="math notranslate nohighlight">\(\widehat{d}(\cdot)\)</span> outputs the interval that contains the smallest treatment.</p>
 <p><em><strong>Policy Evaluation</strong></em>:</p>
 <p>Given <span class="math notranslate nohighlight">\(\widehat{\mathcal{D}}\)</span> and <span class="math notranslate nohighlight">\(\{\widehat{q}_{\mathcal{I}}:\mathcal{I}\in \widehat{\mathcal{D}} \}\)</span>, we apply the DR estimator to derive the value estimate for any target policy of interest <span class="math notranslate nohighlight">\(d\)</span>, i.e.,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0c7b9153-4574-4fd8-94aa-c91cfc70c3f4">
-<span class="eqno">(34)<a class="headerlink" href="#equation-0c7b9153-4574-4fd8-94aa-c91cfc70c3f4" title="Permalink to this equation">¶</a></span>\[\begin{eqnarray}\label{value_djqe}
+<div class="amsmath math notranslate nohighlight" id="equation-2473e301-cff2-4502-9b4b-5089e3c03693">
+<span class="eqno">(34)<a class="headerlink" href="#equation-2473e301-cff2-4502-9b4b-5089e3c03693" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{value_djqe}
 	\widehat{V}^{DR}(d)={1\over n} \sum_{\mathcal{I}\in \widehat{\mathcal{D}}}  \sum_{i=1}^{n} \left( \mathbb{I}\{d(X_i)\in \mathcal{I}\}  \left[  {\mathbb{I}(A_i\in \mathcal{I})\over  \widehat{p}_\mathcal{I}(X_i)}\big\{Y_i - \widehat{q}_\mathcal{I}(X_i) \big\} + \widehat{q}_\mathcal{I}(X_i) \right]\right),
 \end{eqnarray}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\widehat{p}_{\mathcal{I}}(x)\)</span> is some estimator of the generalized propensity score function <span class="math notranslate nohighlight">\(p(A\in \mathcal{I}|X=x)\)</span>.</p>
-</div>
-</div>
-<div class="section" id="demo-code">
-<h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="demo-code">
+<h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
 <p>In the following, we exhibit how to apply the learner on real data to do policy learning and policy evaluation, respectively.</p>
-<div class="section" id="policy-learning">
-<h3>1. Policy Learning<a class="headerlink" href="#policy-learning" title="Permalink to this headline">¶</a></h3>
+<section id="policy-learning">
+<h3>1. Policy Learning<a class="headerlink" href="#policy-learning" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># To find the optimal I2DR by the deep jump learner on the Real Data </span>
@@ -854,12 +971,14 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span><span class="o">/</span><span class="n">ipykernel_15692</span><span class="o">/</span><span class="mf">2744164990.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 5&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># To find the optimal I2DR by the deep jump learner on the Real Data </span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="c1"># of Warfarin Dosing (20 features)</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> 
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># code used to import the learner</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># code used to import the learner  </span>
 <span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">DJL_opt</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> 
 <span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="c1"># real data generator</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">data_gen</span> <span class="o">=</span> <span class="n">data_generator</span><span class="o">.</span><span class="n">RealDataGenerator</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;real_envir.pickle&#39;</span><span class="p">)</span> 
 
 <span class="ne">ModuleNotFoundError</span>: No module named &#39;DJL_opt&#39;
 </pre></div>
@@ -881,9 +1000,9 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <p><strong>Interpretation:</strong> The estimated optimal regime (I2DR) for 0th patient is [0.333, 1.0].</p>
-</div>
-<div class="section" id="policy-evaluation">
-<h3>2. Policy Evaluation<a class="headerlink" href="#policy-evaluation" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="policy-evaluation">
+<h3>2. Policy Evaluation<a class="headerlink" href="#policy-evaluation" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># To evaluate the deep jump learner on the Real Data of Warfarin Dosing (20 features)</span>
@@ -922,16 +1041,16 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <p><strong>Interpretation:</strong> The analysis result: the estimated value of the calibrated optimal policy under sample size <span class="math notranslate nohighlight">\(n=100\)</span> and <span class="math notranslate nohighlight">\(p=20\)</span> features is -0.1.</p>
-</div>
-</div>
-<div class="section" id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <p>[1] Cai, H., Shi, C., Song, R., &amp; Lu, W. (2021). Deep jump learning for off-policy evaluation in continuous treatment settings. Advances in Neural Information Processing Systems, 34.</p>
 <p>[2] Cai, H., Shi, C., Song, R., &amp; Lu, W. (2021). Jump Interval-Learning for Individualized Decision Making. arXiv preprint arXiv:2111.08885.</p>
 <p>[3] Zhu, L., Lu, W., Kosorok, M. R., &amp; Song, R. (2020, August). Kernel assisted learning for personalized dose finding. In Proceedings of the 26th ACM SIGKDD International Conference on Knowledge Discovery &amp; Data Mining (pp. 56-65).</p>
 <p>[4] Kallus, N., &amp; Zhou, A. (2018, March). Policy evaluation and optimization with continuous treatments. In International conference on artificial intelligence and statistics (pp. 1243-1251). PMLR.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -955,9 +1074,11 @@ const thebe_selector_output = ".output, .cell_output"
 
               </div>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="../Continuous.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -973,24 +1094,28 @@ const thebe_selector_output = ".output, .cell_output"
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-            
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-  <p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Causal Decision Making Team<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
     
-      By Causal Decision Making Team<br/>
-    
-        &copy; Copyright 2021.<br/>
-  </p>
-</footer>
-</main>
+</div>
 
 
       </div>
     </div>
   
-  <script src="../../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>

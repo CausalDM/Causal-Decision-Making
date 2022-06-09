@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>A-Learning (Multiple Stages) &#8212; Causal Decision Making</title>
     
-  <link href="../../_static/css/theme.css" rel="stylesheet">
-  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,20 +20,16 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -39,20 +37,21 @@
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="../../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Infinite Horizon" href="../Infinite%20Horizon.html" />
@@ -64,7 +63,21 @@ const thebe_selector_output = ".output, .cell_output"
     <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -73,9 +86,10 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../../index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
@@ -93,14 +107,15 @@ const thebe_selector_output = ".output, .cell_output"
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../intro.html">
-   Causal Decision Making
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Causal Decision Making
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Introduction
  </span>
@@ -524,7 +539,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learning.html">
-   Infinite Horizon
+   Causal Discovery Learning
   </a>
  </li>
 </ul>
@@ -542,107 +557,209 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/Offline/Multiple/A-learning_Multiple.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FOffline/Multiple/A-learning_Multiple.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/Offline/Multiple/A-learning_Multiple.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/Offline/Multiple/A-learning_Multiple.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FOffline/Multiple/A-learning_Multiple.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/Offline/Multiple/A-learning_Multiple.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#main-idea">
    Main Idea
@@ -692,12 +809,11 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1>A-Learning (Multiple Stages)</h1>
@@ -763,58 +879,59 @@ const thebe_selector_output = ".output, .cell_output"
                     </div>
                 </div>
             </div>
-            
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="a-learning-multiple-stages">
-<h1>A-Learning (Multiple Stages)<a class="headerlink" href="#a-learning-multiple-stages" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="main-idea">
-<h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">¶</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="a-learning-multiple-stages">
+<h1>A-Learning (Multiple Stages)<a class="headerlink" href="#a-learning-multiple-stages" title="Permalink to this headline">#</a></h1>
+<section id="main-idea">
+<h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>A-Learning, also known as Advantage Learning, is one of the main approaches to learning the optimal regime and works similarly to Q-learning. However, while Q-learning requires positing regression models to fit the expected outcome, A-learning models the contrasts between treatments and control, directly informing the optimal decision. For example, in the case of <strong>Personalized Incentives</strong>, A-learning aims to find the optimal incentive (<span class="math notranslate nohighlight">\(A\)</span>) for each user by modeling the difference in expected return-on-investment (<span class="math notranslate nohighlight">\(Y\)</span>) between treatments. A detailed comparison between Q-learning and A-learning can be found in [1]. While [1] mainly focus on the case with binary treatment options, a complete review of A-learning with multiple treatment options can be found in [2]. Here, following the algorithm in [1], we consider contrast-based A-learning. However, there is an alternative regret-based A-learning introduced in [3]. Some recent extensions to conventional A-learning, such as deep A-learning [4] and high-dimensional A-Learning [5], will be added soon. Overall, A-learning is doubly-robust. In other words, it is less sensitive and more robust to model misspecification.</p>
 <p>Note that, we assume the action space is either <strong>binary</strong> (i.e., 0,1) or <strong>multinomial</strong> (i.e., 0,1,2,3,4, where 0 stands for the control group by convention), and the outcome of interest Y is <strong>continuous</strong> and <strong>non-negative</strong>, where the larger the <span class="math notranslate nohighlight">\(Y\)</span> the better.</p>
-</div>
-<div class="section" id="algorithm-details">
-<h2>Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="algorithm-details">
+<h2>Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this headline">#</a></h2>
 <p>Suppose there are <span class="math notranslate nohighlight">\(m_t\)</span> number of options at decision point <span class="math notranslate nohighlight">\(t\)</span>, and the corresponding action space <span class="math notranslate nohighlight">\(\mathcal{A}_t=\{0,1,\dots,m_t-1\}\)</span>. At each decision point <span class="math notranslate nohighlight">\(t\)</span>, contrast-based A-learning aims to learn and estimate the constrast function, <span class="math notranslate nohighlight">\(C_{tj}(h_{t}), j=1,2,\dots,m_t-1\)</span>. Here, <span class="math notranslate nohighlight">\(h_{t}=\{X_{1i},A_{1i},\cdots,X_{ti}\})\)</span> includes all the information observed till step t. Furthermore, we also need to posit a model for the conditional expected outcome for the control option (treatment <span class="math notranslate nohighlight">\(0\)</span>), <span class="math notranslate nohighlight">\(Q_t(h_t,0)\)</span>, and the propensity function <span class="math notranslate nohighlight">\(\omega(h_{t},a_{t})\)</span>. Detailed definitions are provided in the following:</p>
 <ul>
 <li><p>Q-function:
 For the final step <span class="math notranslate nohighlight">\(T\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-462623cb-808a-4eb4-b561-9facc0c02f74">
-<span class="eqno">(37)<a class="headerlink" href="#equation-462623cb-808a-4eb4-b561-9facc0c02f74" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-09ac6ff8-267e-4f0e-834c-156990b7c801">
+<span class="eqno">(37)<a class="headerlink" href="#equation-09ac6ff8-267e-4f0e-834c-156990b7c801" title="Permalink to this equation">#</a></span>\[\begin{align}
     Q_T(h_T,a_{T})=E[Y|H_{T}=h_{T}, A_{T}=a_{T}],
     \end{align}\]</div>
 <p>If there is a multi-stage case with total step <span class="math notranslate nohighlight">\(T&gt;1\)</span>, for the step <span class="math notranslate nohighlight">\(t=1,\cdots,T-1\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cbeb32b4-987d-423d-bf99-0a8e83f16442">
-<span class="eqno">(38)<a class="headerlink" href="#equation-cbeb32b4-987d-423d-bf99-0a8e83f16442" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f24b4fb8-66c1-44ec-b1d5-8759570127b4">
+<span class="eqno">(38)<a class="headerlink" href="#equation-f24b4fb8-66c1-44ec-b1d5-8759570127b4" title="Permalink to this equation">#</a></span>\[\begin{align}
     Q_t(h_t,a_{t})=E[V_{t+1}|H_{t}=h_{t}, A_{t}=a_{t}],
     \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9344a781-b59d-4406-b6ef-c85dd2117e67">
-<span class="eqno">(39)<a class="headerlink" href="#equation-9344a781-b59d-4406-b6ef-c85dd2117e67" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6b8c931f-1d6a-40ed-8fc6-b995e6142881">
+<span class="eqno">(39)<a class="headerlink" href="#equation-6b8c931f-1d6a-40ed-8fc6-b995e6142881" title="Permalink to this equation">#</a></span>\[\begin{align}
     V_{t}(h_{t}) = \max_{j\in\mathcal{A}_t}Q_{t}(h_t,j)
     \end{align}\]</div>
 <p>Alternatively, with the contrast function <span class="math notranslate nohighlight">\(C_{tj}(h_t)\)</span>, which will be defined later,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5bd324c0-3eba-4c1a-b0f0-10bf145a619a">
-<span class="eqno">(40)<a class="headerlink" href="#equation-5bd324c0-3eba-4c1a-b0f0-10bf145a619a" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d8332549-0fa2-4dca-9f76-c2853ca32d9a">
+<span class="eqno">(40)<a class="headerlink" href="#equation-d8332549-0fa2-4dca-9f76-c2853ca32d9a" title="Permalink to this equation">#</a></span>\[\begin{align}
     Q_t(h_t,j) = Q_t(h_t,0) + C_{tj}(h_t),\quad j=0,\dots,m_t-1,\quad t=1,\dots,T.
     \end{align}\]</div>
 </li>
 <li><p>Contrast functions (optimal blip to zero functions)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cee7eee2-1721-4e13-a144-43afee153c2f">
-<span class="eqno">(41)<a class="headerlink" href="#equation-cee7eee2-1721-4e13-a144-43afee153c2f" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-de997e10-2392-43c3-bc40-dec8f541aebd">
+<span class="eqno">(41)<a class="headerlink" href="#equation-de997e10-2392-43c3-bc40-dec8f541aebd" title="Permalink to this equation">#</a></span>\[\begin{align}
     C_{tj}(h_t)=Q_t(h_t,j)-Q_t(h_t,0),\quad j=0,\dots,m_t-1,\quad t=1,\dots,T,
     \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(C_{t0}(h_t) = 0\)</span>.</p>
 </li>
 <li><p>Propensity score</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b5ad3984-62bd-44c3-93df-fa4fc0d4230b">
-<span class="eqno">(42)<a class="headerlink" href="#equation-b5ad3984-62bd-44c3-93df-fa4fc0d4230b" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-aaa1680b-d5f8-4bc3-b4e3-2685f8908ecd">
+<span class="eqno">(42)<a class="headerlink" href="#equation-aaa1680b-d5f8-4bc3-b4e3-2685f8908ecd" title="Permalink to this equation">#</a></span>\[\begin{align}
     \omega_{t}(h_t,a_t)=P(A_t=a_t|H_t=h_t)
     \end{align}\]</div>
 </li>
 <li><p>Optimal regime</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b485d753-9094-4538-8627-1867f3d467d6">
-<span class="eqno">(43)<a class="headerlink" href="#equation-b485d753-9094-4538-8627-1867f3d467d6" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f6ead238-d611-45fe-bad1-c02b372098e0">
+<span class="eqno">(43)<a class="headerlink" href="#equation-f6ead238-d611-45fe-bad1-c02b372098e0" title="Permalink to this equation">#</a></span>\[\begin{align}
     d_t^{opt}(h_t)=\arg\max_{j\in\mathcal{A}_t}C_{tj}(h_t)
     \end{align}\]</div>
 </li>
@@ -822,19 +939,19 @@ For the final step <span class="math notranslate nohighlight">\(T\)</span>,</p>
 <p>A backward approach was proposed to find the optimized treatment regime at each decision point.</p>
 <p>At Decision <span class="math notranslate nohighlight">\(T\)</span>, similar as what we did previously with single decision point, we estimate the <span class="math notranslate nohighlight">\(\psi_{Tj}\)</span>, <span class="math notranslate nohighlight">\(\phi_T\)</span> and <span class="math notranslate nohighlight">\(\gamma_T\)</span> by solving the eqautions in A.1 jointly, and the optimal decision at time <span class="math notranslate nohighlight">\(T\)</span> is calculated accordingly.</p>
 <p>Then, at Decision <span class="math notranslate nohighlight">\(t=T-1,\dots,1\)</span>, we use similar trick as decision <span class="math notranslate nohighlight">\(T\)</span>, except for changing <span class="math notranslate nohighlight">\(Y\)</span> in the estimating eqautions to some pseudo outcome <span class="math notranslate nohighlight">\(\tilde{Y}_{t+1,i}\)</span>, such that:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fbb970c5-7d73-4638-be59-f4f784841167">
-<span class="eqno">(44)<a class="headerlink" href="#equation-fbb970c5-7d73-4638-be59-f4f784841167" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a6a24a3b-46d0-4488-b567-00f5cdd95481">
+<span class="eqno">(44)<a class="headerlink" href="#equation-a6a24a3b-46d0-4488-b567-00f5cdd95481" title="Permalink to this equation">#</a></span>\[\begin{align}
 \tilde{Y}_{ti}=\tilde{Y}_{t+1,i}+\max_{j=0,\dots,m_t-1}C_{tj}(h_{ti},\hat{\psi}_{tj})-\sum_{j=1}^{m_k-1}\mathbb{I}\{A_{ti}=j\}C_{tj}(h_{ti},\hat{\psi}_{tj}),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\tilde{Y}_{T+1,i} = Y_{i}\)</span>.</p>
 <p>Estimating <span class="math notranslate nohighlight">\(\psi_{tj}\)</span>, <span class="math notranslate nohighlight">\(\phi_t\)</span> and <span class="math notranslate nohighlight">\(\gamma_t\)</span> iteratively for <span class="math notranslate nohighlight">\(t=T-1,\cdots,1\)</span>, we calculated the optimal decision at time <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(d^{opt}_{t}(h_{ti})\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6b1c8e37-54dc-4eed-bc37-1754a71ec9cc">
-<span class="eqno">(45)<a class="headerlink" href="#equation-6b1c8e37-54dc-4eed-bc37-1754a71ec9cc" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-caa81f1d-bc18-4024-97c8-6c73aad13fc7">
+<span class="eqno">(45)<a class="headerlink" href="#equation-caa81f1d-bc18-4024-97c8-6c73aad13fc7" title="Permalink to this equation">#</a></span>\[\begin{align}
 d^{opt}_{t}(h_{ti})=\arg\max_{j=0,\dots,m_t-1} C_{tj}(h_{ti};\hat{\psi}_{tj}).
 \end{align}\]</div>
-</div>
-<div class="section" id="key-steps">
-<h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="key-steps">
+<h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">#</a></h2>
 <p><strong>Policy Learning:</strong></p>
 <ol class="simple">
 <li><p>At the final decision point <span class="math notranslate nohighlight">\(t=T\)</span>, fitted a model <span class="math notranslate nohighlight">\(\omega_{T}(h_{T},a,\hat{\gamma}_{T})\)</span>, and estimating <span class="math notranslate nohighlight">\(\psi_{Tj}\)</span>, <span class="math notranslate nohighlight">\(\phi_{T}\)</span> by solving the equations in A.2 jointly;</p></li>
@@ -848,19 +965,19 @@ d^{opt}_{t}(h_{ti})=\arg\max_{j=0,\dots,m_t-1} C_{tj}(h_{ti};\hat{\psi}_{tj}).
 </ol>
 <p><strong>Policy Evaluation:</strong><br />
 We use the backward iteration as what we did in policy learning. However, here for each round, the pseudo outcome is not the maximum of Q values. Instead, the pseudo outcome at decision point t is defined as below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b3e534ac-1c9b-4998-9c56-a4c91a5c1eb9">
-<span class="eqno">(46)<a class="headerlink" href="#equation-b3e534ac-1c9b-4998-9c56-a4c91a5c1eb9" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-597927a2-56cb-46c1-9300-da640db07576">
+<span class="eqno">(46)<a class="headerlink" href="#equation-597927a2-56cb-46c1-9300-da640db07576" title="Permalink to this equation">#</a></span>\[\begin{align}
 \tilde{Y}_{ti}=\tilde{Y}_{t+1,i}+C_{tj*}(h_{ti},\hat{\psi}_{tj*})-\sum_{j=1}^{m_k-1}\mathbb{I}\{A_{ti}=j\}C_{tj}(h_{ti},\hat{\psi}_{tj}),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(j*=d(H_{ti})\)</span>, and <span class="math notranslate nohighlight">\(d\)</span> is the fixed regime that we want to evaluate.
 The estimated value of the policy is then the average of <span class="math notranslate nohighlight">\(\tilde{Y}_{1}\)</span>.</p>
 <p><strong>Note</strong> we also provide an option for bootstrapping. Particularly, for a given policy, we utilze the boostrap resampling to get the estimated value of the regime and the corresponding estimated standard error.</p>
-</div>
-<div class="section" id="demo-code">
-<h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="demo-code">
+<h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
 <p>In the following, we exhibit how to apply the learner on real data to do policy learning and policy evaluation, respectively.</p>
-<div class="section" id="policy-learning">
-<h3>1. Policy Learning<a class="headerlink" href="#policy-learning" title="Permalink to this headline">¶</a></h3>
+<section id="policy-learning">
+<h3>1. Policy Learning<a class="headerlink" href="#policy-learning" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A demo with code on how to use the package</span>
@@ -873,7 +990,7 @@ The estimated value of the policy is then the average of <span class="math notra
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span><span class="o">/</span><span class="n">ipykernel_23292</span><span class="o">/</span><span class="mf">3431659105.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># A demo with code on how to use the package</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">ALearning</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">causaldm.test</span> <span class="kn">import</span> <span class="n">shared_simulation</span>
@@ -976,9 +1093,9 @@ estimated_contrast: {1:          Mean         std
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="policy-evaluation">
-<h3>2. Policy Evaluation<a class="headerlink" href="#policy-evaluation" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="policy-evaluation">
+<h3>2. Policy Evaluation<a class="headerlink" href="#policy-evaluation" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#specify the fixed regime to be tested</span>
@@ -1026,10 +1143,10 @@ estimated_contrast: {1:          Mean         std
 </div>
 </div>
 <p>💥 Placeholder for C.I.</p>
-</div>
-</div>
-<div class="section" id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p>Schulte, P. J., Tsiatis, A. A., Laber, E. B., &amp; Davidian, M. (2014). Q-and A-learning methods for estimating optimal dynamic treatment regimes. Statistical science: a review journal of the Institute of Mathematical Statistics, 29(4), 640.</p></li>
 <li><p>Robins, J. M. (2004). Optimal structural nested models for optimal sequential decisions. In Proceedings of the second seattle Symposium in Biostatistics (pp. 189-326). Springer, New York, NY.</p></li>
@@ -1037,9 +1154,9 @@ estimated_contrast: {1:          Mean         std
 <li><p>Liang, S., Lu, W., &amp; Song, R. (2018). Deep advantage learning for optimal dynamic treatment regime. Statistical theory and related fields, 2(1), 80-88.</p></li>
 <li><p>Shi, C., Fan, A., Song, R., &amp; Lu, W. (2018). High-dimensional A-learning for optimal dynamic treatment regimes. Annals of statistics, 46(3), 925.</p></li>
 </ol>
-</div>
-<div class="section" id="a-1">
-<h2>A.1<a class="headerlink" href="#a-1" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="a-1">
+<h2>A.1<a class="headerlink" href="#a-1" title="Permalink to this headline">#</a></h2>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{aligned}
@@ -1048,9 +1165,9 @@ estimated_contrast: {1:          Mean         std
 &amp;\sum_{i=1}^n \left[\frac{\partial \omega_T(H_{Ti},j;\gamma_T)}{\partial \gamma_T}\Big\{Y_i-\sum_{j'=1}^{m_T-1} \mathbb{I}\{A_{Ti}=j'\}C_{Tj'}(H_{Ti};\psi_{Tj'})-Q_T(H_{Ti},0;\phi_T)\Big\}\right]=0
 \end{aligned}
 \end{split}\]</div>
-</div>
-<div class="section" id="a-2">
-<h2>A.2<a class="headerlink" href="#a-2" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="a-2">
+<h2>A.2<a class="headerlink" href="#a-2" title="Permalink to this headline">#</a></h2>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{aligned}
@@ -1059,8 +1176,8 @@ estimated_contrast: {1:          Mean         std
 &amp;\sum_{i=1}^n \left[\frac{\partial \omega_t(H_{ti},j;\gamma_t)}{\partial \gamma_t}\Big\{\tilde{Y}_{t+1,i}-\sum_{j'=1}^{m_t-1} \mathbb{I}\{A_{ti}=j'\}C_{tj'}(H_{ti};\psi_{tj'})-Q_t(H_{ti},0;\phi_t)\Big\}\right]=0
 \end{aligned}
 \end{split}\]</div>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1084,9 +1201,11 @@ estimated_contrast: {1:          Mean         std
 
               </div>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="Q-learning_Multiple.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -1102,24 +1221,28 @@ estimated_contrast: {1:          Mean         std
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-            
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-  <p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Causal Decision Making Team<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
     
-      By Causal Decision Making Team<br/>
-    
-        &copy; Copyright 2021.<br/>
-  </p>
-</footer>
-</main>
+</div>
 
 
       </div>
     </div>
   
-  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>
