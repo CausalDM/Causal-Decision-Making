@@ -79,7 +79,7 @@ We aim to include the cited papers in this tutorial and also add the correspondi
 | [UCB-MNL [6]](https://pubsonline.informs.org/doi/pdf/10.1287/opre.2018.1832?casa_token=6aWDZ292SSsAAAAA:KAG0_j813jxeL6PVNI1dcdLv_CHD7oQ6SKinqxcoq0pC2mX5Q2qGgyYvE8esMSXZPlqOanCPOQ) | Binary | | |80% (notebook)| 
 | [LUMB [7]](https://arxiv.org/pdf/1805.02971.pdf) | Binary | ✅ | | 50% code ready|
 | **TODO** || | ||
-| environment with real data || | ||
+| environment with real data || | |50% MAB is ready|
 | overall simulation || | ||
 
 # Other Chapters
