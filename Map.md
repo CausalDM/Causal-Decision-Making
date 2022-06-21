@@ -26,6 +26,8 @@ We aim to include the cited papers in this tutorial and also add the correspondi
 
 ## Statistical Inference
 
+![Overall.png](Overall.png)
+
 💥The following are examples only
 ## Supported Offline Algorithms
 ![Offline.png](Offline.png)

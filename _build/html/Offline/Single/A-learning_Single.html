@@ -539,7 +539,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learning.html">
-   Causal Discovery Learning
+   Causal Graph Learners
   </a>
  </li>
 </ul>
@@ -885,32 +885,32 @@ title="Print to PDF"
 <p>Suppose there are <span class="math notranslate nohighlight">\(m\)</span> number of options, and the action space <span class="math notranslate nohighlight">\(\mathcal{A}=\{0,1,\dots,m-1\}\)</span>. Contrast-based A-learning, as the name suggested, aims to learn and estimate the constrast function, <span class="math notranslate nohighlight">\(C_{j}(X)\)</span> for each treatment <span class="math notranslate nohighlight">\(j=1,2,\cdots, m-1\)</span>. Furthermore, we also need to posit a model for the conditional expected outcome for the control option (treatment <span class="math notranslate nohighlight">\(0\)</span>), <span class="math notranslate nohighlight">\(Q(X,0)\)</span>, and the propensity function <span class="math notranslate nohighlight">\(\omega(X,A)\)</span>, if the true values are not specified. Detailed definitions are provided in the following.</p>
 <ul>
 <li><p>Q-function:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b27fe4e3-742f-466d-93d2-2fc31ba3ec50">
-<span class="eqno">(22)<a class="headerlink" href="#equation-b27fe4e3-742f-466d-93d2-2fc31ba3ec50" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6e673d17-dbd0-4e02-aa73-921eb32c5924">
+<span class="eqno">(22)<a class="headerlink" href="#equation-6e673d17-dbd0-4e02-aa73-921eb32c5924" title="Permalink to this equation">#</a></span>\[\begin{align}
     Q(x,a)=E[Y|X=x, A=a],
     \end{align}\]</div>
 <p>Alternatively, with the contrast function <span class="math notranslate nohighlight">\(C_j(X)\)</span> which will be defined later,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b96aa05b-aac1-46e0-9cf3-bdc5c448b9f2">
-<span class="eqno">(23)<a class="headerlink" href="#equation-b96aa05b-aac1-46e0-9cf3-bdc5c448b9f2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6dd0229b-6600-49a9-95ba-a9f439bdc2db">
+<span class="eqno">(23)<a class="headerlink" href="#equation-6dd0229b-6600-49a9-95ba-a9f439bdc2db" title="Permalink to this equation">#</a></span>\[\begin{align}
     Q(x,j) = Q(x,0) + C_{j}(x),\quad j=0,\dots,m-1.
     \end{align}\]</div>
 </li>
 <li><p>Contrast functions (optimal blip to zero functions)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9e772621-2c89-4172-babc-a244b7bee387">
-<span class="eqno">(24)<a class="headerlink" href="#equation-9e772621-2c89-4172-babc-a244b7bee387" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f9431d35-1a58-46b4-9237-b355f1f29eba">
+<span class="eqno">(24)<a class="headerlink" href="#equation-f9431d35-1a58-46b4-9237-b355f1f29eba" title="Permalink to this equation">#</a></span>\[\begin{align}
     C_{j}(x)=Q(x,j)-Q(x,0),\quad j=0,\dots,m-1,
     \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(C_{0}(x) = 0\)</span>.</p>
 </li>
 <li><p>Propensity score</p>
-<div class="amsmath math notranslate nohighlight" id="equation-20c2f920-e811-453c-b065-7e9ab30e11fb">
-<span class="eqno">(25)<a class="headerlink" href="#equation-20c2f920-e811-453c-b065-7e9ab30e11fb" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8c2971ef-eb23-453b-99ad-ea5a9421961e">
+<span class="eqno">(25)<a class="headerlink" href="#equation-8c2971ef-eb23-453b-99ad-ea5a9421961e" title="Permalink to this equation">#</a></span>\[\begin{align}
     \omega(x,a)=P(A=a|X=x)
     \end{align}\]</div>
 </li>
 <li><p>Optimal regime</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e334f665-a1e1-4f04-bbfe-45519e656102">
-<span class="eqno">(26)<a class="headerlink" href="#equation-e334f665-a1e1-4f04-bbfe-45519e656102" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d89829cd-0326-48e1-9a8d-6457cd62d230">
+<span class="eqno">(26)<a class="headerlink" href="#equation-d89829cd-0326-48e1-9a8d-6457cd62d230" title="Permalink to this equation">#</a></span>\[\begin{align}
     d^{opt}(x)=\arg\max_{j\in\mathcal{A}}C_{j}(X)
     \end{align}\]</div>
 </li>
@@ -988,8 +988,8 @@ title="Print to PDF"
 </div>
 </div>
 <p>By specifing the model_info, we assume  the following models:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6694e177-db6f-4276-a3fa-745be7105dfe">
-<span class="eqno">(27)<a class="headerlink" href="#equation-6694e177-db6f-4276-a3fa-745be7105dfe" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d75cc0d7-0163-4eff-8d36-ac3efa81bb20">
+<span class="eqno">(27)<a class="headerlink" href="#equation-d75cc0d7-0163-4eff-8d36-ac3efa81bb20" title="Permalink to this equation">#</a></span>\[\begin{align}
 Q(x,0,\phi) &amp;= \phi_{00}+\phi_{01}*recency+\phi_{02}*history,\\
 C_{1}(x,\psi_{0}) &amp;= 0\\
 C_{1}(x,\psi_{1}) &amp;= \psi_{10}+\psi_{11}*recency+\psi_{12}*history,\\
@@ -1031,8 +1031,8 @@ opt value: 126.18615811062617
 </div>
 </div>
 <p><strong>Interpretation:</strong> the fitted contrast models are</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d27564dc-1c7c-4213-9f5a-3892fd5e1e71">
-<span class="eqno">(28)<a class="headerlink" href="#equation-d27564dc-1c7c-4213-9f5a-3892fd5e1e71" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a9624928-afd7-4518-9590-b1753a7ddd2b">
+<span class="eqno">(28)<a class="headerlink" href="#equation-a9624928-afd7-4518-9590-b1753a7ddd2b" title="Permalink to this equation">#</a></span>\[\begin{align}
 C_{0}(x,\psi_{0}) &amp;= 0\\
 C_{1}(x,\psi_{1}) &amp;= 23.39-4.03*recency+.005*history,\\
 C_{2}(x,\psi_{2}) &amp;= 21.03-4.71*recency-.003*history,\\
