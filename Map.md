@@ -1,8 +1,14 @@
-# Overall Map
+# Map
+## Overall
 ![Overall.png](Overall.png)
+## Offline
+![Offline.png](Offline.png)
+## Online
+![Online.png](Online.png)
+## Discovery
+![Discovery.png](Discovery.png)
 
 ## Supported Offline Algorithms
-![Offline.png](Offline.png)
 | Algorithm | Treatment Type | Outcome Type | Single Stage? | Multiple Stages? | Infinite Horizon? | Evaluation? | Optimization? | C.I.? | Advantages |
 |:-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | [Q-Learning](https://www.jmlr.org/papers/volume6/murphy05a/murphy05a.pdf) | Discrete | Continuous (Mean) |✅|✅| |✅|✅| ||
@@ -23,7 +29,6 @@
 
 
 ## Supported Online Algorithms
-![Online.png](Online.png)
 | algorithm | Reward | with features? | Advantage | Progress|
 |:-|:-:|:-:|:-:|:-:|
 | **Single-Item Recommendation** || | |95% (proofreading)|
