@@ -3,10 +3,15 @@
 
 # # MTSS_Cascade
 # 
+# ## Overview
+# - **Advantage**: It is both scalable and robust. Furthermore, it also accounts for the iter-item heterogeneity.
+# - **Disadvantage**:
+# - **Application Situation**: Useful when presenting a ranked list of items, with only one selected at each interaction. The outcome is binary. Static feature information.
+# 
 # ## Main Idea
 # MTSS_Cascade is an example of the general Thompson Sampling(TS)-based framework, MTSS [1], to deal with online learning to rank problems.
 # 
-# **Review of MTSS:** MTSS[1] is a meta-learning framework designed for large-scale structured bandit problems [2]. Mainly, it is a TS-based algorithm that learns the information-sharing structure while minimizing the cumulative regrets. Adapting the TS framework to a problem-specific Bayesian hierarchical model, MTSS simultaneously enables information sharing among items via their features and models the inter-item heterogeneity. Specifically, it assumes that the item-specific parameter $\theta_i$ is sampled from a distribution $g(\theta_i|\boldsymbol{x}_i, \boldsymbol{\gamma})$ instead of being entirely determined by $\boldsymbol{x}_i$ via a deterministic function. Here, $g$ is a model parameterized by an **unknown** vector $\boldsymbol{\gamma}$. The following is the general feature-based hierarchical model MTSS considered. 
+# **Review of MTSS:** MTSS[1] is a meta-learning framework designed for large-scale structured bandit problems [2]. Mainly, it is a TS-based algorithm that learns the information-sharing structure while minimizing the cumulative regrets. Adapting the TS framework to a problem-specific Bayesian hierarchical model, MTSS simultaneously enables information sharing among items via their features and models the inter-item heterogeneity. Specifically, it assumes that the item-specific parameter $\theta_i = E[W_t(i)]$ is sampled from a distribution $g(\theta_i|\boldsymbol{x}_i, \boldsymbol{\gamma})$ instead of being entirely determined by $\boldsymbol{x}_i$ via a deterministic function. Here, $g$ is a model parameterized by an **unknown** vector $\boldsymbol{\gamma}$. The following is the general feature-based hierarchical model MTSS considered. 
 # \begin{equation}\label{eqn:general_hierachical}
 #   \begin{alignedat}{2}
 # &\text{(Prior)} \quad
@@ -15,9 +20,9 @@
 # &\text{(Generalization function)} \;
 # \;    \theta_i| \boldsymbol{x}_i, \boldsymbol{\gamma}  &&\sim g(\theta_i|\boldsymbol{x}_i, \boldsymbol{\gamma}), \forall i \in [N],\\ 
 # &\text{(Observations)} \quad\quad\quad\quad\quad\quad\;
-# \;    \boldsymbol{Y}_t &&\sim f(\boldsymbol{Y}_t|A_t, \boldsymbol{\theta}),\\
+# \;    \boldsymbol{Y}_t(a) &&\sim f(\boldsymbol{Y}_t(a)|\boldsymbol{\theta}),\\
 # &\text{(Reward)} \quad\quad\quad\quad\quad\quad\quad\quad\;
-# \;   R_t &&= f_r(\boldsymbol{Y}_t ; \boldsymbol{\eta}), 
+# \;   R_t(a) &&= f_r(\boldsymbol{Y}_t(a) ; \boldsymbol{\eta}), 
 #       \end{alignedat}
 # \end{equation}
 # where $Q(\boldsymbol{\gamma})$ is the prior distribution for $\boldsymbol{\gamma}$. 
@@ -27,19 +32,17 @@
 # \begin{equation}\label{eqn:model_cascading}
 #     \begin{split}
 #     \theta_i & \sim Beta(logistic(\boldsymbol{x}_i^T \boldsymbol{\gamma}), \psi), \forall i \in [N]\\
-#     W_{k, t} &\sim Bernoulli(\theta_{a^k_t}), \forall k \in [K], \\
-#     Y_{k,t} &= W_{k,t} E_{k,t}, \forall k \in [K],\\
-#     E_{k,t} &= (1-Y_{k-1}) E_{k-1,t}, \forall k \in [K],\\
-#     R_t &= \sum_{k \in [K]} Y_{k,t}, 
+#     W_{k, t}(a) &\sim Bernoulli(\theta_{a^k}), \forall k \in [K], \\
+#     Y_{k,t}(a) &= W_{k,t}(a) E_{k,t}(a), \forall k \in [K],\\
+#     E_{k,t}(a) &= [1-Y_{k-1}(a)] E_{k-1,t}(a), \forall k \in [K],\\
+#     R_t(a) &= \sum_{k \in [K]} Y_{k,t}(a), 
 #     \end{split}
-# \end{equation} with $E_{1,t} \equiv 1$.   
-# The prior $Q(\boldsymbol{\gamma})$ can be chosen as many appropriate distributions. For instance, we choose the prior $\boldsymbol{\gamma} \sim \mathcal{N}(\boldsymbol{\mu}_{\boldsymbol{\gamma}}, {\boldsymbol{\Sigma}}_{\boldsymbol{\gamma}})$ with parameters as known. To update the posterior of $\boldsymbol{\gamma}$, we utilize the **Pymc3** package [3]. With a given $\boldsymbol{\gamma}$, the posterior of $\boldsymbol{\theta}$ enjoys the Beta-Geometric conjugate relationship and hence can be updated explicitly and efficiently. Finally, for each round, we select the top $K$ items with the highest estimated attractiveness factors.
-# 
-# 💥 Application Situation?
+# \end{equation} with $E_{1,t}(a) \equiv 1$.   
+# The prior $Q(\boldsymbol{\gamma})$ can be chosen as many appropriate distributions. For instance, we choose the prior $\boldsymbol{\gamma} \sim \mathcal{N}(\boldsymbol{\mu}_{\boldsymbol{\gamma}}, {\boldsymbol{\Sigma}}_{\boldsymbol{\gamma}})$ with parameters as known. To update the posterior of $\boldsymbol{\gamma}$, we utilize the **Pymc3** package [3]. With a given $\boldsymbol{\gamma}$, the posterior of $\boldsymbol{\theta}$ enjoys the Beta-Geometric conjugate relationship and hence can be updated explicitly and efficiently. Finally, for each round, we select the top $K$ items with the highest estimated attractiveness factors. It should be noted that the posterior updating step differs for different pairs of the $Q(\boldsymbol{\gamma})$ and the reward distribution, and the corresponding code can be easily modified to different prior/reward distribution specifications if necessary.
 # 
 # 
 # ## Algorithm Details
-# At each round $t$, given the feedback $\mathcal{H}_{t}$ received from previous rounds, there are two major steps including posterior sampling and combinatorial optimization. Specifically, the posterior sampling step is decomposed into four steps: 1. approximating a posterior distribution of $\boldsymbol{\gamma}$, $P(\boldsymbol{\gamma}|\mathcal{H}_{t})$, by **Pymc3**; 2. sampling a $\tilde{\boldsymbol{\gamma}}$ from $P(\boldsymbol{\gamma}|\mathcal{H}_{t})$; 3. updating the posterior distribution of $\boldsymbol{\theta}$ conditional on $\tilde{\boldsymbol{\gamma}}$, $P(\boldsymbol{\theta}|\tilde{\boldsymbol{\gamma}},\mathcal{H}_{t})$, which has an explicit form under the assumption of a Beta-Bernoulli logistic model; 4. sampling $\tilde{\boldsymbol{\theta}}$ from $P(\boldsymbol{\theta}|\tilde{\boldsymbol{\gamma}},\mathcal{H}_{t})$. Then, the action $A_{t}$ is selected greedily as $A_t = arg max_{a \in \mathcal{A}} E(R_t \mid a, \tilde{\boldsymbol{\theta}})$. Specifically, the top $K$ items with the highest $\tilde{\theta}_{i}$ will be displayed. Note that $\tilde{\boldsymbol{\gamma}}$ can be sampled in a batch mode to further facilitate computationally efficient online deployment.
+# At each round $t$, given the feedback $\mathcal{H}_{t}$ received from previous rounds, there are two major steps including posterior sampling and combinatorial optimization. Specifically, the posterior sampling step is decomposed into four steps: 1. approximating a posterior distribution of $\boldsymbol{\gamma}$, $P(\boldsymbol{\gamma}|\mathcal{H}_{t})$, by **Pymc3**; 2. sampling a $\tilde{\boldsymbol{\gamma}}$ from $P(\boldsymbol{\gamma}|\mathcal{H}_{t})$; 3. updating the posterior distribution of $\boldsymbol{\theta}$ conditional on $\tilde{\boldsymbol{\gamma}}$, $P(\boldsymbol{\theta}|\tilde{\boldsymbol{\gamma}},\mathcal{H}_{t})$, which has an explicit form under the assumption of a Beta-Bernoulli logistic model; 4. sampling $\tilde{\boldsymbol{\theta}}$ from $P(\boldsymbol{\theta}|\tilde{\boldsymbol{\gamma}},\mathcal{H}_{t})$. Then, the action $A_{t}$ is selected greedily as $A_t = arg max_{a \in \mathcal{A}} E(R_t(a) \mid \tilde{\boldsymbol{\theta}})$. Specifically, the top $K$ items with the highest $\tilde{\theta}_{i}$ will be displayed. Note that $\tilde{\boldsymbol{\gamma}}$ can be sampled in a batch mode to further facilitate computationally efficient online deployment.
 # 
 # ## Key Steps
 # For round $t = 1,2,\cdots$:
@@ -47,16 +50,12 @@
 # 2. Sample $\tilde{\boldsymbol{\gamma}} \sim P(\boldsymbol{\gamma}|\mathcal{H}_{t})$;
 # 3. Update $P(\boldsymbol{\theta}|\tilde{\boldsymbol{\gamma}},\mathcal{H}_{t})$;
 # 4. Sample $\tilde{\boldsymbol{\theta}} \sim P(\boldsymbol{\theta}|\tilde{\boldsymbol{\gamma}},\mathcal{H}_{t})$;
-# 5. Take the action $A_{t}$ w.r.t $\tilde{\boldsymbol{\theta}}$ such that $A_t = arg max_{a \in \mathcal{A}} E(R_t \mid a, \tilde{\boldsymbol{\theta}})$;
+# 5. Take the action $A_{t}$ w.r.t $\tilde{\boldsymbol{\theta}}$ such that $A_t = arg max_{a \in \mathcal{A}} E(R_t(a) \mid \tilde{\boldsymbol{\theta}})$;
 # 6. Receive reward $R_{t}$.
 # 
-# 
-# ## Demo Code
-# 💥 In the following, we exhibit how to apply the learner on real data.
-# 
-# *Notations can be found in the introduction of the combinatorial Semi-Bandit problems.
+# *Notations can be found in either the inroduction of the chapter "Structured Bandits" or the introduction of the cascading Bandit problems.
 
-# ### 1. Policy Learning
+# ## Demo Code
 
 # In[1]:
 

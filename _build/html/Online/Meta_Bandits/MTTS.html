@@ -165,7 +165,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../Map.html">
-   Overall Map
+   Map
   </a>
  </li>
 </ul>
@@ -328,7 +328,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../Bandits.html">
-   Bandits ALgorithm
+   Overview: Bandits ALgorithm
   </a>
  </li>
  <li class="toctree-l1 has-children">
@@ -417,7 +417,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2 has-children">
     <a class="reference internal" href="../Slate/Learning%20to%20rank.html">
-     Online Learning to Rank
+     Online Learning to Rank (Cascading Bandit)
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
     <label for="toctree-checkbox-12">
@@ -425,11 +425,6 @@ const thebe_selector_output = ".output, .cell_output"
      </i>
     </label>
     <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../Slate/Cascade/TS-Cascade.html">
-       TS-Cascade
-      </a>
-     </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../Slate/Cascade/CascadeLinTS.html">
        CascadeLinTS
@@ -444,7 +439,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2 has-children">
     <a class="reference internal" href="../Slate/Combinatorial%20Optimization.html">
-     Online Combinatorial Optimization
+     Online Combinatorial Optimization (Combinatorial Semi-Bandit)
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
     <label for="toctree-checkbox-13">
@@ -471,7 +466,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2 has-children">
     <a class="reference internal" href="../Slate/Assortment%20Optimization.html">
-     Dynamic Assortment Optimization
+     Dynamic Assortment Optimization (Multinomial Logit Bandit)
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
     <label for="toctree-checkbox-14">
@@ -480,13 +475,13 @@ const thebe_selector_output = ".output, .cell_output"
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../Slate/MNL/MNL-Thompson-Beta.html">
-       MNL-Thompson-Beta
+      <a class="reference internal" href="../Slate/MNL/TS_MNL_Beta.html">
+       TS_MNL
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../Slate/MNL/TS-Contextual-MNL.html">
-       TS-Contextual-MNL
+      <a class="reference internal" href="../Slate/MNL/TS_Contextual_MNL.html">
+       TS_Contextual_MNL
       </a>
      </li>
      <li class="toctree-l3">
@@ -741,18 +736,23 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#main-idea">
    Main Idea
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#algorithm-details">
-   Algorithm Details
+  <a class="reference internal nav-link" href="#key-steps">
+   Key Steps
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#key-steps">
-   Key Steps
+  <a class="reference internal nav-link" href="#references">
+   References
   </a>
  </li>
 </ul>
@@ -775,18 +775,23 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#main-idea">
    Main Idea
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#algorithm-details">
-   Algorithm Details
+  <a class="reference internal nav-link" href="#key-steps">
+   Key Steps
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#key-steps">
-   Key Steps
+  <a class="reference internal nav-link" href="#references">
+   References
   </a>
  </li>
 </ul>
@@ -801,28 +806,62 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="multi-task-thompson-sampling-mtts">
 <h1>Multi-Task Thompson Sampling (MTTS)<a class="headerlink" href="#multi-task-thompson-sampling-mtts" title="Permalink to this headline">#</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><strong>Advantage</strong>: It is both scalable and robust. Furthermore, it also accounts for the iter-task heterogeneity.</p></li>
+<li><p><strong>Disadvantage</strong>:</p></li>
+<li><p><strong>Application Situation</strong>: Useful when there are a large number of tasks to learn, especially when new tasks are introduced on a regular basis. The outcome can be either binary or continuous. Static baseline information.</p></li>
+</ul>
+</section>
 <section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
-<p>While most existing algorithms (e.g., \textbf{meta-TS} \citep{kveton2021meta}) fail to leverage feature information, our proposal is more closely related to \textbf{MTTS} \citep{wan2021metadata}, which constructs a Bayesian hierarchical model to share information efficiently. Specifically,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a01a92ed-23a1-4332-9098-316ab90fd2b5">
-<span class="eqno">(55)<a class="headerlink" href="#equation-a01a92ed-23a1-4332-9098-316ab90fd2b5" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:hierachical_model}
+<p>The <strong>MTTS</strong>[1] utilize baseline information to share information among different tasks efficiently, by constructing a Bayesian hierarchical model. Specifically, it assumes that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-02aea70d-25e4-427b-9e12-e97a888669ea">
+<span class="eqno">(55)<a class="headerlink" href="#equation-02aea70d-25e4-427b-9e12-e97a888669ea" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{alignedat}{2}
 &amp;\text{(Prior)} \quad
-\quad\quad\quad    \vgamma &amp;&amp;\sim Q(\vgamma), \\
+\quad\quad\quad    \boldsymbol{\gamma} &amp;&amp;\sim Q(\boldsymbol{\gamma}), \\
 &amp;\text{(Inter-task)} \quad
-\;    \vmu_j | \vx_j, \vgamma &amp;&amp;\sim g(\vmu_j | \vx_j, \vgamma) = \vx_j^{T}\vgamma + \vdelta_{j}, \\
+\;    \boldsymbol{\mu}_j | \boldsymbol{x}_j, \boldsymbol{\gamma} &amp;&amp;\sim g(\boldsymbol{\mu}_j | \boldsymbol{x}_j, \boldsymbol{\gamma})=\boldsymbol{x}_j^{T}\boldsymbol{\gamma} + \boldsymbol{\delta}_{j}, \\
 &amp;\text{(Intra-task)} \quad
-\;    R_{j,t} = Y_{j,t} &amp;&amp;= \sum\nolimits_{a \in [K]} \I(A_{j,t} = a) \mu_{j,a} + \epsilon_{j,t}, 
+\;    R_{j,t}(a) = Y_{j,t}(a) &amp;&amp;= \mu_{j,a} + \epsilon_{j,t}, 
       \end{alignedat}
 \end{equation}\]</div>
-<p>Essentially, \textbf{MTTS} assumes that the mean reward <span class="math notranslate nohighlight">\(\vmu_{j}\)</span> is sampled from model <span class="math notranslate nohighlight">\(g\)</span> parameterized by unknown parameter <span class="math notranslate nohighlight">\(\vgamma\)</span> and conditional on task feature <span class="math notranslate nohighlight">\(\vx_{j}\)</span>. Instead of assuming that <span class="math notranslate nohighlight">\(\vmu_j\)</span> is fully determined by its features through a deterministic function, \textbf{MTTS} adds an item-specific noise term to account for the inter-task heterogeneity. Simultaneously modeling heterogeneity and sharing information across tasks via <span class="math notranslate nohighlight">\(g\)</span>, \textbf{MTTS} is able to provide an informative prior distribution to guide the exploration. Appropriately addressing the heterogeneity between tasks, the MTTS has been shown to have a lower regret bound than both the feature-agnostic and feature-determined MAB algorithms \citep{wan2021metadata}.</p>
-<p>However, it is only applicable to MAB tasks, while we consider CBB, which involves more complex reward structures. Besides, existing meta Bandits algorithms are designed to share information across multiple bandit tasks, and none of them can be applied to our problem of one single large-scale bandit task.</p>
-</section>
-<section id="algorithm-details">
-<h2>Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this headline">#</a></h2>
+<p>Similarly, considering the Bernoulli bandit, it assumes that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ad0de08e-0cee-4b1c-b94b-d110b54c7ffb">
+<span class="eqno">(56)<a class="headerlink" href="#equation-ad0de08e-0cee-4b1c-b94b-d110b54c7ffb" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:hierachical_model}
+  \begin{alignedat}{2}
+&amp;\text{(Prior)} \quad
+\quad\quad\quad    \boldsymbol{\gamma} &amp;&amp;\sim Q(\boldsymbol{\gamma}), \\
+&amp;\text{(Inter-task)} \quad
+\;    \boldsymbol{\mu}_j | \boldsymbol{x}_j, \boldsymbol{\gamma} &amp;&amp;\sim g(\boldsymbol{\mu}_j | \boldsymbol{x}_j, \boldsymbol{\gamma})=\text{Beta}\big(logistic(\boldsymbol{x}_j^T \boldsymbol{\gamma}), \psi \big), \\
+&amp;\text{(Intra-task)} \quad
+\;    R_{j,t}(a) = Y_{j,t}(a) &amp;&amp;\sim  \text{Bernoulli} \big( \mu_{j, a} \big), 
+      \end{alignedat}
+\end{equation}\]</div>
+<p>where  <span class="math notranslate nohighlight">\(logistic(x) \equiv 1 / (1 + exp^{-1}(x))\)</span>, <span class="math notranslate nohighlight">\(\psi\)</span> is a known parameter, and  <span class="math notranslate nohighlight">\(\text{Beta}(\mu, \psi)\)</span> denotes a Beta distribution with mean <span class="math notranslate nohighlight">\(\mu\)</span> and precision <span class="math notranslate nohighlight">\(\psi\)</span>. Still, we assume a Normal prior of <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>. As there is no explicit form of the corresponding posterior, we update the posterior distribution by <strong>Pymc3</strong>.</p>
+<p>Under the TS framework, at each round <span class="math notranslate nohighlight">\(t\)</span> with task <span class="math notranslate nohighlight">\(j\)</span>, the agent will sample a <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\mu}}_{j}\)</span> from its posterior distribution updated according to the hierarchical model, then the action <span class="math notranslate nohighlight">\(a\)</span> with the maximum sampled <span class="math notranslate nohighlight">\(\tilde{\mu}_{j,a}\)</span> will be pulled. Mathmetically,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-760bd1c7-5fe2-4214-8d96-62e5d92f6e43">
+<span class="eqno">(57)<a class="headerlink" href="#equation-760bd1c7-5fe2-4214-8d96-62e5d92f6e43" title="Permalink to this equation">#</a></span>\[\begin{equation}
+    A_{j,t} = argmax_{a \in \mathcal{A}} \hat{E}(R_{j,t}(a)) = argmax_{a \in \mathcal{A}} \tilde\mu_{j,a}.
+\end{equation}\]</div>
+<p>Essentially, <strong>MTTS</strong> assumes that the mean reward <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_{j}\)</span> is sampled from model <span class="math notranslate nohighlight">\(g\)</span> parameterized by unknown parameter <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span> and conditional on task feature <span class="math notranslate nohighlight">\(\boldsymbol{x}_{j}\)</span>. Instead of assuming that <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_j\)</span> is fully determined by its features through a deterministic function, <strong>MTTS</strong> adds an item-specific noise term to account for the inter-task heterogeneity. Simultaneously modeling heterogeneity and sharing information across tasks via <span class="math notranslate nohighlight">\(g\)</span>, <strong>MTTS</strong> is able to provide an informative prior distribution to guide the exploration. Appropriately addressing the heterogeneity between tasks, the MTTS has been shown to have a superior performance in practice[1].</p>
 </section>
 <section id="key-steps">
 <h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">#</a></h2>
+<p>For <span class="math notranslate nohighlight">\((j,t) = (1,1),(1,2),\cdots\)</span>:</p>
+<ol class="simple">
+<li><p>Approximate <span class="math notranslate nohighlight">\(P(\boldsymbol{\gamma}|\mathcal{H})\)</span> either by implementing <strong>Pymc3</strong> or by calculating the explicit form of the posterior distribution;</p></li>
+<li><p>Sample <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\gamma}} \sim P(\boldsymbol{\gamma}|\mathcal{H})\)</span>;</p></li>
+<li><p>Update <span class="math notranslate nohighlight">\(P(\boldsymbol{\mu}|\tilde{\boldsymbol{\gamma}},\mathcal{H})\)</span> and sample <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\mu}} \sim P(\boldsymbol{\mu}|\tilde{\boldsymbol{\gamma}},\mathcal{H})\)</span>;</p></li>
+<li><p>Take the action <span class="math notranslate nohighlight">\(A_{j,t}\)</span> such that <span class="math notranslate nohighlight">\(A_{j,t} = argmax_{a \in \mathcal{A}} \tilde\mu_{j,a}\)</span>;</p></li>
+<li><p>Receive reward <span class="math notranslate nohighlight">\(R_{j,t}\)</span>.</p></li>
+</ol>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<p>[1] Wan, R., Ge, L., &amp; Song, R. (2021). Metadata-based multi-task bandits with bayesian hierarchical models. Advances in Neural Information Processing Systems, 34, 29655-29668.</p>
 </section>
 </section>
 

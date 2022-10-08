@@ -165,7 +165,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../Map.html">
-   Overall Map
+   Map
   </a>
  </li>
 </ul>
@@ -328,7 +328,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../Bandits.html">
-   Bandits ALgorithm
+   Overview: Bandits ALgorithm
   </a>
  </li>
  <li class="toctree-l1 has-children">
@@ -417,7 +417,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2 has-children">
     <a class="reference internal" href="../Slate/Learning%20to%20rank.html">
-     Online Learning to Rank
+     Online Learning to Rank (Cascading Bandit)
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
     <label for="toctree-checkbox-12">
@@ -425,11 +425,6 @@ const thebe_selector_output = ".output, .cell_output"
      </i>
     </label>
     <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../Slate/Cascade/TS-Cascade.html">
-       TS-Cascade
-      </a>
-     </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../Slate/Cascade/CascadeLinTS.html">
        CascadeLinTS
@@ -444,7 +439,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2 has-children">
     <a class="reference internal" href="../Slate/Combinatorial%20Optimization.html">
-     Online Combinatorial Optimization
+     Online Combinatorial Optimization (Combinatorial Semi-Bandit)
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
     <label for="toctree-checkbox-13">
@@ -471,7 +466,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2 has-children">
     <a class="reference internal" href="../Slate/Assortment%20Optimization.html">
-     Dynamic Assortment Optimization
+     Dynamic Assortment Optimization (Multinomial Logit Bandit)
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
     <label for="toctree-checkbox-14">
@@ -480,13 +475,13 @@ const thebe_selector_output = ".output, .cell_output"
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../Slate/MNL/MNL-Thompson-Beta.html">
-       MNL-Thompson-Beta
+      <a class="reference internal" href="../Slate/MNL/TS_MNL_Beta.html">
+       TS_MNL
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../Slate/MNL/TS-Contextual-MNL.html">
-       TS-Contextual-MNL
+      <a class="reference internal" href="../Slate/MNL/TS_Contextual_MNL.html">
+       TS_Contextual_MNL
       </a>
      </li>
      <li class="toctree-l3">
@@ -827,13 +822,13 @@ title="Print to PDF"
 <section id="algorithms-details">
 <h2>Algorithms Details<a class="headerlink" href="#algorithms-details" title="Permalink to this headline">#</a></h2>
 <p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. Noticing that feature information are commonly avialable, the LinTS algorithm consdiers modeling the mean reward with items’ features. As an example, considering the Gaussian reward, we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-85358f1f-f80b-4948-aaf6-ba76d70bffc8">
-<span class="eqno">(53)<a class="headerlink" href="#equation-85358f1f-f80b-4948-aaf6-ba76d70bffc8" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6bfab3f6-cd98-4c2c-94fc-1b952767d992">
+<span class="eqno">(53)<a class="headerlink" href="#equation-6bfab3f6-cd98-4c2c-94fc-1b952767d992" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta_{i} = \boldsymbol{x}_i^T \boldsymbol{\gamma}.
 \end{align}\]</div>
 <p>As for the Bernoulli reward, we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7dfb8f75-12f5-4ac5-abc0-770c80b4f449">
-<span class="eqno">(54)<a class="headerlink" href="#equation-7dfb8f75-12f5-4ac5-abc0-770c80b4f449" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8057e2b6-2b3e-4562-8ed4-717f6a74cfa9">
+<span class="eqno">(54)<a class="headerlink" href="#equation-8057e2b6-2b3e-4562-8ed4-717f6a74cfa9" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta_{i} = logistic(\boldsymbol{x}_i^T \boldsymbol{\gamma})
 \end{align}\]</div>
 <p>Similar as the standard TS algorithm, the LinTS algorithm starts with specifying a prior distribution of the parameter <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>, and a variance of the reward, based on the domian knowledge. At each round <span class="math notranslate nohighlight">\(t\)</span>, the agent will samples a vector of <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\gamma}}^{t}\)</span> from thecorresponding posterior distribution, and the mean reward <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\theta}}^{t}\)</span> is then calculated accordingly. The action <span class="math notranslate nohighlight">\(a\)</span> with the greatest <span class="math notranslate nohighlight">\(\tilde{\theta}_{a}^{t}\)</span> is then selected. Finally, the posterior distribution would be updated after receiving the feedback at the end of each round. Note that the posterior updating step differs for different pairs of prior distribution of the mean reward and reward distribution. Note that code can be easily modified to different specifications of the prior/reward distribution.</p>

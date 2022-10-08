@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Online Combinatorial Optimization" href="../Combinatorial%20Optimization.html" />
+    <link rel="next" title="Online Combinatorial Optimization (Combinatorial Semi-Bandit)" href="../Combinatorial%20Optimization.html" />
     <link rel="prev" title="CascadeLinTS" href="CascadeLinTS.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -165,7 +165,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../../Map.html">
-   Overall Map
+   Map
   </a>
  </li>
 </ul>
@@ -328,7 +328,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../../Bandits.html">
-   Bandits ALgorithm
+   Overview: Bandits ALgorithm
   </a>
  </li>
  <li class="toctree-l1 has-children">
@@ -417,7 +417,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul class="current">
    <li class="toctree-l2 current active has-children">
     <a class="reference internal" href="../Learning%20to%20rank.html">
-     Online Learning to Rank
+     Online Learning to Rank (Cascading Bandit)
     </a>
     <input checked="" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
     <label for="toctree-checkbox-12">
@@ -425,11 +425,6 @@ const thebe_selector_output = ".output, .cell_output"
      </i>
     </label>
     <ul class="current">
-     <li class="toctree-l3">
-      <a class="reference internal" href="TS-Cascade.html">
-       TS-Cascade
-      </a>
-     </li>
      <li class="toctree-l3">
       <a class="reference internal" href="CascadeLinTS.html">
        CascadeLinTS
@@ -444,7 +439,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2 has-children">
     <a class="reference internal" href="../Combinatorial%20Optimization.html">
-     Online Combinatorial Optimization
+     Online Combinatorial Optimization (Combinatorial Semi-Bandit)
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
     <label for="toctree-checkbox-13">
@@ -471,7 +466,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2 has-children">
     <a class="reference internal" href="../Assortment%20Optimization.html">
-     Dynamic Assortment Optimization
+     Dynamic Assortment Optimization (Multinomial Logit Bandit)
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
     <label for="toctree-checkbox-14">
@@ -480,13 +475,13 @@ const thebe_selector_output = ".output, .cell_output"
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../MNL/MNL-Thompson-Beta.html">
-       MNL-Thompson-Beta
+      <a class="reference internal" href="../MNL/TS_MNL_Beta.html">
+       TS_MNL
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../MNL/TS-Contextual-MNL.html">
-       TS-Contextual-MNL
+      <a class="reference internal" href="../MNL/TS_Contextual_MNL.html">
+       TS_Contextual_MNL
       </a>
      </li>
      <li class="toctree-l3">
@@ -741,6 +736,11 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#main-idea">
    Main Idea
   </a>
@@ -759,13 +759,6 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#demo-code">
    Demo Code
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#policy-learning">
-     1. Policy Learning
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
@@ -792,6 +785,11 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#main-idea">
    Main Idea
   </a>
@@ -810,13 +808,6 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#demo-code">
    Demo Code
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#policy-learning">
-     1. Policy Learning
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
@@ -835,12 +826,20 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="mtss-cascade">
 <h1>MTSS_Cascade<a class="headerlink" href="#mtss-cascade" title="Permalink to this headline">#</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><strong>Advantage</strong>: It is both scalable and robust. Furthermore, it also accounts for the iter-item heterogeneity.</p></li>
+<li><p><strong>Disadvantage</strong>:</p></li>
+<li><p><strong>Application Situation</strong>: Useful when presenting a ranked list of items, with only one selected at each interaction. The outcome is binary. Static feature information.</p></li>
+</ul>
+</section>
 <section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>MTSS_Cascade is an example of the general Thompson Sampling(TS)-based framework, MTSS [1], to deal with online learning to rank problems.</p>
-<p><strong>Review of MTSS:</strong> MTSS[1] is a meta-learning framework designed for large-scale structured bandit problems [2]. Mainly, it is a TS-based algorithm that learns the information-sharing structure while minimizing the cumulative regrets. Adapting the TS framework to a problem-specific Bayesian hierarchical model, MTSS simultaneously enables information sharing among items via their features and models the inter-item heterogeneity. Specifically, it assumes that the item-specific parameter <span class="math notranslate nohighlight">\(\theta_i\)</span> is sampled from a distribution <span class="math notranslate nohighlight">\(g(\theta_i|\boldsymbol{x}_i, \boldsymbol{\gamma})\)</span> instead of being entirely determined by <span class="math notranslate nohighlight">\(\boldsymbol{x}_i\)</span> via a deterministic function. Here, <span class="math notranslate nohighlight">\(g\)</span> is a model parameterized by an <strong>unknown</strong> vector <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>. The following is the general feature-based hierarchical model MTSS considered.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-72bc1db0-fac8-4e4a-a543-649c1cfcd000">
-<span class="eqno">(58)<a class="headerlink" href="#equation-72bc1db0-fac8-4e4a-a543-649c1cfcd000" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:general_hierachical}
+<p><strong>Review of MTSS:</strong> MTSS[1] is a meta-learning framework designed for large-scale structured bandit problems [2]. Mainly, it is a TS-based algorithm that learns the information-sharing structure while minimizing the cumulative regrets. Adapting the TS framework to a problem-specific Bayesian hierarchical model, MTSS simultaneously enables information sharing among items via their features and models the inter-item heterogeneity. Specifically, it assumes that the item-specific parameter <span class="math notranslate nohighlight">\(\theta_i = E[W_t(i)]\)</span> is sampled from a distribution <span class="math notranslate nohighlight">\(g(\theta_i|\boldsymbol{x}_i, \boldsymbol{\gamma})\)</span> instead of being entirely determined by <span class="math notranslate nohighlight">\(\boldsymbol{x}_i\)</span> via a deterministic function. Here, <span class="math notranslate nohighlight">\(g\)</span> is a model parameterized by an <strong>unknown</strong> vector <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>. The following is the general feature-based hierarchical model MTSS considered.</p>
+<div class="amsmath math notranslate nohighlight" id="equation-022bd637-0599-49e6-b77c-885eb443eb54">
+<span class="eqno">(62)<a class="headerlink" href="#equation-022bd637-0599-49e6-b77c-885eb443eb54" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:general_hierachical}
   \begin{alignedat}{2}
 &amp;\text{(Prior)} \quad
 \quad\quad\quad\quad\quad\quad\quad\quad\quad
@@ -848,30 +847,29 @@ title="Print to PDF"
 &amp;\text{(Generalization function)} \;
 \;    \theta_i| \boldsymbol{x}_i, \boldsymbol{\gamma}  &amp;&amp;\sim g(\theta_i|\boldsymbol{x}_i, \boldsymbol{\gamma}), \forall i \in [N],\\ 
 &amp;\text{(Observations)} \quad\quad\quad\quad\quad\quad\;
-\;    \boldsymbol{Y}_t &amp;&amp;\sim f(\boldsymbol{Y}_t|A_t, \boldsymbol{\theta}),\\
+\;    \boldsymbol{Y}_t(a) &amp;&amp;\sim f(\boldsymbol{Y}_t(a)|\boldsymbol{\theta}),\\
 &amp;\text{(Reward)} \quad\quad\quad\quad\quad\quad\quad\quad\;
-\;   R_t &amp;&amp;= f_r(\boldsymbol{Y}_t ; \boldsymbol{\eta}), 
+\;   R_t(a) &amp;&amp;= f_r(\boldsymbol{Y}_t(a) ; \boldsymbol{\eta}), 
       \end{alignedat}
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(Q(\boldsymbol{\gamma})\)</span> is the prior distribution for <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>.
 Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class of practical problems, <strong>scalable</strong> to large systems, and <strong>robust</strong> to the specification of the generalization model.</p>
 <p><strong>Review of MTSS_Cascade:</strong> To characterize the relationship between items using their features, one example choice of <span class="math notranslate nohighlight">\(g\)</span> is the popular Beta-Bernoulli logistic model [1,2], where <span class="math notranslate nohighlight">\(\theta_i {\sim} Beta(logistic(\boldsymbol{x}_i^T \boldsymbol{\gamma}), \psi)\)</span> for some known parameter <span class="math notranslate nohighlight">\(\psi\)</span>. We adopt the mean-precision parameterization of the Beta distribution, with <span class="math notranslate nohighlight">\(logistic(\boldsymbol{x}_i^T \boldsymbol{\gamma})\)</span> being the mean and <span class="math notranslate nohighlight">\(\psi\)</span> being the precision parameter. Specifically, the full model is as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9b059d81-948c-4daa-adb4-cf2d9f014a8f">
-<span class="eqno">(59)<a class="headerlink" href="#equation-9b059d81-948c-4daa-adb4-cf2d9f014a8f" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:model_cascading}
+<div class="amsmath math notranslate nohighlight" id="equation-19f501bf-5575-4325-92cb-9d5ab71b3d25">
+<span class="eqno">(63)<a class="headerlink" href="#equation-19f501bf-5575-4325-92cb-9d5ab71b3d25" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:model_cascading}
     \begin{split}
     \theta_i &amp; \sim Beta(logistic(\boldsymbol{x}_i^T \boldsymbol{\gamma}), \psi), \forall i \in [N]\\
-    W_{k, t} &amp;\sim Bernoulli(\theta_{a^k_t}), \forall k \in [K], \\
-    Y_{k,t} &amp;= W_{k,t} E_{k,t}, \forall k \in [K],\\
-    E_{k,t} &amp;= (1-Y_{k-1}) E_{k-1,t}, \forall k \in [K],\\
-    R_t &amp;= \sum_{k \in [K]} Y_{k,t}, 
+    W_{k, t}(a) &amp;\sim Bernoulli(\theta_{a^k}), \forall k \in [K], \\
+    Y_{k,t}(a) &amp;= W_{k,t}(a) E_{k,t}(a), \forall k \in [K],\\
+    E_{k,t}(a) &amp;= [1-Y_{k-1}(a)] E_{k-1,t}(a), \forall k \in [K],\\
+    R_t(a) &amp;= \sum_{k \in [K]} Y_{k,t}(a), 
     \end{split}
 \end{equation}\]</div>
-<p>The prior <span class="math notranslate nohighlight">\(Q(\boldsymbol{\gamma})\)</span> can be chosen as many appropriate distributions. For instance, we choose the prior <span class="math notranslate nohighlight">\(\boldsymbol{\gamma} \sim \mathcal{N}(\boldsymbol{\mu}_{\boldsymbol{\gamma}}, {\boldsymbol{\Sigma}}_{\boldsymbol{\gamma}})\)</span> with parameters as known. To update the posterior of <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>, we utilize the <strong>Pymc3</strong> package [3]. With a given <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>, the posterior of <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> enjoys the Beta-Geometric conjugate relationship and hence can be updated explicitly and efficiently. Finally, for each round, we select the top <span class="math notranslate nohighlight">\(K\)</span> items with the highest estimated attractiveness factors.</p>
-<p>💥 Application Situation?</p>
+<p>The prior <span class="math notranslate nohighlight">\(Q(\boldsymbol{\gamma})\)</span> can be chosen as many appropriate distributions. For instance, we choose the prior <span class="math notranslate nohighlight">\(\boldsymbol{\gamma} \sim \mathcal{N}(\boldsymbol{\mu}_{\boldsymbol{\gamma}}, {\boldsymbol{\Sigma}}_{\boldsymbol{\gamma}})\)</span> with parameters as known. To update the posterior of <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>, we utilize the <strong>Pymc3</strong> package [3]. With a given <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>, the posterior of <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> enjoys the Beta-Geometric conjugate relationship and hence can be updated explicitly and efficiently. Finally, for each round, we select the top <span class="math notranslate nohighlight">\(K\)</span> items with the highest estimated attractiveness factors. It should be noted that the posterior updating step differs for different pairs of the <span class="math notranslate nohighlight">\(Q(\boldsymbol{\gamma})\)</span> and the reward distribution, and the corresponding code can be easily modified to different prior/reward distribution specifications if necessary.</p>
 </section>
 <section id="algorithm-details">
 <h2>Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this headline">#</a></h2>
-<p>At each round <span class="math notranslate nohighlight">\(t\)</span>, given the feedback <span class="math notranslate nohighlight">\(\mathcal{H}_{t}\)</span> received from previous rounds, there are two major steps including posterior sampling and combinatorial optimization. Specifically, the posterior sampling step is decomposed into four steps: 1. approximating a posterior distribution of <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>, <span class="math notranslate nohighlight">\(P(\boldsymbol{\gamma}|\mathcal{H}_{t})\)</span>, by <strong>Pymc3</strong>; 2. sampling a <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\gamma}}\)</span> from <span class="math notranslate nohighlight">\(P(\boldsymbol{\gamma}|\mathcal{H}_{t})\)</span>; 3. updating the posterior distribution of <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> conditional on <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\gamma}}\)</span>, <span class="math notranslate nohighlight">\(P(\boldsymbol{\theta}|\tilde{\boldsymbol{\gamma}},\mathcal{H}_{t})\)</span>, which has an explicit form under the assumption of a Beta-Bernoulli logistic model; 4. sampling <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\theta}}\)</span> from <span class="math notranslate nohighlight">\(P(\boldsymbol{\theta}|\tilde{\boldsymbol{\gamma}},\mathcal{H}_{t})\)</span>. Then, the action <span class="math notranslate nohighlight">\(A_{t}\)</span> is selected greedily as <span class="math notranslate nohighlight">\(A_t = arg max_{a \in \mathcal{A}} E(R_t \mid a, \tilde{\boldsymbol{\theta}})\)</span>. Specifically, the top <span class="math notranslate nohighlight">\(K\)</span> items with the highest <span class="math notranslate nohighlight">\(\tilde{\theta}_{i}\)</span> will be displayed. Note that <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\gamma}}\)</span> can be sampled in a batch mode to further facilitate computationally efficient online deployment.</p>
+<p>At each round <span class="math notranslate nohighlight">\(t\)</span>, given the feedback <span class="math notranslate nohighlight">\(\mathcal{H}_{t}\)</span> received from previous rounds, there are two major steps including posterior sampling and combinatorial optimization. Specifically, the posterior sampling step is decomposed into four steps: 1. approximating a posterior distribution of <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>, <span class="math notranslate nohighlight">\(P(\boldsymbol{\gamma}|\mathcal{H}_{t})\)</span>, by <strong>Pymc3</strong>; 2. sampling a <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\gamma}}\)</span> from <span class="math notranslate nohighlight">\(P(\boldsymbol{\gamma}|\mathcal{H}_{t})\)</span>; 3. updating the posterior distribution of <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> conditional on <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\gamma}}\)</span>, <span class="math notranslate nohighlight">\(P(\boldsymbol{\theta}|\tilde{\boldsymbol{\gamma}},\mathcal{H}_{t})\)</span>, which has an explicit form under the assumption of a Beta-Bernoulli logistic model; 4. sampling <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\theta}}\)</span> from <span class="math notranslate nohighlight">\(P(\boldsymbol{\theta}|\tilde{\boldsymbol{\gamma}},\mathcal{H}_{t})\)</span>. Then, the action <span class="math notranslate nohighlight">\(A_{t}\)</span> is selected greedily as <span class="math notranslate nohighlight">\(A_t = arg max_{a \in \mathcal{A}} E(R_t(a) \mid \tilde{\boldsymbol{\theta}})\)</span>. Specifically, the top <span class="math notranslate nohighlight">\(K\)</span> items with the highest <span class="math notranslate nohighlight">\(\tilde{\theta}_{i}\)</span> will be displayed. Note that <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\gamma}}\)</span> can be sampled in a batch mode to further facilitate computationally efficient online deployment.</p>
 </section>
 <section id="key-steps">
 <h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">#</a></h2>
@@ -881,16 +879,13 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
 <li><p>Sample <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\gamma}} \sim P(\boldsymbol{\gamma}|\mathcal{H}_{t})\)</span>;</p></li>
 <li><p>Update <span class="math notranslate nohighlight">\(P(\boldsymbol{\theta}|\tilde{\boldsymbol{\gamma}},\mathcal{H}_{t})\)</span>;</p></li>
 <li><p>Sample <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\theta}} \sim P(\boldsymbol{\theta}|\tilde{\boldsymbol{\gamma}},\mathcal{H}_{t})\)</span>;</p></li>
-<li><p>Take the action <span class="math notranslate nohighlight">\(A_{t}\)</span> w.r.t <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\theta}}\)</span> such that <span class="math notranslate nohighlight">\(A_t = arg max_{a \in \mathcal{A}} E(R_t \mid a, \tilde{\boldsymbol{\theta}})\)</span>;</p></li>
+<li><p>Take the action <span class="math notranslate nohighlight">\(A_{t}\)</span> w.r.t <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\theta}}\)</span> such that <span class="math notranslate nohighlight">\(A_t = arg max_{a \in \mathcal{A}} E(R_t(a) \mid \tilde{\boldsymbol{\theta}})\)</span>;</p></li>
 <li><p>Receive reward <span class="math notranslate nohighlight">\(R_{t}\)</span>.</p></li>
 </ol>
+<p>*Notations can be found in either the inroduction of the chapter “Structured Bandits” or the introduction of the cascading Bandit problems.</p>
 </section>
 <section id="demo-code">
 <h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
-<p>💥 In the following, we exhibit how to apply the learner on real data.</p>
-<p>*Notations can be found in the introduction of the combinatorial Semi-Bandit problems.</p>
-<section id="policy-learning">
-<h3>1. Policy Learning<a class="headerlink" href="#policy-learning" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># After we publish the pack age, we can directly import it</span>
@@ -970,7 +965,6 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
 </div>
 </div>
 </section>
-</section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <p>[1] Wan, R., Ge, L., &amp; Song, R. (2022). Towards Scalable and Robust Structured Bandits: A Meta-Learning Framework. arXiv preprint arXiv:2202.13227.</p>
@@ -1016,7 +1010,7 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
     <a class='right-next' id="next-link" href="../Combinatorial%20Optimization.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Online Combinatorial Optimization</p>
+        <p class="prev-next-title">Online Combinatorial Optimization (Combinatorial Semi-Bandit)</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
