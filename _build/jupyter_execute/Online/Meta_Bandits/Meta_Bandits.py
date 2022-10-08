@@ -3,12 +3,13 @@
 
 # # Meta Bandits
 # 
-# Recently, a new class of bandit learning algorithms, named meta Bandits, has been developed to utilize learned information to accelerate learning new tasks and share information efficiently across different tasks from a perspective of meta-learning, which is also known as \textit{learning how to learn} \citep{kveton2021meta, hong2021hierarchical, wan2021metadata, basu2021no}. 
+# Recently, a new class of bandit learning algorithms, named meta Bandits, has been developed to utilize learned information to accelerate learning new tasks and share information efficiently across different tasks from a perspective of meta-learning, which is also known as *learning how to learn* [1,2,3,4]. Most related literature on meta Bandits is TS-based, and all focus on sharing knowledge across a large number of relatively simple bandit tasks, such as MAB. For example, consider the following medical application scenario. Patients need to learn their own optimal treatment among a few (i,e., $K$) treatments. Here each patient is a task, and the learning process of each patient is simply a $K$-Armed Bandit. Denote $\boldsymbol{\mu}_j$ a $K$-dimensional vector, where $\mu_{j,a}$ is the expected reward of action $a$ for task $j$. 
 # 
 # ## Problem Setting
-# Most related literature on meta Bandits is TS-based, and all focus on sharing knowledge across a large number of relatively simple bandit tasks, such as MAB. For example, consider the following medical application scenario. Patients need to learn their own optimal treatment among a few (i,e., $K$) treatments. Here each patient is a task, and the learning process of each patient is simply a $K$-Armed Bandit. Slightly different from the notation in other sections of this report, here we denote $\boldsymbol{\mu}_j$ is a $K$-dimensional vector, where $\mu_{j,a}$ is the expected reward of action $a$ for task $j$.
 # 
+# Let $N$ be the number of tasks, $T$ be the number of rounds for each task, and $K$ be the number of arms (actions to be selected). The agent would interact with each task repeatedly in any arbitraty order. Specifically, for each task $j$, at its $t^{th}$ decsion point, the agent would choose one arm $A_{j,t}$ from the action space $\mathcal{A} = \{0,1,\cdots, K-1\}$. Then the agent will receive the corresponding stochastic reward $R_{j,t}$ generated from the environment. Denote the reward that would be received if arm $a$ is played as $R_{j,t}(a)$, which we will refer to as the potential reward of arm $a$ for task $i$ at decision point $t$. Similar to the MAB problems, most real-world applications always lack information about the reward distribution of the random variable $R_{j,t}(a)$. Thus, the agent needs to learn reward distributions for different tasks and arms based on feedback received, with an ultimate goal of maximizing the cumulative reward $\sum_{j=1}^{N}\sum_{t=1}^{T}R_{j,t}$.
 # 
+# Note that, for any positive integer $N$, we denote the set $\{1, \dots, N\}$ by $[N]$. Let $\mathcal{H}=\{(A_{k}, R_{k}, j(k))\}_{k=1}^n$  be a sequence of observations including all the action-and-feedback tuples from the previous $n$ rounds, where the data for all tasks have been combined and re-indexed. Here, the action taken is denoted by $A_k$, the reward received is denoted by $R_k$, and the task index for the $k^{th}$ tuple in $\mathcal{H}$ is denoted by $j(k)$. If there is feature information available and being used, we denote $\boldsymbol{x}_j$ as a $d$-dimensional vector of item-specific features, and then $\mathcal{H}=\{(A_{k}, R_{k}, \boldsymbol{x}_{k}, j(k))\}_{k=1}^n$.
 
 # ## Real Data
 # **1. MovieLens**
@@ -31,12 +32,22 @@
 # - **technician/engineer**: binary, =1 if a technician/engineer,
 # - **writer**: if a writer, then all the previous occupation-related variables = 0 (baseline).
 # 
-# Furthermore, there are two different types of the reward $R_t$:
+# We preprocessed the dataset to leave users with at least 500 data points, which gives us N=175 users. Furthermore, there are two different types of the reward $R_t$:
 # 
 # - **Gaussian Bandit**: $R_t$ is a numerical variable, taking the value of $\{1,2,3,4,5\}$, where 1 is the least satisfied and 5 is the most satisfied.
 # - **Bernoulli Bandit**: $R_t$ is a binary variable, =1 if the rating is higher than 3.
 # 
 # In the following, we evaluated the empirical performance of the supported algorithms on the MovieLens dataset under either the Gaussian bandit or Bernoulli bandit settings.
+
+# ## References
+# 
+# [1] Kveton, B., Konobeev, M., Zaheer, M., Hsu, C. W., Mladenov, M., Boutilier, C., & Szepesvari, C. (2021, July). Meta-thompson sampling. In International Conference on Machine Learning (pp. 5884-5893). PMLR.
+# 
+# [2] Hong, J., Kveton, B., Zaheer, M., & Ghavamzadeh, M. (2022, May). Hierarchical bayesian bandits. In International Conference on Artificial Intelligence and Statistics (pp. 7724-7741). PMLR.
+# 
+# [3] Wan, R., Ge, L., & Song, R. (2021). Metadata-based multi-task bandits with bayesian hierarchical models. Advances in Neural Information Processing Systems, 34, 29655-29668.
+# 
+# [4] Basu, S., Kveton, B., Zaheer, M., & Szepesvári, C. (2021). No regrets for learning the prior in bandits. Advances in Neural Information Processing Systems, 34, 28029-28041.
 
 # In[ ]:
 

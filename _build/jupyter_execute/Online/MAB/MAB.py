@@ -24,7 +24,7 @@
 # - **Thriller**: $a=3$,
 # - **Sci-Fi**: $a=4$.
 # 
-# Therefore, $K=5$. Furthermore, there are two different types of the reward $R_t$:
+# Therefore, $K=5$. We preprocessed the dataset to leave users with at least 500 data points, which gives us N=175 users. Furthermore, there are two different types of the reward $R_t$:
 # 
 # - **Gaussian Bandit**: $R_t$ is a numerical variable, taking the value of $\{1,2,3,4,5\}$, where 1 is the least satisfied and 5 is the most satisfied.
 # - **Bernoulli Bandit**: $R_t$ is a binary variable, =1 if the rating is higher than 3.
