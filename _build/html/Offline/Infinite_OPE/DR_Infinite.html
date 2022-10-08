@@ -54,6 +54,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Deeply-Debiased Off-Policy Evaluation" href="Deeply_Debiased.html" />
+    <link rel="prev" title="Importance Sampling for Policy Evaluation (Infinite Horizon)" href="IPW_Infinite.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -169,10 +171,22 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Offline Policy Learner
+  Causal Discovery Learning
  </span>
 </p>
 <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learning.html">
+   Causal Graph Learners
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Offline Policy Learner
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../Finite%20Horizon.html">
    Finite Horizon (DTR)
@@ -273,24 +287,39 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
   </ul>
  </li>
- <li class="toctree-l1 has-children">
+ <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="../Infinite%20Horizon.html">
    Infinite Horizon
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
   <label for="toctree-checkbox-6">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul>
+  <ul class="current">
    <li class="toctree-l2">
-    <a class="reference internal" href="../Infinite/Q-learning_Infinite.html">
-     Q-Learning (Infinite Horizon)
+    <a class="reference internal" href="../FQI.html">
+     Fitted-Q Iteration
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../Infinite/A-learning_Infinite.html">
-     A-Learning (Infinite Horizon)
+    <a class="reference internal" href="FQE.html">
+     Fitted-Q Evaluation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="IPW_Infinite.html">
+     Importance Sampling for Policy Evaluation (Infinite Horizon)
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Doubly Robust Estimator for Policy Evaluation (Infinite Horizon)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Deeply_Debiased.html">
+     Deeply-Debiased Off-Policy Evaluation
     </a>
    </li>
   </ul>
@@ -424,6 +453,11 @@ const thebe_selector_output = ".output, .cell_output"
     </label>
     <ul>
      <li class="toctree-l3">
+      <a class="reference internal" href="../../Online/Slate/Cascade/TS_Cascade.html">
+       TS_Cascade
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../../Online/Slate/Cascade/CascadeLinTS.html">
        CascadeLinTS
       </a>
@@ -501,18 +535,6 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../../OnlineEval/Evaluator.html">
    HAOYU and YE (epsilon+TS+UCB)
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Causal Discovery Learning
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learning.html">
-   Causal Graph Learners
   </a>
  </li>
 </ul>
@@ -832,8 +854,8 @@ title="Print to PDF"
 <p>In OPE, a DR estimator first requires a Q-function estimator, denoted as <span class="math notranslate nohighlight">\(\widehat{Q}\)</span>, which can be learned by various methods in the literature, such as FQE [<strong>CROSS-REFER</strong>].
 Denote the corresponding plug-in V-function estimator as <span class="math notranslate nohighlight">\(\widehat{V}\)</span>.
 These estimators will then be integrated with importance ratios in a form typically motivated by the Bellman equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8d8419cb-4b47-4ea4-90af-7aaa8dac8165">
-<span class="eqno">()<a class="headerlink" href="#equation-8d8419cb-4b47-4ea4-90af-7aaa8dac8165" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
+<div class="amsmath math notranslate nohighlight" id="equation-1fd3f1a4-8884-42a2-9ef7-f780b3f61f5d">
+<span class="eqno">(58)<a class="headerlink" href="#equation-1fd3f1a4-8884-42a2-9ef7-f780b3f61f5d" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
     Q^\pi(a, s) = \mathbb{E}^\pi \Big(R_t + \gamma Q^\pi(A_{t + 1}, S_{t+1})  | A_t = a, S_t = s \Big).  \;\;\;\;\; \text{(1)} 
 \end{equation}\]</div>
 <p>For example, based on the step-wise IS [<strong>CROSS-REFER</strong>], [1] proposed to construct the estimator as</p>
@@ -865,16 +887,16 @@ Besides, a DR estimator typically has lower (or comparable) bias and variance th
 For example, [2] designed a DR version, and [3] proposed to learn a single nuisance function <span class="math notranslate nohighlight">\(\widetilde{\xi}^{\pi}(s,a) \equiv \widetilde{\omega}^{\pi}(s) [\pi(a|s) / b(a|s)]\)</span> instead of learning <span class="math notranslate nohighlight">\(\widetilde{\omega}^{\pi}(s)\)</span> and <span class="math notranslate nohighlight">\(b\)</span> separately.</p>
 <p>In particular, following this line of research, [4] recently proposed a state-of-the-art method named double reinforcement learning (DRL) that achieves the semiparametric efficiency bound for OPE. DRL is a doubly robust-type method.</p>
 <p>To begin with, we first define the marginalized density ratio under the target policy <span class="math notranslate nohighlight">\(\pi\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b6d97d2a-e061-4749-9ae0-63f437b0bbe0">
-<span class="eqno">()<a class="headerlink" href="#equation-b6d97d2a-e061-4749-9ae0-63f437b0bbe0" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:omega}
+<div class="amsmath math notranslate nohighlight" id="equation-6bed2c88-b45a-42e2-a6b2-82775cd7ec58">
+<span class="eqno">(59)<a class="headerlink" href="#equation-6bed2c88-b45a-42e2-a6b2-82775cd7ec58" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:omega}
 	\omega^{\pi}(a,s)=\frac{(1-\gamma)\sum_{t=0}^{+\infty} \gamma^{t} p_t^{\pi}(a,s)}{p_b(a, s)}, 
 \end{eqnarray}\]</div>
 <p>where <span class="math notranslate nohighlight">\(p_t^{\pi}(a, s)\)</span> denotes the probability of <span class="math notranslate nohighlight">\(\{S_t = s, A_t = a\}\)</span> following policy <span class="math notranslate nohighlight">\(\pi\)</span> with  <span class="math notranslate nohighlight">\(S_{0}\sim \mathbb{G}\)</span>.
 Recall that <span class="math notranslate nohighlight">\(p_b(s, a)\)</span> is the stationary density function of the state-action pair under the policy <span class="math notranslate nohighlight">\(b\)</span>.</p>
 <p>Let <span class="math notranslate nohighlight">\(\widehat{Q}\)</span> and <span class="math notranslate nohighlight">\(\widehat{\omega}\)</span> be some estimates of  <span class="math notranslate nohighlight">\(Q^{\pi}\)</span> and <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span>,  respectively.
 DRL first constructs the following estimator for every <span class="math notranslate nohighlight">\((i,t)\)</span> in a doubly robust manner:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-01d266c8-755b-4c36-870d-f1af50079929">
-<span class="eqno">()<a class="headerlink" href="#equation-01d266c8-755b-4c36-870d-f1af50079929" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{term}
+<div class="amsmath math notranslate nohighlight" id="equation-a94b5040-8bca-4a3b-a689-ee4a7e6ef773">
+<span class="eqno">(60)<a class="headerlink" href="#equation-a94b5040-8bca-4a3b-a689-ee4a7e6ef773" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{term}
 \begin{split}
 	\psi_{i,t}
 	\equiv
@@ -893,8 +915,8 @@ DRL first constructs the following estimator for every <span class="math notrans
 <p>One can show that
 <span class="math notranslate nohighlight">\(\widehat{\eta}_{\tiny{\textrm{DRL}}}\)</span> is consistent when either <span class="math notranslate nohighlight">\(\widehat{Q}\)</span> or <span class="math notranslate nohighlight">\(\widehat{\omega}\)</span> is consistent, and hence is doubly robust.
 In addition, under mild conditions, we can prove that <span class="math notranslate nohighlight">\(\sqrt{nT} (\widehat{\eta}_{\tiny{\textrm{DRL}}} - \eta^{\pi})\)</span> converges weakly to a normal distribution with mean zero and variance <span class="math notranslate nohighlight">\(\sigma^2\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-12953e94-4872-47d2-aff7-86977cb833cb">
-<span class="eqno">()<a class="headerlink" href="#equation-12953e94-4872-47d2-aff7-86977cb833cb" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{lower_bound}
+<div class="amsmath math notranslate nohighlight" id="equation-d054e870-52d7-4fa9-afc0-21e53007f0a1">
+<span class="eqno">(61)<a class="headerlink" href="#equation-d054e870-52d7-4fa9-afc0-21e53007f0a1" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{lower_bound}
     \sigma^2 = 
     \frac{1}{(1-\gamma)^2}\mathbb{E} \left[ 
     \omega^{\pi}(A, S) \{R + \gamma V^{\pi}(S') -  Q^{\pi}(A,S)\}
@@ -948,8 +970,8 @@ Roughly speaking, this implies the algorithm is statistically most efficient.</p
 </ol>
 <p>One critical question is how to estimate the nuisance function <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span>.
 The following observation forms the basis: <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span> is the only function that satisfies the equation <span class="math notranslate nohighlight">\(\mathbb{E} L(\omega^{\pi},f)=0\)</span> for any function <span class="math notranslate nohighlight">\(f\)</span>, where <span class="math notranslate nohighlight">\(L(\omega^{\pi},f)\)</span> equals</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e18b3a93-d387-47e3-adf7-b4f16042d325">
-<span class="eqno">()<a class="headerlink" href="#equation-e18b3a93-d387-47e3-adf7-b4f16042d325" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn_omega}
+<div class="amsmath math notranslate nohighlight" id="equation-a40b465c-0344-4e4b-9777-9554c19ae0a0">
+<span class="eqno">(62)<a class="headerlink" href="#equation-a40b465c-0344-4e4b-9777-9554c19ae0a0" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn_omega}
 \begin{split}
 	\Big[\mathbb{E}_{a \sim \pi(\cdot|S_{t+1})} \{\omega^{\pi}(A_{t},S_{t})
 	(\gamma f(a, S_{t+1})- f(A_{t},S_{t}) ) \}
@@ -957,8 +979,8 @@ The following observation forms the basis: <span class="math notranslate nohighl
 \end{split}
 \end{eqnarray}\]</div>
 <p>As such, <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span> can be learned by solving the following mini-max problem,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4719af34-95dd-455d-88e4-0b437325f29e">
-<span class="eqno">()<a class="headerlink" href="#equation-4719af34-95dd-455d-88e4-0b437325f29e" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:solveL}
+<div class="amsmath math notranslate nohighlight" id="equation-104080ef-d2fe-41e3-aaa6-c06e4e13da95">
+<span class="eqno">(63)<a class="headerlink" href="#equation-104080ef-d2fe-41e3-aaa6-c06e4e13da95" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:solveL}
 \arg \min_{\omega\in \Omega} \sup_{f\in \mathcal{F}} \{\mathbb{E} L(\omega, f)\}^2, 
 \end{eqnarray}\]</div>
 <p>for some function classes <span class="math notranslate nohighlight">\(\Omega\)</span> and <span class="math notranslate nohighlight">\(\mathcal{F}\)</span>.
@@ -996,6 +1018,20 @@ with the expectation approximated by the sample mean.
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="IPW_Infinite.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Importance Sampling for Policy Evaluation (Infinite Horizon)</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Deeply_Debiased.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Deeply-Debiased Off-Policy Evaluation</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
             </footer>
         </div>
