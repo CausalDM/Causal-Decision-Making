@@ -142,8 +142,8 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../Preliminary/Causal%20Inference%20101.html">
-     Causal Inference 101
+    <a class="reference internal" href="../../Preliminary/Causal%20Inference%20Preliminary.html">
+     Causal Inference Preliminary
     </a>
    </li>
    <li class="toctree-l2">
@@ -176,8 +176,18 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learning.html">
-   Causal Graph Learners
+  <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learner%20-%20LiNGAM%20Algorithm.html">
+   Causal Discovery Learner - LiNGAM Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learner%20-%20NOTEARS%20Algorithm.html">
+   Causal Discovery Learner - NOTEARS Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learner%20-%20PC%20Algorithm.html">
+   Causal Discovery Learner - PC Algorithm
   </a>
  </li>
 </ul>
@@ -298,11 +308,6 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../Offline/FQI.html">
-     Fitted-Q Iteration
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="../../Offline/Infinite_OPE/FQE.html">
      Fitted-Q Evaluation
     </a>
@@ -320,6 +325,11 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2">
     <a class="reference internal" href="../../Offline/Infinite_OPE/Deeply_Debiased.html">
      Deeply-Debiased Off-Policy Evaluation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Offline/FQI.html">
+     Fitted-Q Iteration
     </a>
    </li>
   </ul>
@@ -400,7 +410,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../Contextual_Bandits/LinUCB.html">
-     Epsilon_Greedy
+     LinUCB
     </a>
    </li>
    <li class="toctree-l2">
@@ -816,7 +826,8 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="meta-bandits">
 <h1>Meta Bandits<a class="headerlink" href="#meta-bandits" title="Permalink to this headline">#</a></h1>
-<p>Recently, a new class of bandit learning algorithms, named meta Bandits, has been developed to utilize learned information to accelerate learning new tasks and share information efficiently across different tasks from a perspective of meta-learning, which is also known as <em>learning how to learn</em> [1,2,3,4]. Most related literature on meta Bandits is TS-based, and all focus on sharing knowledge across a large number of relatively simple bandit tasks, such as MAB. For example, consider the following medical application scenario. Patients need to learn their own optimal treatment among a few (i,e., <span class="math notranslate nohighlight">\(K\)</span>) treatments. Here each patient is a task, and the learning process of each patient is simply a <span class="math notranslate nohighlight">\(K\)</span>-Armed Bandit. Denote <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_j\)</span> a <span class="math notranslate nohighlight">\(K\)</span>-dimensional vector, where <span class="math notranslate nohighlight">\(\mu_{j,a}\)</span> is the expected reward of action <span class="math notranslate nohighlight">\(a\)</span> for task <span class="math notranslate nohighlight">\(j\)</span>.</p>
+<p>Recently, a new class of bandit learning algorithms, named meta Bandits, has been developed to utilize learned information to accelerate learning new tasks and share information efficiently across tasks from a perspective of meta-learning, which is also known as <em>learning how to learn</em> [1,2,3,4]. Most related literature on meta Bandits is TS-based, and all focus on sharing knowledge across a large number of relatively simple bandit tasks, such as MAB. For example, consider one of our motivating examples–<strong>Healthcare</strong>. Patients need to learn their own optimal treatment among a few (i,e., <span class="math notranslate nohighlight">\(K\)</span>) treatments. Here each patient is a task, and the learning process of each patient is simply a <span class="math notranslate nohighlight">\(K\)</span>-Armed Bandit. Denote <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_j\)</span> a <span class="math notranslate nohighlight">\(K\)</span>-dimensional vector, where <span class="math notranslate nohighlight">\(\mu_{j,a}\)</span> is the expected reward of action <span class="math notranslate nohighlight">\(a\)</span> for task <span class="math notranslate nohighlight">\(j\)</span>. We aim to utilize the information observed from the
+interactions with other patients <span class="math notranslate nohighlight">\(i\)</span> to help learn the distribution of expected reward for different treatments of the patient <span class="math notranslate nohighlight">\(j\)</span> who requires a treatment recommendation.</p>
 <section id="problem-setting">
 <h2>Problem Setting<a class="headerlink" href="#problem-setting" title="Permalink to this headline">#</a></h2>
 <p>Let <span class="math notranslate nohighlight">\(N\)</span> be the number of tasks, <span class="math notranslate nohighlight">\(T\)</span> be the number of rounds for each task, and <span class="math notranslate nohighlight">\(K\)</span> be the number of arms (actions to be selected). The agent would interact with each task repeatedly in any arbitraty order. Specifically, for each task <span class="math notranslate nohighlight">\(j\)</span>, at its <span class="math notranslate nohighlight">\(t^{th}\)</span> decsion point, the agent would choose one arm <span class="math notranslate nohighlight">\(A_{j,t}\)</span> from the action space <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. Then the agent will receive the corresponding stochastic reward <span class="math notranslate nohighlight">\(R_{j,t}\)</span> generated from the environment. Denote the reward that would be received if arm <span class="math notranslate nohighlight">\(a\)</span> is played as <span class="math notranslate nohighlight">\(R_{j,t}(a)\)</span>, which we will refer to as the potential reward of arm <span class="math notranslate nohighlight">\(a\)</span> for task <span class="math notranslate nohighlight">\(i\)</span> at decision point <span class="math notranslate nohighlight">\(t\)</span>. Similar to the MAB problems, most real-world applications always lack information about the reward distribution of the random variable <span class="math notranslate nohighlight">\(R_{j,t}(a)\)</span>. Thus, the agent needs to learn reward distributions for different tasks and arms based on feedback received, with an ultimate goal of maximizing the cumulative reward <span class="math notranslate nohighlight">\(\sum_{j=1}^{N}\sum_{t=1}^{T}R_{j,t}\)</span>.</p>

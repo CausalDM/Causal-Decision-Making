@@ -3,7 +3,8 @@
 
 # # Meta Bandits
 # 
-# Recently, a new class of bandit learning algorithms, named meta Bandits, has been developed to utilize learned information to accelerate learning new tasks and share information efficiently across different tasks from a perspective of meta-learning, which is also known as *learning how to learn* [1,2,3,4]. Most related literature on meta Bandits is TS-based, and all focus on sharing knowledge across a large number of relatively simple bandit tasks, such as MAB. For example, consider the following medical application scenario. Patients need to learn their own optimal treatment among a few (i,e., $K$) treatments. Here each patient is a task, and the learning process of each patient is simply a $K$-Armed Bandit. Denote $\boldsymbol{\mu}_j$ a $K$-dimensional vector, where $\mu_{j,a}$ is the expected reward of action $a$ for task $j$. 
+# Recently, a new class of bandit learning algorithms, named meta Bandits, has been developed to utilize learned information to accelerate learning new tasks and share information efficiently across tasks from a perspective of meta-learning, which is also known as *learning how to learn* [1,2,3,4]. Most related literature on meta Bandits is TS-based, and all focus on sharing knowledge across a large number of relatively simple bandit tasks, such as MAB. For example, consider one of our motivating examples--**Healthcare**. Patients need to learn their own optimal treatment among a few (i,e., $K$) treatments. Here each patient is a task, and the learning process of each patient is simply a $K$-Armed Bandit. Denote $\boldsymbol{\mu}_j$ a $K$-dimensional vector, where $\mu_{j,a}$ is the expected reward of action $a$ for task $j$. We aim to utilize the information observed from the 
+# interactions with other patients $i$ to help learn the distribution of expected reward for different treatments of the patient $j$ who requires a treatment recommendation.
 # 
 # ## Problem Setting
 # 
