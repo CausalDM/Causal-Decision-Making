@@ -143,7 +143,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../../Preliminary/Causal%20Inference%20Preliminary.html">
-     Causal Inference Preliminary
+     Average Treatment Effect
     </a>
    </li>
    <li class="toctree-l2">
@@ -154,11 +154,6 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2">
     <a class="reference internal" href="../../Preliminary/Causal%20Discovery%20Preliminary.html">
      Causal Discovery Preliminary
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../Preliminary/Policy%20Evaluation%20and%20Optimization.html">
-     Policy Evaluation and Optimization
     </a>
    </li>
   </ul>
@@ -176,6 +171,11 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
+  <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learner%20-%20PC%20Algorithm.html">
+   Causal Discovery Learner - PC Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learner%20-%20LiNGAM%20Algorithm.html">
    Causal Discovery Learner - LiNGAM Algorithm
   </a>
@@ -183,11 +183,6 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learner%20-%20NOTEARS%20Algorithm.html">
    Causal Discovery Learner - NOTEARS Algorithm
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learner%20-%20PC%20Algorithm.html">
-   Causal Discovery Learner - PC Algorithm
   </a>
  </li>
 </ul>
@@ -781,6 +776,11 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#demo-code">
+   Demo Code
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
    References
   </a>
@@ -820,6 +820,11 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#demo-code">
+   Demo Code
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
    References
   </a>
@@ -839,28 +844,54 @@ title="Print to PDF"
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p><strong>Advantage</strong>: When task instances are sampled from the same unknown instance prior (i.e., the tasks are similar), it shares information across tasks to efficiently learn the common prior distribution of the mean rewards.</p></li>
+<li><p><strong>Advantage</strong>: When task instances are sampled from the same unknown instance prior (i.e., the tasks are similar), it efficiently learns the prior distribution of the mean potential rewards to achieve a regret bound that is comparable to that of the TS algorithm with known priors.</p></li>
 <li><p><strong>Disadvantage</strong>: When there is a large number of different tasks, the algorithm is not scalable and inefficient.</p></li>
 <li><p><strong>Application Situation</strong>: Useful when there are multiple <strong>similar</strong> multi-armed bandit tasks, each with the same action space. The reward space can be either binary or continuous.</p></li>
 </ul>
 </section>
 <section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
-<p>The <strong>Meta-TS</strong>[1] assumes that the mean reward for each task <span class="math notranslate nohighlight">\(j\)</span> are i.i.d sampled from some distribution parameterized by <span class="math notranslate nohighlight">\(\boldsymbol{\gamma})\)</span>. Specifically, it assumes that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d47dc259-9ad0-456d-92a2-452eddb41f98">
-<span class="eqno">(81)<a class="headerlink" href="#equation-d47dc259-9ad0-456d-92a2-452eddb41f98" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<p>The <strong>Meta-TS</strong>[1] assumes that the mean potential rewards, <span class="math notranslate nohighlight">\(\mu_{j,a} = E(R_{j,t}(a))\)</span>, for each task <span class="math notranslate nohighlight">\(j\)</span> are i.i.d sampled from some distribution parameterized by <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>. Specifically, it assumes that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a777a546-4fbe-4f52-8103-0811a5d7a360">
+<span class="eqno">(81)<a class="headerlink" href="#equation-a777a546-4fbe-4f52-8103-0811a5d7a360" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{alignedat}{2}
 &amp;\text{(meta-Prior)} \quad
 \quad\quad\quad    \boldsymbol{\gamma} &amp;&amp;\sim Q(\boldsymbol{\gamma}), \\
 &amp;\text{(Prior)} \quad
-\; \quad\quad\quad   \boldsymbol{\mu}_j | \boldsymbol{x}_j, \boldsymbol{\gamma} &amp;&amp;\sim g(\boldsymbol{\mu}_j | \boldsymbol{\gamma})\\
+\; \quad\quad\quad\quad   \boldsymbol{\mu}_j | \boldsymbol{\gamma} &amp;&amp;\sim g(\boldsymbol{\mu}_j | \boldsymbol{\gamma})\\
 &amp;\text{(Reward)} \quad
-\;    R_{j,t}(a) = Y_{j,t}(a) &amp;&amp;\sim f(Y_{j,t}(a)|\mu_{j,a}), 
+\;    R_{j,t}(a) = Y_{j,t}(a) &amp;&amp;\sim f(Y_{j,t}(a)|\mu_{j,a}).
       \end{alignedat}
 \end{equation}\]</div>
-<p><strong>Gaussian</strong></p>
-<p><strong>Bernoulli</strong></p>
-<p>While the original algorithm only support the sequential interaction (i.e, a new task will be interacted with until the previous task is finished), we modified the algorithm slightly to adapt to different recommending schedules.</p>
+<p>To learn the prior distribution of <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_{j}\)</span>, it introduces a meta-parameter <span class="math notranslate nohighlight">\(\gamma\)</span> with a meta-prior distribution <span class="math notranslate nohighlight">\(Q(\gamma)\)</span>. The <strong>Meta-TS</strong> efficiently leverages the knowledge received from different tasks to learn the prior distribution and to guide the exploration of each task by maintaining the meta-posterior distribution of <span class="math notranslate nohighlight">\(\gamma\)</span>. Theoretically, it is demonstrated to have a regret bound comparable to that of the Thompson sampling method with known prior distribution of <span class="math notranslate nohighlight">\(\mu_{j,a}\)</span>. Both the</p>
+<p>Considering a Gaussian bandits, we assume that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-700cef8d-c090-44e2-abaa-d9c8767877ae">
+<span class="eqno">(82)<a class="headerlink" href="#equation-700cef8d-c090-44e2-abaa-d9c8767877ae" title="Permalink to this equation">#</a></span>\[\begin{equation}
+  \begin{alignedat}{2}
+&amp;\text{(meta-Prior)} \quad
+\quad\quad\quad    \boldsymbol{\gamma} &amp;&amp;\sim Q(\boldsymbol{\gamma}), \\
+&amp;\text{(Prior)} \quad
+\;  \quad\quad\quad\quad \boldsymbol{\mu}_j |\boldsymbol{\gamma} &amp;&amp;\sim g(\boldsymbol{\mu}_j |\boldsymbol{\gamma})=\boldsymbol{\gamma}+ \boldsymbol{\delta}_{j}, \\
+&amp;\text{(Reward)} \quad
+\;    R_{j,t}(a) = Y_{j,t}(a) &amp;&amp;= \mu_{j,a} + \epsilon_{j,t}, 
+      \end{alignedat}
+\end{equation}\]</div>
+<p>Similarly, considering the Bernoulli bandits, we assume that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-41f93f28-ef20-4504-83ec-1d04c5a3b8be">
+<span class="eqno">(83)<a class="headerlink" href="#equation-41f93f28-ef20-4504-83ec-1d04c5a3b8be" title="Permalink to this equation">#</a></span>\[\begin{equation}
+  \begin{alignedat}{2}
+&amp;\text{(meta-Prior)} \quad
+\quad\quad\quad    \boldsymbol{\gamma} &amp;&amp;\sim Q(\boldsymbol{\gamma}), \\
+&amp;\text{(Prior)} \quad
+\;  \quad\quad\quad\quad \boldsymbol{\mu}_j |\boldsymbol{\gamma} &amp;&amp;\sim Beta(\boldsymbol{\gamma}), \\
+&amp;\text{(Reward)} \quad
+\;    R_{j,t}(a) = Y_{j,t}(a) &amp;&amp;= Bernoulli(\mu_{j,a}). 
+      \end{alignedat}
+\end{equation}\]</div>
+<p>While various meta-priors can be used, by default, we consider a finite space of <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>,
+$<span class="math notranslate nohighlight">\(\mathcal{P} = \{(\alpha_{i,j})_{i=1}^{K}, (\beta_{i,j})_{i=1}^{K}\}_{j=1}^{L},\)</span><span class="math notranslate nohighlight">\( 
+which contains **L** potential instance priors and assume a categorical distribution over the \)</span>\mathcal{P}$ as the meta-prior. See [1] for more information about the corresponding meta-posterior updating.</p>
+<p><strong>Remark.</strong> While the original system only supported a sequential schedule of interactions (i.e., a new task will not be interacted with until the preceding task is completed), we adjusted the algorithm to accommodate different recommending schedules.</p>
 </section>
 <section id="key-steps">
 <h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">#</a></h2>
@@ -872,6 +903,10 @@ title="Print to PDF"
 <li><p>Take the action <span class="math notranslate nohighlight">\(A_{j,t}\)</span> such that <span class="math notranslate nohighlight">\(A_{j,t} = argmax_{a \in \mathcal{A}} \tilde\mu_{j,a}\)</span>;</p></li>
 <li><p>Receive reward <span class="math notranslate nohighlight">\(R_{j,t}\)</span>.</p></li>
 </ol>
+</section>
+<section id="demo-code">
+<h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
+<p>TODO： Bernoulli: specify the prior space</p>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>

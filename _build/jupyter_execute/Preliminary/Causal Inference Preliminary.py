@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# ## Causal Inference Preliminary
+# ## Average Treatment Effect
 # Classical statistical inference considers associational relationships of different variables in a population of interest. However, in scientific research, we are often interested in causal relationships. Does action $T$ cause $Y$. In this section, we will focus on establishing and estimating causal relationships between actions or interventions and subsequent response, under the potential outcome framework advocated by Neyman, Rubin, Robins and others.
 # 
 # We denote the treatment (intervention, action) by the variable $T$, which can be a vector of discrete, continuous random variables. For simplicity, we consider the simplest case where $T$ is a binary indicator, i.e. $T \in \{0, 1\}$ to denote two different interventions, say, for example, ad intervention versus no ad intervention for acquiring new users for new app. We will denote by $Y$ the response of interest, say, convert (download the new app) or not. The ad of the new app may be randomly assigned to a sample of users in a randomized controlled experiment, or the users may be intervened by the ad according to baseline features in an observational study. The data that are available can be summarized as $Z_i = (X_i, T_i, Y_i), i=1, \cdots, n$, where for the $i-$ th sample, $X_i$ denotes the covariates that have been collected on the individual prior to the intervention, $T_i$ is the treatment received, $Y_i$ denotes the response. We are interested in establishing a causal relationship between $T$ and $Y$. 
