@@ -111,21 +111,16 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../../intro.html">
-                    Causal Decision Making
+                    Introduction
                 </a>
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Introduction
+  intro
  </span>
 </p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../Introduction.html">
-   Introduction
-  </a>
- </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../Examples.html">
    Motivating Examples
@@ -143,7 +138,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../../Preliminary/Causal%20Inference%20Preliminary.html">
-     Causal Inference Preliminary
+     Average Treatment Effect
     </a>
    </li>
    <li class="toctree-l2">
@@ -156,16 +151,11 @@ const thebe_selector_output = ".output, .cell_output"
      Causal Discovery Preliminary
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../Preliminary/Policy%20Evaluation%20and%20Optimization.html">
-     Policy Evaluation and Optimization
-    </a>
-   </li>
   </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../Map.html">
-   Map
+   Maps
   </a>
  </li>
 </ul>
@@ -176,6 +166,11 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
+  <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learner%20-%20PC%20Algorithm.html">
+   Causal Discovery Learner - PC Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learner%20-%20LiNGAM%20Algorithm.html">
    Causal Discovery Learner - LiNGAM Algorithm
   </a>
@@ -183,11 +178,6 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learner%20-%20NOTEARS%20Algorithm.html">
    Causal Discovery Learner - NOTEARS Algorithm
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learner%20-%20PC%20Algorithm.html">
-   Causal Discovery Learner - PC Algorithm
   </a>
  </li>
 </ul>
@@ -868,8 +858,8 @@ title="Print to PDF"
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>As the name suggested, the UCB algorithm estimates the upper confidence bound <span class="math notranslate nohighlight">\(U_{a}^{t}\)</span> of the mean of the potential reward of arm <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(R_t(a)\)</span>, based on the observations and then choose the action has the highest estimates. The class of UCB-based algorithms is firstly introduced by Auer et al. [1]. Generally, at each round <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(U_{a}^{t}\)</span> is calculated as the sum of the estimated reward (exploitation) and the estimated confidence radius (exploration) of item <span class="math notranslate nohighlight">\(i\)</span> based on previous observations. Then, <span class="math notranslate nohighlight">\(A_{t}\)</span> is selected as
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0719ccc7-b266-4c9f-8310-3ddd5eeb2ff0">
-<span class="eqno">(74)<a class="headerlink" href="#equation-0719ccc7-b266-4c9f-8310-3ddd5eeb2ff0" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f2962895-2c30-4c99-bccc-0eeaec216c9b">
+<span class="eqno">(74)<a class="headerlink" href="#equation-f2962895-2c30-4c99-bccc-0eeaec216c9b" title="Permalink to this equation">#</a></span>\[\begin{equation}
     A_t = argmax_{a \in \mathcal{A}} U_a^t.
 \end{equation}\]</div>
 <p>$<span class="math notranslate nohighlight">\(
@@ -878,13 +868,13 @@ As an example, **UCB1** [1] estimates the confidence radius as \)</span>\sqrt{\f
 <section id="algorithms-details">
 <h2>Algorithms Details<a class="headerlink" href="#algorithms-details" title="Permalink to this headline">#</a></h2>
 <p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. The UCB1 algorithm start with initializing the estimated upper confidence bound <span class="math notranslate nohighlight">\(U_a^{0}\)</span> and the count of being pulled <span class="math notranslate nohighlight">\(C_a^{0}\)</span> for each action <span class="math notranslate nohighlight">\(a\)</span> as 0. At each round <span class="math notranslate nohighlight">\(t\)</span>, we greedily select an action <span class="math notranslate nohighlight">\(A_t\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c8164cb0-93a6-46e4-b0a9-1305ed489495">
-<span class="eqno">(75)<a class="headerlink" href="#equation-c8164cb0-93a6-46e4-b0a9-1305ed489495" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2195c887-32c8-4dda-af20-2356af2ec568">
+<span class="eqno">(75)<a class="headerlink" href="#equation-2195c887-32c8-4dda-af20-2356af2ec568" title="Permalink to this equation">#</a></span>\[\begin{align}
 A_t = arg max_{a\in \mathcal{A}} U_{a}^{t}.
 \end{align}\]</div>
 <p>After observing the rewards corresponding to the selected action <span class="math notranslate nohighlight">\(A_t\)</span>, we first update the total number of being pulled for <span class="math notranslate nohighlight">\(A_t\)</span> accordingly. Then, we estimate the upper confidence bound for each action <span class="math notranslate nohighlight">\(a\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7fb5812b-2c4e-49d2-98f4-c0511b0c113d">
-<span class="eqno">(76)<a class="headerlink" href="#equation-7fb5812b-2c4e-49d2-98f4-c0511b0c113d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-27d0798a-b4e9-4006-a274-af25214b2e03">
+<span class="eqno">(76)<a class="headerlink" href="#equation-27d0798a-b4e9-4006-a274-af25214b2e03" title="Permalink to this equation">#</a></span>\[\begin{align}
 U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} ,
 \end{align}\]</div>
 </section>
@@ -895,8 +885,8 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 <li><p>For t = <span class="math notranslate nohighlight">\(0, 1,\cdots, T\)</span>:</p>
 <p>2.1. select action <span class="math notranslate nohighlight">\(A_t\)</span> as the arm with the maximum <span class="math notranslate nohighlight">\(U_a^t\)</span></p>
 <p>2.2. Received the reward R, and update <span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(U\)</span> with</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a4b906c5-bfc3-483a-b476-7a98e143b033">
-<span class="eqno">(77)<a class="headerlink" href="#equation-a4b906c5-bfc3-483a-b476-7a98e143b033" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a792265a-8267-47fc-a019-57791883dcf4">
+<span class="eqno">(77)<a class="headerlink" href="#equation-a792265a-8267-47fc-a019-57791883dcf4" title="Permalink to this equation">#</a></span>\[\begin{align}
     C_{A_{t}}^{t+1} &amp;= C_{A_{t}}^{t} + 1 \\
     U_{A_{t}}^{t+1} &amp;= \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} 
     \end{align}\]</div>
