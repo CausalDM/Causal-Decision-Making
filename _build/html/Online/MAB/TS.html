@@ -55,7 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Contextual Bandits" href="../Contextual_Bandits/Contextual_Bandits.html" />
-    <link rel="prev" title="UCB1" href="UCB1.html" />
+    <link rel="prev" title="UCB" href="UCB.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -156,28 +156,6 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../../Map.html">
    Maps
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Causal Discovery Learning
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learner%20-%20PC%20Algorithm.html">
-   Causal Discovery Learner - PC Algorithm
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learner%20-%20LiNGAM%20Algorithm.html">
-   Causal Discovery Learner - LiNGAM Algorithm
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learner%20-%20NOTEARS%20Algorithm.html">
-   Causal Discovery Learner - NOTEARS Algorithm
   </a>
  </li>
 </ul>
@@ -288,8 +266,8 @@ const thebe_selector_output = ".output, .cell_output"
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../Offline/Infinite%20Horizon.html">
-   Infinite Horizon
+  <a class="reference internal" href="../../Offline/preliminary_MDP-potential-outcome.html">
+   Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
   <label for="toctree-checkbox-6">
@@ -369,16 +347,8 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul class="current">
    <li class="toctree-l2">
-    <a class="reference internal" href="Epsilon_Greedy.html">
-     <span class="math notranslate nohighlight">
-      \(\epsilon\)
-     </span>
-     -Greedy
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="UCB1.html">
-     UCB1
+    <a class="reference internal" href="UCB.html">
+     UCB
     </a>
    </li>
    <li class="toctree-l2 current active">
@@ -781,11 +751,6 @@ title="Print to PDF"
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#specify-the-path-where-the-package-code-is">
-     Specify the path where the package code is.
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#import-the-learner">
      Import the learner.
     </a>
@@ -862,11 +827,6 @@ title="Print to PDF"
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#specify-the-path-where-the-package-code-is">
-     Specify the path where the package code is.
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#import-the-learner">
      Import the learner.
     </a>
@@ -924,7 +884,20 @@ title="Print to PDF"
 </section>
 <section id="algorithms-details">
 <h2>Algorithms Details<a class="headerlink" href="#algorithms-details" title="Permalink to this headline">#</a></h2>
-<p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. The TS algorithm starts with specifying a prior distribution of the potential reward, based on the domian knowledge. At each round <span class="math notranslate nohighlight">\(t\)</span>, the agent will samples a vector of <span class="math notranslate nohighlight">\(\theta^{t}\)</span> from the posterior distribution of the potential rewards. The action <span class="math notranslate nohighlight">\(a\)</span> with the greatest <span class="math notranslate nohighlight">\(\theta_{a}^{t}\)</span> is then selected. Finally, the posterior distribution would be updated after receiving the realized reward at the end of each round. Note that the posterior updating step differs for different pairs of prior distribution of the mean reward and reward distribution. Here, we consider two classical examples of the TS algorithm, including Gaussian reward with Gaussian prior and Bernoulli reward with Beta prior. The posterior updating is straightforward for both cases, since the nice conjugate property. In both cases, the variance of reward is assumed to be known, and need to be specified manually. Note that code can be easily modified to different specifications of the prior/potential reward distribution.</p>
+<p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. The TS algorithm starts with specifying a prior distribution of the potential reward, based on the domian knowledge. At each round <span class="math notranslate nohighlight">\(t\)</span>, the agent will samples a vector of <span class="math notranslate nohighlight">\(\theta^{t}\)</span> from the posterior distribution of the potential rewards. The action <span class="math notranslate nohighlight">\(a\)</span> with the greatest <span class="math notranslate nohighlight">\(\theta_{a}^{t}\)</span> is then selected. Finally, the posterior distribution would be updated after receiving the realized reward at the end of each round. Note that the posterior updating step differs for different pairs of prior distribution of the mean reward and reward distribution. Here, we consider two classical examples of the TS algorithm, including</p>
+<ul class="simple">
+<li><p>Gaussian Bandits
+\begin{aligned}
+\boldsymbol{\theta} &amp;\sim Q(\boldsymbol{\theta}),\
+R_t(a) &amp;\sim \mathcal{N}(\theta_a,\sigma^2),
+\end{aligned}</p></li>
+<li><p>Bernoulli Bandits
+\begin{aligned}
+\boldsymbol{\theta} &amp;\sim Q(\boldsymbol{\theta}),\
+R_t(a) &amp;\sim Bernoulli(\theta_a).
+\end{aligned}</p></li>
+</ul>
+<p>Assuming a Gaussian prior for the Gaussian bandits and a Beta prior for the Bernoulli bandits, the posterior updating is straightforward with closed-form expression. In the Gaussian bandits, the variance of reward <span class="math notranslate nohighlight">\(\sigma^2\)</span> is assumed to be known, and need to be specified manually. Note that code can be easily modified to different specifications of the prior/potential reward distribution.</p>
 </section>
 <section id="key-steps">
 <h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">#</a></h2>
@@ -941,8 +914,6 @@ title="Print to PDF"
 </section>
 <section id="demo-code">
 <h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
-<section id="specify-the-path-where-the-package-code-is">
-<h3>Specify the path where the package code is.<a class="headerlink" href="#specify-the-path-where-the-package-code-is" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -952,7 +923,6 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-</section>
 <section id="import-the-learner">
 <h3>Import the learner.<a class="headerlink" href="#import-the-learner" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
@@ -971,15 +941,11 @@ title="Print to PDF"
 </section>
 <section id="generate-the-environment">
 <h3>Generate the Environment<a class="headerlink" href="#generate-the-environment" title="Permalink to this headline">#</a></h3>
-<p>Here, we imitate an environment with K=5 arms, T=2000 time steps. The true mean reward is [2,4,5,2,3], and the standard deviation of each arm’s reward distribution is 1. For real-world applications, users must define the actual operating environment.</p>
+<p>Here, we imitate an environment based on the MovieLens data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.MAB</span> <span class="kn">import</span> <span class="n">_env</span>
-<span class="n">T</span> <span class="o">=</span> <span class="mi">20000</span>
-<span class="n">K</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">sigma</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="n">r_mean</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
-<span class="n">env</span> <span class="o">=</span> <span class="n">_env</span><span class="o">.</span><span class="n">Single_Gaussian_Env</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">r_mean</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.MAB</span> <span class="kn">import</span> <span class="n">_env_realMAB</span> <span class="k">as</span> <span class="n">_env</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">_env</span><span class="o">.</span><span class="n">Single_Gaussian_Env</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -997,7 +963,8 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Reward_Type</span> <span class="o">=</span> <span class="s2">&quot;Gaussian&quot;</span>
-<span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">K</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">K</span>
 <span class="n">u_prior_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">K</span><span class="p">)</span>
 <span class="n">u_prior_cov</span> <span class="o">=</span> <span class="mi">10000</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">K</span><span class="p">)</span>
 <span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1024,37 +991,29 @@ title="Print to PDF"
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">A</span> <span class="o">=</span> <span class="n">TS_Gaussian_agent</span><span class="o">.</span><span class="n">take_action</span><span class="p">()</span>
-<span class="n">R</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get_reward</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">A</span><span class="p">)</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get_reward</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
 <span class="n">TS_Gaussian_agent</span><span class="o">.</span><span class="n">receive_reward</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">R</span><span class="p">)</span>
 <span class="n">t</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">R</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0, 3, 3.5230298564080256)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0, 3, 2)
 </pre></div>
 </div>
 </div>
 </div>
-<p><strong>Interpretation</strong>: For step 0, the TS agent recommend to play arm 3, and received a reward of 3.523 from the environment.</p>
+<p><strong>Interpretation</strong>: For step 0, the TS agent recommend a Thriller (arm 3), and received a rate of 2 from the environment.</p>
 </section>
 <section id="demo-code-for-bernoulli-bandit">
 <h3>Demo Code for Bernoulli Bandit<a class="headerlink" href="#demo-code-for-bernoulli-bandit" title="Permalink to this headline">#</a></h3>
 <p>The steps are similar to those previously performed with a Gaussian Bandit. Note that, when specifying the prior distribution of the expected reward, the mean-precision form of the Beta distribution is used here, i.e., Beta(<span class="math notranslate nohighlight">\(\mu\)</span>, <span class="math notranslate nohighlight">\(\phi\)</span>), where <span class="math notranslate nohighlight">\(\mu\)</span> is the mean reward of each arm and <span class="math notranslate nohighlight">\(\phi\)</span> is the precision of the Beta distribution.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">T</span> <span class="o">=</span> <span class="mi">2000</span>
-<span class="n">K</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">r_mean</span> <span class="o">=</span> <span class="p">[</span><span class="mf">.2</span><span class="p">,</span><span class="mf">.5</span><span class="p">,</span><span class="mf">.6</span><span class="p">,</span><span class="mf">.8</span><span class="p">,</span><span class="mf">.1</span><span class="p">]</span>
-<span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">env</span> <span class="o">=</span> <span class="n">_env</span><span class="o">.</span><span class="n">Single_Bernoulli_Env</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">r_mean</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Reward_Type</span> <span class="o">=</span> <span class="s2">&quot;Bernoulli&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">env</span> <span class="o">=</span> <span class="n">_env</span><span class="o">.</span><span class="n">Single_Bernoulli_Env</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">K</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">K</span>
+<span class="n">Reward_Type</span> <span class="o">=</span> <span class="s2">&quot;Bernoulli&quot;</span>
 <span class="c1">## specify the mean of the prior beta distribution</span>
 <span class="n">u_prior_mean</span> <span class="o">=</span> <span class="mf">.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">K</span><span class="p">)</span>
 <span class="c1">## specify the precision of the prior beta distribution</span>
@@ -1063,17 +1022,11 @@ title="Print to PDF"
                            <span class="n">u_prior_mean</span> <span class="o">=</span> <span class="n">u_prior_mean</span><span class="p">,</span>
                            <span class="n">prior_phi_beta</span> <span class="o">=</span> <span class="n">prior_phi_beta</span><span class="p">,</span>
                            <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">A</span> <span class="o">=</span> <span class="n">TS_Bernoulli_agent</span><span class="o">.</span><span class="n">take_action</span><span class="p">()</span>
-<span class="n">R</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get_reward</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">A</span><span class="p">)</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get_reward</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
 <span class="n">TS_Bernoulli_agent</span><span class="o">.</span><span class="n">receive_reward</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">R</span><span class="p">)</span>
-<span class="n">t</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">R</span>
+<span class="n">t</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">R</span>
 </pre></div>
 </div>
 </div>
@@ -1083,7 +1036,7 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<p><strong>Interpretation</strong>: For step 0, the TS agent recommend to play arm 4, and received a reward of 0 from the environment.</p>
+<p><strong>Interpretation</strong>: For step 0, the TS agent recommend a Sci-Fi (arm 4), and received a reward of 0 from the environment.</p>
 </section>
 </section>
 <section id="references">
@@ -1120,11 +1073,11 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="UCB1.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="UCB.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">UCB1</p>
+            <p class="prev-next-title">UCB</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="../Contextual_Bandits/Contextual_Bandits.html" title="next page">
