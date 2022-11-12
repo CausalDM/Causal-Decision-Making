@@ -42,196 +42,88 @@
 # In[1]:
 
 
-# After we publish the pack age, we can directly import it
-# TODO: explore more efficient way
-# we can hide this cell later
 import os
 os.getcwd()
-os.chdir('/nas/longleaf/home/lge/CausalDM')
-# code used to import the learner
+os.chdir('D:\GitHub\CausalDM')
 
 
-# In[5]:
+# ### Import the learner.
+
+# In[2]:
 
 
-from causaldm.learners.Online.Single import Epsilon_Greedy
-from causaldm.learners.Online.Single import _env
 import numpy as np
+from causaldm.learners.Online.MAB import Epsilon_Greedy
 
 
-# In[6]:
-
-
-T = 2000
-K = 5
-
-phi_beta = 1/4
-with_intercept = True
-p=3
-X_mu = np.zeros(p-1)
-X_sigma = np.identity(p-1)
-Sigma_theta = sigma_gamma = np.identity(p)
-mu_theta = np.zeros(p)
-seed = 0
-
-env = _env.Single_Gaussian_Env(T, K, p, phi_beta
-                         , mu_theta, Sigma_theta
-                        , seed, with_intercept = True
-                         , X_mu = X_mu, X_sigma = X_sigma)
-#time-adaptive. for time-fixed version, specifiying epsilon and setting decrease_eps=False
-greedy_agent = Epsilon_Greedy.Epsilon_Greedy(K, epsilon = None, decrease_eps = True)
-A = greedy_agent.take_action()
-t = 0
-R = env.get_reward(t,A)
-greedy_agent.receive_reward(t,A,R)
-
-
-# In[7]:
-
-
-greedy_agent.cnts
-
-
-# **Interpretation:** A sentence to include the analysis result: the estimated optimal regime is...
+# ### Generate the Environment
+# 
+# Here, we imitate an environment based on the MovieLens data.
 
 # In[3]:
 
 
-import os
-os.getcwd()
-os.chdir('/nas/longleaf/home/lge/CausalDM')
-# code used to import the learner
-from causaldm.learners.Online.Single import _env
-from causaldm.learners.Online.Single import _Experiment
-from causaldm.learners.Online.Single import Epsilon_Greedy
-from causaldm.learners.Online.Single import UCB1
-from causaldm.learners.Online.Single import TS
-from causaldm.learners.Online.Single import LinTS
-from causaldm.learners.Online.Single import LinUCB
-import numpy as np
+from causaldm.learners.Online.MAB import _env_realMAB as _env
+env = _env.Single_Gaussian_Env(seed = 42)
 
 
-# In[27]:
+# ### Specify Hyperparameters
+# 
+# - K: # of arms
+# - epsilon: fixed $\epsilon$ for time-fixed version of $\epsilon$-greedy algorithm
+# - decrease_eps: indicate if a time-adaptive $\epsilon_t = min(1,\frac{K}{t})$ employed.
+
+# In[4]:
 
 
-T = 2000
-K = 500
-
-phi_beta = sigma = 1/4
-with_intercept = True
-p=3
-X_mu = np.zeros(p-1)
-X_sigma = np.identity(p-1)
-Sigma_theta = sigma_gamma = np.identity(p)
-mu_theta = np.zeros(p)
-seed = 0
-
-exp = _Experiment.Experiment(T, K, p, sigma
-                         , mu_theta, Sigma_theta
-                        , seed, with_intercept = True
-                         , X_mu = X_mu, X_sigma = X_sigma, Gaussian = True)
+K = env.K
+greedy_agent = Epsilon_Greedy.Epsilon_Greedy(K, epsilon = None, decrease_eps = True, seed = 0)
 
 
-# In[28]:
+# ### Recommendation and Interaction
+# 
+# Starting from t = 0, for each step t, there are three steps:
+# 1. Recommend an action 
+# <code> A = greedy_agent.take_action() </code>
+# 2. Get the reward from the environment 
+# <code> R = env.get_reward(t,A) </code>
+# 3. Update the posterior distribution
+# <code> greedy_agent.receive_reward(t,A,R) </code>
+
+# In[5]:
 
 
-r = exp.env.r
-greedy_agent = Epsilon_Greedy.Epsilon_Greedy(K, epsilon = .6, decrease_eps = False)
-UCB_agent = UCB1.UCB1(K)
-TS_Bernoulli_agent = TS.TS(Reward_Type = "Gaussian", sigma = sigma, u_prior_mean = np.ones(K)*.5, u_prior_cov = np.identity(K), prior_phi_beta = sigma)
-LinTS_agent = LinTS.LinTS_Gaussian(sigma = sigma, prior_theta_u = np.ones(p), prior_theta_cov = np.identity(p), K = K, p = p, seed = seed)
-LinUCB_agent = LinUCB.LinUCB_Gaussian(alpha = .5, K = K, p = p, seed = seed)
-
-agents = {"greedy" : greedy_agent, 'UCB':UCB_agent, 'TS': TS_Bernoulli_agent, 'LinTS':LinTS_agent, 'LinUCB':LinUCB_agent}
-exp._init_agents(agents)
-exp.run()
+t = 0
+A = greedy_agent.take_action()
+R = env.get_reward(A)
+greedy_agent.receive_reward(t,A,R)
+t, A, R
 
 
-# In[29]:
+# **Interpretation**: For step 0, the $\epsilon-$greedy agent recommend a Thriller (arm 3), and received a rate of 4 from the environment.
+
+# ### Demo Code for Bernoulli Bandit
+# The steps are similar to those previously performed with a Gaussian Bandit.
+
+# In[6]:
 
 
-R_greedy = exp.record['R']['greedy']
-R_oracle = exp.record['R']['oracle']
-R_TS = exp.record['R']['TS']
-R_UCB = exp.record['R']['UCB']
-R_LinTS = exp.record['R']['LinTS']
-R_LinUCB = exp.record['R']['LinUCB']
+env = _env.Single_Bernoulli_Env(seed=42)
+
+K = env.K
+greedy_agent = Epsilon_Greedy.Epsilon_Greedy(K, epsilon = None, decrease_eps = True, seed = 42)
+
+t = 0
+A = greedy_agent.take_action()
+R = env.get_reward(A)
+greedy_agent.receive_reward(t,A,R)
+t, A, R
 
 
-# In[30]:
-
-
-opt_r = exp.env.r[exp.env.optimal_arm]
-Reward_greedy = (np.cumsum(opt_r-R_greedy))/np.arange(1, len(R_greedy)+1)
-Reward_TS = (np.cumsum(opt_r-R_TS))/np.arange(1, len(R_greedy)+1)
-Reward_UCB = (np.cumsum(opt_r-R_UCB))/np.arange(1, len(R_greedy)+1)
-Reward_LinTS = (np.cumsum(opt_r-R_LinTS))/np.arange(1, len(R_greedy)+1)
-Reward_LinUCB = (np.cumsum(opt_r-R_LinUCB))/np.arange(1, len(R_greedy)+1)
-Reward_oracle = (np.cumsum(opt_r-R_oracle))/np.arange(1, len(R_greedy)+1)
-
-
-# In[31]:
-
-
-LinTS_agent.u
-
-
-# In[32]:
-
-
-LinUCB_agent.Cov_inv
-
-
-# In[33]:
-
-
-x = exp.env.Phi[0]
-Ax = np.matmul(LinUCB_agent.Cov_inv,x)
-xAx = x.dot(Ax)
-LinUCB_agent.Cov_inv -= Ax.dot(Ax.T)/(1+xAx)
-
-
-# In[41]:
-
-
-from numpy.linalg import norm, inv
-inv(LinUCB_agent.Cov)
-
-
-# In[35]:
-
-
-exp.env.theta
-
-
-# In[36]:
-
-
-Reward_LinUCB
-
-
-# In[37]:
-
-
-import matplotlib.pyplot as plt
-plt.plot(Reward_oracle,label = 'oracle')
-plt.plot(Reward_greedy,label = 'greedy')
-plt.plot(Reward_TS,label = 'TS')
-plt.plot(Reward_UCB,label = 'UCB')
-plt.plot(Reward_LinTS,label = 'LinTS')
-plt.plot(Reward_LinUCB,label = 'LinUCB')
-plt.legend()
-plt.show()
-
+# **Interpretation**: For step 0, the $\epsilon-$greedy agent recommend a Comedy (arm 0), and received a reward of 1 from the environment.
 
 # ## References
 # 
 # [1] Sutton, R. S., & Barto, A. G. (2018). Reinforcement learning: An introduction. MIT press.
 # 
 # [2] Auer, P., Cesa-Bianchi, N., & Fischer, P. (2002). Finite-time analysis of the multiarmed bandit problem. Machine learning, 47(2), 235-256.
-
-# In[ ]:
-
-
-
-
