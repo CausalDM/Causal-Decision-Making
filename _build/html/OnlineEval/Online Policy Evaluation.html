@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Average Treatment Effect &#8212; Causal Decision Making</title>
+    <title>Doubly Robust Online Policy Evaluator &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -54,8 +54,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Heterogenous Treatement Effect" href="Heterogenous%20Treatement%20Effect.html" />
-    <link rel="prev" title="Preliminary" href="../Preliminary.html" />
+    <link rel="next" title="Variable Selection" href="../Inference/VariableSelection.html" />
+    <link rel="prev" title="MTSS_MNL" href="../Online/Slate/MNL/MTSS_MNL.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -120,34 +120,34 @@ const thebe_selector_output = ".output, .cell_output"
   intro
  </span>
 </p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../Examples.html">
    Motivating Examples
   </a>
  </li>
- <li class="toctree-l1 current active has-children">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../Preliminary.html">
    Preliminary
   </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul class="current">
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Preliminary/Causal%20Inference%20Preliminary.html">
      Average Treatment Effect
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="Heterogenous%20Treatement%20Effect.html">
+    <a class="reference internal" href="../Preliminary/Heterogenous%20Treatement%20Effect.html">
      Heterogenous Treatement Effect
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="Causal%20Discovery%20Preliminary.html">
+    <a class="reference internal" href="../Preliminary/Causal%20Discovery%20Preliminary.html">
      Causal Discovery Preliminary
     </a>
    </li>
@@ -509,9 +509,9 @@ const thebe_selector_output = ".output, .cell_output"
   Online Policy Evaluation
  </span>
 </p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../OnlineEval/Online%20Policy%20Evaluation.html">
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Doubly Robust Online Policy Evaluator
   </a>
  </li>
@@ -586,7 +586,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/Preliminary/Causal Inference Preliminary.ipynb"
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/OnlineEval/Online Policy Evaluation.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -646,7 +646,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FPreliminary/Causal Inference Preliminary.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FOnlineEval/Online Policy Evaluation.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -674,7 +674,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/Preliminary/Causal Inference Preliminary.ipynb"
+        <a href="../_sources/OnlineEval/Online Policy Evaluation.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -734,53 +734,58 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#potential-outcome">
-   Potential Outcome
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#do-operator">
-   Do-Operator
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#assumptions">
-   Assumptions
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#average-causal-effect">
-   Average Causal Effect
+  <a class="reference internal nav-link" href="#main-idea">
+   Main Idea
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#outcome-regression-models">
-     Outcome Regression Models
+    <a class="reference internal nav-link" href="#overview">
+     Overview
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#propensity-score">
-     Propensity Score
+    <a class="reference internal nav-link" href="#id1">
+     Doubly Robust Online Policy Evaluator
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#stratification">
-       Stratification
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#inverse-propensity-score-weighting">
-       Inverse Propensity Score Weighting
-      </a>
-     </li>
-    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#doubly-robust-estimators">
-     Doubly Robust Estimators
+    <a class="reference internal nav-link" href="#probability-of-exploration">
+     Probability of Exploration
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#doubly-robust-interval-estimation">
+     Doubly Robust Interval Estimation
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#demo-code">
+   Demo Code
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#policy-evaluation-under-ucb">
+     1. Policy Evaluation under UCB
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#policy-evaluation-under-ts">
+     2. Policy Evaluation under TS
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#policy-evaluation-under-eg">
+     3. Policy Evaluation under EG
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
  </li>
 </ul>
 
@@ -791,7 +796,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Average Treatment Effect</h1>
+                <h1>Doubly Robust Online Policy Evaluator</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -802,53 +807,58 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#potential-outcome">
-   Potential Outcome
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#do-operator">
-   Do-Operator
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#assumptions">
-   Assumptions
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#average-causal-effect">
-   Average Causal Effect
+  <a class="reference internal nav-link" href="#main-idea">
+   Main Idea
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#outcome-regression-models">
-     Outcome Regression Models
+    <a class="reference internal nav-link" href="#overview">
+     Overview
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#propensity-score">
-     Propensity Score
+    <a class="reference internal nav-link" href="#id1">
+     Doubly Robust Online Policy Evaluator
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#stratification">
-       Stratification
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#inverse-propensity-score-weighting">
-       Inverse Propensity Score Weighting
-      </a>
-     </li>
-    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#doubly-robust-estimators">
-     Doubly Robust Estimators
+    <a class="reference internal nav-link" href="#probability-of-exploration">
+     Probability of Exploration
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#doubly-robust-interval-estimation">
+     Doubly Robust Interval Estimation
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#demo-code">
+   Demo Code
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#policy-evaluation-under-ucb">
+     1. Policy Evaluation under UCB
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#policy-evaluation-under-ts">
+     2. Policy Evaluation under TS
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#policy-evaluation-under-eg">
+     3. Policy Evaluation under EG
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
  </li>
 </ul>
 
@@ -860,131 +870,89 @@ title="Print to PDF"
                 
               <div>
                 
-  <section id="average-treatment-effect">
-<h1>Average Treatment Effect<a class="headerlink" href="#average-treatment-effect" title="Permalink to this headline">#</a></h1>
-<p>Classical statistical inference considers associational relationships of different variables in a population of interest. However, in scientific research, we are often interested in causal relationships. Does action <span class="math notranslate nohighlight">\(T\)</span> cause <span class="math notranslate nohighlight">\(Y\)</span>. In this section, we will focus on establishing and estimating causal relationships between actions or interventions and subsequent response, under the potential outcome framework advocated by Neyman, Rubin, Robins and others.</p>
-<p>We denote the treatment (intervention, action) by the variable <span class="math notranslate nohighlight">\(T\)</span>, which can be a vector of discrete, continuous random variables. For simplicity, we consider the simplest case where <span class="math notranslate nohighlight">\(T\)</span> is a binary indicator, i.e. <span class="math notranslate nohighlight">\(T \in \{0, 1\}\)</span> to denote two different interventions, say, for example, ad intervention versus no ad intervention for acquiring new users for new app. We will denote by <span class="math notranslate nohighlight">\(Y\)</span> the response of interest, say, convert (download the new app) or not. The ad of the new app may be randomly assigned to a sample of users in a randomized controlled experiment, or the users may be intervened by the ad according to baseline features in an observational study. The data that are available can be summarized as <span class="math notranslate nohighlight">\(Z_i = (X_i, T_i, Y_i), i=1, \cdots, n\)</span>, where for the <span class="math notranslate nohighlight">\(i-\)</span> th sample, <span class="math notranslate nohighlight">\(X_i\)</span> denotes the covariates that have been collected on the individual prior to the intervention, <span class="math notranslate nohighlight">\(T_i\)</span> is the treatment received, <span class="math notranslate nohighlight">\(Y_i\)</span> denotes the response. We are interested in establishing a causal relationship between <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>.</p>
-<section id="potential-outcome">
-<h2>Potential Outcome<a class="headerlink" href="#potential-outcome" title="Permalink to this headline">#</a></h2>
-<p>Under the potential outcome framework, we will assume, for each treatment, that there exists a potential outcome <span class="math notranslate nohighlight">\(Y^*(t)\)</span> which will represent the response of a randomly chosen individual in our population if they are given treatment <span class="math notranslate nohighlight">\(T=t\)</span>. Hence, when there are two treatments, <span class="math notranslate nohighlight">\(Y^*(0)\)</span> and <span class="math notranslate nohighlight">\(Y^*(1)\)</span> will represent the responses of a randomly chosen individual from the population if they are given treatment <span class="math notranslate nohighlight">\(T=0\)</span> and <span class="math notranslate nohighlight">\(T=1\)</span>, respectively. <span class="math notranslate nohighlight">\(Y^*(0)\)</span> and <span class="math notranslate nohighlight">\(Y^*(1)\)</span> are sometimes referred to as counterfactual random variables because, in reality, they both cannot be observed and correspond to a hypothetical value if contrary to the fact the individual actually received a treatment different than the one considered. Using the notion of potential outcomes, we can define the causal treatment effect at the individual level by <span class="math notranslate nohighlight">\(\{Y^*(1) - Y^*(0)\}\)</span>. Because only one of <span class="math notranslate nohighlight">\(Y^*(0)\)</span> and <span class="math notranslate nohighlight">\(Y^*(1)\)</span> can be observed for any one individual, it is not possible to measure or estimate the subject-specific causal treatment effect.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="doubly-robust-online-policy-evaluator">
+<h1>Doubly Robust Online Policy Evaluator<a class="headerlink" href="#doubly-robust-online-policy-evaluator" title="Permalink to this headline">#</a></h1>
+<p>Evaluating the performance of an ongoing policy plays a vital role in many areas such as medicine and economics, to provide crucial instruction on the early-stop of the online experiment and timely feedback from the environment. Policy evaluation in online learning thus attracts increasing attention by inferring the mean outcome
+of the optimal policy (i.e., the value) in real-time. We introduce the <strong>doubly robust online policy evaluator</strong> to infer the value under the estimated optimal policy in online learning.</p>
+<p><em><strong>Application Situations</strong></em>:</p>
+<ol class="simple">
+<li><p>Dependent data generated in the online environment;</p></li>
+<li><p>unknown optimal policy or known fixed policy;</p></li>
+<li><p>Contain exploration and exploitation trade-off.</p></li>
+</ol>
+<p><em><strong>Advantage of the Evaluator</strong></em>:</p>
+<ol class="simple">
+<li><p>Double protection on the consistency of the value estimator of the unknown optimal/target policy;</p></li>
+<li><p>Provide a Wald-type confidence interval on the value estimator;</p></li>
+<li><p>flexible to implement in practice.</p></li>
+</ol>
+<section id="main-idea">
+<h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h3>
+<p>We focus on online policy evaluation for contextual linear bandits with deterministic policy for illustration. We first explicitly characterize the <strong>probability of exploration</strong> in the online policy optimization under three commonly used bandit algorithms for exposition, including Upper Confidence Bound (UCB), Thompson Sampling (TS), and <span class="math notranslate nohighlight">\(\epsilon\)</span>-Greedy (EG) methods [[[link to be added]]]. We then propose <strong>doubly robust interval estimation (DREAM) method</strong> to infer the mean outcome of the optimal online policy. The DREAM provides double protection on the consistency of the proposed value estimator to the true value, given either the model of the probability of exploitation or the conditional mean outcome is correctly specified. Under standard assumptions for inferring the online sample mean, we show the value estimator under DREAM is asymptotically normal with a Wald-type confidence interval provided.</p>
+<p><img src="OPE.png" alt="drawing" width="500"/> <img src="DREAM.png" alt="drawing" width="500"/></p>
+<p>Upper: the architecture of offline policy evaluation, with offline context-action-outcome triples <span class="math notranslate nohighlight">\(\{(x_t,a_t,r_t)\}\)</span> stored in the buffer to learn the value under a target policy <span class="math notranslate nohighlight">\(\pi^*\)</span> with data generated by a behavior policy <span class="math notranslate nohighlight">\(\pi_b\)</span>. Lower: the architecture of DREAM for policy evaluation in online learning, where the context-action-outcome triple at time <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\((x_t,a_t,r_t)\)</span>, is stored in the buffer to update the bandit policy <span class="math notranslate nohighlight">\(\pi_t\)</span> and at the meantime to evaluate its performance.</p>
 </section>
-<section id="do-operator">
-<h2>Do-Operator<a class="headerlink" href="#do-operator" title="Permalink to this headline">#</a></h2>
-<p>The potential outcome can be equivalently described using the do-operator advocated by Pearl, Spirtes, and others. Specifically, we have <span class="math notranslate nohighlight">\(Y^*(t) = Y\{do(T=t)\}\)</span> as the response of a randomly chosen individual from the population if they are given treatment <span class="math notranslate nohighlight">\(T=t\)</span>, where <span class="math notranslate nohighlight">\(do(T=t)\)</span> is a mathematical operator to simulate physical interventions that hold <span class="math notranslate nohighlight">\(T\)</span> constant as <span class="math notranslate nohighlight">\(t\)</span> while keeping the rest of the model unchanged.</p>
+<section id="id1">
+<h3>Doubly Robust Online Policy Evaluator<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<p>Given a context <span class="math notranslate nohighlight">\(\boldsymbol{x}_t\)</span>, we choose an action <span class="math notranslate nohighlight">\(a_t\)</span> based on a policy  <span class="math notranslate nohighlight">\(\pi(\cdot)\)</span> which is defined as a deterministic function that maps the context space to the action space as <span class="math notranslate nohighlight">\(\pi: \mathcal{X} \to \mathcal{A}\)</span>. We then receive a reward  <span class="math notranslate nohighlight">\(r_t\)</span> for all <span class="math notranslate nohighlight">\(t \in  \mathcal{T} \)</span>. Denote the history observations previous to time step <span class="math notranslate nohighlight">\(t\)</span> as <span class="math notranslate nohighlight">\(\mathcal{H}_{t-1}=\{\boldsymbol{x}_i,a_i,r_i\}_{1\leq i\leq t-1}\)</span>. The value (Dud ́ık
+et al., 2011) of a given policy <span class="math notranslate nohighlight">\(\pi(\cdot)\)</span> is</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+ V(\pi)\equiv \mathbb{E}_{\boldsymbol{X}  \sim P_{\mathcal{X}}}\left[\mathbb{E}\{R|\boldsymbol{X}, A =\pi(\boldsymbol{X} )\}\right] =\mathbb{E}_{\boldsymbol{X}  \sim P_{\mathcal{X}}}\left[\mu\{ \boldsymbol{X} ,  \pi(\boldsymbol{X} )\}\right] .
+\end{equation*}\]</div>
+<p>We define the optimal policy as  <span class="math notranslate nohighlight">\(\pi^*(\boldsymbol{x}) \equiv argmax_{a\in \mathcal{A}} \mu(\boldsymbol{x },a),   \forall \boldsymbol{x} \in \mathcal{X}\)</span>, that finds the optimal action based on the conditional mean outcome function given a context <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span>.
+Thus, the optimal value can be defined as  <span class="math notranslate nohighlight">\(V^*\equiv V(\pi^*)=\mathbb{E}_{\boldsymbol{X}  \sim P_{\mathcal{X}}}\left[\mu\{ \boldsymbol{X} ,  \pi^*(\boldsymbol{X} )\}\right]\)</span>. In the rest, to simplify the exposition, we focus on two actions, i.e., <span class="math notranslate nohighlight">\(\mathcal{A}=\{0,1\}\)</span>.  Then the optimal policy is given by</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\pi^*(\boldsymbol{x}) \equiv argmax_{a\in \mathcal{A}} \mu(\boldsymbol{x},a) = \mathbb{I}\{\mu(\boldsymbol{x},1)&gt;\mu(\boldsymbol{x},0)\}, \quad \forall \boldsymbol{x} \in \mathcal{X}.
+\end{equation*}\]</div>
+<p>Our goal is to infer the value under the optimal policy <span class="math notranslate nohighlight">\(\pi^* \)</span> from the online data generated sequentially by some bandit algorithms. Since the optimal policy is unknown, we estimate the optimal policy from the online data as <span class="math notranslate nohighlight">\(\widehat{\pi}_t\)</span> by <span class="math notranslate nohighlight">\(\mathcal{H}_{t}\)</span>.</p>
 </section>
-<section id="assumptions">
-<h2>Assumptions<a class="headerlink" href="#assumptions" title="Permalink to this headline">#</a></h2>
-<p>We now consider the necessary assumptions that allow us to deduce the distribution of <span class="math notranslate nohighlight">\(Y^*(0)\)</span> and <span class="math notranslate nohighlight">\(Y^*(1)\)</span> from the distribution of <span class="math notranslate nohighlight">\((X, T, Y)\)</span>.</p>
-<ul class="simple">
-<li><p>SUTVA (stable unit treatment value assumption)</p></li>
-</ul>
-<div class="amsmath math notranslate nohighlight" id="equation-e52f4faa-0634-46b4-ac4e-7dd408a6263d">
-<span class="eqno">(1)<a class="headerlink" href="#equation-e52f4faa-0634-46b4-ac4e-7dd408a6263d" title="Permalink to this equation">#</a></span>\[\begin{align}
-Y_i = Y_i^*(1) T_i + Y_i^*(0) (1-T_i), i = 1, \cdots, n.
-\end{align}\]</div>
-<p>That is, the actual response that is observed for the <span class="math notranslate nohighlight">\(i\)</span>-th individual in our sample, <span class="math notranslate nohighlight">\(Y_i\)</span>, who received treatment <span class="math notranslate nohighlight">\(T_i\)</span>, is the same as the potential outcome for that assigned treatment regardless of the experimental conditions used to assign treatment. This assumption also indicates that there are not any interference between subjects in the population, that is, the observed response for any individual is not affected by the responses of other individuals</p>
-<ul class="simple">
-<li><p>No Unmeasured Confounders (Strong Ignorability)</p></li>
-</ul>
-<div class="amsmath math notranslate nohighlight" id="equation-b7978be8-bfdf-41fb-bd10-8e185c442eaf">
-<span class="eqno">(2)<a class="headerlink" href="#equation-b7978be8-bfdf-41fb-bd10-8e185c442eaf" title="Permalink to this equation">#</a></span>\[\begin{align}
-\{Y^*(0), Y^*(1)\} \perp\!\!\!\perp T|X
-\end{align}\]</div>
-<p>We cannot use the data in an observational study to either confirm or refute this assumption. However, if we believe that <span class="math notranslate nohighlight">\(X\)</span> contained all the relevant information about the treatment assignment, then it will be reasonable to make the above assumption.</p>
-<ul class="simple">
-<li><p>Positivity Assumption</p></li>
-</ul>
-<div class="amsmath math notranslate nohighlight" id="equation-e917f4f4-c65f-4f59-a2b4-e572b08c1211">
-<span class="eqno">(3)<a class="headerlink" href="#equation-e917f4f4-c65f-4f59-a2b4-e572b08c1211" title="Permalink to this equation">#</a></span>\[\begin{align}
-0 &lt; P(T=1|X=x) &lt; 1
-\end{align}\]</div>
-<p>This assumption ensures that for any given individual in treatment group <span class="math notranslate nohighlight">\(1\)</span>, we are able to find a similar individual in treatment group <span class="math notranslate nohighlight">\(0\)</span>, and vice versa.</p>
+<section id="probability-of-exploration">
+<h3>Probability of Exploration<a class="headerlink" href="#probability-of-exploration" title="Permalink to this headline">#</a></h3>
+<p>We next quantify the probability of exploring non-optimal actions at each time step.  Define the status of exploration as <span class="math notranslate nohighlight">\(\mathbb{I}\{a_t\not = \widehat{\pi}_t(\boldsymbol{x}_t )\}\)</span>, indicating whether the action taken by the bandit algorithm is different from the estimated optimal action that exploits the historical information. Here, <span class="math notranslate nohighlight">\(\widehat{\pi}_t\)</span> can be viewed as the greedy policy at time step <span class="math notranslate nohighlight">\(t\)</span>. Thus the probability of exploration is defined by</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\kappa_t(\boldsymbol{x}_t)\equiv  Pr\{a_t\not = \widehat{\pi}_t(\boldsymbol{x}_t )\} =  \mathbb{E} [ \mathbb{I}\{a_t\not = \widehat{\pi}_t(\boldsymbol{x}_t )\}],
+\end{equation*}\]</div>
+<p>where the expectation in the last term is taken respect to <span class="math notranslate nohighlight">\(a_t \in \mathcal{A}\)</span> and history <span class="math notranslate nohighlight">\(\mathcal{H}_{t-1}\)</span>.</p>
 </section>
-<section id="average-causal-effect">
-<h2>Average Causal Effect<a class="headerlink" href="#average-causal-effect" title="Permalink to this headline">#</a></h2>
-<p><span class="math notranslate nohighlight">\(\text{ATE} = E[Y^*(1) - Y^*(0)] = E[ Y|do(T=1)] -  E[ Y|do(T=0)]\)</span>
-There are two general approaches to deriving estimators for the average causal treatment effect from observational data: outcome regression modeling and the use of propensity score.</p>
-<section id="outcome-regression-models">
-<h3>Outcome Regression Models<a class="headerlink" href="#outcome-regression-models" title="Permalink to this headline">#</a></h3>
-<p>The use of outcome regression modeling to estimate the average causal treatment effect from observational data under the assumption of no unmeasured confouners and SUTVA comes from the following consideration:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c5b56dd4-7d0f-4358-98a5-a1dc14f76d90">
-<span class="eqno">(4)<a class="headerlink" href="#equation-c5b56dd4-7d0f-4358-98a5-a1dc14f76d90" title="Permalink to this equation">#</a></span>\[\begin{align}
-E[Y^*(1)] &amp;= E_x [E\{Y^*(1)|X\}] \\
-&amp;= E_x[E\{Y^*(1)|T=1, X\}] \quad \text{No Unmeasured Confounders}\\
-&amp;= E_x[E\{Y|T=1, X\}] \quad \text{SUTVA}
-\end{align}\]</div>
-<p>Similarly, we can show that <span class="math notranslate nohighlight">\(E[Y^*(0)] = E_x[E\{Y|T=0, X\}].\)</span>
-Hence, the average causal treatment effect</p>
-<div class="amsmath math notranslate nohighlight" id="equation-971793f9-effe-4d27-9bf1-25e86be47414">
-<span class="eqno">(5)<a class="headerlink" href="#equation-971793f9-effe-4d27-9bf1-25e86be47414" title="Permalink to this equation">#</a></span>\[\begin{align}
-\text{ATE} = E_x[E\{Y|T=1, X\}] - E_x[E\{Y|T=0, X\}]
-\end{align}\]</div>
-<p>We can posit a model for <span class="math notranslate nohighlight">\(E[Y|T, X] = \mu(X, T;\gamma)\)</span>, and estimate the parameter <span class="math notranslate nohighlight">\(\gamma\)</span> via MLE or least square estimation. Then,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3e4df8c7-cc38-4c2b-b94c-36adc45c0fb4">
-<span class="eqno">(6)<a class="headerlink" href="#equation-3e4df8c7-cc38-4c2b-b94c-36adc45c0fb4" title="Permalink to this equation">#</a></span>\[\begin{align}
-\hat{\text{ATE}} = n^{-1}\sum_{i=1}^n \{\mu(X_i, 1;\hat{\gamma}) - \mu(X_i, 0; \hat{\gamma})\}
-\end{align}\]</div>
-</section>
-<section id="propensity-score">
-<h3>Propensity Score<a class="headerlink" href="#propensity-score" title="Permalink to this headline">#</a></h3>
-<p>Another class of estimators for the average causal treatment effect uses propensity score, defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-02e1c3e4-d3bd-4cad-ade0-9d44564cd4f2">
-<span class="eqno">(7)<a class="headerlink" href="#equation-02e1c3e4-d3bd-4cad-ade0-9d44564cd4f2" title="Permalink to this equation">#</a></span>\[\begin{align}
-\pi(X) = P(T=1|X)
-\end{align}\]</div>
-<p>in the case where there are two treatments. It refers to the propensity of getting one of the treatments as a function of the covariates. One of the attractive features of the propensity score, that makes it useful for causal inference follows from the fact that given the <code class="docutils literal notranslate"><span class="pre">SUTVA</span></code> and <code class="docutils literal notranslate"><span class="pre">strong</span> <span class="pre">ignorability</span></code> assumptions, then</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f3e198c5-2787-4a38-9701-4059b99b06bd">
-<span class="eqno">(8)<a class="headerlink" href="#equation-f3e198c5-2787-4a38-9701-4059b99b06bd" title="Permalink to this equation">#</a></span>\[\begin{align}
-\{Y^*(1), Y^*(0)\} \perp\!\!\!\perp T|\pi(X)
-\end{align}\]</div>
-<p>It may be difficult to build an outcome regression model for <span class="math notranslate nohighlight">\(E[Y|T, X]\)</span> if <span class="math notranslate nohighlight">\(X\)</span> is high dimensional, however, based on the above result, we can simply build models for <span class="math notranslate nohighlight">\(E[Y|T, \pi(X)]\)</span>.</p>
-<section id="stratification">
-<h4>Stratification<a class="headerlink" href="#stratification" title="Permalink to this headline">#</a></h4>
-<p>Rubin suggested the following to estimate ATE. Stratify the observations into groups based on the value of the estimated propensity scores <span class="math notranslate nohighlight">\(\hat{\pi}(X_i), i=1, \cdots, n\)</span>. That is, choose cutoff values,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-501fac53-45b6-4d40-84dc-da3b129a45b0">
-<span class="eqno">(9)<a class="headerlink" href="#equation-501fac53-45b6-4d40-84dc-da3b129a45b0" title="Permalink to this equation">#</a></span>\[\begin{align}
-0 = C_0 &lt; C_1 &lt; \cdots &lt; C_K = 1,
-\end{align}\]</div>
-<p>then individual <span class="math notranslate nohighlight">\(i\)</span> belongs to group <span class="math notranslate nohighlight">\(k\)</span> if</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ceb9b9ce-47b9-4a33-b7a7-1c2126d107a3">
-<span class="eqno">(10)<a class="headerlink" href="#equation-ceb9b9ce-47b9-4a33-b7a7-1c2126d107a3" title="Permalink to this equation">#</a></span>\[\begin{align}
-C_{k-1} &lt; \hat{\pi}(X_i) \le C_k, k=1, \cdots, K,
-\end{align}\]</div>
-<p>then</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f03181a4-efdc-4026-8bcd-e1b65cc6fcc8">
-<span class="eqno">(11)<a class="headerlink" href="#equation-f03181a4-efdc-4026-8bcd-e1b65cc6fcc8" title="Permalink to this equation">#</a></span>\[\begin{align}
-\text{ATE} = \sum_{k=1}^K (\bar{Y}_{1k} - \bar{Y}_{0k}) n_k /n
-\end{align}\]</div>
-<p>where <span class="math notranslate nohighlight">\(\hat{Y}_{1k}, \hat{Y}_{0k}\)</span> are the sample average responses among individuals in the <span class="math notranslate nohighlight">\(k-\)</span>th group receiving treatments <span class="math notranslate nohighlight">\(1\)</span> and <span class="math notranslate nohighlight">\(0\)</span> respectively, and <span class="math notranslate nohighlight">\(n_k\)</span> is the number of individuals from both treatments in the <span class="math notranslate nohighlight">\(k-\)</span>th group.</p>
-</section>
-<section id="inverse-propensity-score-weighting">
-<h4>Inverse Propensity Score Weighting<a class="headerlink" href="#inverse-propensity-score-weighting" title="Permalink to this headline">#</a></h4>
-<p>Another class of estimators with a more theoretical justification coming from semiparametric theory uses the inverse propensity score estimator and augmented inverse propensity score estimator for the average causal treatment effect.</p>
-<p>The motivation of IPW is as follows. Since the propensity (probability) of receiving treatment <span class="math notranslate nohighlight">\(1\)</span> is <span class="math notranslate nohighlight">\(\pi(X)\)</span> for an individual with baseline covariates <span class="math notranslate nohighlight">\(X\)</span>, then every individual with covariates <span class="math notranslate nohighlight">\(X_i\)</span> that was observed to receive treatment 1 in our sample is weighted by <span class="math notranslate nohighlight">\(1/\pi(X_i)\)</span> so that their response not only represent themselves but also other individuals who did not receive treatment 1. More formally, we will show that <span class="math notranslate nohighlight">\(\frac{TY}{\pi(X)}\)</span> is an unbiased estimator of <span class="math notranslate nohighlight">\(E[Y^*(1)]\)</span>. This follows that, given the <code class="docutils literal notranslate"><span class="pre">positivity</span></code> assumption,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5e5990e7-b2e7-4ef3-97ed-946b92125ae0">
-<span class="eqno">(12)<a class="headerlink" href="#equation-5e5990e7-b2e7-4ef3-97ed-946b92125ae0" title="Permalink to this equation">#</a></span>\[\begin{align}
-E\left[\frac{TY}{\pi(X)}\right] = E\left[\frac{TY^*(1)}{\pi(X)}\right] = E\left[E\left\{\frac{TY^*(1)}{\pi(X)}|X\right\}\right] = E\left[E\left\{\frac{T}{\pi(X)}|X\right\}Y^*(1)\right] = E[Y^*(1)].
-\end{align}\]</div>
-<p>Similarly, we have</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d5801ddb-86dc-46fd-8f8c-4739b8284bf9">
-<span class="eqno">(13)<a class="headerlink" href="#equation-d5801ddb-86dc-46fd-8f8c-4739b8284bf9" title="Permalink to this equation">#</a></span>\[\begin{align}
-E[Y^*(0)] = E\left[\frac{(1-T)Y}{1-\pi(X)} \right],
-\end{align}\]</div>
-<p>Consequently, then another unbiased estimator for the average causal treatment effect would be</p>
-<div class="amsmath math notranslate nohighlight" id="equation-db74a639-c534-40cf-bd6c-03af38b11f42">
-<span class="eqno">(14)<a class="headerlink" href="#equation-db74a639-c534-40cf-bd6c-03af38b11f42" title="Permalink to this equation">#</a></span>\[\begin{align}
-\hat{\text{ATE}} = n^{-1}\sum_{i=1}^n \left\{\frac{T_iY_i}{\pi(X_i)}  - \frac{(1-T_i)Y_i}{1-\pi(X_i)}  \right\}
-\end{align}\]</div>
+<section id="doubly-robust-interval-estimation">
+<h3>Doubly Robust Interval Estimation<a class="headerlink" href="#doubly-robust-interval-estimation" title="Permalink to this headline">#</a></h3>
+<p>In contrast to the probability of exploration, we define the probability of exploitation as</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+Pr\{a_t = \widehat{\pi}_t(\boldsymbol{x}_t )\} = 1-{\kappa}_t (\boldsymbol{x}_t ) =  \mathbb{E}[ \mathbb{I}\{a_t = \widehat{\pi}_t(\boldsymbol{x}_t )\}].
+\end{equation*}\]</div>
+<p>Following the doubly robust value estimator in \cite{dudik2011doubly}, we propose the doubly robust mean outcome estimator as the value estimator under the optimal policy as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-750ec416-6635-4d3e-8ab6-54c72492ebfa">
+<span class="eqno">(103)<a class="headerlink" href="#equation-750ec416-6635-4d3e-8ab6-54c72492ebfa" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{dr_est}
+\widehat{V}_T={1\over T }\sum_{t=1}^T {\mathbb{I}\{a_t=\widehat{\pi}_t(\boldsymbol{x}_t )\} \over 1-\widehat{\kappa}_{t}(\boldsymbol{x}_t )} \Big[ r_t -\widehat{\mu}_{t-1}\{\boldsymbol{x}_t ,\widehat{\pi}_t(\boldsymbol{x}_t )\}\Big] + \widehat{\mu}_{t-1}\{\boldsymbol{x}_t ,\widehat{\pi}_t(\boldsymbol{x}_t ) \},
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(T\)</span> is the current/termination time, and <span class="math notranslate nohighlight">\(1-\widehat{\kappa}_{t}(\boldsymbol{x}_t )\)</span> is the estimated matching probability between the chosen action <span class="math notranslate nohighlight">\(a_t\)</span> and estimated optimal action given <span class="math notranslate nohighlight">\(\boldsymbol{x}_t \)</span>, which captures the probability of exploitation. Our value estimator provides double protection on the consistency to the true value, given either the model of the probability of exploitation  or the model of the conditional mean outcome is correctly specified.</p>
 </section>
 </section>
-<section id="doubly-robust-estimators">
-<h3>Doubly Robust Estimators<a class="headerlink" href="#doubly-robust-estimators" title="Permalink to this headline">#</a></h3>
-<p>We are able to combine outcome regression estimator and the propensity score weighted estimator to obtain another so-called doubly robust estimator, as follows</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cd20c8cf-80ab-4517-864c-fa2b37a329a5">
-<span class="eqno">(15)<a class="headerlink" href="#equation-cd20c8cf-80ab-4517-864c-fa2b37a329a5" title="Permalink to this equation">#</a></span>\[\begin{align}
-\hat{\text{ATE}} = n^{-1}\sum_{i=1}^n \left\{\mu(X_i,1;\hat{\gamma})+\frac{T_i(Y_i - \mu(X_i,1;\hat{\gamma}))}{\hat{\pi}(X_i)} - \mu(X_i,0;\hat{\gamma}) - \frac{(1-T_i)(Y_i-\mu(X_i,0;\hat{\gamma}))}{1-\hat{\pi}(X_i)} \right\}
-\end{align}\]</div>
+<section id="demo-code">
+<h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
+<p>In the following, we exhibit how to apply the doubly robust online policy evaluator on real data under UCB, TS, and EG, respectively.</p>
+<section id="policy-evaluation-under-ucb">
+<h3>1. Policy Evaluation under UCB<a class="headerlink" href="#policy-evaluation-under-ucb" title="Permalink to this headline">#</a></h3>
 </section>
+<section id="policy-evaluation-under-ts">
+<h3>2. Policy Evaluation under TS<a class="headerlink" href="#policy-evaluation-under-ts" title="Permalink to this headline">#</a></h3>
+</section>
+<section id="policy-evaluation-under-eg">
+<h3>3. Policy Evaluation under EG<a class="headerlink" href="#policy-evaluation-under-eg" title="Permalink to this headline">#</a></h3>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<p>[1] Cai, H., Shen, Y., &amp; Song, R. (2021). Doubly Robust Interval Estimation for Optimal Policy Evaluation in Online Learning. arXiv preprint arXiv:2110.15501.</p>
+<p>[2] Chen, H., Lu, W., &amp; Song, R. (2021). Statistical inference for online decision making: In a contextual bandit setting. Journal of the American Statistical Association, 116(533), 240-255.</p>
+<p>[3] Chen, H., Lu, W., &amp; Song, R. (2021). Statistical inference for online decision making via stochastic gradient descent. Journal of the American Statistical Association, 116(534), 708-719.</p>
+<p>[4] Dudík, M., Langford, J., &amp; Li, L. (2011). Doubly robust policy evaluation and learning. arXiv preprint arXiv:1103.4601.</p>
 </section>
 </section>
 
@@ -1001,7 +969,7 @@ E[Y^*(0)] = E\left[\frac{(1-T)Y}{1-\pi(X)} \right],
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./Preliminary"
+            path: "./OnlineEval"
         },
         predefinedOutput: true
     }
@@ -1015,17 +983,17 @@ E[Y^*(0)] = E\left[\frac{(1-T)Y}{1-\pi(X)} \right],
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="../Preliminary.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="../Online/Slate/MNL/MTSS_MNL.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Preliminary</p>
+            <p class="prev-next-title">MTSS_MNL</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="Heterogenous%20Treatement%20Effect.html" title="next page">
+    <a class='right-next' id="next-link" href="../Inference/VariableSelection.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Heterogenous Treatement Effect</p>
+        <p class="prev-next-title">Variable Selection</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
