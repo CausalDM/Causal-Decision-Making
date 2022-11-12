@@ -26,24 +26,24 @@
 # 
 # Therefore, $K=5$. We preprocessed the dataset to leave users with at least 500 data points, which gives us N=175 users. Furthermore, there are two different types of the reward $R_t$:
 # 
-# - **Gaussian Bandit**: $R_t$ is a numerical variable, taking the value of $\{1,2,3,4,5\}$, where 1 is the least satisfied and 5 is the most satisfied.
-# - **Bernoulli Bandit**: $R_t$ is a binary variable, =1 if the rating is higher than 3.
+# - **Gaussian Bandit**: $R_t$ is a numerical variable, taking the value of $\{1,2,3,4,5\}$, where 1 is the least satisfied and 5 is the most satisfied. In the following table, we summarize the empirical distribution of rates for each genre.
 # 
-# In the following, we evaluated the empirical performance of the supported algorithms ($\epsilon$-greedy, TS, and UCB) on the MovieLens dataset under either the Gaussian bandit or Bernoulli bandit settings.
-
-# ## Simulation 1: Gaussian Bandit
-# We repeat the experiment over **100** random seeds, with $T = 100$.
-
-# ## Simulation 1: Bernoulli Bandit
-# We repeat the experiment over **100** random seeds, with $T = 100$.
+# |             | 1    | 2    | 3    | 4    | 5    |
+# |-------------|------|------|------|------|------|
+# | Comedy(0)   | .081 | .153 | .311 | .309 | .146 |
+# | Drama(1)    | .045 | .114 | .288 | .350 | .204 |
+# | Action(2)   | .096 | .170 | .312 | .287 | .135 |
+# | Thriller(3) | .076 | .160 | .313 | .305 | .146 |
+# | Sci-Fi(4)   | .104 | .176 | .300 | .278 | .143 |
+# 
+# 
+# - **Bernoulli Bandit**: $R_t$ is a binary variable, =1 if the rating is higher than 3. In the following table, we summarize the empirical probability of getting a reward of 1 for each genre.
+# 
+# | Comedy(0) | Drama(1) | Action(2) | Thriller(3) | Sci-Fi(4) |
+# |-----------|----------|-----------|-------------|-----------|
+# | .455      | .553     | .421      | .451        | .420      |
 
 # ## Reference
 # [1] Slivkins, A. (2019). Introduction to multi-armed bandits. arXiv preprint arXiv:1904.07272.
 # 
 # [2] Bouneffouf, D. and Rish, I. (2019). A survey on practical applications of multi-armed and contextual bandits. arXiv preprint arXiv:1904.10040.
-
-# In[ ]:
-
-
-
-

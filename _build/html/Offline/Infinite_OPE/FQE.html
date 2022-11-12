@@ -55,7 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Importance Sampling for Policy Evaluation (Infinite Horizon)" href="IPW_Infinite.html" />
-    <link rel="prev" title="Infinite Horizon" href="../Infinite%20Horizon.html" />
+    <link rel="prev" title="Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes" href="../preliminary_MDP-potential-outcome.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -111,21 +111,16 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../../intro.html">
-                    Causal Decision Making
+                    Introduction
                 </a>
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Introduction
+  intro
  </span>
 </p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../Introduction.html">
-   Introduction
-  </a>
- </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../Examples.html">
    Motivating Examples
@@ -143,7 +138,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../../Preliminary/Causal%20Inference%20Preliminary.html">
-     Causal Inference Preliminary
+     Average Treatment Effect
     </a>
    </li>
    <li class="toctree-l2">
@@ -156,38 +151,11 @@ const thebe_selector_output = ".output, .cell_output"
      Causal Discovery Preliminary
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../Preliminary/Policy%20Evaluation%20and%20Optimization.html">
-     Policy Evaluation and Optimization
-    </a>
-   </li>
   </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../Map.html">
-   Map
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Causal Discovery Learning
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learner%20-%20LiNGAM%20Algorithm.html">
-   Causal Discovery Learner - LiNGAM Algorithm
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learner%20-%20NOTEARS%20Algorithm.html">
-   Causal Discovery Learner - NOTEARS Algorithm
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learner%20-%20PC%20Algorithm.html">
-   Causal Discovery Learner - PC Algorithm
+   Maps
   </a>
  </li>
 </ul>
@@ -298,8 +266,8 @@ const thebe_selector_output = ".output, .cell_output"
   </ul>
  </li>
  <li class="toctree-l1 current active has-children">
-  <a class="reference internal" href="../Infinite%20Horizon.html">
-   Infinite Horizon
+  <a class="reference internal" href="../preliminary_MDP-potential-outcome.html">
+   Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
   <label for="toctree-checkbox-6">
@@ -379,16 +347,8 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../Online/MAB/Epsilon_Greedy.html">
-     <span class="math notranslate nohighlight">
-      \(\epsilon\)
-     </span>
-     -Greedy
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../Online/MAB/UCB1.html">
-     UCB1
+    <a class="reference internal" href="../../Online/MAB/UCB.html">
+     UCB
     </a>
    </li>
    <li class="toctree-l2">
@@ -846,16 +806,16 @@ It is observed to perform consistently well in a large-scale empirical study [2]
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p><strong>Q-function.</strong>
 The Q-function-based approach aims to direct learn the state-action value function (referred to as the Q-function)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-83c7b438-06f4-4134-a920-1f4b4cb4e2a8">
-<span class="eqno">(55)<a class="headerlink" href="#equation-83c7b438-06f4-4134-a920-1f4b4cb4e2a8" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-cd137ca3-e768-4db7-a494-5716d9c83af8">
+<span class="eqno">(51)<a class="headerlink" href="#equation-cd137ca3-e768-4db7-a494-5716d9c83af8" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 Q^\pi(a,s)&amp;= \mathbb{E}^{\pi} (\sum_{t=0}^{+\infty} \gamma^t R_{t}|A_{0}=a,S_{0}=s)   
 \end{eqnarray}\]</div>
 <p>of the policy <span class="math notranslate nohighlight">\(\pi\)</span> that we aim to evaluate.</p>
 <p>The final estimator can then be constructed by plugging <span class="math notranslate nohighlight">\(\hat{Q}^{\pi}\)</span> in the definition <span class="math notranslate nohighlight">\(\eta^{\pi} = \mathbb{E}_{s \sim \mathbb{G}, a \sim \pi(\cdot|s)} Q^{\pi}(a, s)\)</span>.</p>
 <p><strong>Bellman equations.</strong>
 The Q-learning-type evaluation is commonly based on the Bellman equation for the Q-function of a given policy <span class="math notranslate nohighlight">\(\pi\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-1171f563-72e5-4fd8-bfff-36003bd6bdc3">
-<span class="eqno">(56)<a class="headerlink" href="#equation-1171f563-72e5-4fd8-bfff-36003bd6bdc3" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
+<div class="amsmath math notranslate nohighlight" id="equation-92ca916a-4240-4328-a6de-76612d8b9836">
+<span class="eqno">(52)<a class="headerlink" href="#equation-92ca916a-4240-4328-a6de-76612d8b9836" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
     Q^\pi(a, s) = \mathbb{E}^\pi \Big(R_t + \gamma Q^\pi(A_{t + 1}, S_{t+1})  | A_t = a, S_t = s \Big).  \;\;\;\;\; \text{(1)} 
 \end{equation}\]</div>
 <p><strong>FQE.</strong>
@@ -864,8 +824,8 @@ Besides, the right-hand side of (1) is a contraction mapping.
 Therefore, we can consider a fixed-point method:
 with an initial estimate <span class="math notranslate nohighlight">\(\widehat{Q}^{0}\)</span>,
 FQE iteratively solves the following optimization problem,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bf87f032-14e1-463b-a042-ca62d53b84d4">
-<span class="eqno">(57)<a class="headerlink" href="#equation-bf87f032-14e1-463b-a042-ca62d53b84d4" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-2e4206d5-86ad-4a1a-bcd6-d1f4459185fd">
+<span class="eqno">(53)<a class="headerlink" href="#equation-2e4206d5-86ad-4a1a-bcd6-d1f4459185fd" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 	\widehat{Q}^{{\ell}}=\arg \min_{Q} 
 	\sum_{\substack{i \le n}}\sum_{t&lt;T}
 	\Big\{
@@ -938,11 +898,11 @@ The final estimator is denoted as <span class="math notranslate nohighlight">\(\
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="../Infinite%20Horizon.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="../preliminary_MDP-potential-outcome.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Infinite Horizon</p>
+            <p class="prev-next-title">Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="IPW_Infinite.html" title="next page">
