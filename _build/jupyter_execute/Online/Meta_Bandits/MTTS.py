@@ -19,7 +19,7 @@
 # &\text{(Intra-task)} \quad
 # \;    R_{j,t}(a) = Y_{j,t}(a) &&= \mu_{j,a} + \epsilon_{j,t}, 
 #       \end{alignedat}
-# \end{equation} where $\boldsymbol{\delta}_{j} \stackrel{i.i.d.}{\sim} \mathcal{N}(\boldsymbol{0}, \boldsymbol{\Sigma})$, and $\epsilon_{j,t} \stackrel{i.i.d.}{\sim} \mathcal{N}(\boldsymbol{0}, \sigma^{2})$. For simplicity, we assume a Normal prior, which resulted in a Normal posterior with explicit form.
+# \end{equation} where $\boldsymbol{\delta}_{j} \stackrel{i.i.d.}{\sim} \mathcal{N}(\boldsymbol{0}, \boldsymbol{\Sigma})$, and $\epsilon_{j,t} \stackrel{i.i.d.}{\sim} \mathcal{N}(\boldsymbol{0}, \sigma^{2})$. For simplicity, we assume a Normal prior, which resulted in a Normal posterior with explicit form. Note that, if we replace the inter-task layer to a deterministic model (i.e., $g(\boldsymbol{\mu}_j | \boldsymbol{x}_j, \boldsymbol{\gamma})=\boldsymbol{x}_j^{T}\boldsymbol{\gamma}$), **MTTS** is reduced to an algorithm similar to **AdaTS** with linear bandits and Gaussian rewards discussed in Section 3.2 [2]. In contrast to **MTSS**, the **AdaTS** fail to address the issue of heterogeneous tasks.
 # 
 # Similarly, considering the Bernoulli bandit, it assumes that
 # \begin{equation}\label{eqn:hierachical_model}
@@ -54,3 +54,11 @@
 # 
 # [1] Wan, R., Ge, L., & Song, R. (2021). Metadata-based multi-task bandits with bayesian hierarchical models. Advances in Neural Information Processing Systems, 34, 29655-29668.
 # 
+# [2] Basu, S., Kveton, B., Zaheer, M., & Szepesvári, C. (2021). No regrets for learning the prior in bandits. Advances in Neural Information Processing Systems, 34, 28029-28041.
+# 
+
+# In[ ]:
+
+
+
+

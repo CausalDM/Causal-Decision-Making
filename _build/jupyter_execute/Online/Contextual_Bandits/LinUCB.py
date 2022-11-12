@@ -1,20 +1,17 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Epsilon_Greedy
+# # LinUCB
+# 
+# ## Overview
+# - **Advantage**: It is more scalable and efficient than **UCB1** by utilizing features.
+# - **Disadvantage**:  
+# - **Application Situation**: discrete action space, binary/Gaussian reward space
 # 
 # ## Main Idea
-# An overview of the learner include:
-# 1. a brief introduction of the learner 
-# 2. evolution of the learner (i.e. when it is first developed, any alternative extensions?)
-# 3. Application situations: Describe the data structure that can be analyzed, and make a connection between the real application situations (mentioned in the Motivating Examples) and the learner (i.e., when can we use the learner) 
-# 4. the advantage of the learner
 # 
-# ## Algorithm Details
-# a detailed description of the learner with clear definitions of key concepts.
 # 
 # ## Key Steps
-# an abstract pseudo-code for policy learning and policy evaluation
 
 # ## Demo Code
 

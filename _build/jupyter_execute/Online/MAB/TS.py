@@ -25,104 +25,123 @@
 
 # ## Demo Code
 
+# ### Specify the path where the package code is.
+
 # In[1]:
 
 
-# After we publish the pack age, we can directly import it
-# TODO: explore more efficient way
-# we can hide this cell later
 import os
 os.getcwd()
-os.chdir('/nas/longleaf/home/lge/CausalDM')
-# code used to import the learner
+os.chdir('D:\GitHub\CausalDM')
 
+
+# ### Import the learner.
 
 # In[2]:
 
 
-from causaldm.learners.Online.Single import TS
-from causaldm.learners.Online.Single import Env
 import numpy as np
+from causaldm.learners.Online.MAB import TS
+
+
+# ### Generate the Environment
+# 
+# Here, we imitate an environment with K=5 arms, T=2000 time steps. The true mean reward is [2,4,5,2,3], and the standard deviation of each arm's reward distribution is 1. For real-world applications, users must define the actual operating environment.
+
+# In[3]:
+
+
+from causaldm.learners.Online.MAB import _env
+T = 20000
+K = 5
+sigma = 1
+r_mean = [2,4,5,2,3]
+env = _env.Single_Gaussian_Env(T, K, sigma, r_mean, seed = 42)
+
+
+# ### Specify Hyperparameters
+# 
+# - Reward_Type: the type of the MAB, i.e., "Gaussian"/"Bernoulli"
+# - sigma: the standard deviation of the reward distributions
+# - u_prior_mean: mean of the prior distribution of the mean reward
+# - u_prior_cov: Covaraince matrix of the prior distribution of the mean reward
+# - seed: random seed
+
+# In[4]:
+
+
+Reward_Type = "Gaussian"
+sigma = sigma
+u_prior_mean = np.ones(K)
+u_prior_cov = 10000*np.identity(K)
+seed = 0
+TS_Gaussian_agent = TS.TS(Reward_Type = Reward_Type, sigma = sigma, 
+                          u_prior_mean = u_prior_mean, u_prior_cov = u_prior_cov, 
+                          seed = seed)
+
+
+# ### Recommendation and Interaction
+# 
+# Starting from t = 0, for each step t, there are three steps:
+# 1. Recommend an action 
+# <code> A = TS_Gaussian_agent.take_action() </code>
+# 2. Get the reward from the environment 
+# <code> R = env.get_reward(t,A) </code>
+# 3. Update the posterior distribution
+# <code> TS_Gaussian_agent.receive_reward(t,A,R) </code>
+
+# In[5]:
+
+
+t = 0
+A = TS_Gaussian_agent.take_action()
+R = env.get_reward(t,A)
+TS_Gaussian_agent.receive_reward(t,A,R)
+t, A, R
+
+
+# **Interpretation**: For step 0, the TS agent recommend to play arm 3, and received a reward of 3.523 from the environment.
+
+# ### Demo Code for Bernoulli Bandit
+# The steps are similar to those previously performed with a Gaussian Bandit. Note that, when specifying the prior distribution of the expected reward, the mean-precision form of the Beta distribution is used here, i.e., Beta($\mu$, $\phi$), where $\mu$ is the mean reward of each arm and $\phi$ is the precision of the Beta distribution. 
+
+# In[6]:
+
+
+T = 2000
+K = 5
+r_mean = [.2,.5,.6,.8,.1]
+seed = 0
+env = _env.Single_Bernoulli_Env(T, K, r_mean, seed)
+
+
+# In[7]:
+
+
+Reward_Type = "Bernoulli"
+## specify the mean of the prior beta distribution
+u_prior_mean = .5*np.ones(K)
+## specify the precision of the prior beta distribution
+prior_phi_beta = 1
+TS_Bernoulli_agent = TS.TS(Reward_Type = Reward_Type,
+                           u_prior_mean = u_prior_mean,
+                           prior_phi_beta = prior_phi_beta,
+                           seed = seed)
 
 
 # In[8]:
 
 
-T = 2000
-K = 5
-with_intercept = True
-p=3
-X_mu = np.zeros(p-1)
-X_sigma = np.identity(p-1)
-Sigma_theta = sigma_gamma = np.identity(p)
-mu_theta = np.zeros(p)
-seed = 0
-sigma = 1
-
-env = Env.Single_Gaussian_Env(T, K, p, sigma
-                         , mu_theta, Sigma_theta
-                        , seed = 42, with_intercept = True
-                         , X_mu = X_mu, X_Sigma = X_sigma)
-TS_Gaussian_agent = TS.TS(Reward_Type = "Gaussian", sigma = sigma, u_prior_mean = np.ones(K), u_prior_cov = np.identity(K), prior_phi_beta = None)
-A = TS_Gaussian_agent.take_action()
 t = 0
-R = env.get_reward(t,A)
-TS_Gaussian_agent.receive_reward(t,A,R)
-
-
-# In[9]:
-
-
-TS_Gaussian_agent.posterior_u
-
-
-# In[4]:
-
-
-T = 2000
-K = 5
-
-phi_beta = 1/4
-with_intercept = True
-p=3
-X_mu = np.zeros(p-1)
-X_sigma = np.identity(p-1)
-Sigma_theta = sigma_gamma = np.identity(p)
-mu_theta = np.zeros(p)
-seed = 0
-
-env = Env.Single_Bernoulli_Env(T, K, p, phi_beta
-                         , mu_theta, Sigma_theta
-                        , seed = 42, with_intercept = True
-                         , X_mu = X_mu, X_Sigma = X_sigma)
-TS_Bernoulli_agent = TS.TS(Reward_Type = "Bernoulli", sigma = 1, u_prior_mean = .5*np.ones(K), u_prior_cov = None, prior_phi_beta = phi_beta)
 A = TS_Bernoulli_agent.take_action()
-t = 0
 R = env.get_reward(t,A)
 TS_Bernoulli_agent.receive_reward(t,A,R)
+t,A,R
 
 
-# In[5]:
-
-
-TS_Bernoulli_agent.posterior_alpha
-
-
-# In[6]:
-
-
-TS_Bernoulli_agent.posterior_beta
-
-
-# **Interpretation:** A sentence to include the analysis result: the estimated optimal regime is...
+# **Interpretation**: For step 0, the TS agent recommend to play arm 4, and received a reward of 0 from the environment.
 
 # ## References
 # [1] Russo, D., Van Roy, B., Kazerouni, A., Osband, I., and Wen, Z. (2017). A tutorial on thompson sampling. arXiv preprint arXiv:1707.0203
 # 
 # [2] Lattimore, T. and Szepesv´ari, C. (2020). Bandit algorithms. Cambridge University Press.
-
-# In[ ]:
-
-
-
-

@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Plan to do" href="../Plan%20to%20Do.html" />
+    <link rel="next" title="Fitted-Q Iteration" href="../FQI.html" />
     <link rel="prev" title="Doubly Robust Estimator for Policy Evaluation (Infinite Horizon)" href="DR_Infinite.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -111,21 +111,16 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../../intro.html">
-                    Causal Decision Making
+                    Introduction
                 </a>
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Introduction
+  intro
  </span>
 </p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../Introduction.html">
-   Introduction
-  </a>
- </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../Examples.html">
    Motivating Examples
@@ -142,8 +137,8 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../Preliminary/Causal%20Inference%20101.html">
-     Causal Inference 101
+    <a class="reference internal" href="../../Preliminary/Causal%20Inference%20Preliminary.html">
+     Average Treatment Effect
     </a>
    </li>
    <li class="toctree-l2">
@@ -156,16 +151,11 @@ const thebe_selector_output = ".output, .cell_output"
      Causal Discovery Preliminary
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../Preliminary/Policy%20Evaluation%20and%20Optimization.html">
-     Policy Evaluation and Optimization
-    </a>
-   </li>
   </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../Map.html">
-   Map
+   Maps
   </a>
  </li>
 </ul>
@@ -176,8 +166,18 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learning.html">
-   Causal Graph Learners
+  <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learner%20-%20PC%20Algorithm.html">
+   Causal Discovery Learner - PC Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learner%20-%20LiNGAM%20Algorithm.html">
+   Causal Discovery Learner - LiNGAM Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Causal%20Discovery/Causal%20Discovery%20Learner%20-%20NOTEARS%20Algorithm.html">
+   Causal Discovery Learner - NOTEARS Algorithm
   </a>
  </li>
 </ul>
@@ -298,11 +298,6 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul class="current">
    <li class="toctree-l2">
-    <a class="reference internal" href="../FQI.html">
-     Fitted-Q Iteration
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="FQE.html">
      Fitted-Q Evaluation
     </a>
@@ -320,6 +315,11 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      Deeply-Debiased Off-Policy Evaluation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../FQI.html">
+     Fitted-Q Iteration
     </a>
    </li>
   </ul>
@@ -400,7 +400,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../../Online/Contextual_Bandits/LinUCB.html">
-     Epsilon_Greedy
+     LinUCB
     </a>
    </li>
    <li class="toctree-l2">
@@ -843,8 +843,8 @@ See [1] for illustrative examples.</p>
 <p>The limitation of DRL motivates us to consider constructing a valid CI under weaker and practically more feasible conditions.
 To achieve this goal, we first take a deeper look at DRL. First recall that <span class="math notranslate nohighlight">\(\widehat{\eta}_{\tiny{\textrm{DRL}}}= (nT)^{-1}
 \sum_{i=1}^n\sum_{t=0}^{T-1} \psi_{i,t}\)</span>, where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2dc2b719-034e-4076-bd80-b9fc908c2347">
-<span class="eqno">(64)<a class="headerlink" href="#equation-2dc2b719-034e-4076-bd80-b9fc908c2347" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{new_DRL_term}
+<div class="amsmath math notranslate nohighlight" id="equation-129bceab-a162-40b5-b3e1-233f8e9d47eb">
+<span class="eqno">(67)<a class="headerlink" href="#equation-129bceab-a162-40b5-b3e1-233f8e9d47eb" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{new_DRL_term}
 \begin{split}
 	\psi_{i,t}
 	\equiv
@@ -867,8 +867,8 @@ Specifically, by replacing <span class="math notranslate nohighlight">\(\mathbb{
 <p>where <span class="math notranslate nohighlight">\(p_t^{\pi}(a,s|a_0,s_0)\)</span> denotes the probability of <span class="math notranslate nohighlight">\((A_t,S_t)=(a,s)\)</span> following policy <span class="math notranslate nohighlight">\(\pi\)</span> conditional on the event that <span class="math notranslate nohighlight">\(\{A_0=a_0, S_0=s_0\}\)</span>. By definition, the numerator corresponds to the discounted conditional visitation probability following <span class="math notranslate nohighlight">\(\pi\)</span> given that the initial state-action pair equals <span class="math notranslate nohighlight">\((s_0,a_0)\)</span>.</p>
 <p><strong>Debias the Q-function.</strong>
 By replacing <span class="math notranslate nohighlight">\(\widehat{\omega}\)</span> in (1) with some estimated conditional density ratio <span class="math notranslate nohighlight">\(\widehat{\tau}\)</span>, we obtain the following estimation function for any <span class="math notranslate nohighlight">\(Q\)</span>-function estimate <span class="math notranslate nohighlight">\(\tilde{Q}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b229a319-b407-415d-b0e6-c4fb0999f8d8">
-<span class="eqno">(65)<a class="headerlink" href="#equation-b229a319-b407-415d-b0e6-c4fb0999f8d8" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:debiasterm}
+<div class="amsmath math notranslate nohighlight" id="equation-56811d5d-b995-4e7b-9397-6a17fb1d75af">
+<span class="eqno">(68)<a class="headerlink" href="#equation-56811d5d-b995-4e7b-9397-6a17fb1d75af" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:debiasterm}
 \begin{split}
 \mathcal{D}^{(i,t)}\tilde{Q}(a,s) =
 \tilde{Q}(a,s)+ 
@@ -891,8 +891,8 @@ $<span class="math notranslate nohighlight">\(\widehat{\eta}^{(2)}_{\tiny{\textr
 We can establish that the bias of \)</span>\widehat{\eta}^{(2)}<em>{\tiny{\textrm{TR}}}<span class="math notranslate nohighlight">\( decays at a  faster rate than the DRL estimator. 
 Moreover, based on the structure of this estimator, we can establish that \)</span>\widehat{\eta}^{(2)}</em>{\tiny{\textrm{TR}}}<span class="math notranslate nohighlight">\( converges to the true value when one model for \)</span>Q^{\pi}<span class="math notranslate nohighlight">\(, \)</span>\omega^{\pi}<span class="math notranslate nohighlight">\( or \)</span>\tau^{\pi}<span class="math notranslate nohighlight">\( is correctly specified. As such, it is *triply-robust*. 
 Finally, let \)</span>\widehat{\sigma}^{(2)} = \Big[(nT-1)^{-1} \sum_{i,t} (\psi_{i,t}^{(2)}-\widehat{\eta}_{\textrm{TR}}^{(2)})^2\Big]^{1/2}<span class="math notranslate nohighlight">\(, an asymptotic \)</span>(1 - \alpha)$-CI is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2c7caf1c-0a9b-4caa-b6a2-8bd3bf4f7a89">
-<span class="eqno">(66)<a class="headerlink" href="#equation-2c7caf1c-0a9b-4caa-b6a2-8bd3bf4f7a89" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:CI_TR}
+<div class="amsmath math notranslate nohighlight" id="equation-f9f9ad55-83ce-4672-a46d-27280ea85ba4">
+<span class="eqno">(69)<a class="headerlink" href="#equation-f9f9ad55-83ce-4672-a46d-27280ea85ba4" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:CI_TR}
     [\widehat{\eta}_{\textrm{TR}}^{(2)} - z_{\alpha/2} (nT)^{-1/2}	\widehat{\sigma}^{(2)} \; , \; \widehat{\eta}_{\textrm{TR}}^{(2)} +z_{\alpha/2} (nT)^{-1/2}	\widehat{\sigma}^{(2)}], 
 \end{equation}\]</div>
 <p>and roughly speaking, its validity only requires the nuisanses to converge at a rate faster than <span class="math notranslate nohighlight">\((nT)^{-1/6}\)</span>.</p>
@@ -987,10 +987,10 @@ The efficiency of this method follows from the fact that the estimator can achie
             <p class="prev-next-title">Doubly Robust Estimator for Policy Evaluation (Infinite Horizon)</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../Plan%20to%20Do.html" title="next page">
+    <a class='right-next' id="next-link" href="../FQI.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Plan to do</p>
+        <p class="prev-next-title">Fitted-Q Iteration</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

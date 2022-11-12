@@ -3,9 +3,12 @@
 
 # # LinTS
 # 
-# ## Main Idea
+# ## Overview
+# - **Advantage**: It is scalable by utilizing features. It outperforms algorithms based on other frameworks, such as UCB, in practice.
+# - **Disadvantage**: It is susceptible to model misspecification.
+# - **Application Situation**: discrete action space, binary/Gaussian reward space
 # 
-# ## Algorithms Details
+# ## Main Idea
 # Supposed there are $K$ options, and the action space is $\mathcal{A} = \{0,1,\cdots, K-1\}$. Noticing that feature information are commonly avialable, the LinTS algorithm consdiers modeling the mean reward with items' features. As an example, considering the Gaussian reward, we assume that 
 # \begin{align}
 # \theta_{i} = \boldsymbol{x}_i^T \boldsymbol{\gamma}.
@@ -14,7 +17,7 @@
 # \begin{align}
 # \theta_{i} = logistic(\boldsymbol{x}_i^T \boldsymbol{\gamma})
 # \end{align}, where $logistic(x) \equiv 1 / (1 + exp^{-1}(x))$.
-# Similar as the standard TS algorithm, the LinTS algorithm starts with specifying a prior distribution of the parameter $\boldsymbol{\gamma}$, and a variance of the reward, based on the domian knowledge. At each round $t$, the agent will samples a vector of $\tilde{\boldsymbol{\gamma}}^{t}$ from thecorresponding posterior distribution, and the mean reward $\tilde{\boldsymbol{\theta}}^{t}$ is then calculated accordingly. The action $a$ with the greatest $\tilde{\theta}_{a}^{t}$ is then selected. Finally, the posterior distribution would be updated after receiving the feedback at the end of each round. Note that the posterior updating step differs for different pairs of prior distribution of the mean reward and reward distribution. Note that code can be easily modified to different specifications of the prior/reward distribution.
+# Similar as the standard TS algorithm, the LinTS algorithm starts with specifying a prior distribution of the parameter $\boldsymbol{\gamma}$, and a variance of the reward, based on the domian knowledge. At each round $t$, the agent will samples a vector of $\tilde{\boldsymbol{\gamma}}^{t}$ from thecorresponding posterior distribution, and the mean reward $\tilde{\boldsymbol{\theta}}^{t}$ is then calculated accordingly. The action $a$ with the greatest $\tilde{\theta}_{a}^{t}$ is then selected. Finally, the posterior distribution would be updated after receiving the feedback at the end of each round. It should be noted that the posterior updating step differs for different pairs of the prior distribution of expected potential reward and reward distribution, and the code can be easily modified to different prior/reward distribution specifications if necessary.
 # 
 # ## Key Steps
 # 
