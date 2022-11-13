@@ -1,0 +1,992 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Deeply-Debiased Off-Policy Evaluation &#8212; Causal Decision Making</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Fitted-Q Iteration" href="../FQI.html" />
+    <link rel="prev" title="Doubly Robust Estimator for Policy Evaluation (Infinite Horizon)" href="DR_Infinite.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Causal Decision Making</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  intro
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Examples.html">
+   Motivating Examples
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../Preliminary.html">
+   Preliminary
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Preliminary/Causal%20Inference%20Preliminary.html">
+     Average Treatment Effect
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Preliminary/Heterogenous%20Treatement%20Effect.html">
+     Heterogenous Treatement Effect
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Preliminary/Causal%20Discovery%20Preliminary.html">
+     Causal Discovery Preliminary
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Map.html">
+   Maps
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Offline Policy Learner
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Finite%20Horizon.html">
+   Finite Horizon (DTR)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finite/Q-learning_Single.html">
+     Q-Learning (Single Stage)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finite/Q-learning_Multiple.html">
+     Q-Learning (Multiple Stages)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finite/A-learning_Single.html">
+     A-Learning (Single Stage)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finite/A-learning_Multiple.html">
+     A-Learning (Multiple Stages)
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../Finite/Classification.html">
+     Reduction to Classification Problems
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Finite/Classification/O-Learning.html">
+       Outcome Weighted Learning
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Finite/Classification/E-learning.html">
+       Entropy learning
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../Finite/Continuous.html">
+     Continuous Action Space
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Finite/Continuous/Deep%20Jump%20Learner.html">
+       Deep Jump Learner for Continuous Actions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Finite/Continuous/Kernel-Based%20Learner.html">
+       Kernel-Based Learner
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Finite/Continuous/Outcome%20Learning.html">
+       Outcome Learning
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../Finite/Quantile.html">
+     Quantile Outcome
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Finite/Quantile/QuantileOTR_test.html">
+       <strong>
+        Quantile Optimal Treatment Regime
+       </strong>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../preliminary_MDP-potential-outcome.html">
+   Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="FQE.html">
+     Fitted-Q Evaluation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="IPW_Infinite.html">
+     Importance Sampling for Policy Evaluation (Infinite Horizon)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="DR_Infinite.html">
+     Doubly Robust Estimator for Policy Evaluation (Infinite Horizon)
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Deeply-Debiased Off-Policy Evaluation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../FQI.html">
+     Fitted-Q Iteration
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Plan%20to%20Do.html">
+   Plan to do
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finite/Policy%20Search.html">
+     Policy Search
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finite/Concordance.html">
+     Concordance-assisted learning
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Online Policy Learner
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Online/Bandits.html">
+   Overview: Bandits ALgorithm
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../Online/MAB/MAB.html">
+   Multi-Armed Bandits (MAB)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Online/MAB/UCB.html">
+     UCB
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Online/MAB/TS.html">
+     TS
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../Online/Contextual_Bandits/Contextual_Bandits.html">
+   Contextual Bandits
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Online/Contextual_Bandits/LinUCB.html">
+     LinUCB
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Online/Contextual_Bandits/LinTS.html">
+     LinTS
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../Online/Meta_Bandits/Meta_Bandits.html">
+   Meta Bandits
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Online/Meta_Bandits/Meta_TS.html">
+     Meta Thompson Sampling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Online/Meta_Bandits/MTTS.html">
+     Multi-Task Thompson Sampling (MTTS)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../Online/Slate/Structured_Bandit.html">
+   Structured Bandit (Slate Recommendation)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../Online/Slate/Learning%20to%20rank.html">
+     Online Learning to Rank (Cascading Bandit)
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+    <label for="toctree-checkbox-12">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Online/Slate/Cascade/TS_Cascade.html">
+       TS_Cascade
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Online/Slate/Cascade/CascadeLinTS.html">
+       CascadeLinTS
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Online/Slate/Cascade/MTSS_Cascade.html">
+       MTSS_Cascade
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../Online/Slate/Combinatorial%20Optimization.html">
+     Online Combinatorial Optimization (Combinatorial Semi-Bandit)
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+    <label for="toctree-checkbox-13">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Online/Slate/Combinatorial-Semi/CombTS.html">
+       CombTS
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Online/Slate/Combinatorial-Semi/CombLinTS.html">
+       CombLinTS
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Online/Slate/Combinatorial-Semi/MTSS_Comb.html">
+       MTSS_Comb
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../Online/Slate/Assortment%20Optimization.html">
+     Dynamic Assortment Optimization (Multinomial Logit Bandit)
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+    <label for="toctree-checkbox-14">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Online/Slate/MNL/TS_MNL_Beta.html">
+       TS_MNL
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Online/Slate/MNL/TS_Contextual_MNL.html">
+       TS_Contextual_MNL
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Online/Slate/MNL/MTSS_MNL.html">
+       MTSS_MNL
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Online Policy Evaluation
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../OnlineEval/Evaluator.html">
+   HAOYU and YE (epsilon+TS+UCB)
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Inference
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Inference/VariableSelection.html">
+   Variable Selection
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/Offline/Infinite_OPE/Deeply_Debiased.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FOffline/Infinite_OPE/Deeply_Debiased.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/Offline/Infinite_OPE/Deeply_Debiased.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#main-idea">
+   Main Idea
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#demo-todo">
+   Demo [TODO]
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#note">
+   Note
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Deeply-Debiased Off-Policy Evaluation</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#main-idea">
+   Main Idea
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#demo-todo">
+   Demo [TODO]
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#note">
+   Note
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="deeply-debiased-off-policy-evaluation">
+<h1>Deeply-Debiased Off-Policy Evaluation<a class="headerlink" href="#deeply-debiased-off-policy-evaluation" title="Permalink to this headline">#</a></h1>
+<p>The doubly robust utilizes the importance weighting method to reduce the bias of the direct methods. However, in the complicated RL problems, it is still challenging to satisfy the required rate conditions to yield valid inference. In this part, we introduce a deeply-debiasing procedure to provide valid inference under minimal conditions.
+We present the method in the infinite-horizon setting, under the stationarity assumption introduced in <strong>CROSS-REFER</strong>, and extensions to other RL setups are straightforward.</p>
+<p><em><strong>Advantages</strong></em>:</p>
+<ul class="simple">
+<li><p>Theoretically valid with dependent data</p></li>
+<li><p>Statistically efficient as it can avoid the curse of horizon and can achieve the semiparametric efficiency bound</p></li>
+<li><p>Robust to model mis-specifications and slow convergence rates of nuisance estimators</p></li>
+</ul>
+<section id="main-idea">
+<h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
+<p>The validity of the asymptotic distribution of the doubly robust estimator such as DRL and its Wald-type CI requires the two nuisance function estimators, <span class="math notranslate nohighlight">\(\widehat{Q}\)</span> and <span class="math notranslate nohighlight">\(\widehat{\omega}\)</span>, to both converge at a rate faster than <span class="math notranslate nohighlight">\((nT)^{-1/4}\)</span>.
+When this assumption is violated, the resulting CI cannot achieve the nominal coverage.
+These requirements are likely to be violated in complicated RL tasks, given the dimensionality and the complexity of modeling the Q-function and the design function.
+See [1] for illustrative examples.</p>
+<p>The limitation of DRL motivates us to consider constructing a valid CI under weaker and practically more feasible conditions.
+To achieve this goal, we first take a deeper look at DRL. First recall that <span class="math notranslate nohighlight">\(\widehat{\eta}_{\tiny{\textrm{DRL}}}= (nT)^{-1}
+\sum_{i=1}^n\sum_{t=0}^{T-1} \psi_{i,t}\)</span>, where</p>
+<div class="amsmath math notranslate nohighlight" id="equation-748bd79d-9bc1-4a77-8175-87bca5125e99">
+<span class="eqno">(63)<a class="headerlink" href="#equation-748bd79d-9bc1-4a77-8175-87bca5125e99" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{new_DRL_term}
+\begin{split}
+	\psi_{i,t}
+	\equiv
+	\frac{1}{1-\gamma}\widehat{\omega}(A_{i,t},S_{i,t})\{R_{i,t} 
+	-\widehat{Q}(A_{i,t},S_{i,t})+
+	\gamma 
+	\mathbb{E}_{a \sim \pi(\cdot| S_{i,t+1})}\widehat{Q}(a, S_{i,t+1})\}
+	+ \mathbb{E}_{s \sim \mathbb{G}, a \sim \pi(\cdot| s)}\widehat{Q}(a, s).  (1)
+\end{split}	
+\end{eqnarray}\]</div>
+<p>Here, the second term on is a plug-in estimator of the value based on the initial Q-estimator,
+and the first term corresponds to an augmentation term used to de-bias the plug-in value estimator <span class="math notranslate nohighlight">\(\mathbb{E}_{s \sim \mathbb{G}, a \sim \pi(\cdot|s)}\widehat{Q}(a, s)\)</span>.</p>
+<p><strong>Conditional density ratio.</strong>
+Similarly, we can debias the initial Q-estimator <span class="math notranslate nohighlight">\(\widehat{Q}(a_0,s_0)\)</span> for any <span class="math notranslate nohighlight">\((a_0,s_0)\)</span>. Towards that end, we introduce the conditional density ratio.
+Specifically, by replacing <span class="math notranslate nohighlight">\(\mathbb{G}(\bullet)\)</span> with a Dirac measure <span class="math notranslate nohighlight">\(\mathbb{I}(\bullet=s_0)\)</span> and further conditioning on an initial action <span class="math notranslate nohighlight">\(a_0\)</span>, the marginalized density ratio <span class="math notranslate nohighlight">\(\omega(a, s)\)</span> becomes a conditional density ratio, defined as</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\tau^{\pi}(a,s,a_0,s_0) = \frac{(1-\gamma)\sum_{t=0}^{+\infty}\gamma^t p_t^{\pi}(a,s|a_0,s_0) }{p_{\infty}(a,s)},
+\end{align*}\]</div>
+<p>where <span class="math notranslate nohighlight">\(p_t^{\pi}(a,s|a_0,s_0)\)</span> denotes the probability of <span class="math notranslate nohighlight">\((A_t,S_t)=(a,s)\)</span> following policy <span class="math notranslate nohighlight">\(\pi\)</span> conditional on the event that <span class="math notranslate nohighlight">\(\{A_0=a_0, S_0=s_0\}\)</span>. By definition, the numerator corresponds to the discounted conditional visitation probability following <span class="math notranslate nohighlight">\(\pi\)</span> given that the initial state-action pair equals <span class="math notranslate nohighlight">\((s_0,a_0)\)</span>.</p>
+<p><strong>Debias the Q-function.</strong>
+By replacing <span class="math notranslate nohighlight">\(\widehat{\omega}\)</span> in (1) with some estimated conditional density ratio <span class="math notranslate nohighlight">\(\widehat{\tau}\)</span>, we obtain the following estimation function for any <span class="math notranslate nohighlight">\(Q\)</span>-function estimate <span class="math notranslate nohighlight">\(\tilde{Q}\)</span>:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-9839b7a3-c0f6-449a-b691-9cb2ea863801">
+<span class="eqno">(64)<a class="headerlink" href="#equation-9839b7a3-c0f6-449a-b691-9cb2ea863801" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:debiasterm}
+\begin{split}
+\mathcal{D}^{(i,t)}\tilde{Q}(a,s) =
+\tilde{Q}(a,s)+ 
+\frac{1}{1-\gamma}\widehat{\tau}(A_{i,t},S_{i,t},a,s)
+\times
+\{R_{i,t} +\gamma
+\mathbb{E}_{a' \sim \pi(\cdot|S_{i,t+1})}
+\tilde{Q}(a',S_{i,t+1})- \tilde{Q}(A_{i,t},S_{i,t})\}. 
+\end{split}	
+\end{eqnarray}\]</div>
+<p>Here, we refer to <span class="math notranslate nohighlight">\(\mathcal{D}^{(i,t)}\)</span> as the <em>individual debiasing operator</em>, since it debiases any <span class="math notranslate nohighlight">\(\tilde{Q}\)</span> based on an individual data tuple <span class="math notranslate nohighlight">\((S_{i,t},A_{i,t},R_{i,t},S_{i,t+1})\)</span>.
+Similarly, the augmentation term here is to offer protection against potential model misspecification of the Q-function, and as such,
+<span class="math notranslate nohighlight">\(\mathcal{D}^{(i,t)}Q(a,s)\)</span> is a doubly robust estimator of <span class="math notranslate nohighlight">\(Q^{\pi}(a,s)\)</span>.
+A debiased version of the Q-estimator is given by averaging <span class="math notranslate nohighlight">\(\mathcal{D}^{(i,t)} \widehat{Q}\)</span> over the data tuples, i.e.,  <span class="math notranslate nohighlight">\(\widehat{Q}^{(2)}=\frac{1}{nT}\sum_{i \le n}\sum_{0\le t&lt;T}\mathcal{D}^{(i,t)} \widehat{Q}.\)</span>
+We can prove the bias of <span class="math notranslate nohighlight">\(\widehat{Q}^{(2)}\)</span> will decay at a faster rate than the initial Q-estimator <span class="math notranslate nohighlight">\(\widehat{Q}\)</span>.</p>
+<p><strong>The two-step debias iteration.</strong>
+Similar with DRL, we can construct an estimating function <span class="math notranslate nohighlight">\(\psi_{i,t}^{(2)}\)</span> for any <span class="math notranslate nohighlight">\((i,t)\)</span> by replacing <span class="math notranslate nohighlight">\(\widehat{Q}\)</span> in (1) with <span class="math notranslate nohighlight">\(\widehat{Q}^{(2)}\)</span>.
+This yields our second-order estimator
+$<span class="math notranslate nohighlight">\(\widehat{\eta}^{(2)}_{\tiny{\textrm{TR}}}=(nT)^{-1} \sum_{i,t} \psi_{i,t}^{(2)}.\)</span><span class="math notranslate nohighlight">\( 
+We can establish that the bias of \)</span>\widehat{\eta}^{(2)}<em>{\tiny{\textrm{TR}}}<span class="math notranslate nohighlight">\( decays at a  faster rate than the DRL estimator. 
+Moreover, based on the structure of this estimator, we can establish that \)</span>\widehat{\eta}^{(2)}</em>{\tiny{\textrm{TR}}}<span class="math notranslate nohighlight">\( converges to the true value when one model for \)</span>Q^{\pi}<span class="math notranslate nohighlight">\(, \)</span>\omega^{\pi}<span class="math notranslate nohighlight">\( or \)</span>\tau^{\pi}<span class="math notranslate nohighlight">\( is correctly specified. As such, it is *triply-robust*. 
+Finally, let \)</span>\widehat{\sigma}^{(2)} = \Big[(nT-1)^{-1} \sum_{i,t} (\psi_{i,t}^{(2)}-\widehat{\eta}_{\textrm{TR}}^{(2)})^2\Big]^{1/2}<span class="math notranslate nohighlight">\(, an asymptotic \)</span>(1 - \alpha)$-CI is given by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a78341f2-ffe3-4899-9eb3-174bf4a96b74">
+<span class="eqno">(65)<a class="headerlink" href="#equation-a78341f2-ffe3-4899-9eb3-174bf4a96b74" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:CI_TR}
+    [\widehat{\eta}_{\textrm{TR}}^{(2)} - z_{\alpha/2} (nT)^{-1/2}	\widehat{\sigma}^{(2)} \; , \; \widehat{\eta}_{\textrm{TR}}^{(2)} +z_{\alpha/2} (nT)^{-1/2}	\widehat{\sigma}^{(2)}], 
+\end{equation}\]</div>
+<p>and roughly speaking, its validity only requires the nuisanses to converge at a rate faster than <span class="math notranslate nohighlight">\((nT)^{-1/6}\)</span>.</p>
+<p><strong>The <span class="math notranslate nohighlight">\(m\)</span>-step debias iteration.</strong>
+To further relax the convergence rate requirement, we can iteratively debias the Q-estimator to construct higher-order value estimates. Specifically, for any order <span class="math notranslate nohighlight">\(m\ge 2\)</span>, we iteratively apply the debiasing operator to the initial Q-estimator <span class="math notranslate nohighlight">\(m-1\)</span> times and average over all individual tuples, leading to the following estimator,</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{eqnarray*}
+	\widehat{Q}^{(m)}={{nT \choose (m-1)}}^{-1}\sum \mathcal{D}^{(i_1,t_1)}\cdots \mathcal{D}^{(i_{m-1},t_{m-1})} \widehat{Q},  
+\end{eqnarray*}\]</div>
+<p>where the sum is taken over all possible combinations of disjoint tuples <span class="math notranslate nohighlight">\((i_1,t_1),(i_2,t_2),\cdots,(i_{m-1},t_{m-1})\)</span> in the set <span class="math notranslate nohighlight">\(\{(i,t):i \le n, 0\le t&lt;T\}\)</span>.
+The resulting value estimator <span class="math notranslate nohighlight">\(\widehat{\eta}^{(m)}_{\tiny{\textrm{TR}}}\)</span> and its CI can be similarly constructed as their second-order counterparts.
+By similar arguments, we can establish that the bias of the Q-estimator and that of the resulting value decrease as the order <span class="math notranslate nohighlight">\(m\)</span> increases.
+This yields the flexibility and robustness of our estimator as it allows the nuisance function estimator to converge at an arbitrary rate, with large enough <span class="math notranslate nohighlight">\(m\)</span>.
+The efficiency of this method follows from the fact that the estimator can achieve the semiparametric efficiency bound.</p>
+<img src="d2ope.png" width="700">
+</section>
+<section id="demo-todo">
+<h2>Demo [TODO]<a class="headerlink" href="#demo-todo" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># After we publish the pack age, we can directly import it</span>
+<span class="c1"># TODO: explore more efficient way</span>
+<span class="c1"># we can hide this cell later</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 7&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
+
+<span class="ne">FileNotFoundError</span>: [WinError 2] 系统找不到指定的文件。: &#39;../CausalDM&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<ol class="simple">
+<li><p>Shi C, Wan R, Chernozhukov V, et al. Deeply-debiased off-policy interval estimation[C]//International Conference on Machine Learning. PMLR, 2021: 9580-9591.</p></li>
+</ol>
+</section>
+<section id="note">
+<h2>Note<a class="headerlink" href="#note" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>DRL is designed by following the standard approach in semiparametric theory, via first deriving the first-order efficient influence function of <span class="math notranslate nohighlight">\(\eta^{\pi}\)</span> and then constructing the corresponding first-order U-statistic. Our proposal is motivated by the recent breakthroughs on higher-order U-statistics. Specifically, a higher-order U-statistic can be obtained by deriving the higher-order influence functions of <span class="math notranslate nohighlight">\(\eta^{\pi}\)</span>, and for a large class of problems, the estimator yields the same asymptotic distribution with the first-order U-statistic under milder conditions. When <span class="math notranslate nohighlight">\(T = 1\)</span>, our proposal shares similar spirits to the works on minimax optimal estimation for average treatment effects.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\tau^{\pi}\)</span> can be learned from the observed data by solving a minimax problem. See [1] for more details.</p></li>
+<li><p>Although the proposed estimator is as efficient as DRL in the asymptotic sense, in  finite sample, the variance of our estimator will always be larger than DRL. This is due to the fact that, our estimator, as a higher-order U-statistic, can be decomposed into the sum of some asymptotically uncorrelated terms as <span class="math notranslate nohighlight">\(\eta^{\pi}+\sum_{j=1}^m \widehat{\eta}_j\)</span>,  according to the Hoeffding decomposition. Here, the DRL estimator is asymptotically equivalent to <span class="math notranslate nohighlight">\(\eta^{\pi}+\widehat{\eta}_1\)</span> and <span class="math notranslate nohighlight">\(\widehat{\eta}_j\)</span> corresponds to a <span class="math notranslate nohighlight">\(j\)</span>th order degenerate U-statistic for any <span class="math notranslate nohighlight">\(j\ge 2\)</span>. Therefore, the proposed estimator has additional higher order terms. This fact can be regarded as a bias-variance tradeoff.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./Offline\Infinite_OPE"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="DR_Infinite.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Doubly Robust Estimator for Policy Evaluation (Infinite Horizon)</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../FQI.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Fitted-Q Iteration</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Causal Decision Making Team<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

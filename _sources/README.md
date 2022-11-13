@@ -1,4 +1,4 @@
-<h1><img src="logo.png" width="90px" align="left" style="margin-right: 10px;"> Causal Decision Making: An Tutorial for Personalized Decision-Making</h1>
+<h1><img src="logo.png" width="90px" align="left" style="margin-right: 10px;"> Causal Decision Making: a Tutorial for Optimal Decision-Making</h1>
 
 
 
