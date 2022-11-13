@@ -28,7 +28,7 @@ pip install -U jupyter-book
 
 ### Publish a new version
 4. `cd Causal-Decision-Making`
-3. `ghp-import -n -p -f _build/html`
+3. `ghp-import -n -p -f _build/html`. It does not matter if the password fails. 
 4. push both the gh-pages branch
 
 
