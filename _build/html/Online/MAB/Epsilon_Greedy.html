@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="UCB1" href="UCB1.html" />
+    <link rel="next" title="UCB" href="UCB.html" />
     <link rel="prev" title="Multi-Armed Bandits (MAB)" href="MAB.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -266,8 +266,8 @@ const thebe_selector_output = ".output, .cell_output"
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../Offline/Infinite%20Horizon.html">
-   Infinite Horizon
+  <a class="reference internal" href="../../Offline/preliminary_MDP-potential-outcome.html">
+   Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
   <label for="toctree-checkbox-6">
@@ -355,8 +355,8 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="UCB1.html">
-     UCB1
+    <a class="reference internal" href="UCB.html">
+     UCB
     </a>
    </li>
    <li class="toctree-l2">
@@ -757,6 +757,33 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#demo-code">
    Demo Code
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#import-the-learner">
+     Import the learner.
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generate-the-environment">
+     Generate the Environment
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#specify-hyperparameters">
+     Specify Hyperparameters
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#recommendation-and-interaction">
+     Recommendation and Interaction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#demo-code-for-bernoulli-bandit">
+     Demo Code for Bernoulli Bandit
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
@@ -806,6 +833,33 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#demo-code">
    Demo Code
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#import-the-learner">
+     Import the learner.
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generate-the-environment">
+     Generate the Environment
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#specify-hyperparameters">
+     Specify Hyperparameters
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#recommendation-and-interaction">
+     Recommendation and Interaction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#demo-code-for-bernoulli-bandit">
+     Demo Code for Bernoulli Bandit
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
@@ -854,8 +908,8 @@ $<span class="math notranslate nohighlight">\(
 <li><p>For t = <span class="math notranslate nohighlight">\(0, 1,\cdots, T\)</span>:</p>
 <p>2.1. select action <span class="math notranslate nohighlight">\(A_t\)</span> as the arm with the maximum <span class="math notranslate nohighlight">\(\theta_a^t\)</span> with probability <span class="math notranslate nohighlight">\(1-\epsilon_t\)</span>, or randomly select an action <span class="math notranslate nohighlight">\(A_t\)</span> with probability <span class="math notranslate nohighlight">\(\epsilon_t\)</span></p>
 <p>2.2. Received the reward <span class="math notranslate nohighlight">\(R_t\)</span>, and update <span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(Q\)</span> with</p>
-<div class="amsmath math notranslate nohighlight" id="equation-feb326c1-2448-4190-8ed0-5e2c336a130f">
-<span class="eqno">(67)<a class="headerlink" href="#equation-feb326c1-2448-4190-8ed0-5e2c336a130f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3187a7c7-2565-47a8-9252-a85560c3b3ba">
+<span class="eqno">(69)<a class="headerlink" href="#equation-3187a7c7-2565-47a8-9252-a85560c3b3ba" title="Permalink to this equation">#</a></span>\[\begin{align}
     C_{A_{t}}^{t+1} &amp;= C_{A_{t}}^{t} + 1 \\
     \theta_{A_{t}}^{t+1} &amp;=\theta_{A_{t}}^{t} + \frac{1}{C_{A_{t+1}}^{t+1}}*(R_t-\theta_{A_{t}}^{t})
     \end{align}\]</div>
@@ -866,263 +920,112 @@ $<span class="math notranslate nohighlight">\(
 <h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># After we publish the pack age, we can directly import it</span>
-<span class="c1"># TODO: explore more efficient way</span>
-<span class="c1"># we can hide this cell later</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM&#39;</span><span class="p">)</span>
-<span class="c1"># code used to import the learner</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 6&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">os</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM&#39;</span><span class="p">)</span>
-
-<span class="ne">FileNotFoundError</span>: [WinError 3] 系统找不到指定的路径。: &#39;/nas/longleaf/home/lge/CausalDM&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Single</span> <span class="kn">import</span> <span class="n">Epsilon_Greedy</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Single</span> <span class="kn">import</span> <span class="n">_env</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">T</span> <span class="o">=</span> <span class="mi">2000</span>
-<span class="n">K</span> <span class="o">=</span> <span class="mi">5</span>
-
-<span class="n">phi_beta</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span>
-<span class="n">with_intercept</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="n">p</span><span class="o">=</span><span class="mi">3</span>
-<span class="n">X_mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">p</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">X_sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">p</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">Sigma_theta</span> <span class="o">=</span> <span class="n">sigma_gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-<span class="n">mu_theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-<span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span>
-
-<span class="n">env</span> <span class="o">=</span> <span class="n">_env</span><span class="o">.</span><span class="n">Single_Gaussian_Env</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">phi_beta</span>
-                         <span class="p">,</span> <span class="n">mu_theta</span><span class="p">,</span> <span class="n">Sigma_theta</span>
-                        <span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">with_intercept</span> <span class="o">=</span> <span class="kc">True</span>
-                         <span class="p">,</span> <span class="n">X_mu</span> <span class="o">=</span> <span class="n">X_mu</span><span class="p">,</span> <span class="n">X_sigma</span> <span class="o">=</span> <span class="n">X_sigma</span><span class="p">)</span>
-<span class="c1">#time-adaptive. for time-fixed version, specifiying epsilon and setting decrease_eps=False</span>
-<span class="n">greedy_agent</span> <span class="o">=</span> <span class="n">Epsilon_Greedy</span><span class="o">.</span><span class="n">Epsilon_Greedy</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">epsilon</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">decrease_eps</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">greedy_agent</span><span class="o">.</span><span class="n">take_action</span><span class="p">()</span>
-<span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">R</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get_reward</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">A</span><span class="p">)</span>
-<span class="n">greedy_agent</span><span class="o">.</span><span class="n">receive_reward</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">R</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">greedy_agent</span><span class="o">.</span><span class="n">cnts</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0., 0., 0., 1., 0.])
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Interpretation:</strong> A sentence to include the analysis result: the estimated optimal regime is…</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM&#39;</span><span class="p">)</span>
-<span class="c1"># code used to import the learner</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Single</span> <span class="kn">import</span> <span class="n">_env</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Single</span> <span class="kn">import</span> <span class="n">_Experiment</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Single</span> <span class="kn">import</span> <span class="n">Epsilon_Greedy</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Single</span> <span class="kn">import</span> <span class="n">UCB1</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Single</span> <span class="kn">import</span> <span class="n">TS</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Single</span> <span class="kn">import</span> <span class="n">LinTS</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Single</span> <span class="kn">import</span> <span class="n">LinUCB</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:\GitHub\CausalDM&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<section id="import-the-learner">
+<h3>Import the learner.<a class="headerlink" href="#import-the-learner" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">T</span> <span class="o">=</span> <span class="mi">2000</span>
-<span class="n">K</span> <span class="o">=</span> <span class="mi">500</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.Online.MAB</span> <span class="kn">import</span> <span class="n">Epsilon_Greedy</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="generate-the-environment">
+<h3>Generate the Environment<a class="headerlink" href="#generate-the-environment" title="Permalink to this headline">#</a></h3>
+<p>Here, we imitate an environment based on the MovieLens data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.MAB</span> <span class="kn">import</span> <span class="n">_env_realMAB</span> <span class="k">as</span> <span class="n">_env</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">_env</span><span class="o">.</span><span class="n">Single_Gaussian_Env</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="specify-hyperparameters">
+<h3>Specify Hyperparameters<a class="headerlink" href="#specify-hyperparameters" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>K: # of arms</p></li>
+<li><p>epsilon: fixed <span class="math notranslate nohighlight">\(\epsilon\)</span> for time-fixed version of <span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy algorithm</p></li>
+<li><p>decrease_eps: indicate if a time-adaptive <span class="math notranslate nohighlight">\(\epsilon_t = min(1,\frac{K}{t})\)</span> employed.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">K</span>
+<span class="n">greedy_agent</span> <span class="o">=</span> <span class="n">Epsilon_Greedy</span><span class="o">.</span><span class="n">Epsilon_Greedy</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">epsilon</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">decrease_eps</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="recommendation-and-interaction">
+<h3>Recommendation and Interaction<a class="headerlink" href="#recommendation-and-interaction" title="Permalink to this headline">#</a></h3>
+<p>Starting from t = 0, for each step t, there are three steps:</p>
+<ol class="simple">
+<li><p>Recommend an action
+<code> A = greedy_agent.take_action() </code></p></li>
+<li><p>Get the reward from the environment
+<code> R = env.get_reward(t,A) </code></p></li>
+<li><p>Update the posterior distribution
+<code> greedy_agent.receive_reward(t,A,R) </code></p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">greedy_agent</span><span class="o">.</span><span class="n">take_action</span><span class="p">()</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get_reward</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">greedy_agent</span><span class="o">.</span><span class="n">receive_reward</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">R</span><span class="p">)</span>
+<span class="n">t</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">R</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0, 3, 4)
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Interpretation</strong>: For step 0, the <span class="math notranslate nohighlight">\(\epsilon-\)</span>greedy agent recommend a Thriller (arm 3), and received a rate of 4 from the environment.</p>
+</section>
+<section id="demo-code-for-bernoulli-bandit">
+<h3>Demo Code for Bernoulli Bandit<a class="headerlink" href="#demo-code-for-bernoulli-bandit" title="Permalink to this headline">#</a></h3>
+<p>The steps are similar to those previously performed with a Gaussian Bandit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">env</span> <span class="o">=</span> <span class="n">_env</span><span class="o">.</span><span class="n">Single_Bernoulli_Env</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
-<span class="n">phi_beta</span> <span class="o">=</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span>
-<span class="n">with_intercept</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="n">p</span><span class="o">=</span><span class="mi">3</span>
-<span class="n">X_mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">p</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">X_sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">p</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">Sigma_theta</span> <span class="o">=</span> <span class="n">sigma_gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-<span class="n">mu_theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-<span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">K</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">K</span>
+<span class="n">greedy_agent</span> <span class="o">=</span> <span class="n">Epsilon_Greedy</span><span class="o">.</span><span class="n">Epsilon_Greedy</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">epsilon</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">decrease_eps</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
 
-<span class="n">exp</span> <span class="o">=</span> <span class="n">_Experiment</span><span class="o">.</span><span class="n">Experiment</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">sigma</span>
-                         <span class="p">,</span> <span class="n">mu_theta</span><span class="p">,</span> <span class="n">Sigma_theta</span>
-                        <span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">with_intercept</span> <span class="o">=</span> <span class="kc">True</span>
-                         <span class="p">,</span> <span class="n">X_mu</span> <span class="o">=</span> <span class="n">X_mu</span><span class="p">,</span> <span class="n">X_sigma</span> <span class="o">=</span> <span class="n">X_sigma</span><span class="p">,</span> <span class="n">Gaussian</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">r</span>
-<span class="n">greedy_agent</span> <span class="o">=</span> <span class="n">Epsilon_Greedy</span><span class="o">.</span><span class="n">Epsilon_Greedy</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">epsilon</span> <span class="o">=</span> <span class="mf">.6</span><span class="p">,</span> <span class="n">decrease_eps</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
-<span class="n">UCB_agent</span> <span class="o">=</span> <span class="n">UCB1</span><span class="o">.</span><span class="n">UCB1</span><span class="p">(</span><span class="n">K</span><span class="p">)</span>
-<span class="n">TS_Bernoulli_agent</span> <span class="o">=</span> <span class="n">TS</span><span class="o">.</span><span class="n">TS</span><span class="p">(</span><span class="n">Reward_Type</span> <span class="o">=</span> <span class="s2">&quot;Gaussian&quot;</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">u_prior_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">*</span><span class="mf">.5</span><span class="p">,</span> <span class="n">u_prior_cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">K</span><span class="p">),</span> <span class="n">prior_phi_beta</span> <span class="o">=</span> <span class="n">sigma</span><span class="p">)</span>
-<span class="n">LinTS_agent</span> <span class="o">=</span> <span class="n">LinTS</span><span class="o">.</span><span class="n">LinTS_Gaussian</span><span class="p">(</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">prior_theta_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="n">prior_theta_cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="n">K</span> <span class="o">=</span> <span class="n">K</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
-<span class="n">LinUCB_agent</span> <span class="o">=</span> <span class="n">LinUCB</span><span class="o">.</span><span class="n">LinUCB_Gaussian</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">.5</span><span class="p">,</span> <span class="n">K</span> <span class="o">=</span> <span class="n">K</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
-
-<span class="n">agents</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;greedy&quot;</span> <span class="p">:</span> <span class="n">greedy_agent</span><span class="p">,</span> <span class="s1">&#39;UCB&#39;</span><span class="p">:</span><span class="n">UCB_agent</span><span class="p">,</span> <span class="s1">&#39;TS&#39;</span><span class="p">:</span> <span class="n">TS_Bernoulli_agent</span><span class="p">,</span> <span class="s1">&#39;LinTS&#39;</span><span class="p">:</span><span class="n">LinTS_agent</span><span class="p">,</span> <span class="s1">&#39;LinUCB&#39;</span><span class="p">:</span><span class="n">LinUCB_agent</span><span class="p">}</span>
-<span class="n">exp</span><span class="o">.</span><span class="n">_init_agents</span><span class="p">(</span><span class="n">agents</span><span class="p">)</span>
-<span class="n">exp</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">greedy_agent</span><span class="o">.</span><span class="n">take_action</span><span class="p">()</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get_reward</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">greedy_agent</span><span class="o">.</span><span class="n">receive_reward</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">R</span><span class="p">)</span>
+<span class="n">t</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">R</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>oracle: 100%|██████████| 2000/2000 [00:00&lt;00:00, 601635.80it/s]
-greedy: 100%|██████████| 2000/2000 [00:00&lt;00:00, 67258.99it/s]
-UCB: 100%|██████████| 2000/2000 [00:00&lt;00:00, 46620.21it/s]
-TS: 100%|██████████| 2000/2000 [01:49&lt;00:00, 18.29it/s]
-LinTS: 100%|██████████| 2000/2000 [00:00&lt;00:00, 5183.43it/s]
-LinUCB: 100%|██████████| 2000/2000 [00:00&lt;00:00, 3878.14it/s]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0, 0, 1)
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">R_greedy</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">][</span><span class="s1">&#39;greedy&#39;</span><span class="p">]</span>
-<span class="n">R_oracle</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">][</span><span class="s1">&#39;oracle&#39;</span><span class="p">]</span>
-<span class="n">R_TS</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">][</span><span class="s1">&#39;TS&#39;</span><span class="p">]</span>
-<span class="n">R_UCB</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">][</span><span class="s1">&#39;UCB&#39;</span><span class="p">]</span>
-<span class="n">R_LinTS</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">][</span><span class="s1">&#39;LinTS&#39;</span><span class="p">]</span>
-<span class="n">R_LinUCB</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">][</span><span class="s1">&#39;LinUCB&#39;</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">opt_r</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">r</span><span class="p">[</span><span class="n">exp</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">optimal_arm</span><span class="p">]</span>
-<span class="n">Reward_greedy</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">opt_r</span><span class="o">-</span><span class="n">R_greedy</span><span class="p">))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">R_greedy</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">Reward_TS</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">opt_r</span><span class="o">-</span><span class="n">R_TS</span><span class="p">))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">R_greedy</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">Reward_UCB</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">opt_r</span><span class="o">-</span><span class="n">R_UCB</span><span class="p">))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">R_greedy</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">Reward_LinTS</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">opt_r</span><span class="o">-</span><span class="n">R_LinTS</span><span class="p">))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">R_greedy</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">Reward_LinUCB</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">opt_r</span><span class="o">-</span><span class="n">R_LinUCB</span><span class="p">))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">R_greedy</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">Reward_oracle</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">opt_r</span><span class="o">-</span><span class="n">R_oracle</span><span class="p">))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">R_greedy</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">LinTS_agent</span><span class="o">.</span><span class="n">u</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-2.2903,  1.4224,  0.9699])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">LinUCB_agent</span><span class="o">.</span><span class="n">Cov_inv</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[nan, nan, nan],
-       [nan, nan, nan],
-       [nan, nan, nan]])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>        <span class="n">x</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">Phi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">Ax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">LinUCB_agent</span><span class="o">.</span><span class="n">Cov_inv</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">xAx</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Ax</span><span class="p">)</span>
-        <span class="n">LinUCB_agent</span><span class="o">.</span><span class="n">Cov_inv</span> <span class="o">-=</span> <span class="n">Ax</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Ax</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">xAx</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy.linalg</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">inv</span>
-<span class="n">inv</span><span class="p">(</span><span class="n">LinUCB_agent</span><span class="o">.</span><span class="n">Cov</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[8.3083e+14, 1.3556e+15, 1.3801e+15],
-       [1.3556e+15, 2.2119e+15, 2.2518e+15],
-       [1.3801e+15, 2.2518e+15, 2.2925e+15]])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">exp</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">theta</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.7641, 0.4002, 0.9787])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Reward_LinUCB</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([3.9901, 3.5788, 3.4776, ..., 1.6803, 1.6803, 1.6805])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Reward_oracle</span><span class="p">,</span><span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;oracle&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Reward_greedy</span><span class="p">,</span><span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;greedy&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Reward_TS</span><span class="p">,</span><span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;TS&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Reward_UCB</span><span class="p">,</span><span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;UCB&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Reward_LinTS</span><span class="p">,</span><span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;LinTS&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Reward_LinUCB</span><span class="p">,</span><span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;LinUCB&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../../_images/Epsilon_Greedy_18_0.png" src="../../_images/Epsilon_Greedy_18_0.png" />
-</div>
-</div>
+<p><strong>Interpretation</strong>: For step 0, the <span class="math notranslate nohighlight">\(\epsilon-\)</span>greedy agent recommend a Comedy (arm 0), and received a reward of 1 from the environment.</p>
+</section>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
@@ -1165,10 +1068,10 @@ LinUCB: 100%|██████████| 2000/2000 [00:00&lt;00:00, 3878.14i
             <p class="prev-next-title">Multi-Armed Bandits (MAB)</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="UCB1.html" title="next page">
+    <a class='right-next' id="next-link" href="UCB.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">UCB1</p>
+        <p class="prev-next-title">UCB</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
