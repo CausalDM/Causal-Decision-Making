@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Epsilon_Greedy &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -21,7 +20,7 @@
     href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
@@ -37,7 +36,7 @@
     <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -345,6 +344,14 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
+    <a class="reference internal" href="../../MAB/Epsilon_Greedy.html">
+     <span class="math notranslate nohighlight">
+      \(\epsilon\)
+     </span>
+     -Greedy
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../../MAB/UCB.html">
      UCB
     </a>
@@ -501,8 +508,18 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../../../OnlineEval/Evaluator.html">
-   HAOYU and YE (epsilon+TS+UCB)
+  <a class="reference internal" href="../../../OnlineEval/Inverse%20Probability%20Weighted%20Online%20Policy%20Evaluator.html">
+   Inverse Probability Weighted Online Policy Evaluator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../OnlineEval/Direct%20Online%20Policy%20Evaluator.html">
+   Direct Online Policy Evaluator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../OnlineEval/Doubly%20Robust%20Online%20Policy%20Evaluator.html">
+   Doubly Robust Online Policy Evaluator
   </a>
  </li>
 </ul>
@@ -802,33 +819,33 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="epsilon-greedy">
+  <div class="tex2jax_ignore mathjax_ignore section" id="epsilon-greedy">
 <h1>Epsilon_Greedy<a class="headerlink" href="#epsilon-greedy" title="Permalink to this headline">#</a></h1>
-<section id="main-idea">
+<div class="section" id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>An intuitive algorithm to incorporate the exploration and exploitation is <span class="math notranslate nohighlight">\(\epsilon\)</span>-Greedy, which is simple and widely used [6]. Specifically, at each round <span class="math notranslate nohighlight">\(t\)</span>, we will select a random action with probability <span class="math notranslate nohighlight">\(\epsilon\)</span>, and select an action with the highest estimated mean reward based on the history so far with probability <span class="math notranslate nohighlight">\(1-\epsilon\)</span>. Here the parameter <span class="math notranslate nohighlight">\(\epsilon\)</span> is pre-specified. A more adaptive variant is <span class="math notranslate nohighlight">\(\epsilon_{t}\)</span>-greedy, where the probability of taking a random action is defined as a decreasing function of <span class="math notranslate nohighlight">\(t\)</span>. Auer et al. [7] showed that <span class="math notranslate nohighlight">\(\epsilon_{t}\)</span>-greedy performs well in practice with <span class="math notranslate nohighlight">\(\epsilon_{t}\)</span> decreases to 0 at a rate of <span class="math notranslate nohighlight">\(\frac{1}{t}\)</span>.</p>
-</section>
-<section id="algorithms-details">
+</div>
+<div class="section" id="algorithms-details">
 <h2>Algorithms Details<a class="headerlink" href="#algorithms-details" title="Permalink to this headline">#</a></h2>
 <p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. The <span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy algorithm start with initializing the estimated values <span class="math notranslate nohighlight">\(\theta_a^0\)</span> and the count of being pulled <span class="math notranslate nohighlight">\(C_a^0\)</span> for each action <span class="math notranslate nohighlight">\(a\)</span> as 0. At each round <span class="math notranslate nohighlight">\(t\)</span>, we either take an action with the maximum estimated value <span class="math notranslate nohighlight">\(\theta_a\)</span> with probability <span class="math notranslate nohighlight">\(1-\epsilon_{t}\)</span> or randomly select an action with probability <span class="math notranslate nohighlight">\(\epsilon_t\)</span>. After observing the rewards corresponding to the selected action <span class="math notranslate nohighlight">\(A_t\)</span>, we updated the total number of being pulled for <span class="math notranslate nohighlight">\(A_t\)</span>, and estimated the <span class="math notranslate nohighlight">\(\theta_{A_{t}}\)</span> by with the sample average for <span class="math notranslate nohighlight">\(A_t\)</span>.</p>
 <p>Remark that both the time-adaptive and the time-fixed version of <span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy algorithm are provided. By setting <strong>decrease_eps=True</strong>, the <span class="math notranslate nohighlight">\(\epsilon_{t}\)</span> in round <span class="math notranslate nohighlight">\(t\)</span> is calculated as <span class="math notranslate nohighlight">\(\frac{K}{T}\)</span>. Otherwise, <span class="math notranslate nohighlight">\(\epsilon_{t}\)</span> is a fixed value specfied by users.</p>
-</section>
-<section id="key-steps">
+</div>
+<div class="section" id="key-steps">
 <h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">#</a></h2>
 <ol>
 <li><p>Initializing the <span class="math notranslate nohighlight">\(\boldsymbol{\theta}^0\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{C}^0\)</span> for <span class="math notranslate nohighlight">\(K\)</span> items as 0</p></li>
 <li><p>For t = <span class="math notranslate nohighlight">\(0, 1,\cdots, T\)</span>:</p>
 <p>2.1. select action <span class="math notranslate nohighlight">\(A_t\)</span> as the arm with the maximum <span class="math notranslate nohighlight">\(\theta_a^t\)</span> with probability <span class="math notranslate nohighlight">\(1-\epsilon_t\)</span>, or randomly select an action <span class="math notranslate nohighlight">\(A_t\)</span> with probability <span class="math notranslate nohighlight">\(\epsilon_t\)</span></p>
 <p>2.2. Received the reward R, and update <span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(Q\)</span> with</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a404cf3b-d968-4db4-81a9-f2de52ff6ba4">
-<span class="eqno">()<a class="headerlink" href="#equation-a404cf3b-d968-4db4-81a9-f2de52ff6ba4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2ac47d37-f108-4a31-984e-a1cbdb4f7ec1">
+<span class="eqno">()<a class="headerlink" href="#equation-2ac47d37-f108-4a31-984e-a1cbdb4f7ec1" title="Permalink to this equation">#</a></span>\[\begin{align}
     C_{A_{t}}^{t+1} &amp;= C_{A_{t}}^{t} + 1 \\
     \theta_{A_{t}}^{t+1} &amp;=\theta_{A_{t}}^{t} + 1/C_{A_{t+1}}^{t+1}*(R-\theta_{A_{t}}^{t})
     \end{align}\]</div>
 </li>
 </ol>
-</section>
-<section id="demo-code">
+</div>
+<div class="section" id="demo-code">
 <h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -850,7 +867,7 @@ title="Print to PDF"
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM&#39;</span><span class="p">)</span>
 
-<span class="ne">FileNotFoundError</span>: [WinError 3] 系统找不到指定的路径。: &#39;/nas/longleaf/home/lge/CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;/nas/longleaf/home/lge/CausalDM&#39;
 </pre></div>
 </div>
 </div>
@@ -905,13 +922,13 @@ title="Print to PDF"
 </div>
 </div>
 <p><strong>Interpretation:</strong> A sentence to include the analysis result: the estimated optimal regime is…</p>
-</section>
-<section id="references">
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <p>[1] Sutton, R. S., &amp; Barto, A. G. (2018). Reinforcement learning: An introduction. MIT press.</p>
 <p>[2] Auer, P., Cesa-Bianchi, N., &amp; Fischer, P. (2002). Finite-time analysis of the multiarmed bandit problem. Machine learning, 47(2), 235-256.</p>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -926,7 +943,7 @@ title="Print to PDF"
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./Online\Old_documents\Single"
+            path: "./Online/Old_documents/Single"
         },
         predefinedOutput: true
     }

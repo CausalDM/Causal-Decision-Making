@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Q-Learning (Single Stage) &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -21,7 +20,7 @@
     href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
@@ -37,7 +36,7 @@
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -347,6 +346,14 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
+    <a class="reference internal" href="../../Online/MAB/Epsilon_Greedy.html">
+     <span class="math notranslate nohighlight">
+      \(\epsilon\)
+     </span>
+     -Greedy
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../../Online/MAB/UCB.html">
      UCB
     </a>
@@ -503,8 +510,18 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../../OnlineEval/Evaluator.html">
-   HAOYU and YE (epsilon+TS+UCB)
+  <a class="reference internal" href="../../OnlineEval/Inverse%20Probability%20Weighted%20Online%20Policy%20Evaluator.html">
+   Inverse Probability Weighted Online Policy Evaluator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../OnlineEval/Direct%20Online%20Policy%20Evaluator.html">
+   Direct Online Policy Evaluator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../OnlineEval/Doubly%20Robust%20Online%20Policy%20Evaluator.html">
+   Doubly Robust Online Policy Evaluator
   </a>
  </li>
 </ul>
@@ -828,26 +845,26 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="q-learning-single-stage">
+  <div class="tex2jax_ignore mathjax_ignore section" id="q-learning-single-stage">
 <h1>Q-Learning (Single Stage)<a class="headerlink" href="#q-learning-single-stage" title="Permalink to this headline">#</a></h1>
-<section id="main-idea">
+<div class="section" id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>Early in 2000, as a classic method of Reinforcement Learning, Q-learning was adapted to decision-making problems[1] and kept evolving with various extensions, such as penalized Q-learning [2]. Q-learning with finite decision points is mainly a regression modeling problem based on positing regression models for outcome at each decision point. The target of Q-learning is to find an optimal policy <span class="math notranslate nohighlight">\(\pi\)</span> that can maximize the expected reward received. In other words, by training a model with the observed data, we hope to find an optimal policy to predict the optimal action for each individual to maximize rewards. For example, considering the motivating example <strong>Personalized Incentives</strong>, Q-learning aims to find the best policy to assign different incentives (<span class="math notranslate nohighlight">\(A\)</span>) to different users to optimize the return-on-investment (<span class="math notranslate nohighlight">\(Y\)</span>). Overall, Q-learning is practical and easy to understand, as it allows straightforward implementation of diverse established regression methods.</p>
 <p>Note that, we assume the action space is either <strong>binary</strong> (i.e., 0,1) or <strong>multinomial</strong> (i.e., A,B,C,D), and the outcome of interest Y is <strong>continuous</strong> and <strong>non-negative</strong>, where the larger the <span class="math notranslate nohighlight">\(Y\)</span> the better.</p>
-</section>
-<section id="algorithm-details">
+</div>
+<div class="section" id="algorithm-details">
 <h2>Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this headline">#</a></h2>
 <p>Q-learning with a single decision point is mainly a regression modeling problem, as the major component is to find the relationship between <span class="math notranslate nohighlight">\(Y\)</span> and <span class="math notranslate nohighlight">\(\{X,A\}\)</span>. Let’s first define a Q-function, such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9fae2d22-6d1f-453f-8505-a0445bfdf2d1">
-<span class="eqno">(20)<a class="headerlink" href="#equation-9fae2d22-6d1f-453f-8505-a0445bfdf2d1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d6d7091f-305b-4323-b667-3558e7bb3cf9">
+<span class="eqno">(20)<a class="headerlink" href="#equation-d6d7091f-305b-4323-b667-3558e7bb3cf9" title="Permalink to this equation">#</a></span>\[\begin{align}
     Q(x,a) = E(Y|X=x, A=a).
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-afa3d96e-12d2-482e-9c00-1349a8c8a033">
-<span class="eqno">(21)<a class="headerlink" href="#equation-afa3d96e-12d2-482e-9c00-1349a8c8a033" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6d1f2873-f64c-40b9-8b05-fe7a7b64a02f">
+<span class="eqno">(21)<a class="headerlink" href="#equation-6d1f2873-f64c-40b9-8b05-fe7a7b64a02f" title="Permalink to this equation">#</a></span>\[\begin{align}
     \text{arg max}_{\pi}Q(x_{i},\pi(x_{i})).
 \end{align}\]</div>
-</section>
-<section id="key-steps">
+</div>
+<div class="section" id="key-steps">
 <h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">#</a></h2>
 <p><strong>Policy Learning:</strong></p>
 <ol class="simple">
@@ -860,11 +877,11 @@ title="Print to PDF"
 <li><p>Estimated the value of a given regime <span class="math notranslate nohighlight">\(d\)</span> using the estimated Q function, such that, <span class="math notranslate nohighlight">\(\hat{Y}_{i} = \hat{Q}(x_{i},d(x_{i}),\hat{\beta})\)</span></p></li>
 </ol>
 <p><strong>Note</strong> we also provide an option for bootstrapping. Particularly, for a given policy, we utilize bootstrap resampling to get the estimated value of the regime and the corresponding estimated standard error. For each round of bootstrapping, we first resample a dataset of the same size as the original dataset, then fit the Q function based on the sampled dataset, and finally estimate the value of a given regime based on the estimated Q function.</p>
-</section>
-<section id="demo-code">
+</div>
+<div class="section" id="demo-code">
 <h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
 <p>In the following, we exhibit how to apply the learner on real data to do policy learning and policy evaluation, respectively.</p>
-<section id="policy-learning">
+<div class="section" id="policy-learning">
 <h3>1. Policy Learning<a class="headerlink" href="#policy-learning" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -908,8 +925,8 @@ title="Print to PDF"
 </div>
 </div>
 <p>By specifing the model_info, we assume a regression model that:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ede4a7ba-8941-4642-a2ef-93aa18d9a707">
-<span class="eqno">(22)<a class="headerlink" href="#equation-ede4a7ba-8941-4642-a2ef-93aa18d9a707" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6a2cbee7-31e9-4fda-835c-041e84a558f4">
+<span class="eqno">(22)<a class="headerlink" href="#equation-6a2cbee7-31e9-4fda-835c-041e84a558f4" title="Permalink to this equation">#</a></span>\[\begin{align}
 Q(x,a,\beta) &amp;= \beta_{00}+\beta_{01}*recency+\beta_{02}*history\\
 &amp;+I(a=1)*\{\beta_{10}+\beta_{11}*recency+\beta_{12}*history\} \\
 &amp;+I(a=2)*\{\beta_{20}+\beta_{21}*recency+\beta_{22}*history\} 
@@ -957,8 +974,8 @@ opt value: 126.48792828230047
 </div>
 </div>
 <p><strong>Interpretation:</strong> the fitted model is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-24fb8a58-a790-4805-b20d-208e2e7bee42">
-<span class="eqno">(23)<a class="headerlink" href="#equation-24fb8a58-a790-4805-b20d-208e2e7bee42" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ce88241a-32b2-4122-8759-86957f8776fc">
+<span class="eqno">(23)<a class="headerlink" href="#equation-ce88241a-32b2-4122-8759-86957f8776fc" title="Permalink to this equation">#</a></span>\[\begin{align}
 Q(x,a,\beta) &amp;= 94.20+4.53*recency+0.0005*history\\
 &amp;+I(a=1)*\{23.24-4.15*recency+0.0076*history\} \\
 &amp;+I(a=2)*\{20.61-4.84*recency+0.0004history\}. 
@@ -991,8 +1008,8 @@ Q(x,a,\beta) &amp;= 94.20+4.53*recency+0.0005*history\\
 </div>
 </div>
 <p><strong>Interpretation:</strong> Based on the boostrap with 200 replicates, the estimated optimal value is 132.31 with a standard error of 7.37.</p>
-</section>
-<section id="policy-evaluation">
+</div>
+<div class="section" id="policy-evaluation">
 <h3>2. Policy Evaluation<a class="headerlink" href="#policy-evaluation" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1033,9 +1050,9 @@ Q(x,a,\beta) &amp;= 94.20+4.53*recency+0.0005*history\\
 </div>
 </div>
 <p><strong>Interpretation:</strong> the bootstrapped estimated value of the regime that always sends no emails is 115.96 with a bootstrapped standard error 10.50, under the specified model.</p>
-</section>
-</section>
-<section id="references">
+</div>
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p>Murphy, S. A. (2005). A generalization error for Q-learning.</p></li>
@@ -1045,8 +1062,8 @@ Q(x,a,\beta) &amp;= 94.20+4.53*recency+0.0005*history\\
 <p>TODO:
 1. estimate the standard error for the binary case with sandwich formula;
 2. inference for the estimated optimal regime: projected confidence interval? m-out-of-n CI?….</p>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -1061,7 +1078,7 @@ Q(x,a,\beta) &amp;= 94.20+4.53*recency+0.0005*history\\
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./Offline\Finite"
+            path: "./Offline/Finite"
         },
         predefinedOutput: true
     }
