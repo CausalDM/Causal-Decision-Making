@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>A-Learning (Multiple Stages) &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -21,7 +20,7 @@
     href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
@@ -37,7 +36,7 @@
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -347,6 +346,14 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
+    <a class="reference internal" href="../../Online/MAB/Epsilon_Greedy.html">
+     <span class="math notranslate nohighlight">
+      \(\epsilon\)
+     </span>
+     -Greedy
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../../Online/MAB/UCB.html">
      UCB
     </a>
@@ -503,8 +510,18 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../../OnlineEval/Evaluator.html">
-   HAOYU and YE (epsilon+TS+UCB)
+  <a class="reference internal" href="../../OnlineEval/Inverse%20Probability%20Weighted%20Online%20Policy%20Evaluator.html">
+   Inverse Probability Weighted Online Policy Evaluator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../OnlineEval/Direct%20Online%20Policy%20Evaluator.html">
+   Direct Online Policy Evaluator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../OnlineEval/Doubly%20Robust%20Online%20Policy%20Evaluator.html">
+   Doubly Robust Online Policy Evaluator
   </a>
  </li>
 </ul>
@@ -848,55 +865,55 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="a-learning-multiple-stages">
+  <div class="tex2jax_ignore mathjax_ignore section" id="a-learning-multiple-stages">
 <h1>A-Learning (Multiple Stages)<a class="headerlink" href="#a-learning-multiple-stages" title="Permalink to this headline">#</a></h1>
-<section id="main-idea">
+<div class="section" id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>A-Learning, also known as Advantage Learning, is one of the main approaches to learning the optimal regime and works similarly to Q-learning. However, while Q-learning requires positing regression models to fit the expected outcome, A-learning models the contrasts between treatments and control, directly informing the optimal decision. For example, in the case of <strong>Personalized Incentives</strong>, A-learning aims to find the optimal incentive (<span class="math notranslate nohighlight">\(A\)</span>) for each user by modeling the difference in expected return-on-investment (<span class="math notranslate nohighlight">\(Y\)</span>) between treatments. A detailed comparison between Q-learning and A-learning can be found in [1]. While [1] mainly focus on the case with binary treatment options, a complete review of A-learning with multiple treatment options can be found in [2]. Here, following the algorithm in [1], we consider contrast-based A-learning. However, there is an alternative regret-based A-learning introduced in [3]. Some recent extensions to conventional A-learning, such as deep A-learning [4] and high-dimensional A-Learning [5], will be added soon. Overall, A-learning is doubly-robust. In other words, it is less sensitive and more robust to model misspecification.</p>
 <p>Note that, we assume the action space is either <strong>binary</strong> (i.e., 0,1) or <strong>multinomial</strong> (i.e., 0,1,2,3,4, where 0 stands for the control group by convention), and the outcome of interest Y is <strong>continuous</strong> and <strong>non-negative</strong>, where the larger the <span class="math notranslate nohighlight">\(Y\)</span> the better.</p>
-</section>
-<section id="algorithm-details">
+</div>
+<div class="section" id="algorithm-details">
 <h2>Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this headline">#</a></h2>
 <p>Suppose there are <span class="math notranslate nohighlight">\(m_t\)</span> number of options at decision point <span class="math notranslate nohighlight">\(t\)</span>, and the corresponding action space <span class="math notranslate nohighlight">\(\mathcal{A}_t=\{0,1,\dots,m_t-1\}\)</span>. At each decision point <span class="math notranslate nohighlight">\(t\)</span>, contrast-based A-learning aims to learn and estimate the constrast function, <span class="math notranslate nohighlight">\(C_{tj}(h_{t}), j=1,2,\dots,m_t-1\)</span>. Here, <span class="math notranslate nohighlight">\(h_{t}=\{X_{1i},A_{1i},\cdots,X_{ti}\})\)</span> includes all the information observed till step t. Furthermore, we also need to posit a model for the conditional expected outcome for the control option (treatment <span class="math notranslate nohighlight">\(0\)</span>), <span class="math notranslate nohighlight">\(Q_t(h_t,0)\)</span>, and the propensity function <span class="math notranslate nohighlight">\(\omega(h_{t},a_{t})\)</span>. Detailed definitions are provided in the following:</p>
 <ul>
 <li><p>Q-function:
 For the final step <span class="math notranslate nohighlight">\(T\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4cb26d03-b24b-4b45-b134-e6a67d5b23c0">
-<span class="eqno">(32)<a class="headerlink" href="#equation-4cb26d03-b24b-4b45-b134-e6a67d5b23c0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9e113b63-c5d1-4115-b13c-4a2bf89f86b3">
+<span class="eqno">(32)<a class="headerlink" href="#equation-9e113b63-c5d1-4115-b13c-4a2bf89f86b3" title="Permalink to this equation">#</a></span>\[\begin{align}
     Q_T(h_T,a_{T})=E[Y|H_{T}=h_{T}, A_{T}=a_{T}],
     \end{align}\]</div>
 <p>If there is a multi-stage case with total step <span class="math notranslate nohighlight">\(T&gt;1\)</span>, for the step <span class="math notranslate nohighlight">\(t=1,\cdots,T-1\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-12d19700-4045-48a3-8764-b28609bd5472">
-<span class="eqno">(33)<a class="headerlink" href="#equation-12d19700-4045-48a3-8764-b28609bd5472" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d9f635c9-4e6a-4a14-bb64-2078542c47a6">
+<span class="eqno">(33)<a class="headerlink" href="#equation-d9f635c9-4e6a-4a14-bb64-2078542c47a6" title="Permalink to this equation">#</a></span>\[\begin{align}
     Q_t(h_t,a_{t})=E[V_{t+1}|H_{t}=h_{t}, A_{t}=a_{t}],
     \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-471b6266-5202-4e99-a504-6e5ca996ffd4">
-<span class="eqno">(34)<a class="headerlink" href="#equation-471b6266-5202-4e99-a504-6e5ca996ffd4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d7218727-805a-4db3-8794-f4104672aad7">
+<span class="eqno">(34)<a class="headerlink" href="#equation-d7218727-805a-4db3-8794-f4104672aad7" title="Permalink to this equation">#</a></span>\[\begin{align}
     V_{t}(h_{t}) = \max_{j\in\mathcal{A}_t}Q_{t}(h_t,j)
     \end{align}\]</div>
 <p>Alternatively, with the contrast function <span class="math notranslate nohighlight">\(C_{tj}(h_t)\)</span>, which will be defined later,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b5fcf5f5-0811-4be1-b663-d912e046ba02">
-<span class="eqno">(35)<a class="headerlink" href="#equation-b5fcf5f5-0811-4be1-b663-d912e046ba02" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1d57f81d-583d-48f2-ad9e-92cc5866f435">
+<span class="eqno">(35)<a class="headerlink" href="#equation-1d57f81d-583d-48f2-ad9e-92cc5866f435" title="Permalink to this equation">#</a></span>\[\begin{align}
     Q_t(h_t,j) = Q_t(h_t,0) + C_{tj}(h_t),\quad j=0,\dots,m_t-1,\quad t=1,\dots,T.
     \end{align}\]</div>
 </li>
 <li><p>Contrast functions (optimal blip to zero functions)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2cae6003-0dcb-4002-9856-486e30727d7c">
-<span class="eqno">(36)<a class="headerlink" href="#equation-2cae6003-0dcb-4002-9856-486e30727d7c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-76437aa0-4b97-43e5-8e35-8c6d1fda65fb">
+<span class="eqno">(36)<a class="headerlink" href="#equation-76437aa0-4b97-43e5-8e35-8c6d1fda65fb" title="Permalink to this equation">#</a></span>\[\begin{align}
     C_{tj}(h_t)=Q_t(h_t,j)-Q_t(h_t,0),\quad j=0,\dots,m_t-1,\quad t=1,\dots,T,
     \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(C_{t0}(h_t) = 0\)</span>.</p>
 </li>
 <li><p>Propensity score</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8f4a6b46-bd8b-4ab6-833d-667924c00f5b">
-<span class="eqno">(37)<a class="headerlink" href="#equation-8f4a6b46-bd8b-4ab6-833d-667924c00f5b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3dd771d2-d208-4d84-bc40-a2c28694cc3a">
+<span class="eqno">(37)<a class="headerlink" href="#equation-3dd771d2-d208-4d84-bc40-a2c28694cc3a" title="Permalink to this equation">#</a></span>\[\begin{align}
     \omega_{t}(h_t,a_t)=P(A_t=a_t|H_t=h_t)
     \end{align}\]</div>
 </li>
 <li><p>Optimal regime</p>
-<div class="amsmath math notranslate nohighlight" id="equation-825a9a5c-da49-4241-ae69-5602182a2eff">
-<span class="eqno">(38)<a class="headerlink" href="#equation-825a9a5c-da49-4241-ae69-5602182a2eff" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fc20db39-a164-45a8-bdfc-0b918259c620">
+<span class="eqno">(38)<a class="headerlink" href="#equation-fc20db39-a164-45a8-bdfc-0b918259c620" title="Permalink to this equation">#</a></span>\[\begin{align}
     d_t^{opt}(h_t)=\arg\max_{j\in\mathcal{A}_t}C_{tj}(h_t)
     \end{align}\]</div>
 </li>
@@ -904,18 +921,18 @@ For the final step <span class="math notranslate nohighlight">\(T\)</span>,</p>
 <p>A backward approach was proposed to find the optimized treatment regime at each decision point.</p>
 <p>At Decision <span class="math notranslate nohighlight">\(T\)</span>, similar as what we did previously with single decision point, we estimate the <span class="math notranslate nohighlight">\(\psi_{Tj}\)</span>, <span class="math notranslate nohighlight">\(\phi_T\)</span> and <span class="math notranslate nohighlight">\(\gamma_T\)</span> by solving the eqautions in A.1 jointly, and the optimal decision at time <span class="math notranslate nohighlight">\(T\)</span> is calculated accordingly.</p>
 <p>Then, at Decision <span class="math notranslate nohighlight">\(t=T-1,\dots,1\)</span>, we use similar trick as decision <span class="math notranslate nohighlight">\(T\)</span>, except for changing <span class="math notranslate nohighlight">\(Y\)</span> in the estimating eqautions to some pseudo outcome <span class="math notranslate nohighlight">\(\tilde{Y}_{t+1,i}\)</span>, such that:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8d380b95-791a-4b70-85aa-16ed7b705829">
-<span class="eqno">(39)<a class="headerlink" href="#equation-8d380b95-791a-4b70-85aa-16ed7b705829" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-67d25578-77f4-4be2-907f-d9d75c8e1484">
+<span class="eqno">(39)<a class="headerlink" href="#equation-67d25578-77f4-4be2-907f-d9d75c8e1484" title="Permalink to this equation">#</a></span>\[\begin{align}
 \tilde{Y}_{ti}=\tilde{Y}_{t+1,i}+\max_{j=0,\dots,m_t-1}C_{tj}(h_{ti},\hat{\psi}_{tj})-\sum_{j=1}^{m_k-1}\mathbb{I}\{A_{ti}=j\}C_{tj}(h_{ti},\hat{\psi}_{tj}),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\tilde{Y}_{T+1,i} = Y_{i}\)</span>.</p>
 <p>Estimating <span class="math notranslate nohighlight">\(\psi_{tj}\)</span>, <span class="math notranslate nohighlight">\(\phi_t\)</span> and <span class="math notranslate nohighlight">\(\gamma_t\)</span> iteratively for <span class="math notranslate nohighlight">\(t=T-1,\cdots,1\)</span>, we calculated the optimal decision at time <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(d^{opt}_{t}(h_{ti})\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-81ef8153-3f1f-4ff1-933b-0eae6d396640">
-<span class="eqno">(40)<a class="headerlink" href="#equation-81ef8153-3f1f-4ff1-933b-0eae6d396640" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6d8cae2b-46c2-4593-ab8b-00782bebfc03">
+<span class="eqno">(40)<a class="headerlink" href="#equation-6d8cae2b-46c2-4593-ab8b-00782bebfc03" title="Permalink to this equation">#</a></span>\[\begin{align}
 d^{opt}_{t}(h_{ti})=\arg\max_{j=0,\dots,m_t-1} C_{tj}(h_{ti};\hat{\psi}_{tj}).
 \end{align}\]</div>
-</section>
-<section id="key-steps">
+</div>
+<div class="section" id="key-steps">
 <h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">#</a></h2>
 <p><strong>Policy Learning:</strong></p>
 <ol class="simple">
@@ -930,18 +947,18 @@ d^{opt}_{t}(h_{ti})=\arg\max_{j=0,\dots,m_t-1} C_{tj}(h_{ti};\hat{\psi}_{tj}).
 </ol>
 <p><strong>Policy Evaluation:</strong><br />
 We use the backward iteration as what we did in policy learning. However, here for each round, the pseudo outcome is not the maximum of Q values. Instead, the pseudo outcome at decision point t is defined as below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cf7b11e7-82ab-464c-a87f-c4ca8cffb596">
-<span class="eqno">(41)<a class="headerlink" href="#equation-cf7b11e7-82ab-464c-a87f-c4ca8cffb596" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-bd0ca8e3-e2b0-4509-be8a-238531b28575">
+<span class="eqno">(41)<a class="headerlink" href="#equation-bd0ca8e3-e2b0-4509-be8a-238531b28575" title="Permalink to this equation">#</a></span>\[\begin{align}
 \tilde{Y}_{ti}=\tilde{Y}_{t+1,i}+C_{tj*}(h_{ti},\hat{\psi}_{tj*})-\sum_{j=1}^{m_k-1}\mathbb{I}\{A_{ti}=j\}C_{tj}(h_{ti},\hat{\psi}_{tj}),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(j*=d(H_{ti})\)</span>, and <span class="math notranslate nohighlight">\(d\)</span> is the fixed regime that we want to evaluate.
 The estimated value of the policy is then the average of <span class="math notranslate nohighlight">\(\tilde{Y}_{1}\)</span>.</p>
 <p><strong>Note</strong> we also provide an option for bootstrapping. Particularly, for a given policy, we utilze the boostrap resampling to get the estimated value of the regime and the corresponding estimated standard error.</p>
-</section>
-<section id="demo-code">
+</div>
+<div class="section" id="demo-code">
 <h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
 <p>In the following, we exhibit how to apply the learner on real data to do policy learning and policy evaluation, respectively.</p>
-<section id="policy-learning">
+<div class="section" id="policy-learning">
 <h3>1. Policy Learning<a class="headerlink" href="#policy-learning" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1058,8 +1075,8 @@ estimated_contrast: {1:          Mean         std
 </div>
 </div>
 </div>
-</section>
-<section id="policy-evaluation">
+</div>
+<div class="section" id="policy-evaluation">
 <h3>2. Policy Evaluation<a class="headerlink" href="#policy-evaluation" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1108,9 +1125,9 @@ estimated_contrast: {1:          Mean         std
 </div>
 </div>
 <p>💥 Placeholder for C.I.</p>
-</section>
-</section>
-<section id="references">
+</div>
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p>Schulte, P. J., Tsiatis, A. A., Laber, E. B., &amp; Davidian, M. (2014). Q-and A-learning methods for estimating optimal dynamic treatment regimes. Statistical science: a review journal of the Institute of Mathematical Statistics, 29(4), 640.</p></li>
@@ -1119,8 +1136,8 @@ estimated_contrast: {1:          Mean         std
 <li><p>Liang, S., Lu, W., &amp; Song, R. (2018). Deep advantage learning for optimal dynamic treatment regime. Statistical theory and related fields, 2(1), 80-88.</p></li>
 <li><p>Shi, C., Fan, A., Song, R., &amp; Lu, W. (2018). High-dimensional A-learning for optimal dynamic treatment regimes. Annals of statistics, 46(3), 925.</p></li>
 </ol>
-</section>
-<section id="a-1">
+</div>
+<div class="section" id="a-1">
 <h2>A.1<a class="headerlink" href="#a-1" title="Permalink to this headline">#</a></h2>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -1130,8 +1147,8 @@ estimated_contrast: {1:          Mean         std
 &amp;\sum_{i=1}^n \left[\frac{\partial \omega_T(H_{Ti},j;\gamma_T)}{\partial \gamma_T}\Big\{Y_i-\sum_{j'=1}^{m_T-1} \mathbb{I}\{A_{Ti}=j'\}C_{Tj'}(H_{Ti};\psi_{Tj'})-Q_T(H_{Ti},0;\phi_T)\Big\}\right]=0
 \end{aligned}
 \end{split}\]</div>
-</section>
-<section id="a-2">
+</div>
+<div class="section" id="a-2">
 <h2>A.2<a class="headerlink" href="#a-2" title="Permalink to this headline">#</a></h2>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -1141,8 +1158,8 @@ estimated_contrast: {1:          Mean         std
 &amp;\sum_{i=1}^n \left[\frac{\partial \omega_t(H_{ti},j;\gamma_t)}{\partial \gamma_t}\Big\{\tilde{Y}_{t+1,i}-\sum_{j'=1}^{m_t-1} \mathbb{I}\{A_{ti}=j'\}C_{tj'}(H_{ti};\psi_{tj'})-Q_t(H_{ti},0;\phi_t)\Big\}\right]=0
 \end{aligned}
 \end{split}\]</div>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -1157,7 +1174,7 @@ estimated_contrast: {1:          Mean         std
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./Offline\Finite"
+            path: "./Offline/Finite"
         },
         predefinedOutput: true
     }

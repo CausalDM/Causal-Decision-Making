@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fitted-Q Evaluation &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -21,7 +20,7 @@
     href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
@@ -37,7 +36,7 @@
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -347,6 +346,14 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
+    <a class="reference internal" href="../../Online/MAB/Epsilon_Greedy.html">
+     <span class="math notranslate nohighlight">
+      \(\epsilon\)
+     </span>
+     -Greedy
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../../Online/MAB/UCB.html">
      UCB
     </a>
@@ -503,8 +510,18 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../../OnlineEval/Evaluator.html">
-   HAOYU and YE (epsilon+TS+UCB)
+  <a class="reference internal" href="../../OnlineEval/Inverse%20Probability%20Weighted%20Online%20Policy%20Evaluator.html">
+   Inverse Probability Weighted Online Policy Evaluator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../OnlineEval/Direct%20Online%20Policy%20Evaluator.html">
+   Direct Online Policy Evaluator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../OnlineEval/Doubly%20Robust%20Online%20Policy%20Evaluator.html">
+   Doubly Robust Online Policy Evaluator
   </a>
  </li>
 </ul>
@@ -784,7 +801,7 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="fitted-q-evaluation">
+  <div class="tex2jax_ignore mathjax_ignore section" id="fitted-q-evaluation">
 <h1>Fitted-Q Evaluation<a class="headerlink" href="#fitted-q-evaluation" title="Permalink to this headline">#</a></h1>
 <p>The most straightforward approach for OPE is the direct method (DM).
 As suggested by the name,
@@ -802,20 +819,20 @@ It is observed to perform consistently well in a large-scale empirical study [2]
 <ol class="simple">
 <li><p>The model class can be chosen appropriately</p></li>
 </ol>
-<section id="main-idea">
+<div class="section" id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p><strong>Q-function.</strong>
 The Q-function-based approach aims to direct learn the state-action value function (referred to as the Q-function)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cd137ca3-e768-4db7-a494-5716d9c83af8">
-<span class="eqno">(51)<a class="headerlink" href="#equation-cd137ca3-e768-4db7-a494-5716d9c83af8" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-482574e9-b765-4386-838a-a6a07b81dd24">
+<span class="eqno">(51)<a class="headerlink" href="#equation-482574e9-b765-4386-838a-a6a07b81dd24" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 Q^\pi(a,s)&amp;= \mathbb{E}^{\pi} (\sum_{t=0}^{+\infty} \gamma^t R_{t}|A_{0}=a,S_{0}=s)   
 \end{eqnarray}\]</div>
 <p>of the policy <span class="math notranslate nohighlight">\(\pi\)</span> that we aim to evaluate.</p>
 <p>The final estimator can then be constructed by plugging <span class="math notranslate nohighlight">\(\hat{Q}^{\pi}\)</span> in the definition <span class="math notranslate nohighlight">\(\eta^{\pi} = \mathbb{E}_{s \sim \mathbb{G}, a \sim \pi(\cdot|s)} Q^{\pi}(a, s)\)</span>.</p>
 <p><strong>Bellman equations.</strong>
 The Q-learning-type evaluation is commonly based on the Bellman equation for the Q-function of a given policy <span class="math notranslate nohighlight">\(\pi\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-92ca916a-4240-4328-a6de-76612d8b9836">
-<span class="eqno">(52)<a class="headerlink" href="#equation-92ca916a-4240-4328-a6de-76612d8b9836" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
+<div class="amsmath math notranslate nohighlight" id="equation-a18bd331-b32b-41dd-b36a-b4bd00f8b0c3">
+<span class="eqno">(52)<a class="headerlink" href="#equation-a18bd331-b32b-41dd-b36a-b4bd00f8b0c3" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
     Q^\pi(a, s) = \mathbb{E}^\pi \Big(R_t + \gamma Q^\pi(A_{t + 1}, S_{t+1})  | A_t = a, S_t = s \Big).  \;\;\;\;\; \text{(1)} 
 \end{equation}\]</div>
 <p><strong>FQE.</strong>
@@ -824,8 +841,8 @@ Besides, the right-hand side of (1) is a contraction mapping.
 Therefore, we can consider a fixed-point method:
 with an initial estimate <span class="math notranslate nohighlight">\(\widehat{Q}^{0}\)</span>,
 FQE iteratively solves the following optimization problem,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2e4206d5-86ad-4a1a-bcd6-d1f4459185fd">
-<span class="eqno">(53)<a class="headerlink" href="#equation-2e4206d5-86ad-4a1a-bcd6-d1f4459185fd" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-a946b659-d211-4fad-9c58-b21b61938bac">
+<span class="eqno">(53)<a class="headerlink" href="#equation-a946b659-d211-4fad-9c58-b21b61938bac" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 	\widehat{Q}^{{\ell}}=\arg \min_{Q} 
 	\sum_{\substack{i \le n}}\sum_{t&lt;T}
 	\Big\{
@@ -835,8 +852,8 @@ FQE iteratively solves the following optimization problem,</p>
 \end{eqnarray}\]</div>
 <p>for <span class="math notranslate nohighlight">\(\ell=1,2,\cdots\)</span>, until convergence.
 The final estimator is denoted as <span class="math notranslate nohighlight">\(\widehat{Q}_{FQE}\)</span>.</p>
-</section>
-<section id="demo-todo">
+</div>
+<div class="section" id="demo-todo">
 <h2>Demo [TODO]<a class="headerlink" href="#demo-todo" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -858,18 +875,18 @@ The final estimator is denoted as <span class="math notranslate nohighlight">\(\
 <span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
 <span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
 
-<span class="ne">FileNotFoundError</span>: [WinError 2] 系统找不到指定的文件。: &#39;../CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;../CausalDM&#39;
 </pre></div>
 </div>
 </div>
 </div>
-</section>
-<section id="references">
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <p>[1] Le, H. M., Voloshin, C., and Yue, Y. Batch policy learning under constraints. arXiv preprint arXiv:1903.08738, 2019.</p>
 <p>[2] Voloshin C, Le H M, Jiang N, et al. Empirical study of off-policy policy evaluation for reinforcement learning[J]. arXiv preprint arXiv:1911.06854, 2019.</p>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -884,7 +901,7 @@ The final estimator is denoted as <span class="math notranslate nohighlight">\(\
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./Offline\Infinite_OPE"
+            path: "./Offline/Infinite_OPE"
         },
         predefinedOutput: true
     }

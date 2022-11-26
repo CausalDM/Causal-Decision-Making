@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Meta Bandits &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -21,7 +20,7 @@
     href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
@@ -37,7 +36,7 @@
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -511,8 +510,18 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../../OnlineEval/Evaluator.html">
-   HAOYU and YE (epsilon+TS+UCB)
+  <a class="reference internal" href="../../OnlineEval/Inverse%20Probability%20Weighted%20Online%20Policy%20Evaluator.html">
+   Inverse Probability Weighted Online Policy Evaluator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../OnlineEval/Direct%20Online%20Policy%20Evaluator.html">
+   Direct Online Policy Evaluator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../OnlineEval/Doubly%20Robust%20Online%20Policy%20Evaluator.html">
+   Doubly Robust Online Policy Evaluator
   </a>
  </li>
 </ul>
@@ -792,16 +801,16 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="meta-bandits">
+  <div class="tex2jax_ignore mathjax_ignore section" id="meta-bandits">
 <h1>Meta Bandits<a class="headerlink" href="#meta-bandits" title="Permalink to this headline">#</a></h1>
 <p>Recently, a new class of bandit learning algorithms, named meta Bandits, has been developed to utilize learned information to accelerate learning new tasks and share information efficiently across tasks from a perspective of meta-learning, which is also known as <em>learning how to learn</em> [1,2,3,4]. Most related literature on meta Bandits is TS-based, and all focus on sharing knowledge across a large number of relatively simple bandit tasks, such as MAB. For example, consider one of our motivating examples–<strong>Healthcare</strong>. Patients need to learn their own optimal treatment among a few (i,e., <span class="math notranslate nohighlight">\(K\)</span>) treatments. Here each patient is a task, and the learning process of each patient is simply a <span class="math notranslate nohighlight">\(K\)</span>-Armed Bandit. Denote <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_j\)</span> a <span class="math notranslate nohighlight">\(K\)</span>-dimensional vector, where <span class="math notranslate nohighlight">\(\mu_{j,a}\)</span> is the expected reward of action <span class="math notranslate nohighlight">\(a\)</span> for task <span class="math notranslate nohighlight">\(j\)</span>. We aim to utilize the information observed from the
 interactions with other patients <span class="math notranslate nohighlight">\(i\)</span> to help learn the distribution of expected reward for different treatments of the patient <span class="math notranslate nohighlight">\(j\)</span> who requires a treatment recommendation.</p>
-<section id="problem-setting">
+<div class="section" id="problem-setting">
 <h2>Problem Setting<a class="headerlink" href="#problem-setting" title="Permalink to this headline">#</a></h2>
 <p>Let <span class="math notranslate nohighlight">\(N\)</span> be the number of tasks, <span class="math notranslate nohighlight">\(T\)</span> be the number of rounds for each task, and <span class="math notranslate nohighlight">\(K\)</span> be the number of arms (actions to be selected). The agent would interact with each task repeatedly in any arbitraty order. Specifically, for each task <span class="math notranslate nohighlight">\(j\)</span>, at its <span class="math notranslate nohighlight">\(t^{th}\)</span> decsion point, the agent would choose one arm <span class="math notranslate nohighlight">\(A_{j,t}\)</span> from the action space <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. Then the agent will receive the corresponding stochastic reward <span class="math notranslate nohighlight">\(R_{j,t}\)</span> generated from the environment. Denote the reward that would be received if arm <span class="math notranslate nohighlight">\(a\)</span> is played as <span class="math notranslate nohighlight">\(R_{j,t}(a)\)</span>, which we will refer to as the potential reward of arm <span class="math notranslate nohighlight">\(a\)</span> for task <span class="math notranslate nohighlight">\(i\)</span> at decision point <span class="math notranslate nohighlight">\(t\)</span>. Similar to the MAB problems, most real-world applications always lack information about the reward distribution of the random variable <span class="math notranslate nohighlight">\(R_{j,t}(a)\)</span>. Thus, the agent needs to learn reward distributions for different tasks and arms based on feedback received, with an ultimate goal of maximizing the cumulative reward <span class="math notranslate nohighlight">\(\sum_{j=1}^{N}\sum_{t=1}^{T}R_{j,t}\)</span>.</p>
 <p>Note that, for any positive integer <span class="math notranslate nohighlight">\(N\)</span>, we denote the set <span class="math notranslate nohighlight">\(\{1, \dots, N\}\)</span> by <span class="math notranslate nohighlight">\([N]\)</span>. Let <span class="math notranslate nohighlight">\(\mathcal{H}=\{(A_{k}, R_{k}, j(k))\}_{k=1}^n\)</span>  be a sequence of observations including all the action-and-feedback tuples from the previous <span class="math notranslate nohighlight">\(n\)</span> rounds, where the data for all tasks have been combined and re-indexed. Here, the action taken is denoted by <span class="math notranslate nohighlight">\(A_k\)</span>, the reward received is denoted by <span class="math notranslate nohighlight">\(R_k\)</span>, and the task index for the <span class="math notranslate nohighlight">\(k^{th}\)</span> tuple in <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> is denoted by <span class="math notranslate nohighlight">\(j(k)\)</span>. If there is feature information available and being used, we denote <span class="math notranslate nohighlight">\(\boldsymbol{x}_j\)</span> as a <span class="math notranslate nohighlight">\(d\)</span>-dimensional vector of item-specific features, and then <span class="math notranslate nohighlight">\(\mathcal{H}=\{(A_{k}, R_{k}, \boldsymbol{x}_{k}, j(k))\}_{k=1}^n\)</span>.</p>
-</section>
-<section id="real-data">
+</div>
+<div class="section" id="real-data">
 <h2>Real Data<a class="headerlink" href="#real-data" title="Permalink to this headline">#</a></h2>
 <p><strong>1. MovieLens</strong></p>
 <p>Movie Lens is a website that helps users find the movies they like and where they will rate the recommended movies. <a class="reference external" href="https://grouplens.org/datasets/movielens/1m/">MovieLens 1M dataset</a> is a dataset including the observations collected in an online movie recommendation experiment and is widely used to generate data for online bandit simulation studies. The goal of the simulation studies below is to learn the reward distribution of different movie genres and hence to recommend the optimal movie genres to the users to optimize the cumulative user satisfaction. In other words, every time a user visits the website, the agent will recommend a movie genre (<span class="math notranslate nohighlight">\(A_t\)</span>) to the user, and then the user will give a rating (<span class="math notranslate nohighlight">\(R_t\)</span>) to the genre recommended. We assume that users’ satisfaction is fully reflected through the ratings. Therefore, the ultimate goal of the bandit algorithms is to optimize the cumulative ratings received by finding and recommending the optimal movie genre that will receive the highest rating. In this chapter, we mainly focus on the top 5 Genres, including</p>
@@ -828,17 +837,17 @@ interactions with other patients <span class="math notranslate nohighlight">\(i\
 <li><p><strong>Bernoulli Bandit</strong>: <span class="math notranslate nohighlight">\(R_t\)</span> is a binary variable, =1 if the rating is higher than 3.</p></li>
 </ul>
 <p>In the following, we evaluated the empirical performance of the supported algorithms on the MovieLens dataset under either the Gaussian bandit or Bernoulli bandit settings.</p>
-</section>
-<section id="references">
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <p>[1] Kveton, B., Konobeev, M., Zaheer, M., Hsu, C. W., Mladenov, M., Boutilier, C., &amp; Szepesvari, C. (2021, July). Meta-thompson sampling. In International Conference on Machine Learning (pp. 5884-5893). PMLR.</p>
 <p>[2] Hong, J., Kveton, B., Zaheer, M., &amp; Ghavamzadeh, M. (2022, May). Hierarchical bayesian bandits. In International Conference on Artificial Intelligence and Statistics (pp. 7724-7741). PMLR.</p>
 <p>[3] Wan, R., Ge, L., &amp; Song, R. (2021). Metadata-based multi-task bandits with bayesian hierarchical models. Advances in Neural Information Processing Systems, 34, 29655-29668.</p>
 <p>[4] Basu, S., Kveton, B., Zaheer, M., &amp; Szepesvári, C. (2021). No regrets for learning the prior in bandits. Advances in Neural Information Processing Systems, 34, 28029-28041.</p>
-</section>
+</div>
 <div class="toctree-wrapper compound">
 </div>
-</section>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -853,7 +862,7 @@ interactions with other patients <span class="math notranslate nohighlight">\(i\
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./Online\Meta_Bandits"
+            path: "./Online/Meta_Bandits"
         },
         predefinedOutput: true
     }

@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Outcome Weighted Learning &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -21,7 +20,7 @@
     href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
@@ -37,7 +36,7 @@
     <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -347,6 +346,14 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
+    <a class="reference internal" href="../../../Online/MAB/Epsilon_Greedy.html">
+     <span class="math notranslate nohighlight">
+      \(\epsilon\)
+     </span>
+     -Greedy
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../../../Online/MAB/UCB.html">
      UCB
     </a>
@@ -503,8 +510,18 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../../../OnlineEval/Evaluator.html">
-   HAOYU and YE (epsilon+TS+UCB)
+  <a class="reference internal" href="../../../OnlineEval/Inverse%20Probability%20Weighted%20Online%20Policy%20Evaluator.html">
+   Inverse Probability Weighted Online Policy Evaluator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../OnlineEval/Direct%20Online%20Policy%20Evaluator.html">
+   Direct Online Policy Evaluator
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../OnlineEval/Doubly%20Robust%20Online%20Policy%20Evaluator.html">
+   Doubly Robust Online Policy Evaluator
   </a>
  </li>
 </ul>
@@ -814,7 +831,7 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="outcome-weighted-learning">
+  <div class="tex2jax_ignore mathjax_ignore section" id="outcome-weighted-learning">
 <h1>Outcome Weighted Learning<a class="headerlink" href="#outcome-weighted-learning" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -836,19 +853,19 @@ title="Print to PDF"
 <span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
 <span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
 
-<span class="ne">FileNotFoundError</span>: [WinError 2] 系统找不到指定的文件。: &#39;../CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;../CausalDM&#39;
 </pre></div>
 </div>
 </div>
 </div>
-<section id="main-idea">
+<div class="section" id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>A natural idea for policy learning is to stay close to the behaviour policy in those areas where it performs well.
 Outcome Weighted Learning (OWL) shares similar ideas.
 OWL was first proposed in [1] under the binary treatment case, and extended in [3] to allow multiple treatments.
 The foundation of OWL is built on the relationship that, maximizing <span class="math notranslate nohighlight">\(V(\pi)\)</span> is equivalent to solve</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a0088b86-7a16-4a50-a30f-48c3a4900bcb">
-<span class="eqno">(42)<a class="headerlink" href="#equation-a0088b86-7a16-4a50-a30f-48c3a4900bcb" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-da6c0172-0b39-4eae-8ffd-8ede4a02a132">
+<span class="eqno">(42)<a class="headerlink" href="#equation-da6c0172-0b39-4eae-8ffd-8ede4a02a132" title="Permalink to this equation">#</a></span>\[\begin{align}
     \text{arg min}_{\pi} \mathbb{E}\Big[ \frac{Y_i}{b(A_i|X_i)}\mathbb{I}(A_i \neq \pi(X_i))\Big]. 
 \end{align}\]</div>
 <p>When <span class="math notranslate nohighlight">\(Y_i\)</span> is non-negative, this goal corresponds to the objective function of a cost-sensitive classification problem with <span class="math notranslate nohighlight">\({Y_i}/{b(A_i|X_i)}\)</span> as the weight,
@@ -868,14 +885,14 @@ This is why the estimator is called <em>outcome weighted</em>.
 </li>
 <li><p>Solve the policy with a user-specified cost-sensitive classifier. The theory is developed based on SVM.</p></li>
 </ol>
-</section>
-<section id="when-should-i-use-owl">
+</div>
+<div class="section" id="when-should-i-use-owl">
 <h2>When should I use OWL?<a class="headerlink" href="#when-should-i-use-owl" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p>TBD</p></li>
 </ul>
-</section>
-<section id="demo">
+</div>
+<div class="section" id="demo">
 <h2>Demo<a class="headerlink" href="#demo" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -932,13 +949,13 @@ This is why the estimator is called <em>outcome weighted</em>.
 </div>
 </div>
 </div>
-</section>
-<section id="sparse-owl">
+</div>
+<div class="section" id="sparse-owl">
 <h2>Sparse OWL<a class="headerlink" href="#sparse-owl" title="Permalink to this headline">#</a></h2>
 <p>In many applications, we have a large number of features. [4] extend OWL to these use cases by assuming a sparsity structure, i.e., most features do not have effect in the policy. Under this assumption, [4] develops a penalized policy learner and proved its consistency as well as asymptotic distribution. Notably, one can achieve variable selection in the meantime.</p>
 <p>TBD</p>
-</section>
-<section id="references">
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p>Zhao, Yingqi, et al. “Estimating individualized treatment rules using outcome weighted learning.” Journal of the American Statistical Association 107.499 (2012): 1106-1118.</p></li>
@@ -946,8 +963,8 @@ This is why the estimator is called <em>outcome weighted</em>.
 <li><p>Lou, Zhilan, Jun Shao, and Menggang Yu. “Optimal treatment assignment to maximize expected outcome with multiple treatments.” Biometrics 74.2 (2018): 506-516.</p></li>
 <li><p>Song, Rui, et al. “On sparse representation for optimal individualized treatment selection with penalized outcome weighted learning.” Stat 4.1 (2015): 59-68.</p></li>
 </ol>
-</section>
-<section id="a1-derivations">
+</div>
+<div class="section" id="a1-derivations">
 <h2>A1: Derivations<a class="headerlink" href="#a1-derivations" title="Permalink to this headline">#</a></h2>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*}
@@ -957,8 +974,8 @@ V(\pi)
 &amp;= \text{const} - \mathbb{E}_{A_i \sim b(X_i)}\Big[ \frac{\mathbb{I}(A_i \neq \pi(X_i))}{b(A_i|X_i)}Y_i\Big]\\
 &amp;= \text{const} - \mathbb{E}_{A_i \sim b(X_i)}\Big[ \frac{Y_i}{b(A_i|X_i)}\mathbb{I}(A_i \neq \pi(X_i))\Big]. 
 \end{align*}\]</div>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -973,7 +990,7 @@ V(\pi)
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./Offline\Finite\Classification"
+            path: "./Offline/Finite/Classification"
         },
         predefinedOutput: true
     }
