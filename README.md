@@ -24,12 +24,15 @@ pip install -U jupyter-book
 1. switch to the main branch in Github Desktop
 2. `jupyter-book build Causal-Decision-Making`
 3. The static html should then be visiable locally at `Causal-Decision-Making/_build/html/index.html`
-4. If you only want to share this version internally instead of publishing it online, simply go to Github Desktop and commit&push this version (main branch)
+4. Commit & push this version (main branch)
+
+If you only want to share this version internally instead of publishing it online, the steps above are enough. 
+Otherwise, continue with the steps in the next section. 
 
 ### Publish a new version
 4. `cd Causal-Decision-Making`
-3. `ghp-import -n -p -f _build/html`
-4. push both the gh-pages branch
+3. run `ghp-import -n -p -f _build/html` at the `main` branch. Ignores the password part.  
+4. push the `gh-pages` branch
 
 
 One command line for the two steps: 
