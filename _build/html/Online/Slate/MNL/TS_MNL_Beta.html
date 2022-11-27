@@ -483,11 +483,6 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
   </ul>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../../OnlineEval/Online%20Policy%20Evaluation.html">
-   Doubly Robust Online Policy Evaluator
-  </a>
- </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -882,13 +877,13 @@ title="Print to PDF"
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>The first TS-based algorithm is developed by [1]. Noticing that direct inference under the standard multinomila logit model is intractable due to the complex dependency of the reward distribution on action slate <span class="math notranslate nohighlight">\(a\)</span>, an epoch-based algorithmic structure is introduced and is being more popular in recent bandit literature [1,2,3]. Under the epoch-type offering framework,</p>
 <div class="amsmath math notranslate nohighlight" id="equation-f6795c90-000b-4514-80b5-8992496ad301">
-<span class="eqno">(71)<a class="headerlink" href="#equation-f6795c90-000b-4514-80b5-8992496ad301" title="Permalink to this equation">#</a></span>\[\begin{align}
+<span class="eqno">(74)<a class="headerlink" href="#equation-f6795c90-000b-4514-80b5-8992496ad301" title="Permalink to this equation">#</a></span>\[\begin{align}
     Y_{i}^l(a) &amp;\sim Geometric(\theta_i), \forall i \in a,\\
     R^l(a) &amp;= \sum_{i\in a}Y_{i}^l(a)\eta_{i}.
 \end{align}\]</div>
 <p>Taking the advantage of the nice conjugate relationship between the geometric distribution and the Beta distribution, the TS-based algorithm <strong>TS_MNL</strong> [1] is tractable and computationally efficient. Assuming a Beta prior over parameters <span class="math notranslate nohighlight">\(\theta_{i}\)</span>, at each epoch <span class="math notranslate nohighlight">\(l\)</span>, <strong>TS_MNL</strong> updates the posterior distribution of <span class="math notranslate nohighlight">\(\theta_{i}\)</span> according to the property of the Beta-Geometric conjugate pair, from which we then sample a <span class="math notranslate nohighlight">\(\tilde{\theta}_{i}^{l}\)</span>, and <span class="math notranslate nohighlight">\(\tilde{v}_{i}^{l}\)</span> is calculated directly as <span class="math notranslate nohighlight">\(\tilde{v}_{i}^{l}=1/\tilde{\theta}_{i}^{l}-1\)</span>. Finally, the optimal assortment <span class="math notranslate nohighlight">\(A^{l}\)</span> is determined efficiently through linear programming [1], such that</p>
 <div class="amsmath math notranslate nohighlight" id="equation-2c9963da-059a-4b76-aa8c-16481a5a6c87">
-<span class="eqno">(72)<a class="headerlink" href="#equation-2c9963da-059a-4b76-aa8c-16481a5a6c87" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<span class="eqno">(75)<a class="headerlink" href="#equation-2c9963da-059a-4b76-aa8c-16481a5a6c87" title="Permalink to this equation">#</a></span>\[\begin{equation}
     A^{l} = arg max_{a \in \mathcal{A}} E(R_t(a) \mid\tilde{\boldsymbol{v}})=argmax_{a \in \mathcal{A}} \frac{\sum_{i\in a}\eta_{i}\tilde{v}_{i}}{1+\sum_{j\in a} \tilde{v}_{j}},
 \end{equation}\]</div>
 </section>
