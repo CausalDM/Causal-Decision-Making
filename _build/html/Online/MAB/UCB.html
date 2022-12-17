@@ -110,14 +110,14 @@ const thebe_selector_output = ".output, .cell_output"
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="../../intro.html">
-                    Introduction
+                <a class="reference internal" href="../../Map.html">
+                    Overview
                 </a>
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  intro
+  Introduction
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -146,17 +146,7 @@ const thebe_selector_output = ".output, .cell_output"
      Heterogenous Treatement Effect
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../Preliminary/Causal%20Discovery%20Preliminary.html">
-     Causal Discovery Preliminary
-    </a>
-   </li>
   </ul>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../Map.html">
-   Overview
-  </a>
  </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
@@ -166,18 +156,23 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../../Causal_Discovery/Causal%20Discovery%20Learner%20-%20PC%20Algorithm.html">
-   Causal Discovery Learner - PC Algorithm
+  <a class="reference internal" href="../../Preliminary/Causal%20Discovery%20Preliminary.html">
+   Causal Discovery Preliminary
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../Causal_Discovery/Causal%20Discovery%20Learner%20-%20LiNGAM%20Algorithm.html">
-   Causal Discovery Learner - LiNGAM Algorithm
+  <a class="reference internal" href="../../Causal_Discovery/Testing-based%20Learner%20-%20PC%20Algorithm.html">
+   Testing-based Learner - PC Algorithm
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../Causal_Discovery/Causal%20Discovery%20Learner%20-%20NOTEARS%20Algorithm.html">
-   Causal Discovery Learner - NOTEARS Algorithm
+  <a class="reference internal" href="../../Causal_Discovery/Functional-based%20Learner%20-%20LiNGAM%20Algorithm.html">
+   Functional-based Learner - LiNGAM Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Causal_Discovery/Score-based%20Learner%20-%20NOTEARS%20Algorithm.html">
+   Score-based Learner - NOTEARS Algorithm
   </a>
  </li>
 </ul>
@@ -968,8 +963,8 @@ title="Print to PDF"
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>As the name suggested, the UCB algorithm estimates the upper confidence bound <span class="math notranslate nohighlight">\(U_{a}^{t}\)</span> of the mean of the potential reward of arm <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(R_t(a)\)</span>, based on the observations and then choose the action has the highest estimates. The class of UCB-based algorithms is firstly introduced by Auer et al. [1]. Generally, at each round <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(U_{a}^{t}\)</span> is calculated as the sum of the estimated reward (exploitation) and the estimated confidence radius (exploration) of item <span class="math notranslate nohighlight">\(i\)</span> based on previous observations. Then, <span class="math notranslate nohighlight">\(A_{t}\)</span> is selected as
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-062a4fbe-7bde-4a21-9d5b-8c7472dfa85d">
-<span class="eqno">(45)<a class="headerlink" href="#equation-062a4fbe-7bde-4a21-9d5b-8c7472dfa85d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1fbb9f0d-8ed6-4d33-8a79-429398861586">
+<span class="eqno">(45)<a class="headerlink" href="#equation-1fbb9f0d-8ed6-4d33-8a79-429398861586" title="Permalink to this equation">#</a></span>\[\begin{equation}
     A_t = \arg \max_{a \in \mathcal{A}} U_a^t.
 \end{equation}\]</div>
 <p>$<span class="math notranslate nohighlight">\(
@@ -978,13 +973,13 @@ As an example, **UCB** [1] estimates the confidence radius as \)</span>\sqrt{\fr
 <section id="algorithms-details">
 <h2>Algorithms Details<a class="headerlink" href="#algorithms-details" title="Permalink to this headline">#</a></h2>
 <p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. The UCB1 algorithm start with initializing the estimated upper confidence bound <span class="math notranslate nohighlight">\(U_a^{0}\)</span> and the count of being pulled <span class="math notranslate nohighlight">\(C_a^{0}\)</span> for each action <span class="math notranslate nohighlight">\(a\)</span> as 0. At each round <span class="math notranslate nohighlight">\(t\)</span>, we greedily select an action <span class="math notranslate nohighlight">\(A_t\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-882b874c-2151-4aa0-856f-b5f9968cba28">
-<span class="eqno">(46)<a class="headerlink" href="#equation-882b874c-2151-4aa0-856f-b5f9968cba28" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7d261913-027b-4848-a47b-ea499c4ab265">
+<span class="eqno">(46)<a class="headerlink" href="#equation-7d261913-027b-4848-a47b-ea499c4ab265" title="Permalink to this equation">#</a></span>\[\begin{align}
 A_t = \arg \max_{a\in \mathcal{A}} U_{a}^{t}.
 \end{align}\]</div>
 <p>After observing the rewards corresponding to the selected action <span class="math notranslate nohighlight">\(A_t\)</span>, we first update the total number of being pulled for <span class="math notranslate nohighlight">\(A_t\)</span> accordingly. Then, we estimate the upper confidence bound for each action <span class="math notranslate nohighlight">\(a\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c5bec605-8ad9-46a4-b3d0-8fc04bb674d0">
-<span class="eqno">(47)<a class="headerlink" href="#equation-c5bec605-8ad9-46a4-b3d0-8fc04bb674d0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-432a5f85-e4a4-4a14-9385-b4a857099cfc">
+<span class="eqno">(47)<a class="headerlink" href="#equation-432a5f85-e4a4-4a14-9385-b4a857099cfc" title="Permalink to this equation">#</a></span>\[\begin{align}
 U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} ,
 \end{align}\]</div>
 </section>
@@ -996,8 +991,8 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 <ul>
 <li><p>select action <span class="math notranslate nohighlight">\(A_t\)</span> as the arm with the maximum <span class="math notranslate nohighlight">\(U_a^t\)</span></p></li>
 <li><p>Received the reward R, and update <span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(U\)</span> with</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e453e763-cb5c-4ad2-8270-c75b4dd84d62">
-<span class="eqno">(48)<a class="headerlink" href="#equation-e453e763-cb5c-4ad2-8270-c75b4dd84d62" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0122fbeb-550b-447e-b105-7dc9d4922b4e">
+<span class="eqno">(48)<a class="headerlink" href="#equation-0122fbeb-550b-447e-b105-7dc9d4922b4e" title="Permalink to this equation">#</a></span>\[\begin{align}
         C_{A_{t}}^{t+1} &amp;= C_{A_{t}}^{t} + 1 \\
         U_{A_{t}}^{t+1} &amp;= \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} 
         \end{align}\]</div>
@@ -1028,58 +1023,6 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="nn">Input In [2],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">causaldm.learners.Online.MAB</span> <span class="kn">import</span> <span class="n">UCB</span>
-
-<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">GitHub</span>\<span class="n">CausalDM</span>\<span class="n">causaldm</span>\<span class="n">learners</span>\<span class="n">Online</span>\<span class="n">MAB</span>\<span class="n">UCB</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">.._base_online_learner</span> <span class="kn">import</span> <span class="n">BaseOnlineLearner</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">.._util_online</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">copy</span>
-
-<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">GitHub</span>\<span class="n">CausalDM</span>\<span class="n">causaldm</span>\<span class="n">learners</span>\<span class="n">Online</span>\<span class="n">_base_online_learner</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">._util_online</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="k">class</span> <span class="nc">BaseOnlineLearner</span><span class="p">():</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="nd">@autoargs</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">GitHub</span>\<span class="n">CausalDM</span>\<span class="n">causaldm</span>\<span class="n">learners</span>\<span class="n">Online</span>\<span class="n">_util_online</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">55</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">52</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="g g-Whitespace">     </span><span class="mi">53</span> <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
-<span class="ne">---&gt; </span><span class="mi">55</span> <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span> <span class="k">as</span> <span class="n">GBT</span>
-<span class="g g-Whitespace">     </span><span class="mi">56</span> <span class="c1">####################################</span>
-<span class="g g-Whitespace">     </span><span class="mi">57</span> <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-
-<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">sklearn</span>\<span class="n">ensemble</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">22</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">20</span> <span class="kn">from</span> <span class="nn">._stacking</span> <span class="kn">import</span> <span class="n">StackingClassifier</span>
-<span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="kn">from</span> <span class="nn">._stacking</span> <span class="kn">import</span> <span class="n">StackingRegressor</span>
-<span class="ne">---&gt; </span><span class="mi">22</span> <span class="kn">from</span> <span class="nn">._hist_gradient_boosting.gradient_boosting</span> <span class="kn">import</span> <span class="p">(</span>
-<span class="g g-Whitespace">     </span><span class="mi">23</span>     <span class="n">HistGradientBoostingRegressor</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span>     <span class="n">HistGradientBoostingClassifier</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">25</span> <span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">27</span> <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-<span class="g g-Whitespace">     </span><span class="mi">28</span>     <span class="s2">&quot;BaseEnsemble&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">29</span>     <span class="s2">&quot;RandomForestClassifier&quot;</span><span class="p">,</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">46</span>     <span class="s2">&quot;HistGradientBoostingRegressor&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">47</span> <span class="p">]</span>
-
-<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">sklearn</span>\<span class="n">ensemble</span>\<span class="n">_hist_gradient_boosting</span>\<span class="n">gradient_boosting</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">22</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">20</span> <span class="kn">from</span> <span class="nn">...model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="kn">from</span> <span class="nn">...preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span>
-<span class="ne">---&gt; </span><span class="mi">22</span> <span class="kn">from</span> <span class="nn">._gradient_boosting</span> <span class="kn">import</span> <span class="n">_update_raw_predictions</span>
-<span class="g g-Whitespace">     </span><span class="mi">23</span> <span class="kn">from</span> <span class="nn">.common</span> <span class="kn">import</span> <span class="n">Y_DTYPE</span><span class="p">,</span> <span class="n">X_DTYPE</span><span class="p">,</span> <span class="n">X_BINNED_DTYPE</span>
-<span class="g g-Whitespace">     </span><span class="mi">25</span> <span class="kn">from</span> <span class="nn">.binning</span> <span class="kn">import</span> <span class="n">_BinMapper</span>
-
-<span class="nn">File sklearn\ensemble\_hist_gradient_boosting\_gradient_boosting.pyx:8,</span> in <span class="ni">init sklearn.ensemble._hist_gradient_boosting._gradient_boosting</span><span class="nt">()</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap&gt;:398,</span> in <span class="ni">parent</span><span class="nt">(self)</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>

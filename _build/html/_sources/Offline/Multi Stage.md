@@ -1,7 +1,7 @@
 # Multiple Stages (DTR)
 
 ## Problem Setting
-Suppose we have a dataset containing observations from $N$ individuals. For each individual $i$, we have $\{\mathbf{X}_{i},A_{i},Y_{i}\}$, $i=1,\cdots,N$. $\mathbf{X}_{i}$ includes the feature information, $A_{i}$ is the action taken, and $Y_{i}$ is the observed reward received.
+Suppose we have a dataset containing observations from $N$ individuals. For each individual $i$, we have $\{\mathbf{S}_{i},A_{i},R_{i}\}$, $i=1,\cdots,N$. $\mathbf{S}_{i}$ includes the feature information, $A_{i}$ is the action taken, and $R_{i}$ is the observed reward received.
 
 ## Real Data
 **1. Fetch_hillstrom**
@@ -26,17 +26,17 @@ Considering a binary action space, each customer would either receive an e-mail 
 - **Multi Treatments**:
 Considering a multinomial action space, each customer would either receive no e-mail ($A=0$) or receive an e-mail campaign featuring Women's merchandise ($A=1$) or receive an e-mail campaign featuring Men's merchandise ($A=2$)
 
-After two weeks following the e-mail campaign, each customer's total dollar spent ($Y$) is recorded.
+After two weeks following the e-mail campaign, each customer's total dollar spent ($R$) is recorded.
 
 The observed data are independent and identically distributed
-$\{\text{recency}_i, \text{history}_i, \text{mens}_i, \text{womens}_i, \text{newbie}_i, \text{zip_code_Surburban}_i, \text{zip_code_Urban}_i, \text{channel_Phone}_i,\text{channel_Web}_i ,A_i, Y_i\}$, for $i=1,…,N$,
+$\{\text{recency}_i, \text{history}_i, \text{mens}_i, \text{womens}_i, \text{newbie}_i, \text{zip_code_Surburban}_i, \text{zip_code_Urban}_i, \text{channel_Phone}_i,\text{channel_Web}_i ,A_i, R_i\}$, for $i=1,…,N$,
 
-where larger values of $Y$ are considered better.
+where larger values of $R$ are considered better.
 
 - **How to get the data?**
     1. from causaldm._util_causaldm import *
-    2. if binary treatment, X,A,Y = get_data(target_col = 'spend', binary_trt = True); 
-        otherwise, X,A,Y = get_data(target_col = 'spend', binary_trt = Flase)
+    2. if binary treatment, S,A,R = get_data(target_col = 'spend', binary_trt = True); 
+        otherwise, S,A,R = get_data(target_col = 'spend', binary_trt = Flase)
 
 More details about the original dataset can be found in [https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html).
 
@@ -46,8 +46,8 @@ More details about the original dataset can be found in [https://blog.minethatda
 ## Problem Setting
 Suppose we have a dataset containning observations from $N$ individuals. For each individual $i$, the observed data is structured as follows
     \begin{align}
-    (X_{1i},A_{1i},\cdots,X_{Ti},A_{Ti},Y), i=1,\cdots, N.
+    (S_{1i},A_{1i},\cdots,S_{Ti},A_{Ti},R), i=1,\cdots, N.
     \end{align} 
-    Let $h_{ti}=\{X_{1i},A_{1i},\cdots,X_{ti}\})$ includes all the information observed till step t. 
+    Let $h_{ti}=\{S_{1i},A_{1i},\cdots,S_{ti}\})$ includes all the information observed till step t. 
 
 ## Real Data

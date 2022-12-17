@@ -12,14 +12,14 @@
 # 
 # Motivated by observations in most real-world applications, which have a large number of candidate items, Zong et al. (2016) proposed using feature information that is widely available to improve learning efficiency. Utilizing the feature information of each item $i$, **CascadeLinTS** [1] characterize $\theta_{i}=E[W_t(i)]$ by assuming that
 # \begin{equation}
-# \theta_{i} = logistic(\boldsymbol{x}_{i,t}^T \boldsymbol{\gamma}),
-# \end{equation}where $logistic(x) \equiv 1 / (1 + exp^{-1}(x))$. 
+# \theta_{i} = logistic(\boldsymbol{s}_{i,t}^T \boldsymbol{\gamma}),
+# \end{equation}where $logistic(s) \equiv 1 / (1 + exp^{-1}(s))$. 
 # 
 # Similar to the Thompson Sampling algorithm with generalized linear bandits [2], we approximate the posterior distribution of $\boldsymbol{\gamma}$ by its Laplace approximation. Specifically, we approximate the posterior of $\boldsymbol{\gamma}$ as:
 # \begin{equation}
 #     \begin{split}
 #     \tilde{\boldsymbol{\gamma}}^{t} &\sim \mathcal{N}\Big(\hat{\boldsymbol{\gamma}}_{t}, \alpha^2 \boldsymbol{H}_{t}^{-1}\Big),\\
-#     \boldsymbol{H}_{t} &= \sum_{t}\mu^{'}(\boldsymbol{X}_{t}^{T}\hat{\boldsymbol{\gamma}}^{t})\boldsymbol{X}_{t}\boldsymbol{X}_{t}^{T},
+#     \boldsymbol{H}_{t} &= \sum_{t}\mu^{'}(\boldsymbol{S}_{t}^{T}\hat{\boldsymbol{\gamma}}^{t})\boldsymbol{S}_{t}\boldsymbol{S}_{t}^{T},
 #     \end{split}
 # \end{equation} where $\alpha$ is a pre-specified constant to control the degree of exploration, and $\mu^{'}(\cdot)$ is the derivative of the mean function. It should be noted that the posterior updating step differs for different pairs of the prior distribution of $\boldsymbol{\gamma}$ and the reward distribution, and the code can be easily modified to different prior/reward distribution specifications if necessary.
 # 
@@ -28,7 +28,7 @@
 # For round $t = 1,2,\cdots$:
 # 1. Approximate $P(\boldsymbol{\gamma}|\mathcal{H}_{t})$ by the Laplace approximation;
 # 2. Sample $\tilde{\boldsymbol{\gamma}} \sim P(\boldsymbol{\gamma}|\mathcal{H}_{t})$;
-# 3. Update $\tilde{\boldsymbol{\theta}}$ as $logistic(\boldsymbol{x}_{i,t}^T \tilde{\boldsymbol{\gamma}})$;
+# 3. Update $\tilde{\boldsymbol{\theta}}$ as $logistic(\boldsymbol{s}_{i,t}^T \tilde{\boldsymbol{\gamma}})$;
 # 5. Take the action $A_{t}$ w.r.t $\tilde{\boldsymbol{\theta}}$ such that $A_t = arg max_{a \in \mathcal{A}} E(R_t(a) \mid \tilde{\boldsymbol{\theta}})$;
 # 6. Receive reward $R_{t}$.
 # 

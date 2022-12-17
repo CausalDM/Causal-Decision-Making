@@ -21,7 +21,7 @@
 # - **Online Combinatorial Optimization**: Combinatorial Semi-Bandits [4] which have numerous applications, including maximum weighted matching, ad allocation, and news page optimization;
 # - ...... 
 # 
-# Note that, for any positive integer $N$, we denote the set $\{1, \dots, N\}$ by $[N]$. Further, we denote the cardinality of set $A$ as $|A|$. $\mathcal{H}_{t}$ denotes a sequence of observations containing all the tuples of action and corresponding feedback received in previous rounds, excluding round $t$. Specifically, $\mathcal{H}_{t}=\{(A_{i},\boldsymbol{Y}_{i},R_{i})\}_{i=1}^{t-1}$. If feature information is avialable and used, we denote $\boldsymbol{x}_i$ as a $d$-dimensional vector of item-specific features, and then $\mathcal{H}_{t}=\{(A_{i},\boldsymbol{Y}_{i},R_{i},\boldsymbol{x}_i)\}_{i=1}^{t-1}$.
+# Note that, for any positive integer $N$, we denote the set $\{1, \dots, N\}$ by $[N]$. Further, we denote the cardinality of set $A$ as $|A|$. $\mathcal{H}_{t}$ denotes a sequence of observations containing all the tuples of action and corresponding feedback received in previous rounds, excluding round $t$. Specifically, $\mathcal{H}_{t}=\{(A_{i},\boldsymbol{Y}_{i},R_{i})\}_{i=1}^{t-1}$. If feature information is avialable and used, we denote $\boldsymbol{s}_i$ as a $d$-dimensional vector of item-specific features, and then $\mathcal{H}_{t}=\{(A_{i},\boldsymbol{Y}_{i},R_{i},\boldsymbol{s}_i)\}_{i=1}^{t-1}$.
 # 
 # 
 # ## Real Data
@@ -35,18 +35,6 @@
 # - **Dynamic Assortment Optimization**: The ultimate goal is to discover the optimal slate of movies with the highest probability that at least one of the recommended movies will appeal to the user. When a user visits the recommender system, the agent will recommend a slate of movies ($A_t$), and the user will either click on one of the movies ($R_t=1$) or leave with no click ($R_t = 0$).
 # - **Online Learning to Rank**: Similarly, the ultimate goal is to discover the optimal **ranked** slate of movies with the highest probability that at least one of the recommended movies will appeal to the user. When a user visits the recommender system, the agent will recommend a **ranked** slate of movies ($A_t$) to the user, and the user will browse the recommended list of movies from top to bottom, stopping to click on the movie ($R_t=1$) when being attracted by the movie, or leaving with no click ($R_t = 0$) if not attracted by any movies.
 # - **Online Combinatorial Optimization**: We now consider the ultimate goal of finding the optimal set of movies consisting of **one comedy movie, one drama movie, one action movie, one thriller movie, and one other genre movie** with the highest total utility. When a user visits the recommender system, the agent will recommend a slate of movies ($A_t$) to the user, and the user will rate each of the recommended movies, indicating the real-time utility of each recommended movie. The reward received, $R_t$, is then defined as the sum of each movie's rating.
-# 
-# 
-# In the following, we evaluated the empirical performance of the supported algorithms on the MovieLens dataset under each of the three structured bandit settings.
-# 
-# ## Simulation 1: Multinomial Logit Bandits
-# We repeat the experiment over **100** random seeds, with $T = 100$.
-# 
-# ## Simulation 2: Cascading Bandits
-# We repeat the experiment over **100** random seeds, with $T = 100$.
-# 
-# ## Simulation 3: Combinatorial Semi-Bandits
-# We repeat the experiment over **100** random seeds, with $T = 100$.
 
 # ## Reference
 # [1] Russo, D., Van Roy, B., Kazerouni, A., Osband, I., and Wen, Z. (2017). A tutorial on thompson sampling. arXiv preprint arXiv:1707.02038.

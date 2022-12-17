@@ -110,14 +110,14 @@ const thebe_selector_output = ".output, .cell_output"
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="../../intro.html">
-                    Introduction
+                <a class="reference internal" href="../../Map.html">
+                    Overview
                 </a>
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  intro
+  Introduction
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -146,17 +146,7 @@ const thebe_selector_output = ".output, .cell_output"
      Heterogenous Treatement Effect
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../Preliminary/Causal%20Discovery%20Preliminary.html">
-     Causal Discovery Preliminary
-    </a>
-   </li>
   </ul>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../Map.html">
-   Overview
-  </a>
  </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
@@ -166,18 +156,23 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../../Causal_Discovery/Causal%20Discovery%20Learner%20-%20PC%20Algorithm.html">
-   Causal Discovery Learner - PC Algorithm
+  <a class="reference internal" href="../../Preliminary/Causal%20Discovery%20Preliminary.html">
+   Causal Discovery Preliminary
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../Causal_Discovery/Causal%20Discovery%20Learner%20-%20LiNGAM%20Algorithm.html">
-   Causal Discovery Learner - LiNGAM Algorithm
+  <a class="reference internal" href="../../Causal_Discovery/Testing-based%20Learner%20-%20PC%20Algorithm.html">
+   Testing-based Learner - PC Algorithm
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../Causal_Discovery/Causal%20Discovery%20Learner%20-%20NOTEARS%20Algorithm.html">
-   Causal Discovery Learner - NOTEARS Algorithm
+  <a class="reference internal" href="../../Causal_Discovery/Functional-based%20Learner%20-%20LiNGAM%20Algorithm.html">
+   Functional-based Learner - LiNGAM Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Causal_Discovery/Score-based%20Learner%20-%20NOTEARS%20Algorithm.html">
+   Score-based Learner - NOTEARS Algorithm
   </a>
  </li>
 </ul>
@@ -876,16 +871,16 @@ title="Print to PDF"
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p><strong>Q-function.</strong>
 The Q-function-based approach aims to direct learn the state-action value function (referred to as the Q-function)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aeb992be-3779-40fa-8a80-0ed5236592ae">
-<span class="eqno">(101)<a class="headerlink" href="#equation-aeb992be-3779-40fa-8a80-0ed5236592ae" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-50c56dfc-321b-4eff-aa8e-13da713d7883">
+<span class="eqno">(101)<a class="headerlink" href="#equation-50c56dfc-321b-4eff-aa8e-13da713d7883" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 Q^\pi(a,s)&amp;= \mathbb{E}^{\pi} (\sum_{t=0}^{+\infty} \gamma^t R_{t}|A_{0}=a,S_{0}=s)   
 \end{eqnarray}\]</div>
 <p>of either the policy <span class="math notranslate nohighlight">\(\pi\)</span> that we aim to evaluate or the optimal policy <span class="math notranslate nohighlight">\(\pi = \pi^*\)</span>.</p>
 <p><strong>Bellman optimality equations.</strong>
 The Q-learning-type policy learning is commonly based on the Bellman optimality equation, which characterizes the optimal policy <span class="math notranslate nohighlight">\(\pi^*\)</span> and is commonly used in policy optimization.
 Specifically, <span class="math notranslate nohighlight">\(Q^*\)</span> is the unique solution of</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6b972891-a01a-4cb0-8492-197de3040580">
-<span class="eqno">(102)<a class="headerlink" href="#equation-6b972891-a01a-4cb0-8492-197de3040580" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-663ea1f0-ebc6-4e91-bd8f-f73d08fb5d69">
+<span class="eqno">(102)<a class="headerlink" href="#equation-663ea1f0-ebc6-4e91-bd8f-f73d08fb5d69" title="Permalink to this equation">#</a></span>\[\begin{equation}
     Q(a, s) = \mathbb{E} \Big(R_t + \gamma \arg \max_{a'} Q(a, S_{t+1})  | A_t = a, S_t = s \Big).  \;\;\;\;\; \text{(2)} 
 \end{equation}\]</div>
 <p><strong>FQI.</strong>
@@ -895,8 +890,8 @@ Besides, the right-hand side of (2) is a contraction mapping.
 Therefore, we can consider a fixed-point method:
 with an initial estimate <span class="math notranslate nohighlight">\(\widehat{Q}^{0}\)</span>,
 FQI iteratively solves the following optimization problem,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dc6d340a-16b1-469f-8207-994f13a73de1">
-<span class="eqno">(103)<a class="headerlink" href="#equation-dc6d340a-16b1-469f-8207-994f13a73de1" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-1d38facd-1683-4889-9bb3-a348d77b2c10">
+<span class="eqno">(103)<a class="headerlink" href="#equation-1d38facd-1683-4889-9bb3-a348d77b2c10" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 	\widehat{Q}^{{\ell}}=\arg \min_{Q} 
 	\sum_{\substack{i \le n}}\sum_{t&lt;T}
 	\Big\{

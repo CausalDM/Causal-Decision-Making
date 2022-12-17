@@ -4,30 +4,30 @@
 # # Q-Learning (Single Stage)
 # 
 # ## Main Idea
-# Early in 2000, as a classic method of Reinforcement Learning, Q-learning was adapted to decision-making problems[1] and kept evolving with various extensions, such as penalized Q-learning [2]. Q-learning with finite decision points is mainly a regression modeling problem based on positing regression models for outcome at each decision point. The target of Q-learning is to find an optimal policy $\pi$ that can maximize the expected reward received. In other words, by training a model with the observed data, we hope to find an optimal policy to predict the optimal action for each individual to maximize rewards. For example, considering the motivating example **Personalized Incentives**, Q-learning aims to find the best policy to assign different incentives ($A$) to different users to optimize the return-on-investment ($Y$). Overall, Q-learning is practical and easy to understand, as it allows straightforward implementation of diverse established regression methods. 
+# Early in 2000, as a classic method of Reinforcement Learning, Q-learning was adapted to decision-making problems[1] and kept evolving with various extensions, such as penalized Q-learning [2]. Q-learning with finite decision points is mainly a regression modeling problem based on positing regression models for outcome at each decision point. The target of Q-learning is to find an optimal policy $\pi$ that can maximize the expected reward received. In other words, by training a model with the observed data, we hope to find an optimal policy to predict the optimal action for each individual to maximize rewards. For example, considering the motivating example **Personalized Incentives**, Q-learning aims to find the best policy to assign different incentives ($A$) to different users to optimize the return-on-investment ($R$). Overall, Q-learning is practical and easy to understand, as it allows straightforward implementation of diverse established regression methods. 
 # 
 # 
-# Note that, we assume the action space is either **binary** (i.e., 0,1) or **multinomial** (i.e., A,B,C,D), and the outcome of interest Y is **continuous** and **non-negative**, where the larger the $Y$ the better.
+# Note that, we assume the action space is either **binary** (i.e., 0,1) or **multinomial** (i.e., A,B,C,D), and the outcome of interest R is **continuous** and **non-negative**, where the larger the $R$ the better.
 # 
 # 
 # 
 # ## Algorithm Details
-# Q-learning with a single decision point is mainly a regression modeling problem, as the major component is to find the relationship between $Y$ and $\{X,A\}$. Let's first define a Q-function, such that
+# Q-learning with a single decision point is mainly a regression modeling problem, as the major component is to find the relationship between $R$ and $\{S,A\}$. Let's first define a Q-function, such that
 # \begin{align}
-#     Q(x,a) = E(Y|X=x, A=a).
+#     Q(s,a) = E(R|S=s, A=a).
 # \end{align} Then, to find the optimal policy is equivalent to solve
 # \begin{align}
-#     \text{arg max}_{\pi}Q(x_{i},\pi(x_{i})).
+#     \text{arg max}_{\pi}Q(s_{i},\pi(s_{i})).
 # \end{align} 
 # 
 # ## Key Steps
 # **Policy Learning:**
-# 1. Fitted a model $\hat{Q}(x,a,\hat{\beta})$, which can be solved directly by existing approaches (i.e., OLS, .etc),
-# 2. For each individual find the optimal action $d^{opt}(x_{i})$ such that $d^{opt}(x_{i}) = \text{arg max}_{a}\hat{Q}(x_{i},a,\hat{\beta})$.
+# 1. Fitted a model $\hat{Q}(s,a,\hat{\beta})$, which can be solved directly by existing approaches (i.e., OLS, .etc),
+# 2. For each individual find the optimal action $d^{opt}(s_{i})$ such that $d^{opt}(s_{i}) = \text{arg max}_{a}\hat{Q}(s_{i},a,\hat{\beta})$.
 # 
 # **Policy Evaluation:**    
-# 1. Fitted the Q function $\hat{Q}(x,a,\hat{\beta})$, based on the sampled dataset
-# 2. Estimated the value of a given regime $d$ using the estimated Q function, such that, $\hat{Y}_{i} = \hat{Q}(x_{i},d(x_{i}),\hat{\beta})$
+# 1. Fitted the Q function $\hat{Q}(s,a,\hat{\beta})$, based on the sampled dataset
+# 2. Estimated the value of a given regime $d$ using the estimated Q function, such that, $\hat{R}_{i} = \hat{Q}(s_{i},d(s_{i}),\hat{\beta})$
 # 
 # **Note** we also provide an option for bootstrapping. Particularly, for a given policy, we utilize bootstrap resampling to get the estimated value of the regime and the corresponding estimated standard error. For each round of bootstrapping, we first resample a dataset of the same size as the original dataset, then fit the Q function based on the sampled dataset, and finally estimate the value of a given regime based on the estimated Q function. 
 # 
@@ -48,14 +48,14 @@ from causaldm.learners import QLearning
 
 
 # get the data
-X,A,Y = get_data(target_col = 'spend', binary_trt = False)
+S,A,R = get_data(target_col = 'spend', binary_trt = False)
 
 
 # In[9]:
 
 
 #1. specify the model you would like to use
-# If want to include all the variable in X and A with no specific model structure, then use "Y~."
+# If want to include all the variable in S and A with no specific model structure, then use "Y~."
 # Otherwise, specify the model structure by hand
 # Note: if the action space is not binary, use C(A) in the model instead of A
 model_info = [{"model": "Y~C(A)*(recency+history)", #default is add an intercept!!!
@@ -64,7 +64,7 @@ model_info = [{"model": "Y~C(A)*(recency+history)", #default is add an intercept
 
 # By specifing the model_info, we assume a regression model that:
 # \begin{align}
-# Q(x,a,\beta) &= \beta_{00}+\beta_{01}*recency+\beta_{02}*history\\
+# Q(s,a,\beta) &= \beta_{00}+\beta_{01}*recency+\beta_{02}*history\\
 # &+I(a=1)*\{\beta_{10}+\beta_{11}*recency+\beta_{12}*history\} \\
 # &+I(a=2)*\{\beta_{20}+\beta_{21}*recency+\beta_{22}*history\} 
 # \end{align}
@@ -75,16 +75,16 @@ model_info = [{"model": "Y~C(A)*(recency+history)", #default is add an intercept
 #2. initialize the learner
 QLearn = QLearning.QLearning()
 #3. train the policy
-QLearn.train(X, A, Y, model_info, T=1)
+QLearn.train(S, A, R, model_info, T=1)
 
 
 # In[11]:
 
 
 #4. recommend action
-opt_d = QLearn.recommend_action(X).value_counts()
+opt_d = QLearn.recommend_action(S).value_counts()
 #5. get the estimated value of the optimal regime
-V_hat = QLearn.predict_value(X)
+V_hat = QLearn.predict_value(S)
 print("fitted model:",QLearn.fitted_model[0].params)
 print("opt regime:",opt_d)
 print("opt value:",V_hat)
@@ -92,7 +92,7 @@ print("opt value:",V_hat)
 
 # **Interpretation:** the fitted model is 
 # \begin{align}
-# Q(x,a,\beta) &= 94.20+4.53*recency+0.0005*history\\
+# Q(s,a,\beta) &= 94.20+4.53*recency+0.0005*history\\
 # &+I(a=1)*\{23.24-4.15*recency+0.0076*history\} \\
 # &+I(a=2)*\{20.61-4.84*recency+0.0004history\}. 
 # \end{align}
@@ -112,8 +112,8 @@ print("opt value:",V_hat)
 QLearn = QLearning.QLearning()
 model_info = [{"model": "Y~C(A)*(recency+history)", #default is add an intercept!!!
               'action_space':{'A':[0,1,2]}}]
-QLearn.train(X, A, Y, model_info, T=1, bootstrap = True, n_bs = 200)
-fitted_params,fitted_value,value_avg,value_std,params=QLearn.predict_value_boots(X)
+QLearn.train(S, A, R, model_info, T=1, bootstrap = True, n_bs = 200)
+fitted_params,fitted_value,value_avg,value_std,params=QLearn.predict_value_boots(S)
 print('Value_hat:',value_avg,'Value_std:',value_std)
 
 
@@ -125,15 +125,15 @@ print('Value_hat:',value_avg,'Value_std:',value_std)
 
 
 #1. specify the fixed regime to be tested (For example, regime d = 'No E-Mail' for all subjects)
-# !! IMPORTANT： index shold be the same as that of the X
-N=len(X)
-regime = pd.DataFrame({'A':[0]*N}).set_index(X.index)
+# !! IMPORTANT： index shold be the same as that of the S
+N=len(S)
+regime = pd.DataFrame({'A':[0]*N}).set_index(S.index)
 #2. evaluate the regime
 QLearn = QLearning.QLearning()
 model_info = [{"model": "Y~C(A)*(recency+history)", #default is add an intercept!!!
               'action_space':{'A':[0,1,2]}}]
-QLearn.train(X, A, Y, model_info, T=1, regime = regime, evaluate = True)
-QLearn.predict_value(X)
+QLearn.train(S, A, R, model_info, T=1, regime = regime, evaluate = True)
+QLearn.predict_value(S)
 
 
 # **Interpretation:** the estimated value of the regime that always sends no emails ($A=0$) is 116.41, under the specified model.
@@ -142,8 +142,8 @@ QLearn.predict_value(X)
 
 
 # Optional: Boostrap
-QLearn.train(X, A, Y, model_info, T=1, regime = regime, evaluate = True, bootstrap = True, n_bs = 200)
-fitted_params,fitted_value,value_avg,value_std,params=QLearn.predict_value_boots(X)
+QLearn.train(S, A, R, model_info, T=1, regime = regime, evaluate = True, bootstrap = True, n_bs = 200)
+fitted_params,fitted_value,value_avg,value_std,params=QLearn.predict_value_boots(S)
 # bootstrap average and the std of estimate value
 print('Value_hat:',value_avg,'Value_std:',value_std)
 
@@ -159,3 +159,9 @@ print('Value_hat:',value_avg,'Value_std:',value_std)
 # TODO: 
 #     1. estimate the standard error for the binary case with sandwich formula;
 #     2. inference for the estimated optimal regime: projected confidence interval? m-out-of-n CI?....
+
+# In[ ]:
+
+
+
+

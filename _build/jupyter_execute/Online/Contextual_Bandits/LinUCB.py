@@ -11,18 +11,18 @@
 # ## Main Idea
 # Supposed there are $K$ options, and the action space is $\mathcal{A} = \{0,1,\cdots, K-1\}$. **LinUCB** uses feature information to guide exploration by assuming a linear model between the expected potential reward and the features. Specifcially, for the Gaussain bandits, we assume that 
 # \begin{align}
-# E(R_{t}(a)) = \theta_a = \boldsymbol{x}_a^T \boldsymbol{\gamma}.
+# E(R_{t}(a)) = \theta_a = \boldsymbol{s}_a^T \boldsymbol{\gamma}.
 # \end{align} Solving a linear gression model, at each round $t$, the corresponding estimated upper confidence interval of the mean potential reward is then updated as
 # \begin{align}
-# U_a^t = \boldsymbol{x}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{x}_a^T V^{-1}  \boldsymbol{x}_a},
-# \end{align} where $\alpha$ is a tuning parameter that controls the rate of exploration, $V^{-1} = \sum_{j=0}^{t-1}\boldsymbol{x}_{a_j}\boldsymbol{x}_{a_j}^T$, and $\hat{\boldsymbol{\gamma}} = V^{-1}\sum_{j=0}^{t-1}\boldsymbol{x}_{a_j}R_j$.
+# U_a^t = \boldsymbol{s}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{s}_a^T V^{-1}  \boldsymbol{s}_a},
+# \end{align} where $\alpha$ is a tuning parameter that controls the rate of exploration, $V^{-1} = \sum_{j=0}^{t-1}\boldsymbol{s}_{a_j}\boldsymbol{s}_{a_j}^T$, and $\hat{\boldsymbol{\gamma}} = V^{-1}\sum_{j=0}^{t-1}\boldsymbol{s}_{a_j}R_j$.
 # 
 # As for the Bernoulli bandits, we assume that 
 # \begin{align}
-# \theta_{a} = logistic(\boldsymbol{x}_a^T \boldsymbol{\gamma}),
-# \end{align}where $logistic(x) \equiv 1 / (1 + exp^{-1}(x))$. At each round $t$, by fitting a generalized linear model to all historical observations, we obtain the maximum likelihood estimator of $\boldsymbol{\gamma}$. The corresponding estimated confidence upper bound is then calculated in the same way as for Gaussian bandits, such that
+# \theta_{a} = logistic(\boldsymbol{s}_a^T \boldsymbol{\gamma}),
+# \end{align}where $logistic(s) \equiv 1 / (1 + exp^{-1}(s))$. At each round $t$, by fitting a generalized linear model to all historical observations, we obtain the maximum likelihood estimator of $\boldsymbol{\gamma}$. The corresponding estimated confidence upper bound is then calculated in the same way as for Gaussian bandits, such that
 # \begin{align}
-# U_a^t = \boldsymbol{x}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{x}_a^T V^{-1}  \boldsymbol{x}_a},
+# U_a^t = \boldsymbol{s}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{s}_a^T V^{-1}  \boldsymbol{s}_a},
 # \end{align}where $\alpha$ and $V$ are defined in the same way as before. 
 # 
 # Finally, using the estimated upper confidence bounds, $A_t = \arg \max_{a \in \mathcal{A}} U_a^t$ would be selected.

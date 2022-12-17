@@ -12,8 +12,8 @@
 # ## Main Idea
 # Feature-determined approaches have been developed recently to provide a more feasible approach for large-scale problems, by adapting either the UCB framwork or the TS framework. While all of them [1,2,3] are under the standard offering structure, here we modify the TS-type algorithm in [3] by adapting to the epoch-type offering framework and assuming a linear realtionship between the utility and the item features as 
 # \begin{equation}
-# \theta_i = \frac{logistic(\boldsymbol{x}_{i,t}^T \boldsymbol{\gamma})+ 1}{2},
-# \end{equation} to tackle the challenge of a large item space. We named the proposed algorithm as **TS_Contextual_MNL**. At each decision round $t$, **TS_Contextual_MNL** samples $\tilde{\boldsymbol{\gamma}}_{t}$ from the posterior distribution, which is updated by **Pymc3**, and get the $\tilde{\theta}_{i}^{t}$ as $\frac{logistic(\boldsymbol{x}_{i,t}^T \text{ }\tilde{\boldsymbol{\gamma}})+ 1}{2}$ and $\tilde{v}_{i}^{l}$ as $1/\tilde{\theta}_{i}^{l}-1$. Finally, linear programming is employed to determine the optimal assortment $A^{l}$, such that
+# \theta_i = \frac{logistic(\boldsymbol{s}_{i,t}^T \boldsymbol{\gamma})+ 1}{2},
+# \end{equation} to tackle the challenge of a large item space. We named the proposed algorithm as **TS_Contextual_MNL**. At each decision round $t$, **TS_Contextual_MNL** samples $\tilde{\boldsymbol{\gamma}}_{t}$ from the posterior distribution, which is updated by **Pymc3**, and get the $\tilde{\theta}_{i}^{t}$ as $\frac{logistic(\boldsymbol{s}_{i,t}^T \text{ }\tilde{\boldsymbol{\gamma}})+ 1}{2}$ and $\tilde{v}_{i}^{l}$ as $1/\tilde{\theta}_{i}^{l}-1$. Finally, linear programming is employed to determine the optimal assortment $A^{l}$, such that
 # \begin{equation}
 #     A^{l} = arg max_{a \in \mathcal{A}} E(R_t(a) \mid\tilde{\boldsymbol{v}})=argmax_{a \in \mathcal{A}} \frac{\sum_{i\in a}\eta_{i}\tilde{v}_{i}}{1+\sum_{j\in a} \tilde{v}_{j}},
 # \end{equation} where $t$ is the first round of epoch $l$.  
@@ -24,7 +24,7 @@
 # For epoch $l = 1,2,\cdots$:
 # 1. Approximate $P(\boldsymbol{\gamma}|\mathcal{H}^{l})$ by **Pymc3**;
 # 2. Sample $\tilde{\boldsymbol{\gamma}} \sim P(\boldsymbol{\gamma}|\mathcal{H}^{l})$;
-# 3. Update $\tilde{\boldsymbol{\theta}} = \frac{logistic(\boldsymbol{x}_{i,t}^T \text{ }\tilde{\boldsymbol{\gamma}})+ 1}{2}$
+# 3. Update $\tilde{\boldsymbol{\theta}} = \frac{logistic(\boldsymbol{s}_{i,t}^T \text{ }\tilde{\boldsymbol{\gamma}})+ 1}{2}$
 # 4. Compute the utility $\tilde{v}_{i} = \frac{1}{\tilde{\theta}_{i}}-1$;
 # 5. Take the action $A^{l}$ w.r.t $\{\tilde{v}_{i}\}_{i=1}^{N}$ such that $A^{l} = arg max_{a \in \mathcal{A}} E(R_t(a) \mid\tilde{\boldsymbol{v}})=argmax_{a \in \mathcal{A}} \frac{\sum_{i\in a}\eta_{i}\tilde{v}_{i}}{1+\sum_{j\in a} \tilde{v}_{j}}$;
 # 6. Offer $A^{l}$ until no purchase appears;

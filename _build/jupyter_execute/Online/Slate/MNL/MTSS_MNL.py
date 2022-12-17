@@ -11,14 +11,14 @@
 # ## Main Idea
 # MTSS_MNL is an example of the general Thompson Sampling(TS)-based framework, MTSS [1], to deal with dynamic assortment optimization problems.
 # 
-# **Review of MTSS:** MTSS[1] is a meta-learning framework designed for large-scale structured bandit problems [2]. Mainly, it is a TS-based algorithm that learns the information-sharing structure while minimizing the cumulative regrets. Adapting the TS framework to a problem-specific Bayesian hierarchical model, MTSS simultaneously enables information sharing among items via their features and models the inter-item heterogeneity. Specifically, it assumes that the item-specific parameter $\theta_i$ is sampled from a distribution $g(\theta_i|\boldsymbol{x}_i, \boldsymbol{\gamma})$ instead of being entirely determined by $\boldsymbol{x}_i$ via a deterministic function. Here, $g$ is a model parameterized by an **unknown** vector $\boldsymbol{\gamma}$. The following is the general feature-based hierarchical model MTSS considered. 
+# **Review of MTSS:** MTSS[1] is a meta-learning framework designed for large-scale structured bandit problems [2]. Mainly, it is a TS-based algorithm that learns the information-sharing structure while minimizing the cumulative regrets. Adapting the TS framework to a problem-specific Bayesian hierarchical model, MTSS simultaneously enables information sharing among items via their features and models the inter-item heterogeneity. Specifically, it assumes that the item-specific parameter $\theta_i$ is sampled from a distribution $g(\theta_i|\boldsymbol{s}_i, \boldsymbol{\gamma})$ instead of being entirely determined by $\boldsymbol{s}_i$ via a deterministic function. Here, $g$ is a model parameterized by an **unknown** vector $\boldsymbol{\gamma}$. The following is the general feature-based hierarchical model MTSS considered. 
 # \begin{equation}\label{eqn:general_hierachical}
 #   \begin{alignedat}{2}
 # &\text{(Prior)} \quad
 # \quad\quad\quad\quad\quad\quad\quad\quad\quad
 # \boldsymbol{\gamma} &&\sim Q(\boldsymbol{\gamma}),\\
 # &\text{(Generalization function)} \;
-# \;    \theta_i| \boldsymbol{x}_i, \boldsymbol{\gamma}  &&\sim g(\theta_i|\boldsymbol{x}_i, \boldsymbol{\gamma}), \forall i \in [N],\\ 
+# \;    \theta_i| \boldsymbol{s}_i, \boldsymbol{\gamma}  &&\sim g(\theta_i|\boldsymbol{s}_i, \boldsymbol{\gamma}), \forall i \in [N],\\ 
 # &\text{(Observations)} \quad\quad\quad\quad\quad\quad\;
 # \;    \boldsymbol{Y}_t(a) &&\sim f(\boldsymbol{Y}_t(a)|\boldsymbol{\theta}),\\
 # &\text{(Reward)} \quad\quad\quad\quad\quad\quad\quad\quad\;
@@ -28,10 +28,10 @@
 # where $Q(\boldsymbol{\gamma})$ is the prior distribution for $\boldsymbol{\gamma}$. 
 # Overall, MTTS is a **general** framework that subsumes a wide class of practical problems, **scalable** to large systems, and **robust** to the specification of the generalization model.
 # 
-# **Review of MTSS_MNL:** In this tutorial, as a concrete example, we focus on the epoch-type offering schedule and consider modeling the relationship between $\theta_i$ and $\boldsymbol{x}_i$ with the following Beta-Geometric logistic model:
+# **Review of MTSS_MNL:** In this tutorial, as a concrete example, we focus on the epoch-type offering schedule and consider modeling the relationship between $\theta_i$ and $\boldsymbol{s}_i$ with the following Beta-Geometric logistic model:
 # \begin{equation}\label{eqn1}
 #     \begin{split}
-#      \theta_i &\sim Beta \big(\frac{logistic(\boldsymbol{x}_i^T \boldsymbol{\gamma})+ 1}{2}, \psi \big) , \forall i \in [N],\\
+#      \theta_i &\sim Beta \big(\frac{logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})+ 1}{2}, \psi \big) , \forall i \in [N],\\
 #     Y_{i}^l(a) &\sim Geometric(\theta_i), \forall i \in a,\\
 #     R^l(a) &= \sum_{i\in a}Y_{i}^l(a)\eta_{i},
 #     \end{split}

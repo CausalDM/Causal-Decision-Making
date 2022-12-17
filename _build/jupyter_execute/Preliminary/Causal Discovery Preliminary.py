@@ -11,8 +11,8 @@
 # Consider a graph $\mathcal{G} =(Z,E)$ with a node set $Z$ and an edge set $E$. A node $Z_i$ is said to be a parent of $Z_j$ if there is a directed edge from $Z_i$ to $Z_j$. Let the set of all parents of node $Z_j$ in $\mathcal{G}$ as $PA_{Z_j} (\mathcal{G})$. A directed graph that does not contain directed cycles is called a directed acyclic graph (DAG). Suppose a DAG $\mathcal{G}=(Z,E)$ that characterizes the causal relationship among $|Z|=d$ nodes, where $Z=[Z_1,Z_2,\cdots,Z_d]^\top $ represents a random vector and an edge $Z_i\rightarrow Z_j$ means that $Z_i$ is a direct cause of $Z_j$. 
 
 # ### Toy Example 1:  Causal Graph for Heterogeneous Treatment Effect and Personalized Decision Making
-# In this example, the feature $X$ determines the treatment assignment $A$ (i.e., $X\rightarrow A$) and the outcome $Y$ (i.e., $X\rightarrow Y$), and the treatment assignment $A$ further influences the outcome $Y$ (i.e., $A\rightarrow Y$).
-# ![title](xay.png)
+# In this example, the feature $S$ determines the treatment assignment $A$ (i.e., $S\rightarrow A$) and the outcome $R$ (i.e., $S\rightarrow R$), and the treatment assignment $A$ further influences the outcome $R$ (i.e., $A\rightarrow R$).
+# <img src="xay.png" alt="drawing" width="400"/> 
 # 
 # Based on this causal graph, to optimize the outcome of interest, the doctor should assign the right treatment according to different features. Thus, the methods for personalized decision making focus on modeling the conditional mean outcome and the propensity score.
 
@@ -20,23 +20,30 @@
 # 
 # Causal mediation analysis (CMA) is a method to dissect total effect of a treatment into direct and indirect effect. The direct effect is how the treatment directly affects the outcome, and the indirect effect is transmitted via mediator $M$ to the outcome.
 # 
-# ![title](amy.png)
+# <img src="amy.png" alt="drawing" width="400"/> 
 # 
-# Pearl et al. (2009) provided a comprehensive review of recent advances in causal mediation analysis using ‘do-operator’ by graphical methods. Let $M=[M_1,M_2,\cdots,M_p]^\top $ be mediators with dimension $p$. Suppose there exists a weighted DAG $\mathcal{G}=(Z,E)$ that characterizes the causal relationship among $Z=[A, M^\top, Y]^\top $.  The total effect ($TE$), the natural direct effect that is not mediated by mediators ($DE$), and the natural indirect effect that is regulated by mediators ($IE$) are defined as:
+# Pearl et al. (2009) provided a comprehensive review of recent advances in causal mediation analysis using ‘do-operator’ by graphical methods. Let $M=[M_1,M_2,\cdots,M_p]^\top $ be mediators with dimension $p$. Suppose there exists a weighted DAG $\mathcal{G}=(Z,E)$ that characterizes the causal relationship among $Z=[A, M^\top, R]^\top $.  The total effect ($TE$), the natural direct effect that is not mediated by mediators ($DE$), and the natural indirect effect that is regulated by mediators ($IE$) are defined as:
 # \begin{equation*}
 # \begin{split}
-# TE &={\partial E\{Y|do(A=a)\} / \partial a}= E\{Y|do(A=a+1)\}-E\{Y|do(A=a)\},\\
-# DE &= E\{Y|do(A=a+1, M=m^{(a)})\}-E\{Y|do(A=a)\},\\
-# IE &= E\{Y|do(A=a, M=m^{(a+1)})\}-E\{Y|do(A=a)\},
+# TE &={\partial E\{R|do(A=a)\} / \partial a}= E\{R|do(A=a+1)\}-E\{R|do(A=a)\},\\
+# DE &= E\{R|do(A=a+1, M=m^{(a)})\}-E\{R|do(A=a)\},\\
+# IE &= E\{R|do(A=a, M=m^{(a+1)})\}-E\{R|do(A=a)\},
 # \end{split}
 # \end{equation*}
 # where $do(A=a)$ is a mathematical operator to simulate physical interventions that hold $A$ constant as $a$ while keeping the rest of the model unchanged, which corresponds to remove edges into $A$ and replace $A$ by the constant $a$ in $\mathcal{G}$. Here, $m^{(a)}$ is the value of $M$ if setting $do(A=a)$, and $m^{(a+1)}$ is the value of $M$ if setting $do(A=a+1)$. Refer to Pearl et al. (2009) for more details of `do-operator'.
 # 
 # #### Remarks
 # 
-# 1. Connection to Average Treatment Effect: When there is no mediator, i.e., only $A$ and $Y$ in the system, there is no indirect effect. Then the defined total effect ($TE$) reduced to the average treatment effect (ATE): $\text{ATE} = E[Y^*(1) - Y^*(0)] = E[ Y|do(A=1)] -  E[ Y|do(A=0)] = TE = DE$.
+# 1. Connection to Average Treatment Effect: When there is no mediator, i.e., only $A$ and $Y$ in the system, there is no indirect effect. Then the defined total effect ($TE$) reduced to the average treatment effect (ATE): $\text{ATE} = E[R^*(1) - R^*(0)] = E[ R|do(A=1)] -  E[ R|do(A=0)] = TE = DE$.
 # 
-# 2. Connection to Conditional Average Treatment Effect: When there is no mediator but with additional modifiers $X$ in the system, we have the conditional average treatment effect (CATE), i.e., $\text{CATE} = E[Y^*(1) - Y^*(0)|X] = E[ Y|do(A=1),X] -  E[ Y|do(A=0),X] = DE(X) = TE(X)$.
+# 2. Connection to Conditional Average Treatment Effect: When there is no mediator but with additional modifiers $X$ in the system, we have the conditional average treatment effect (CATE), i.e., $\text{CATE} = E[R^*(1) - R^*(0)|X] = E[ R|do(A=1),X] -  E[ R|do(A=0),X] = DE(X) = TE(X)$.
+
+# ### Toy Example 3:  Causal Graph for Mediated Personalized Decision Making
+# In this example, the feature $S$ determines the treatment assignment $A$ (i.e., $S\rightarrow A$), the mediators $M$ (i.e., $S\rightarrow M$), and the outcome $R$ (i.e., $S\rightarrow R$), and the treatment assignment $A$ further influences the mediators $M$ (i.e., $A\rightarrow M$) and the outcome $R$ (i.e., $A\rightarrow R$). In addition, the mediators $M$ also affects the outcome $R$ (i.e., $M\rightarrow R$).
+# 
+# <img src="mxay.png" alt="drawing" width="400"/> 
+# 
+# Based on this causal graph, to optimize the outcome of interest, the doctor should assign the right treatment through useful mediators according to different features. 
 
 # ### 3. Overview of Popular Causal Discovery Learners 
 # 

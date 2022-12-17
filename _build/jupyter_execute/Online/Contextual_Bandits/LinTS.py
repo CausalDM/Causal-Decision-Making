@@ -11,12 +11,12 @@
 # ## Main Idea
 # Supposed there are $K$ options, and the action space is $\mathcal{A} = \{0,1,\cdots, K-1\}$. Noticing that feature information are commonly avialable, the **LinTS** algorithm consdiers modeling the expectation of the potential reward $R_t(i)$ with features of item $i$. As an example, considering the Gaussian reward, we assume that 
 # \begin{align}
-# R_t(i)\sim \mathcal{N}(\boldsymbol{x}_i^T \boldsymbol{\gamma},\sigma^2).
+# R_t(i)\sim \mathcal{N}(\boldsymbol{s}_i^T \boldsymbol{\gamma},\sigma^2).
 # \end{align}
 # As for the Bernoulli reward, we assume that 
 # \begin{align}
-# R_t(i) \sim Bernoulli(logistic(\boldsymbol{x}_i^T \boldsymbol{\gamma})).
-# \end{align}where $logistic(x) \equiv 1 / (1 + exp^{-1}(x))$.
+# R_t(i) \sim Bernoulli(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})).
+# \end{align}where $logistic(s) \equiv 1 / (1 + exp^{-1}(s))$.
 # Similar as the standard TS algorithm, the LinTS algorithm starts with specifying a prior distribution of the parameter $\boldsymbol{\gamma}$, and a variance of the reward, based on the domian knowledge. At each round $t$, the agent will samples a vector of $\tilde{\boldsymbol{\gamma}}^{t}$ from thecorresponding posterior distribution, and the mean reward $\tilde{\boldsymbol{\theta}}^{t}$ is then calculated accordingly. The action $a$ with the greatest $\tilde{\theta}_{a}^{t}$ is then selected. Finally, the posterior distribution would be updated after receiving the feedback at the end of each round. It should be noted that the posterior updating step differs for different pairs of the prior distribution of expected potential reward and reward distribution, and the code can be easily modified to different prior/reward distribution specifications if necessary.
 # 
 # ## Key Steps

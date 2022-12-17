@@ -2,8 +2,6 @@
 # coding: utf-8
 
 # # Contextual Bandits
-# 
-# 
 # disjoint linear models...finite arm
 # 
 # 
@@ -13,6 +11,9 @@
 # Let $T$ be the total number of rounds, and $K$ be the number of arms (actions to be selected). The agent would choose one arm at each round $t = 1, \dots, T$. Then the agent will receive the corresponding stochastic reward $R_t$ from the environment. Denote the expected reward for each arm $i$ as $r_{i}$. Since, in most real applications, such a reward distribution is always unknown, the agent needs to learn the reward distribution from feedback received. Overall, the objective is to find a bandit algorithm to maximize the cumulative Reward $\sum_{t=1}^{T}R_{t}$.
 # 
 # MAB has been extensively studied and widely applied to different areas, including healthcare, recommender system, and finance, to name a few. See [4] for a detailed review of MAB and [5] for a survey of practical applications. Among them, the ultimate goal of a learning algorithm is always to strike a good balance between exploration (try an unfamiliar action to learn more information) and exploitation (take the action that has the highest estimated reward so far) so as to maximize the cumulative reward. In the following, we will briefly illustrate three popular and classical categories of algorithms to handle the exploration-exploitation trade-off: i) $\epsilon$-greedy, ii) Upper Confidence Bound (UCB), and iii) Thompson Sampling (TS). 
+# 
+# ## Graphical Data Structure
+# ![CMAB.png](CMAB.png)
 
 # ## Real Data
 # **1. MovieLens**
@@ -41,12 +42,6 @@
 # - **Bernoulli Bandit**: $R_t$ is a binary variable, =1 if the rating is higher than 3.
 # 
 # In the following, we evaluated the empirical performance of the supported algorithms on the MovieLens dataset under either the Gaussian bandit or Bernoulli bandit settings.
-
-# ## Simulation 1: Gaussian Bandit
-# We repeat the experiment over **100** random seeds, with $T = 100$.
-
-# ## Simulation 1: Bernoulli Bandit
-# We repeat the experiment over **100** random seeds, with $T = 100$.
 
 # ## Reference
 # [1] Durand, A., Achilleos, C., Iacovides, D., Strati, K., Mitsis, G. D., and Pineau, J. (2018). Contextual bandits for adapting treatment in a mouse model of de novo carcinogenesis. In Machine learning for healthcare conference, pages 67–82. PMLR.

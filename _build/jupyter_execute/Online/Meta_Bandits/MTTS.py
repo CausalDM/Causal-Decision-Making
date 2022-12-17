@@ -15,11 +15,11 @@
 # &\text{(Prior)} \quad
 # \quad\quad\quad    \boldsymbol{\gamma} &&\sim Q(\boldsymbol{\gamma}), \\
 # &\text{(Inter-task)} \quad
-# \;    \boldsymbol{\mu}_j | \boldsymbol{x}_j, \boldsymbol{\gamma} &&\sim g(\boldsymbol{\mu}_j | \boldsymbol{x}_j, \boldsymbol{\gamma})=\boldsymbol{x}_j^{T}\boldsymbol{\gamma} + \boldsymbol{\delta}_{j}, \\
+# \;    \boldsymbol{\mu}_j | \boldsymbol{s}_j, \boldsymbol{\gamma} &&\sim g(\boldsymbol{\mu}_j | \boldsymbol{s}_j, \boldsymbol{\gamma})=\boldsymbol{s}_j^{T}\boldsymbol{\gamma} + \boldsymbol{\delta}_{j}, \\
 # &\text{(Intra-task)} \quad
 # \;    R_{j,t}(a) = Y_{j,t}(a) &&= \mu_{j,a} + \epsilon_{j,t}, 
 #       \end{alignedat}
-# \end{equation} where $\boldsymbol{\delta}_{j} \stackrel{i.i.d.}{\sim} \mathcal{N}(\boldsymbol{0}, \boldsymbol{\Sigma})$, and $\epsilon_{j,t} \stackrel{i.i.d.}{\sim} \mathcal{N}(\boldsymbol{0}, \sigma^{2})$. For simplicity, we assume a Normal prior, which resulted in a Normal posterior with explicit form. Note that, if we replace the inter-task layer to a deterministic model (i.e., $g(\boldsymbol{\mu}_j | \boldsymbol{x}_j, \boldsymbol{\gamma})=\boldsymbol{x}_j^{T}\boldsymbol{\gamma}$), **MTTS** is reduced to an algorithm similar to **AdaTS** with linear bandits and Gaussian rewards discussed in Section 3.2 [2]. In contrast to **MTSS**, the **AdaTS** fail to address the issue of heterogeneous tasks.
+# \end{equation} where $\boldsymbol{\delta}_{j} \stackrel{i.i.d.}{\sim} \mathcal{N}(\boldsymbol{0}, \boldsymbol{\Sigma})$, and $\epsilon_{j,t} \stackrel{i.i.d.}{\sim} \mathcal{N}(\boldsymbol{0}, \sigma^{2})$. For simplicity, we assume a Normal prior, which resulted in a Normal posterior with explicit form. Note that, if we replace the inter-task layer to a deterministic model (i.e., $g(\boldsymbol{\mu}_j | \boldsymbol{x}_j, \boldsymbol{\gamma})=\boldsymbol{s}_j^{T}\boldsymbol{\gamma}$), **MTTS** is reduced to an algorithm similar to **AdaTS** with linear bandits and Gaussian rewards discussed in Section 3.2 [2]. In contrast to **MTSS**, the **AdaTS** fail to address the issue of heterogeneous tasks.
 # 
 # Similarly, considering the Bernoulli bandit, it assumes that
 # \begin{equation}\label{eqn:hierachical_model}
@@ -32,14 +32,14 @@
 # \;    R_{j,t}(a) = Y_{j,t}(a) &&\sim  \text{Bernoulli} \big( \mu_{j, a} \big), 
 #       \end{alignedat}
 # \end{equation}
-# where  $logistic(x) \equiv 1 / (1 + exp^{-1}(x))$, $\psi$ is a known parameter, and  $\text{Beta}(\mu, \psi)$ denotes a Beta distribution with mean $\mu$ and precision $\psi$. Still, we assume a Normal prior of $\boldsymbol{\gamma}$. As there is no explicit form of the corresponding posterior, we update the posterior distribution by **Pymc3**.
+# where  $logistic(s) \equiv 1 / (1 + exp^{-1}(s))$, $\psi$ is a known parameter, and  $\text{Beta}(\mu, \psi)$ denotes a Beta distribution with mean $\mu$ and precision $\psi$. Still, we assume a Normal prior of $\boldsymbol{\gamma}$. As there is no explicit form of the corresponding posterior, we update the posterior distribution by **Pymc3**.
 # 
 # Under the TS framework, at each round $t$ with task $j$, the agent will sample a $\tilde{\boldsymbol{\mu}}_{j}$ from its posterior distribution updated according to the hierarchical model, then the action $a$ with the maximum sampled $\tilde{\mu}_{j,a}$ will be pulled. Mathmetically,
 # \begin{equation}
 #     A_{j,t} = argmax_{a \in \mathcal{A}} \hat{E}(R_{j,t}(a)) = argmax_{a \in \mathcal{A}} \tilde\mu_{j,a}.
 # \end{equation}
 # 
-# Essentially, **MTTS** assumes that the mean reward $\boldsymbol{\mu}_{j}$ is sampled from model $g$ parameterized by unknown parameter $\boldsymbol{\gamma}$ and conditional on task feature $\boldsymbol{x}_{j}$. Instead of assuming that $\boldsymbol{\mu}_j$ is fully determined by its features through a deterministic function, **MTTS** adds an item-specific noise term to account for the inter-task heterogeneity. Simultaneously modeling heterogeneity and sharing information across tasks via $g$, **MTTS** is able to provide an informative prior distribution to guide the exploration. Appropriately addressing the heterogeneity between tasks, the MTTS has been shown to have a superior performance in practice[1].
+# Essentially, **MTTS** assumes that the mean reward $\boldsymbol{\mu}_{j}$ is sampled from model $g$ parameterized by unknown parameter $\boldsymbol{\gamma}$ and conditional on task feature $\boldsymbol{s}_{j}$. Instead of assuming that $\boldsymbol{\mu}_j$ is fully determined by its features through a deterministic function, **MTTS** adds an item-specific noise term to account for the inter-task heterogeneity. Simultaneously modeling heterogeneity and sharing information across tasks via $g$, **MTTS** is able to provide an informative prior distribution to guide the exploration. Appropriately addressing the heterogeneity between tasks, the MTTS has been shown to have a superior performance in practice[1].
 # 
 # ## Key Steps
 # For $(j,t) = (1,1),(1,2),\cdots$:

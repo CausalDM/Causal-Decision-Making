@@ -11,14 +11,14 @@
 # ## Main Idea
 # MTSS_Cascade is an example of the general Thompson Sampling(TS)-based framework, MTSS [1], to deal with online learning to rank problems.
 # 
-# **Review of MTSS:** MTSS[1] is a meta-learning framework designed for large-scale structured bandit problems [2]. Mainly, it is a TS-based algorithm that learns the information-sharing structure while minimizing the cumulative regrets. Adapting the TS framework to a problem-specific Bayesian hierarchical model, MTSS simultaneously enables information sharing among items via their features and models the inter-item heterogeneity. Specifically, it assumes that the item-specific parameter $\theta_i = E[W_t(i)]$ is sampled from a distribution $g(\theta_i|\boldsymbol{x}_i, \boldsymbol{\gamma})$ instead of being entirely determined by $\boldsymbol{x}_i$ via a deterministic function. Here, $g$ is a model parameterized by an **unknown** vector $\boldsymbol{\gamma}$. The following is the general feature-based hierarchical model MTSS considered. 
+# **Review of MTSS:** MTSS[1] is a meta-learning framework designed for large-scale structured bandit problems [2]. Mainly, it is a TS-based algorithm that learns the information-sharing structure while minimizing the cumulative regrets. Adapting the TS framework to a problem-specific Bayesian hierarchical model, MTSS simultaneously enables information sharing among items via their features and models the inter-item heterogeneity. Specifically, it assumes that the item-specific parameter $\theta_i = E[W_t(i)]$ is sampled from a distribution $g(\theta_i|\boldsymbol{s}_i, \boldsymbol{\gamma})$ instead of being entirely determined by $\boldsymbol{s}_i$ via a deterministic function. Here, $g$ is a model parameterized by an **unknown** vector $\boldsymbol{\gamma}$. The following is the general feature-based hierarchical model MTSS considered. 
 # \begin{equation}\label{eqn:general_hierachical}
 #   \begin{alignedat}{2}
 # &\text{(Prior)} \quad
 # \quad\quad\quad\quad\quad\quad\quad\quad\quad
 # \boldsymbol{\gamma} &&\sim Q(\boldsymbol{\gamma}),\\
 # &\text{(Generalization function)} \;
-# \;    \theta_i| \boldsymbol{x}_i, \boldsymbol{\gamma}  &&\sim g(\theta_i|\boldsymbol{x}_i, \boldsymbol{\gamma}), \forall i \in [N],\\ 
+# \;    \theta_i| \boldsymbol{s}_i, \boldsymbol{\gamma}  &&\sim g(\theta_i|\boldsymbol{s}_i, \boldsymbol{\gamma}), \forall i \in [N],\\ 
 # &\text{(Observations)} \quad\quad\quad\quad\quad\quad\;
 # \;    \boldsymbol{Y}_t(a) &&\sim f(\boldsymbol{Y}_t(a)|\boldsymbol{\theta}),\\
 # &\text{(Reward)} \quad\quad\quad\quad\quad\quad\quad\quad\;
@@ -28,10 +28,10 @@
 # where $Q(\boldsymbol{\gamma})$ is the prior distribution for $\boldsymbol{\gamma}$. 
 # Overall, MTTS is a **general** framework that subsumes a wide class of practical problems, **scalable** to large systems, and **robust** to the specification of the generalization model.
 # 
-# **Review of MTSS_Cascade:** To characterize the relationship between items using their features, one example choice of $g$ is the popular Beta-Bernoulli logistic model [1,2], where $\theta_i {\sim} Beta(logistic(\boldsymbol{x}_i^T \boldsymbol{\gamma}), \psi)$ for some known parameter $\psi$. We adopt the mean-precision parameterization of the Beta distribution, with $logistic(\boldsymbol{x}_i^T \boldsymbol{\gamma})$ being the mean and $\psi$ being the precision parameter. Specifically, the full model is as follows: 
+# **Review of MTSS_Cascade:** To characterize the relationship between items using their features, one example choice of $g$ is the popular Beta-Bernoulli logistic model [1,2], where $\theta_i {\sim} Beta(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma}), \psi)$ for some known parameter $\psi$. We adopt the mean-precision parameterization of the Beta distribution, with $logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})$ being the mean and $\psi$ being the precision parameter. Specifically, the full model is as follows: 
 # \begin{equation}\label{eqn:model_cascading}
 #     \begin{split}
-#     \theta_i & \sim Beta(logistic(\boldsymbol{x}_i^T \boldsymbol{\gamma}), \psi), \forall i \in [N]\\
+#     \theta_i & \sim Beta(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma}), \psi), \forall i \in [N]\\
 #     W_{k, t}(a) &\sim Bernoulli(\theta_{a^k}), \forall k \in [K], \\
 #     Y_{k,t}(a) &= W_{k,t}(a) E_{k,t}(a), \forall k \in [K],\\
 #     E_{k,t}(a) &= [1-Y_{k-1}(a)] E_{k-1,t}(a), \forall k \in [K],\\

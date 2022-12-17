@@ -4,47 +4,47 @@
 # # A-Learning (Single Stage)
 # 
 # ## Main Idea
-# A-Learning, also known as Advantage Learning, is one of the main approaches to learning the optimal regime and works similarly to Q-learning. However, while Q-learning requires positing regression models to fit the expected outcome, A-learning models the contrasts between treatments and control, directly informing the optimal decision. For example, in the case of **Personalized Incentives**, A-learning aims to find the optimal incentive ($A$) for each user by modeling the difference in expected return-on-investment ($Y$) between treatments. A detailed comparison between Q-learning and A-learning can be found in [1]. While [1] mainly focus on the case with binary treatment options, a complete review of A-learning with multiple treatment options can be found in [2]. Here, following the algorithm in [1], we consider contrast-based A-learning. However, there is an alternative regret-based A-learning introduced in [3]. Some recent extensions to conventional A-learning, such as deep A-learning [4] and high-dimensional A-Learning [5], will be added soon. Overall, A-learning is doubly-robust. In other words, it is less sensitive and more robust to model misspecification. 
+# A-Learning, also known as Advantage Learning, is one of the main approaches to learning the optimal regime and works similarly to Q-learning. However, while Q-learning requires positing regression models to fit the expected outcome, A-learning models the contrasts between treatments and control, directly informing the optimal decision. For example, in the case of **Personalized Incentives**, A-learning aims to find the optimal incentive ($A$) for each user by modeling the difference in expected return-on-investment ($R$) between treatments. A detailed comparison between Q-learning and A-learning can be found in [1]. While [1] mainly focus on the case with binary treatment options, a complete review of A-learning with multiple treatment options can be found in [2]. Here, following the algorithm in [1], we consider contrast-based A-learning. However, there is an alternative regret-based A-learning introduced in [3]. Some recent extensions to conventional A-learning, such as deep A-learning [4] and high-dimensional A-Learning [5], will be added soon. Overall, A-learning is doubly-robust. In other words, it is less sensitive and more robust to model misspecification. 
 # 
-# Note that, we assume the action space is either **binary** (i.e., 0,1) or **multinomial** (i.e., 0,1,2,3,4, where 0 stands for the control group by convention), and the outcome of interest Y is **continuous** and **non-negative**, where the larger the $Y$ the better. 
+# Note that, we assume the action space is either **binary** (i.e., 0,1) or **multinomial** (i.e., 0,1,2,3,4, where 0 stands for the control group by convention), and the outcome of interest R is **continuous** and **non-negative**, where the larger the $R$ the better. 
 # 
 # ## Algorithm Details
-# Suppose there are $m$ number of options, and the action space $\mathcal{A}=\{0,1,\dots,m-1\}$. Contrast-based A-learning, as the name suggested, aims to learn and estimate the constrast function, $C_{j}(X)$ for each treatment $j=1,2,\cdots, m-1$. Furthermore, we also need to posit a model for the conditional expected outcome for the control option (treatment $0$), $Q(X,0)$, and the propensity function $\omega(X,A)$, if the true values are not specified. Detailed definitions are provided in the following.
+# Suppose there are $m$ number of options, and the action space $\mathcal{A}=\{0,1,\dots,m-1\}$. Contrast-based A-learning, as the name suggested, aims to learn and estimate the constrast function, $C_{j}(X)$ for each treatment $j=1,2,\cdots, m-1$. Furthermore, we also need to posit a model for the conditional expected outcome for the control option (treatment $0$), $Q(S,0)$, and the propensity function $\omega(S,A)$, if the true values are not specified. Detailed definitions are provided in the following.
 # *   Q-function:
 #     \begin{align}
-#     Q(x,a)=E[Y|X=x, A=a],
+#     Q(s,a)=E[R|S=s, A=a],
 #     \end{align}
-#     Alternatively, with the contrast function $C_j(X)$ which will be defined later,
+#     Alternatively, with the contrast function $C_j(S)$ which will be defined later,
 #     \begin{align}
-#     Q(x,j) = Q(x,0) + C_{j}(x),\quad j=0,\dots,m-1.
+#     Q(s,j) = Q(s,0) + C_{j}(s),\quad j=0,\dots,m-1.
 #     \end{align}
 # *   Contrast functions (optimal blip to zero functions)
 #     \begin{align}
-#     C_{j}(x)=Q(x,j)-Q(x,0),\quad j=0,\dots,m-1,
+#     C_{j}(s)=Q(s,j)-Q(s,0),\quad j=0,\dots,m-1,
 #     \end{align}
-#     where $C_{0}(x) = 0$.
+#     where $C_{0}(s) = 0$.
 # *   Propensity score
 #     \begin{align}
-#     \omega(x,a)=P(A=a|X=x)
+#     \omega(s,a)=P(A=a|S=s)
 #     \end{align}
 # *   Optimal regime
 #     \begin{align}
-#     d^{opt}(x)=\arg\max_{j\in\mathcal{A}}C_{j}(X)
+#     d^{opt}(s)=\arg\max_{j\in\mathcal{A}}C_{j}(S)
 #     \end{align}
-# Positting models, $C_{j}(x,\psi_{j})$,$Q(x,0,\phi)$,and $\omega(x,a,\gamma)$, A-learning aims to estimate $\psi_{j}$, $\phi$, and $\gamma$ by g-estimation. With the $\hat{\psi}_{j}$ in hand, the optimal decision $d^{opt}(x)$ can be directly derived.
+# Positting models, $C_{j}(s,\psi_{j})$,$Q(s,0,\phi)$,and $\omega(s,a,\gamma)$, A-learning aims to estimate $\psi_{j}$, $\phi$, and $\gamma$ by g-estimation. With the $\hat{\psi}_{j}$ in hand, the optimal decision $d^{opt}(s)$ can be directly derived.
 # 
 # 
 # ## Key Steps
 # **Policy Learning:**
-# 1. Fitted a model $\omega(x,a,\gamma)$, which can be solved directly by existing approaches (i.e., logistic regression, .etc),
+# 1. Fitted a model $\omega(s,a,\gamma)$, which can be solved directly by existing approaches (i.e., logistic regression, .etc),
 # 2. Substituting the $\hat{\gamma}$, we estimate the $\hat{\psi}_{j}$ and $\gamma$ by solving the euqations in Appendix A.1 jointly.      
-# 3. For each individual find the optimal action $d^{opt}(x_{i})$ such that $d^{opt}(x_{i}) = \arg\max_{j\in\mathcal{A}}C_{j}(h,\hat{\psi_{j}})$.
+# 3. For each individual find the optimal action $d^{opt}(s_{i})$ such that $d^{opt}(s_{i}) = \arg\max_{j\in\mathcal{A}}C_{j}(h,\hat{\psi_{j}})$.
 #     
 # **Policy Evaluation:**    
-# 1. Fitted the functions $\omega(x,a,\gamma)$， $\hat{Q}(x,0,\hat{\beta})$, and $\hat{C}_{j}(x,\hat{\psi}_{j})$, based on the sampled dataset
-# 2. Estimated the value of a given regime $d$ using the estimated functions, such that, $\hat{Y}_{i} = \hat{Q}(x_{i},0,\hat{\beta})+I\{d(x_{i}=j)\}\hat{C}_{j}(x,\hat{\psi}_{j})$
+# 1. Fitted the functions $\omega(s,a,\gamma)$， $\hat{Q}(s,0,\hat{\beta})$, and $\hat{C}_{j}(s,\hat{\psi}_{j})$, based on the sampled dataset
+# 2. Estimated the value of a given regime $d$ using the estimated functions, such that, $\hat{R}_{i} = \hat{Q}(s_{i},0,\hat{\beta})+I\{d(s_{i}=j)\}\hat{C}_{j}(s,\hat{\psi}_{j})$
 # 
-# **Note** we also provide an option for bootstrapping. Particularly, for a given policy, we utilze the boostrap resampling to get the estimated value of the regime and the corresponding estimated standard error. Basically, for each round of bootstrap, we resample a dataset of the same size as the original dataset with replacement, fitted the $Q(x,0)$ function and contrast functions based on the sampled dataset, and estimated the value of a given regime using the estimated $Q(x,0)$ function and contrast functions function. 
+# **Note** we also provide an option for bootstrapping. Particularly, for a given policy, we utilze the boostrap resampling to get the estimated value of the regime and the corresponding estimated standard error. Basically, for each round of bootstrap, we resample a dataset of the same size as the original dataset with replacement, fitted the $Q(s,0)$ function and contrast functions based on the sampled dataset, and estimated the value of a given regime using the estimated $Q(s,0)$ function and contrast functions function. 
 # 
 # ## Demo Code
 # In the following, we exhibit how to apply the learner on real data to do policy learning and policy evaluation, respectively.
@@ -63,15 +63,15 @@ from causaldm.learners import ALearning
 
 
 # get the data
-X,A,Y = get_data(target_col = 'spend', binary_trt = False)
+S,A,R = get_data(target_col = 'spend', binary_trt = False)
 
 
 # In[3]:
 
 
 # transform the data into 2d numpy array
-Y = np.array(Y)
-X = np.hstack([np.ones((len(X),1)),np.array(X)])# add an intercept column
+R = np.array(R)
+S = np.hstack([np.ones((len(S),1)),np.array(S)])# add an intercept column
 A = np.array(A)[:, np.newaxis]
 
 
@@ -87,11 +87,11 @@ model_info = [{'X_prop': [0,1,2], #[0,1,2] here stands for the intercept, recenc
 
 # By specifing the model_info, we assume  the following models:
 # \begin{align}
-# Q(x,0,\phi) &= \phi_{00}+\phi_{01}*recency+\phi_{02}*history,\\
-# C_{1}(x,\psi_{0}) &= 0\\
-# C_{1}(x,\psi_{1}) &= \psi_{10}+\psi_{11}*recency+\psi_{12}*history,\\
-# C_{2}(x,\psi_{2}) &= \psi_{20}+\psi_{21}*recency+\psi_{22}*history,\\
-# \omega(x,a=j,\gamma) &= \frac{exp(\gamma_{j0}+\gamma_{j1}*recency+\gamma_{j2}*history)}{\sum_{j=0}^{2}exp(\gamma_{j0}+\gamma_{j1}*recency+\gamma_{j2}*history)},\\
+# Q(s,0,\phi) &= \phi_{00}+\phi_{01}*recency+\phi_{02}*history,\\
+# C_{1}(s,\psi_{0}) &= 0\\
+# C_{1}(s,\psi_{1}) &= \psi_{10}+\psi_{11}*recency+\psi_{12}*history,\\
+# C_{2}(s,\psi_{2}) &= \psi_{20}+\psi_{21}*recency+\psi_{22}*history,\\
+# \omega(s,a=j,\gamma) &= \frac{exp(\gamma_{j0}+\gamma_{j1}*recency+\gamma_{j2}*history)}{\sum_{j=0}^{2}exp(\gamma_{j0}+\gamma_{j1}*recency+\gamma_{j2}*history)},\\
 # \end{align}
 # where $\gamma_{00}=\gamma_{01}=\gamma_{02}=0$.
 
@@ -101,16 +101,16 @@ model_info = [{'X_prop': [0,1,2], #[0,1,2] here stands for the intercept, recenc
 #2. initialize the learner
 ALearn = ALearning.ALearning()
 #3. train the policy
-ALearn.train(X, A, Y, model_info, T=1)
+ALearn.train(S, A, R, model_info, T=1)
 
 
 # In[6]:
 
 
 # recommend action
-opt_d = ALearn.recommend_action(X).value_counts()
+opt_d = ALearn.recommend_action(S).value_counts()
 # get the estimated value of the optimal regime
-V_hat = ALearn.predict_value(X)
+V_hat = ALearn.predict_value(S)
 print("fitted contrast model:",ALearn.fitted_model['contrast'])
 print("opt regime:",opt_d)
 print("opt value:",V_hat)
@@ -118,9 +118,9 @@ print("opt value:",V_hat)
 
 # **Interpretation:** the fitted contrast models are 
 # \begin{align}
-# C_{0}(x,\psi_{0}) &= 0\\
-# C_{1}(x,\psi_{1}) &= 23.39-4.03*recency+.005*history,\\
-# C_{2}(x,\psi_{2}) &= 21.03-4.71*recency-.003*history,\\
+# C_{0}(s,\psi_{0}) &= 0\\
+# C_{1}(s,\psi_{1}) &= 23.39-4.03*recency+.005*history,\\
+# C_{2}(s,\psi_{2}) &= 21.03-4.71*recency-.003*history,\\
 # \end{align}
 # Therefore, the estimated optimal regime is:
 # 1. We would recommend $A=0$ (No E-mail) if $23.39-4.03*recency+.005*history<0$ and $21.03-4.71*recency-.003*history<0$
@@ -140,8 +140,8 @@ model_info = [{'X_prop': [0,1,2], #[0,1,2] here stands for the intercept, recenc
               'X_q0': [0,1,2],
                'X_C':{1:[0,1,2],2:[0,1,2]},
               'action_space': {'A':[0,1,2]}}] #A in [0,1,2]
-ALearn.train(X, A, Y, model_info, T=1, bootstrap = True, n_bs = 100)
-fitted_params,fitted_value,value_avg,value_std,params=ALearn.predict_value_boots(X)
+ALearn.train(S, A, R, model_info, T=1, bootstrap = True, n_bs = 100)
+fitted_params,fitted_value,value_avg,value_std,params=ALearn.predict_value_boots(S)
 print('Value_hat:',value_avg,'Value_std:',value_std)
 
 
@@ -154,7 +154,7 @@ print('Value_hat:',value_avg,'Value_std:',value_std)
 
 #1. specify the fixed regime to be tested
 # For example, regime d = 0 for all subjects
-N=len(X)
+N=len(S)
 regime = pd.DataFrame({'A':[0]*N})
 #2. evaluate the regime
 ALearn = ALearning.ALearning()
@@ -162,8 +162,8 @@ model_info = [{'X_prop': [0,1,2], #[0,1,2] here stands for the intercept, recenc
               'X_q0': [0,1,2],
                'X_C':{1:[0,1,2],2:[0,1,2]},
               'action_space': {'A':[0,1,2]}}] #A in [0,1,2]
-ALearn.train(X, A, Y, model_info, T=1, regime = regime, evaluate = True)
-ALearn.predict_value(X)
+ALearn.train(S, A, R, model_info, T=1, regime = regime, evaluate = True)
+ALearn.predict_value(S)
 
 
 # **Interpretation:** the estimated value of the regime that always sends no emails ($A=0$) is 116.37, under the specified model.
@@ -172,8 +172,8 @@ ALearn.predict_value(X)
 
 
 # bootstrap average and the std of estimate value
-ALearn.train(X, A, Y, model_info, T=1, regime = regime, evaluate = True, bootstrap = True, n_bs = 200)
-fitted_params,fitted_value,value_avg,value_std,params=ALearn.predict_value_boots(X)
+ALearn.train(S, A, R, model_info, T=1, regime = regime, evaluate = True, bootstrap = True, n_bs = 200)
+fitted_params,fitted_value,value_avg,value_std,params=ALearn.predict_value_boots(S)
 print('Value_hat:',value_avg,'Value_std:',value_std)
 
 
@@ -191,7 +191,13 @@ print('Value_hat:',value_avg,'Value_std:',value_std)
 # ## A.1
 # $$
 # \begin{aligned}
-# &\sum_{i=1}^n \frac{\partial C_{j}(X_{i};\psi_{j})}{\partial \psi_{j}}\{\mathbb{I}\{A_{i}=j\}-\omega(X_{i},j;\hat{\gamma})\}\times \Big\{Y_i-\sum_{j'=1}^{m-1} \mathbb{I}\{A_{i}=j'\}C_{j'}(X_{i;\psi_{j'}})-Q(X_{i},0;\phi)\Big\}=0\\
-# &\sum_{i=1}^n \frac{\partial Q(X_{i},0;\phi)}{\partial \phi}\Big\{Y_i-\sum_{j'=1}^{m-1} \mathbb{I}\{A_{i}=j'\}C_{j'}(X_{i};\psi_{j'}) Q(X_{i},0;\phi)\Big\}=0
+# &\sum_{i=1}^n \frac{\partial C_{j}(S_{i};\psi_{j})}{\partial \psi_{j}}\{\mathbb{I}\{A_{i}=j\}-\omega(S_{i},j;\hat{\gamma})\}\times \Big\{R_i-\sum_{j'=1}^{m-1} \mathbb{I}\{A_{i}=j'\}C_{j'}(S_{i;\psi_{j'}})-Q(S_{i},0;\phi)\Big\}=0\\
+# &\sum_{i=1}^n \frac{\partial Q(S_{i},0;\phi)}{\partial \phi}\Big\{R_i-\sum_{j'=1}^{m-1} \mathbb{I}\{A_{i}=j'\}C_{j'}(S_{i};\psi_{j'}) Q(S_{i},0;\phi)\Big\}=0
 # \end{aligned}
 # $$
+
+# In[ ]:
+
+
+
+

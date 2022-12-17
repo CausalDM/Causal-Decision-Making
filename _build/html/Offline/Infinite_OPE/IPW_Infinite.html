@@ -110,14 +110,14 @@ const thebe_selector_output = ".output, .cell_output"
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="../../intro.html">
-                    Introduction
+                <a class="reference internal" href="../../Map.html">
+                    Overview
                 </a>
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  intro
+  Introduction
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -146,17 +146,7 @@ const thebe_selector_output = ".output, .cell_output"
      Heterogenous Treatement Effect
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../Preliminary/Causal%20Discovery%20Preliminary.html">
-     Causal Discovery Preliminary
-    </a>
-   </li>
   </ul>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../Map.html">
-   Overview
-  </a>
  </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
@@ -166,18 +156,23 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../../Causal_Discovery/Causal%20Discovery%20Learner%20-%20PC%20Algorithm.html">
-   Causal Discovery Learner - PC Algorithm
+  <a class="reference internal" href="../../Preliminary/Causal%20Discovery%20Preliminary.html">
+   Causal Discovery Preliminary
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../Causal_Discovery/Causal%20Discovery%20Learner%20-%20LiNGAM%20Algorithm.html">
-   Causal Discovery Learner - LiNGAM Algorithm
+  <a class="reference internal" href="../../Causal_Discovery/Testing-based%20Learner%20-%20PC%20Algorithm.html">
+   Testing-based Learner - PC Algorithm
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../Causal_Discovery/Causal%20Discovery%20Learner%20-%20NOTEARS%20Algorithm.html">
-   Causal Discovery Learner - NOTEARS Algorithm
+  <a class="reference internal" href="../../Causal_Discovery/Functional-based%20Learner%20-%20LiNGAM%20Algorithm.html">
+   Functional-based Learner - LiNGAM Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Causal_Discovery/Score-based%20Learner%20-%20NOTEARS%20Algorithm.html">
+   Score-based Learner - NOTEARS Algorithm
   </a>
  </li>
 </ul>
@@ -915,13 +910,13 @@ IS has been widely used in statistics, and the idea can be extended to OPE after
 \end{align*}\]</div>
 <p>Since the transition and reward generation probabilities are shared  between both policies, this ratio is equal to the probability ratio of observing the <span class="math notranslate nohighlight">\(i\)</span>th trajectory until time point <span class="math notranslate nohighlight">\(t\)</span>.</p>
 <p>The standard <strong>(trajectory-wise) IS</strong> estimator [2] regards each trajectory (and the corresponding observed cumulative reward, <span class="math notranslate nohighlight">\(\sum_{t=0}^{T-1} \gamma^t R_{i,t}\)</span>) as one realization, and it estimates <span class="math notranslate nohighlight">\(\eta^{\pi}\)</span> by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3bd5d8ea-8665-4ece-bf55-768f4e64dc43">
-<span class="eqno">(89)<a class="headerlink" href="#equation-3bd5d8ea-8665-4ece-bf55-768f4e64dc43" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:IS}
+<div class="amsmath math notranslate nohighlight" id="equation-faddb42e-a38c-4ad8-9a77-c11603991281">
+<span class="eqno">(89)<a class="headerlink" href="#equation-faddb42e-a38c-4ad8-9a77-c11603991281" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:IS}
     \hat{\eta}^{\pi}_{IS} = \frac{1}{n} \sum_{i=1}^n \rho^i_T (\sum_{t=0}^{T-1} \gamma^t R_{i,t}). 
 \end{align}\]</div>
 <p>In contrast, the <strong>step-wise IS</strong> [2]  focuses on reweighting each immediate reward <span class="math notranslate nohighlight">\(R_{i,t}\)</span> and typically yields a lower variance than the trajectory-wise IS. It is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a09f83da-77c7-4304-a7cd-ec6cef945901">
-<span class="eqno">(90)<a class="headerlink" href="#equation-a09f83da-77c7-4304-a7cd-ec6cef945901" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:stepIS}
+<div class="amsmath math notranslate nohighlight" id="equation-804f10ec-e7a8-47f8-9061-cf7439f74762">
+<span class="eqno">(90)<a class="headerlink" href="#equation-804f10ec-e7a8-47f8-9061-cf7439f74762" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:stepIS}
     \hat{\eta}^{\pi}_{StepIS} = \frac{1}{n} \sum_{i=1}^n \Big[ \sum_{t=0}^{T-1} \rho^i_t  \gamma^t R_{i,t} \Big]. 
 \end{align}\]</div>
 <p>In addition to these two IS-type estimators, their <strong>self-normalized variants</strong> are also commonly considered [3].
@@ -937,8 +932,8 @@ The key observation is that, under the stationary assumption and when the data i
 We introduce the average visitation distribution under a policy <span class="math notranslate nohighlight">\(\pi\)</span> as <span class="math notranslate nohighlight">\(d^{\pi}(s)= (1 - \gamma)^{-1} \sum_{t=0}^{+\infty} \gamma^{t} p_t^{\pi}(s)\)</span>, where <span class="math notranslate nohighlight">\(p_t^{\pi}(s)\)</span> denotes the probability of <span class="math notranslate nohighlight">\(\{S_t = s\}\)</span> following policy <span class="math notranslate nohighlight">\(\pi\)</span> with  <span class="math notranslate nohighlight">\(S_{0}\sim \mathbb{G}\)</span>.
 Define <span class="math notranslate nohighlight">\(\widetilde{\omega}^{\pi}(s) = d^{\pi}(s) / d^{b}(s)\)</span>.
 Therefore, <span class="math notranslate nohighlight">\(\widetilde{\omega}^{\pi}(s)\)</span> can be understood as a marginalized version of the importance ratio. With a similar change-of-measure trick as in IS, we can obtain the relationship that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9e5bffd5-28fe-4e4b-ac75-5454d39e4a5d">
-<span class="eqno">(91)<a class="headerlink" href="#equation-9e5bffd5-28fe-4e4b-ac75-5454d39e4a5d" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:breaking}
+<div class="amsmath math notranslate nohighlight" id="equation-f79f3831-957a-47cf-966f-59324bf356e3">
+<span class="eqno">(91)<a class="headerlink" href="#equation-f79f3831-957a-47cf-966f-59324bf356e3" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:breaking}
     \eta^{\pi} =  \mathbb{E}_{(s,a) \sim p_b(s, a), r \sim \mathcal{R}(\cdot; s, a)} \widetilde{\omega}^{\pi}(s) \frac{\pi(a|s)}{b(a|s)} r. 
 \end{equation}\]</div>
 <p>According to this relationship, we can construct an estimator by replacing the nuisance functions  with their estimates and then approximating the expectation by its empirical mean over <span class="math notranslate nohighlight">\(\{(S_{i,t},A_{i,t},R_{i,t},S_{i,t+1})\}\)</span>.
