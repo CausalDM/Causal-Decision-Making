@@ -12,7 +12,7 @@
 # As the name suggested, the UCB algorithm estimates the upper confidence bound $U_{a}^{t}$ of the mean of the potential reward of arm $a$, $R_t(a)$, based on the observations and then choose the action has the highest estimates. The class of UCB-based algorithms is firstly introduced by Auer et al. [1]. Generally, at each round $t$, $U_{a}^{t}$ is calculated as the sum of the estimated reward (exploitation) and the estimated confidence radius (exploration) of item $i$ based on previous observations. Then, $A_{t}$ is selected as 
 # $$
 # \begin{equation}
-#     A_t = argmax_{a \in \mathcal{A}} U_a^t.
+#     A_t = \arg \max_{a \in \mathcal{A}} U_a^t.
 # \end{equation} 
 # $$
 # As an example, **UCB** [1] estimates the confidence radius as $\sqrt{\frac{2log(t)}{\text{\# item $i$ played so far}}}$. Doing so, either the item with a large average reward or the item with limited exploration will be selected. Note that this algorithm support cases with either binary reward or continuous reward.
@@ -20,7 +20,7 @@
 # ## Algorithms Details
 # Supposed there are $K$ options, and the action space is $\mathcal{A} = \{0,1,\cdots, K-1\}$. The UCB1 algorithm start with initializing the estimated upper confidence bound $U_a^{0}$ and the count of being pulled $C_a^{0}$ for each action $a$ as 0. At each round $t$, we greedily select an action $A_t$ as 
 # \begin{align}
-# A_t = arg max_{a\in \mathcal{A}} U_{a}^{t}.
+# A_t = \arg \max_{a\in \mathcal{A}} U_{a}^{t}.
 # \end{align}
 # 
 # After observing the rewards corresponding to the selected action $A_t$, we first update the total number of being pulled for $A_t$ accordingly. Then, we estimate the upper confidence bound for each action $a$ as
@@ -32,14 +32,12 @@
 # 
 # 1. Initializing the $\boldsymbol{U}^0$ and $\boldsymbol{C}^0$ for $K$ items as 0
 # 2. For t = $0, 1,\cdots, T$:
-# 
-#     2.1. select action $A_t$ as the arm with the maximum $U_a^t$
-#     
-#     2.2. Received the reward R, and update $C$ and $U$ with
-#     \begin{align}
-#     C_{A_{t}}^{t+1} &= C_{A_{t}}^{t} + 1 \\
-#     U_{A_{t}}^{t+1} &= \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} 
-#     \end{align}
+#     - select action $A_t$ as the arm with the maximum $U_a^t$
+#     - Received the reward R, and update $C$ and $U$ with
+#         \begin{align}
+#         C_{A_{t}}^{t+1} &= C_{A_{t}}^{t} + 1 \\
+#         U_{A_{t}}^{t+1} &= \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} 
+#         \end{align}
 
 # ## Demo Code
 
@@ -53,7 +51,7 @@ os.chdir('D:\GitHub\CausalDM')
 
 # ### Import the learner.
 
-# In[13]:
+# In[2]:
 
 
 import numpy as np

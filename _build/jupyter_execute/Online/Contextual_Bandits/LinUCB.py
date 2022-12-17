@@ -6,40 +6,35 @@
 # ## Overview
 # - **Advantage**: It is more scalable and efficient than **UCB** by utilizing features.
 # - **Disadvantage**:  
-# - **Application Situation**: discrete action space, binary/Gaussian reward space
+# - **Application Situation**: discrete action space, Gaussian reward space
 # 
 # ## Main Idea
-# As the name suggested, the UCB algorithm estimates the upper confidence bound $U_{a}^{t}$ of the mean of the potential reward of arm $a$, $R_t(a)$, based on the observations and then choose the action has the highest estimates. The class of UCB-based algorithms is firstly introduced by Auer et al. [1]. Generally, at each round $t$, $U_{a}^{t}$ is calculated as the sum of the estimated reward (exploitation) and the estimated confidence radius (exploration) of item $i$ based on previous observations. Then, $A_{t}$ is selected as 
-# $$
-# \begin{equation}
-#     A_t = argmax_{a \in \mathcal{A}} U_a^t.
-# \end{equation} 
-# $$
-# As an example, **UCB** [1] estimates the confidence radius as $\sqrt{\frac{2log(t)}{\text{\# item $i$ played so far}}}$. Doing so, either the item with a large average reward or the item with limited exploration will be selected. Note that this algorithm support cases with either binary reward or continuous reward.
-# 
-# ## Algorithms Details
-# Supposed there are $K$ options, and the action space is $\mathcal{A} = \{0,1,\cdots, K-1\}$. The UCB1 algorithm start with initializing the estimated upper confidence bound $U_a^{0}$ and the count of being pulled $C_a^{0}$ for each action $a$ as 0. At each round $t$, we greedily select an action $A_t$ as 
+# Supposed there are $K$ options, and the action space is $\mathcal{A} = \{0,1,\cdots, K-1\}$. **LinUCB** uses feature information to guide exploration by assuming a linear model between the expected potential reward and the features. Specifcially, for the Gaussain bandits, we assume that 
 # \begin{align}
-# A_t = arg max_{a\in \mathcal{A}} U_{a}^{t}.
-# \end{align}
-# 
-# After observing the rewards corresponding to the selected action $A_t$, we first update the total number of being pulled for $A_t$ accordingly. Then, we estimate the upper confidence bound for each action $a$ as
+# E(R_{t}(a)) = \theta_a = \boldsymbol{x}_a^T \boldsymbol{\gamma}.
+# \end{align} Solving a linear gression model, at each round $t$, the corresponding estimated upper confidence interval of the mean potential reward is then updated as
 # \begin{align}
-# U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} ,
-# \end{align}where $R_{t'}$ is the reward received at round $t'$. Intuitively, $U_{a}^{t}$ is the sum of the sample average reward of action $a$ for expolitation and a confidence radius for exploration.
+# U_a^t = \boldsymbol{x}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{x}_a^T V^{-1}  \boldsymbol{x}_a},
+# \end{align} where $\alpha$ is a tuning parameter that controls the rate of exploration, $V^{-1} = \sum_{j=0}^{t-1}\boldsymbol{x}_{a_j}\boldsymbol{x}_{a_j}^T$, and $\hat{\boldsymbol{\gamma}} = V^{-1}\sum_{j=0}^{t-1}\boldsymbol{x}_{a_j}R_j$.
+# 
+# As for the Bernoulli bandits, we assume that 
+# \begin{align}
+# \theta_{a} = logistic(\boldsymbol{x}_a^T \boldsymbol{\gamma}),
+# \end{align}where $logistic(x) \equiv 1 / (1 + exp^{-1}(x))$. At each round $t$, by fitting a generalized linear model to all historical observations, we obtain the maximum likelihood estimator of $\boldsymbol{\gamma}$. The corresponding estimated confidence upper bound is then calculated in the same way as for Gaussian bandits, such that
+# \begin{align}
+# U_a^t = \boldsymbol{x}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{x}_a^T V^{-1}  \boldsymbol{x}_a},
+# \end{align}where $\alpha$ and $V$ are defined in the same way as before. 
+# 
+# Finally, using the estimated upper confidence bounds, $A_t = \arg \max_{a \in \mathcal{A}} U_a^t$ would be selected.
+# 
 # 
 # ## Key Steps
 # 
-# 1. Initializing the $\boldsymbol{U}^0$ and $\boldsymbol{C}^0$ for $K$ items as 0
+# 1. Initializing $\hat{\boldsymbol{\gamma}}=\boldsymbol{0}$ and $V = I$, and specifying $\alpha$;
 # 2. For t = $0, 1,\cdots, T$:
-# 
-#     2.1. select action $A_t$ as the arm with the maximum $U_a^t$
-#     
-#     2.2. Received the reward R, and update $C$ and $U$ with
-#     \begin{align}
-#     C_{A_{t}}^{t+1} &= C_{A_{t}}^{t} + 1 \\
-#     U_{A_{t}}^{t+1} &= \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} 
-#     \end{align}
+#     - Calculate the upper confidence bound $U_a^t$;
+#     - Select action $A_t$ as the arm with the maximum $U_a^t$;
+#     - Receive the reward R, and update $\hat{\boldsymbol{\gamma}}$, $V$.
 
 # ## Demo Code
 
@@ -96,7 +91,7 @@ LinUCB_Gaussian_agent.cnts
 
 # ## References
 # 
-# [1] Li, L., Chu, W., Langford, J., & Schapire, R. E. (2010, April). A contextual-bandit approach to personalized news article recommendation. In Proceedings of the 19th international conference on World wide web (pp. 661-670).
+# [1] Chu, W., Li, L., Reyzin, L., & Schapire, R. (2011, June). Contextual bandits with linear payoff functions. In Proceedings of the Fourteenth International Conference on Artificial Intelligence and Statistics (pp. 208-214). JMLR Workshop and Conference Proceedings.
 
 # In[ ]:
 

@@ -33,7 +33,7 @@
 # 1. Specifying a prior distirbution of $E[R_0(a)]$, $a \in \mathcal{A}$, and the variance of the reward distribution.
 # 2. For t = $0, 1,\cdots, T$:
 #     - sample a $\theta^{t}$ from the posterior distribution of $E[R_t(a)]$ or prior distribution if in round $0$
-#     - select action $A_t$ which has the greatest $\theta^{t}_{a}$, i.e. $A_t = argmax_{a \in \mathcal{A}} \theta_{a}^{t}$
+#     - select action $A_t$ which has the greatest $\theta^{t}_{a}$, i.e. $A_t = \arg\max_{a \in \mathcal{A}} \theta_{a}^{t}$
 #     - receive the rewad $R_t$, and update the posterior distirbution accordingly.
 
 # ## Demo Code
@@ -48,7 +48,7 @@ os.chdir('D:\GitHub\CausalDM')
 
 # ### Import the learner.
 
-# In[3]:
+# In[2]:
 
 
 import numpy as np
