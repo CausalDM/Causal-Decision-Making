@@ -483,6 +483,33 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
   </ul>
  </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../OnlineEval/Online%20Policy%20Evaluation.html">
+   Online Policy Evaluation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+  <label for="toctree-checkbox-13">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../OnlineEval/Doubly%20Robust%20Online%20Policy%20Evaluator.html">
+     Doubly Robust Online Policy Evaluator
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../OnlineEval/Inverse%20Probability%20Weighted%20Online%20Policy%20Evaluator.html">
+     Inverse Probability Weighted Online Policy Evaluator
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../OnlineEval/Direct%20Online%20Policy%20Evaluator.html">
+     Direct Online Policy Evaluator
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -494,8 +521,8 @@ const thebe_selector_output = ".output, .cell_output"
   <a class="reference internal" href="../../Offline/preliminary_MDP-potential-outcome.html">
    Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
-  <label for="toctree-checkbox-13">
+  <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+  <label for="toctree-checkbox-14">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -504,8 +531,8 @@ const thebe_selector_output = ".output, .cell_output"
     <a class="reference internal" href="../../Offline/Infinite_OPE/Evaluation.html">
      Offline Evaluation
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
-    <label for="toctree-checkbox-14">
+    <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+    <label for="toctree-checkbox-15">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -536,8 +563,8 @@ const thebe_selector_output = ".output, .cell_output"
     <a class="reference internal" href="../../Offline/Infinite_OPE/Optimization.html">
      Offline Optimization
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
-    <label for="toctree-checkbox-15">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -795,11 +822,6 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#algorithms-details">
-   Algorithms Details
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#key-steps">
    Key Steps
   </a>
@@ -844,11 +866,6 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#algorithms-details">
-   Algorithms Details
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#key-steps">
    Key Steps
   </a>
@@ -880,45 +897,41 @@ title="Print to PDF"
 <ul class="simple">
 <li><p><strong>Advantage</strong>: It is more scalable and efficient than <strong>UCB</strong> by utilizing features.</p></li>
 <li><p><strong>Disadvantage</strong>:</p></li>
-<li><p><strong>Application Situation</strong>: discrete action space, binary/Gaussian reward space</p></li>
+<li><p><strong>Application Situation</strong>: discrete action space, Gaussian reward space</p></li>
 </ul>
 </section>
 <section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
-<p>As the name suggested, the UCB algorithm estimates the upper confidence bound <span class="math notranslate nohighlight">\(U_{a}^{t}\)</span> of the mean of the potential reward of arm <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(R_t(a)\)</span>, based on the observations and then choose the action has the highest estimates. The class of UCB-based algorithms is firstly introduced by Auer et al. [1]. Generally, at each round <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(U_{a}^{t}\)</span> is calculated as the sum of the estimated reward (exploitation) and the estimated confidence radius (exploration) of item <span class="math notranslate nohighlight">\(i\)</span> based on previous observations. Then, <span class="math notranslate nohighlight">\(A_{t}\)</span> is selected as
-$$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-86a19664-e4ee-4793-9301-114a15751424">
-<span class="eqno">(49)<a class="headerlink" href="#equation-86a19664-e4ee-4793-9301-114a15751424" title="Permalink to this equation">#</a></span>\[\begin{equation}
-    A_t = argmax_{a \in \mathcal{A}} U_a^t.
-\end{equation}\]</div>
-<p>$<span class="math notranslate nohighlight">\(
-As an example, **UCB** [1] estimates the confidence radius as \)</span>\sqrt{\frac{2log(t)}{\text{# item <span class="math notranslate nohighlight">\(i\)</span> played so far}}}$. Doing so, either the item with a large average reward or the item with limited exploration will be selected. Note that this algorithm support cases with either binary reward or continuous reward.</p>
-</section>
-<section id="algorithms-details">
-<h2>Algorithms Details<a class="headerlink" href="#algorithms-details" title="Permalink to this headline">#</a></h2>
-<p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. The UCB1 algorithm start with initializing the estimated upper confidence bound <span class="math notranslate nohighlight">\(U_a^{0}\)</span> and the count of being pulled <span class="math notranslate nohighlight">\(C_a^{0}\)</span> for each action <span class="math notranslate nohighlight">\(a\)</span> as 0. At each round <span class="math notranslate nohighlight">\(t\)</span>, we greedily select an action <span class="math notranslate nohighlight">\(A_t\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-06a9c11e-0b1b-4950-bc3b-1af05e16c4f8">
-<span class="eqno">(50)<a class="headerlink" href="#equation-06a9c11e-0b1b-4950-bc3b-1af05e16c4f8" title="Permalink to this equation">#</a></span>\[\begin{align}
-A_t = arg max_{a\in \mathcal{A}} U_{a}^{t}.
+<p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. <strong>LinUCB</strong> uses feature information to guide exploration by assuming a linear model between the expected potential reward and the features. Specifcially, for the Gaussain bandits, we assume that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-f263587d-8d70-4e2f-b4cd-54fbc404d0df">
+<span class="eqno">(49)<a class="headerlink" href="#equation-f263587d-8d70-4e2f-b4cd-54fbc404d0df" title="Permalink to this equation">#</a></span>\[\begin{align}
+E(R_{t}(a)) = \theta_a = \boldsymbol{x}_a^T \boldsymbol{\gamma}.
 \end{align}\]</div>
-<p>After observing the rewards corresponding to the selected action <span class="math notranslate nohighlight">\(A_t\)</span>, we first update the total number of being pulled for <span class="math notranslate nohighlight">\(A_t\)</span> accordingly. Then, we estimate the upper confidence bound for each action <span class="math notranslate nohighlight">\(a\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d081ea35-c995-482f-9209-b0de1d0c2cd7">
-<span class="eqno">(51)<a class="headerlink" href="#equation-d081ea35-c995-482f-9209-b0de1d0c2cd7" title="Permalink to this equation">#</a></span>\[\begin{align}
-U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} ,
+<div class="amsmath math notranslate nohighlight" id="equation-569b555f-ae72-4ef2-ae4e-451991b051fa">
+<span class="eqno">(50)<a class="headerlink" href="#equation-569b555f-ae72-4ef2-ae4e-451991b051fa" title="Permalink to this equation">#</a></span>\[\begin{align}
+U_a^t = \boldsymbol{x}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{x}_a^T V^{-1}  \boldsymbol{x}_a},
 \end{align}\]</div>
+<p>As for the Bernoulli bandits, we assume that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-44cf492f-ef86-4cf2-b0d6-789406ac62f5">
+<span class="eqno">(51)<a class="headerlink" href="#equation-44cf492f-ef86-4cf2-b0d6-789406ac62f5" title="Permalink to this equation">#</a></span>\[\begin{align}
+\theta_{a} = logistic(\boldsymbol{x}_a^T \boldsymbol{\gamma}),
+\end{align}\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-f6d1acab-4227-4f9a-a54a-8988377d6c67">
+<span class="eqno">(52)<a class="headerlink" href="#equation-f6d1acab-4227-4f9a-a54a-8988377d6c67" title="Permalink to this equation">#</a></span>\[\begin{align}
+U_a^t = \boldsymbol{x}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{x}_a^T V^{-1}  \boldsymbol{x}_a},
+\end{align}\]</div>
+<p>Finally, using the estimated upper confidence bounds, <span class="math notranslate nohighlight">\(A_t = \arg \max_{a \in \mathcal{A}} U_a^t\)</span> would be selected.</p>
 </section>
 <section id="key-steps">
 <h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">#</a></h2>
-<ol>
-<li><p>Initializing the <span class="math notranslate nohighlight">\(\boldsymbol{U}^0\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{C}^0\)</span> for <span class="math notranslate nohighlight">\(K\)</span> items as 0</p></li>
+<ol class="simple">
+<li><p>Initializing <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\gamma}}=\boldsymbol{0}\)</span> and <span class="math notranslate nohighlight">\(V = I\)</span>, and specifying <span class="math notranslate nohighlight">\(\alpha\)</span>;</p></li>
 <li><p>For t = <span class="math notranslate nohighlight">\(0, 1,\cdots, T\)</span>:</p>
-<p>2.1. select action <span class="math notranslate nohighlight">\(A_t\)</span> as the arm with the maximum <span class="math notranslate nohighlight">\(U_a^t\)</span></p>
-<p>2.2. Received the reward R, and update <span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(U\)</span> with</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e450bce2-d052-46c8-b569-bfe94bbb24e4">
-<span class="eqno">(52)<a class="headerlink" href="#equation-e450bce2-d052-46c8-b569-bfe94bbb24e4" title="Permalink to this equation">#</a></span>\[\begin{align}
-    C_{A_{t}}^{t+1} &amp;= C_{A_{t}}^{t} + 1 \\
-    U_{A_{t}}^{t+1} &amp;= \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} 
-    \end{align}\]</div>
+<ul class="simple">
+<li><p>Calculate the upper confidence bound <span class="math notranslate nohighlight">\(U_a^t\)</span>;</p></li>
+<li><p>Select action <span class="math notranslate nohighlight">\(A_t\)</span> as the arm with the maximum <span class="math notranslate nohighlight">\(U_a^t\)</span>;</p></li>
+<li><p>Receive the reward R, and update <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\gamma}}\)</span>, <span class="math notranslate nohighlight">\(V\)</span>.</p></li>
+</ul>
 </li>
 </ol>
 </section>
@@ -999,7 +1012,7 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
-<p>[1] Li, L., Chu, W., Langford, J., &amp; Schapire, R. E. (2010, April). A contextual-bandit approach to personalized news article recommendation. In Proceedings of the 19th international conference on World wide web (pp. 661-670).</p>
+<p>[1] Chu, W., Li, L., Reyzin, L., &amp; Schapire, R. (2011, June). Contextual bandits with linear payoff functions. In Proceedings of the Fourteenth International Conference on Artificial Intelligence and Statistics (pp. 208-214). JMLR Workshop and Conference Proceedings.</p>
 </section>
 </section>
 
