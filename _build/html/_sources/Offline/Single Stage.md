@@ -1,7 +1,7 @@
 # Single Stage (DTR)
 
 ## Problem Setting
-Suppose we have a dataset containing observations from $N$ individuals. For each individual $i$, we have $\{\mathbf{S}_{i},A_{i},R_{i}\}$, $i=1,\cdots,N$. $\mathbf{S}_{i}$ includes the feature information, $A_{i}$ is the action taken, and $R_{i}$ is the observed reward received.
+Suppose we have a dataset containing observations from $N$ individuals. For each individual $i$, we have $\{\mathbf{S}_{i},A_{i},R_{i}\}$, $i=1,\cdots,N$. $\mathbf{S}_{i}$ includes the feature information, $A_{i}$ is the action taken, and $R_{i}$ is the observed reward received. Further, let $R_i(a)$ denote the potential reward that would be observed if individual $i$ was treated with action $a$.
 
 ## Real Data
 **1. Fetch_hillstrom**
@@ -39,15 +39,3 @@ where larger values of $R$ are considered better.
         otherwise, S,A,R = get_data(target_col = 'spend', binary_trt = Flase)
 
 More details about the original dataset can be found in [https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html).
-
-
-## Multiple Stages
-
-## Problem Setting
-Suppose we have a dataset containning observations from $N$ individuals. For each individual $i$, the observed data is structured as follows
-    \begin{align}
-    (S_{1i},A_{1i},\cdots,S_{Ti},A_{Ti},R), i=1,\cdots, N.
-    \end{align} 
-    Let $h_{ti}=\{S_{1i},A_{1i},\cdots,S_{ti}\})$ includes all the information observed till step t. 
-
-## Real Data

@@ -12,9 +12,9 @@
 # 
 # 
 # ## Algorithm Details
-# Q-learning with a single decision point is mainly a regression modeling problem, as the major component is to find the relationship between $R$ and $\{S,A\}$. Let's first define a Q-function, such that
+# Q-learning with a single decision point is mainly a regression modeling problem, as the major component is to find the relationship between the expectation of potential reward $R(a)$ and $\{s,a\}$. Let's first define a Q-function, such that
 # \begin{align}
-#     Q(s,a) = E(R|S=s, A=a).
+#     Q(s,a) = E(R(a)|S=s).
 # \end{align} Then, to find the optimal policy is equivalent to solve
 # \begin{align}
 #     \text{arg max}_{\pi}Q(s_{i},\pi(s_{i})).
@@ -27,7 +27,7 @@
 # 
 # **Policy Evaluation:**    
 # 1. Fitted the Q function $\hat{Q}(s,a,\hat{\beta})$, based on the sampled dataset
-# 2. Estimated the value of a given regime $d$ using the estimated Q function, such that, $\hat{R}_{i} = \hat{Q}(s_{i},d(s_{i}),\hat{\beta})$
+# 2. Estimated the value of a given regime $d$ (i.e., $V(d)$) using the estimated Q function, such that, $\hat{E}(R_{i}[d(s_{i})]) = \hat{Q}(s_{i},d(s_{i}),\hat{\beta})$, and $\hat{V}(d) = \frac{1}{N}\sum_{i=1}^{N}\hat{E}(R_{i}[d(s_{i})])$.
 # 
 # **Note** we also provide an option for bootstrapping. Particularly, for a given policy, we utilize bootstrap resampling to get the estimated value of the regime and the corresponding estimated standard error. For each round of bootstrapping, we first resample a dataset of the same size as the original dataset, then fit the Q function based on the sampled dataset, and finally estimate the value of a given regime based on the estimated Q function. 
 # 
@@ -44,14 +44,14 @@ from causaldm._util_causaldm import *
 from causaldm.learners import QLearning
 
 
-# In[8]:
+# In[ ]:
 
 
 # get the data
 S,A,R = get_data(target_col = 'spend', binary_trt = False)
 
 
-# In[9]:
+# In[ ]:
 
 
 #1. specify the model you would like to use
@@ -69,7 +69,7 @@ model_info = [{"model": "Y~C(A)*(recency+history)", #default is add an intercept
 # &+I(a=2)*\{\beta_{20}+\beta_{21}*recency+\beta_{22}*history\} 
 # \end{align}
 
-# In[10]:
+# In[ ]:
 
 
 #2. initialize the learner
@@ -78,7 +78,7 @@ QLearn = QLearning.QLearning()
 QLearn.train(S, A, R, model_info, T=1)
 
 
-# In[11]:
+# In[ ]:
 
 
 #4. recommend action
@@ -103,7 +103,7 @@ print("opt value:",V_hat)
 # 
 # The estimated value for the estimated optimal regime is 126.49.
 
-# In[13]:
+# In[ ]:
 
 
 # Optional: 
@@ -121,7 +121,7 @@ print('Value_hat:',value_avg,'Value_std:',value_std)
 
 # ### 2. Policy Evaluation
 
-# In[14]:
+# In[ ]:
 
 
 #1. specify the fixed regime to be tested (For example, regime d = 'No E-Mail' for all subjects)
@@ -138,7 +138,7 @@ QLearn.predict_value(S)
 
 # **Interpretation:** the estimated value of the regime that always sends no emails ($A=0$) is 116.41, under the specified model.
 
-# In[16]:
+# In[ ]:
 
 
 # Optional: Boostrap

@@ -918,13 +918,13 @@ title="Print to PDF"
 </section>
 <section id="algorithm-details">
 <h2>Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this headline">#</a></h2>
-<p>Q-learning with a single decision point is mainly a regression modeling problem, as the major component is to find the relationship between <span class="math notranslate nohighlight">\(R\)</span> and <span class="math notranslate nohighlight">\(\{S,A\}\)</span>. Let’s first define a Q-function, such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-11b67bff-c3e7-460b-a29d-c168292d992c">
-<span class="eqno">(26)<a class="headerlink" href="#equation-11b67bff-c3e7-460b-a29d-c168292d992c" title="Permalink to this equation">#</a></span>\[\begin{align}
-    Q(s,a) = E(R|S=s, A=a).
+<p>Q-learning with a single decision point is mainly a regression modeling problem, as the major component is to find the relationship between the expectation of potential reward <span class="math notranslate nohighlight">\(R(a)\)</span> and <span class="math notranslate nohighlight">\(\{s,a\}\)</span>. Let’s first define a Q-function, such that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-b11f2a84-aaed-4f25-95d1-1f270d854429">
+<span class="eqno">(26)<a class="headerlink" href="#equation-b11f2a84-aaed-4f25-95d1-1f270d854429" title="Permalink to this equation">#</a></span>\[\begin{align}
+    Q(s,a) = E(R(a)|S=s).
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-6fc5b9e4-05d2-40ee-92e7-b6ab0b375244">
-<span class="eqno">(27)<a class="headerlink" href="#equation-6fc5b9e4-05d2-40ee-92e7-b6ab0b375244" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-99edd8f9-93e4-485e-82e7-8949bf0c5cc5">
+<span class="eqno">(27)<a class="headerlink" href="#equation-99edd8f9-93e4-485e-82e7-8949bf0c5cc5" title="Permalink to this equation">#</a></span>\[\begin{align}
     \text{arg max}_{\pi}Q(s_{i},\pi(s_{i})).
 \end{align}\]</div>
 </section>
@@ -938,7 +938,7 @@ title="Print to PDF"
 <p><strong>Policy Evaluation:</strong></p>
 <ol class="simple">
 <li><p>Fitted the Q function <span class="math notranslate nohighlight">\(\hat{Q}(s,a,\hat{\beta})\)</span>, based on the sampled dataset</p></li>
-<li><p>Estimated the value of a given regime <span class="math notranslate nohighlight">\(d\)</span> using the estimated Q function, such that, <span class="math notranslate nohighlight">\(\hat{R}_{i} = \hat{Q}(s_{i},d(s_{i}),\hat{\beta})\)</span></p></li>
+<li><p>Estimated the value of a given regime <span class="math notranslate nohighlight">\(d\)</span> (i.e., <span class="math notranslate nohighlight">\(V(d)\)</span>) using the estimated Q function, such that, <span class="math notranslate nohighlight">\(\hat{E}(R_{i}[d(s_{i})]) = \hat{Q}(s_{i},d(s_{i}),\hat{\beta})\)</span>, and <span class="math notranslate nohighlight">\(\hat{V}(d) = \frac{1}{N}\sum_{i=1}^{N}\hat{E}(R_{i}[d(s_{i})])\)</span>.</p></li>
 </ol>
 <p><strong>Note</strong> we also provide an option for bootstrapping. Particularly, for a given policy, we utilize bootstrap resampling to get the estimated value of the regime and the corresponding estimated standard error. For each round of bootstrapping, we first resample a dataset of the same size as the original dataset, then fit the Q function based on the sampled dataset, and finally estimate the value of a given regime based on the estimated Q function.</p>
 </section>
@@ -989,8 +989,8 @@ title="Print to PDF"
 </div>
 </div>
 <p>By specifing the model_info, we assume a regression model that:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-575dbc38-2d37-42ae-a246-4de19b97e719">
-<span class="eqno">(28)<a class="headerlink" href="#equation-575dbc38-2d37-42ae-a246-4de19b97e719" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ecf72206-b699-44cd-817a-427be5e483c9">
+<span class="eqno">(28)<a class="headerlink" href="#equation-ecf72206-b699-44cd-817a-427be5e483c9" title="Permalink to this equation">#</a></span>\[\begin{align}
 Q(s,a,\beta) &amp;= \beta_{00}+\beta_{01}*recency+\beta_{02}*history\\
 &amp;+I(a=1)*\{\beta_{10}+\beta_{11}*recency+\beta_{12}*history\} \\
 &amp;+I(a=2)*\{\beta_{20}+\beta_{21}*recency+\beta_{22}*history\} 
@@ -1038,8 +1038,8 @@ opt value: 126.48792828230047
 </div>
 </div>
 <p><strong>Interpretation:</strong> the fitted model is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4571ed32-2bdc-43da-bab8-181eb54050d3">
-<span class="eqno">(29)<a class="headerlink" href="#equation-4571ed32-2bdc-43da-bab8-181eb54050d3" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-694f91e1-d008-44f5-9cfa-012318ee11d6">
+<span class="eqno">(29)<a class="headerlink" href="#equation-694f91e1-d008-44f5-9cfa-012318ee11d6" title="Permalink to this equation">#</a></span>\[\begin{align}
 Q(s,a,\beta) &amp;= 94.20+4.53*recency+0.0005*history\\
 &amp;+I(a=1)*\{23.24-4.15*recency+0.0076*history\} \\
 &amp;+I(a=2)*\{20.61-4.84*recency+0.0004history\}. 

@@ -918,17 +918,17 @@ title="Print to PDF"
 </section>
 <section id="algorithm-details">
 <h2>Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this headline">#</a></h2>
-<p>For multistage cases, we apply a backward iterative approach, which means that we start from the final decision point T and work our way backward to the initial decision point. At the final step <span class="math notranslate nohighlight">\(T\)</span>, it is again a standard regression modeling problem that is the same as what we did for the single decision point case. Particularly, we posit a model <span class="math notranslate nohighlight">\(Q_{T}(h_{T},a_{T})\)</span> for the observed outcome <span class="math notranslate nohighlight">\(R\)</span>, and then the optimal policy at step <span class="math notranslate nohighlight">\(T\)</span> is derived as <span class="math notranslate nohighlight">\(\text{arg max}_{\pi_{T}}Q_{T}(h_{T},\pi_{T}(h_{T}))\)</span>. For the decision point <span class="math notranslate nohighlight">\(T-1\)</span> till the decision point <span class="math notranslate nohighlight">\(1\)</span>, a new term is introduced, which is the pseudo-outcome <span class="math notranslate nohighlight">\(\tilde{R}_{t}\)</span>.
+<p>For multistage cases, we apply a backward iterative approach, which means that we start from the final decision point T and work our way backward to the initial decision point. At the final step <span class="math notranslate nohighlight">\(T\)</span>, it is again a standard regression modeling problem that is the same as what we did for the single decision point case. Particularly, we posit a model <span class="math notranslate nohighlight">\(Q_{T}(h_{T},a_{T})\)</span> for the expectation of potential outcome <span class="math notranslate nohighlight">\(R(\bar{a}_T)\)</span>, and then the optimal policy at step <span class="math notranslate nohighlight">\(T\)</span> is derived as <span class="math notranslate nohighlight">\(\text{arg max}_{\pi_{T}}Q_{T}(h_{T},\pi_{T}(h_{T}))\)</span>. For the decision point <span class="math notranslate nohighlight">\(T-1\)</span> till the decision point <span class="math notranslate nohighlight">\(1\)</span>, a new term is introduced, which is the pseudo-outcome <span class="math notranslate nohighlight">\(\tilde{R}_{t}\)</span>.
 \begin{align}
 \tilde{R}<em>{t} = \text{max}</em>{\pi_{t}}\hat{Q}<em>{t}(h</em>{t},\pi_{t}(h_{t}),\hat{\beta}_{t})
 \end{align}
-By doing so, the pseudo-outcome taking the <strong>delayed effect</strong> into account to help explore the optimal policy. Then, for each decision point <span class="math notranslate nohighlight">\(t&lt;T\)</span>, with the <span class="math notranslate nohighlight">\(\tilde{R}_{t+1}\)</span> calculated, we repeat the regression modeling step for <span class="math notranslate nohighlight">\(\tilde{R}_{t+1}\)</span>. After obtaining the fitted model <span class="math notranslate nohighlight">\(\hat{Q}_{t}(h_{t},a_{t},\hat{\beta}_{t})\)</span>, the optimal policy is obtained as <span class="math notranslate nohighlight">\(\text{arg max}_{\pi_{t}}Q_{t}(h_{t},\pi_{t}(h_{t}))\)</span>.</p>
+By doing so, the pseudo-outcome taking the <strong>delayed effect</strong> into account to help explore the optimal policy. Then, for each decision point <span class="math notranslate nohighlight">\(t&lt;T\)</span>, with the <span class="math notranslate nohighlight">\(\tilde{R}_{t+1}\)</span> calculated, we repeat the regression modeling step for <span class="math notranslate nohighlight">\(\tilde{R}_{t+1}\)</span>. After obtaining the fitted model <span class="math notranslate nohighlight">\(\hat{Q}_{t}(h_{t},a_{t},\hat{\beta}_{t})\)</span>, the optimal policy is obtained as <span class="math notranslate nohighlight">\(\arg \max_{\pi_{t}}Q_{t}(h_{t},\pi_{t}(h_{t}))\)</span>.</p>
 </section>
 <section id="key-steps">
 <h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">#</a></h2>
 <p><strong>Policy Learning:</strong></p>
 <ol class="simple">
-<li><p>At the final decision point <span class="math notranslate nohighlight">\(t=T\)</span>, fitted a model <span class="math notranslate nohighlight">\(\hat{Q}_{T}(h_{T},a_{T},\hat{\beta}_{T})\)</span> for the observed outcome <span class="math notranslate nohighlight">\(R\)</span>;</p></li>
+<li><p>At the final decision point <span class="math notranslate nohighlight">\(t=T\)</span>, fitted a model <span class="math notranslate nohighlight">\(Q_{T}(h_{T},a_{T},\beta_{T})\)</span>;</p></li>
 <li><p>For each individual <span class="math notranslate nohighlight">\(i\)</span>, calculated the pseudo-outcome <span class="math notranslate nohighlight">\(\tilde{R}_{Ti}=\text{max}_{\pi}\hat{Q}_{T}(h_{Ti},\pi(h_{Ti}),\hat{\beta}_{T})\)</span>, and the optimal action <span class="math notranslate nohighlight">\(d^{opt}_{T}(s_{i})=\text{arg max}_{a}\hat{Q}_{T}(h_{Ti},a,\hat{\beta}_{T})\)</span>;</p></li>
 <li><p>For decision point <span class="math notranslate nohighlight">\(t = T-1,\cdots, 1\)</span>,</p>
 <ol class="simple">
@@ -939,11 +939,11 @@ By doing so, the pseudo-outcome taking the <strong>delayed effect</strong> into 
 </ol>
 <p><strong>Policy Evaluation:</strong><br />
 We use the backward iteration as what we did in policy learning. However, here for each round, the pseudo outcome is not the maximum of Q values. Instead, the pseudo outcome at decision point t is defined as below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-27781b55-3534-4ffe-94a9-59768e85b13c">
-<span class="eqno">(104)<a class="headerlink" href="#equation-27781b55-3534-4ffe-94a9-59768e85b13c" title="Permalink to this equation">#</a></span>\[\begin{align}
-\tilde{R}_{t} = \hat{Q}_{t}(h_{t},d_{t}(h_{t}),\hat{\beta}_{t}),
+<div class="amsmath math notranslate nohighlight" id="equation-d4e1e54b-232a-4902-8cf8-5be5a68acf2b">
+<span class="eqno">(104)<a class="headerlink" href="#equation-d4e1e54b-232a-4902-8cf8-5be5a68acf2b" title="Permalink to this equation">#</a></span>\[\begin{align}
+\tilde{R}_{ti} = \hat{Q}_{t}(h_{ti},d_{t}(h_{ti}),\hat{\beta}_{t}),
 \end{align}\]</div>
-<p>The estimated value of the policy is then the average of <span class="math notranslate nohighlight">\(\tilde{R}_{1}\)</span>.</p>
+<p>The estimated value of the policy is then the average of <span class="math notranslate nohighlight">\(\tilde{R}_{1i}\)</span>.</p>
 <p><strong>Note</strong> we also provide an option for bootstrapping. Particularly, for a given policy, we utilize bootstrap resampling to get the estimated value of the regime and the corresponding estimated standard error.</p>
 </section>
 <section id="demo-code">
