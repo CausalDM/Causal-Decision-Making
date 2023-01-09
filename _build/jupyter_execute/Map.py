@@ -46,7 +46,7 @@
 # The Scenario 3 includes two data dependence structures with a Markovian state transition structure. In particular, the offline version is the well-known Markov Decision Process (MDP). While $A_t$ is only affected by $S_t$, both $R_t$ and $S_{t+1}$ would be affected by $(S_t,A_t)$. Given $S_{t}, A_t$, a standard assumption of MDP problems is that $R_t$ and $S_{t+1}$ are independent of previous observations. Build upon the MDP structure, when an adaptive policy is applied, the online version of the strucuture clearly depicts the data generating process, in which $A_t$ would be affected by all previous observations $H_{t-1}$. List of related learning methods would be introduced, with a map in [Appendix C](#MDP).
 # 
 # ### <a name="Case4"></a> Scenario 4: All Others
-# The Scenario 4 also includes two versions (i.e., offline and online). Taking all the possible causal relationship into account, this scenario considers all the data dependence struacture that are not included in the previous three classical scenarios, such as **Multi-Stage DTR**, **Partially Observable MDP (POMDP)**, **Confounded MDP**, ......
+# The Scenario 4 also includes two versions (i.e., offline and online). Taking all the possible causal relationship into account, this scenario considers all the data dependence struacture that are not included in the previous three classical scenarios, such as **Multi-Stage DTR**, **Partially Observable MDP (POMDP)**,$\cdots$
 # 
 # 
 # ## Appendix
