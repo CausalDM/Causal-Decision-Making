@@ -960,7 +960,7 @@ title="Print to PDF"
 <p>MTSS_MNL is an example of the general Thompson Sampling(TS)-based framework, MTSS [1], to deal with dynamic assortment optimization problems.</p>
 <p><strong>Review of MTSS:</strong> MTSS[1] is a meta-learning framework designed for large-scale structured bandit problems [2]. Mainly, it is a TS-based algorithm that learns the information-sharing structure while minimizing the cumulative regrets. Adapting the TS framework to a problem-specific Bayesian hierarchical model, MTSS simultaneously enables information sharing among items via their features and models the inter-item heterogeneity. Specifically, it assumes that the item-specific parameter <span class="math notranslate nohighlight">\(\theta_i\)</span> is sampled from a distribution <span class="math notranslate nohighlight">\(g(\theta_i|\boldsymbol{s}_i, \boldsymbol{\gamma})\)</span> instead of being entirely determined by <span class="math notranslate nohighlight">\(\boldsymbol{s}_i\)</span> via a deterministic function. Here, <span class="math notranslate nohighlight">\(g\)</span> is a model parameterized by an <strong>unknown</strong> vector <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>. The following is the general feature-based hierarchical model MTSS considered.</p>
 <div class="amsmath math notranslate nohighlight" id="equation-ae7b200d-3984-4b56-906c-947e7c32f96c">
-<span class="eqno">(79)<a class="headerlink" href="#equation-ae7b200d-3984-4b56-906c-947e7c32f96c" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:general_hierachical}
+<span class="eqno">(89)<a class="headerlink" href="#equation-ae7b200d-3984-4b56-906c-947e7c32f96c" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:general_hierachical}
   \begin{alignedat}{2}
 &amp;\text{(Prior)} \quad
 \quad\quad\quad\quad\quad\quad\quad\quad\quad
@@ -977,7 +977,7 @@ title="Print to PDF"
 Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class of practical problems, <strong>scalable</strong> to large systems, and <strong>robust</strong> to the specification of the generalization model.</p>
 <p><strong>Review of MTSS_MNL:</strong> In this tutorial, as a concrete example, we focus on the epoch-type offering schedule and consider modeling the relationship between <span class="math notranslate nohighlight">\(\theta_i\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{s}_i\)</span> with the following Beta-Geometric logistic model:</p>
 <div class="amsmath math notranslate nohighlight" id="equation-123f37d1-4d86-425c-a944-45f8fa4232b1">
-<span class="eqno">(80)<a class="headerlink" href="#equation-123f37d1-4d86-425c-a944-45f8fa4232b1" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn1}
+<span class="eqno">(90)<a class="headerlink" href="#equation-123f37d1-4d86-425c-a944-45f8fa4232b1" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn1}
     \begin{split}
      \theta_i &amp;\sim Beta \big(\frac{logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})+ 1}{2}, \psi \big) , \forall i \in [N],\\
     Y_{i}^l(a) &amp;\sim Geometric(\theta_i), \forall i \in a,\\
@@ -986,7 +986,7 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
 \end{equation}\]</div>
 <p>The prior <span class="math notranslate nohighlight">\(Q(\boldsymbol{\gamma})\)</span> can be chosen as many appropriate distributions. For instance, we choose the prior <span class="math notranslate nohighlight">\(\boldsymbol{\gamma} \sim \mathcal{N}(\boldsymbol{\mu}_{\boldsymbol{\gamma}}, {\boldsymbol{\Sigma}}_{\boldsymbol{\gamma}})\)</span> with parameters as known. To update the posterior of <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>, we utilize the <strong>Pymc3</strong> package [4]. With a given <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>, the posterior of <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> enjoys the Beta-Geometric conjugate relationship and hence can be updated explicitly and efficiently. Finally, for each epoch <span class="math notranslate nohighlight">\(l\)</span>, <span class="math notranslate nohighlight">\(A^{l}\)</span> is selected by linear programming as</p>
 <div class="amsmath math notranslate nohighlight" id="equation-2a77d9ec-9d12-49c7-932e-0f0ff41132de">
-<span class="eqno">(81)<a class="headerlink" href="#equation-2a77d9ec-9d12-49c7-932e-0f0ff41132de" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<span class="eqno">(91)<a class="headerlink" href="#equation-2a77d9ec-9d12-49c7-932e-0f0ff41132de" title="Permalink to this equation">#</a></span>\[\begin{equation}
     A^{l} = argmax_{a \in \mathcal{A}} \frac{\sum_{i\in a}\eta_{i}v_{i}}{1+\sum_{j\in a} v_{j}}.
 \end{equation}\]</div>
 <p>It should be noted that the posterior updating step differs for different pairs of the <span class="math notranslate nohighlight">\(Q(\boldsymbol{\gamma})\)</span> and the reward distribution, and the corresponding code can be easily modified to different prior/reward distribution specifications if necessary.</p>
