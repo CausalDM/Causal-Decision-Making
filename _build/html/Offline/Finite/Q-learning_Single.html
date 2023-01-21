@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Q-Learning (Single Stage) &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -144,7 +145,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../Preliminary/Heterogenous%20Treatement%20Effect.html">
-     Heterogenous Treatement Effect
+     Heterogenous Treatment Effect
     </a>
    </li>
   </ul>
@@ -959,26 +960,26 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="q-learning-single-stage">
+  <section class="tex2jax_ignore mathjax_ignore" id="q-learning-single-stage">
 <h1>Q-Learning (Single Stage)<a class="headerlink" href="#q-learning-single-stage" title="Permalink to this headline">#</a></h1>
-<div class="section" id="main-idea">
+<section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>Early in 2000, as a classic method of Reinforcement Learning, Q-learning was adapted to decision-making problems[1] and kept evolving with various extensions, such as penalized Q-learning [2]. Q-learning with finite decision points is mainly a regression modeling problem based on positing regression models for outcome at each decision point. The target of Q-learning is to find an optimal policy <span class="math notranslate nohighlight">\(\pi\)</span> that can maximize the expected reward received. In other words, by training a model with the observed data, we hope to find an optimal policy to predict the optimal action for each individual to maximize rewards. For example, considering the motivating example <strong>Personalized Incentives</strong>, Q-learning aims to find the best policy to assign different incentives (<span class="math notranslate nohighlight">\(A\)</span>) to different users to optimize the return-on-investment (<span class="math notranslate nohighlight">\(R\)</span>). Overall, Q-learning is practical and easy to understand, as it allows straightforward implementation of diverse established regression methods.</p>
 <p>Note that, we assume the action space is either <strong>binary</strong> (i.e., 0,1) or <strong>multinomial</strong> (i.e., A,B,C,D), and the outcome of interest R is <strong>continuous</strong> and <strong>non-negative</strong>, where the larger the <span class="math notranslate nohighlight">\(R\)</span> the better.</p>
-</div>
-<div class="section" id="algorithm-details">
+</section>
+<section id="algorithm-details">
 <h2>Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this headline">#</a></h2>
 <p>Q-learning with a single decision point is mainly a regression modeling problem, as the major component is to find the relationship between the expectation of potential reward <span class="math notranslate nohighlight">\(R(a)\)</span> and <span class="math notranslate nohighlight">\(\{s,a\}\)</span>. Let’s first define a Q-function, such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3988328a-2ce1-42e0-b0df-5f78a735757a">
-<span class="eqno">(37)<a class="headerlink" href="#equation-3988328a-2ce1-42e0-b0df-5f78a735757a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1e48cdd3-5702-4c09-abec-3a643215b60d">
+<span class="eqno">(37)<a class="headerlink" href="#equation-1e48cdd3-5702-4c09-abec-3a643215b60d" title="Permalink to this equation">#</a></span>\[\begin{align}
     Q(s,a) = E(R(a)|S=s).
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-05904179-b5ab-4f1f-bcaa-3cae0c17e8d2">
-<span class="eqno">(38)<a class="headerlink" href="#equation-05904179-b5ab-4f1f-bcaa-3cae0c17e8d2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ba7b036c-e7a1-4a26-9980-ec28492ff256">
+<span class="eqno">(38)<a class="headerlink" href="#equation-ba7b036c-e7a1-4a26-9980-ec28492ff256" title="Permalink to this equation">#</a></span>\[\begin{align}
     \text{arg max}_{\pi}Q(s_{i},\pi(s_{i})).
 \end{align}\]</div>
-</div>
-<div class="section" id="key-steps">
+</section>
+<section id="key-steps">
 <h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">#</a></h2>
 <p><strong>Policy Learning:</strong></p>
 <ol class="simple">
@@ -991,24 +992,24 @@ title="Print to PDF"
 <li><p>Estimated the value of a given regime <span class="math notranslate nohighlight">\(d\)</span> (i.e., <span class="math notranslate nohighlight">\(V(d)\)</span>) using the estimated Q function, such that, <span class="math notranslate nohighlight">\(\hat{E}(R_{i}[d(s_{i})]) = \hat{Q}(s_{i},d(s_{i}),\hat{\beta})\)</span>, and <span class="math notranslate nohighlight">\(\hat{V}(d) = \frac{1}{N}\sum_{i=1}^{N}\hat{E}(R_{i}[d(s_{i})])\)</span>.</p></li>
 </ol>
 <p><strong>Note</strong> we also provide an option for bootstrapping. Particularly, for a given policy, we utilize bootstrap resampling to get the estimated value of the regime and the corresponding estimated standard error. For each round of bootstrapping, we first resample a dataset of the same size as the original dataset, then fit the Q function based on the sampled dataset, and finally estimate the value of a given regime based on the estimated Q function.</p>
-</div>
-<div class="section" id="demo-code">
+</section>
+<section id="demo-code">
 <h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
 <p>In the following, we exhibit how to apply the learner on real data to do policy learning and policy evaluation, respectively.</p>
-<div class="section" id="policy-learning">
+<section id="policy-learning">
 <h3>1. Policy Learning<a class="headerlink" href="#policy-learning" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import learner</span>
-<span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="k">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="k">import</span> <span class="n">QLearning</span>
+<span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">QLearning</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">b0b98e7bf907</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">wc</span><span class="o">/</span><span class="n">c5dcq1_d1gn8w9yg5728l9dm0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_16286</span><span class="o">/</span><span class="mf">3479176628.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># import learner</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">QLearning</span>
@@ -1039,8 +1040,8 @@ title="Print to PDF"
 </div>
 </div>
 <p>By specifing the model_info, we assume a regression model that:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9e5c0adb-eeee-4dfd-82bc-7705e23b6f8f">
-<span class="eqno">(39)<a class="headerlink" href="#equation-9e5c0adb-eeee-4dfd-82bc-7705e23b6f8f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-68b7d51b-7943-4dbe-8a17-e2aecfb431ae">
+<span class="eqno">(39)<a class="headerlink" href="#equation-68b7d51b-7943-4dbe-8a17-e2aecfb431ae" title="Permalink to this equation">#</a></span>\[\begin{align}
 Q(s,a,\beta) &amp;= \beta_{00}+\beta_{01}*recency+\beta_{02}*history\\
 &amp;+I(a=1)*\{\beta_{10}+\beta_{11}*recency+\beta_{12}*history\} \\
 &amp;+I(a=2)*\{\beta_{20}+\beta_{21}*recency+\beta_{22}*history\} 
@@ -1088,8 +1089,8 @@ opt value: 126.48792828230047
 </div>
 </div>
 <p><strong>Interpretation:</strong> the fitted model is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bac02300-26e8-4a89-8b20-cb623dd8ce0f">
-<span class="eqno">(40)<a class="headerlink" href="#equation-bac02300-26e8-4a89-8b20-cb623dd8ce0f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b582b3ad-a8cc-481b-a031-b40c7d559a2f">
+<span class="eqno">(40)<a class="headerlink" href="#equation-b582b3ad-a8cc-481b-a031-b40c7d559a2f" title="Permalink to this equation">#</a></span>\[\begin{align}
 Q(s,a,\beta) &amp;= 94.20+4.53*recency+0.0005*history\\
 &amp;+I(a=1)*\{23.24-4.15*recency+0.0076*history\} \\
 &amp;+I(a=2)*\{20.61-4.84*recency+0.0004history\}. 
@@ -1122,8 +1123,8 @@ Q(s,a,\beta) &amp;= 94.20+4.53*recency+0.0005*history\\
 </div>
 </div>
 <p><strong>Interpretation:</strong> Based on the boostrap with 200 replicates, the estimated optimal value is 132.31 with a standard error of 7.37.</p>
-</div>
-<div class="section" id="policy-evaluation">
+</section>
+<section id="policy-evaluation">
 <h3>2. Policy Evaluation<a class="headerlink" href="#policy-evaluation" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1164,9 +1165,9 @@ Q(s,a,\beta) &amp;= 94.20+4.53*recency+0.0005*history\\
 </div>
 </div>
 <p><strong>Interpretation:</strong> the bootstrapped estimated value of the regime that always sends no emails is 115.96 with a bootstrapped standard error 10.50, under the specified model.</p>
-</div>
-</div>
-<div class="section" id="references">
+</section>
+</section>
+<section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p>Murphy, S. A. (2005). A generalization error for Q-learning.</p></li>
@@ -1176,8 +1177,8 @@ Q(s,a,\beta) &amp;= 94.20+4.53*recency+0.0005*history\\
 <p>TODO:
 1. estimate the standard error for the binary case with sandwich formula;
 2. inference for the estimated optimal regime: projected confidence interval? m-out-of-n CI?….</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1192,7 +1193,7 @@ Q(s,a,\beta) &amp;= 94.20+4.53*recency+0.0005*history\\
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./Offline\Finite"
+            path: "./Offline/Finite"
         },
         predefinedOutput: true
     }
