@@ -1,1 +1,2 @@
-# Heterogenous Treatement Effect
+# Heterogenous Treatment Effect
+

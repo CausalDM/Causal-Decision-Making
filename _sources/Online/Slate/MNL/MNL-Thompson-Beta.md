@@ -1,1 +1,0 @@
-# MNL-Thompson-Beta

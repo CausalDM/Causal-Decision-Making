@@ -1,0 +1,1746 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Heterogeneous Treatment Effect Estimation (Single Stage) &#8212; Causal Decision Making</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Markov Decision Processes" href="../Scenario%202/underMDP.html" />
+    <link rel="prev" title="ATE estimation (Single Stage)" href="ATE.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Causal Decision Making</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../Map.html">
+                    Overview
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Examples.html">
+   <em>
+    Motivating Examples
+   </em>
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../Preliminary.html">
+   Preliminary
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Preliminary/Causal%20Inference%20Preliminary.html">
+     Average Treatment Effect
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Preliminary/Heterogenous%20Treatement%20Effect.html">
+     Heterogenous Treatment Effect
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Structure Learning (CSL)
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Preliminary/Causal%20Discovery%20Preliminary.html">
+   Causal Discovery Preliminary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Causal_Discovery/Testing-based%20Learner%20-%20PC%20Algorithm.html">
+   Testing-based Learner - PC Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Causal_Discovery/Functional-based%20Learner%20-%20LiNGAM%20Algorithm.html">
+   Functional-based Learner - LiNGAM Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Causal_Discovery/Score-based%20Learner%20-%20NOTEARS%20Algorithm.html">
+   Score-based Learner - NOTEARS Algorithm
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Effect Learning (CEL)
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="Single%20Stage.html">
+   Single Stage
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="ATE.html">
+     ATE estimation (Single Stage)
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Heterogeneous Treatment Effect Estimation (Single Stage)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Scenario%202/underMDP.html">
+   Markov Decision Processes
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Scenario%202/ATE.html">
+     ATE
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Scenario%202/HTE.html">
+     HTE
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Scenario%203/Multiple%20Stage.html">
+   Multiple Stage–Finite Horizon
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Scenario%204/Miscellaneous.html">
+   Miscellaneous
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Scenario 1
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Offline/Single%20Stage.html">
+   Single Stage (DTR)
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../Offline/Finite/Discrete.html">
+   Discrete Action Space
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Offline/Finite/Q-learning_Single.html">
+     Q-Learning (Single Stage)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Offline/Finite/A-learning_Single.html">
+     A-Learning (Single Stage)
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../Offline/Finite/Classification.html">
+     Reduction to Classification Problems
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Offline/Finite/Classification/O-Learning.html">
+       Outcome Weighted Learning
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Offline/Finite/Classification/E-learning.html">
+       Entropy learning
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Offline/Finite/Quantile/QuantileOTR_test.html">
+     <strong>
+      Quantile Optimal Treatment Regime
+     </strong>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../Offline/Finite/Continuous.html">
+   Continuous Action Space
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Offline/Finite/Continuous/Deep%20Jump%20Learner.html">
+     Deep Jump Learner for Continuous Actions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Offline/Finite/Continuous/Kernel-Based%20Learner.html">
+     Kernel-Based Learner
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Offline/Finite/Continuous/Outcome%20Learning.html">
+     Outcome Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../Offline/Plan%20to%20Do.html">
+   Plan to do
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Offline/Finite/Policy%20Search.html">
+     Policy Search
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Offline/Finite/Concordance.html">
+     Concordance-assisted learning
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Scenario 2
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Online/Bandits.html">
+   Overview: Bandits ALgorithm
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../Online/MAB/MAB.html">
+   Multi-Armed Bandits (MAB)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Online/MAB/Epsilon_Greedy.html">
+     <span class="math notranslate nohighlight">
+      \(\epsilon\)
+     </span>
+     -Greedy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Online/MAB/UCB.html">
+     UCB
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Online/MAB/TS.html">
+     TS
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../Online/Contextual_Bandits/Contextual_Bandits.html">
+   Contextual Bandits
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Online/Contextual_Bandits/LinUCB.html">
+     LinUCB
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Online/Contextual_Bandits/LinTS.html">
+     LinTS
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../Online/Meta_Bandits/Meta_Bandits.html">
+   Meta Bandits
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Online/Meta_Bandits/Meta_TS.html">
+     Meta Thompson Sampling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Online/Meta_Bandits/MTTS.html">
+     Multi-Task Thompson Sampling (MTTS)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../Online/Slate/Structured_Bandit.html">
+   Structured Bandit (Slate Recommendation)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../Online/Slate/Learning%20to%20rank.html">
+     Online Learning to Rank (Cascading Bandit)
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+    <label for="toctree-checkbox-12">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Online/Slate/Cascade/TS_Cascade.html">
+       TS_Cascade
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Online/Slate/Cascade/CascadeLinTS.html">
+       CascadeLinTS
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Online/Slate/Cascade/MTSS_Cascade.html">
+       MTSS_Cascade
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../Online/Slate/Combinatorial%20Optimization.html">
+     Online Combinatorial Optimization (Combinatorial Semi-Bandit)
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+    <label for="toctree-checkbox-13">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Online/Slate/Combinatorial-Semi/CombTS.html">
+       CombTS
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Online/Slate/Combinatorial-Semi/CombLinTS.html">
+       CombLinTS
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Online/Slate/Combinatorial-Semi/MTSS_Comb.html">
+       MTSS_Comb
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../Online/Slate/Assortment%20Optimization.html">
+     Dynamic Assortment Optimization (Multinomial Logit Bandit)
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+    <label for="toctree-checkbox-14">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Online/Slate/MNL/TS_MNL_Beta.html">
+       TS_MNL
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Online/Slate/MNL/TS_Contextual_MNL.html">
+       TS_Contextual_MNL
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Online/Slate/MNL/MTSS_MNL.html">
+       MTSS_MNL
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../OnlineEval/Online%20Policy%20Evaluation.html">
+   Online Policy Evaluation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+  <label for="toctree-checkbox-15">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../OnlineEval/Doubly%20Robust%20Online%20Policy%20Evaluator.html">
+     Doubly Robust Online Policy Evaluator
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../OnlineEval/Inverse%20Probability%20Weighted%20Online%20Policy%20Evaluator.html">
+     Inverse Probability Weighted Online Policy Evaluator
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../OnlineEval/Direct%20Online%20Policy%20Evaluator.html">
+     Direct Online Policy Evaluator
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Scenario 3
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../Offline/preliminary_MDP-potential-outcome.html">
+   Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+  <label for="toctree-checkbox-16">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../Offline/Infinite_OPE/Evaluation.html">
+     Offline Evaluation
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Offline/Infinite_OPE/FQE.html">
+       Fitted-Q Evaluation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Offline/Infinite_OPE/IPW_Infinite.html">
+       Importance Sampling for Policy Evaluation (Infinite Horizon)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Offline/Infinite_OPE/DR_Infinite.html">
+       Doubly Robust Estimator for Policy Evaluation (Infinite Horizon)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Offline/Infinite_OPE/Deeply_Debiased.html">
+       Deeply-Debiased Off-Policy Evaluation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../Offline/Infinite_OPE/Optimization.html">
+     Offline Optimization
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Offline/Infinite_OPE/FQI.html">
+       Fitted-Q Iteration
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Offline/OnlineRL.html">
+   Online RL
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Scenario 4
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Offline/Multi%20Stage.html">
+   Multiple Stages (DTR)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Offline/Finite/Q-learning_Multiple.html">
+   Q-Learning (Multiple Stages)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Offline/Finite/A-learning_Multiple.html">
+   A-Learning (Multiple Stages)
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/Causal_Effect_Learning/Scenario 1/HTE.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FCausal_Effect_Learning/Scenario 1/HTE.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/Causal_Effect_Learning/Scenario 1/HTE.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#main-idea">
+   Main Idea
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#different-approaches-in-single-stage-hte-estimation">
+   Different approaches in single-stage HTE estimation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#s-learner">
+     <strong>
+      1. S-learner
+     </strong>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#t-learner">
+     <strong>
+      2. T-learner
+     </strong>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#x-learner">
+     <strong>
+      3. X-learner
+     </strong>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#r-learner">
+     <strong>
+      4. R learner
+     </strong>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dr-learner">
+     <strong>
+      5. DR-learner
+     </strong>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lp-r-learner">
+     <strong>
+      6. Lp-R-learner
+     </strong>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generalized-random-forest">
+     <strong>
+      7. Generalized Random Forest
+     </strong>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Heterogeneous Treatment Effect Estimation (Single Stage)</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#main-idea">
+   Main Idea
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#different-approaches-in-single-stage-hte-estimation">
+   Different approaches in single-stage HTE estimation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#s-learner">
+     <strong>
+      1. S-learner
+     </strong>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#t-learner">
+     <strong>
+      2. T-learner
+     </strong>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#x-learner">
+     <strong>
+      3. X-learner
+     </strong>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#r-learner">
+     <strong>
+      4. R learner
+     </strong>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dr-learner">
+     <strong>
+      5. DR-learner
+     </strong>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lp-r-learner">
+     <strong>
+      6. Lp-R-learner
+     </strong>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generalized-random-forest">
+     <strong>
+      7. Generalized Random Forest
+     </strong>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="heterogeneous-treatment-effect-estimation-single-stage">
+<h1>Heterogeneous Treatment Effect Estimation (Single Stage)<a class="headerlink" href="#heterogeneous-treatment-effect-estimation-single-stage" title="Permalink to this headline">#</a></h1>
+<p>In the previous section, we’ve introduced the estimation of average treatment effect, where we aims to estimate the difference of potential outcomes by executing action <span class="math notranslate nohighlight">\(A=1\)</span> v.s. <span class="math notranslate nohighlight">\(A=0\)</span>. That is,</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\text{ATE}=\mathbb{E}[R(1)-R(0)].
+\end{equation*}\]</div>
+<p>In this section, we will focus on the estimation of heterogeneous treatment effect (HTE), which is also one of the main focuses in causal inference.</p>
+<section id="main-idea">
+<h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
+<p>Let’s first consider the single stage setup, where the observed data can be written as a state-action-reward triplet <span class="math notranslate nohighlight">\(\{S_i,A_i,R_i\}_{i=1}^n\)</span> with a total of <span class="math notranslate nohighlight">\(n\)</span> trajectories. Heterogeneous treatment effect, as we can imagine from its terminology, aims to measure the heterogeneity of the treatment effect for different subjects. Specifically, we define HTE as <span class="math notranslate nohighlight">\(\tau(s)\)</span>, where</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\tau(s)=\mathbb{E}[R(1)-R(0)|S=s],
+\end{equation*}\]</div>
+<p>where <span class="math notranslate nohighlight">\(S=s\)</span> denotes the state information of a subject.</p>
+<p>The estimation of HTE is widely used in a lot of real cases such as precision medicine, advertising, recommendation systems, etc. For example, in adversiting system, the company would like to know the impact (such as annual income) of exposing an ad to a group of customers. In this case, <span class="math notranslate nohighlight">\(S\)</span> contains all of the information of a specific customer, <span class="math notranslate nohighlight">\(A\)</span> denotes the status of ads exposure (<span class="math notranslate nohighlight">\(A=1\)</span> means exposed and <span class="math notranslate nohighlight">\(A=0\)</span> means not), and <span class="math notranslate nohighlight">\(R\)</span> denotes the reward one can observe when assigned to policy <span class="math notranslate nohighlight">\(A\)</span>.</p>
+<p>Suppose the ad is a picture of a dress that can lead the customers to a detail page on a shopping website. In this case, females are more likely to be interested to click the picture and look at the detail page of a dress, resulting in a higher conversion rate than males. The difference of customers preference in clothes can be regarded as the heterogeneity of the treatment effect. By looking at the HTE for each customer, we can clearly estimate the reward of ads exposure from a granular level.</p>
+<p>Another related concept is conditional averge treatment effect, which is defined as</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\text{CATE}=\mathbb{E}[R(1)-R(0)|Z],
+\end{equation*}\]</div>
+<p>where <span class="math notranslate nohighlight">\(Z\)</span> is a collection of states with some specific characsteristics. For example, if the company is interested in the treatment effect of exposing the dress to female customers, <span class="math notranslate nohighlight">\(Z\)</span> can be defined as ``female”, and the problem can be addressed under the structure CATE estimation.</p>
+</section>
+<section id="different-approaches-in-single-stage-hte-estimation">
+<h2>Different approaches in single-stage HTE estimation<a class="headerlink" href="#different-approaches-in-single-stage-hte-estimation" title="Permalink to this headline">#</a></h2>
+<p>Next, let’s briefly summarize some state-of-the-art approaches in estimating the heterogeneous treatment effect. There are several review papers which summarize some commonly-used approaches in literature, some of which are also detailed in the following subsections here. For more details please refer to [1], etc.</p>
+<section id="s-learner">
+<h3><strong>1. S-learner</strong><a class="headerlink" href="#s-learner" title="Permalink to this headline">#</a></h3>
+<p>The first estimator we would like to introduce is the S-learner, also known as a ``single learner”. This is one of the most foundamental learners in HTE esitmation, and is very easy to implement.</p>
+<p>Under three common assumptions in causal inference, i.e. (1) consistency, (2) no unmeasured confounders (NUC), (3) positivity assumption, the heterogeneous treatment effect can be identified by the observed data, where</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\tau(s)=\mathbb{E}[R|S,A=1]-\mathbb{E}[R|S,A=0].
+\end{equation*}\]</div>
+<p>The basic idea of S-learner is to fit a model for <span class="math notranslate nohighlight">\(\mathbb{E}[R|S,A]\)</span>, and then construct a plug-in estimator based on the expression above. Specifically, the algorithm can be summarized as below:</p>
+<p><strong>Step 1:</strong>  Estimate the combined response function <span class="math notranslate nohighlight">\(\mu(s,a):=\mathbb{E}[R|S=s,A=a]\)</span> with any regression algorithm or supervised machine learning methods;</p>
+<p><strong>Step 2:</strong>  Estimate HTE by</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\hat{\tau}_{\text{S-learner}}(s)=\hat\mu(s,1)-\hat\mu(s,0).
+\end{equation*}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import related packages</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span><span class="p">;</span>
+<span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span><span class="p">;</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">wc</span><span class="o">/</span><span class="n">c5dcq1_d1gn8w9yg5728l9dm0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_16197</span><span class="o">/</span><span class="mf">1742119828.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># import related packages</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span><span class="p">;</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span><span class="p">;</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span><span class="p">;</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;lightgbm&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">3</span>  <span class="c1"># sample size in observed data</span>
+<span class="n">n0</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">5</span> <span class="c1"># the number of samples used to estimate the true reward distribution by MC</span>
+<span class="n">seed</span><span class="o">=</span><span class="mi">223</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get data</span>
+<span class="n">data_behavior</span> <span class="o">=</span> <span class="n">get_data_simulation</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">policy</span><span class="o">=</span><span class="s2">&quot;behavior&quot;</span><span class="p">)</span>
+<span class="c1">#data_target = get_data_simulation(n0, seed, policy=&quot;target&quot;)</span>
+
+<span class="c1"># The true expected heterogeneous treatment effect</span>
+<span class="n">HTE_true</span> <span class="o">=</span> <span class="n">get_data_simulation</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">policy</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">)[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">get_data_simulation</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">policy</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="p">)[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_behavior</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-06f51ba5-8664-463b-8c33-36a5a7ba03f2">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>S1</th>
+      <th>S2</th>
+      <th>A</th>
+      <th>R</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.034775</td>
+      <td>2.453145</td>
+      <td>1</td>
+      <td>7.167637</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.084880</td>
+      <td>-1.234459</td>
+      <td>0</td>
+      <td>-1.553798</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.144626</td>
+      <td>2.040543</td>
+      <td>1</td>
+      <td>5.956732</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.148426</td>
+      <td>-0.021139</td>
+      <td>1</td>
+      <td>1.095578</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.120852</td>
+      <td>1.377594</td>
+      <td>1</td>
+      <td>4.323133</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>995</th>
+      <td>-2.022440</td>
+      <td>1.887551</td>
+      <td>0</td>
+      <td>6.797542</td>
+    </tr>
+    <tr>
+      <th>996</th>
+      <td>0.411179</td>
+      <td>-1.655833</td>
+      <td>0</td>
+      <td>-2.722846</td>
+    </tr>
+    <tr>
+      <th>997</th>
+      <td>0.155706</td>
+      <td>-0.992197</td>
+      <td>0</td>
+      <td>-1.140100</td>
+    </tr>
+    <tr>
+      <th>998</th>
+      <td>-1.510241</td>
+      <td>0.828438</td>
+      <td>0</td>
+      <td>4.167118</td>
+    </tr>
+    <tr>
+      <th>999</th>
+      <td>-1.744187</td>
+      <td>0.857147</td>
+      <td>0</td>
+      <td>4.458481</td>
+    </tr>
+  </tbody>
+</table>
+<p>1000 rows × 4 columns</p>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-06f51ba5-8664-463b-8c33-36a5a7ba03f2')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-06f51ba5-8664-463b-8c33-36a5a7ba03f2 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-06f51ba5-8664-463b-8c33-36a5a7ba03f2');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SandA</span> <span class="o">=</span> <span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># S-learner</span>
+<span class="n">S_learner</span> <span class="o">=</span> <span class="n">LGBMRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="c1">#S_learner = LinearRegression()</span>
+<span class="c1">#SandA = np.hstack((S.to_numpy(),A.to_numpy().reshape(-1,1)))</span>
+<span class="n">S_learner</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">SandA</span><span class="p">,</span> <span class="n">data_behavior</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LGBMRegressor(max_depth=5)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">HTE_S_learner</span> <span class="o">=</span> <span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span> <span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))))</span> <span class="o">-</span> <span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span> <span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To evaluate how well S-learner is in estimating heterogeneous treatment effect, we compare its estimates with the true value for the first 10 subjects:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;S-learner:  &quot;</span><span class="p">,</span><span class="n">HTE_S_learner</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;true value: &quot;</span><span class="p">,</span><span class="n">HTE_true</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>S-learner:   [-0.1492  0.1687 -0.589  -0.0319 -0.8354 -0.5843 -0.4577 -2.0791]
+true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Bias_S_learner</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">HTE_S_learner</span><span class="o">-</span><span class="n">HTE_true</span><span class="p">)</span><span class="o">/</span><span class="n">n</span>
+<span class="n">Variance_S_learner</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">HTE_S_learner</span><span class="o">-</span><span class="n">HTE_true</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">n</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The overall estimation bias of S-learner is :&quot;</span><span class="p">,</span> <span class="n">Bias_S_learner</span><span class="p">,</span> <span class="s2">&quot;, </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;The overall estimation variance of S-learner is :&quot;</span><span class="p">,</span><span class="n">Variance_S_learner</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The overall estimation bias of S-learner is : 0.2857192464627009 , 
+ The overall estimation variance of S-learner is : 4.079505077680185
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Conclusion:</strong> The performance of S-learner, at least in this toy example, is not very attractive. Although it is the easiest approach to implement, the over-simplicity tends to cover some information that can be better explored with some advanced approaches.</p>
+</section>
+<section id="t-learner">
+<h3><strong>2. T-learner</strong><a class="headerlink" href="#t-learner" title="Permalink to this headline">#</a></h3>
+<p>The second learner is called T-learner, which denotes ``two learners”. Instead of fitting a single model to estimate the potential outcomes under both treatment and control groups, T-learner aims to learn different models for <span class="math notranslate nohighlight">\(\mathbb{E}[R(1)|S]\)</span> and <span class="math notranslate nohighlight">\(\mathbb{E}[R(0)|S]\)</span> separately, and finally combines them to obtain a final HTE estimator.</p>
+<p>Define the control response function as <span class="math notranslate nohighlight">\(\mu_0(s)=\mathbb{E}[R(0)|S=s]\)</span>, and the treatment response function as <span class="math notranslate nohighlight">\(\mu_1(s)=\mathbb{E}[R(1)|S=s]\)</span>. The algorithm of T-learner is summarized below:</p>
+<p><strong>Step 1:</strong>  Estimate <span class="math notranslate nohighlight">\(\mu_0(s)\)</span> and <span class="math notranslate nohighlight">\(\mu_1(s)\)</span> separately with any regression algorithms or supervised machine learning methods;</p>
+<p><strong>Step 2:</strong>  Estimate HTE by</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\hat{\tau}_{\text{T-learner}}(s)=\hat\mu_1(s)-\hat\mu_0(s).
+\end{equation*}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu0</span> <span class="o">=</span> <span class="n">LGBMRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">mu1</span> <span class="o">=</span> <span class="n">LGBMRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">mu0</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_behavior</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span><span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_behavior</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">]</span> <span class="p">)</span>
+<span class="n">mu1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_behavior</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span><span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_behavior</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">]</span> <span class="p">)</span>
+
+
+<span class="c1"># estimate the HTE by T-learner</span>
+<span class="n">HTE_T_learner</span> <span class="o">=</span> <span class="n">mu1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span> <span class="o">-</span> <span class="n">mu0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s take a glance at the performance of T-learner by comparing it with the true value for the first 10 subjects:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;T-learner:  &quot;</span><span class="p">,</span><span class="n">HTE_T_learner</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;true value: &quot;</span><span class="p">,</span><span class="n">HTE_true</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>T-learner:   [ 1.869   1.8733  0.6596  0.3087 -0.2298 -0.5598 -2.2745 -1.8211]
+true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is quite good! T-learner captures the overall trend of the treatment effect w.r.t. the heterogeneity of different subjects.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Bias_T_learner</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">HTE_T_learner</span><span class="o">-</span><span class="n">HTE_true</span><span class="p">)</span><span class="o">/</span><span class="n">n</span>
+<span class="n">Variance_T_learner</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">HTE_T_learner</span><span class="o">-</span><span class="n">HTE_true</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">n</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The overall estimation bias of T-learner is :&quot;</span><span class="p">,</span> <span class="n">Bias_T_learner</span><span class="p">,</span> <span class="s2">&quot;, </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;The overall estimation variance of T-learner is :&quot;</span><span class="p">,</span><span class="n">Variance_T_learner</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The overall estimation bias of T-learner is : 0.29138198450323705 , 
+ The overall estimation variance of T-learner is : 1.810391408711312
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Conclusion:</strong> In this toy example, the overall estimation variance of T-learner is smaller than that of S-learner. In some cases when the treatment effect is relatively complex, it’s likely to yield better performance by fitting two models separately.</p>
+<p>However, in an extreme case when both <span class="math notranslate nohighlight">\(\mu_0(s)\)</span> and <span class="math notranslate nohighlight">\(\mu_1(s)\)</span> are nonlinear complicated function of state <span class="math notranslate nohighlight">\(s\)</span> while their difference is just a constant, T-learner will overfit each model very easily, yielding a nonlinear treatment effect estimator. In this case, other estimators are often preferred.</p>
+</section>
+<section id="x-learner">
+<h3><strong>3. X-learner</strong><a class="headerlink" href="#x-learner" title="Permalink to this headline">#</a></h3>
+<p>Next, let’s introduce the X-learner. As a combination of S-learner and T-learner, the X-learner can use information from the control(treatment) group to derive better estimators for the treatment(control) group, which is provably more efficient than the above two.</p>
+<p>The basic</p>
+<p><strong>Step 1:</strong>  Estimate <span class="math notranslate nohighlight">\(\mu_0(s)\)</span> and <span class="math notranslate nohighlight">\(\mu_1(s)\)</span> separately with any regression algorithms or supervised machine learning methods (same as T-learner);</p>
+<p><strong>Step 2:</strong>  Obtain the imputed treatment effects for individuals</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\tilde{\Delta}_i^1:=R_i^1-\hat\mu_0(S_i^1), \quad \tilde{\Delta}_i^0:=\hat\mu_1(S_i^0)-R_i^0.
+\end{equation*}\]</div>
+<p><strong>Step 3:</strong>  Fit the imputed treatment effects to obtain <span class="math notranslate nohighlight">\(\hat\tau_1(s):=\mathbb{E}[\tilde{\Delta}_i^1|S=s]\)</span> and <span class="math notranslate nohighlight">\(\hat\tau_0(s):=\mathbb{E}[\tilde{\Delta}_i^0|S=s]\)</span>;</p>
+<p><strong>Step 4:</strong>  The final HTE estimator is given by</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\hat{\tau}_{\text{X-learner}}(s)=g(s)\hat\tau_0(s)+(1-g(s))\hat\tau_1(s),
+\end{equation*}\]</div>
+<p>where <span class="math notranslate nohighlight">\(g(s)\)</span> is a weight function between <span class="math notranslate nohighlight">\([0,1]\)</span>. A possible way is to use the propensity score model as an estimate of <span class="math notranslate nohighlight">\(g(s)\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 1: Fit two models under treatment and control separately, same as T-learner</span>
+
+<span class="n">mu0</span> <span class="o">=</span> <span class="n">LGBMRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">mu1</span> <span class="o">=</span> <span class="n">LGBMRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">S_T0</span> <span class="o">=</span> <span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_behavior</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">S_T1</span> <span class="o">=</span> <span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_behavior</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">R_T0</span> <span class="o">=</span> <span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_behavior</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">]</span> 
+<span class="n">R_T1</span> <span class="o">=</span> <span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_behavior</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">]</span> 
+
+<span class="n">mu0</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">S_T0</span><span class="p">,</span> <span class="n">R_T0</span><span class="p">)</span>
+<span class="n">mu1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">S_T1</span><span class="p">,</span> <span class="n">R_T1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LGBMRegressor(max_depth=3)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 2: impute the potential outcomes that are unobserved in original data</span>
+
+<span class="n">n_T0</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">R_T0</span><span class="p">)</span>
+<span class="n">n_T1</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">R_T1</span><span class="p">)</span>
+
+<span class="n">Delta0</span> <span class="o">=</span> <span class="n">mu1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">S_T0</span><span class="p">)</span> <span class="o">-</span> <span class="n">R_T0</span>
+<span class="n">Delta1</span> <span class="o">=</span> <span class="n">R_T1</span> <span class="o">-</span> <span class="n">mu0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">S_T1</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 3: Fit tau_1(s) and tau_0(s)</span>
+
+<span class="n">tau0</span> <span class="o">=</span> <span class="n">LGBMRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">tau1</span> <span class="o">=</span> <span class="n">LGBMRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">tau0</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">S_T0</span><span class="p">,</span> <span class="n">Delta0</span><span class="p">)</span>
+<span class="n">tau1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">S_T1</span><span class="p">,</span> <span class="n">Delta1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LGBMRegressor(max_depth=2)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 4: fit the propensity score model $\hat{g}(s)$ and obtain the final HTE estimator by taking weighted average of tau0 and tau1</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span> 
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="n">g</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span><span class="n">data_behavior</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">])</span>
+
+<span class="n">HTE_X_learner</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">tau0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="n">g</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">tau1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LogisticRegression()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;X-learner:  &quot;</span><span class="p">,</span><span class="n">HTE_X_learner</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;true value: &quot;</span><span class="p">,</span><span class="n">HTE_true</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X-learner:   [ 1.9341  1.9235  0.2944  0.2013 -0.4147 -0.5626 -2.214  -1.5443]
+true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
+</pre></div>
+</div>
+</div>
+</div>
+<p>X-learner also performs OK.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Bias_X_learner</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">HTE_X_learner</span><span class="o">-</span><span class="n">HTE_true</span><span class="p">)</span><span class="o">/</span><span class="n">n</span>
+<span class="n">Variance_X_learner</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">HTE_X_learner</span><span class="o">-</span><span class="n">HTE_true</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">n</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The overall estimation bias of X-learner is :&quot;</span><span class="p">,</span> <span class="n">Bias_X_learner</span><span class="p">,</span> <span class="s2">&quot;, </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;The overall estimation variance of X-learner is :&quot;</span><span class="p">,</span><span class="n">Variance_X_learner</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The overall estimation bias of X-learner is : 0.2827518068171628 , 
+ The overall estimation variance of X-learner is : 1.7686646616779012
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Conclusion:</strong> In this toy example, the overall estimation variance of X-learner is the smallest, followed by T-learner, and the worst is given by S-learner.</p>
+</section>
+<section id="r-learner">
+<h3><strong>4. R learner</strong><a class="headerlink" href="#r-learner" title="Permalink to this headline">#</a></h3>
+<p>The idea of classical R-learner came from Robinson 1988 [3] and was formalized by Nie and Wager in 2020 [2]. The main idea of R learner starts from the partially linear model setup, in which we assume that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-82c13870-d0e7-4e32-9f3a-1dc22efae445">
+<span class="eqno">(26)<a class="headerlink" href="#equation-82c13870-d0e7-4e32-9f3a-1dc22efae445" title="Permalink to this equation">#</a></span>\[\begin{equation}
+  \begin{aligned}
+    R&amp;=A\tau(S)+g_0(S)+U,\\
+    A&amp;=m_0(S)+V,
+  \end{aligned}
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(V\)</span> satisfies <span class="math notranslate nohighlight">\(\mathbb{E}[U|D,X]=0\)</span>, <span class="math notranslate nohighlight">\(\mathbb{E}[V|X]=0\)</span>.</p>
+<p>After several manipulations, it’s easy to get</p>
+<div class="amsmath math notranslate nohighlight" id="equation-fd9dc8c2-b1d6-4652-8200-ca606b7a6827">
+<span class="eqno">(27)<a class="headerlink" href="#equation-fd9dc8c2-b1d6-4652-8200-ca606b7a6827" title="Permalink to this equation">#</a></span>\[\begin{equation}
+	R-\mathbb{E}[R|S]=\tau(S)\cdot(A-\mathbb{E}[A|S])+\epsilon.
+\end{equation}\]</div>
+<p>Define <span class="math notranslate nohighlight">\(m_0(X)=\mathbb{E}[A|S]\)</span> and <span class="math notranslate nohighlight">\(l_0(X)=\mathbb{E}[R|S]\)</span>. A natural way to estimate <span class="math notranslate nohighlight">\(\tau(X)\)</span> is given below, which is also the main idea of R-learner:</p>
+<p><strong>Step 1</strong>: Regress <span class="math notranslate nohighlight">\(R\)</span> on <span class="math notranslate nohighlight">\(S\)</span> to obtain model <span class="math notranslate nohighlight">\(\hat{\eta}(S)=\hat{\mathbb{E}}[R|S]\)</span>; and regress <span class="math notranslate nohighlight">\(A\)</span> on <span class="math notranslate nohighlight">\(S\)</span> to obtain model <span class="math notranslate nohighlight">\(\hat{m}(S)=\hat{\mathbb{E}}[A|S]\)</span>.</p>
+<p><strong>Step 2</strong>: Regress outcome residual <span class="math notranslate nohighlight">\(R-\hat{l}(S)\)</span> on propensity score residual <span class="math notranslate nohighlight">\(A-\hat{m}(S)\)</span>.</p>
+<p>That is,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-df27b61e-5f61-4b01-8c00-616df1c13940">
+<span class="eqno">(28)<a class="headerlink" href="#equation-df27b61e-5f61-4b01-8c00-616df1c13940" title="Permalink to this equation">#</a></span>\[\begin{equation}
+	\hat{\tau}(S)=\arg\min_{\tau}\left\{\mathbb{E}_n\left[\left(\{R_i-\hat{\eta}(S_i)\}-\{A_i-\hat{m}(S_i)\}\cdot\tau(S_i)\right)^2\right]\right\}	
+\end{equation}\]</div>
+<p>The easiest way to do so is to specify <span class="math notranslate nohighlight">\(\hat{\tau}(S)\)</span> to the linear function class. In this case, <span class="math notranslate nohighlight">\(\tau(S)=S\beta\)</span>, and the problem becomes to estimate <span class="math notranslate nohighlight">\(\beta\)</span> by solving the following linear regression:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-89bfb0f0-c568-44b3-878a-61c22ad344a5">
+<span class="eqno">(29)<a class="headerlink" href="#equation-89bfb0f0-c568-44b3-878a-61c22ad344a5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+	\hat{\beta}=\arg\min_{\beta}\left\{\mathbb{E}_n\left[\left(\{R_i-\hat{\eta}(S_i)\}-\{A_i-\hat{m}(S_i)\} S_i\cdot \beta\right)^2\right]\right\}.
+\end{equation}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># example</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dr-learner">
+<h3><strong>5. DR-learner</strong><a class="headerlink" href="#dr-learner" title="Permalink to this headline">#</a></h3>
+<p>DR-learner is a two-stage doubly robust estimator for HTE estimation. Before Kennedy et al. 2020 [4], there are several related approaches trying to extend the doubly robust procedure to HTE estimation, such as [5, 6, 7]. Compared with the above three estimators, DR-learner is proved to be oracle efficient under some mild assumptions detailed in Theorem 2 of [4].</p>
+<p>The basic steps of DR-learner is given below:</p>
+<p><strong>Step 1</strong>: Nuisance training: \
+(a)  Using <span class="math notranslate nohighlight">\(I_{1}^n\)</span> to construct estimates <span class="math notranslate nohighlight">\(\hat{\pi}\)</span> for the propensity scores <span class="math notranslate nohighlight">\(\pi\)</span>; \
+(b)  Using <span class="math notranslate nohighlight">\(I_{1}^n\)</span> to construct estimates <span class="math notranslate nohighlight">\(\hat\mu_a(s)\)</span> for <span class="math notranslate nohighlight">\(\mu_a(s):=\mathbb{E}[R|S=s,A=a]\)</span>;</p>
+<p><strong>Step 2</strong>: Pseudo-outcome regression: \
+Define <span class="math notranslate nohighlight">\(\widehat{\phi}(Z)\)</span> as the pseudo-outcome where</p>
+<div class="amsmath math notranslate nohighlight" id="equation-bc1f94e6-f6eb-40d9-981b-3d075586914c">
+<span class="eqno">(30)<a class="headerlink" href="#equation-bc1f94e6-f6eb-40d9-981b-3d075586914c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\widehat{\phi}(Z)=\frac{A-\hat{\pi}(S)}{\hat{\pi}(S)\{1-\hat{\pi}(S)\}}\Big\{R-\hat{\mu}_A(S)\Big\}+\hat{\mu}_1(S)-\hat{\mu}_0(S),
+\end{equation}\]</div>
+<p>and regress it on covariates <span class="math notranslate nohighlight">\(S\)</span> in the test sample <span class="math notranslate nohighlight">\(I_2^n\)</span>, yielding</p>
+<div class="amsmath math notranslate nohighlight" id="equation-b2f21e41-3e9a-48ab-a31b-83003c7a5a58">
+<span class="eqno">(31)<a class="headerlink" href="#equation-b2f21e41-3e9a-48ab-a31b-83003c7a5a58" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\widehat{\tau}_{\text{DR-learner}}(s)=\widehat{\mathbb{E}}_n[\widehat{\phi}(Z)|S=s].
+\end{equation}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># example</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="lp-r-learner">
+<h3><strong>6. Lp-R-learner</strong><a class="headerlink" href="#lp-r-learner" title="Permalink to this headline">#</a></h3>
+<p>As an extension of R-learner, Lp-R-learner combined the idea of residual regression with local polynomial adaptation, and leveraged the idea of cross fitting to further relax the conditions needed to obtain the oracle convergence rate. For brevity of content, we will just introduce their main algorithm. For more details about its theory and real data performance please see the paper written by Kennedy [4].</p>
+<p>Let <span class="math notranslate nohighlight">\((I_{1a}^n, I_{1b}^n,I_{2}^n)\)</span> denote three independent samples of <span class="math notranslate nohighlight">\(n\)</span> observations of <span class="math notranslate nohighlight">\(Z_i = (S_i, A_i, R_i)\)</span>. Let <span class="math notranslate nohighlight">\(b:\mathbb{R}^d\rightarrow \mathbb{R}^p\)</span> denote the vector of basis functions consisting of all powers of each covariate, up to order <span class="math notranslate nohighlight">\(\gamma\)</span>, and all interactions up to degree <span class="math notranslate nohighlight">\(\gamma\)</span> polynomials. Let <span class="math notranslate nohighlight">\(K_{hs}(S)=\frac{1}{h^d}K\left(\frac{S-s}{h}\right)\)</span> for <span class="math notranslate nohighlight">\(k:\mathbb{R}^d\rightarrow \mathbb{R}\)</span> a bounded kernel function with support <span class="math notranslate nohighlight">\([-1,1]^d\)</span>, and <span class="math notranslate nohighlight">\(h\)</span> is a bandwidth parameter.</p>
+<p><strong>Step 1</strong>: Nuisance training: \
+(a)  Using <span class="math notranslate nohighlight">\(I_{1a}^n\)</span> to construct estimates <span class="math notranslate nohighlight">\(\hat{\pi}_a\)</span> of the propensity scores <span class="math notranslate nohighlight">\(\pi\)</span>; \
+(b)  Using <span class="math notranslate nohighlight">\(I_{1b}^n\)</span> to construct estimates <span class="math notranslate nohighlight">\(\hat{\eta}\)</span> of the regression function <span class="math notranslate nohighlight">\(\eta=\pi\mu_1+(1-\pi)\mu_0\)</span>, and estimtes <span class="math notranslate nohighlight">\(\hat{\pi}_b\)</span> of the propensity scores <span class="math notranslate nohighlight">\(\pi\)</span>.</p>
+<p><strong>Step 2</strong>: Localized double-residual regression: \
+Define <span class="math notranslate nohighlight">\(\hat{\tau}_r(s)\)</span> as the fitted value from a kernel-weighted least squares regression (in the test sample <span class="math notranslate nohighlight">\(I_2^n\)</span>) of outcome residual <span class="math notranslate nohighlight">\((R-\hat{\eta})\)</span> on basis terms <span class="math notranslate nohighlight">\(b\)</span> scaled by the treatment residual <span class="math notranslate nohighlight">\(A-\hat{\pi}_b\)</span>, with weights <span class="math notranslate nohighlight">\(\Big(\frac{A-\hat{\pi}_a}{A-\hat{\pi}_b}\Big)\cdot K_{hs}\)</span>. Thus <span class="math notranslate nohighlight">\(\hat{\tau}_r(s)=b(0)^T\hat{\theta}\)</span> for</p>
+<div class="amsmath math notranslate nohighlight" id="equation-58385134-cf48-4938-ab1a-7bd8c2145251">
+<span class="eqno">(32)<a class="headerlink" href="#equation-58385134-cf48-4938-ab1a-7bd8c2145251" title="Permalink to this equation">#</a></span>\[\begin{equation}
+		\hat{\theta}=\arg\min_{\theta\in\mathbb{R}^p}\mathbb{P}_n\left(K_{hs}(S)\Big\{ \frac{A-\hat{\pi}_a(S)}{A-\hat{\pi}_b(S)}\Big\} \left[  \big\{R-\hat{\eta}(S)\big\}-\theta^Tb(S-s_0)\big\{A-\hat{\pi}_b(S)\big\} \right] \right).
+\end{equation}\]</div>
+<p><strong>Step 3</strong>: Cross-fitting(optional): \
+Repeat Step 1–2 twice, first using <span class="math notranslate nohighlight">\((I^n_{1b} , I_2^n)\)</span> for nuisance training and <span class="math notranslate nohighlight">\(I_{1a}^n\)</span> as the test samplem and then using <span class="math notranslate nohighlight">\((I^n_{1a} , I_2^n)\)</span> for training and <span class="math notranslate nohighlight">\(I_{1b}^n\)</span> as the test sample. Use the average of the resulting three estimators of <span class="math notranslate nohighlight">\(\tau\)</span> as the final estimator <span class="math notranslate nohighlight">\(\hat{\tau}_r\)</span>.</p>
+<p>In the theory section, Kennedy proved that Lp-R-learner, compared with traditional DR learner, can achieve the oracle convergence rate under milder conditions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># example</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="generalized-random-forest">
+<h3><strong>7. Generalized Random Forest</strong><a class="headerlink" href="#generalized-random-forest" title="Permalink to this headline">#</a></h3>
+<p>Developed by Susan Athey, Julie Tibshirani and Stefan Wager, Generalized Random Forest aims to give the solution to a set of local moment equations:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-b266e7fb-62b7-427f-89bc-3ebb30884332">
+<span class="eqno">(33)<a class="headerlink" href="#equation-b266e7fb-62b7-427f-89bc-3ebb30884332" title="Permalink to this equation">#</a></span>\[\begin{equation}
+  \mathbb{E}\big[\psi_{\tau(s),\nu(s)}(O_i)\big| S_i=s\big]=0,
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\tau(s)\)</span> is the parameter we care about and <span class="math notranslate nohighlight">\(\nu(s)\)</span> is an optional nuisance parameter. In the problem of Heterogeneous Treatment Effect Evaluation, our parameter of interest <span class="math notranslate nohighlight">\(\tau(s)=\xi\cdot \beta(s)\)</span> is identified by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-845ffb10-70b8-4178-9ca3-80708198b334">
+<span class="eqno">(34)<a class="headerlink" href="#equation-845ffb10-70b8-4178-9ca3-80708198b334" title="Permalink to this equation">#</a></span>\[\begin{equation}
+  \psi_{\beta(s),\nu(s)}(R_i,A_i)=(R_i-\beta(s)\cdot A_i-c(s))(1 \quad A_i^T)^T.
+\end{equation}\]</div>
+<p>The induced estimator <span class="math notranslate nohighlight">\(\hat{\tau}(s)\)</span> for <span class="math notranslate nohighlight">\(\tau(s)\)</span> can thus be solved by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-39af98f4-7ee8-48a6-bccc-8a430d51d02b">
+<span class="eqno">(35)<a class="headerlink" href="#equation-39af98f4-7ee8-48a6-bccc-8a430d51d02b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+  \hat{\tau}(s)=\xi^T\left(\sum_{i=1}^n \alpha_i(s)\big(A_i-\bar{A}_\alpha\big)^{\otimes 2}\right)^{-1}\sum_{i=1}^n \alpha_i(s)\big(A_i-\bar{A}_\alpha\big)\big(R_i-\bar{R}_\alpha\big),
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\bar{A}_\alpha=\sum \alpha_i(s)A_i\)</span> and <span class="math notranslate nohighlight">\(\bar{R}_\alpha=\sum \alpha_i(s)R_i\)</span>, and we write <span class="math notranslate nohighlight">\(v^{\otimes 2}=vv^T\)</span>.</p>
+<p>Notice that this formula is just a weighted version of R-learner introduced above. However, instead of using ordinary kernel weighting functions that are prone to a strong curse of dimensionality, GRF uses an adaptive weighting function <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span> derived from a forest designed to express heterogeneity in the specified quantity of interest.</p>
+<p>To be more specific, in order to obtain <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span>, GRF first grows a set of <span class="math notranslate nohighlight">\(B\)</span> trees indexed by <span class="math notranslate nohighlight">\(1,\dots,B\)</span>. Then for each such tree, define <span class="math notranslate nohighlight">\(L_b(s)\)</span> as the set of training samples falling in the same ``leaf” as x. The weights <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span> then capture the frequency with which the <span class="math notranslate nohighlight">\(i\)</span>-th training example falls into the same leaf as <span class="math notranslate nohighlight">\(s\)</span>:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-72d9e3e0-9be1-40c5-b957-23edd4f1b77e">
+<span class="eqno">(36)<a class="headerlink" href="#equation-72d9e3e0-9be1-40c5-b957-23edd4f1b77e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+  \alpha_{bi}(s)=\frac{\boldsymbol{1}\big(\{S_i\in L_b(s)\}\big)}{\big|L_b(s)\big|},\quad \alpha_i(s)=\frac{1}{B}\sum_{b=1}^B \alpha_{bi}(s).
+\end{equation}\]</div>
+<p>To sum up, GRF aims to leverage the splitting result of a series of trees to decide the ``localized” weight for HTE estimation at each point <span class="math notranslate nohighlight">\(x_0\)</span>. Compared with kernel functions, we may expect tree-based weights to be more flexible and better performed in real settings.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># example</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<ol class="simple">
+<li><p>Kunzel, S. R., Sekhon, J. S., Bickel, P. J., and Yu, B. (2019). Metalearners for estimating heterogeneous treatment effects using machine learning. Proceedings of the national academy of sciences 116, 4156–4165.</p></li>
+<li><p>Xinkun Nie and Stefan Wager. Quasi-oracle estimation of heterogeneous treatment effects. Biometrika, 108(2):299–319, 2021.</p></li>
+<li><p>Peter M Robinson. Root-n-consistent semiparametric regression. Econometrica: Journal of the Econometric Society, pages 931–954, 1988.</p></li>
+<li><p>Edward H Kennedy. Optimal doubly robust estimation of heterogeneous causal effects. arXiv preprint arXiv:2004.14497, 2020</p></li>
+<li><p>M. J. van der Laan. Statistical inference for variable importance. The International Journal of Biostatistics, 2(1), 2006.</p></li>
+<li><p>S. Lee, R. Okui, and Y.-J. Whang. Doubly robust uniform confidence band for the conditional average treatment effect function. Journal of Applied Econometrics, 32(7):1207–1225, 2017.</p></li>
+<li><p>D. J. Foster and V. Syrgkanis. Orthogonal statistical learning. arXiv preprint arXiv:1901.09036, 2019.</p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./Causal_Effect_Learning/Scenario 1"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="ATE.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">ATE estimation (Single Stage)</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../Scenario%202/underMDP.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Markov Decision Processes</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Causal Decision Making Team<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

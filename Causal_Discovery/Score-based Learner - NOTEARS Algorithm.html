@@ -1,0 +1,1317 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Score-based Learner - NOTEARS Algorithm &#8212; Causal Decision Making</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Single Stage" href="../Causal_Effect_Learning/Scenario%201/Single%20Stage.html" />
+    <link rel="prev" title="Functional-based Learner - LiNGAM Algorithm" href="Functional-based%20Learner%20-%20LiNGAM%20Algorithm.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Causal Decision Making</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../Map.html">
+                    Overview
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Examples.html">
+   <em>
+    Motivating Examples
+   </em>
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Preliminary.html">
+   Preliminary
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Preliminary/Causal%20Inference%20Preliminary.html">
+     Average Treatment Effect
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Preliminary/Heterogenous%20Treatement%20Effect.html">
+     Heterogenous Treatment Effect
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Structure Learning (CSL)
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Preliminary/Causal%20Discovery%20Preliminary.html">
+   Causal Discovery Preliminary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Testing-based%20Learner%20-%20PC%20Algorithm.html">
+   Testing-based Learner - PC Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Functional-based%20Learner%20-%20LiNGAM%20Algorithm.html">
+   Functional-based Learner - LiNGAM Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Score-based Learner - NOTEARS Algorithm
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Effect Learning (CEL)
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Causal_Effect_Learning/Scenario%201/Single%20Stage.html">
+   Single Stage
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Causal_Effect_Learning/Scenario%201/ATE.html">
+     ATE estimation (Single Stage)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Causal_Effect_Learning/Scenario%201/HTE.html">
+     Heterogeneous Treatment Effect Estimation (Single Stage)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Causal_Effect_Learning/Scenario%202/underMDP.html">
+   Markov Decision Processes
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Causal_Effect_Learning/Scenario%202/ATE.html">
+     ATE
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Causal_Effect_Learning/Scenario%202/HTE.html">
+     HTE
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Causal_Effect_Learning/Scenario%203/Multiple%20Stage.html">
+   Multiple Stage–Finite Horizon
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Causal_Effect_Learning/Scenario%204/Miscellaneous.html">
+   Miscellaneous
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Scenario 1
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Offline/Single%20Stage.html">
+   Single Stage (DTR)
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Offline/Finite/Discrete.html">
+   Discrete Action Space
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Offline/Finite/Q-learning_Single.html">
+     Q-Learning (Single Stage)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Offline/Finite/A-learning_Single.html">
+     A-Learning (Single Stage)
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../Offline/Finite/Classification.html">
+     Reduction to Classification Problems
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Offline/Finite/Classification/O-Learning.html">
+       Outcome Weighted Learning
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Offline/Finite/Classification/E-learning.html">
+       Entropy learning
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Offline/Finite/Quantile/QuantileOTR_test.html">
+     <strong>
+      Quantile Optimal Treatment Regime
+     </strong>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Offline/Finite/Continuous.html">
+   Continuous Action Space
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Offline/Finite/Continuous/Deep%20Jump%20Learner.html">
+     Deep Jump Learner for Continuous Actions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Offline/Finite/Continuous/Kernel-Based%20Learner.html">
+     Kernel-Based Learner
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Offline/Finite/Continuous/Outcome%20Learning.html">
+     Outcome Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Offline/Plan%20to%20Do.html">
+   Plan to do
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Offline/Finite/Policy%20Search.html">
+     Policy Search
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Offline/Finite/Concordance.html">
+     Concordance-assisted learning
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Scenario 2
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Online/Bandits.html">
+   Overview: Bandits ALgorithm
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Online/MAB/MAB.html">
+   Multi-Armed Bandits (MAB)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Online/MAB/Epsilon_Greedy.html">
+     <span class="math notranslate nohighlight">
+      \(\epsilon\)
+     </span>
+     -Greedy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Online/MAB/UCB.html">
+     UCB
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Online/MAB/TS.html">
+     TS
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Online/Contextual_Bandits/Contextual_Bandits.html">
+   Contextual Bandits
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Online/Contextual_Bandits/LinUCB.html">
+     LinUCB
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Online/Contextual_Bandits/LinTS.html">
+     LinTS
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Online/Meta_Bandits/Meta_Bandits.html">
+   Meta Bandits
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Online/Meta_Bandits/Meta_TS.html">
+     Meta Thompson Sampling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Online/Meta_Bandits/MTTS.html">
+     Multi-Task Thompson Sampling (MTTS)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Online/Slate/Structured_Bandit.html">
+   Structured Bandit (Slate Recommendation)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../Online/Slate/Learning%20to%20rank.html">
+     Online Learning to Rank (Cascading Bandit)
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+    <label for="toctree-checkbox-12">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Online/Slate/Cascade/TS_Cascade.html">
+       TS_Cascade
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Online/Slate/Cascade/CascadeLinTS.html">
+       CascadeLinTS
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Online/Slate/Cascade/MTSS_Cascade.html">
+       MTSS_Cascade
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../Online/Slate/Combinatorial%20Optimization.html">
+     Online Combinatorial Optimization (Combinatorial Semi-Bandit)
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+    <label for="toctree-checkbox-13">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Online/Slate/Combinatorial-Semi/CombTS.html">
+       CombTS
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Online/Slate/Combinatorial-Semi/CombLinTS.html">
+       CombLinTS
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Online/Slate/Combinatorial-Semi/MTSS_Comb.html">
+       MTSS_Comb
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../Online/Slate/Assortment%20Optimization.html">
+     Dynamic Assortment Optimization (Multinomial Logit Bandit)
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+    <label for="toctree-checkbox-14">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Online/Slate/MNL/TS_MNL_Beta.html">
+       TS_MNL
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Online/Slate/MNL/TS_Contextual_MNL.html">
+       TS_Contextual_MNL
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Online/Slate/MNL/MTSS_MNL.html">
+       MTSS_MNL
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../OnlineEval/Online%20Policy%20Evaluation.html">
+   Online Policy Evaluation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+  <label for="toctree-checkbox-15">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../OnlineEval/Doubly%20Robust%20Online%20Policy%20Evaluator.html">
+     Doubly Robust Online Policy Evaluator
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../OnlineEval/Inverse%20Probability%20Weighted%20Online%20Policy%20Evaluator.html">
+     Inverse Probability Weighted Online Policy Evaluator
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../OnlineEval/Direct%20Online%20Policy%20Evaluator.html">
+     Direct Online Policy Evaluator
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Scenario 3
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Offline/preliminary_MDP-potential-outcome.html">
+   Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+  <label for="toctree-checkbox-16">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../Offline/Infinite_OPE/Evaluation.html">
+     Offline Evaluation
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Offline/Infinite_OPE/FQE.html">
+       Fitted-Q Evaluation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Offline/Infinite_OPE/IPW_Infinite.html">
+       Importance Sampling for Policy Evaluation (Infinite Horizon)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Offline/Infinite_OPE/DR_Infinite.html">
+       Doubly Robust Estimator for Policy Evaluation (Infinite Horizon)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Offline/Infinite_OPE/Deeply_Debiased.html">
+       Deeply-Debiased Off-Policy Evaluation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../Offline/Infinite_OPE/Optimization.html">
+     Offline Optimization
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Offline/Infinite_OPE/FQI.html">
+       Fitted-Q Iteration
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Offline/OnlineRL.html">
+   Online RL
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Scenario 4
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Offline/Multi%20Stage.html">
+   Multiple Stages (DTR)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Offline/Finite/Q-learning_Multiple.html">
+   Q-Learning (Multiple Stages)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Offline/Finite/A-learning_Multiple.html">
+   A-Learning (Multiple Stages)
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/Causal_Discovery/Score-based Learner - NOTEARS Algorithm.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FCausal_Discovery/Score-based Learner - NOTEARS Algorithm.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/Causal_Discovery/Score-based Learner - NOTEARS Algorithm.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview:
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#causal-graph-terminology-and-goal">
+     1. Causal Graph Terminology and Goal
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#applicable-causal-graphical-models">
+     2. Applicable Causal Graphical Models
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#model-1-linear-structural-equation-model-lsem">
+       Model 1: Linear Structural Equation Model (LSEM)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#model-2-generalized-lsem">
+       Model 2: Generalized LSEM
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#model-3-additive-noise-model">
+       Model 3: Additive Noise Model
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#algorithm-details">
+     3. Algorithm Details
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#demo-code">
+   Demo Code
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#generate-synthetic-datasets">
+   Generate Synthetic Datasets
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#causal-discovery-by-notears-learner-zheng-et-al-2018">
+     Causal Discovery by  NOTEARS Learner (Zheng et al., 2018)
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#summary-of-results-under-different-causal-graph-learners">
+       Summary of Results under Different Causal Graph Learners.
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#anoce-cvae-learner-cai-et-al-2020">
+   ANOCE-CVAE Learner (Cai et al., 2020)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Score-based Learner - NOTEARS Algorithm</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview:
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#causal-graph-terminology-and-goal">
+     1. Causal Graph Terminology and Goal
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#applicable-causal-graphical-models">
+     2. Applicable Causal Graphical Models
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#model-1-linear-structural-equation-model-lsem">
+       Model 1: Linear Structural Equation Model (LSEM)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#model-2-generalized-lsem">
+       Model 2: Generalized LSEM
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#model-3-additive-noise-model">
+       Model 3: Additive Noise Model
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#algorithm-details">
+     3. Algorithm Details
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#demo-code">
+   Demo Code
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#generate-synthetic-datasets">
+   Generate Synthetic Datasets
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#causal-discovery-by-notears-learner-zheng-et-al-2018">
+     Causal Discovery by  NOTEARS Learner (Zheng et al., 2018)
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#summary-of-results-under-different-causal-graph-learners">
+       Summary of Results under Different Causal Graph Learners.
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#anoce-cvae-learner-cai-et-al-2020">
+   ANOCE-CVAE Learner (Cai et al., 2020)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="score-based-learner-notears-algorithm">
+<h1>Score-based Learner - NOTEARS Algorithm<a class="headerlink" href="#score-based-learner-notears-algorithm" title="Permalink to this headline">#</a></h1>
+<p>Causal discovery attracts more and more attention recently to infer causal structure from data and disentangles the complex relationship among variables. In the following, we detail a state-of-the-art causal discovery learner, NOTEARS (Zheng et al., 2018).</p>
+<p><em><strong>Application situations</strong></em>:</p>
+<ol class="simple">
+<li><p>Moderate or high-dimensional nodes;</p></li>
+<li><p>Unknown causal model or noises.</p></li>
+</ol>
+<p><em><strong>Advantage of the learner</strong></em>:</p>
+<ol class="simple">
+<li><p>Handle general causal graph with general noises;</p></li>
+<li><p>Graph can be uniquely identified in various cases;</p></li>
+<li><p>Computational fast in high-dimensional setting.</p></li>
+</ol>
+<p><em><strong>Disadvantage of the learner</strong></em>:</p>
+<ol class="simple">
+<li><p>Results is not invariant to data trasformation.</p></li>
+</ol>
+<section id="overview">
+<h2>Overview:<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
+<section id="causal-graph-terminology-and-goal">
+<h3>1. Causal Graph Terminology and Goal<a class="headerlink" href="#causal-graph-terminology-and-goal" title="Permalink to this headline">#</a></h3>
+<p>Consider a graph <span class="math notranslate nohighlight">\(\mathcal{G} =(Z,E)\)</span> with a node/variable set <span class="math notranslate nohighlight">\(Z\)</span> and an edge set <span class="math notranslate nohighlight">\(E\)</span>. A node <span class="math notranslate nohighlight">\(Z_i\)</span> is said to be a parent of <span class="math notranslate nohighlight">\(Z_j\)</span> if there is a directed edge from <span class="math notranslate nohighlight">\(Z_i\)</span> to <span class="math notranslate nohighlight">\(Z_j\)</span>. Let the set of all parents of node <span class="math notranslate nohighlight">\(Z_j\)</span> in <span class="math notranslate nohighlight">\(\mathcal{G}\)</span> as <span class="math notranslate nohighlight">\(PA_{Z_j} (\mathcal{G})\)</span>. A directed graph that does not contain directed cycles is called a directed acyclic graph (DAG). Suppose a DAG <span class="math notranslate nohighlight">\(\mathcal{G}=(Z,E)\)</span> that characterizes the causal relationship among <span class="math notranslate nohighlight">\(|Z|=d\)</span> nodes, where <span class="math notranslate nohighlight">\(Z=[Z_1,Z_2,\cdots,Z_d]^\top \)</span> represents a random vector and an edge <span class="math notranslate nohighlight">\(Z_i\rightarrow Z_j\)</span> means that <span class="math notranslate nohighlight">\(Z_i\)</span> is a direct cause of <span class="math notranslate nohighlight">\(Z_j\)</span>. Given realizations of the variable set <span class="math notranslate nohighlight">\(Z\)</span> as <span class="math notranslate nohighlight">\(\{z_1^{(i)},z_2^{(i)},\cdots,z_d^{(i)}\}_{1\leq i \leq n}\)</span>, we aim to estimate the underlying causal graph <span class="math notranslate nohighlight">\(\mathcal{G}\)</span>.</p>
+</section>
+<section id="applicable-causal-graphical-models">
+<h3>2. Applicable Causal Graphical Models<a class="headerlink" href="#applicable-causal-graphical-models" title="Permalink to this headline">#</a></h3>
+<p>Most causal graph learners rely on structural equation model (SEM).</p>
+<section id="model-1-linear-structural-equation-model-lsem">
+<h4>Model 1: Linear Structural Equation Model (LSEM)<a class="headerlink" href="#model-1-linear-structural-equation-model-lsem" title="Permalink to this headline">#</a></h4>
+<p>Let <span class="math notranslate nohighlight">\(B=\{b_{i,j}\}_{1\leq i\leq d,1\leq j\leq d}\)</span> be a <span class="math notranslate nohighlight">\(d\times d\)</span> matrix, where <span class="math notranslate nohighlight">\(b_{i,j}\)</span> is the weight of the edge <span class="math notranslate nohighlight">\(Z_i\rightarrow Z_j \in E\)</span>, and <span class="math notranslate nohighlight">\(b_{i,j}=0\)</span> otherwise. Then, we say that <span class="math notranslate nohighlight">\(\mathcal{G} =(Z,B)\)</span> is a weighted DAG with the node set <span class="math notranslate nohighlight">\(Z\)</span> and the weighted adjacency matrix <span class="math notranslate nohighlight">\(B\)</span> (the edge set <span class="math notranslate nohighlight">\(E\)</span> is nested in <span class="math notranslate nohighlight">\(B\)</span>). Under no unmeasured confounders, the Markov condition, the faithfulness condition, causal sufficiency assumption, and the linear structural equation model (LSEM) such that <span class="math notranslate nohighlight">\(Z\)</span> characterized by the pair (<span class="math notranslate nohighlight">\(\mathcal{G}\)</span>, <span class="math notranslate nohighlight">\(\epsilon\)</span>) is generated by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-57b0b5ae-0efd-4b62-8b25-6bbc34aa6fc7">
+<span class="eqno">(23)<a class="headerlink" href="#equation-57b0b5ae-0efd-4b62-8b25-6bbc34aa6fc7" title="Permalink to this equation">#</a></span>\[\begin{equation} 
+Z=B^\top Z +\epsilon,
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\epsilon \)</span> is a  random vector of jointly independent error variables. The LSEM model has good interpretation and has been analysised by Zheng et al. (2018) by contrained optimization. When the noise is Gaussian with equal variance, the model is identifiable (Peters and Bühlmann, 2013). In addition, under the linear model with non-Gaussian noise, the model is also identifiable (Shimizu et al., 2006).</p>
+</section>
+<section id="model-2-generalized-lsem">
+<h4>Model 2: Generalized LSEM<a class="headerlink" href="#model-2-generalized-lsem" title="Permalink to this headline">#</a></h4>
+<p>To handle complex relationship, a generalized version of LSEM has been studied by Yu et al. (2019) as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-43f43971-fe77-4338-a70f-8efc2bda9a1a">
+<span class="eqno">(24)<a class="headerlink" href="#equation-43f43971-fe77-4338-a70f-8efc2bda9a1a" title="Permalink to this equation">#</a></span>\[\begin{equation} 
+f_2(Z)=B^\top f_2(Z) +f_1(\epsilon),
+\end{equation}\]</div>
+<p>where the parameterized functions <span class="math notranslate nohighlight">\(f_1\)</span> and <span class="math notranslate nohighlight">\(f_2\)</span> effectively perform (possibly nonlinear) transforms on <span class="math notranslate nohighlight">\(\epsilon\)</span> and <span class="math notranslate nohighlight">\(Z\)</span>, respectively. Here, Model 1 is a special case of Model 2.</p>
+</section>
+<section id="model-3-additive-noise-model">
+<h4>Model 3: Additive Noise Model<a class="headerlink" href="#model-3-additive-noise-model" title="Permalink to this headline">#</a></h4>
+<p>Suppose there exists a weighted DAG <span class="math notranslate nohighlight">\(\mathcal{G}=(Z,E)\)</span> that characterizes the causal relationship among <span class="math notranslate nohighlight">\(|Z|=d\)</span> nodes. Each variable <span class="math notranslate nohighlight">\(Z_i\)</span> is associated with a node <span class="math notranslate nohighlight">\(i\)</span> in the DAG <span class="math notranslate nohighlight">\(\mathcal{G}\)</span>, and the observed value of <span class="math notranslate nohighlight">\(Z_i\)</span> is obtained as a function of its parents in the graph plus an independent additive noise <span class="math notranslate nohighlight">\(n_i\)</span>, i.e.,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-cc2f994e-8fce-49b6-919c-22ed5faf4011">
+<span class="eqno">(25)<a class="headerlink" href="#equation-cc2f994e-8fce-49b6-919c-22ed5faf4011" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{anm}
+Z_i := g_i\{PA_{Z_i} (\mathcal{G})\} + n_i,i = 1,2,...,d, 
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(PA_{Z_i} (\mathcal{G})\)</span> denotes the set of parent variables of <span class="math notranslate nohighlight">\(Z_i\)</span> so that there is an edge from <span class="math notranslate nohighlight">\(Z_j\in PA_{Z_i} (\mathcal{G})\)</span> to <span class="math notranslate nohighlight">\(Z_i\)</span> in the graph, and the noises <span class="math notranslate nohighlight">\(n_i\)</span> are assumed to be jointly independent. Assuming the <span class="math notranslate nohighlight">\(g_j\)</span> are three times differentiable and not linear in any of its arguments, this model is identifiable (Peters et al., 2014, Corollary 31). Here, Model 1 is a special case of Model 3 as well.</p>
+</section>
+</section>
+<section id="algorithm-details">
+<h3>3. Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this headline">#</a></h3>
+<p>The NOTEARS learner (Zheng et al., 2018) estimates the weighted adjacency matrix by formulating the optimization with an acyclicity constraint. The implementation is available at their repository at https://github.com/xunzheng/notears. A follow-up work using a VAE parameterized by a graph neural network that generalizes LSEM was proposed in Yu et al. (2019) with a more computational friendly constraint, namely DAG-GNN. Also see Zhu &amp; Chen (2019) and Cai et al. (2021) for other cutting-edge structural learning methods.</p>
+</section>
+</section>
+<section id="demo-code">
+<h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="generate-synthetic-datasets">
+<h2>Generate Synthetic Datasets<a class="headerlink" href="#generate-synthetic-datasets" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">synthetic_datasets</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">seed</span> <span class="o">=</span> <span class="mi">1234</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">300</span>
+<span class="n">ground_truth_G</span> <span class="o">=</span> <span class="n">simulate_random_dag</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">graph_type</span><span class="o">=</span><span class="s1">&#39;erdos-renyi&#39;</span><span class="p">,</span> <span class="n">w_range</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="n">d</span><span class="p">])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">simulate_lsem</span><span class="p">(</span><span class="n">G</span> <span class="o">=</span> <span class="n">ground_truth_G</span><span class="p">,</span> <span class="n">A_type</span> <span class="o">=</span><span class="s1">&#39;Gaussian&#39;</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="p">,</span> <span class="n">baseline</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">n</span><span class="p">,</span><span class="n">d</span><span class="p">))</span>
+
+<span class="c1">#plot true causal graph:</span>
+<span class="n">plot_net</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">to_numpy_array</span><span class="p">(</span><span class="n">ground_truth_G</span><span class="p">),</span> <span class="n">labels_name</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">)))</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">wc</span><span class="o">/</span><span class="n">c5dcq1_d1gn8w9yg5728l9dm0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_16179</span><span class="o">/</span><span class="mf">2370726509.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">os</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">synthetic_datasets</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">1234</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;utils&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="causal-discovery-by-notears-learner-zheng-et-al-2018">
+<h3>Causal Discovery by  NOTEARS Learner (Zheng et al., 2018)<a class="headerlink" href="#causal-discovery-by-notears-learner-zheng-et-al-2018" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">notears</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="n">notears_linear</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span><span class="n">d</span><span class="p">),</span> <span class="n">lambda1</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">loss_type</span><span class="o">=</span><span class="s1">&#39;l2&#39;</span><span class="p">)</span>
+<span class="n">notears_res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+<span class="n">notears_res</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">notears_res</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> 
+<span class="c1">#plot the estimated causal graph:</span>
+<span class="n">plot_net</span><span class="p">(</span><span class="n">notears_res</span><span class="p">,</span> <span class="n">labels_name</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">)))</span> 
+
+<span class="n">FDR</span><span class="p">,</span> <span class="n">TPR</span><span class="p">,</span> <span class="n">SHD</span> <span class="o">=</span> <span class="n">count_accuracy</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">(</span><span class="n">ground_truth_G</span><span class="p">),</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">(</span><span class="n">notears_res</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;FDR:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">FDR</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;TPR:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">TPR</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;SHD:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">SHD</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Score-based Learner - NOTEARS Algorithm_7_0.png" src="../_images/Score-based Learner - NOTEARS Algorithm_7_0.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FDR: 0.0
+TPR: 0.62
+SHD: 3
+</pre></div>
+</div>
+</div>
+</div>
+<section id="summary-of-results-under-different-causal-graph-learners">
+<h4>Summary of Results under Different Causal Graph Learners.<a class="headerlink" href="#summary-of-results-under-different-causal-graph-learners" title="Permalink to this headline">#</a></h4>
+<p>Note: The estimated graphs (after pruning) are evaluated by three metrics: the false discovery rate (FDR), the true positive rate (TPR), and the structural Hamming distance (SHD, the smallest number of edge additions, deletions, and reversals to convert the estimated graph into the true DAG). Here, the SHD takes into account both false positives and negatives and a lower SHD indicates a better estimate of the causal graph.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Learners</p></th>
+<th class="head"><p>FDR</p></th>
+<th class="head"><p>TPR</p></th>
+<th class="head"><p>SHD</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>PC</p></td>
+<td><p>0.00</p></td>
+<td><p>0.50</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-odd"><td><p>ICA-LiNGAM</p></td>
+<td><p>0.67</p></td>
+<td><p>0.25</p></td>
+<td><p>7</p></td>
+</tr>
+<tr class="row-even"><td><p>NOTEARS</p></td>
+<td><p>0.00</p></td>
+<td><p>0.62</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-odd"><td><p>DAGGNN</p></td>
+<td><p>0.00</p></td>
+<td><p>0.62</p></td>
+<td><p>3</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="anoce-cvae-learner-cai-et-al-2020">
+<h2>ANOCE-CVAE Learner (Cai et al., 2020)<a class="headerlink" href="#anoce-cvae-learner-cai-et-al-2020" title="Permalink to this headline">#</a></h2>
+<p>The ANOCE-CVAE learner (Cai et al., 2020) is constrained causal structure learning method by incorporating a novel identification constraint that specifies the temporal causal relationship of variables. The code is publicly available at an anonymous repository at https://github.com/anoce-cvae/ANOCE-CVAE.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils_anoce</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">calculate_effect</span><span class="p">(</span><span class="n">notears_res</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The total effect (TE): [[0.]]
+The natural direct effect (DE): 0.0
+The natural indirect effect (IE): [[0.]]
+The natural direct effect for mediators (DM): [[ 0.  0.  0.  0. -0. -0.]]
+The natural direct effect for mediators (IM): [[0. 0. 0. 0. 0. 0.]]
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(matrix([[0.]]),
+ 0.0,
+ matrix([[0.]]),
+ matrix([[ 0.,  0.,  0.,  0., -0., -0.]]),
+ matrix([[0., 0., 0., 0., 0., 0.]]))
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<p>[1] Judea Pearl et al. Causal inference in statistics: An overview. Statistics surveys, 3:96–146, 2009.</p>
+<p>[2] Pater Spirtes, Clark Glymour, Richard Scheines, Stuart Kauffman, Valerio Aimale, and Frank Wimberly. Constructing bayesian network models of gene expression networks from microarray data. 2000.</p>
+<p>[3] Markus Kalisch and Peter Bühlmann. Estimating high-dimensional directed acyclic graphs with the pc-algorithm. Journal of Machine Learning Research, 8(Mar):613–636, 2007.</p>
+<p>[4] Rajen D Shah and Jonas Peters. The hardness of conditional independence testing and the generalised covariance measure. arXiv preprint arXiv:1804.07203, 2018.</p>
+<p>[5] Shohei Shimizu, Patrik O Hoyer, Aapo Hyvärinen, and Antti Kerminen. A linear non-gaussian acyclic model for causal discovery. Journal of Machine Learning Research, 7(Oct):2003–2030, 2006.</p>
+<p>[6] Peter Bühlmann, Jonas Peters, Jan Ernest, et al. Cam: Causal additive models, high-dimensional order search and penalized regression. The Annals of Statistics, 42(6):2526–2556, 2014.</p>
+<p>[7] David Maxwell Chickering. Optimal structure identification with greedy search. Journal of machine learning research, 3(Nov):507–554, 2002.</p>
+<p>[8] Joseph Ramsey, Madelyn Glymour, Ruben Sanchez-Romero, and Clark Glymour. A million variables and more: the fast greedy equivalence search algorithm for learning high-dimensional graphical causal models, with an application to functional magnetic resonance images. International journal of data science and analytics, 3(2):121–129, 2017.</p>
+<p>[9] Xun Zheng, Bryon Aragam, Pradeep K Ravikumar, and Eric P Xing. Dags with no tears: Continuous optimization for structure learning. In Advances in Neural Information Processing Systems, pp. 9472–9483, 2018.</p>
+<p>[10] Yue Yu, Jie Chen, Tian Gao, and Mo Yu. Dag-gnn: Dag structure learning with graph neural networks.
+arXiv preprint arXiv:1904.10098, 2019.</p>
+<p>[11] Shengyu Zhu and Zhitang Chen. Causal discovery with reinforcement learning. arXiv preprint arXiv:1906.04477, 2019.</p>
+<p>[12] Cai, Hengrui, Rui Song, and Wenbin Lu. “ANOCE: Analysis of Causal Effects with Multiple Mediators via Constrained Structural Learning.” International Conference on Learning Representations. 2020.</p>
+<p>[13] J. Peters and P. Bühlmann. Identifiability of Gaussian structural equation models with equal error variances.
+Biometrika, 101(1):219–228, 2013.</p>
+<p>[14] J. Peters, J. Mooij, D. Janzing, and B. Schölkopf. Causal Discovery with Continuous Additive Noise Models.
+Journal of Machine Learning Research, 2014.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./Causal_Discovery"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="Functional-based%20Learner%20-%20LiNGAM%20Algorithm.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Functional-based Learner - LiNGAM Algorithm</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../Causal_Effect_Learning/Scenario%201/Single%20Stage.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Single Stage</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Causal Decision Making Team<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
