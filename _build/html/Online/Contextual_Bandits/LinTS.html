@@ -195,7 +195,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/ATE.html">
-     ATE estimation (Single Stage)
+     ATE Estimation (Single Stage)
     </a>
    </li>
    <li class="toctree-l2">
@@ -949,12 +949,12 @@ title="Print to PDF"
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. Noticing that feature information are commonly avialable, the <strong>LinTS</strong> algorithm consdiers modeling the expectation of the potential reward <span class="math notranslate nohighlight">\(R_t(i)\)</span> with features of item <span class="math notranslate nohighlight">\(i\)</span>. As an example, considering the Gaussian reward, we assume that</p>
 <div class="amsmath math notranslate nohighlight" id="equation-cd118c8a-8ad2-4d99-9221-9454679e2e97">
-<span class="eqno">(64)<a class="headerlink" href="#equation-cd118c8a-8ad2-4d99-9221-9454679e2e97" title="Permalink to this equation">#</a></span>\[\begin{align}
+<span class="eqno">(77)<a class="headerlink" href="#equation-cd118c8a-8ad2-4d99-9221-9454679e2e97" title="Permalink to this equation">#</a></span>\[\begin{align}
 R_t(i)\sim \mathcal{N}(\boldsymbol{s}_i^T \boldsymbol{\gamma},\sigma^2).
 \end{align}\]</div>
 <p>As for the Bernoulli reward, we assume that</p>
 <div class="amsmath math notranslate nohighlight" id="equation-10687823-a9be-4605-a4d1-5133fc36cd7c">
-<span class="eqno">(65)<a class="headerlink" href="#equation-10687823-a9be-4605-a4d1-5133fc36cd7c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<span class="eqno">(78)<a class="headerlink" href="#equation-10687823-a9be-4605-a4d1-5133fc36cd7c" title="Permalink to this equation">#</a></span>\[\begin{align}
 R_t(i) \sim Bernoulli(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})).
 \end{align}\]</div>
 <p>Similar as the standard TS algorithm, the LinTS algorithm starts with specifying a prior distribution of the parameter <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>, and a variance of the reward, based on the domian knowledge. At each round <span class="math notranslate nohighlight">\(t\)</span>, the agent will samples a vector of <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\gamma}}^{t}\)</span> from thecorresponding posterior distribution, and the mean reward <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\theta}}^{t}\)</span> is then calculated accordingly. The action <span class="math notranslate nohighlight">\(a\)</span> with the greatest <span class="math notranslate nohighlight">\(\tilde{\theta}_{a}^{t}\)</span> is then selected. Finally, the posterior distribution would be updated after receiving the feedback at the end of each round. It should be noted that the posterior updating step differs for different pairs of the prior distribution of expected potential reward and reward distribution, and the code can be easily modified to different prior/reward distribution specifications if necessary.</p>
