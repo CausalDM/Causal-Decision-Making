@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Contextual Bandits &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -20,7 +21,7 @@
     href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
@@ -36,7 +37,7 @@
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -925,20 +926,30 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="contextual-bandits">
+  <section class="tex2jax_ignore mathjax_ignore" id="contextual-bandits">
 <h1>Contextual Bandits<a class="headerlink" href="#contextual-bandits" title="Permalink to this headline">#</a></h1>
-<p>disjoint linear models…finite arm</p>
-<p>The bandit problems have received increasing attention recently and have been widely applied to areas such as clinical trials [1], finance [2], and recommendation systems [3], among others. The most classical version of it is the multi-armed bandit (MAB) [4], where an agent will sequentially select an item (arm) from a few and then receive a random reward for the item selected. Since the reward distributions are unknown in most real applications, the central task of a MAB algorithm is to learn the distributions from feedback received and find the optimal item to maximize the cumulative rewards or, equivalently, to minimize the cumulative regret. This chapter focuses on the MAB problems by illustrating a group of classical algorithms to tackle the well-known exploration-exploitation trade-off.</p>
-<div class="section" id="problem-setting">
+<p>Contextual bandits are primarily motivated by the fact that contextual information is commonly available in real-world applications, such as user profile (i.e., gender, occupation) and environment features (i.e., season, temperature, etc). While the reward distributions are typically unknown, contextual bandits aim to utilize the contextual information to aid in learning the reward distribution. Building upon the classical MAB framework, an agent will first observe the context, then choose an item (arm) from a few options, and finally receive a random reward for the item chosen. Consider the motivating example <strong>Recommender Systems</strong>. Suppose that there are a few movie genres available to be recommended and that every time a user visits, we would receive information about the user’s gender. Intuitively, females and males are likely to have different tastes in film genres. Therefore, contextual bandits algorithms aim to investigate how the reward of each movie genre differs depending on the gender of the user and to recommend the best movie genres whenever a user visits, with the ultimate goal of optimizing overall user satisfaction. See more application situations in [4].</p>
+<p>Typically, there are three major versions of contextual bandits [5]:</p>
+<ul class="simple">
+<li><p><strong>Lipschitz Contextual Bandits</strong> [6]: assumes that the expected reward for each arm is Lipschitz regarding contexts;</p></li>
+<li><p><strong>Linear Contextual Bandits</strong> [7]: assumes that the expected reward for each arm is linear in the feature vector;</p></li>
+<li><p><strong>Contextual Bandits with Policy Classes</strong> [8]: does not make any assumptions about the expected reward but instead considers a fixed set of context-based policies from which the best policy is selected in each round.</p></li>
+</ul>
+<p>In this chapter, we focus on linear contextual bandits and introduce two classical algorithms:</p>
+<ul class="simple">
+<li><p><strong>LinUCB</strong>[1],</p></li>
+<li><p><strong>LinTS</strong>[2,3].</p></li>
+</ul>
+<p>Notably, while the term <strong>linear contextual bandits</strong> typically refers to algorithms that consider problems with time-varying contexts, the term <strong>Stochastic Linear Bandits</strong> refers to its static version that considers static contexts. Recent extensions include, among others, contextual bandits with an infinite number of arms, contextual bandits with sparsity, and contextual bandits in a nonstationary environments.</p>
+<section id="problem-setting">
 <h2>Problem Setting<a class="headerlink" href="#problem-setting" title="Permalink to this headline">#</a></h2>
-<p>Let <span class="math notranslate nohighlight">\(T\)</span> be the total number of rounds, and <span class="math notranslate nohighlight">\(K\)</span> be the number of arms (actions to be selected). The agent would choose one arm at each round <span class="math notranslate nohighlight">\(t = 1, \dots, T\)</span>. Then the agent will receive the corresponding stochastic reward <span class="math notranslate nohighlight">\(R_t\)</span> from the environment. Denote the expected reward for each arm <span class="math notranslate nohighlight">\(i\)</span> as <span class="math notranslate nohighlight">\(r_{i}\)</span>. Since, in most real applications, such a reward distribution is always unknown, the agent needs to learn the reward distribution from feedback received. Overall, the objective is to find a bandit algorithm to maximize the cumulative Reward <span class="math notranslate nohighlight">\(\sum_{t=1}^{T}R_{t}\)</span>.</p>
-<p>MAB has been extensively studied and widely applied to different areas, including healthcare, recommender system, and finance, to name a few. See [4] for a detailed review of MAB and [5] for a survey of practical applications. Among them, the ultimate goal of a learning algorithm is always to strike a good balance between exploration (try an unfamiliar action to learn more information) and exploitation (take the action that has the highest estimated reward so far) so as to maximize the cumulative reward. In the following, we will briefly illustrate three popular and classical categories of algorithms to handle the exploration-exploitation trade-off: i) <span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy, ii) Upper Confidence Bound (UCB), and iii) Thompson Sampling (TS).</p>
-</div>
-<div class="section" id="graphical-data-structure">
+<p>Let <span class="math notranslate nohighlight">\(T\)</span> be the total number of rounds, and <span class="math notranslate nohighlight">\(K\)</span> be the number of arms (actions to be selected). At each round <span class="math notranslate nohighlight">\(t = 1, \dots, T\)</span>, the agent would first observe a vector of feature information, <span class="math notranslate nohighlight">\(S_t\)</span>, about the environment. Then the agent will choose one arm to play based on <span class="math notranslate nohighlight">\(S_t\)</span>, and then receive the corresponding stochastic reward <span class="math notranslate nohighlight">\(R_t\)</span> from the environment. Denote the reward that would be received if arm <span class="math notranslate nohighlight">\(a\)</span> is played as <span class="math notranslate nohighlight">\(R_t(a)\)</span>, which we will refer to as the potential reward of arm <span class="math notranslate nohighlight">\(a\)</span>. Since, in most real applications, the reward distribution of the random variable <span class="math notranslate nohighlight">\(R_t(a)\)</span> is always unknown, the agent needs to learn the reward distributions for each arm <span class="math notranslate nohighlight">\(a\)</span> from feature information and feedback received. Overall, the objective is to find a bandit algorithm to maximize the cumulative reward <span class="math notranslate nohighlight">\(\sum_{t=1}^{T}R_{t}\)</span>.</p>
+</section>
+<section id="graphical-data-structure">
 <h2>Graphical Data Structure<a class="headerlink" href="#graphical-data-structure" title="Permalink to this headline">#</a></h2>
 <p><img alt="CMAB.png" src="../../_images/CMAB.png" /></p>
-</div>
-<div class="section" id="real-data">
+</section>
+<section id="real-data">
 <h2>Real Data<a class="headerlink" href="#real-data" title="Permalink to this headline">#</a></h2>
 <p><strong>1. MovieLens</strong></p>
 <p>Movie Lens is a website that helps users find the movies they like and where they will rate the recommended movies. <a class="reference external" href="https://grouplens.org/datasets/movielens/1m/">MovieLens 1M dataset</a> is a dataset including the observations collected in an online movie recommendation experiment and is widely used to generate data for online bandit simulation studies. The goal of the simulation studies below is to learn the reward distribution of different movie genres and hence to recommend the optimal movie genres to the users to optimize the cumulative user satisfaction. In other words, every time a user visits the website, the agent will recommend a movie genre (<span class="math notranslate nohighlight">\(A_t\)</span>) to the user, and then the user will give a rating (<span class="math notranslate nohighlight">\(R_t\)</span>) to the genre recommended. We assume that users’ satisfaction is fully reflected through the ratings. Therefore, the ultimate goal of the bandit algorithms is to optimize the cumulative ratings received by finding and recommending the optimal movie genre that will receive the highest rating. In this chapter, we mainly focus on the top 5 Genres, including</p>
@@ -965,26 +976,21 @@ title="Print to PDF"
 <li><p><strong>Bernoulli Bandit</strong>: <span class="math notranslate nohighlight">\(R_t\)</span> is a binary variable, =1 if the rating is higher than 3.</p></li>
 </ul>
 <p>In the following, we evaluated the empirical performance of the supported algorithms on the MovieLens dataset under either the Gaussian bandit or Bernoulli bandit settings.</p>
-</div>
-<div class="section" id="reference">
+</section>
+<section id="reference">
 <h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">#</a></h2>
-<p>[1] Durand, A., Achilleos, C., Iacovides, D., Strati, K., Mitsis, G. D., and Pineau, J. (2018). Contextual bandits for adapting treatment in a mouse model of de novo carcinogenesis. In Machine learning for healthcare conference, pages 67–82. PMLR.</p>
-<p>[2] Shen, W., Wang, J., Jiang, Y.-G., and Zha, H. (2015). Portfolio choices with orthogonal bandit learning. In Twenty-fourth international joint conference on artificial intelligence.</p>
-<p>[3] Zhou, Q., Zhang, X., Xu, J., and Liang, B. (2017). Large-scale bandit approaches for recommender systems. In International Conference on Neural Information Processing, pages 811–821. Springer.</p>
-<p>[4] Slivkins, A. (2019). Introduction to multi-armed bandits. arXiv preprint arXiv:1904.07272.</p>
-<p>[5] Bouneffouf, D. and Rish, I. (2019). A survey on practical applications of multi-armed and contextual bandits. arXiv preprint arXiv:1904.10040.</p>
-<p>[6] Sutton, R. S. and Barto, A. G. (2018). Reinforcement learning: An introduction. MIT press</p>
-<p>[7] Auer, P., Cesa-Bianchi, N., and Fischer, P. (2002). Finite-time analysis of the multiarmed bandit problem. Machine learning, 47(2):235–256.</p>
-<p>[8] Russo, D., Van Roy, B., Kazerouni, A., Osband, I., and Wen, Z. (2017). A tutorial on thompson sampling. arXiv preprint arXiv:1707.0203</p>
-<p>[9] Lattimore, T. and Szepesv´ari, C. (2020). Bandit algorithms. Cambridge University Press.</p>
-<p>[10] Li, L., Chu, W., Langford, J., and Schapire, R. E. (2010). A contextual-bandit approach to personalized news article recommendation. In Proceedings of the 19th international conference on World wide web, pages 661–670</p>
-<p>[11] Li, L., Lu, Y., and Zhou, D. (2017). Provably optimal algorithms for generalized linear contextual bandits. In International Conference on Machine Learning, pages 2071–2080. PMLR.</p>
-<p>[12] Kveton, B., Zaheer, M., Szepesvari, C., Li, L., Ghavamzadeh, M., and Boutilier, C. (2020). Randomized exploration in generalized linear bandits. In International Conference on Artificial Intelligence and Statistics, pages 2066–2076. PMLR.</p>
-<p>[13] Agrawal, S. and Goyal, N. (2013). Thompson sampling for contextual bandits with linear payoffs. In International conference on machine learning, pages 127–135. PMLR.</p>
-</div>
+<p>[1] Chu, W., Li, L., Reyzin, L., &amp; Schapire, R. (2011, June). Contextual bandits with linear payoff functions. In Proceedings of the Fourteenth International Conference on Artificial Intelligence and Statistics (pp. 208-214). JMLR Workshop and Conference Proceedings.</p>
+<p>[2] Agrawal, S., &amp; Goyal, N. (2013, May). Thompson sampling for contextual bandits with linear payoffs. In International conference on machine learning (pp. 127-135). PMLR.</p>
+<p>[3] Kveton, B., Zaheer, M., Szepesvari, C., Li, L., Ghavamzadeh, M., &amp; Boutilier, C. (2020, June). Randomized exploration in generalized linear bandits. In International Conference on Artificial Intelligence and Statistics (pp. 2066-2076). PMLR.</p>
+<p>[4] Bouneffouf, D. and Rish, I. (2019). A survey on practical applications of multi-armed and contextual bandits. arXiv preprint arXiv:1904.10040.</p>
+<p>[5] Slivkins, A. (2019). Introduction to multi-armed bandits. Foundations and Trends® in Machine Learning, 12(1-2), 1-286.</p>
+<p>[6] Hazan, E., &amp; Megiddo, N. (2007, June). Online learning with prior knowledge. In International Conference on Computational Learning Theory (pp. 499-513). Springer, Berlin, Heidelberg.</p>
+<p>[7] Li, L., Chu, W., Langford, J., &amp; Schapire, R. E. (2010, April). A contextual-bandit approach to personalized news article recommendation. In Proceedings of the 19th international conference on World wide web (pp. 661-670).</p>
+<p>[8] Auer, P., Cesa-Bianchi, N., Freund, Y., &amp; Schapire, R. E. (2002). The nonstochastic multiarmed bandit problem. SIAM journal on computing, 32(1), 48-77.</p>
+</section>
 <div class="toctree-wrapper compound">
 </div>
-</div>
+</section>
 
     <script type="text/x-thebe-config">
     {

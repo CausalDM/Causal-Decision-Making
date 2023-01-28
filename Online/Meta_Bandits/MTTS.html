@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Multi-Task Thompson Sampling (MTTS) &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -20,7 +21,7 @@
     href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
@@ -36,7 +37,7 @@
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -925,21 +926,21 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="multi-task-thompson-sampling-mtts">
+  <section class="tex2jax_ignore mathjax_ignore" id="multi-task-thompson-sampling-mtts">
 <h1>Multi-Task Thompson Sampling (MTTS)<a class="headerlink" href="#multi-task-thompson-sampling-mtts" title="Permalink to this headline">#</a></h1>
-<div class="section" id="overview">
+<section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p><strong>Advantage</strong>: It is both scalable and robust. Furthermore, it also accounts for the iter-task heterogeneity.</p></li>
 <li><p><strong>Disadvantage</strong>:</p></li>
 <li><p><strong>Application Situation</strong>: Useful when there are a large number of tasks to learn, especially when new tasks are introduced on a regular basis. The outcome can be either binary or continuous. Static baseline information.</p></li>
 </ul>
-</div>
-<div class="section" id="main-idea">
+</section>
+<section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>The <strong>MTTS</strong>[1] utilize baseline information to share information among different tasks efficiently, by constructing a Bayesian hierarchical model. Specifically, it assumes that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7a90a000-44c3-4471-a7cc-acbb566cd8bd">
-<span class="eqno">(82)<a class="headerlink" href="#equation-7a90a000-44c3-4471-a7cc-acbb566cd8bd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9937bc75-73d5-4b86-91a4-077f9ddfb6c8">
+<span class="eqno">(82)<a class="headerlink" href="#equation-9937bc75-73d5-4b86-91a4-077f9ddfb6c8" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{alignedat}{2}
 &amp;\text{(Prior)} \quad
 \quad\quad\quad    \boldsymbol{\gamma} &amp;&amp;\sim Q(\boldsymbol{\gamma}), \\
@@ -950,8 +951,8 @@ title="Print to PDF"
       \end{alignedat}
 \end{equation}\]</div>
 <p>Similarly, considering the Bernoulli bandit, it assumes that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c29354c1-1c51-4009-8515-dc6d4cd96668">
-<span class="eqno">(83)<a class="headerlink" href="#equation-c29354c1-1c51-4009-8515-dc6d4cd96668" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:hierachical_model}
+<div class="amsmath math notranslate nohighlight" id="equation-5be3787b-d50a-40f6-a4b9-8ff2bec81645">
+<span class="eqno">(83)<a class="headerlink" href="#equation-5be3787b-d50a-40f6-a4b9-8ff2bec81645" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:hierachical_model}
   \begin{alignedat}{2}
 &amp;\text{(Prior)} \quad
 \quad\quad\quad    \boldsymbol{\gamma} &amp;&amp;\sim Q(\boldsymbol{\gamma}), \\
@@ -963,13 +964,13 @@ title="Print to PDF"
 \end{equation}\]</div>
 <p>where  <span class="math notranslate nohighlight">\(logistic(s) \equiv 1 / (1 + exp^{-1}(s))\)</span>, <span class="math notranslate nohighlight">\(\psi\)</span> is a known parameter, and  <span class="math notranslate nohighlight">\(\text{Beta}(\mu, \psi)\)</span> denotes a Beta distribution with mean <span class="math notranslate nohighlight">\(\mu\)</span> and precision <span class="math notranslate nohighlight">\(\psi\)</span>. Still, we assume a Normal prior of <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>. As there is no explicit form of the corresponding posterior, we update the posterior distribution by <strong>Pymc3</strong>.</p>
 <p>Under the TS framework, at each round <span class="math notranslate nohighlight">\(t\)</span> with task <span class="math notranslate nohighlight">\(j\)</span>, the agent will sample a <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\mu}}_{j}\)</span> from its posterior distribution updated according to the hierarchical model, then the action <span class="math notranslate nohighlight">\(a\)</span> with the maximum sampled <span class="math notranslate nohighlight">\(\tilde{\mu}_{j,a}\)</span> will be pulled. Mathmetically,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eda57a6e-fb43-44e9-9003-7dc8db072988">
-<span class="eqno">(84)<a class="headerlink" href="#equation-eda57a6e-fb43-44e9-9003-7dc8db072988" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e9765572-9ea0-42b5-b863-1811c415a56f">
+<span class="eqno">(84)<a class="headerlink" href="#equation-e9765572-9ea0-42b5-b863-1811c415a56f" title="Permalink to this equation">#</a></span>\[\begin{equation}
     A_{j,t} = argmax_{a \in \mathcal{A}} \hat{E}(R_{j,t}(a)) = argmax_{a \in \mathcal{A}} \tilde\mu_{j,a}.
 \end{equation}\]</div>
 <p>Essentially, <strong>MTTS</strong> assumes that the mean reward <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_{j}\)</span> is sampled from model <span class="math notranslate nohighlight">\(g\)</span> parameterized by unknown parameter <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span> and conditional on task feature <span class="math notranslate nohighlight">\(\boldsymbol{s}_{j}\)</span>. Instead of assuming that <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_j\)</span> is fully determined by its features through a deterministic function, <strong>MTTS</strong> adds an item-specific noise term to account for the inter-task heterogeneity. Simultaneously modeling heterogeneity and sharing information across tasks via <span class="math notranslate nohighlight">\(g\)</span>, <strong>MTTS</strong> is able to provide an informative prior distribution to guide the exploration. Appropriately addressing the heterogeneity between tasks, the MTTS has been shown to have a superior performance in practice[1].</p>
-</div>
-<div class="section" id="key-steps">
+</section>
+<section id="key-steps">
 <h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">#</a></h2>
 <p>For <span class="math notranslate nohighlight">\((j,t) = (1,1),(1,2),\cdots\)</span>:</p>
 <ol class="simple">
@@ -979,13 +980,13 @@ title="Print to PDF"
 <li><p>Take the action <span class="math notranslate nohighlight">\(A_{j,t}\)</span> such that <span class="math notranslate nohighlight">\(A_{j,t} = argmax_{a \in \mathcal{A}} \tilde\mu_{j,a}\)</span>;</p></li>
 <li><p>Receive reward <span class="math notranslate nohighlight">\(R_{j,t}\)</span>.</p></li>
 </ol>
-</div>
-<div class="section" id="references">
+</section>
+<section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <p>[1] Wan, R., Ge, L., &amp; Song, R. (2021). Metadata-based multi-task bandits with bayesian hierarchical models. Advances in Neural Information Processing Systems, 34, 29655-29668.</p>
 <p>[2] Basu, S., Kveton, B., Zaheer, M., &amp; Szepesvári, C. (2021). No regrets for learning the prior in bandits. Advances in Neural Information Processing Systems, 34, 28029-28041.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
