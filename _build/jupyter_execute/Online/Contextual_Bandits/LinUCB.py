@@ -43,7 +43,7 @@
 
 import os
 os.getcwd()
-os.chdir('/nas/longleaf/home/lge/CausalDM')
+os.chdir('D:\GitHub\CausalDM')
 
 
 # ### Import the learner.
