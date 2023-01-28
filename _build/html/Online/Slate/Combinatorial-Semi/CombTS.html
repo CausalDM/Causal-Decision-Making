@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>CombTS &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -20,7 +21,7 @@
     href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
@@ -36,7 +37,7 @@
     <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -195,7 +196,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/ATE.html">
-     ATE estimation (Single Stage)
+     ATE Estimation (Single Stage)
     </a>
    </li>
    <li class="toctree-l2">
@@ -935,22 +936,22 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="combts">
+  <section class="tex2jax_ignore mathjax_ignore" id="combts">
 <h1>CombTS<a class="headerlink" href="#combts" title="Permalink to this headline">#</a></h1>
-<div class="section" id="overview">
+<section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p><strong>Advantage</strong>: In practice, it always outperforms algorithms that also do not use features but are based on other frameworks, such as UCB.</p></li>
 <li><p><strong>Disadvantage</strong>: When there are a large number of items, it is not scalable.</p></li>
 <li><p><strong>Application Situation</strong>: Useful when presenting a list of items, each of which will generate a partial outcome (reward). The outcome is continuous.</p></li>
 </ul>
-</div>
-<div class="section" id="main-idea">
+</section>
+<section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>Recently, researchers began adapting the TS framework for combinatorial semi-bandits problems from a Bayesian perspective. <strong>CombTS</strong> [2] has been developed for the general family of sub-Gaussian outcomes <span class="math notranslate nohighlight">\(Y_{i,t}(a)\)</span> by assuming a Gaussian prior for each <span class="math notranslate nohighlight">\(\theta_i\)</span> and then updating the posterior distribution using Bayes’ rule. The optimal action can be obtained from a combinatorial optimization problem with estimates of the mean reward <span class="math notranslate nohighlight">\(\theta_i\)</span> of each item, which can be efficiently solved by corresponding combinatorial optimization algorithms in most real-world applications [1].</p>
 <p>It should be noted that the posterior updating step differs for different pairs of the prior distribution of expected potential reward of each item and the reward distribution, and the code can be easily modified to different prior/reward distribution specifications if necessary. Further, for simplicity, we consider the most basic size constraint such that the action space includes all the possible subsets with size <span class="math notranslate nohighlight">\(K\)</span>. Therefore, the optimization process to find the optimal subset <span class="math notranslate nohighlight">\(A_{t}\)</span> is equal to selecting a list of <span class="math notranslate nohighlight">\(K\)</span> items with the highest attractiveness factors. Of course, users are welcome to modify the <strong>optimization</strong> function to satisfy more complex constraints.</p>
-</div>
-<div class="section" id="key-steps">
+</section>
+<section id="key-steps">
 <h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p>Specifying a prior distirbution of each <span class="math notranslate nohighlight">\(\theta_i\)</span>, i.e., Normal(0,1).</p></li>
@@ -963,8 +964,8 @@ title="Print to PDF"
 </li>
 </ol>
 <p>*Notations can be found in either the inroduction of the chapter “Structured Bandits” or the introduction of the combinatorial Semi-Bandit problems.</p>
-</div>
-<div class="section" id="demo-code">
+</section>
+<section id="demo-code">
 <h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -981,21 +982,20 @@ title="Print to PDF"
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">e48b8638d1cf</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 6&gt;</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">os</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="c1"># code used to import the learner</span>
 
-<span class="ne">FileNotFoundError</span>: [WinError 3] The system cannot find the path specified: &#39;/nas/longleaf/home/lge/CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [WinError 3] 系统找不到指定的路径。: &#39;/nas/longleaf/home/lge/CausalDM&#39;
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Slate.Combinatorial_Semi</span> <span class="k">import</span> <span class="n">MTSS_Comb</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Slate.Combinatorial_Semi</span> <span class="k">import</span> <span class="n">_env_SemiBandit</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Slate.Combinatorial_Semi</span> <span class="kn">import</span> <span class="n">MTSS_Comb</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Slate.Combinatorial_Semi</span> <span class="kn">import</span> <span class="n">_env_SemiBandit</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </pre></div>
 </div>
@@ -1010,7 +1010,7 @@ title="Print to PDF"
 <span class="n">X_sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">p</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">with_intercept</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">sigma_1</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span>
+<span class="n">sigma_1</span> <span class="o">=</span> <span class="mf">.5</span>
 <span class="n">sigma_2</span> <span class="o">=</span> <span class="mi">1</span>
 
 <span class="n">env</span> <span class="o">=</span> <span class="n">_env_SemiBandit</span><span class="o">.</span><span class="n">Semi_env</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">sigma_1</span><span class="p">,</span> <span class="n">sigma_2</span>
@@ -1032,13 +1032,13 @@ title="Print to PDF"
 </div>
 </div>
 <p><strong>Interpretation:</strong> A sentence to include the analysis result: the estimated optimal regime is…</p>
-</div>
-<div class="section" id="references">
+</section>
+<section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <p>[1] Chen, W., Wang, Y., &amp; Yuan, Y. (2013, February). Combinatorial multi-armed bandit: General framework and applications. In International conference on machine learning (pp. 151-159). PMLR.</p>
 <p>[2] Perrault, P., Boursier, E., Valko, M., &amp; Perchet, V. (2020). Statistical efficiency of thompson sampling for combinatorial semi-bandits. Advances in Neural Information Processing Systems, 33, 5429-5440.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {

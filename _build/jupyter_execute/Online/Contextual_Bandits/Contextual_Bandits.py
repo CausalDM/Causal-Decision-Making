@@ -2,15 +2,21 @@
 # coding: utf-8
 
 # # Contextual Bandits
-# disjoint linear models...finite arm
+# Contextual bandits are primarily motivated by the fact that contextual information is commonly available in real-world applications, such as user profile (i.e., gender, occupation) and environment features (i.e., season, temperature, etc). While the reward distributions are typically unknown, contextual bandits aim to utilize the contextual information to aid in learning the reward distribution. Building upon the classical MAB framework, an agent will first observe the context, then choose an item (arm) from a few options, and finally receive a random reward for the item chosen. Consider the motivating example **Recommender Systems**. Suppose that there are a few movie genres available to be recommended and that every time a user visits, we would receive information about the user's gender. Intuitively, females and males are likely to have different tastes in film genres. Therefore, contextual bandits algorithms aim to investigate how the reward of each movie genre differs depending on the gender of the user and to recommend the best movie genres whenever a user visits, with the ultimate goal of optimizing overall user satisfaction. See more application situations in [4].
 # 
+# Typically, there are three major versions of contextual bandits [5]:
+# - **Lipschitz Contextual Bandits** [6]: assumes that the expected reward for each arm is Lipschitz regarding contexts;
+# - **Linear Contextual Bandits** [7]: assumes that the expected reward for each arm is linear in the feature vector;
+# - **Contextual Bandits with Policy Classes** [8]: does not make any assumptions about the expected reward but instead considers a fixed set of context-based policies from which the best policy is selected in each round.
 # 
-# The bandit problems have received increasing attention recently and have been widely applied to areas such as clinical trials [1], finance [2], and recommendation systems [3], among others. The most classical version of it is the multi-armed bandit (MAB) [4], where an agent will sequentially select an item (arm) from a few and then receive a random reward for the item selected. Since the reward distributions are unknown in most real applications, the central task of a MAB algorithm is to learn the distributions from feedback received and find the optimal item to maximize the cumulative rewards or, equivalently, to minimize the cumulative regret. This chapter focuses on the MAB problems by illustrating a group of classical algorithms to tackle the well-known exploration-exploitation trade-off.
+# In this chapter, we focus on linear contextual bandits and introduce two classical algorithms:
+# - **LinUCB**[1],
+# - **LinTS**[2,3].
+# 
+# Notably, while the term **linear contextual bandits** typically refers to algorithms that consider problems with time-varying contexts, the term **Stochastic Linear Bandits** refers to its static version that considers static contexts. Recent extensions include, among others, contextual bandits with an infinite number of arms, contextual bandits with sparsity, and contextual bandits in a nonstationary environments.
 # 
 # ## Problem Setting
-# Let $T$ be the total number of rounds, and $K$ be the number of arms (actions to be selected). The agent would choose one arm at each round $t = 1, \dots, T$. Then the agent will receive the corresponding stochastic reward $R_t$ from the environment. Denote the expected reward for each arm $i$ as $r_{i}$. Since, in most real applications, such a reward distribution is always unknown, the agent needs to learn the reward distribution from feedback received. Overall, the objective is to find a bandit algorithm to maximize the cumulative Reward $\sum_{t=1}^{T}R_{t}$.
-# 
-# MAB has been extensively studied and widely applied to different areas, including healthcare, recommender system, and finance, to name a few. See [4] for a detailed review of MAB and [5] for a survey of practical applications. Among them, the ultimate goal of a learning algorithm is always to strike a good balance between exploration (try an unfamiliar action to learn more information) and exploitation (take the action that has the highest estimated reward so far) so as to maximize the cumulative reward. In the following, we will briefly illustrate three popular and classical categories of algorithms to handle the exploration-exploitation trade-off: i) $\epsilon$-greedy, ii) Upper Confidence Bound (UCB), and iii) Thompson Sampling (TS). 
+# Let $T$ be the total number of rounds, and $K$ be the number of arms (actions to be selected). At each round $t = 1, \dots, T$, the agent would first observe a vector of feature information, $S_t$, about the environment. Then the agent will choose one arm to play based on $S_t$, and then receive the corresponding stochastic reward $R_t$ from the environment. Denote the reward that would be received if arm $a$ is played as $R_t(a)$, which we will refer to as the potential reward of arm $a$. Since, in most real applications, the reward distribution of the random variable $R_t(a)$ is always unknown, the agent needs to learn the reward distributions for each arm $a$ from feature information and feedback received. Overall, the objective is to find a bandit algorithm to maximize the cumulative reward $\sum_{t=1}^{T}R_{t}$.
 # 
 # ## Graphical Data Structure
 # ![CMAB.png](CMAB.png)
@@ -44,32 +50,21 @@
 # In the following, we evaluated the empirical performance of the supported algorithms on the MovieLens dataset under either the Gaussian bandit or Bernoulli bandit settings.
 
 # ## Reference
-# [1] Durand, A., Achilleos, C., Iacovides, D., Strati, K., Mitsis, G. D., and Pineau, J. (2018). Contextual bandits for adapting treatment in a mouse model of de novo carcinogenesis. In Machine learning for healthcare conference, pages 67–82. PMLR.
+# [1] Chu, W., Li, L., Reyzin, L., & Schapire, R. (2011, June). Contextual bandits with linear payoff functions. In Proceedings of the Fourteenth International Conference on Artificial Intelligence and Statistics (pp. 208-214). JMLR Workshop and Conference Proceedings.
 # 
-# [2] Shen, W., Wang, J., Jiang, Y.-G., and Zha, H. (2015). Portfolio choices with orthogonal bandit learning. In Twenty-fourth international joint conference on artificial intelligence.
+# [2] Agrawal, S., & Goyal, N. (2013, May). Thompson sampling for contextual bandits with linear payoffs. In International conference on machine learning (pp. 127-135). PMLR.
 # 
-# [3] Zhou, Q., Zhang, X., Xu, J., and Liang, B. (2017). Large-scale bandit approaches for recommender systems. In International Conference on Neural Information Processing, pages 811–821. Springer.
+# [3] Kveton, B., Zaheer, M., Szepesvari, C., Li, L., Ghavamzadeh, M., & Boutilier, C. (2020, June). Randomized exploration in generalized linear bandits. In International Conference on Artificial Intelligence and Statistics (pp. 2066-2076). PMLR.
 # 
-# [4] Slivkins, A. (2019). Introduction to multi-armed bandits. arXiv preprint arXiv:1904.07272.
+# [4] Bouneffouf, D. and Rish, I. (2019). A survey on practical applications of multi-armed and contextual bandits. arXiv preprint arXiv:1904.10040.
 # 
-# [5] Bouneffouf, D. and Rish, I. (2019). A survey on practical applications of multi-armed and contextual bandits. arXiv preprint arXiv:1904.10040.
+# [5] Slivkins, A. (2019). Introduction to multi-armed bandits. Foundations and Trends® in Machine Learning, 12(1-2), 1-286.
 # 
-# [6] Sutton, R. S. and Barto, A. G. (2018). Reinforcement learning: An introduction. MIT press
+# [6] Hazan, E., & Megiddo, N. (2007, June). Online learning with prior knowledge. In International Conference on Computational Learning Theory (pp. 499-513). Springer, Berlin, Heidelberg.
 # 
-# [7] Auer, P., Cesa-Bianchi, N., and Fischer, P. (2002). Finite-time analysis of the multiarmed bandit problem. Machine learning, 47(2):235–256.
+# [7] Li, L., Chu, W., Langford, J., & Schapire, R. E. (2010, April). A contextual-bandit approach to personalized news article recommendation. In Proceedings of the 19th international conference on World wide web (pp. 661-670).
 # 
-# [8] Russo, D., Van Roy, B., Kazerouni, A., Osband, I., and Wen, Z. (2017). A tutorial on thompson sampling. arXiv preprint arXiv:1707.0203
-# 
-# [9] Lattimore, T. and Szepesv´ari, C. (2020). Bandit algorithms. Cambridge University Press.
-# 
-# [10] Li, L., Chu, W., Langford, J., and Schapire, R. E. (2010). A contextual-bandit approach to personalized news article recommendation. In Proceedings of the 19th international conference on World wide web, pages 661–670
-# 
-# [11] Li, L., Lu, Y., and Zhou, D. (2017). Provably optimal algorithms for generalized linear contextual bandits. In International Conference on Machine Learning, pages 2071–2080. PMLR.
-# 
-# [12] Kveton, B., Zaheer, M., Szepesvari, C., Li, L., Ghavamzadeh, M., and Boutilier, C. (2020). Randomized exploration in generalized linear bandits. In International Conference on Artificial Intelligence and Statistics, pages 2066–2076. PMLR.
-# 
-# [13] Agrawal, S. and Goyal, N. (2013). Thompson sampling for contextual bandits with linear payoffs. In International conference on machine learning, pages 127–135. PMLR.
-# 
+# [8] Auer, P., Cesa-Bianchi, N., Freund, Y., & Schapire, R. E. (2002). The nonstochastic multiarmed bandit problem. SIAM journal on computing, 32(1), 48-77.
 
 # In[ ]:
 

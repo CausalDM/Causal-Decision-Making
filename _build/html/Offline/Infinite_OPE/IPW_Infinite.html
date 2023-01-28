@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Importance Sampling for Policy Evaluation (Infinite Horizon) &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -20,7 +21,7 @@
     href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
@@ -36,7 +37,7 @@
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -935,7 +936,7 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="importance-sampling-for-policy-evaluation-infinite-horizon">
+  <section class="tex2jax_ignore mathjax_ignore" id="importance-sampling-for-policy-evaluation-infinite-horizon">
 <h1>Importance Sampling for Policy Evaluation (Infinite Horizon)<a class="headerlink" href="#importance-sampling-for-policy-evaluation-infinite-horizon" title="Permalink to this headline">#</a></h1>
 <p>Another important approach is importance sampling (IS), also known as inverse propensity score or inverse propensity weighting methods.
 IS has been widely used in statistics, and the idea can be extended to OPE after appropriately handling the temporal dependency.</p>
@@ -950,7 +951,7 @@ IS has been widely used in statistics, and the idea can be extended to OPE after
 <li><p>Short horizon</p></li>
 <li><p>Sufficient policy match between the behaviour policy and the target policy.</p></li>
 </ol>
-<div class="section" id="main-idea">
+<section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>IS estimates the value by reweighting the observed rewards with importance ratios between the target and behavior policy [1]. For simplicity, we assume the behaviour policy <span class="math notranslate nohighlight">\(b\)</span> is known.</p>
 <p>To begin with, for every trajectory index <span class="math notranslate nohighlight">\(i\)</span> and any <span class="math notranslate nohighlight">\(t \in \{0, 1, \dots, T - 1\}\)</span>, we define the <span class="math notranslate nohighlight">\(t\)</span>-step cumulative <strong>importance ratio</strong> between the target policy <span class="math notranslate nohighlight">\(\pi\)</span> and the behaviour policy <span class="math notranslate nohighlight">\(b\)</span> as</p>
@@ -960,21 +961,21 @@ IS has been widely used in statistics, and the idea can be extended to OPE after
 \end{align*}\]</div>
 <p>Since the transition and reward generation probabilities are shared  between both policies, this ratio is equal to the probability ratio of observing the <span class="math notranslate nohighlight">\(i\)</span>th trajectory until time point <span class="math notranslate nohighlight">\(t\)</span>.</p>
 <p>The standard <strong>(trajectory-wise) IS</strong> estimator [2] regards each trajectory (and the corresponding observed cumulative reward, <span class="math notranslate nohighlight">\(\sum_{t=0}^{T-1} \gamma^t R_{i,t}\)</span>) as one realization, and it estimates <span class="math notranslate nohighlight">\(\eta^{\pi}\)</span> by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-15db39ad-c4df-4f6d-92b4-ce346a45827f">
-<span class="eqno">(113)<a class="headerlink" href="#equation-15db39ad-c4df-4f6d-92b4-ce346a45827f" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:IS}
+<div class="amsmath math notranslate nohighlight" id="equation-e7fa68b4-703f-4905-8b20-99cda3b034d5">
+<span class="eqno">(113)<a class="headerlink" href="#equation-e7fa68b4-703f-4905-8b20-99cda3b034d5" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:IS}
     \hat{\eta}^{\pi}_{IS} = \frac{1}{n} \sum_{i=1}^n \rho^i_T (\sum_{t=0}^{T-1} \gamma^t R_{i,t}). 
 \end{align}\]</div>
 <p>In contrast, the <strong>step-wise IS</strong> [2]  focuses on reweighting each immediate reward <span class="math notranslate nohighlight">\(R_{i,t}\)</span> and typically yields a lower variance than the trajectory-wise IS. It is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-740ded7c-7095-4d75-aea1-2b937bd40e90">
-<span class="eqno">(114)<a class="headerlink" href="#equation-740ded7c-7095-4d75-aea1-2b937bd40e90" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:stepIS}
+<div class="amsmath math notranslate nohighlight" id="equation-be6d2d17-203a-4833-aeb0-e5b42412e3bf">
+<span class="eqno">(114)<a class="headerlink" href="#equation-be6d2d17-203a-4833-aeb0-e5b42412e3bf" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:stepIS}
     \hat{\eta}^{\pi}_{StepIS} = \frac{1}{n} \sum_{i=1}^n \Big[ \sum_{t=0}^{T-1} \rho^i_t  \gamma^t R_{i,t} \Big]. 
 \end{align}\]</div>
 <p>In addition to these two IS-type estimators, their <strong>self-normalized variants</strong> are also commonly considered [3].
 Specifically, we can define the normalization factor <span class="math notranslate nohighlight">\(\bar{\rho}_t = N^{-1} \sum_{i=1}^N \rho^i_t\)</span>, and replace the <span class="math notranslate nohighlight">\(\rho^i_t\)</span> term by <span class="math notranslate nohighlight">\(\rho^i_t / \bar{\rho}_t\)</span>.
 The resulting estimators are biased but consistent, and they generally yield lower variance than their counterparts.
 This comparison reflects the bias-variance trade-off.</p>
-</div>
-<div class="section" id="breaking-the-curse-of-horizon-with-stationary-distribution">
+</section>
+<section id="breaking-the-curse-of-horizon-with-stationary-distribution">
 <h2>Breaking the curse of horizon with stationary distribution<a class="headerlink" href="#breaking-the-curse-of-horizon-with-stationary-distribution" title="Permalink to this headline">#</a></h2>
 <p>Traditional IS methods (and related DR methods) have exponential variance with the number of steps and hence will soon become unstable when the trajectory is long.  To avoid this issue,  [4] made an important step forward by proposing to utilize the stationary distributions of the Markov process to marginalize the importance ratio. We need to assume the stationarity assumption (SA), that the state process <span class="math notranslate nohighlight">\(\{S_{i,t}\}_{t \ge 0}\)</span> is strictly stationary.</p>
 <p>Let <span class="math notranslate nohighlight">\(p_b(s)\)</span> and  <span class="math notranslate nohighlight">\(p_b(s, a)\)</span> denote the stationary density function of the state and the state-action pair under the policy <span class="math notranslate nohighlight">\(b\)</span>, respectively.
@@ -982,15 +983,15 @@ The key observation is that, under the stationary assumption and when the data i
 We introduce the average visitation distribution under a policy <span class="math notranslate nohighlight">\(\pi\)</span> as <span class="math notranslate nohighlight">\(d^{\pi}(s)= (1 - \gamma)^{-1} \sum_{t=0}^{+\infty} \gamma^{t} p_t^{\pi}(s)\)</span>, where <span class="math notranslate nohighlight">\(p_t^{\pi}(s)\)</span> denotes the probability of <span class="math notranslate nohighlight">\(\{S_t = s\}\)</span> following policy <span class="math notranslate nohighlight">\(\pi\)</span> with  <span class="math notranslate nohighlight">\(S_{0}\sim \mathbb{G}\)</span>.
 Define <span class="math notranslate nohighlight">\(\widetilde{\omega}^{\pi}(s) = d^{\pi}(s) / d^{b}(s)\)</span>.
 Therefore, <span class="math notranslate nohighlight">\(\widetilde{\omega}^{\pi}(s)\)</span> can be understood as a marginalized version of the importance ratio. With a similar change-of-measure trick as in IS, we can obtain the relationship that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a73cf67a-30dc-4af4-bc38-20887922ced2">
-<span class="eqno">(115)<a class="headerlink" href="#equation-a73cf67a-30dc-4af4-bc38-20887922ced2" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:breaking}
+<div class="amsmath math notranslate nohighlight" id="equation-cf7d7fdb-c97d-4920-a04c-941986651570">
+<span class="eqno">(115)<a class="headerlink" href="#equation-cf7d7fdb-c97d-4920-a04c-941986651570" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:breaking}
     \eta^{\pi} =  \mathbb{E}_{(s,a) \sim p_b(s, a), r \sim \mathcal{R}(\cdot; s, a)} \widetilde{\omega}^{\pi}(s) \frac{\pi(a|s)}{b(a|s)} r. 
 \end{equation}\]</div>
 <p>According to this relationship, we can construct an estimator by replacing the nuisance functions  with their estimates and then approximating the expectation by its empirical mean over <span class="math notranslate nohighlight">\(\{(S_{i,t},A_{i,t},R_{i,t},S_{i,t+1})\}\)</span>.
 The nuisance function <span class="math notranslate nohighlight">\(\widetilde{\omega}^{\pi}(s)\)</span> is typically learned by solving an optimization problem, which we will omit to save space.
 The optimization is similar to a relevant task that we will discuss in the next section, which is more related with our proposal.</p>
-</div>
-<div class="section" id="demo-todo">
+</section>
+<section id="demo-todo">
 <h2>Demo [TODO]<a class="headerlink" href="#demo-todo" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1007,26 +1008,25 @@ The optimization is similar to a relevant task that we will discuss in the next 
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">d7635db18706</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 7&gt;</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
 <span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> 
 
-<span class="ne">FileNotFoundError</span>: [WinError 2] The system cannot find the file specified: &#39;../CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [WinError 2] 系统找不到指定的文件。: &#39;../CausalDM&#39;
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="references">
+</section>
+<section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <p>[1] Precup D. Eligibility traces for off-policy policy evaluation[J]. Computer Science Department Faculty Publication Series, 2000: 80.</p>
 <p>[2] Thomas P S. Safe reinforcement learning[J]. 2015.</p>
 <p>[3] Jiang N, Li L. Doubly robust off-policy value evaluation for reinforcement learning[C]//International Conference on Machine Learning. PMLR, 2016: 652-661.</p>
 <p>[4] Liu Q, Li L, Tang Z, et al. Breaking the curse of horizon: Infinite-horizon off-policy estimation[J]. Advances in Neural Information Processing Systems, 2018, 31.</p>
-</div>
-<div class="section" id="note">
+</section>
+<section id="note">
 <h2>Note<a class="headerlink" href="#note" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p>When the behaviour policy is unknown, we can estimate it from data by regarding the task as a classification problem and using methods such as logistic regression.</p></li>
@@ -1037,8 +1037,8 @@ The estimand is
 However, when <span class="math notranslate nohighlight">\(T\)</span> is relatively large and <span class="math notranslate nohighlight">\(\gamma\)</span> is not quite close to <span class="math notranslate nohighlight">\(1\)</span>, the difference between <span class="math notranslate nohighlight">\(\sum_{t=0}^{T-1} \gamma^t\)</span> and <span class="math notranslate nohighlight">\(\sum_{t=0}^{\infty} \gamma^t\)</span> is negligible and is usually ignored, and they are still commonly used as baselines.</p></li>
 <li><p>We note that (SA) is not a strong assumption. Recall that <span class="math notranslate nohighlight">\(\{S_{i,t}\}_{t \ge 0}\)</span> is generated by following the stationary policy <span class="math notranslate nohighlight">\(b\)</span>. (SA) is automatically  satisfied when the initial distribution equals the stationary distribution. Besides, When the MDP is a Harris ergodic chain , the process will eventually mix well and we can replace the stationary distribution with its limiting assumption and the following discussions will continue to hold.</p></li>
 </ol>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {

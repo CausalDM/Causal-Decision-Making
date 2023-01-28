@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Meta Thompson Sampling &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -20,7 +21,7 @@
     href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
@@ -36,7 +37,7 @@
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -935,21 +936,21 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="meta-thompson-sampling">
+  <section class="tex2jax_ignore mathjax_ignore" id="meta-thompson-sampling">
 <h1>Meta Thompson Sampling<a class="headerlink" href="#meta-thompson-sampling" title="Permalink to this headline">#</a></h1>
-<div class="section" id="overview">
+<section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p><strong>Advantage</strong>: When task instances are sampled from the same unknown instance prior (i.e., the tasks are similar), it efficiently learns the prior distribution of the mean potential rewards to achieve a regret bound that is comparable to that of the TS algorithm with known priors.</p></li>
 <li><p><strong>Disadvantage</strong>: When there is a large number of different tasks, the algorithm is not scalable and inefficient.</p></li>
 <li><p><strong>Application Situation</strong>: Useful when there are multiple <strong>similar</strong> multi-armed bandit tasks, each with the same action space. The reward space can be either binary or continuous.</p></li>
 </ul>
-</div>
-<div class="section" id="main-idea">
+</section>
+<section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>The <strong>Meta-TS</strong>[1] assumes that the mean potential rewards, <span class="math notranslate nohighlight">\(\mu_{j,a} = E(R_{j,t}(a))\)</span>, for each task <span class="math notranslate nohighlight">\(j\)</span> are i.i.d sampled from some distribution parameterized by <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>. Specifically, it assumes that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cc7882ec-ccdb-4004-803b-3eaeb101997e">
-<span class="eqno">(79)<a class="headerlink" href="#equation-cc7882ec-ccdb-4004-803b-3eaeb101997e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-23155469-b942-4224-beba-3e832d55815d">
+<span class="eqno">(79)<a class="headerlink" href="#equation-23155469-b942-4224-beba-3e832d55815d" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{alignedat}{2}
 &amp;\text{(meta-Prior)} \quad
 \quad\quad\quad    \boldsymbol{\gamma} &amp;&amp;\sim Q(\boldsymbol{\gamma}), \\
@@ -961,8 +962,8 @@ title="Print to PDF"
 \end{equation}\]</div>
 <p>To learn the prior distribution of <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_{j}\)</span>, it introduces a meta-parameter <span class="math notranslate nohighlight">\(\gamma\)</span> with a meta-prior distribution <span class="math notranslate nohighlight">\(Q(\gamma)\)</span>. The <strong>Meta-TS</strong> efficiently leverages the knowledge received from different tasks to learn the prior distribution and to guide the exploration of each task by maintaining the meta-posterior distribution of <span class="math notranslate nohighlight">\(\gamma\)</span>. Theoretically, it is demonstrated to have a regret bound comparable to that of the Thompson sampling method with known prior distribution of <span class="math notranslate nohighlight">\(\mu_{j,a}\)</span>. Both the</p>
 <p>Considering a Gaussian bandits, we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cfc78baf-c00a-43f1-ab4e-e358eea35d7a">
-<span class="eqno">(80)<a class="headerlink" href="#equation-cfc78baf-c00a-43f1-ab4e-e358eea35d7a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e79ff7c1-f46b-41a7-b4ac-c693be35d29e">
+<span class="eqno">(80)<a class="headerlink" href="#equation-e79ff7c1-f46b-41a7-b4ac-c693be35d29e" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{alignedat}{2}
 &amp;\text{(meta-Prior)} \quad
 \quad\quad\quad    \boldsymbol{\gamma} &amp;&amp;\sim Q(\boldsymbol{\gamma}), \\
@@ -973,8 +974,8 @@ title="Print to PDF"
       \end{alignedat}
 \end{equation}\]</div>
 <p>Similarly, considering the Bernoulli bandits, we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1a1b0993-a34c-4e22-96d8-b4df6eec4958">
-<span class="eqno">(81)<a class="headerlink" href="#equation-1a1b0993-a34c-4e22-96d8-b4df6eec4958" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4258e31d-35ae-41e5-bb5a-df2b9368397c">
+<span class="eqno">(81)<a class="headerlink" href="#equation-4258e31d-35ae-41e5-bb5a-df2b9368397c" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{alignedat}{2}
 &amp;\text{(meta-Prior)} \quad
 \quad\quad\quad    \boldsymbol{\gamma} &amp;&amp;\sim Q(\boldsymbol{\gamma}), \\
@@ -988,8 +989,8 @@ title="Print to PDF"
 $<span class="math notranslate nohighlight">\(\mathcal{P} = \{(\alpha_{i,j})_{i=1}^{K}, (\beta_{i,j})_{i=1}^{K}\}_{j=1}^{L},\)</span><span class="math notranslate nohighlight">\( 
 which contains **L** potential instance priors and assume a categorical distribution over the \)</span>\mathcal{P}$ as the meta-prior. See [1] for more information about the corresponding meta-posterior updating.</p>
 <p><strong>Remark.</strong> While the original system only supported a sequential schedule of interactions (i.e., a new task will not be interacted with until the preceding task is completed), we adjusted the algorithm to accommodate different recommending schedules.</p>
-</div>
-<div class="section" id="key-steps">
+</section>
+<section id="key-steps">
 <h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">#</a></h2>
 <p>For <span class="math notranslate nohighlight">\((j,t) = (1,1),(1,2),\cdots\)</span>:</p>
 <ol class="simple">
@@ -999,17 +1000,17 @@ which contains **L** potential instance priors and assume a categorical distribu
 <li><p>Take the action <span class="math notranslate nohighlight">\(A_{j,t}\)</span> such that <span class="math notranslate nohighlight">\(A_{j,t} = argmax_{a \in \mathcal{A}} \tilde\mu_{j,a}\)</span>;</p></li>
 <li><p>Receive reward <span class="math notranslate nohighlight">\(R_{j,t}\)</span>.</p></li>
 </ol>
-</div>
-<div class="section" id="demo-code">
+</section>
+<section id="demo-code">
 <h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
 <p>TODO： Bernoulli: specify the prior space</p>
-</div>
-<div class="section" id="references">
+</section>
+<section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <p>[1] Kveton, B., Konobeev, M., Zaheer, M., Hsu, C. W., Mladenov, M., Boutilier, C., &amp; Szepesvari, C. (2021, July). Meta-thompson sampling. In International Conference on Machine Learning (pp. 5884-5893). PMLR.</p>
 <p>[2] Basu, S., Kveton, B., Zaheer, M., &amp; Szepesvári, C. (2021). No regrets for learning the prior in bandits. Advances in Neural Information Processing Systems, 34, 28029-28041.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {

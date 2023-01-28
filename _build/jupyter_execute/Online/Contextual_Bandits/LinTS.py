@@ -9,7 +9,7 @@
 # - **Application Situation**: discrete action space, binary/Gaussian reward space
 # 
 # ## Main Idea
-# Supposed there are $K$ options, and the action space is $\mathcal{A} = \{0,1,\cdots, K-1\}$. Noticing that feature information are commonly avialable, the **LinTS** algorithm consdiers modeling the expectation of the potential reward $R_t(i)$ with features of item $i$. As an example, considering the Gaussian reward, we assume that 
+# Supposed there are $K$ options, and the action space is $\mathcal{A} = \{0,1,\cdots, K-1\}$. Noticing that feature information are commonly avialable, the **LinTS**[1,2] algorithm consdiers modeling the expectation of the potential reward $R_t(i)$ with features of item $i$. As an example, considering the Gaussian reward, we assume that 
 # \begin{align}
 # R_t(i)\sim \mathcal{N}(\boldsymbol{s}_i^T \boldsymbol{\gamma},\sigma^2).
 # \end{align}
@@ -33,97 +33,106 @@
 # In[1]:
 
 
-# After we publish the pack age, we can directly import it
-# TODO: explore more efficient way
-# we can hide this cell later
 import os
 os.getcwd()
 os.chdir('/nas/longleaf/home/lge/CausalDM')
-# code used to import the learner
 
+
+# ### Import the learner.
 
 # In[2]:
 
 
-from causaldm.learners.Online.Single import LinTS
-from causaldm.learners.Online.Single import Env
 import numpy as np
+from causaldm.learners.Online.CMAB import LinTS
 
+
+# ### Generate the Environment
+# 
+# Here, we imitate an environment based on the MovieLens data.
 
 # In[3]:
 
 
-T = 2000
-K = 5
-with_intercept = True
-p=3
-X_mu = np.zeros(p-1)
-X_sigma = np.identity(p-1)
-Sigma_theta = sigma_gamma = np.identity(p)
-mu_theta = np.zeros(p)
-seed = 0
+from causaldm.learners.Online.CMAB import _env_realCMAB as _env
+env = _env.Single_Contextual_Env(seed = 0, Binary = False)
+
+
+# ### Specify Hyperparameters
+# 
+# - K: number of arms
+# - p: number of features per arm
+# - sigma: the standard deviation of the reward distributions
+# - prior_theta_u: mean of the prior distribution of the coefficients
+# - prior_theta_cov: Covaraince matrix of the prior distribution of the coefficients
+# - seed: random seed
+
+# In[7]:
+
+
+K = env.K
+p = env.p
+seed = 42
 sigma = 1
+prior_theta_u = np.zeros(p)
+prior_theta_cov = np.identity(p)
 
-env = Env.Single_Gaussian_Env(T, K, p, sigma
-                         , mu_theta, Sigma_theta
-                        , seed = 42, with_intercept = True
-                         , X_mu = X_mu, X_Sigma = X_sigma)
-LinTS_Gaussian_agent = LinTS.LinTS_Gaussian(sigma = 1
-                                         , prior_theta_u = np.zeros(p), prior_theta_cov = np.identity(p)
-                                         , K = K, p = p)
-A = LinTS_Gaussian_agent.take_action(env.Phi)
+LinTS_Gaussian_agent = LinTS.LinTS_Gaussian(sigma = sigma, prior_theta_u = prior_theta_u, 
+                                            prior_theta_cov = prior_theta_cov, 
+                                            K = K, p = p,seed = seed)
+
+
+# ### Recommendation and Interaction
+# 
+# Starting from t = 0, for each step t, there are three steps:
+# 1. Observe the feature information
+# <code> X = env.get_Phi(t) </code>
+# 2. Recommend an action 
+# <code> A = LinTS_Gaussian_agent.take_action(X) </code>
+# 3. Get the reward from the environment 
+# <code> R = env.get_reward(t,A) </code>
+# 4. Update the posterior distribution
+# <code> LinTS_Gaussian_agent.receive_reward(t,A,R,X) </code>
+
+# In[8]:
+
+
 t = 0
+X, feature_info = env.get_Phi(t)
+A = LinTS_Gaussian_agent.take_action(X)
 R = env.get_reward(t,A)
-LinTS_Gaussian_agent.receive_reward(t,A,R, env.Phi)
+LinTS_Gaussian_agent.receive_reward(t,A,R,X)
+t,A,R,feature_info
 
 
-# In[4]:
+# **Interpretation**: For step 0, the TS agent encounter a male user who is a 25-year-old college/grad student. Given the information, the agent recommend a Comedy (arm 0), and receive a rate of 3 from the user.
+
+# ### Demo Code for Bernoulli Bandit
+# The steps are similar to those previously performed with a Gaussian Bandit. Note that, when specifying the prior distribution of the expected reward, the mean-precision form of the Beta distribution is used here, i.e., Beta($\mu$, $\phi$), where $\mu$ is the mean reward of each arm and $\phi$ is the precision of the Beta distribution. 
+
+# In[10]:
 
 
-LinTS_Gaussian_agent.cnts
+env = _env.Single_Contextual_Env(seed = 0, Binary = True)
+K = env.K
+p = env.p
+seed = 42
+alpha = 1 # exploration rate
+retrain_freq = 1 #frequency to train the GLM model
 
-
-# In[5]:
-
-
-T = 2000
-K = 5
-with_intercept = True
-p=3
-X_mu = np.zeros(p-1)
-X_sigma = np.identity(p-1)
-Sigma_theta = sigma_gamma = np.identity(p)
-mu_theta = np.zeros(p)
-seed = 0
-phi_beta = 1/4
-
-env = Env.Single_Bernoulli_Env(T, K, p, phi_beta
-                         , mu_theta, Sigma_theta
-                        , seed = 42, with_intercept = True
-                         , X_mu = X_mu, X_Sigma = X_sigma)
-LinTS_GLM_agent = LinTS.LinTS_GLM(K = K, p = p , alpha = 1, retrain_freq = 1)
-A = LinTS_GLM_agent.take_action(env.Phi)
+LinTS_GLM_agent = LinTS.LinTS_GLM(K = K, p = p , alpha = alpha, retrain_freq = retrain_freq)
 t = 0
+X, feature_info = env.get_Phi(t)
+A = LinTS_GLM_agent.take_action(X)
 R = env.get_reward(t,A)
-LinTS_GLM_agent.receive_reward(t,A,R, env.Phi)
+LinTS_GLM_agent.receive_reward(t,A,R,X)
+t,A,R,feature_info
 
 
-# In[6]:
-
-
-LinTS_Bernoulli_agent.cnts
-
-
-# **Interpretation:** A sentence to include the analysis result: the estimated optimal regime is...
+# **Interpretation**: For step 0, the TS agent encounter a male user who is a 25-year-old college/grad student. Given the information, the agent recommend a Sci-Fi (arm 4), and receive a rate of 1 from the user.
 
 # ## References
 # 
 # [1] Agrawal, S., & Goyal, N. (2013, May). Thompson sampling for contextual bandits with linear payoffs. In International conference on machine learning (pp. 127-135). PMLR.
 # 
 # [2] Kveton, B., Zaheer, M., Szepesvari, C., Li, L., Ghavamzadeh, M., & Boutilier, C. (2020, June). Randomized exploration in generalized linear bandits. In International Conference on Artificial Intelligence and Statistics (pp. 2066-2076). PMLR.
-
-# In[ ]:
-
-
-
-

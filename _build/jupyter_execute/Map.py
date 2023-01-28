@@ -9,7 +9,7 @@
 # 
 # ## What to expect?
 # ---
-# The diagram below depicts the overall structure of this book, which is comprised of three primary components: **Causal Structure Learning**, **Causal Policy Learning**, and **Causal Machine Learning**. Specifically, in the chapter [**Causal Structure Learning (CSL)**](#SL), we present state-of-the-art techniques for learning the skeleton of causal relationships among input variables. When a causal structure is known, the second chapter of [**Causal Machine Learning (CML)**](#ML) introduces approaches making causal inference. Finally, the [**Causal Policy Learning (CPL)**](#PL) chapter introduces diverse policy learners to learn optimal policies and evaluate various policies of interest.
+# The diagram below depicts the overall structure of this book, which is comprised of three primary components: **Causal Structure Learning**, **Causal Policy Learning**, and **Causal Effect Learning**. Specifically, in the chapter [**Causal Structure Learning (CSL)**](#SL), we present state-of-the-art techniques for learning the skeleton of causal relationships among input variables. When a causal structure is known, the second chapter of [**Causal Effect Learning (CEL)**](#ML) introduces approaches making causal inference. Finally, the [**Causal Policy Learning (CPL)**](#PL) chapter introduces diverse policy learners to learn optimal policies and evaluate various policies of interest.
 # 
 # ![Overall.png](Overall.png)
 # 
@@ -27,7 +27,7 @@
 # 
 # *$p$ is the number of nodes in $\mathcal{G}$, and $q$ is the max number of nodes adjacent to any nodes in $\mathcal{G}$.*
 # 
-# ## <a name="ML"></a> Causal Machine Learning (CML)
+# ## <a name="ML"></a> Causal Effect Learning (CEL)
 # ---
 # 
 # ## <a name="PL"></a> Causal Policy Learning (CPL)

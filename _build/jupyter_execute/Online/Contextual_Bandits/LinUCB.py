@@ -9,7 +9,7 @@
 # - **Application Situation**: discrete action space, Gaussian reward space
 # 
 # ## Main Idea
-# Supposed there are $K$ options, and the action space is $\mathcal{A} = \{0,1,\cdots, K-1\}$. **LinUCB** uses feature information to guide exploration by assuming a linear model between the expected potential reward and the features. Specifcially, for the Gaussain bandits, we assume that 
+# Supposed there are $K$ options, and the action space is $\mathcal{A} = \{0,1,\cdots, K-1\}$. **LinUCB**[1] uses feature information to guide exploration by assuming a linear model between the expected potential reward and the features. Specifcially, for the Gaussain bandits, we assume that 
 # \begin{align}
 # E(R_{t}(a)) = \theta_a = \boldsymbol{s}_a^T \boldsymbol{\gamma}.
 # \end{align} Solving a linear gression model, at each round $t$, the corresponding estimated upper confidence interval of the mean potential reward is then updated as
@@ -41,53 +41,99 @@
 # In[1]:
 
 
-# After we publish the pack age, we can directly import it
-# TODO: explore more efficient way
-# we can hide this cell later
 import os
 os.getcwd()
 os.chdir('/nas/longleaf/home/lge/CausalDM')
-# code used to import the learner
 
+
+# ### Import the learner.
 
 # In[2]:
 
 
-from causaldm.learners.Online.Single import LinUCB
-from causaldm.learners.Online.Single import Env
 import numpy as np
+from causaldm.learners.Online.CMAB import LinUCB
 
+
+# ### Generate the Environment
+# 
+# Here, we imitate an environment based on the MovieLens data.
 
 # In[3]:
 
 
-T = 2000
-K = 5
-with_intercept = True
-p=3
-X_mu = np.zeros(p-1)
-X_sigma = np.identity(p-1)
-Sigma_theta = sigma_gamma = np.identity(p)
-mu_theta = np.zeros(p)
-seed = 0
-sigma = 1
+from causaldm.learners.Online.CMAB import _env_realCMAB as _env
+env = _env.Single_Contextual_Env(seed = 0, Binary = False)
 
-env = Env.Single_Gaussian_Env(T, K, p, sigma
-                         , mu_theta, Sigma_theta
-                        , seed = 42, with_intercept = True
-                         , X_mu = X_mu, X_Sigma = X_sigma)
-LinUCB_Gaussian_agent = LinUCB.LinUCB_Gaussian(alpha = .5, K = K, p = p)
-A = LinUCB_Gaussian_agent.take_action(env.Phi)
-t = 0
-R = env.get_reward(t,A)
-LinUCB_Gaussian_agent.receive_reward(t,A,R, env.Phi)
 
+# ### Specify Hyperparameters
+# 
+# - K: number of arms
+# - p: number of features per arm
+# - alpha: rate of exploration
+# - seed: random seed
+# - exploration_T: number of rounds to do random exploration at the beginning
 
 # In[4]:
 
 
-LinUCB_Gaussian_agent.cnts
+alpha = .1
+K = env.K
+p = env.p
+seed = 42
+exploration_T = 10
+LinUCB_Gaussian_agent = LinUCB.LinUCB_Gaussian(alpha = .1, K = K, p = p, seed = seed, exploration_T = exploration_T)
 
+
+# ### Recommendation and Interaction
+# 
+# Starting from t = 0, for each step t, there are three steps:
+# 1. Observe the feature information
+# <code> X = env.get_Phi(t) </code>
+# 2. Recommend an action 
+# <code> A = LinUCB_Gaussian_agent.take_action(X) </code>
+# 3. Get the reward from the environment 
+# <code> R = env.get_reward(t,A) </code>
+# 4. Update the posterior distribution
+# <code> LinUCB_Gaussian_agent.receive_reward(t,A,R,X) </code>
+
+# In[5]:
+
+
+t = 0
+X, feature_info = env.get_Phi(t)
+A = LinUCB_Gaussian_agent.take_action(X)
+R = env.get_reward(t,A)
+LinUCB_Gaussian_agent.receive_reward(t,A,R,X)
+t,A,R,feature_info
+
+
+# **Interpretation**: For step 0, the TS agent encounter a male user who is a 25-year-old college/grad student. Given the information, the agent recommend a Sci-Fi (arm 4), and receive a rate of 4 from the user.
+
+# ### Demo Code for Bernoulli Bandit
+# The steps are similar to those previously performed with a Gaussian Bandit. 
+
+# In[6]:
+
+
+env = _env.Single_Contextual_Env(seed = 0, Binary = True)
+K = env.K
+p = env.p
+seed = 42
+alpha = 1 # exploration rate
+retrain_freq = 1 #frequency to train the GLM model
+exploration_T = 10
+LinUCB_GLM_agent = LinUCB.LinUCB_GLM(K = K, p = p , alpha = alpha, retrain_freq = retrain_freq, 
+                                     seed = seed, exploration_T = exploration_T)
+t = 0
+X, feature_info = env.get_Phi(t)
+A = LinUCB_GLM_agent.take_action(X)
+R = env.get_reward(t,A)
+LinUCB_GLM_agent.receive_reward(t,A,R,X)
+t,A,R,feature_info
+
+
+# **Interpretation**: For step 0, the TS agent encounter a male user who is a 25-year-old college/grad student. Given the information, the agent recommend a Thriller (arm 3), and receive a rate of 0 from the user.
 
 # ## References
 # 
