@@ -130,7 +130,7 @@ print("true value: ",HTE_true[0:8].to_numpy())
 
 Bias_S_learner = np.sum(HTE_S_learner-HTE_true)/n
 Variance_S_learner = np.sum((HTE_S_learner-HTE_true)**2)/n
-print("The overall estimation bias of S-learner is :", Bias_S_learner, ", \n", "The overall estimation variance of S-learner is :",Variance_S_learner)
+print("The overall estimation bias of S-learner is :     ", Bias_S_learner, ", \n", "The overall estimation variance of S-learner is :",Variance_S_learner,". \n")
 
 
 # **Conclusion:** The performance of S-learner, at least in this toy example, is not very attractive. Although it is the easiest approach to implement, the over-simplicity tends to cover some information that can be better explored with some advanced approaches.
@@ -180,7 +180,7 @@ print("true value: ",HTE_true[0:8].to_numpy())
 
 Bias_T_learner = np.sum(HTE_T_learner-HTE_true)/n
 Variance_T_learner = np.sum((HTE_T_learner-HTE_true)**2)/n
-print("The overall estimation bias of T-learner is :", Bias_T_learner, ", \n", "The overall estimation variance of T-learner is :",Variance_T_learner)
+print("The overall estimation bias of T-learner is :     ", Bias_T_learner, ", \n", "The overall estimation variance of T-learner is :",Variance_T_learner,". \n")
 
 
 # **Conclusion:** In this toy example, the overall estimation variance of T-learner is smaller than that of S-learner. In some cases when the treatment effect is relatively complex, it's likely to yield better performance by fitting two models separately. 
@@ -215,6 +215,7 @@ print("The overall estimation bias of T-learner is :", Bias_T_learner, ", \n", "
 
 # Step 1: Fit two models under treatment and control separately, same as T-learner
 
+import numpy as np
 mu0 = LGBMRegressor(max_depth=3)
 mu1 = LGBMRegressor(max_depth=3)
 
@@ -272,19 +273,19 @@ print("X-learner:  ",HTE_X_learner[0:8])
 print("true value: ",HTE_true[0:8].to_numpy())
 
 
-# X-learner also performs OK.
+# From the result above we can see that X-learner can roughly catch the trend of treatment effect w.r.t. the change of baseline information $S$. In this synthetic example, X-learner also performs slightly better than T-learner.
 
 # In[ ]:
 
 
 Bias_X_learner = np.sum(HTE_X_learner-HTE_true)/n
 Variance_X_learner = np.sum((HTE_X_learner-HTE_true)**2)/n
-print("The overall estimation bias of X-learner is :", Bias_X_learner, ", \n", "The overall estimation variance of X-learner is :",Variance_X_learner)
+print("The overall estimation bias of X-learner is :     ", Bias_X_learner, ", \n", "The overall estimation variance of X-learner is :",Variance_X_learner,". \n")
 
 
 # **Conclusion:** In this toy example, the overall estimation variance of X-learner is the smallest, followed by T-learner, and the worst is given by S-learner.
 
-# ### **4. R learner** 
+# ### **4. R learner**
 # The idea of classical R-learner came from Robinson 1988 [3] and was formalized by Nie and Wager in 2020 [2]. The main idea of R learner starts from the partially linear model setup, in which we assume that
 # \begin{equation}
 #   \begin{aligned}
@@ -319,8 +320,136 @@ print("The overall estimation bias of X-learner is :", Bias_X_learner, ", \n", "
 # In[ ]:
 
 
-# example
+# a demo code of R-learner
 
+def Rlearner(df, outcome, treatment, controls, n_folds, y_model, ps_model, Rlearner_model):
+    """
+    Parameters
+    ----------
+    df : pd.dataframe
+        data
+    outcome : str
+        outcome label.
+    treatment : str
+        treatment label.
+    controls : list
+        list of all controls.
+    n_folds : int
+        number of folds for cross-fitting.
+    y_model : sklearn class
+        the model for outcome regression learner.
+    ps_model : sklearn class
+        the model for general propensity score learner.
+
+    Returns
+    -------
+    Rlearner_pred : Length: n, dtype: float64
+        Estimated Heterogeneous Treatemnt Effect by Simple R-learner with linear regression
+    """
+
+    # =============================================================================
+    # # estimate with R-learner
+    # =============================================================================
+
+    print('estimate with R-learner')
+
+    import numpy as np
+    import pandas as pd
+
+    # estimate p(x) by GBDT(Gradient Boosting Decision Tree)
+    # estimate m(x) by Random Forest
+    n_controls=len(controls)
+    folds=np.random.randint(1,n_folds+1,size=df.shape[0])
+    
+    y_learner=[y_model]*n_folds
+    ps_learner=[ps_model]*n_folds
+
+
+    y_pred=pd.Series(index=df.index,dtype=np.float64)
+    ps_pred=pd.Series(index=df.index,dtype=np.float64)
+    
+    
+    for i in range(n_folds):
+        fold=i+1
+        #y_learner for outcome prediction
+        y_learner[i].fit(df[folds!=fold][controls],df[folds!=fold][outcome])
+        y_pred.loc[folds==fold]=y_learner[i].predict(df[folds==fold][controls])
+
+        #ps_learner for propensity score prediction
+        ps_learner[i].fit(df[folds!=fold][controls],df[folds!=fold][treatment])
+        ps_pred.loc[folds==fold]=ps_learner[i].predict_proba(df[folds==fold][controls])[:,1]
+
+        #model performance output
+        print('fold {},testing r2 y_learner: {:.3f}, ps_learner: {:.3f}'.format(fold, 
+                        y_learner[i].score(df[folds==fold][controls],df[folds==fold][outcome]),
+                        ps_learner[i].score(df[folds==fold][controls],df[folds==fold][treatment])
+                                            ))
+      
+    x_residual=df[controls]
+    x_residual['Intercept']=1
+    
+    y_residual=df[outcome]-y_pred
+    ps_residual=df[treatment]-ps_pred
+    x_tilde=ps_residual.to_numpy().reshape(-1,1)*(x_residual.to_numpy())
+    
+    data=pd.DataFrame(x_tilde)
+    data['y_residual']=y_residual
+    
+    # R learner: conducting regressison on residuals: (Y-y_pred)~(A-ps_pred)*X'*beta
+    # any parametric/nonparametric regression method is fine
+    Rlearner_pred=pd.Series(index=df.index,dtype=np.float64)
+
+    #Rlearner_model=GradientBoostingRegressor(n_estimators=50, max_depth=5)
+    #Rlearner_model=LinearRegression(fit_intercept=False) # almost failed: testing r2 R-learner: 0.041
+    #Rlearner_model=ElasticNet() # almost failed
+    #Rlearner_model=Lasso() # almost failed
+    R_learner=[Rlearner_model]*n_folds   
+    
+    for i in range(n_folds):
+        fold=i+1
+        #R_learner for residual regression
+        R_learner[i].fit(data[folds!=fold][range(n_controls+1)],data[folds!=fold]['y_residual'])
+        Rlearner_pred.loc[folds==fold]=R_learner[i].predict(x_residual[folds==fold])
+
+        #model performance output
+        print('fold {}, training r2 R-learner: {:.3f}, testing r2 R-learner: {:.3f}'.format(fold, R_learner[i].score(data[folds!=fold][range(n_controls+1)],data[folds!=fold]['y_residual']), R_learner[i].score(data[folds==fold][range(n_controls+1)],data[folds==fold]['y_residual'])  ))
+    
+    return Rlearner_pred
+
+
+
+# In[ ]:
+
+
+# R-learner for HTE estimation
+outcome = 'R'
+treatment = 'A'
+controls = ['S1','S2']
+n_folds = 5
+y_model = LGBMRegressor(max_depth=2)
+ps_model = LogisticRegression()
+Rlearner_model = LGBMRegressor(max_depth=2)
+
+HTE_R_learner = Rlearner(data_behavior, outcome, treatment, controls, n_folds, y_model, ps_model, Rlearner_model)
+HTE_R_learner = HTE_R_learner.to_numpy()
+
+
+# In[ ]:
+
+
+print("R-learner:  ",HTE_R_learner[0:8])
+print("true value: ",HTE_true[0:8].to_numpy())
+
+
+# In[ ]:
+
+
+Bias_R_learner = np.sum(HTE_R_learner-HTE_true)/n
+Variance_R_learner = np.sum((HTE_R_learner-HTE_true)**2)/n
+print("The overall estimation bias of R-learner is :     ", Bias_R_learner, ", \n", "The overall estimation variance of R-learner is :",Variance_R_learner,". \n")
+
+
+# **Conclusion:** It's amazing to see that the bias of R-learner is significantly smaller than all other approaches.
 
 # ### **5. DR-learner**
 # 
@@ -346,7 +475,132 @@ print("The overall estimation bias of X-learner is :", Bias_X_learner, ", \n", "
 # In[ ]:
 
 
-# example
+# A demo code of DR-learner
+
+def DRlearner(df, outcome, treatment, controls, y_model, ps_model, n_folds=5):
+    """
+    Parameters
+    ----------
+    df : pd.dataframe
+        data
+    outcome : str
+        outcome label.
+    treatment : str
+        treatment label.
+    controls : list
+        list of all controls.
+    y_model : sklearn class
+        the model for outcome regression learner.
+    ps_model : sklearn class
+        the model for general propensity score learner.
+    n_folds : int
+        number of folds for cross-fitting.
+    Returns
+    -------
+    TE_DR : Length: n, dtype: float64
+        Estimated Heterogeneous Treatemnt Effect by DR-learner
+    """
+    # =============================================================================
+    # # estimate with DR-learner
+    # =============================================================================
+    print('estimate with DR-learner')
+
+    import pandas as pd
+    import subprocess,os,pdb
+    from sklearn.metrics import r2_score
+    from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+    from sklearn.linear_model import Lasso,ElasticNet
+    from scipy import stats
+
+    from sklearn.metrics import r2_score
+    from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, GradientBoostingClassifier
+    from sklearn.linear_model import Lasso,ElasticNet
+
+    import pdb
+    import numpy as np
+    from scipy.sparse import diags
+    
+    dt_len=np.shape(df)[0]
+    
+    np.random.seed(525)
+    folds=np.random.randint(1,n_folds+1,size=df.shape[0])
+    
+    y_learner=[y_model]*n_folds
+    ps_learner=[ps_model]*n_folds
+    
+    y_pred=pd.Series(index=df.index,dtype=np.float64)
+    ps_pred=pd.Series(index=df.index,dtype=np.float64)
+
+    Y1_pred=pd.Series(index=df.index,dtype=np.float64)
+    Y0_pred=pd.Series(index=df.index,dtype=np.float64)
+    ps_pred=pd.Series(index=df.index,dtype=np.float64)
+
+    df['T_1']=1
+    df['T_0']=0
+    
+    
+    # estimate classical DR 
+    for i in range(n_folds):
+        fold=i+1
+        #baselearner for outcome prediction
+        y_learner[i].fit(df[folds!=fold][controls+[treatment]],df[folds!=fold][outcome])
+
+
+        Y1_pred.loc[folds==fold]=y_learner[i].predict(df[folds==fold][controls+['T_1']])
+        Y0_pred.loc[folds==fold]=y_learner[i].predict(df[folds==fold][controls+['T_0']])
+
+        ps_learner[i].fit(df[folds!=fold][controls],df[folds!=fold][treatment])
+
+        ps_pred.loc[folds==fold]=ps_learner[i].predict_proba(df[folds==fold][controls])[:,1]
+
+        print('fold {}, testing r2 baselearner: {:.3f}, pslearner: {:.3f}'.format(fold, 
+                        y_learner[i].score(df[folds!=fold][controls+[treatment]],df[folds!=fold][outcome]),
+                        ps_learner[i].score(df[folds!=fold][controls],df[folds!=fold][treatment])
+                                            ))
+
+
+
+    #gps_pred[np.where(gps_pred<1e-2)[0]]=1e-2
+    #gps_pred[np.where(gps_pred>1-1e-2)[0]]=1-1e-2
+
+    
+    # DR estimator
+    TE_DR=Y1_pred-Y0_pred+df[treatment]*(df[outcome]-Y1_pred)/ps_pred-(1-df[treatment])*(df[outcome]-Y0_pred)/(1-ps_pred)
+    
+    
+    return TE_DR
+    
+
+
+# In[ ]:
+
+
+# DR-learner for HTE estimation
+outcome = 'R'
+treatment = 'A'
+controls = ['S1','S2']
+n_folds = 5
+y_model = LGBMRegressor(max_depth=2)
+ps_model = LogisticRegression()
+Rlearner_model = LGBMRegressor(max_depth=2)
+
+HTE_DR_learner = DRlearner(data_behavior, outcome, treatment, controls, y_model, ps_model)
+HTE_DR_learner = HTE_DR_learner.to_numpy()
+
+
+# In[ ]:
+
+
+print("DR-learner:  ",HTE_DR_learner[0:8])
+print("true value: ",HTE_true[0:8].to_numpy())
+
+
+# In[ ]:
+
+
+Bias_DR_learner = np.sum(HTE_DR_learner-HTE_true)/n
+Variance_DR_learner = np.sum((HTE_DR_learner-HTE_true)**2)/n
+print("The overall estimation bias of DR-learner is :     ", Bias_DR_learner, ", \n", "The overall estimation variance of DR-learner is :",Variance_DR_learner,". \n")
 
 
 # ### **6. Lp-R-learner**
@@ -372,12 +626,211 @@ print("The overall estimation bias of X-learner is :", Bias_X_learner, ", \n", "
 # In[ ]:
 
 
-# example
+# A demo code of Lp-R-learner
 
+def LpRlearner(df, outcome, treatment, controls, y_model, ps_model_a, ps_model_b, s, LpRlearner_model, degree = 1):
+    """
+    
+    Parameters
+    ----------
+    df : pd.dataframe
+        data
+    outcome : str
+        outcome label.
+    treatment : str
+        treatment label.
+    controls : list
+        list of all controls.
+    y_model : sklearn class
+        the model for outcome regression learner.
+    ps_model_a : sklearn class
+        the model for general propensity score learner in fold 1a.
+    ps_model_b : sklearn class
+        the model for general propensity score learner in fold 1b.
+        s:  float64
+            bandwidth of gauss kernel function in deciding the weight of regression
+   LpRlearner_model:  sklearn class
+        the model for residual regression learner in fold 2.
+    n_folds : int
+        number of folds for cross-fitting. Set as a fixed number, 3, as indicated in the paper    
+    Returns
+    -------
+    LpRlearner_pred : Length: n, dtype: float64
+        Estimated Heterogeneous Treatemnt Effect by Lp-R-learner with kernel-weighted polynomial regression
+    """
+    # =============================================================================
+    # # estimate with Lp-R-learner
+    # =============================================================================
+
+
+    print('estimate with Lp-R-learner')
+
+
+    from sklearn.ensemble import RandomForestRegressor
+    from sklearn.linear_model import Lasso,LogisticRegression
+    from sklearn.metrics import r2_score
+    import numpy as np
+    import pandas as pd
+
+    from sklearn.metrics import r2_score
+    from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, GradientBoostingClassifier
+    from sklearn.linear_model import Lasso,ElasticNet
+    from sklearn.preprocessing import PolynomialFeatures
+
+    n_all = len(df)
+    
+    n_folds = 3
+    folds=np.random.randint(1,n_folds+1,size=df.shape[0])
+    poly = PolynomialFeatures(degree = degree)
+    
+
+    
+    tau=np.zeros((n_all,3))
+    LpRlearner_pred = pd.Series(np.zeros(n_all))
+
+    
+    for j in range(n_all):  
+        
+        y_learner=[y_model]*n_folds
+        ps_learner_a=[ps_model_a]*n_folds
+        ps_learner_b=[ps_model_b]*n_folds
+        Lp_R_learner=[LpRlearner_model]*n_folds
+
+        y_pred=pd.Series(index=df.index,dtype=np.float64)
+        ps_pred=pd.Series(index=df.index,dtype=np.float64)
+        LpRlearner_pred=pd.Series(index=df.index,dtype=np.float64)
+
+        for i in range(n_folds):
+            fold=i+1
+
+            # define the three-folds cross fitting index according to Kennedy's paper
+            fold1a=fold
+            fold1b=(fold+1)%n_folds
+            fold2=(fold+2)%n_folds  
+            if (fold1a == 0):
+                fold1a = fold1a + n_folds
+            if (fold1b == 0):
+                fold1b = fold1b + n_folds
+            if (fold2 == 0):
+                fold2 = fold2 + n_folds
+
+                
+            # step 1: nuisance training
+            ps_learner_a[fold1a-1].fit(df[folds==fold1a][controls],df[folds==fold1a][treatment])
+
+            y_learner[fold1b-1].fit(df[folds==fold1b][controls],df[folds==fold1b][outcome])
+            ps_learner_b[fold1b-1].fit(df[folds==fold1b][controls],df[folds==fold1b][treatment])
+
+            
+            #1st stage model performance output
+            #print('fold {},training r2 y_learner: {:.3f}, ps_learner: {:.3f}'.format(fold1a,y_learner[fold1b-1].score(df[folds==fold1b][controls],df[folds==fold1b][outcome]), ps_learner_a[fold1a-1].score(df[folds==fold1a][controls],df[folds==fold1a][treatment])  ))
+            #print('fold {},testing r2 y_learner: {:.3f}, ps_learner: {:.3f}'.format(fold1a,y_learner[fold1b-1].score(df[folds!=fold1b][controls],df[folds!=fold1b][outcome]),ps_learner_a[fold1a-1].score(df[folds!=fold1a][controls],df[folds!=fold1a][treatment])))
+            
+     
+            x0=df[controls].iloc[j].to_numpy()#.reshape(-1,1)  ############## define another vector in argument line##
+            X=df[controls][folds==fold2].to_numpy()
+            
+            #print(np.shape(X))
+            n=len(df[folds==fold2])
+
+
+            # choose h to ensure the support to be in between [-1,1]^d
+            h=0
+            for k in range(n):
+                temp=np.max(abs(X[k,:]-x0))
+                if (temp>h):
+                    h=temp
+            h=np.ceil(h)
+            #print('the value of h is {:.3f}'.format(h) )
+            
+            # step 2: kernel-weighted least squares regression
+            # kernel calculation
+            # use gauss kernel to determine the weight of regression
+            Kernel_X=np.exp(-sum( ((x - y)/h)**2 for (x, y) in zip(X.transpose(), x0) ) / s**2)
+
+            ps_a=ps_model_a.predict_proba(df[folds==fold2][controls])[:,1]
+            ps_b=ps_model_b.predict_proba(df[folds==fold2][controls])[:,1]
+
+
+            ps_a[np.where(ps_a<1e-5)]=1e-5
+            ps_b[np.where(ps_b<1e-5)]=1e-5
+            ps_a[np.where(1-ps_a<1e-5)]=1-1e-5
+            ps_b[np.where(1-ps_b<1e-5)]=1-1e-5
+
+            weight=Kernel_X * (df[folds==fold2][treatment]-ps_a) / (df[folds==fold2][treatment]-ps_b)
+
+            
+            # polynomial regression at point x0
+            X_poly = poly.fit_transform(df[folds==fold2][controls]-x0)
+            y_residual = df[outcome][folds==fold2]-y_model.predict(df[folds==fold2][controls])
+            x_tilde = X_poly * (df[folds==fold2][treatment]-ps_model_b.predict_proba(df[folds==fold2][controls])[:,1]).to_numpy().reshape(-1,1)
+            
+            p = np.shape(X_poly)[1]
+            
+            #poly.fit(X_poly_train,y_train)
+            Lp_R_learner[fold2-1].fit(x_tilde, y_residual, sample_weight=weight)
+            
+            Theta = Lp_R_learner[fold2-1].coef_
+            #LpRlearner_pred[0].loc[folds==(fold+2)]=LpRlearner_model.predict(X_poly)
+            
+
+            #model performance output
+            X_poly_test = poly.fit_transform(df[folds!=fold2][controls]-x0)
+            y_residual_test = df[outcome][folds!=fold2]-y_model.predict(df[folds!=fold2][controls])
+            x_tilde_test = X_poly_test * (df[folds!=fold2][treatment]-ps_model_b.predict_proba(df[folds!=fold2][controls])[:,1]).to_numpy().reshape(-1,1)
+            #print('fold {},training r2 of Lp-R-learner_model: {:.3f},testing r2 of Lp-R-learner_model: {:.3f}'.format(fold1a, Lp_R_learner[fold2-1].score(x_tilde,y_residual),Lp_R_learner[fold2-1].score(x_tilde_test,y_residual_test)))
+            
+            tau[j,i]=Theta[0] #the intercept of the linear regression
+            
+    LpRlearner_pred = np.sum(tau,axis=1)/n_folds        
+            
+    return LpRlearner_pred
+    
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+# Lp-R-learner for HTE estimation
+outcome = 'R'
+treatment = 'A'
+controls = ['S1','S2']
+n_folds = 5
+y_model = LGBMRegressor(max_depth=2)
+ps_model_a = LogisticRegression()
+ps_model_b = LogisticRegression()
+s = 1
+LpRlearner_model = LinearRegression()
+
+HTE_Lp_R_learner = LpRlearner(data_behavior, outcome, treatment, controls, y_model, ps_model_a, ps_model_b, s, LpRlearner_model, degree = 1)
+
+
+# In[ ]:
+
+
+print("Lp_R-learner:  ",HTE_Lp_R_learner[0:8])
+print("true value: ",HTE_true[0:8].to_numpy())
+
+
+# In[ ]:
+
+
+Bias_Lp_R_learner = np.sum(HTE_Lp_R_learner-HTE_true)/n
+Variance_Lp_R_learner = np.sum((HTE_Lp_R_learner-HTE_true)**2)/n
+print("The overall estimation bias of Lp_R-learner is :     ", Bias_Lp_R_learner, ", \n", "The overall estimation variance of Lp_R-learner is :",Variance_Lp_R_learner,". \n")
+
+
+# **Conclusion**: It will cost more time to use Lp-R-learner than other approaches. However, the overall estimation variance of Lp-R-learner is incredibly smaller than other approaches.
 
 # ### **7. Generalized Random Forest**
 # 
-# Developed by Susan Athey, Julie Tibshirani and Stefan Wager, Generalized Random Forest aims to give the solution to a set of local moment equations:
+# Developed by Susan Athey, Julie Tibshirani and Stefan Wager, Generalized Random Forest [8] aims to give the solution to a set of local moment equations:
 # \begin{equation}
 #   \mathbb{E}\big[\psi_{\tau(s),\nu(s)}(O_i)\big| S_i=s\big]=0,
 # \end{equation}
@@ -405,7 +858,44 @@ print("The overall estimation bias of X-learner is :", Bias_X_learner, ", \n", "
 # In[ ]:
 
 
-# example
+# import the package for Causal Random Forest
+get_ipython().system(' pip install econml')
+
+
+# In[ ]:
+
+
+# A demo code of Causal Random Forest
+from econml.grf import CausalForest, CausalIVForest, RegressionForest
+from econml.dml import CausalForestDML
+est = CausalForest(criterion='het', n_estimators=400, min_samples_leaf=5, max_depth=None,
+                    min_var_fraction_leaf=None, min_var_leaf_on_val=True,
+                    min_impurity_decrease = 0.0, max_samples=0.45, min_balancedness_tol=.45,
+                    warm_start=False, inference=True, fit_intercept=True, subforest_size=4,
+                    honest=True, verbose=0, n_jobs=-1, random_state=1235)
+
+
+est.fit(data_behavior.iloc[:,0:2], data_behavior['A'], data_behavior['R'])
+
+HTE_GRF = est.predict(data_behavior.iloc[:,0:2], interval=False, alpha=0.05)
+HTE_GRF = HTE_GRF.flatten()
+
+
+# In[ ]:
+
+
+print("Generalized Random Forest:  ",HTE_GRF[0:8])
+print("true value:                 ",HTE_true[0:8].to_numpy())
+
+
+# Causal Forest performs just okay in this example.
+
+# In[ ]:
+
+
+Bias_GRF = np.sum(HTE_GRF-HTE_true)/n
+Variance_GRF = np.sum((HTE_GRF-HTE_true)**2)/n
+print("The overall estimation bias of Generalized Random Forest is :     ", Bias_GRF, ", \n", "The overall estimation variance of Generalized Random Forest is :",Variance_GRF ,". \n")
 
 
 # ## References
@@ -422,9 +912,5 @@ print("The overall estimation bias of X-learner is :", Bias_X_learner, ", \n", "
 # 6. S. Lee, R. Okui, and Y.-J. Whang. Doubly robust uniform confidence band for the conditional average treatment effect function. Journal of Applied Econometrics, 32(7):1207–1225, 2017.
 # 
 # 7. D. J. Foster and V. Syrgkanis. Orthogonal statistical learning. arXiv preprint arXiv:1901.09036, 2019.
-
-# In[ ]:
-
-
-
-
+# 
+# 8. Susan Athey, Julie Tibshirani, and Stefan Wager. Generalized random forests. The Annals of Statistics, 47(2):1148–1178, 2019.
