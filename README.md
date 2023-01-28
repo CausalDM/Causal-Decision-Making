@@ -31,8 +31,13 @@ Otherwise, continue with the steps in the next section.
 
 ### Publish a new version
 4. `cd Causal-Decision-Making`
-3. run `ghp-import -n -p -f _build/html` at the `main` branch. Ignores the password part.  
-4. push the `gh-pages` branch
+5. run `ghp-import -n -p -f _build/html` at the `main` branch. Ignores the password part.  
+6. push the `gh-pages` branch
+
+### Potential Error Messages when Running ghp-import
+1. File not found error: you may not have Git installed. Try installing/reinstalling the Git 
+2. Fail identification: the credential information saved in your local credential manager needs to be updated. You can generate personal access token at https://github.com/settings/tokens
+3. the 'causaldm.com' cannot be opened: It seems that only Runzhe can automatically change the link. For the rest of us, every time we push the `gh-pages` branch, we need to manually add a 'CNAME' file to the `gh-pages` branch. Then, within the 'CNAME' file, type causaldm.com.
 
 
 One command line for the two steps: 
