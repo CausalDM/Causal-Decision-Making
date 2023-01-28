@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Heterogeneous Treatment Effect Estimation (Single Stage) &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -55,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Markov Decision Processes" href="../Scenario%202/underMDP.html" />
-    <link rel="prev" title="ATE estimation (Single Stage)" href="ATE.html" />
+    <link rel="prev" title="ATE Estimation (Single Stage)" href="ATE.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -196,7 +195,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul class="current">
    <li class="toctree-l2">
     <a class="reference internal" href="ATE.html">
-     ATE estimation (Single Stage)
+     ATE Estimation (Single Stage)
     </a>
    </li>
    <li class="toctree-l2 current active">
@@ -1018,7 +1017,7 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="heterogeneous-treatment-effect-estimation-single-stage">
+  <div class="tex2jax_ignore mathjax_ignore section" id="heterogeneous-treatment-effect-estimation-single-stage">
 <h1>Heterogeneous Treatment Effect Estimation (Single Stage)<a class="headerlink" href="#heterogeneous-treatment-effect-estimation-single-stage" title="Permalink to this headline">#</a></h1>
 <p>In the previous section, we’ve introduced the estimation of average treatment effect, where we aims to estimate the difference of potential outcomes by executing action <span class="math notranslate nohighlight">\(A=1\)</span> v.s. <span class="math notranslate nohighlight">\(A=0\)</span>. That is,</p>
 <div class="amsmath math notranslate nohighlight">
@@ -1026,7 +1025,7 @@ title="Print to PDF"
 \text{ATE}=\mathbb{E}[R(1)-R(0)].
 \end{equation*}\]</div>
 <p>In this section, we will focus on the estimation of heterogeneous treatment effect (HTE), which is also one of the main focuses in causal inference.</p>
-<section id="main-idea">
+<div class="section" id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>Let’s first consider the single stage setup, where the observed data can be written as a state-action-reward triplet <span class="math notranslate nohighlight">\(\{S_i,A_i,R_i\}_{i=1}^n\)</span> with a total of <span class="math notranslate nohighlight">\(n\)</span> trajectories. Heterogeneous treatment effect, as we can imagine from its terminology, aims to measure the heterogeneity of the treatment effect for different subjects. Specifically, we define HTE as <span class="math notranslate nohighlight">\(\tau(s)\)</span>, where</p>
 <div class="amsmath math notranslate nohighlight">
@@ -1042,11 +1041,11 @@ title="Print to PDF"
 \text{CATE}=\mathbb{E}[R(1)-R(0)|Z],
 \end{equation*}\]</div>
 <p>where <span class="math notranslate nohighlight">\(Z\)</span> is a collection of states with some specific characsteristics. For example, if the company is interested in the treatment effect of exposing the dress to female customers, <span class="math notranslate nohighlight">\(Z\)</span> can be defined as ``female”, and the problem can be addressed under the structure CATE estimation.</p>
-</section>
-<section id="different-approaches-in-single-stage-hte-estimation">
+</div>
+<div class="section" id="different-approaches-in-single-stage-hte-estimation">
 <h2>Different approaches in single-stage HTE estimation<a class="headerlink" href="#different-approaches-in-single-stage-hte-estimation" title="Permalink to this headline">#</a></h2>
 <p>Next, let’s briefly summarize some state-of-the-art approaches in estimating the heterogeneous treatment effect. There are several review papers which summarize some commonly-used approaches in literature, some of which are also detailed in the following subsections here. For more details please refer to [1], etc.</p>
-<section id="s-learner">
+<div class="section" id="s-learner">
 <h3><strong>1. S-learner</strong><a class="headerlink" href="#s-learner" title="Permalink to this headline">#</a></h3>
 <p>The first estimator we would like to introduce is the S-learner, also known as a ``single learner”. This is one of the most foundamental learners in HTE esitmation, and is very easy to implement.</p>
 <p>Under three common assumptions in causal inference, i.e. (1) consistency, (2) no unmeasured confounders (NUC), (3) positivity assumption, the heterogeneous treatment effect can be identified by the observed data, where</p>
@@ -1064,24 +1063,22 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import related packages</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span><span class="p">;</span>
-<span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span><span class="p">;</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span><span class="p">;</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="k">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span><span class="p">;</span>
+<span class="kn">from</span> <span class="nn">lightgbm</span> <span class="k">import</span> <span class="n">LGBMRegressor</span><span class="p">;</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="k">import</span> <span class="o">*</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">wc</span><span class="o">/</span><span class="n">c5dcq1_d1gn8w9yg5728l9dm0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_16197</span><span class="o">/</span><span class="mf">1742119828.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># import related packages</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span><span class="p">;</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span><span class="p">;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">d2906cddc1f8</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span><span class="p">;</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span><span class="p">;</span>
+<span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span><span class="p">;</span>
 
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;lightgbm&#39;
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;causaldm&#39;
 </pre></div>
 </div>
 </div>
@@ -1361,8 +1358,8 @@ true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
 </div>
 </div>
 <p><strong>Conclusion:</strong> The performance of S-learner, at least in this toy example, is not very attractive. Although it is the easiest approach to implement, the over-simplicity tends to cover some information that can be better explored with some advanced approaches.</p>
-</section>
-<section id="t-learner">
+</div>
+<div class="section" id="t-learner">
 <h3><strong>2. T-learner</strong><a class="headerlink" href="#t-learner" title="Permalink to this headline">#</a></h3>
 <p>The second learner is called T-learner, which denotes ``two learners”. Instead of fitting a single model to estimate the potential outcomes under both treatment and control groups, T-learner aims to learn different models for <span class="math notranslate nohighlight">\(\mathbb{E}[R(1)|S]\)</span> and <span class="math notranslate nohighlight">\(\mathbb{E}[R(0)|S]\)</span> separately, and finally combines them to obtain a final HTE estimator.</p>
 <p>Define the control response function as <span class="math notranslate nohighlight">\(\mu_0(s)=\mathbb{E}[R(0)|S=s]\)</span>, and the treatment response function as <span class="math notranslate nohighlight">\(\mu_1(s)=\mathbb{E}[R(1)|S=s]\)</span>. The algorithm of T-learner is summarized below:</p>
@@ -1420,8 +1417,8 @@ true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
 </div>
 <p><strong>Conclusion:</strong> In this toy example, the overall estimation variance of T-learner is smaller than that of S-learner. In some cases when the treatment effect is relatively complex, it’s likely to yield better performance by fitting two models separately.</p>
 <p>However, in an extreme case when both <span class="math notranslate nohighlight">\(\mu_0(s)\)</span> and <span class="math notranslate nohighlight">\(\mu_1(s)\)</span> are nonlinear complicated function of state <span class="math notranslate nohighlight">\(s\)</span> while their difference is just a constant, T-learner will overfit each model very easily, yielding a nonlinear treatment effect estimator. In this case, other estimators are often preferred.</p>
-</section>
-<section id="x-learner">
+</div>
+<div class="section" id="x-learner">
 <h3><strong>3. X-learner</strong><a class="headerlink" href="#x-learner" title="Permalink to this headline">#</a></h3>
 <p>Next, let’s introduce the X-learner. As a combination of S-learner and T-learner, the X-learner can use information from the control(treatment) group to derive better estimators for the treatment(control) group, which is provably more efficient than the above two.</p>
 <p>The basic</p>
@@ -1495,7 +1492,7 @@ true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 4: fit the propensity score model $\hat{g}(s)$ and obtain the final HTE estimator by taking weighted average of tau0 and tau1</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span> 
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegression</span> 
 
 <span class="n">g</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
 <span class="n">g</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span><span class="n">data_behavior</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">])</span>
@@ -1541,12 +1538,12 @@ true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
 </div>
 </div>
 <p><strong>Conclusion:</strong> In this toy example, the overall estimation variance of X-learner is the smallest, followed by T-learner, and the worst is given by S-learner.</p>
-</section>
-<section id="r-learner">
+</div>
+<div class="section" id="r-learner">
 <h3><strong>4. R learner</strong><a class="headerlink" href="#r-learner" title="Permalink to this headline">#</a></h3>
 <p>The idea of classical R-learner came from Robinson 1988 [3] and was formalized by Nie and Wager in 2020 [2]. The main idea of R learner starts from the partially linear model setup, in which we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-82c13870-d0e7-4e32-9f3a-1dc22efae445">
-<span class="eqno">(26)<a class="headerlink" href="#equation-82c13870-d0e7-4e32-9f3a-1dc22efae445" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-62ce9b16-7ce5-47ee-b0e3-f585d8a472fa">
+<span class="eqno">(39)<a class="headerlink" href="#equation-62ce9b16-7ce5-47ee-b0e3-f585d8a472fa" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{aligned}
     R&amp;=A\tau(S)+g_0(S)+U,\\
     A&amp;=m_0(S)+V,
@@ -1554,21 +1551,21 @@ true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(V\)</span> satisfies <span class="math notranslate nohighlight">\(\mathbb{E}[U|D,X]=0\)</span>, <span class="math notranslate nohighlight">\(\mathbb{E}[V|X]=0\)</span>.</p>
 <p>After several manipulations, it’s easy to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fd9dc8c2-b1d6-4652-8200-ca606b7a6827">
-<span class="eqno">(27)<a class="headerlink" href="#equation-fd9dc8c2-b1d6-4652-8200-ca606b7a6827" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6f05c2df-47ad-4193-b56f-4c00a6ba3043">
+<span class="eqno">(40)<a class="headerlink" href="#equation-6f05c2df-47ad-4193-b56f-4c00a6ba3043" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	R-\mathbb{E}[R|S]=\tau(S)\cdot(A-\mathbb{E}[A|S])+\epsilon.
 \end{equation}\]</div>
 <p>Define <span class="math notranslate nohighlight">\(m_0(X)=\mathbb{E}[A|S]\)</span> and <span class="math notranslate nohighlight">\(l_0(X)=\mathbb{E}[R|S]\)</span>. A natural way to estimate <span class="math notranslate nohighlight">\(\tau(X)\)</span> is given below, which is also the main idea of R-learner:</p>
 <p><strong>Step 1</strong>: Regress <span class="math notranslate nohighlight">\(R\)</span> on <span class="math notranslate nohighlight">\(S\)</span> to obtain model <span class="math notranslate nohighlight">\(\hat{\eta}(S)=\hat{\mathbb{E}}[R|S]\)</span>; and regress <span class="math notranslate nohighlight">\(A\)</span> on <span class="math notranslate nohighlight">\(S\)</span> to obtain model <span class="math notranslate nohighlight">\(\hat{m}(S)=\hat{\mathbb{E}}[A|S]\)</span>.</p>
 <p><strong>Step 2</strong>: Regress outcome residual <span class="math notranslate nohighlight">\(R-\hat{l}(S)\)</span> on propensity score residual <span class="math notranslate nohighlight">\(A-\hat{m}(S)\)</span>.</p>
 <p>That is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-df27b61e-5f61-4b01-8c00-616df1c13940">
-<span class="eqno">(28)<a class="headerlink" href="#equation-df27b61e-5f61-4b01-8c00-616df1c13940" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8b78f06c-77f8-4eff-aa2e-f9eb3beaa865">
+<span class="eqno">(41)<a class="headerlink" href="#equation-8b78f06c-77f8-4eff-aa2e-f9eb3beaa865" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	\hat{\tau}(S)=\arg\min_{\tau}\left\{\mathbb{E}_n\left[\left(\{R_i-\hat{\eta}(S_i)\}-\{A_i-\hat{m}(S_i)\}\cdot\tau(S_i)\right)^2\right]\right\}	
 \end{equation}\]</div>
 <p>The easiest way to do so is to specify <span class="math notranslate nohighlight">\(\hat{\tau}(S)\)</span> to the linear function class. In this case, <span class="math notranslate nohighlight">\(\tau(S)=S\beta\)</span>, and the problem becomes to estimate <span class="math notranslate nohighlight">\(\beta\)</span> by solving the following linear regression:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-89bfb0f0-c568-44b3-878a-61c22ad344a5">
-<span class="eqno">(29)<a class="headerlink" href="#equation-89bfb0f0-c568-44b3-878a-61c22ad344a5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-fc01531a-2083-41c4-ba61-1071cc21ca68">
+<span class="eqno">(42)<a class="headerlink" href="#equation-fc01531a-2083-41c4-ba61-1071cc21ca68" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	\hat{\beta}=\arg\min_{\beta}\left\{\mathbb{E}_n\left[\left(\{R_i-\hat{\eta}(S_i)\}-\{A_i-\hat{m}(S_i)\} S_i\cdot \beta\right)^2\right]\right\}.
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -1578,8 +1575,8 @@ true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
 </div>
 </div>
 </div>
-</section>
-<section id="dr-learner">
+</div>
+<div class="section" id="dr-learner">
 <h3><strong>5. DR-learner</strong><a class="headerlink" href="#dr-learner" title="Permalink to this headline">#</a></h3>
 <p>DR-learner is a two-stage doubly robust estimator for HTE estimation. Before Kennedy et al. 2020 [4], there are several related approaches trying to extend the doubly robust procedure to HTE estimation, such as [5, 6, 7]. Compared with the above three estimators, DR-learner is proved to be oracle efficient under some mild assumptions detailed in Theorem 2 of [4].</p>
 <p>The basic steps of DR-learner is given below:</p>
@@ -1588,13 +1585,13 @@ true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
 (b)  Using <span class="math notranslate nohighlight">\(I_{1}^n\)</span> to construct estimates <span class="math notranslate nohighlight">\(\hat\mu_a(s)\)</span> for <span class="math notranslate nohighlight">\(\mu_a(s):=\mathbb{E}[R|S=s,A=a]\)</span>;</p>
 <p><strong>Step 2</strong>: Pseudo-outcome regression: \
 Define <span class="math notranslate nohighlight">\(\widehat{\phi}(Z)\)</span> as the pseudo-outcome where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bc1f94e6-f6eb-40d9-981b-3d075586914c">
-<span class="eqno">(30)<a class="headerlink" href="#equation-bc1f94e6-f6eb-40d9-981b-3d075586914c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d1b07124-5f6c-4bb0-a9f0-e6f429eafffe">
+<span class="eqno">(43)<a class="headerlink" href="#equation-d1b07124-5f6c-4bb0-a9f0-e6f429eafffe" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \widehat{\phi}(Z)=\frac{A-\hat{\pi}(S)}{\hat{\pi}(S)\{1-\hat{\pi}(S)\}}\Big\{R-\hat{\mu}_A(S)\Big\}+\hat{\mu}_1(S)-\hat{\mu}_0(S),
 \end{equation}\]</div>
 <p>and regress it on covariates <span class="math notranslate nohighlight">\(S\)</span> in the test sample <span class="math notranslate nohighlight">\(I_2^n\)</span>, yielding</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b2f21e41-3e9a-48ab-a31b-83003c7a5a58">
-<span class="eqno">(31)<a class="headerlink" href="#equation-b2f21e41-3e9a-48ab-a31b-83003c7a5a58" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-02fdac51-d00f-489f-8932-a04d5b7719a3">
+<span class="eqno">(44)<a class="headerlink" href="#equation-02fdac51-d00f-489f-8932-a04d5b7719a3" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \widehat{\tau}_{\text{DR-learner}}(s)=\widehat{\mathbb{E}}_n[\widehat{\phi}(Z)|S=s].
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -1604,8 +1601,8 @@ Define <span class="math notranslate nohighlight">\(\widehat{\phi}(Z)\)</span> a
 </div>
 </div>
 </div>
-</section>
-<section id="lp-r-learner">
+</div>
+<div class="section" id="lp-r-learner">
 <h3><strong>6. Lp-R-learner</strong><a class="headerlink" href="#lp-r-learner" title="Permalink to this headline">#</a></h3>
 <p>As an extension of R-learner, Lp-R-learner combined the idea of residual regression with local polynomial adaptation, and leveraged the idea of cross fitting to further relax the conditions needed to obtain the oracle convergence rate. For brevity of content, we will just introduce their main algorithm. For more details about its theory and real data performance please see the paper written by Kennedy [4].</p>
 <p>Let <span class="math notranslate nohighlight">\((I_{1a}^n, I_{1b}^n,I_{2}^n)\)</span> denote three independent samples of <span class="math notranslate nohighlight">\(n\)</span> observations of <span class="math notranslate nohighlight">\(Z_i = (S_i, A_i, R_i)\)</span>. Let <span class="math notranslate nohighlight">\(b:\mathbb{R}^d\rightarrow \mathbb{R}^p\)</span> denote the vector of basis functions consisting of all powers of each covariate, up to order <span class="math notranslate nohighlight">\(\gamma\)</span>, and all interactions up to degree <span class="math notranslate nohighlight">\(\gamma\)</span> polynomials. Let <span class="math notranslate nohighlight">\(K_{hs}(S)=\frac{1}{h^d}K\left(\frac{S-s}{h}\right)\)</span> for <span class="math notranslate nohighlight">\(k:\mathbb{R}^d\rightarrow \mathbb{R}\)</span> a bounded kernel function with support <span class="math notranslate nohighlight">\([-1,1]^d\)</span>, and <span class="math notranslate nohighlight">\(h\)</span> is a bandwidth parameter.</p>
@@ -1614,8 +1611,8 @@ Define <span class="math notranslate nohighlight">\(\widehat{\phi}(Z)\)</span> a
 (b)  Using <span class="math notranslate nohighlight">\(I_{1b}^n\)</span> to construct estimates <span class="math notranslate nohighlight">\(\hat{\eta}\)</span> of the regression function <span class="math notranslate nohighlight">\(\eta=\pi\mu_1+(1-\pi)\mu_0\)</span>, and estimtes <span class="math notranslate nohighlight">\(\hat{\pi}_b\)</span> of the propensity scores <span class="math notranslate nohighlight">\(\pi\)</span>.</p>
 <p><strong>Step 2</strong>: Localized double-residual regression: \
 Define <span class="math notranslate nohighlight">\(\hat{\tau}_r(s)\)</span> as the fitted value from a kernel-weighted least squares regression (in the test sample <span class="math notranslate nohighlight">\(I_2^n\)</span>) of outcome residual <span class="math notranslate nohighlight">\((R-\hat{\eta})\)</span> on basis terms <span class="math notranslate nohighlight">\(b\)</span> scaled by the treatment residual <span class="math notranslate nohighlight">\(A-\hat{\pi}_b\)</span>, with weights <span class="math notranslate nohighlight">\(\Big(\frac{A-\hat{\pi}_a}{A-\hat{\pi}_b}\Big)\cdot K_{hs}\)</span>. Thus <span class="math notranslate nohighlight">\(\hat{\tau}_r(s)=b(0)^T\hat{\theta}\)</span> for</p>
-<div class="amsmath math notranslate nohighlight" id="equation-58385134-cf48-4938-ab1a-7bd8c2145251">
-<span class="eqno">(32)<a class="headerlink" href="#equation-58385134-cf48-4938-ab1a-7bd8c2145251" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-105d85a7-9f81-4106-aa10-e52dfd53c93c">
+<span class="eqno">(45)<a class="headerlink" href="#equation-105d85a7-9f81-4106-aa10-e52dfd53c93c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 		\hat{\theta}=\arg\min_{\theta\in\mathbb{R}^p}\mathbb{P}_n\left(K_{hs}(S)\Big\{ \frac{A-\hat{\pi}_a(S)}{A-\hat{\pi}_b(S)}\Big\} \left[  \big\{R-\hat{\eta}(S)\big\}-\theta^Tb(S-s_0)\big\{A-\hat{\pi}_b(S)\big\} \right] \right).
 \end{equation}\]</div>
 <p><strong>Step 3</strong>: Cross-fitting(optional): \
@@ -1628,29 +1625,29 @@ Repeat Step 1–2 twice, first using <span class="math notranslate nohighlight">
 </div>
 </div>
 </div>
-</section>
-<section id="generalized-random-forest">
+</div>
+<div class="section" id="generalized-random-forest">
 <h3><strong>7. Generalized Random Forest</strong><a class="headerlink" href="#generalized-random-forest" title="Permalink to this headline">#</a></h3>
 <p>Developed by Susan Athey, Julie Tibshirani and Stefan Wager, Generalized Random Forest aims to give the solution to a set of local moment equations:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b266e7fb-62b7-427f-89bc-3ebb30884332">
-<span class="eqno">(33)<a class="headerlink" href="#equation-b266e7fb-62b7-427f-89bc-3ebb30884332" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9c9f74bf-ff70-4f08-afa2-b6bf2b816532">
+<span class="eqno">(46)<a class="headerlink" href="#equation-9c9f74bf-ff70-4f08-afa2-b6bf2b816532" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \mathbb{E}\big[\psi_{\tau(s),\nu(s)}(O_i)\big| S_i=s\big]=0,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\tau(s)\)</span> is the parameter we care about and <span class="math notranslate nohighlight">\(\nu(s)\)</span> is an optional nuisance parameter. In the problem of Heterogeneous Treatment Effect Evaluation, our parameter of interest <span class="math notranslate nohighlight">\(\tau(s)=\xi\cdot \beta(s)\)</span> is identified by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-845ffb10-70b8-4178-9ca3-80708198b334">
-<span class="eqno">(34)<a class="headerlink" href="#equation-845ffb10-70b8-4178-9ca3-80708198b334" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f46eeb26-6826-42d8-9e74-1bbb96fd73bc">
+<span class="eqno">(47)<a class="headerlink" href="#equation-f46eeb26-6826-42d8-9e74-1bbb96fd73bc" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \psi_{\beta(s),\nu(s)}(R_i,A_i)=(R_i-\beta(s)\cdot A_i-c(s))(1 \quad A_i^T)^T.
 \end{equation}\]</div>
 <p>The induced estimator <span class="math notranslate nohighlight">\(\hat{\tau}(s)\)</span> for <span class="math notranslate nohighlight">\(\tau(s)\)</span> can thus be solved by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-39af98f4-7ee8-48a6-bccc-8a430d51d02b">
-<span class="eqno">(35)<a class="headerlink" href="#equation-39af98f4-7ee8-48a6-bccc-8a430d51d02b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-59f92fb5-2d3e-4d25-88a6-6bd81437686a">
+<span class="eqno">(48)<a class="headerlink" href="#equation-59f92fb5-2d3e-4d25-88a6-6bd81437686a" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \hat{\tau}(s)=\xi^T\left(\sum_{i=1}^n \alpha_i(s)\big(A_i-\bar{A}_\alpha\big)^{\otimes 2}\right)^{-1}\sum_{i=1}^n \alpha_i(s)\big(A_i-\bar{A}_\alpha\big)\big(R_i-\bar{R}_\alpha\big),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\bar{A}_\alpha=\sum \alpha_i(s)A_i\)</span> and <span class="math notranslate nohighlight">\(\bar{R}_\alpha=\sum \alpha_i(s)R_i\)</span>, and we write <span class="math notranslate nohighlight">\(v^{\otimes 2}=vv^T\)</span>.</p>
 <p>Notice that this formula is just a weighted version of R-learner introduced above. However, instead of using ordinary kernel weighting functions that are prone to a strong curse of dimensionality, GRF uses an adaptive weighting function <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span> derived from a forest designed to express heterogeneity in the specified quantity of interest.</p>
 <p>To be more specific, in order to obtain <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span>, GRF first grows a set of <span class="math notranslate nohighlight">\(B\)</span> trees indexed by <span class="math notranslate nohighlight">\(1,\dots,B\)</span>. Then for each such tree, define <span class="math notranslate nohighlight">\(L_b(s)\)</span> as the set of training samples falling in the same ``leaf” as x. The weights <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span> then capture the frequency with which the <span class="math notranslate nohighlight">\(i\)</span>-th training example falls into the same leaf as <span class="math notranslate nohighlight">\(s\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-72d9e3e0-9be1-40c5-b957-23edd4f1b77e">
-<span class="eqno">(36)<a class="headerlink" href="#equation-72d9e3e0-9be1-40c5-b957-23edd4f1b77e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2a9b8bd3-a053-42fd-8228-7c752a40c6a7">
+<span class="eqno">(49)<a class="headerlink" href="#equation-2a9b8bd3-a053-42fd-8228-7c752a40c6a7" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \alpha_{bi}(s)=\frac{\boldsymbol{1}\big(\{S_i\in L_b(s)\}\big)}{\big|L_b(s)\big|},\quad \alpha_i(s)=\frac{1}{B}\sum_{b=1}^B \alpha_{bi}(s).
 \end{equation}\]</div>
 <p>To sum up, GRF aims to leverage the splitting result of a series of trees to decide the ``localized” weight for HTE estimation at each point <span class="math notranslate nohighlight">\(x_0\)</span>. Compared with kernel functions, we may expect tree-based weights to be more flexible and better performed in real settings.</p>
@@ -1661,9 +1658,9 @@ Repeat Step 1–2 twice, first using <span class="math notranslate nohighlight">
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="references">
+</div>
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p>Kunzel, S. R., Sekhon, J. S., Bickel, P. J., and Yu, B. (2019). Metalearners for estimating heterogeneous treatment effects using machine learning. Proceedings of the national academy of sciences 116, 4156–4165.</p></li>
@@ -1674,8 +1671,8 @@ Repeat Step 1–2 twice, first using <span class="math notranslate nohighlight">
 <li><p>S. Lee, R. Okui, and Y.-J. Whang. Doubly robust uniform confidence band for the conditional average treatment effect function. Journal of Applied Econometrics, 32(7):1207–1225, 2017.</p></li>
 <li><p>D. J. Foster and V. Syrgkanis. Orthogonal statistical learning. arXiv preprint arXiv:1901.09036, 2019.</p></li>
 </ol>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -1690,7 +1687,7 @@ Repeat Step 1–2 twice, first using <span class="math notranslate nohighlight">
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./Causal_Effect_Learning/Scenario 1"
+            path: "./Causal_Effect_Learning\Scenario 1"
         },
         predefinedOutput: true
     }
@@ -1708,7 +1705,7 @@ Repeat Step 1–2 twice, first using <span class="math notranslate nohighlight">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">ATE estimation (Single Stage)</p>
+            <p class="prev-next-title">ATE Estimation (Single Stage)</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="../Scenario%202/underMDP.html" title="next page">

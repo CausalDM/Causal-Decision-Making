@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>\(\epsilon\)-Greedy &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -196,7 +195,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/ATE.html">
-     ATE estimation (Single Stage)
+     ATE Estimation (Single Stage)
     </a>
    </li>
    <li class="toctree-l2">
@@ -1000,17 +999,17 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="epsilon-greedy">
+  <div class="tex2jax_ignore mathjax_ignore section" id="epsilon-greedy">
 <h1><span class="math notranslate nohighlight">\(\epsilon\)</span>-Greedy<a class="headerlink" href="#epsilon-greedy" title="Permalink to this headline">#</a></h1>
-<section id="overview">
+<div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p><strong>Advantage</strong>: Simple and easy to understand. Compared to random policy, it makes better use of observations.</p></li>
 <li><p><strong>Disadvantage</strong>:  It is difficult to determine an ideal <span class="math notranslate nohighlight">\(\epsilon\)</span>: if <span class="math notranslate nohighlight">\(\epsilon\)</span> is large, exploration will dominate; otherwise, eploitation will dominate. To address this issue, we offer a more adaptive version—<span class="math notranslate nohighlight">\(\epsilon_t\)</span>-greedy, where <span class="math notranslate nohighlight">\(\epsilon_t\)</span> decreases as <span class="math notranslate nohighlight">\(t\)</span> increases.</p></li>
 <li><p><strong>Application Situation</strong>: discrete action space, binary/Gaussian reward space</p></li>
 </ul>
-</section>
-<section id="main-idea">
+</div>
+<div class="section" id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p><span class="math notranslate nohighlight">\(\epsilon\)</span>-Greedy is an intuitive algorithm to incorporate the exploration and exploitation. It is simple and widely used [1]. Specifically, at each round <span class="math notranslate nohighlight">\(t\)</span>, we will select a random action with probability <span class="math notranslate nohighlight">\(\epsilon\)</span>, and select an action with the highest estimated mean potential reward, <span class="math notranslate nohighlight">\(\theta_a\)</span>, for each arm <span class="math notranslate nohighlight">\(a\)</span> based on the history so far with probability <span class="math notranslate nohighlight">\(1-\epsilon\)</span>. Specifically,
 $<span class="math notranslate nohighlight">\(
@@ -1019,28 +1018,28 @@ $<span class="math notranslate nohighlight">\(
 \end{aligned}
 \)</span>$</p>
 <p>For example, in movie recommendation, the agent would either recommend a random genere of movies to the user or recommend the genere that the user watched the most in the past. Here the parameter <span class="math notranslate nohighlight">\(\epsilon\)</span> is pre-specified. A more adaptive variant is <span class="math notranslate nohighlight">\(\epsilon_{t}\)</span>-greedy, where the probability of taking a random action is defined as a decreasing function of <span class="math notranslate nohighlight">\(t\)</span>. Auer et al. [2] showed that <span class="math notranslate nohighlight">\(\epsilon_{t}\)</span>-greedy performs well in practice with <span class="math notranslate nohighlight">\(\epsilon_{t}\)</span> decreases to 0 at a rate of <span class="math notranslate nohighlight">\(\frac{1}{t}\)</span>. Note that, the reward can be either binary or continuous.</p>
-</section>
-<section id="algorithms-details">
+</div>
+<div class="section" id="algorithms-details">
 <h2>Algorithms Details<a class="headerlink" href="#algorithms-details" title="Permalink to this headline">#</a></h2>
 <p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. The <span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy algorithm start with initializing the estimated values <span class="math notranslate nohighlight">\(\theta_a^0\)</span> and the count of being pulled <span class="math notranslate nohighlight">\(C_a^0\)</span> for each action <span class="math notranslate nohighlight">\(a\)</span> as 0. At each round <span class="math notranslate nohighlight">\(t\)</span>, we either take an action with the maximum estimated value <span class="math notranslate nohighlight">\(\theta_a\)</span> with probability <span class="math notranslate nohighlight">\(1-\epsilon_{t}\)</span> or randomly select an action with probability <span class="math notranslate nohighlight">\(\epsilon_t\)</span>. After observing the rewards corresponding to the selected action <span class="math notranslate nohighlight">\(A_t\)</span>, we updated the total number of being pulled for <span class="math notranslate nohighlight">\(A_t\)</span>, and estimated the <span class="math notranslate nohighlight">\(\theta_{A_{t}}\)</span> by with the sample average for <span class="math notranslate nohighlight">\(A_t\)</span>.</p>
 <p>Remark that both the time-adaptive and the time-fixed version of <span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy algorithm are provided. By setting <strong>decrease_eps=True</strong>, the <span class="math notranslate nohighlight">\(\epsilon_{t}\)</span> in round <span class="math notranslate nohighlight">\(t\)</span> is calculated as <span class="math notranslate nohighlight">\(\frac{K}{T}\)</span>. Otherwise, <span class="math notranslate nohighlight">\(\epsilon_{t}\)</span> is a fixed value specfied by users.</p>
-</section>
-<section id="key-steps">
+</div>
+<div class="section" id="key-steps">
 <h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">#</a></h2>
 <ol>
 <li><p>Initializing the <span class="math notranslate nohighlight">\(\boldsymbol{\theta}^0\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{C}^0\)</span> for <span class="math notranslate nohighlight">\(K\)</span> items as 0</p></li>
 <li><p>For t = <span class="math notranslate nohighlight">\(0, 1,\cdots, T\)</span>:</p>
 <p>2.1. select action <span class="math notranslate nohighlight">\(A_t\)</span> as the arm with the maximum <span class="math notranslate nohighlight">\(\theta_a^t\)</span> with probability <span class="math notranslate nohighlight">\(1-\epsilon_t\)</span>, or randomly select an action <span class="math notranslate nohighlight">\(A_t\)</span> with probability <span class="math notranslate nohighlight">\(\epsilon_t\)</span></p>
 <p>2.2. Received the reward <span class="math notranslate nohighlight">\(R_t\)</span>, and update <span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(Q\)</span> with</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4920ff69-d2ab-411b-a63e-3a2b2a1e0c65">
-<span class="eqno">(55)<a class="headerlink" href="#equation-4920ff69-d2ab-411b-a63e-3a2b2a1e0c65" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-687bb37e-5966-4e17-b460-29036bca717f">
+<span class="eqno">(68)<a class="headerlink" href="#equation-687bb37e-5966-4e17-b460-29036bca717f" title="Permalink to this equation">#</a></span>\[\begin{align}
     C_{A_{t}}^{t+1} &amp;= C_{A_{t}}^{t} + 1 \\
     \theta_{A_{t}}^{t+1} &amp;=\theta_{A_{t}}^{t} + \frac{1}{C_{A_{t+1}}^{t+1}}*(R_t-\theta_{A_{t}}^{t})
     \end{align}\]</div>
 </li>
 </ol>
-</section>
-<section id="demo-code">
+</div>
+<div class="section" id="demo-code">
 <h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1053,40 +1052,40 @@ $<span class="math notranslate nohighlight">\(
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">wc</span><span class="o">/</span><span class="n">c5dcq1_d1gn8w9yg5728l9dm0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_16381</span><span class="o">/</span><span class="mf">836241344.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">a4f395ec17bc</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">os</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:\GitHub\CausalDM&#39;</span><span class="p">)</span>
 
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;D:\\GitHub\\CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [WinError 3] The system cannot find the path specified: &#39;D:\\GitHub\\CausalDM&#39;
 </pre></div>
 </div>
 </div>
 </div>
-<section id="import-the-learner">
+<div class="section" id="import-the-learner">
 <h3>Import the learner.<a class="headerlink" href="#import-the-learner" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.MAB</span> <span class="kn">import</span> <span class="n">Epsilon_Greedy</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.Online.MAB</span> <span class="k">import</span> <span class="n">Epsilon_Greedy</span>
 </pre></div>
 </div>
 </div>
 </div>
-</section>
-<section id="generate-the-environment">
+</div>
+<div class="section" id="generate-the-environment">
 <h3>Generate the Environment<a class="headerlink" href="#generate-the-environment" title="Permalink to this headline">#</a></h3>
 <p>Here, we imitate an environment based on the MovieLens data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.MAB</span> <span class="kn">import</span> <span class="n">_env_realMAB</span> <span class="k">as</span> <span class="n">_env</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.MAB</span> <span class="k">import</span> <span class="n">_env_realMAB</span> <span class="k">as</span> <span class="n">_env</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">_env</span><span class="o">.</span><span class="n">Single_Gaussian_Env</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-</section>
-<section id="specify-hyperparameters">
+</div>
+<div class="section" id="specify-hyperparameters">
 <h3>Specify Hyperparameters<a class="headerlink" href="#specify-hyperparameters" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>K: # of arms</p></li>
@@ -1101,8 +1100,8 @@ $<span class="math notranslate nohighlight">\(
 </div>
 </div>
 </div>
-</section>
-<section id="recommendation-and-interaction">
+</div>
+<div class="section" id="recommendation-and-interaction">
 <h3>Recommendation and Interaction<a class="headerlink" href="#recommendation-and-interaction" title="Permalink to this headline">#</a></h3>
 <p>Starting from t = 0, for each step t, there are three steps:</p>
 <ol class="simple">
@@ -1130,8 +1129,8 @@ $<span class="math notranslate nohighlight">\(
 </div>
 </div>
 <p><strong>Interpretation</strong>: For step 0, the <span class="math notranslate nohighlight">\(\epsilon-\)</span>greedy agent recommend a Thriller (arm 3), and received a rate of 4 from the environment.</p>
-</section>
-<section id="demo-code-for-bernoulli-bandit">
+</div>
+<div class="section" id="demo-code-for-bernoulli-bandit">
 <h3>Demo Code for Bernoulli Bandit<a class="headerlink" href="#demo-code-for-bernoulli-bandit" title="Permalink to this headline">#</a></h3>
 <p>The steps are similar to those previously performed with a Gaussian Bandit.</p>
 <div class="cell docutils container">
@@ -1156,14 +1155,14 @@ $<span class="math notranslate nohighlight">\(
 </div>
 </div>
 <p><strong>Interpretation</strong>: For step 0, the <span class="math notranslate nohighlight">\(\epsilon-\)</span>greedy agent recommend a Comedy (arm 0), and received a reward of 1 from the environment.</p>
-</section>
-</section>
-<section id="references">
+</div>
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <p>[1] Sutton, R. S., &amp; Barto, A. G. (2018). Reinforcement learning: An introduction. MIT press.</p>
 <p>[2] Auer, P., Cesa-Bianchi, N., &amp; Fischer, P. (2002). Finite-time analysis of the multiarmed bandit problem. Machine learning, 47(2), 235-256.</p>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -1178,7 +1177,7 @@ $<span class="math notranslate nohighlight">\(
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./Online/MAB"
+            path: "./Online\MAB"
         },
         predefinedOutput: true
     }

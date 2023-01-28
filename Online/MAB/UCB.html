@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UCB &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -196,7 +195,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/ATE.html">
-     ATE estimation (Single Stage)
+     ATE Estimation (Single Stage)
     </a>
    </li>
    <li class="toctree-l2">
@@ -1000,41 +999,41 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="ucb">
+  <div class="tex2jax_ignore mathjax_ignore section" id="ucb">
 <h1>UCB<a class="headerlink" href="#ucb" title="Permalink to this headline">#</a></h1>
-<section id="overview">
+<div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p><strong>Advantage</strong>: There is no need to specify any hyper-parameters. It carefully quantifies the uncertainty of the estimation to better combine exploration and exploitation.</p></li>
 <li><p><strong>Disadvantage</strong>: Inefficient if there is a large number of action items.</p></li>
 <li><p><strong>Application Situation</strong>: discrete action space, binary/Gaussian reward space</p></li>
 </ul>
-</section>
-<section id="main-idea">
+</div>
+<div class="section" id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>As the name suggested, the UCB algorithm estimates the upper confidence bound <span class="math notranslate nohighlight">\(U_{a}^{t}\)</span> of the mean of the potential reward of arm <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(R_t(a)\)</span>, based on the observations and then choose the action has the highest estimates. The class of UCB-based algorithms is firstly introduced by Auer et al. [1]. Generally, at each round <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(U_{a}^{t}\)</span> is calculated as the sum of the estimated reward (exploitation) and the estimated confidence radius (exploration) of item <span class="math notranslate nohighlight">\(i\)</span> based on previous observations. Then, <span class="math notranslate nohighlight">\(A_{t}\)</span> is selected as
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8a6fcd73-2c46-4792-b490-05ef8e350b47">
-<span class="eqno">(56)<a class="headerlink" href="#equation-8a6fcd73-2c46-4792-b490-05ef8e350b47" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-94f83163-206d-4af6-b23e-963dd96225e5">
+<span class="eqno">(69)<a class="headerlink" href="#equation-94f83163-206d-4af6-b23e-963dd96225e5" title="Permalink to this equation">#</a></span>\[\begin{equation}
     A_t = \arg \max_{a \in \mathcal{A}} U_a^t.
 \end{equation}\]</div>
 <p>$<span class="math notranslate nohighlight">\(
 As an example, **UCB** [1] estimates the confidence radius as \)</span>\sqrt{\frac{2log(t)}{\text{# item <span class="math notranslate nohighlight">\(i\)</span> played so far}}}$. Doing so, either the item with a large average reward or the item with limited exploration will be selected. Note that this algorithm support cases with either binary reward or continuous reward.</p>
-</section>
-<section id="algorithms-details">
+</div>
+<div class="section" id="algorithms-details">
 <h2>Algorithms Details<a class="headerlink" href="#algorithms-details" title="Permalink to this headline">#</a></h2>
 <p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. The UCB1 algorithm start with initializing the estimated upper confidence bound <span class="math notranslate nohighlight">\(U_a^{0}\)</span> and the count of being pulled <span class="math notranslate nohighlight">\(C_a^{0}\)</span> for each action <span class="math notranslate nohighlight">\(a\)</span> as 0. At each round <span class="math notranslate nohighlight">\(t\)</span>, we greedily select an action <span class="math notranslate nohighlight">\(A_t\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cce9542f-8f65-40d6-ae8b-1be5c18485b2">
-<span class="eqno">(57)<a class="headerlink" href="#equation-cce9542f-8f65-40d6-ae8b-1be5c18485b2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fe00b37d-9d37-422d-b115-ead759a94529">
+<span class="eqno">(70)<a class="headerlink" href="#equation-fe00b37d-9d37-422d-b115-ead759a94529" title="Permalink to this equation">#</a></span>\[\begin{align}
 A_t = \arg \max_{a\in \mathcal{A}} U_{a}^{t}.
 \end{align}\]</div>
 <p>After observing the rewards corresponding to the selected action <span class="math notranslate nohighlight">\(A_t\)</span>, we first update the total number of being pulled for <span class="math notranslate nohighlight">\(A_t\)</span> accordingly. Then, we estimate the upper confidence bound for each action <span class="math notranslate nohighlight">\(a\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dde0c347-1527-4c76-a2a0-45b74e31444f">
-<span class="eqno">(58)<a class="headerlink" href="#equation-dde0c347-1527-4c76-a2a0-45b74e31444f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-75cc8760-b882-4720-8d44-ce61384be065">
+<span class="eqno">(71)<a class="headerlink" href="#equation-75cc8760-b882-4720-8d44-ce61384be065" title="Permalink to this equation">#</a></span>\[\begin{align}
 U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} ,
 \end{align}\]</div>
-</section>
-<section id="key-steps">
+</div>
+<div class="section" id="key-steps">
 <h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">#</a></h2>
 <ol>
 <li><p>Initializing the <span class="math notranslate nohighlight">\(\boldsymbol{U}^0\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{C}^0\)</span> for <span class="math notranslate nohighlight">\(K\)</span> items as 0</p></li>
@@ -1042,8 +1041,8 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 <ul>
 <li><p>select action <span class="math notranslate nohighlight">\(A_t\)</span> as the arm with the maximum <span class="math notranslate nohighlight">\(U_a^t\)</span></p></li>
 <li><p>Received the reward R, and update <span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(U\)</span> with</p>
-<div class="amsmath math notranslate nohighlight" id="equation-56229fb7-164b-4b56-883a-686e8d0ac75b">
-<span class="eqno">(59)<a class="headerlink" href="#equation-56229fb7-164b-4b56-883a-686e8d0ac75b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-15009d26-8a8a-40e8-81ce-124699ddaf96">
+<span class="eqno">(72)<a class="headerlink" href="#equation-15009d26-8a8a-40e8-81ce-124699ddaf96" title="Permalink to this equation">#</a></span>\[\begin{align}
         C_{A_{t}}^{t+1} &amp;= C_{A_{t}}^{t} + 1 \\
         U_{A_{t}}^{t+1} &amp;= \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} 
         \end{align}\]</div>
@@ -1051,8 +1050,8 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 </ul>
 </li>
 </ol>
-</section>
-<section id="demo-code">
+</div>
+<div class="section" id="demo-code">
 <h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1065,40 +1064,40 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">wc</span><span class="o">/</span><span class="n">c5dcq1_d1gn8w9yg5728l9dm0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_16400</span><span class="o">/</span><span class="mf">836241344.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">a4f395ec17bc</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">os</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:\GitHub\CausalDM&#39;</span><span class="p">)</span>
 
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;D:\\GitHub\\CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [WinError 3] The system cannot find the path specified: &#39;D:\\GitHub\\CausalDM&#39;
 </pre></div>
 </div>
 </div>
 </div>
-<section id="import-the-learner">
+<div class="section" id="import-the-learner">
 <h3>Import the learner.<a class="headerlink" href="#import-the-learner" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.MAB</span> <span class="kn">import</span> <span class="n">UCB</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.Online.MAB</span> <span class="k">import</span> <span class="n">UCB</span>
 </pre></div>
 </div>
 </div>
 </div>
-</section>
-<section id="generate-the-environment">
+</div>
+<div class="section" id="generate-the-environment">
 <h3>Generate the Environment<a class="headerlink" href="#generate-the-environment" title="Permalink to this headline">#</a></h3>
 <p>Here, we imitate an environment based on the MovieLens data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.MAB</span> <span class="kn">import</span> <span class="n">_env_realMAB</span> <span class="k">as</span> <span class="n">_env</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.MAB</span> <span class="k">import</span> <span class="n">_env_realMAB</span> <span class="k">as</span> <span class="n">_env</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">_env</span><span class="o">.</span><span class="n">Single_Gaussian_Env</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-</section>
-<section id="specify-hyperparameters">
+</div>
+<div class="section" id="specify-hyperparameters">
 <h3>Specify Hyperparameters<a class="headerlink" href="#specify-hyperparameters" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>K: # of arms</p></li>
@@ -1110,8 +1109,8 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 </div>
 </div>
 </div>
-</section>
-<section id="recommendation-and-interaction">
+</div>
+<div class="section" id="recommendation-and-interaction">
 <h3>Recommendation and Interaction<a class="headerlink" href="#recommendation-and-interaction" title="Permalink to this headline">#</a></h3>
 <p>Starting from t = 0, for each step t, there are three steps:</p>
 <ol class="simple">
@@ -1139,8 +1138,8 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 </div>
 </div>
 <p><strong>Interpretation</strong>: For step 0, the UCB agent recommend a Comedy (arm 0), and received a rate of 2 from the environment.</p>
-</section>
-<section id="demo-code-for-bernoulli-bandit">
+</div>
+<div class="section" id="demo-code-for-bernoulli-bandit">
 <h3>Demo Code for Bernoulli Bandit<a class="headerlink" href="#demo-code-for-bernoulli-bandit" title="Permalink to this headline">#</a></h3>
 <p>The steps are similar to those previously performed with a Gaussian Bandit.</p>
 <div class="cell docutils container">
@@ -1164,13 +1163,13 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 </div>
 </div>
 <p><strong>Interpretation</strong>: For step 0, the UCB agent recommend a Comedy (arm 0), and received a reward of 0 from the environment.</p>
-</section>
-</section>
-<section id="references">
+</div>
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <p>[1] Auer, P., Cesa-Bianchi, N., and Fischer, P. (2002). Finite-time analysis of the multiarmed bandit problem. Machine learning, 47(2):235–256.</p>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -1185,7 +1184,7 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./Online/MAB"
+            path: "./Online\MAB"
         },
         predefinedOutput: true
     }

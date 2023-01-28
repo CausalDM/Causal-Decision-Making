@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MTSS_MNL &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -196,7 +195,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/ATE.html">
-     ATE estimation (Single Stage)
+     ATE Estimation (Single Stage)
     </a>
    </li>
    <li class="toctree-l2">
@@ -946,22 +945,22 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="mtss-mnl">
+  <div class="tex2jax_ignore mathjax_ignore section" id="mtss-mnl">
 <h1>MTSS_MNL<a class="headerlink" href="#mtss-mnl" title="Permalink to this headline">#</a></h1>
-<section id="overview">
+<div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p><strong>Advantage</strong>: It is both scalable and robust. Furthermore, it also accounts for the iter-item heterogeneity.</p></li>
 <li><p><strong>Disadvantage</strong>:</p></li>
 <li><p><strong>Application Situation</strong>: Useful when a list of items is presented, each with a matching price or income, and only one is chosen for each interaction. Binary responses from users include click/don’t-click and buy/don’t-buy.</p></li>
 </ul>
-</section>
-<section id="main-idea">
+</div>
+<div class="section" id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>MTSS_MNL is an example of the general Thompson Sampling(TS)-based framework, MTSS [1], to deal with dynamic assortment optimization problems.</p>
 <p><strong>Review of MTSS:</strong> MTSS[1] is a meta-learning framework designed for large-scale structured bandit problems [2]. Mainly, it is a TS-based algorithm that learns the information-sharing structure while minimizing the cumulative regrets. Adapting the TS framework to a problem-specific Bayesian hierarchical model, MTSS simultaneously enables information sharing among items via their features and models the inter-item heterogeneity. Specifically, it assumes that the item-specific parameter <span class="math notranslate nohighlight">\(\theta_i\)</span> is sampled from a distribution <span class="math notranslate nohighlight">\(g(\theta_i|\boldsymbol{s}_i, \boldsymbol{\gamma})\)</span> instead of being entirely determined by <span class="math notranslate nohighlight">\(\boldsymbol{s}_i\)</span> via a deterministic function. Here, <span class="math notranslate nohighlight">\(g\)</span> is a model parameterized by an <strong>unknown</strong> vector <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>. The following is the general feature-based hierarchical model MTSS considered.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-762de1d4-3f41-444b-9431-2bd2db6fd08a">
-<span class="eqno">(89)<a class="headerlink" href="#equation-762de1d4-3f41-444b-9431-2bd2db6fd08a" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:general_hierachical}
+<div class="amsmath math notranslate nohighlight" id="equation-336c51f1-a53f-411b-92b9-98f898ca5310">
+<span class="eqno">(102)<a class="headerlink" href="#equation-336c51f1-a53f-411b-92b9-98f898ca5310" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:general_hierachical}
   \begin{alignedat}{2}
 &amp;\text{(Prior)} \quad
 \quad\quad\quad\quad\quad\quad\quad\quad\quad
@@ -977,8 +976,8 @@ title="Print to PDF"
 <p>where <span class="math notranslate nohighlight">\(Q(\boldsymbol{\gamma})\)</span> is the prior distribution for <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>.
 Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class of practical problems, <strong>scalable</strong> to large systems, and <strong>robust</strong> to the specification of the generalization model.</p>
 <p><strong>Review of MTSS_MNL:</strong> In this tutorial, as a concrete example, we focus on the epoch-type offering schedule and consider modeling the relationship between <span class="math notranslate nohighlight">\(\theta_i\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{s}_i\)</span> with the following Beta-Geometric logistic model:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-26fc8b86-ee36-4da2-938f-72b0eb9adc2a">
-<span class="eqno">(90)<a class="headerlink" href="#equation-26fc8b86-ee36-4da2-938f-72b0eb9adc2a" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn1}
+<div class="amsmath math notranslate nohighlight" id="equation-dd2216b9-da4c-4363-892f-15a12214284b">
+<span class="eqno">(103)<a class="headerlink" href="#equation-dd2216b9-da4c-4363-892f-15a12214284b" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn1}
     \begin{split}
      \theta_i &amp;\sim Beta \big(\frac{logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})+ 1}{2}, \psi \big) , \forall i \in [N],\\
     Y_{i}^l(a) &amp;\sim Geometric(\theta_i), \forall i \in a,\\
@@ -986,17 +985,17 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
     \end{split}
 \end{equation}\]</div>
 <p>The prior <span class="math notranslate nohighlight">\(Q(\boldsymbol{\gamma})\)</span> can be chosen as many appropriate distributions. For instance, we choose the prior <span class="math notranslate nohighlight">\(\boldsymbol{\gamma} \sim \mathcal{N}(\boldsymbol{\mu}_{\boldsymbol{\gamma}}, {\boldsymbol{\Sigma}}_{\boldsymbol{\gamma}})\)</span> with parameters as known. To update the posterior of <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>, we utilize the <strong>Pymc3</strong> package [4]. With a given <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>, the posterior of <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> enjoys the Beta-Geometric conjugate relationship and hence can be updated explicitly and efficiently. Finally, for each epoch <span class="math notranslate nohighlight">\(l\)</span>, <span class="math notranslate nohighlight">\(A^{l}\)</span> is selected by linear programming as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7d16c5d5-6a19-41cb-bf87-949b7552873e">
-<span class="eqno">(91)<a class="headerlink" href="#equation-7d16c5d5-6a19-41cb-bf87-949b7552873e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-227205b7-2d9a-468b-b7aa-5c2954113ee1">
+<span class="eqno">(104)<a class="headerlink" href="#equation-227205b7-2d9a-468b-b7aa-5c2954113ee1" title="Permalink to this equation">#</a></span>\[\begin{equation}
     A^{l} = argmax_{a \in \mathcal{A}} \frac{\sum_{i\in a}\eta_{i}v_{i}}{1+\sum_{j\in a} v_{j}}.
 \end{equation}\]</div>
 <p>It should be noted that the posterior updating step differs for different pairs of the <span class="math notranslate nohighlight">\(Q(\boldsymbol{\gamma})\)</span> and the reward distribution, and the corresponding code can be easily modified to different prior/reward distribution specifications if necessary.</p>
-</section>
-<section id="algorithm-details">
+</div>
+<div class="section" id="algorithm-details">
 <h2>Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this headline">#</a></h2>
 <p>At each epoch <span class="math notranslate nohighlight">\(l\)</span>, given the feedback <span class="math notranslate nohighlight">\(\mathcal{H}^{l}\)</span> received from previous rounds, there are two major steps, including posterior sampling and combinatorial optimization. Specifically, the posterior sampling step is decomposed into four steps: 1. approximating a posterior distribution of <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>, <span class="math notranslate nohighlight">\(P(\boldsymbol{\gamma}|\mathcal{H}^{l})\)</span>, by <strong>Pymc3</strong>; 2. sampling a <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\gamma}}\)</span> from <span class="math notranslate nohighlight">\(P(\boldsymbol{\gamma}|\mathcal{H}^{l})\)</span>; 3. updating the posterior distribution of <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> conditional on <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\gamma}}\)</span>, <span class="math notranslate nohighlight">\(P(\boldsymbol{\theta}|\tilde{\boldsymbol{\gamma}},\mathcal{H}^{l})\)</span>, which has an explicit form under the assumption of a Beta-Geometric logistic model; 4. sampling <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\theta}}\)</span> from <span class="math notranslate nohighlight">\(P(\boldsymbol{\theta}|\tilde{\boldsymbol{\gamma}},\mathcal{H}^{l})\)</span>. Then <span class="math notranslate nohighlight">\(\tilde{v}_{i}\)</span> is calculated as <span class="math notranslate nohighlight">\(\frac{1}{\tilde{\theta}_{i}}-1\)</span>. Then, the action <span class="math notranslate nohighlight">\(A^{l}\)</span> is selected greedily via linear programming. Note that <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\gamma}}\)</span> can be sampled in a batch mode to further facilitate computationally efficient online deployment.</p>
-</section>
-<section id="key-steps">
+</div>
+<div class="section" id="key-steps">
 <h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">#</a></h2>
 <p>For epoch <span class="math notranslate nohighlight">\(l = 1,2,\cdots\)</span>:</p>
 <ol class="simple">
@@ -1010,8 +1009,8 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
 <li><p>Receive reward <span class="math notranslate nohighlight">\(R^{l}\)</span>.</p></li>
 </ol>
 <p>*Notations can be found in either the inroduction of the chapter “Structured Bandits” or the introduction of the Multinomial Logit Bandit problems.</p>
-</section>
-<section id="demo-code">
+</div>
+<div class="section" id="demo-code">
 <h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1028,21 +1027,21 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">wc</span><span class="o">/</span><span class="n">c5dcq1_d1gn8w9yg5728l9dm0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_16497</span><span class="o">/</span><span class="mf">3636065689.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">e48b8638d1cf</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">os</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM&#39;</span><span class="p">)</span>
 <span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="c1"># code used to import the learner</span>
 
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;/nas/longleaf/home/lge/CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [WinError 3] The system cannot find the path specified: &#39;/nas/longleaf/home/lge/CausalDM&#39;
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Slate.MNL</span> <span class="kn">import</span> <span class="n">MTSS_MNL</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Slate.MNL</span> <span class="kn">import</span> <span class="n">_env_MNL</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Slate.MNL</span> <span class="k">import</span> <span class="n">MTSS_MNL</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Slate.MNL</span> <span class="k">import</span> <span class="n">_env_MNL</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </pre></div>
 </div>
@@ -1093,15 +1092,15 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
 </div>
 </div>
 </div>
-</section>
-<section id="references">
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <p>[1] Wan, R., Ge, L., &amp; Song, R. (2022). Towards Scalable and Robust Structured Bandits: A Meta-Learning Framework. arXiv preprint arXiv:2202.13227.</p>
 <p>[2] Agrawal, S., Avadhanula, V., Goyal, V., &amp; Zeevi, A. (2017, June). Thompson sampling for the mnl-bandit. In Conference on Learning Theory (pp. 76-78). PMLR.</p>
 <p>[3] Oh, M. H., &amp; Iyengar, G. (2019). Thompson sampling for multinomial logit contextual bandits. Advances in Neural Information Processing Systems, 32.</p>
 <p>[4] Salvatier J., Wiecki T.V., Fonnesbeck C. (2016) Probabilistic programming in Python using PyMC3. PeerJ Computer Science 2:e55 DOI: 10.7717/peerj-cs.55.</p>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -1116,7 +1115,7 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./Online/Slate/MNL"
+            path: "./Online\Slate\MNL"
         },
         predefinedOutput: true
     }

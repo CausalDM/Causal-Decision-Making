@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fitted-Q Evaluation &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -196,7 +195,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/ATE.html">
-     ATE estimation (Single Stage)
+     ATE Estimation (Single Stage)
     </a>
    </li>
    <li class="toctree-l2">
@@ -916,7 +915,7 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="fitted-q-evaluation">
+  <div class="tex2jax_ignore mathjax_ignore section" id="fitted-q-evaluation">
 <h1>Fitted-Q Evaluation<a class="headerlink" href="#fitted-q-evaluation" title="Permalink to this headline">#</a></h1>
 <p>The most straightforward approach for OPE is the direct method (DM).
 As suggested by the name,
@@ -934,20 +933,20 @@ It is observed to perform consistently well in a large-scale empirical study [2]
 <ol class="simple">
 <li><p>The model class can be chosen appropriately</p></li>
 </ol>
-<section id="main-idea">
+<div class="section" id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p><strong>Q-function.</strong>
 The Q-function-based approach aims to direct learn the state-action value function (referred to as the Q-function)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f7143c9d-9bb0-4073-9f2c-e18fb9e647fc">
-<span class="eqno">(97)<a class="headerlink" href="#equation-f7143c9d-9bb0-4073-9f2c-e18fb9e647fc" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-db32bea4-b453-454f-a40d-46b2f42602dc">
+<span class="eqno">(110)<a class="headerlink" href="#equation-db32bea4-b453-454f-a40d-46b2f42602dc" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 Q^\pi(a,s)&amp;= \mathbb{E}^{\pi} (\sum_{t=0}^{+\infty} \gamma^t R_{t}|A_{0}=a,S_{0}=s)   
 \end{eqnarray}\]</div>
 <p>of the policy <span class="math notranslate nohighlight">\(\pi\)</span> that we aim to evaluate.</p>
 <p>The final estimator can then be constructed by plugging <span class="math notranslate nohighlight">\(\hat{Q}^{\pi}\)</span> in the definition <span class="math notranslate nohighlight">\(\eta^{\pi} = \mathbb{E}_{s \sim \mathbb{G}, a \sim \pi(\cdot|s)} Q^{\pi}(a, s)\)</span>.</p>
 <p><strong>Bellman equations.</strong>
 The Q-learning-type evaluation is commonly based on the Bellman equation for the Q-function of a given policy <span class="math notranslate nohighlight">\(\pi\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-857451a2-cab4-440f-bb0c-473677716dbb">
-<span class="eqno">(98)<a class="headerlink" href="#equation-857451a2-cab4-440f-bb0c-473677716dbb" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
+<div class="amsmath math notranslate nohighlight" id="equation-0f4d466b-5760-4d61-8b10-522369ae9f4a">
+<span class="eqno">(111)<a class="headerlink" href="#equation-0f4d466b-5760-4d61-8b10-522369ae9f4a" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
     Q^\pi(a, s) = \mathbb{E}^\pi \Big(R_t + \gamma Q^\pi(A_{t + 1}, S_{t+1})  | A_t = a, S_t = s \Big).  \;\;\;\;\; \text{(1)} 
 \end{equation}\]</div>
 <p><strong>FQE.</strong>
@@ -956,8 +955,8 @@ Besides, the right-hand side of (1) is a contraction mapping.
 Therefore, we can consider a fixed-point method:
 with an initial estimate <span class="math notranslate nohighlight">\(\widehat{Q}^{0}\)</span>,
 FQE iteratively solves the following optimization problem,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-98645cec-6079-4008-ac3e-629e53f1a3e2">
-<span class="eqno">(99)<a class="headerlink" href="#equation-98645cec-6079-4008-ac3e-629e53f1a3e2" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-0aed26e7-5835-42ad-b7c9-d55acb1e4408">
+<span class="eqno">(112)<a class="headerlink" href="#equation-0aed26e7-5835-42ad-b7c9-d55acb1e4408" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 	\widehat{Q}^{{\ell}}=\arg \min_{Q} 
 	\sum_{\substack{i \le n}}\sum_{t&lt;T}
 	\Big\{
@@ -967,8 +966,8 @@ FQE iteratively solves the following optimization problem,</p>
 \end{eqnarray}\]</div>
 <p>for <span class="math notranslate nohighlight">\(\ell=1,2,\cdots\)</span>, until convergence.
 The final estimator is denoted as <span class="math notranslate nohighlight">\(\widehat{Q}_{FQE}\)</span>.</p>
-</section>
-<section id="demo-todo">
+</div>
+<div class="section" id="demo-todo">
 <h2>Demo [TODO]<a class="headerlink" href="#demo-todo" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -985,23 +984,23 @@ The final estimator is denoted as <span class="math notranslate nohighlight">\(\
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">wc</span><span class="o">/</span><span class="n">c5dcq1_d1gn8w9yg5728l9dm0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_16316</span><span class="o">/</span><span class="mf">2982377520.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">74</span><span class="n">c57ea9d893</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
 <span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
 
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;../CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [WinError 2] The system cannot find the file specified: &#39;../CausalDM&#39;
 </pre></div>
 </div>
 </div>
 </div>
-</section>
-<section id="references">
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <p>[1] Le, H. M., Voloshin, C., and Yue, Y. Batch policy learning under constraints. arXiv preprint arXiv:1903.08738, 2019.</p>
 <p>[2] Voloshin C, Le H M, Jiang N, et al. Empirical study of off-policy policy evaluation for reinforcement learning[J]. arXiv preprint arXiv:1911.06854, 2019.</p>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -1016,7 +1015,7 @@ The final estimator is denoted as <span class="math notranslate nohighlight">\(\
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./Offline/Infinite_OPE"
+            path: "./Offline\Infinite_OPE"
         },
         predefinedOutput: true
     }
