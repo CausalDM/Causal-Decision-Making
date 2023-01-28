@@ -945,8 +945,8 @@ At each time point <span class="math notranslate nohighlight">\(t \ge 0\)</span>
 <section id="value-functions">
 <h2>Value functions<a class="headerlink" href="#value-functions" title="Permalink to this headline">#</a></h2>
 <p>The state value function (referred to as the V-function) and state-action value function (referred to as the Q-function) for a policy <span class="math notranslate nohighlight">\(\pi\)</span> are given as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ebef8137-1308-4eaf-91e9-78568c650671">
-<span class="eqno">()<a class="headerlink" href="#equation-ebef8137-1308-4eaf-91e9-78568c650671" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-bcc8b4e5-93b0-4ea4-a794-66bfefaa19f0">
+<span class="eqno">()<a class="headerlink" href="#equation-bcc8b4e5-93b0-4ea4-a794-66bfefaa19f0" title="Permalink to this equation">#</a></span>\[\begin{align}
 	V^\pi(s)&amp;=\mathbb{E}^{\pi} (\sum_{t=0}^{+\infty} \gamma^t R_{t}|S_{0}=s),\\
 	Q^\pi(a,s)&amp;= \mathbb{E}^{\pi} (\sum_{t=0}^{+\infty} \gamma^t R_{t}|A_{0}=a,S_{0}=s) \label{eqn:Q},
 \end{align}\]</div>
@@ -964,16 +964,16 @@ The optimal policy is defined as <span class="math notranslate nohighlight">\(\p
 <p>where the last equality follows from the stationarity of the MDP.
 Motivated by this fact,
 the Bellman equation for the Q-function is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-221eebe6-56e7-438f-9073-a937b4be6e11">
-<span class="eqno">()<a class="headerlink" href="#equation-221eebe6-56e7-438f-9073-a937b4be6e11" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
+<div class="amsmath math notranslate nohighlight" id="equation-ffd75ff9-0c55-4a30-ac8e-bd297295b37f">
+<span class="eqno">()<a class="headerlink" href="#equation-ffd75ff9-0c55-4a30-ac8e-bd297295b37f" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
     Q(a, s) = \mathbb{E}^\pi \Big(R_t + \gamma Q(A_{t + 1}, S_{t+1})  | A_t = a, S_t = s \Big), 
 \end{equation}\]</div>
 <p>for which <span class="math notranslate nohighlight">\(Q^\pi\)</span> is the unique solution [2].
 The Bellman equation relates different components of the MDP via a recursive form and is the foundation for lots of RL algorithms.</p>
 <p>Similarly, we have the Bellman optimality equation, which characterizes the optimal policy <span class="math notranslate nohighlight">\(\pi^*\)</span> and is commonly used in policy optimization.
 Specifically, its value function <span class="math notranslate nohighlight">\(Q^*\)</span> is the unique solution of</p>
-<div class="amsmath math notranslate nohighlight" id="equation-274e555d-e4a2-498a-94de-3ee4897ed7c2">
-<span class="eqno">()<a class="headerlink" href="#equation-274e555d-e4a2-498a-94de-3ee4897ed7c2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-87886caf-d053-45ef-8a3d-5cb7c38b06bd">
+<span class="eqno">()<a class="headerlink" href="#equation-87886caf-d053-45ef-8a3d-5cb7c38b06bd" title="Permalink to this equation">#</a></span>\[\begin{equation}
     Q(a, s) = \mathbb{E} \Big(R_t + \gamma \arg \max_{a'} Q(a, S_{t+1})  | A_t = a, S_t = s \Big).  \;\;\;\;\; \text{(2)} 
 \end{equation}\]</div>
 </section>
@@ -982,8 +982,8 @@ Specifically, its value function <span class="math notranslate nohighlight">\(Q^
 <p>In the off-policy setting, the observed data consists of <span class="math notranslate nohighlight">\(n\)</span> i.i.d. trajectories <span class="math notranslate nohighlight">\(\{(S_{i,t},A_{i,t},R_{i,t},S_{i,t+1})\}_{0\le t&lt;T_i,1\le i\le n}\)</span>, where <span class="math notranslate nohighlight">\(T_i\)</span> denotes the length of the <span class="math notranslate nohighlight">\(i\)</span>th trajectory. Without loss of generality, we assume <span class="math notranslate nohighlight">\(T_1=\cdots=T_n=T\)</span> and the immediate rewards are uniformly bounded.
 The dataset is collected by following a stationary policy <span class="math notranslate nohighlight">\(b\)</span>, known as the <em>behavior policy</em>.</p>
 <p><strong>Off-Policy Evaluation(OPE).</strong> The goal of OPE is to estimate the value of a given <em>target policy</em> <span class="math notranslate nohighlight">\(\pi\)</span> with respect to the initial state distribution <span class="math notranslate nohighlight">\(\mathbb{G}\)</span>, defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ec09f975-111f-44ba-ba79-da38f5f9b853">
-<span class="eqno">()<a class="headerlink" href="#equation-ec09f975-111f-44ba-ba79-da38f5f9b853" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:def_value}
+<div class="amsmath math notranslate nohighlight" id="equation-dd9cf988-9704-40d5-985a-ba3752a2564b">
+<span class="eqno">()<a class="headerlink" href="#equation-dd9cf988-9704-40d5-985a-ba3752a2564b" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:def_value}
 	\eta^{\pi} =  \mathbb{E}_{s \sim \mathbb{G}} V^{\pi}(s). 
 \end{eqnarray}\]</div>
 <p>By definition, we directly have <span class="math notranslate nohighlight">\(\eta^{\pi} = \mathbb{E}_{s \sim \mathbb{G}, a \sim \pi(\cdot|s)} Q^{\pi}(a, s)\)</span>.</p>
