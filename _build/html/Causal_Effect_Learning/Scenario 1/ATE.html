@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ATE Estimation (Single Stage) &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -21,7 +20,7 @@
     href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
@@ -37,7 +36,7 @@
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -960,47 +959,47 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="ate-estimation-single-stage">
+  <div class="tex2jax_ignore mathjax_ignore section" id="ate-estimation-single-stage">
 <h1>ATE Estimation (Single Stage)<a class="headerlink" href="#ate-estimation-single-stage" title="Permalink to this headline">#</a></h1>
 <p>Average treatment effect (ATE), is a measure used to compare treatments (or interventions) in randomized experiments, evaluation of policy interventions, and medical trials. As we’ve introduced in the preliminary section, it aims to estimate the difference of some reward function in between treatment and control. Under the potential outcome’s framework, or the notation of do-operator in RL-based literature, our main purpose lies in estimating and inferring on</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d41600bb-83a6-42ba-b1c4-9af53750a4b2">
-<span class="eqno">(26)<a class="headerlink" href="#equation-d41600bb-83a6-42ba-b1c4-9af53750a4b2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-97bf3892-96eb-4338-866d-0f315c7906a8">
+<span class="eqno">(26)<a class="headerlink" href="#equation-97bf3892-96eb-4338-866d-0f315c7906a8" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \text{ATE} = E[R^*(1) - R^*(0)] = E[ R|do(A=1)] -  E[ R|do(A=0)].
 \end{equation}\]</div>
-<section id="assumptions">
+<div class="section" id="assumptions">
 <h2>Assumptions<a class="headerlink" href="#assumptions" title="Permalink to this headline">#</a></h2>
 <p>Under three common assumptions in causal inference, we can identify, or consistently estimate the potential outcome <span class="math notranslate nohighlight">\(\{R^*(0),R^*(1)\}\)</span> from the observed data. These assumptions are 1) Consistency, 2) No unmeasured confounders (NUC), and 3) Positivity assumption.</p>
 <ul class="simple">
 <li><p><strong>SUTVA (Stable Unit Treatment Value Assumption, or Consistency Assumption)</strong></p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-e82684a7-a093-49b8-97a8-1d5ddcd22884">
-<span class="eqno">(27)<a class="headerlink" href="#equation-e82684a7-a093-49b8-97a8-1d5ddcd22884" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d018c11f-1eb8-4332-b05d-dd65b8719f45">
+<span class="eqno">(27)<a class="headerlink" href="#equation-d018c11f-1eb8-4332-b05d-dd65b8719f45" title="Permalink to this equation">#</a></span>\[\begin{align}
 R_i = R_i^*(1) A_i + R_i^*(0) (1-A_i), i = 1, \cdots, n.
 \end{align}\]</div>
 <p>That is, the actual response that is observed for the <span class="math notranslate nohighlight">\(i\)</span>-th individual in our sample, <span class="math notranslate nohighlight">\(R_i\)</span>, who received treatment <span class="math notranslate nohighlight">\(A_i\)</span>, is the same as the potential outcome for that assigned treatment regardless of the experimental conditions used to assign treatment. This assumption also indicates that there is no interference between subjects in the population, that is, the observed response for any individual is not affected by the responses of other individuals.</p>
 <ul class="simple">
 <li><p><strong>NUC (No Unmeasured Confounders Assumption, or Strong Ignorability)</strong></p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-328205d0-9e46-4529-a320-cc235a7102ee">
-<span class="eqno">(28)<a class="headerlink" href="#equation-328205d0-9e46-4529-a320-cc235a7102ee" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-aa26bc65-5b07-4b17-94c1-cf1755692be0">
+<span class="eqno">(28)<a class="headerlink" href="#equation-aa26bc65-5b07-4b17-94c1-cf1755692be0" title="Permalink to this equation">#</a></span>\[\begin{align}
 \{R^*(0), R^*(1)\} \perp\!\!\!\perp A|S
 \end{align}\]</div>
 <p>We cannot use the data in an observational study to either confirm or refute this assumption. However, if we believe that <span class="math notranslate nohighlight">\(X\)</span> contained all the relevant information about the treatment assignment, then it will be reasonable to make the above assumption.</p>
 <ul class="simple">
 <li><p><strong>Positivity Assumption</strong></p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-afcd0fbc-228e-4b5c-aa9e-8c527cc3e223">
-<span class="eqno">(29)<a class="headerlink" href="#equation-afcd0fbc-228e-4b5c-aa9e-8c527cc3e223" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a4546533-4a69-4758-a682-2ad176661328">
+<span class="eqno">(29)<a class="headerlink" href="#equation-a4546533-4a69-4758-a682-2ad176661328" title="Permalink to this equation">#</a></span>\[\begin{align}
 0 &lt; P(A=1|S=s) &lt; 1
 \end{align}\]</div>
 <p>This assumption ensures that for any given individual in treatment group <span class="math notranslate nohighlight">\(1\)</span>, we are able to find a similar individual in treatment group <span class="math notranslate nohighlight">\(0\)</span>, and vice versa.</p>
 <p>We remark that these three assumptions are commonly imposed in causal inference and individualized treatment regimes literature [1]. Moreover, NUC and Positivity assumptions are automatically satisfied in randomized studies where the behavior policy is usually a strictly positive function independent of <span class="math notranslate nohighlight">\(s\)</span>.</p>
-</section>
-<section id="identification">
+</div>
+<div class="section" id="identification">
 <h2>Identification<a class="headerlink" href="#identification" title="Permalink to this headline">#</a></h2>
 <p>Based on the three assumptions above, we can re-write ATE as a function of the observed data. The details are shown below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fbda7d15-31f9-48d9-a6a9-c392474023c5">
-<span class="eqno">(30)<a class="headerlink" href="#equation-fbda7d15-31f9-48d9-a6a9-c392474023c5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e2cbc0e4-11bc-4eca-94e4-52489de225f9">
+<span class="eqno">(30)<a class="headerlink" href="#equation-e2cbc0e4-11bc-4eca-94e4-52489de225f9" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 E[Y^*(1)] &amp;= E_x [E\{Y^*(1)|X\}] \\
 &amp;= E_x[E\{Y^*(1)|T=1, X\}] \quad \text{(NUC)}\\
@@ -1008,23 +1007,23 @@ E[Y^*(1)] &amp;= E_x [E\{Y^*(1)|X\}] \\
 \end{aligned}
 \end{equation}\]</div>
 <p>Similarly, we can show that <span class="math notranslate nohighlight">\(E[Y^*(0)] = E_x[E\{Y|T=0, X\}].\)</span> Hence, the average causal treatment effect can be written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8f148516-9318-48a0-83a5-aeed4803f425">
-<span class="eqno">(31)<a class="headerlink" href="#equation-8f148516-9318-48a0-83a5-aeed4803f425" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2954cc69-8e3e-46d8-9a84-27f73e111c71">
+<span class="eqno">(31)<a class="headerlink" href="#equation-2954cc69-8e3e-46d8-9a84-27f73e111c71" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \text{ATE} = E_x[E\{Y|T=1, X\}] - E_x[E\{Y|T=0, X\}],
 \end{aligned}
 \end{equation}\]</div>
 <p>where the RHS we get rid of the potential outcome’s notations and thus can be identified from purely the observed data.</p>
-</section>
-<section id="estimation">
+</div>
+<div class="section" id="estimation">
 <h2>Estimation<a class="headerlink" href="#estimation" title="Permalink to this headline">#</a></h2>
 <p>In this section, we will introduce three categories of estimators that have been widely used in ATE estimation: direct method (DM), importance sampling estimator (IS), and doubly robust estimator (DR).</p>
-<section id="direct-method">
+<div class="section" id="direct-method">
 <h3>1. Direct Method<a class="headerlink" href="#direct-method" title="Permalink to this headline">#</a></h3>
 <p>The first approach to estimate the average treatment effect is through direct model fitting based on the identification result, which is also known as the outcome regression model.</p>
 <p>Specifically, we can posit a model for <span class="math notranslate nohighlight">\(E[R|A, S] = \mu(S, A;\gamma)\)</span>, and estimate the parameter <span class="math notranslate nohighlight">\(\gamma\)</span> via least square or any other machine learning-based tools for model fitting. Then, The DM estimator of ATE is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bcd939b3-6ba7-425e-bce0-1290764b9fd1">
-<span class="eqno">(32)<a class="headerlink" href="#equation-bcd939b3-6ba7-425e-bce0-1290764b9fd1" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d3f02ea8-29c5-4db5-87ae-f672ba477e48">
+<span class="eqno">(32)<a class="headerlink" href="#equation-d3f02ea8-29c5-4db5-87ae-f672ba477e48" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \widehat{\text{ATE}}_{\text{DM}} = \frac{1}{n}\sum_{i=1}^n \{\mu(X_i, 1;\hat{\gamma}) - \mu(X_i, 0; \hat{\gamma})\}
 \end{aligned}
@@ -1036,40 +1035,40 @@ E[Y^*(1)] &amp;= E_x [E\{Y^*(1)|X\}] \\
 </div>
 </div>
 </div>
-</section>
-<section id="importance-sampling-estimator">
+</div>
+<div class="section" id="importance-sampling-estimator">
 <h3>2. Importance Sampling Estimator<a class="headerlink" href="#importance-sampling-estimator" title="Permalink to this headline">#</a></h3>
 <p>The second type of estimators is called importance sampling (IS) estimator, or inverse propensity score (IPW) and augmented inverse propensity score (AIPW) in causal inference literature.</p>
 <p>Before we proceed, let’s define the propensity score as below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c8b3858e-1142-491b-9b61-f9fb4f51ade6">
-<span class="eqno">(33)<a class="headerlink" href="#equation-c8b3858e-1142-491b-9b61-f9fb4f51ade6" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-26e9f771-2071-4fca-b88d-fafe2be33109">
+<span class="eqno">(33)<a class="headerlink" href="#equation-26e9f771-2071-4fca-b88d-fafe2be33109" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \pi(S) = P(A=1|S).
 \end{aligned}
 \end{equation}\]</div>
 <p>In the case where there are only two treatments, it refers to the propensity of getting one of the treatments as a function of the covariates. One of the attractive features of the propensity score is that given the <code class="docutils literal notranslate"><span class="pre">SUTVA</span></code> and <code class="docutils literal notranslate"><span class="pre">strong</span> <span class="pre">ignorability</span></code> assumptions, we have</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0533497a-6b95-4017-9a4f-dba3647e8a07">
-<span class="eqno">(34)<a class="headerlink" href="#equation-0533497a-6b95-4017-9a4f-dba3647e8a07" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-22989976-0512-4a18-b9a2-01567fb49369">
+<span class="eqno">(34)<a class="headerlink" href="#equation-22989976-0512-4a18-b9a2-01567fb49369" title="Permalink to this equation">#</a></span>\[\begin{align}
 \{R^*(1), R^*(0)\} \perp\!\!\!\perp A|\pi(S)
 \end{align}\]</div>
 <p>In some cases when it is difficult to fit an outcome regression model for <span class="math notranslate nohighlight">\(E[R|A, S]\)</span> and <span class="math notranslate nohighlight">\(S\)</span> may be high dimensional, we can alternatively fit models for <span class="math notranslate nohighlight">\(E[R|A, \pi(S)]\)</span> based on the result above.</p>
 <p>The motivation of IPW is as follows. Since the propensity (probability) of receiving treatment <span class="math notranslate nohighlight">\(1\)</span> is <span class="math notranslate nohighlight">\(\pi(S)\)</span> for an individual with baseline covariates <span class="math notranslate nohighlight">\(S\)</span>, then every individual with covariates <span class="math notranslate nohighlight">\(X_i\)</span> that was observed to receive treatment 1 in our sample is weighted by <span class="math notranslate nohighlight">\(1/\pi(S_i)\)</span> so that their response not only represent themselves but also other individuals who did not receive treatment 1. More formally, we will show that <span class="math notranslate nohighlight">\(\frac{AR}{\pi(S)}\)</span> is an unbiased estimator of <span class="math notranslate nohighlight">\(E[R^*(1)]\)</span>. This follows that, given the <code class="docutils literal notranslate"><span class="pre">positivity</span></code> assumption,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-757ba1e5-e7c1-4f17-be79-21fca2e5ddd4">
-<span class="eqno">(35)<a class="headerlink" href="#equation-757ba1e5-e7c1-4f17-be79-21fca2e5ddd4" title="Permalink to this equation">#</a></span>\[\begin{equation} 
+<div class="amsmath math notranslate nohighlight" id="equation-d02c526a-23de-43b5-87d5-b62a509e7c4a">
+<span class="eqno">(35)<a class="headerlink" href="#equation-d02c526a-23de-43b5-87d5-b62a509e7c4a" title="Permalink to this equation">#</a></span>\[\begin{equation} 
 \begin{aligned}
 E\left[\frac{AR}{\pi(S)}\right] = E\left[\frac{AR^*(1)}{\pi(S)}\right] = E\left[E\bigg\{\frac{AR^*(1)}{\pi(S)}\Big|S\bigg\}\right] = E\left[E\bigg\{\frac{A}{\pi(S)}\Big| S\bigg\}R^*(1)\right] = E[R^*(1)].
 \end{aligned}
 \end{equation}\]</div>
 <p>Similarly, by flipping the role of treatment (<span class="math notranslate nohighlight">\(A=1\)</span>) and control (<span class="math notranslate nohighlight">\(A=0\)</span>), we have</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2c1e00cb-57bd-4e89-9450-cd35e1e167c7">
-<span class="eqno">(36)<a class="headerlink" href="#equation-2c1e00cb-57bd-4e89-9450-cd35e1e167c7" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a728ae7f-532c-4798-af37-d008c28e054e">
+<span class="eqno">(36)<a class="headerlink" href="#equation-a728ae7f-532c-4798-af37-d008c28e054e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 E[R^*(0)] = E\left[\frac{(1-A)R}{1-\pi(S)} \right].
 \end{aligned}
 \end{equation}\]</div>
 <p>Consequently, the IS (or IPW) estimator for the estimation of ATE is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cf9fbeff-d528-4147-8f6f-d44e7579a790">
-<span class="eqno">(37)<a class="headerlink" href="#equation-cf9fbeff-d528-4147-8f6f-d44e7579a790" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d81090d9-7e94-467d-ba67-e8df4d092ffb">
+<span class="eqno">(37)<a class="headerlink" href="#equation-d81090d9-7e94-467d-ba67-e8df4d092ffb" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \widehat{\text{ATE}}_{\text{IS}} =\frac{1}{n}\sum_{i=1}^n \left\{\frac{T_iY_i}{\pi(X_i)}  - \frac{(1-T_i)Y_i}{1-\pi(X_i)}  \right\}.
 \end{aligned}
@@ -1081,12 +1080,12 @@ E[R^*(0)] = E\left[\frac{(1-A)R}{1-\pi(S)} \right].
 </div>
 </div>
 </div>
-</section>
-<section id="doubly-robust-estimator">
+</div>
+<div class="section" id="doubly-robust-estimator">
 <h3>3. Doubly Robust Estimator<a class="headerlink" href="#doubly-robust-estimator" title="Permalink to this headline">#</a></h3>
 <p>The third type of estimator is the doubly robust estimator. Basically, DR combines DM and IS estimators, which is more robust to model misspecifications.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ab5d1665-0a86-48b3-ae0b-6e6a98c772d0">
-<span class="eqno">(38)<a class="headerlink" href="#equation-ab5d1665-0a86-48b3-ae0b-6e6a98c772d0" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-72ef1749-133f-4bf4-a41f-3ad98e40c993">
+<span class="eqno">(38)<a class="headerlink" href="#equation-72ef1749-133f-4bf4-a41f-3ad98e40c993" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \widehat{\text{ATE}}_{\text{DR}} = \frac{1}{n}\sum_{i=1}^n \left\{\mu(S_i,1;\hat{\gamma})- \mu(S_i,0;\hat{\gamma})+\frac{A_i(R_i - \mu(S_i,1;\hat{\gamma}))}{\hat{\pi}(S_i)}  - \frac{(1-A_i)(R_i-\mu(S_i,0;\hat{\gamma}))}{1-\hat{\pi}(S_i)} \right\}.
 \end{aligned}
@@ -1100,16 +1099,16 @@ E[R^*(0)] = E\left[\frac{(1-A)R}{1-\pi(S)} \right].
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="references">
+</div>
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p>Zhang, B., A. A. Tsiatis, E. B. Laber, and M. Davidian (2013). Robust estimation of optimal dynamic treatment regimes for sequential treatment decisions. Biometrika 100 (3), 681–694.</p></li>
 <li><p>Chernozhukov, V., D. Chetverikov, M. Demirer, E. Duflo, C. Hansen, W. Newey, and J. Robins (2018). Double/debiased machine learning for treatment and structural parameters.</p></li>
 </ol>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
