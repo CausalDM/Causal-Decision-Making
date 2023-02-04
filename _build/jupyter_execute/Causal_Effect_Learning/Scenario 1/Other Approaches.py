@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# ## **Other Approaches**
+# 
+
 # ### **7. Generalized Random Forest**
 # 
 # Developed by Susan Athey, Julie Tibshirani and Stefan Wager, Generalized Random Forest [8] aims to give the solution to a set of local moment equations:
@@ -31,22 +34,14 @@
 # In[1]:
 
 
-import sys
-get_ipython().system('{sys.executable} -m pip install scikit-uplift')
-
-
-# In[2]:
-
-
 # import related packages
 from matplotlib import pyplot as plt
-from lightgbm import LGBMRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import LogisticRegression 
-from drive.MyDrive.CausalDM.causaldm._util_causaldm import *
+from causaldm._util_causaldm import *
 
 
-# In[4]:
+# In[ ]:
 
 
 n = 10**3  # sample size in observed data
@@ -54,7 +49,7 @@ n0 = 10**5 # the number of samples used to estimate the true reward distribution
 seed=223
 
 
-# In[5]:
+# In[ ]:
 
 
 # Get data
@@ -66,14 +61,16 @@ HTE_true = get_data_simulation(n, seed, policy="1")['R']-get_data_simulation(n, 
 
 
 
-# In[6]:
+# The generalized random forest (GRF) approach has been implemented in package *grf* for R and C++, and *econml* in python. Here we implement the package of *econml* for a simple illustration.
+
+# In[ ]:
 
 
 # import the package for Causal Random Forest
 get_ipython().system(' pip install econml')
 
 
-# In[7]:
+# In[ ]:
 
 
 # A demo code of Causal Random Forest
@@ -92,7 +89,7 @@ HTE_GRF = est.predict(data_behavior.iloc[:,0:2], interval=False, alpha=0.05)
 HTE_GRF = HTE_GRF.flatten()
 
 
-# In[8]:
+# In[ ]:
 
 
 print("Generalized Random Forest:  ",HTE_GRF[0:8])
@@ -101,18 +98,12 @@ print("true value:                 ",HTE_true[0:8].to_numpy())
 
 # Causal Forest performs just okay in this example.
 
-# In[9]:
+# In[ ]:
 
 
 Bias_GRF = np.sum(HTE_GRF-HTE_true)/n
 Variance_GRF = np.sum((HTE_GRF-HTE_true)**2)/n
 print("The overall estimation bias of Generalized Random Forest is :     ", Bias_GRF, ", \n", "The overall estimation variance of Generalized Random Forest is :",Variance_GRF ,". \n")
-
-
-# In[ ]:
-
-
-
 
 
 # ### **8. Dragon Net**

@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fitted-Q Iteration &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -21,7 +20,7 @@
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -37,7 +36,7 @@
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -914,22 +913,22 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="fitted-q-iteration">
+  <div class="tex2jax_ignore mathjax_ignore section" id="fitted-q-iteration">
 <h1>Fitted-Q Iteration<a class="headerlink" href="#fitted-q-iteration" title="Permalink to this headline">#</a></h1>
-<section id="main-idea">
+<div class="section" id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p><strong>Q-function.</strong>
 The Q-function-based approach aims to direct learn the state-action value function (referred to as the Q-function)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8a7e64e1-29ab-45c5-b131-00bed5fa7430">
-<span class="eqno">()<a class="headerlink" href="#equation-8a7e64e1-29ab-45c5-b131-00bed5fa7430" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-0acab12e-5e44-4e2d-9e99-a5bb6a23dc7b">
+<span class="eqno">()<a class="headerlink" href="#equation-0acab12e-5e44-4e2d-9e99-a5bb6a23dc7b" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 Q^\pi(a,s)&amp;= \mathbb{E}^{\pi} (\sum_{t=0}^{+\infty} \gamma^t R_{t}|A_{0}=a,S_{0}=s)   
 \end{eqnarray}\]</div>
 <p>of either the policy <span class="math notranslate nohighlight">\(\pi\)</span> that we aim to evaluate or the optimal policy <span class="math notranslate nohighlight">\(\pi = \pi^*\)</span>.</p>
 <p><strong>Bellman optimality equations.</strong>
 The Q-learning-type policy learning is commonly based on the Bellman optimality equation, which characterizes the optimal policy <span class="math notranslate nohighlight">\(\pi^*\)</span> and is commonly used in policy optimization.
 Specifically, <span class="math notranslate nohighlight">\(Q^*\)</span> is the unique solution of</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a2e3a43d-634f-4abb-8390-0142bf56f0a8">
-<span class="eqno">()<a class="headerlink" href="#equation-a2e3a43d-634f-4abb-8390-0142bf56f0a8" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-05141d3f-fb0b-41b5-a58f-20bde27a5dc2">
+<span class="eqno">()<a class="headerlink" href="#equation-05141d3f-fb0b-41b5-a58f-20bde27a5dc2" title="Permalink to this equation">#</a></span>\[\begin{equation}
     Q(a, s) = \mathbb{E} \Big(R_t + \gamma \arg \max_{a'} Q(a, S_{t+1})  | A_t = a, S_t = s \Big).  \;\;\;\;\; \text{(2)} 
 \end{equation}\]</div>
 <p><strong>FQI.</strong>
@@ -939,8 +938,8 @@ Besides, the right-hand side of (2) is a contraction mapping.
 Therefore, we can consider a fixed-point method:
 with an initial estimate <span class="math notranslate nohighlight">\(\widehat{Q}^{0}\)</span>,
 FQI iteratively solves the following optimization problem,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ad4e851a-998b-45cf-8655-71276483273f">
-<span class="eqno">()<a class="headerlink" href="#equation-ad4e851a-998b-45cf-8655-71276483273f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-0731077f-efe5-431d-a1da-d9bab96e8b27">
+<span class="eqno">()<a class="headerlink" href="#equation-0731077f-efe5-431d-a1da-d9bab96e8b27" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 	\widehat{Q}^{{\ell}}=\arg \min_{Q} 
 	\sum_{\substack{i \le n}}\sum_{t&lt;T}
 	\Big\{
@@ -950,8 +949,8 @@ FQI iteratively solves the following optimization problem,</p>
 \end{eqnarray}\]</div>
 <p>for <span class="math notranslate nohighlight">\(\ell=1,2,\cdots\)</span>, until convergence.
 The final estimate is denoted as <span class="math notranslate nohighlight">\(\widehat{Q}_{FQI}\)</span>.</p>
-</section>
-<section id="demo-todo">
+</div>
+<div class="section" id="demo-todo">
 <h2>Demo [TODO]<a class="headerlink" href="#demo-todo" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -966,12 +965,12 @@ The final estimate is denoted as <span class="math notranslate nohighlight">\(\w
 </div>
 </div>
 </div>
-</section>
-<section id="references">
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <p>[1] Ernst, D., Geurts, P., and Wehenkel, L. Tree-based batch mode reinforcement learning. Journal of Machine Learn- ing Research, 6(Apr):503–556, 2005.</p>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

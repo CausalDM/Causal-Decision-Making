@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# ## **Meta Learners**
+# 
+# In this section, we introduce three classical learners in HTE estimation. These meta learners are easy to implement, and can handle general data without additional assumptions. 
+
 # ### **1. S-learner**
 # 
 # 
@@ -26,21 +30,13 @@
 # In[1]:
 
 
-import sys
-get_ipython().system('{sys.executable} -m pip install scikit-uplift')
-
-
-# In[2]:
-
-
 # import related packages
-from matplotlib import pyplot as plt;
-from lightgbm import LGBMRegressor;
+from matplotlib import pyplot as plt
 from sklearn.linear_model import LinearRegression
-from drive.MyDrive.CausalDM.causaldm._util_causaldm import *;
+from causaldm._util_causaldm import *
 
 
-# In[6]:
+# In[ ]:
 
 
 n = 10**3  # sample size in observed data
@@ -48,7 +44,7 @@ n0 = 10**5 # the number of samples used to estimate the true reward distribution
 seed=223
 
 
-# In[7]:
+# In[ ]:
 
 
 # Get data
@@ -60,19 +56,19 @@ HTE_true = get_data_simulation(n, seed, policy="1")['R']-get_data_simulation(n, 
 
 
 
-# In[8]:
+# In[ ]:
 
 
 data_behavior
 
 
-# In[9]:
+# In[ ]:
 
 
 SandA = data_behavior.iloc[:,0:3]
 
 
-# In[10]:
+# In[ ]:
 
 
 # S-learner
@@ -82,7 +78,7 @@ S_learner = LGBMRegressor(max_depth=5)
 S_learner.fit(SandA, data_behavior['R'])
 
 
-# In[11]:
+# In[ ]:
 
 
 HTE_S_learner = S_learner.predict(np.hstack(( data_behavior.iloc[:,0:2].to_numpy(),np.ones(n).reshape(-1,1)))) - S_learner.predict(np.hstack(( data_behavior.iloc[:,0:2].to_numpy(),np.zeros(n).reshape(-1,1))))
@@ -90,14 +86,14 @@ HTE_S_learner = S_learner.predict(np.hstack(( data_behavior.iloc[:,0:2].to_numpy
 
 # To evaluate how well S-learner is in estimating heterogeneous treatment effect, we compare its estimates with the true value for the first 10 subjects:
 
-# In[12]:
+# In[ ]:
 
 
 print("S-learner:  ",HTE_S_learner[0:8])
 print("true value: ",HTE_true[0:8].to_numpy())
 
 
-# In[13]:
+# In[ ]:
 
 
 Bias_S_learner = np.sum(HTE_S_learner-HTE_true)/n
@@ -122,7 +118,7 @@ print("The overall estimation bias of S-learner is :     ", Bias_S_learner, ", \
 # 
 # 
 
-# In[14]:
+# In[ ]:
 
 
 mu0 = LGBMRegressor(max_depth=3)
@@ -138,7 +134,7 @@ HTE_T_learner = mu1.predict(data_behavior.iloc[:,0:2]) - mu0.predict(data_behavi
 
 # Now let's take a glance at the performance of T-learner by comparing it with the true value for the first 10 subjects:
 
-# In[15]:
+# In[ ]:
 
 
 print("T-learner:  ",HTE_T_learner[0:8])
@@ -147,7 +143,7 @@ print("true value: ",HTE_true[0:8].to_numpy())
 
 # This is quite good! T-learner captures the overall trend of the treatment effect w.r.t. the heterogeneity of different subjects.
 
-# In[16]:
+# In[ ]:
 
 
 Bias_T_learner = np.sum(HTE_T_learner-HTE_true)/n
@@ -182,7 +178,7 @@ print("The overall estimation bias of T-learner is :     ", Bias_T_learner, ", \
 # 
 # where $g(s)$ is a weight function between $[0,1]$. A possible way is to use the propensity score model as an estimate of $g(s)$.
 
-# In[17]:
+# In[ ]:
 
 
 # Step 1: Fit two models under treatment and control separately, same as T-learner
@@ -200,7 +196,7 @@ mu0.fit(S_T0, R_T0)
 mu1.fit(S_T1, R_T1)
 
 
-# In[18]:
+# In[ ]:
 
 
 # Step 2: impute the potential outcomes that are unobserved in original data
@@ -212,7 +208,7 @@ Delta0 = mu1.predict(S_T0) - R_T0
 Delta1 = R_T1 - mu0.predict(S_T1) 
 
 
-# In[19]:
+# In[ ]:
 
 
 # Step 3: Fit tau_1(s) and tau_0(s)
@@ -224,7 +220,7 @@ tau0.fit(S_T0, Delta0)
 tau1.fit(S_T1, Delta1)
 
 
-# In[20]:
+# In[ ]:
 
 
 # Step 4: fit the propensity score model $\hat{g}(s)$ and obtain the final HTE estimator by taking weighted average of tau0 and tau1
@@ -238,7 +234,7 @@ HTE_X_learner = g.predict_proba(data_behavior.iloc[:,0:2])[:,0]*tau0.predict(dat
 
 
 
-# In[21]:
+# In[ ]:
 
 
 print("X-learner:  ",HTE_X_learner[0:8])
@@ -247,7 +243,7 @@ print("true value: ",HTE_true[0:8].to_numpy())
 
 # From the result above we can see that X-learner can roughly catch the trend of treatment effect w.r.t. the change of baseline information $S$. In this synthetic example, X-learner also performs slightly better than T-learner.
 
-# In[22]:
+# In[ ]:
 
 
 Bias_X_learner = np.sum(HTE_X_learner-HTE_true)/n

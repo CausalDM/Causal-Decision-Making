@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# ## **R-Learner, DR-Learner, and Lp-R-Learner**
+# 
+
 # ### **4. R learner**
 # The idea of classical R-learner came from Robinson 1988 [3] and was formalized by Nie and Wager in 2020 [2]. The main idea of R learner starts from the partially linear model setup, in which we assume that
 # \begin{equation}
@@ -36,23 +39,16 @@
 # In[1]:
 
 
-import sys
-get_ipython().system('{sys.executable} -m pip install scikit-uplift')
-
-
-# In[2]:
-
-
 # import related packages
 from matplotlib import pyplot as plt
 from lightgbm import LGBMRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import LogisticRegression 
-from drive.MyDrive.CausalDM.causaldm._util_causaldm import *
-from drive.MyDrive.CausalDM.causaldm.learners.Causal_Effect_Learning.Single_Stage.Rlearner import Rlearner
+from causaldm._util_causaldm import *
+from causaldm.learners.Causal_Effect_Learning.Single_Stage.Rlearner import Rlearner
 
 
-# In[16]:
+# In[ ]:
 
 
 n = 10**3  # sample size in observed data
@@ -60,7 +56,7 @@ n0 = 10**5 # the number of samples used to estimate the true reward distribution
 seed=223
 
 
-# In[17]:
+# In[ ]:
 
 
 # Get data
@@ -72,7 +68,7 @@ HTE_true = get_data_simulation(n, seed, policy="1")['R']-get_data_simulation(n, 
 
 
 
-# In[18]:
+# In[ ]:
 
 
 # R-learner for HTE estimation
@@ -126,19 +122,13 @@ print("The overall estimation bias of R-learner is :     ", Bias_R_learner, ", \
 # \end{equation}
 # 
 
-# In[19]:
+# In[ ]:
 
 
-from drive.MyDrive.CausalDM.causaldm.learners.Causal_Effect_Learning.Single_Stage.DRlearner import DRlearner
+from causaldm.learners.Causal_Effect_Learning.Single_Stage.DRlearner import DRlearner
 
 
-# In[19]:
-
-
-
-
-
-# In[20]:
+# In[ ]:
 
 
 # DR-learner for HTE estimation
@@ -154,14 +144,14 @@ HTE_DR_learner = DRlearner(data_behavior, outcome, treatment, controls, y_model,
 HTE_DR_learner = HTE_DR_learner.to_numpy()
 
 
-# In[21]:
+# In[ ]:
 
 
 print("DR-learner:  ",HTE_DR_learner[0:8])
 print("true value: ",HTE_true[0:8].to_numpy())
 
 
-# In[22]:
+# In[ ]:
 
 
 Bias_DR_learner = np.sum(HTE_DR_learner-HTE_true)/n
@@ -189,13 +179,13 @@ print("The overall estimation bias of DR-learner is :     ", Bias_DR_learner, ",
 # 
 # In the theory section, Kennedy proved that Lp-R-learner, compared with traditional DR learner, can achieve the oracle convergence rate under milder conditions. 
 
-# In[23]:
+# In[ ]:
 
 
-from drive.MyDrive.CausalDM.causaldm.learners.Causal_Effect_Learning.Single_Stage.LpRlearner import LpRlearner
+from causaldm.learners.Causal_Effect_Learning.Single_Stage.LpRlearner import LpRlearner
 
 
-# In[24]:
+# In[ ]:
 
 
 # Lp-R-learner for HTE estimation
@@ -212,14 +202,14 @@ LpRlearner_model = LinearRegression()
 HTE_Lp_R_learner = LpRlearner(data_behavior, outcome, treatment, controls, y_model, ps_model_a, ps_model_b, s, LpRlearner_model, degree = 1)
 
 
-# In[25]:
+# In[ ]:
 
 
 print("Lp_R-learner:  ",HTE_Lp_R_learner[0:8])
 print("true value: ",HTE_true[0:8].to_numpy())
 
 
-# In[26]:
+# In[ ]:
 
 
 Bias_Lp_R_learner = np.sum(HTE_Lp_R_learner-HTE_true)/n

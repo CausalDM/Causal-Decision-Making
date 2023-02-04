@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>7. Generalized Random Forest &#8212; Causal Decision Making</title>
+    <title>Other Approaches &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Markov Decision Processes" href="../Scenario%202/underMDP.html" />
-    <link rel="prev" title="4. R learner" href="R-Learner%2C%20DR-Learner%2C%20Lp-R-Learner.html" />
+    <link rel="prev" title="R-Learner, DR-Learner, and Lp-R-Learner" href="R-Learner%2C%20DR-Learner%2C%20Lp-R-Learner.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -195,12 +195,12 @@ const thebe_selector_output = ".output, .cell_output"
   <ul class="current">
    <li class="toctree-l2">
     <a class="reference internal" href="ATE.html">
-     ATE Estimation
+     ATE Estimation (Single Stage)
     </a>
    </li>
    <li class="toctree-l2 current active has-children">
     <a class="reference internal" href="HTE.html">
-     Heterogeneous Treatment Effect Estimation
+     Heterogeneous Treatment Effect Estimation (Single Stage)
     </a>
     <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
     <label for="toctree-checkbox-3">
@@ -211,21 +211,21 @@ const thebe_selector_output = ".output, .cell_output"
      <li class="toctree-l3">
       <a class="reference internal" href="Meta%20Learners.html">
        <strong>
-        1. S-learner
+        Meta Learners
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="R-Learner%2C%20DR-Learner%2C%20Lp-R-Learner.html">
        <strong>
-        4. R learner
+        R-Learner, DR-Learner, and Lp-R-Learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3 current active">
       <a class="current reference internal" href="#">
        <strong>
-        7. Generalized Random Forest
+        Other Approaches
        </strong>
       </a>
      </li>
@@ -887,16 +887,25 @@ title="Print to PDF"
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
    <strong>
-    7. Generalized Random Forest
+    Other Approaches
    </strong>
   </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#dragon-net">
-   <strong>
-    8. Dragon Net
-   </strong>
-  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generalized-random-forest">
+     <strong>
+      7. Generalized Random Forest
+     </strong>
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dragon-net">
+     <strong>
+      8. Dragon Net
+     </strong>
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
@@ -912,7 +921,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>7. Generalized Random Forest</h1>
+                <h1>Other Approaches</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -925,16 +934,25 @@ title="Print to PDF"
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
    <strong>
-    7. Generalized Random Forest
+    Other Approaches
    </strong>
   </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#dragon-net">
-   <strong>
-    8. Dragon Net
-   </strong>
-  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generalized-random-forest">
+     <strong>
+      7. Generalized Random Forest
+     </strong>
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dragon-net">
+     <strong>
+      8. Dragon Net
+     </strong>
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
@@ -951,87 +969,52 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="section" id="generalized-random-forest">
-<h1><strong>7. Generalized Random Forest</strong><a class="headerlink" href="#generalized-random-forest" title="Permalink to this headline">#</a></h1>
+  <div class="section" id="other-approaches">
+<h1><strong>Other Approaches</strong><a class="headerlink" href="#other-approaches" title="Permalink to this headline">#</a></h1>
+<div class="section" id="generalized-random-forest">
+<h2><strong>7. Generalized Random Forest</strong><a class="headerlink" href="#generalized-random-forest" title="Permalink to this headline">#</a></h2>
 <p>Developed by Susan Athey, Julie Tibshirani and Stefan Wager, Generalized Random Forest [8] aims to give the solution to a set of local moment equations:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-94f4def4-a8b4-47a2-9f23-6bd901e40993">
-<span class="eqno">(46)<a class="headerlink" href="#equation-94f4def4-a8b4-47a2-9f23-6bd901e40993" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e5a4043e-affd-47bd-b9b0-6f76cd0a0a63">
+<span class="eqno">(46)<a class="headerlink" href="#equation-e5a4043e-affd-47bd-b9b0-6f76cd0a0a63" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \mathbb{E}\big[\psi_{\tau(s),\nu(s)}(O_i)\big| S_i=s\big]=0,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\tau(s)\)</span> is the parameter we care about and <span class="math notranslate nohighlight">\(\nu(s)\)</span> is an optional nuisance parameter. In the problem of Heterogeneous Treatment Effect Evaluation, our parameter of interest <span class="math notranslate nohighlight">\(\tau(s)=\xi\cdot \beta(s)\)</span> is identified by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b8afc208-98fd-4d5f-902d-91a7af54e837">
-<span class="eqno">(47)<a class="headerlink" href="#equation-b8afc208-98fd-4d5f-902d-91a7af54e837" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f509ba57-c585-4fbc-aa3c-3c7398891e50">
+<span class="eqno">(47)<a class="headerlink" href="#equation-f509ba57-c585-4fbc-aa3c-3c7398891e50" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \psi_{\beta(s),\nu(s)}(R_i,A_i)=(R_i-\beta(s)\cdot A_i-c(s))(1 \quad A_i^T)^T.
 \end{equation}\]</div>
 <p>The induced estimator <span class="math notranslate nohighlight">\(\hat{\tau}(s)\)</span> for <span class="math notranslate nohighlight">\(\tau(s)\)</span> can thus be solved by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7772a451-31a0-44e2-8722-01ce501f3c73">
-<span class="eqno">(48)<a class="headerlink" href="#equation-7772a451-31a0-44e2-8722-01ce501f3c73" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-650343df-eaf0-4475-9484-e53571bc57c5">
+<span class="eqno">(48)<a class="headerlink" href="#equation-650343df-eaf0-4475-9484-e53571bc57c5" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \hat{\tau}(s)=\xi^T\left(\sum_{i=1}^n \alpha_i(s)\big(A_i-\bar{A}_\alpha\big)^{\otimes 2}\right)^{-1}\sum_{i=1}^n \alpha_i(s)\big(A_i-\bar{A}_\alpha\big)\big(R_i-\bar{R}_\alpha\big),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\bar{A}_\alpha=\sum \alpha_i(s)A_i\)</span> and <span class="math notranslate nohighlight">\(\bar{R}_\alpha=\sum \alpha_i(s)R_i\)</span>, and we write <span class="math notranslate nohighlight">\(v^{\otimes 2}=vv^T\)</span>.</p>
 <p>Notice that this formula is just a weighted version of R-learner introduced above. However, instead of using ordinary kernel weighting functions that are prone to a strong curse of dimensionality, GRF uses an adaptive weighting function <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span> derived from a forest designed to express heterogeneity in the specified quantity of interest.</p>
 <p>To be more specific, in order to obtain <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span>, GRF first grows a set of <span class="math notranslate nohighlight">\(B\)</span> trees indexed by <span class="math notranslate nohighlight">\(1,\dots,B\)</span>. Then for each such tree, define <span class="math notranslate nohighlight">\(L_b(s)\)</span> as the set of training samples falling in the same ``leaf” as x. The weights <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span> then capture the frequency with which the <span class="math notranslate nohighlight">\(i\)</span>-th training example falls into the same leaf as <span class="math notranslate nohighlight">\(s\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3ff99dd2-48e4-4113-b94c-32f6a2bb86a4">
-<span class="eqno">(49)<a class="headerlink" href="#equation-3ff99dd2-48e4-4113-b94c-32f6a2bb86a4" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-913270d1-767c-4bd9-9577-78f859b90a67">
+<span class="eqno">(49)<a class="headerlink" href="#equation-913270d1-767c-4bd9-9577-78f859b90a67" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \alpha_{bi}(s)=\frac{\boldsymbol{1}\big(\{S_i\in L_b(s)\}\big)}{\big|L_b(s)\big|},\quad \alpha_i(s)=\frac{1}{B}\sum_{b=1}^B \alpha_{bi}(s).
 \end{equation}\]</div>
 <p>To sum up, GRF aims to leverage the splitting result of a series of trees to decide the ``localized” weight for HTE estimation at each point <span class="math notranslate nohighlight">\(x_0\)</span>. Compared with kernel functions, we may expect tree-based weights to be more flexible and better performed in real settings.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="o">!{</span>sys.executable<span class="o">}</span> -m pip install scikit-uplift
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: scikit-uplift in c:\faked\anaconda\lib\site-packages (0.5.1)
-Requirement already satisfied: numpy&gt;=1.16 in c:\faked\anaconda\lib\site-packages (from scikit-uplift) (1.16.5)
-Requirement already satisfied: scikit-learn&gt;=0.21.0 in c:\faked\anaconda\lib\site-packages (from scikit-uplift) (0.21.3)
-Requirement already satisfied: pandas in c:\faked\anaconda\lib\site-packages (from scikit-uplift) (0.25.1)
-Requirement already satisfied: matplotlib in c:\faked\anaconda\lib\site-packages (from scikit-uplift) (3.1.1)
-Requirement already satisfied: requests in c:\faked\anaconda\lib\site-packages (from scikit-uplift) (2.22.0)
-Requirement already satisfied: tqdm in c:\faked\anaconda\lib\site-packages (from scikit-uplift) (4.36.1)
-Requirement already satisfied: joblib&gt;=0.11 in c:\faked\anaconda\lib\site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (0.13.2)
-Requirement already satisfied: scipy&gt;=0.17.0 in c:\faked\anaconda\lib\site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (1.3.1)
-Requirement already satisfied: cycler&gt;=0.10 in c:\faked\anaconda\lib\site-packages (from matplotlib-&gt;scikit-uplift) (0.10.0)
-Requirement already satisfied: kiwisolver&gt;=1.0.1 in c:\faked\anaconda\lib\site-packages (from matplotlib-&gt;scikit-uplift) (1.1.0)
-Requirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,&gt;=2.0.1 in c:\faked\anaconda\lib\site-packages (from matplotlib-&gt;scikit-uplift) (2.4.2)
-Requirement already satisfied: python-dateutil&gt;=2.1 in c:\users\yang xu\appdata\roaming\python\python37\site-packages (from matplotlib-&gt;scikit-uplift) (2.8.2)
-Requirement already satisfied: pytz&gt;=2017.2 in c:\faked\anaconda\lib\site-packages (from pandas-&gt;scikit-uplift) (2019.3)
-Requirement already satisfied: chardet&lt;3.1.0,&gt;=3.0.2 in c:\faked\anaconda\lib\site-packages (from requests-&gt;scikit-uplift) (3.0.4)
-Requirement already satisfied: certifi&gt;=2017.4.17 in c:\faked\anaconda\lib\site-packages (from requests-&gt;scikit-uplift) (2019.9.11)
-Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in c:\faked\anaconda\lib\site-packages (from requests-&gt;scikit-uplift) (1.24.2)
-Requirement already satisfied: idna&lt;2.9,&gt;=2.5 in c:\faked\anaconda\lib\site-packages (from requests-&gt;scikit-uplift) (2.8)
-Requirement already satisfied: six in c:\faked\anaconda\lib\site-packages (from cycler&gt;=0.10-&gt;matplotlib-&gt;scikit-uplift) (1.12.0)
-Requirement already satisfied: setuptools in c:\faked\anaconda\lib\site-packages (from kiwisolver&gt;=1.0.1-&gt;matplotlib-&gt;scikit-uplift) (41.4.0)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip available: 22.3.1 -&gt; 23.0
-[notice] To update, run: python.exe -m pip install --upgrade pip
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import related packages</span>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="k">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="kn">from</span> <span class="nn">lightgbm</span> <span class="k">import</span> <span class="n">LGBMRegressor</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LinearRegression</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegression</span> 
-<span class="kn">from</span> <span class="nn">drive.MyDrive.CausalDM.causaldm._util_causaldm</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="k">import</span> <span class="o">*</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="n">d607596ca99</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
-<span class="ne">----&gt; </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">drive.MyDrive.CausalDM.causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">fc935b318549</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
 
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;drive&#39;
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;causaldm&#39;
 </pre></div>
 </div>
 </div>
@@ -1057,6 +1040,7 @@ Requirement already satisfied: setuptools in c:\faked\anaconda\lib\site-packages
 </div>
 </div>
 </div>
+<p>The generalized random forest (GRF) approach has been implemented in package <em>grf</em> for R and C++, and <em>econml</em> in python. Here we implement the package of <em>econml</em> for a simple illustration.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the package for Causal Random Forest</span>
@@ -1155,7 +1139,8 @@ true value:                  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3
 </div>
 </div>
 <div class="section" id="dragon-net">
-<h1><strong>8. Dragon Net</strong><a class="headerlink" href="#dragon-net" title="Permalink to this headline">#</a></h1>
+<h2><strong>8. Dragon Net</strong><a class="headerlink" href="#dragon-net" title="Permalink to this headline">#</a></h2>
+</div>
 </div>
 <div class="section" id="references">
 <h1>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h1>
@@ -1195,7 +1180,7 @@ true value:                  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title"><strong>4. R learner</strong></p>
+            <p class="prev-next-title"><strong>R-Learner, DR-Learner, and Lp-R-Learner</strong></p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="../Scenario%202/underMDP.html" title="next page">
