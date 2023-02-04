@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # ATE Estimation (Single Stage)
+# # ATE Estimation 
 # Average treatment effect (ATE), is a measure used to compare treatments (or interventions) in randomized experiments, evaluation of policy interventions, and medical trials. As we've introduced in the preliminary section, it aims to estimate the difference of some reward function in between treatment and control. Under the potential outcome's framework, or the notation of do-operator in RL-based literature, our main purpose lies in estimating and inferring on 
 # \begin{equation}
 # \text{ATE} = E[R^*(1) - R^*(0)] = E[ R|do(A=1)] -  E[ R|do(A=0)].
