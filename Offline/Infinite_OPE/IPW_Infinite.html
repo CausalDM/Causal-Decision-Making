@@ -961,13 +961,13 @@ IS has been widely used in statistics, and the idea can be extended to OPE after
 \end{align*}\]</div>
 <p>Since the transition and reward generation probabilities are shared  between both policies, this ratio is equal to the probability ratio of observing the <span class="math notranslate nohighlight">\(i\)</span>th trajectory until time point <span class="math notranslate nohighlight">\(t\)</span>.</p>
 <p>The standard <strong>(trajectory-wise) IS</strong> estimator [2] regards each trajectory (and the corresponding observed cumulative reward, <span class="math notranslate nohighlight">\(\sum_{t=0}^{T-1} \gamma^t R_{i,t}\)</span>) as one realization, and it estimates <span class="math notranslate nohighlight">\(\eta^{\pi}\)</span> by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a6d2de86-11c8-47d2-957d-a2dc6b69a13d">
-<span class="eqno">(113)<a class="headerlink" href="#equation-a6d2de86-11c8-47d2-957d-a2dc6b69a13d" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:IS}
+<div class="amsmath math notranslate nohighlight" id="equation-b0db94b8-c396-4bcc-952e-29d9bd51661c">
+<span class="eqno">(113)<a class="headerlink" href="#equation-b0db94b8-c396-4bcc-952e-29d9bd51661c" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:IS}
     \hat{\eta}^{\pi}_{IS} = \frac{1}{n} \sum_{i=1}^n \rho^i_T (\sum_{t=0}^{T-1} \gamma^t R_{i,t}). 
 \end{align}\]</div>
 <p>In contrast, the <strong>step-wise IS</strong> [2]  focuses on reweighting each immediate reward <span class="math notranslate nohighlight">\(R_{i,t}\)</span> and typically yields a lower variance than the trajectory-wise IS. It is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6a33aa0f-4fcc-47db-bca1-2b6b09576ad9">
-<span class="eqno">(114)<a class="headerlink" href="#equation-6a33aa0f-4fcc-47db-bca1-2b6b09576ad9" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:stepIS}
+<div class="amsmath math notranslate nohighlight" id="equation-4fddb382-ec71-4048-b685-e7cac2ddb06c">
+<span class="eqno">(114)<a class="headerlink" href="#equation-4fddb382-ec71-4048-b685-e7cac2ddb06c" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:stepIS}
     \hat{\eta}^{\pi}_{StepIS} = \frac{1}{n} \sum_{i=1}^n \Big[ \sum_{t=0}^{T-1} \rho^i_t  \gamma^t R_{i,t} \Big]. 
 \end{align}\]</div>
 <p>In addition to these two IS-type estimators, their <strong>self-normalized variants</strong> are also commonly considered [3].
@@ -983,8 +983,8 @@ The key observation is that, under the stationary assumption and when the data i
 We introduce the average visitation distribution under a policy <span class="math notranslate nohighlight">\(\pi\)</span> as <span class="math notranslate nohighlight">\(d^{\pi}(s)= (1 - \gamma)^{-1} \sum_{t=0}^{+\infty} \gamma^{t} p_t^{\pi}(s)\)</span>, where <span class="math notranslate nohighlight">\(p_t^{\pi}(s)\)</span> denotes the probability of <span class="math notranslate nohighlight">\(\{S_t = s\}\)</span> following policy <span class="math notranslate nohighlight">\(\pi\)</span> with  <span class="math notranslate nohighlight">\(S_{0}\sim \mathbb{G}\)</span>.
 Define <span class="math notranslate nohighlight">\(\widetilde{\omega}^{\pi}(s) = d^{\pi}(s) / d^{b}(s)\)</span>.
 Therefore, <span class="math notranslate nohighlight">\(\widetilde{\omega}^{\pi}(s)\)</span> can be understood as a marginalized version of the importance ratio. With a similar change-of-measure trick as in IS, we can obtain the relationship that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dabbae08-4a9d-4b27-87d7-fe9d6f4d4b0c">
-<span class="eqno">(115)<a class="headerlink" href="#equation-dabbae08-4a9d-4b27-87d7-fe9d6f4d4b0c" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:breaking}
+<div class="amsmath math notranslate nohighlight" id="equation-e383e7fd-adf3-4d7e-b764-be2aeed400df">
+<span class="eqno">(115)<a class="headerlink" href="#equation-e383e7fd-adf3-4d7e-b764-be2aeed400df" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:breaking}
     \eta^{\pi} =  \mathbb{E}_{(s,a) \sim p_b(s, a), r \sim \mathcal{R}(\cdot; s, a)} \widetilde{\omega}^{\pi}(s) \frac{\pi(a|s)}{b(a|s)} r. 
 \end{equation}\]</div>
 <p>According to this relationship, we can construct an estimator by replacing the nuisance functions  with their estimates and then approximating the expectation by its empirical mean over <span class="math notranslate nohighlight">\(\{(S_{i,t},A_{i,t},R_{i,t},S_{i,t+1})\}\)</span>.
