@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>LinTS &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -20,7 +21,7 @@
     href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
@@ -36,7 +37,7 @@
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -989,31 +990,31 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="lints">
+  <section class="tex2jax_ignore mathjax_ignore" id="lints">
 <h1>LinTS<a class="headerlink" href="#lints" title="Permalink to this headline">#</a></h1>
-<div class="section" id="overview">
+<section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p><strong>Advantage</strong>: It is scalable by utilizing features. It outperforms algorithms based on other frameworks, such as UCB, in practice.</p></li>
 <li><p><strong>Disadvantage</strong>: It is susceptible to model misspecification.</p></li>
 <li><p><strong>Application Situation</strong>: discrete action space, binary/Gaussian reward space</p></li>
 </ul>
-</div>
-<div class="section" id="main-idea">
+</section>
+<section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. Noticing that feature information are commonly avialable, the <strong>LinTS</strong>[1,2] algorithm consdiers modeling the expectation of the potential reward <span class="math notranslate nohighlight">\(R_t(i)\)</span> with features of item <span class="math notranslate nohighlight">\(i\)</span>. As an example, considering the Gaussian reward, we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4b9d59be-21dc-4fda-8836-e2288c31a55e">
-<span class="eqno">(77)<a class="headerlink" href="#equation-4b9d59be-21dc-4fda-8836-e2288c31a55e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e6077b2d-4e5c-49ca-bb17-153a301e542e">
+<span class="eqno">(77)<a class="headerlink" href="#equation-e6077b2d-4e5c-49ca-bb17-153a301e542e" title="Permalink to this equation">#</a></span>\[\begin{align}
 R_t(i)\sim \mathcal{N}(\boldsymbol{s}_i^T \boldsymbol{\gamma},\sigma^2).
 \end{align}\]</div>
 <p>As for the Bernoulli reward, we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f6697656-fb9a-4ece-90f3-f33717052456">
-<span class="eqno">(78)<a class="headerlink" href="#equation-f6697656-fb9a-4ece-90f3-f33717052456" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-dc2ff59e-01ae-46a2-b334-991085bcccc5">
+<span class="eqno">(78)<a class="headerlink" href="#equation-dc2ff59e-01ae-46a2-b334-991085bcccc5" title="Permalink to this equation">#</a></span>\[\begin{align}
 R_t(i) \sim Bernoulli(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})).
 \end{align}\]</div>
 <p>Similar as the standard TS algorithm, the LinTS algorithm starts with specifying a prior distribution of the parameter <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>, and a variance of the reward, based on the domian knowledge. At each round <span class="math notranslate nohighlight">\(t\)</span>, the agent will samples a vector of <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\gamma}}^{t}\)</span> from thecorresponding posterior distribution, and the mean reward <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\theta}}^{t}\)</span> is then calculated accordingly. The action <span class="math notranslate nohighlight">\(a\)</span> with the greatest <span class="math notranslate nohighlight">\(\tilde{\theta}_{a}^{t}\)</span> is then selected. Finally, the posterior distribution would be updated after receiving the feedback at the end of each round. It should be noted that the posterior updating step differs for different pairs of the prior distribution of expected potential reward and reward distribution, and the code can be easily modified to different prior/reward distribution specifications if necessary.</p>
-</div>
-<div class="section" id="key-steps">
+</section>
+<section id="key-steps">
 <h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p>Specifying a prior distirbution of <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>, and the variance of the reward distribution.</p></li>
@@ -1026,8 +1027,8 @@ R_t(i) \sim Bernoulli(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})).
 </ul>
 </li>
 </ol>
-</div>
-<div class="section" id="demo-code">
+</section>
+<section id="demo-code">
 <h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1037,43 +1038,36 @@ R_t(i) \sim Bernoulli(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})).
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">a4f395ec17bc</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">os</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:\GitHub\CausalDM&#39;</span><span class="p">)</span>
-
-<span class="ne">FileNotFoundError</span>: [WinError 3] The system cannot find the path specified: &#39;D:\\GitHub\\CausalDM&#39;
-</pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="import-the-learner">
+<section id="import-the-learner">
 <h3>Import the learner.<a class="headerlink" href="#import-the-learner" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.CMAB</span> <span class="k">import</span> <span class="n">LinTS</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.Online.CMAB</span> <span class="kn">import</span> <span class="n">LinTS</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="generate-the-environment">
+</section>
+<section id="generate-the-environment">
 <h3>Generate the Environment<a class="headerlink" href="#generate-the-environment" title="Permalink to this headline">#</a></h3>
 <p>Here, we imitate an environment based on the MovieLens data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.CMAB</span> <span class="k">import</span> <span class="n">_env_realCMAB</span> <span class="k">as</span> <span class="n">_env</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.CMAB</span> <span class="kn">import</span> <span class="n">_env_realCMAB</span> <span class="k">as</span> <span class="n">_env</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">_env</span><span class="o">.</span><span class="n">Single_Contextual_Env</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Binary</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="specify-hyperparameters">
+</section>
+<section id="specify-hyperparameters">
 <h3>Specify Hyperparameters<a class="headerlink" href="#specify-hyperparameters" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>K: number of arms</p></li>
@@ -1099,8 +1093,8 @@ R_t(i) \sim Bernoulli(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})).
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="recommendation-and-interaction">
+</section>
+<section id="recommendation-and-interaction">
 <h3>Recommendation and Interaction<a class="headerlink" href="#recommendation-and-interaction" title="Permalink to this headline">#</a></h3>
 <p>Starting from t = 0, for each step t, there are three steps:</p>
 <ol class="simple">
@@ -1125,14 +1119,14 @@ R_t(i) \sim Bernoulli(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})).
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0, 0, 3.0, (25.0, 1.0, &#39;college/grad student&#39;))
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0, 0, 4.0, (25.0, 1.0, &#39;college/grad student&#39;))
 </pre></div>
 </div>
 </div>
 </div>
 <p><strong>Interpretation</strong>: For step 0, the TS agent encounter a male user who is a 25-year-old college/grad student. Given the information, the agent recommend a Comedy (arm 0), and receive a rate of 3 from the user.</p>
-</div>
-<div class="section" id="demo-code-for-bernoulli-bandit">
+</section>
+<section id="demo-code-for-bernoulli-bandit">
 <h3>Demo Code for Bernoulli Bandit<a class="headerlink" href="#demo-code-for-bernoulli-bandit" title="Permalink to this headline">#</a></h3>
 <p>The steps are similar to those previously performed with a Gaussian Bandit. Note that, when specifying the prior distribution of the expected reward, the mean-precision form of the Beta distribution is used here, i.e., Beta(<span class="math notranslate nohighlight">\(\mu\)</span>, <span class="math notranslate nohighlight">\(\phi\)</span>), where <span class="math notranslate nohighlight">\(\mu\)</span> is the mean reward of each arm and <span class="math notranslate nohighlight">\(\phi\)</span> is the precision of the Beta distribution.</p>
 <div class="cell docutils container">
@@ -1161,14 +1155,14 @@ R_t(i) \sim Bernoulli(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})).
 </div>
 </div>
 <p><strong>Interpretation</strong>: For step 0, the TS agent encounter a male user who is a 25-year-old college/grad student. Given the information, the agent recommend a Sci-Fi (arm 4), and receive a rate of 1 from the user.</p>
-</div>
-</div>
-<div class="section" id="references">
+</section>
+</section>
+<section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <p>[1] Agrawal, S., &amp; Goyal, N. (2013, May). Thompson sampling for contextual bandits with linear payoffs. In International conference on machine learning (pp. 127-135). PMLR.</p>
 <p>[2] Kveton, B., Zaheer, M., Szepesvari, C., Li, L., Ghavamzadeh, M., &amp; Boutilier, C. (2020, June). Randomized exploration in generalized linear bandits. In International Conference on Artificial Intelligence and Statistics (pp. 2066-2076). PMLR.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
