@@ -37,8 +37,6 @@
 # 
 # - **Gaussian Bandit**: $R_t$ is a numerical variable, taking the value of $\{1,2,3,4,5\}$, where 1 is the least satisfied and 5 is the most satisfied.
 # - **Bernoulli Bandit**: $R_t$ is a binary variable, =1 if the rating is higher than 3.
-# 
-# In the following, we evaluated the empirical performance of the supported algorithms on the MovieLens dataset under either the Gaussian bandit or Bernoulli bandit settings.
 
 # ## References
 # 
@@ -49,9 +47,3 @@
 # [3] Wan, R., Ge, L., & Song, R. (2021). Metadata-based multi-task bandits with bayesian hierarchical models. Advances in Neural Information Processing Systems, 34, 29655-29668.
 # 
 # [4] Basu, S., Kveton, B., Zaheer, M., & Szepesvári, C. (2021). No regrets for learning the prior in bandits. Advances in Neural Information Processing Systems, 34, 28029-28041.
-
-# In[ ]:
-
-
-
-

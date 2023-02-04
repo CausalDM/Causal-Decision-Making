@@ -87,7 +87,6 @@ data_behavior = get_data_simulation(n, seed, policy="behavior")
 HTE_true = get_data_simulation(n, seed, policy="1")['R']-get_data_simulation(n, seed, policy="0")['R']
 
 
-
 # In[ ]:
 
 
@@ -265,7 +264,6 @@ HTE_X_learner = g.predict_proba(data_behavior.iloc[:,0:2])[:,0]*tau0.predict(dat
 
 
 
-
 # In[ ]:
 
 
@@ -415,7 +413,6 @@ def Rlearner(df, outcome, treatment, controls, n_folds, y_model, ps_model, Rlear
         print('fold {}, training r2 R-learner: {:.3f}, testing r2 R-learner: {:.3f}'.format(fold, R_learner[i].score(data[folds!=fold][range(n_controls+1)],data[folds!=fold]['y_residual']), R_learner[i].score(data[folds==fold][range(n_controls+1)],data[folds==fold]['y_residual'])  ))
     
     return Rlearner_pred
-
 
 
 # In[ ]:

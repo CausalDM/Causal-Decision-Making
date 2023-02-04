@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>MTSS_Comb &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -20,7 +21,7 @@
     href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
@@ -36,7 +37,7 @@
     <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -945,22 +946,22 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="mtss-comb">
+  <section class="tex2jax_ignore mathjax_ignore" id="mtss-comb">
 <h1>MTSS_Comb<a class="headerlink" href="#mtss-comb" title="Permalink to this headline">#</a></h1>
-<div class="section" id="overview">
+<section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p><strong>Advantage</strong>: It is both scalable and robust. Furthermore, it also accounts for the iter-item heterogeneity.</p></li>
 <li><p><strong>Disadvantage</strong>:</p></li>
 <li><p><strong>Application Situation</strong>: Useful when presenting a list of items, each of which will generate a partial outcome (reward). The outcome is continuous. Static feature information.</p></li>
 </ul>
-</div>
-<div class="section" id="main-idea">
+</section>
+<section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>MTSS_Comb is an example of the general Thompson Sampling(TS)-based framework, MTSS [1], to deal with online combinatorial optimization problems.</p>
 <p><strong>Review of MTSS:</strong> MTSS[1] is a meta-learning framework designed for large-scale structured bandit problems [2]. Mainly, it is a TS-based algorithm that learns the information-sharing structure while minimizing the cumulative regrets. Adapting the TS framework to a problem-specific Bayesian hierarchical model, MTSS simultaneously enables information sharing among items via their features and models the inter-item heterogeneity. Specifically, it assumes that the item-specific parameter <span class="math notranslate nohighlight">\(\theta_i = E[Y_{t}(i)]\)</span> is sampled from a distribution <span class="math notranslate nohighlight">\(g(\theta_i|\boldsymbol{s}_i, \boldsymbol{\gamma})\)</span> instead of being entirely determined by <span class="math notranslate nohighlight">\(\boldsymbol{s}_i\)</span> via a deterministic function. Here, <span class="math notranslate nohighlight">\(g\)</span> is a model parameterized by an <strong>unknown</strong> vector <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>. The following is the general feature-based hierarchical model MTSS considered.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0f2366c5-2a05-4af1-a33e-b734adb2d72f">
-<span class="eqno">(93)<a class="headerlink" href="#equation-0f2366c5-2a05-4af1-a33e-b734adb2d72f" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:general_hierachical}
+<div class="amsmath math notranslate nohighlight" id="equation-3c13a50b-45d5-48af-912a-03aa645cd64a">
+<span class="eqno">(93)<a class="headerlink" href="#equation-3c13a50b-45d5-48af-912a-03aa645cd64a" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:general_hierachical}
   \begin{alignedat}{2}
 &amp;\text{(Prior)} \quad
 \quad\quad\quad\quad\quad\quad\quad\quad\quad
@@ -976,8 +977,8 @@ title="Print to PDF"
 <p>where <span class="math notranslate nohighlight">\(Q(\boldsymbol{\gamma})\)</span> is the prior distribution for <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>.
 Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class of practical problems, <strong>scalable</strong> to large systems, and <strong>robust</strong> to the specification of the generalization model.</p>
 <p><strong>Review of MTSS_Comb:</strong> In this tutorial, as an example, we focus on the combinatorial semi-bandits with Gaussian outcome, <span class="math notranslate nohighlight">\(Y_{i, t}\)</span>, and consider using a linear mixed model (LMM) as the generalization model to share information. Specifically, the full model is as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a7e035d4-076d-4351-85ee-00bfac0081aa">
-<span class="eqno">(94)<a class="headerlink" href="#equation-a7e035d4-076d-4351-85ee-00bfac0081aa" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:LMM}
+<div class="amsmath math notranslate nohighlight" id="equation-a2601ba1-6168-468d-be62-3c7b680694e7">
+<span class="eqno">(94)<a class="headerlink" href="#equation-a2601ba1-6168-468d-be62-3c7b680694e7" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:LMM}
     \begin{split}
      \theta_i &amp;\sim \mathcal{N}(\boldsymbol{s}_i^T \boldsymbol{\gamma}, \sigma_1^2), \forall i \in [N],\\
     Y_{i, t}(a) &amp;\sim \mathcal{N}(\theta_i, \sigma_2^2), \forall i \in a,\\
@@ -985,12 +986,12 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
     \end{split}
 \end{equation}\]</div>
 <p>where it is typically assumed that <span class="math notranslate nohighlight">\(\sigma_1\)</span> and <span class="math notranslate nohighlight">\(\sigma_2\)</span> are known. We choose the prior <span class="math notranslate nohighlight">\(\boldsymbol{\gamma} \sim \mathcal{N}(\boldsymbol{\mu}_{\boldsymbol{\gamma}}, {\boldsymbol{\Sigma}}_{\boldsymbol{\gamma}})\)</span> with parameters as known. It is worth noting that many other outcome distributions (e.g., Bernoulli) and model assumptions (e.g., Gaussian process) can be formulated similarly, depending on the applications. Users can directly modify the code for posterior updating to adapt different model assumptions. Further, for simplicity, we consider the most basic size constraint such that the action space includes all the possible subsets with size <span class="math notranslate nohighlight">\(K\)</span>. Therefore, the optimization process to find the optimal subset <span class="math notranslate nohighlight">\(A_{t}\)</span> is equal to selecting a list of <span class="math notranslate nohighlight">\(K\)</span> items with the highest attractiveness factors. Of course, users are welcome to modify the <strong>optimization</strong> function to satisfy more complex constraints.</p>
-</div>
-<div class="section" id="algorithm-details">
+</section>
+<section id="algorithm-details">
 <h2>Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this headline">#</a></h2>
 <p>Under the assumption of a LMM, the posteriors can be derived explicitly, following the Bayes’ theorem. At each round <span class="math notranslate nohighlight">\(t\)</span>, given the feedback <span class="math notranslate nohighlight">\(\mathcal{H}_{t}\)</span> received from previous rounds, there are two major steps including posterior sampling and combinatorial optimization. Specifically, the posterior sampling step is decomposed into four steps: 1. updating the posterior distribution of <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>, <span class="math notranslate nohighlight">\(P(\boldsymbol{\gamma}|\mathcal{H}_{t})\)</span>; 2. sampling a <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\gamma}}\)</span> from <span class="math notranslate nohighlight">\(P(\boldsymbol{\gamma}|\mathcal{H}_{t})\)</span>; 3. updating the posterior distribution of <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> conditional on <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\gamma}}\)</span>, <span class="math notranslate nohighlight">\(P(\boldsymbol{\theta}|\tilde{\boldsymbol{\gamma}},\mathcal{H}_{t})\)</span>; 4. sampling <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\theta}}\)</span> from <span class="math notranslate nohighlight">\(P(\boldsymbol{\theta}|\tilde{\boldsymbol{\gamma}},\mathcal{H}_{t})\)</span>. Then, the action <span class="math notranslate nohighlight">\(A_{t}\)</span> is selected greedily as <span class="math notranslate nohighlight">\(A_t = arg max_{a \in \mathcal{A}} E(R_t(a) \mid \tilde{\boldsymbol{\theta}})\)</span>. Considering the simple size constraint, <span class="math notranslate nohighlight">\(A_{t}\)</span> is the list of <span class="math notranslate nohighlight">\(K\)</span> items with the highest <span class="math notranslate nohighlight">\(\tilde{\theta}_{i}\)</span>. Note that <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\gamma}}\)</span> can be sampled in a batch mode to further facilitate computationally efficient online deployment.</p>
-</div>
-<div class="section" id="key-steps">
+</section>
+<section id="key-steps">
 <h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">#</a></h2>
 <p>For round <span class="math notranslate nohighlight">\(t = 1,2,\cdots\)</span>:</p>
 <ol class="simple">
@@ -1002,8 +1003,8 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
 <li><p>Receive reward <span class="math notranslate nohighlight">\(R_{t}\)</span>.</p></li>
 </ol>
 <p>*Notations can be found in either the inroduction of the chapter “Structured Bandits” or the introduction of the combinatorial Semi-Bandit problems.</p>
-</div>
-<div class="section" id="demo-code">
+</section>
+<section id="demo-code">
 <h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1020,21 +1021,20 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">e48b8638d1cf</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 6&gt;</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">os</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="c1"># code used to import the learner</span>
 
-<span class="ne">FileNotFoundError</span>: [WinError 3] The system cannot find the path specified: &#39;/nas/longleaf/home/lge/CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [WinError 3] 系统找不到指定的路径。: &#39;/nas/longleaf/home/lge/CausalDM&#39;
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Slate.Combinatorial_Semi</span> <span class="k">import</span> <span class="n">MTSS_Comb</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Slate.Combinatorial_Semi</span> <span class="k">import</span> <span class="n">_env_SemiBandit</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Slate.Combinatorial_Semi</span> <span class="kn">import</span> <span class="n">MTSS_Comb</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Slate.Combinatorial_Semi</span> <span class="kn">import</span> <span class="n">_env_SemiBandit</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </pre></div>
 </div>
@@ -1049,7 +1049,7 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
 <span class="n">X_sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">p</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">with_intercept</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">sigma_1</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span>
+<span class="n">sigma_1</span> <span class="o">=</span> <span class="mf">.5</span>
 <span class="n">sigma_2</span> <span class="o">=</span> <span class="mi">1</span>
 
 <span class="n">env</span> <span class="o">=</span> <span class="n">_env_SemiBandit</span><span class="o">.</span><span class="n">Semi_env</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">sigma_1</span><span class="p">,</span> <span class="n">sigma_2</span>
@@ -1071,13 +1071,13 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
 </div>
 </div>
 <p><strong>Interpretation:</strong> A sentence to include the analysis result: the estimated optimal regime is…</p>
-</div>
-<div class="section" id="references">
+</section>
+<section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <p>[1] Wan, R., Ge, L., &amp; Song, R. (2022). Towards Scalable and Robust Structured Bandits: A Meta-Learning Framework. arXiv preprint arXiv:2202.13227.
 [2] Van Parys, B., &amp; Golrezaei, N. (2020). Optimal learning for structured bandits. Available at SSRN 3651397.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {

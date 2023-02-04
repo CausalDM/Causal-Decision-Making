@@ -51,7 +51,7 @@ os.chdir('D:\GitHub\CausalDM')
 
 # ### Import the learner.
 
-# In[13]:
+# In[2]:
 
 
 import numpy as np
@@ -62,7 +62,7 @@ from causaldm.learners.Online.MAB import UCB
 # 
 # Here, we imitate an environment based on the MovieLens data.
 
-# In[14]:
+# In[3]:
 
 
 from causaldm.learners.Online.MAB import _env_realMAB as _env
@@ -73,7 +73,7 @@ env = _env.Single_Gaussian_Env(seed = 42)
 # 
 # - K: # of arms
 
-# In[15]:
+# In[4]:
 
 
 UCB_agent = UCB.UCB1(env.K)
@@ -89,7 +89,7 @@ UCB_agent = UCB.UCB1(env.K)
 # 3. Update the posterior distribution
 # <code> UCB_agent.receive_reward(t,A,R) </code>
 
-# In[16]:
+# In[5]:
 
 
 t = 0
@@ -104,7 +104,7 @@ t, A, R
 # ### Demo Code for Bernoulli Bandit
 # The steps are similar to those previously performed with a Gaussian Bandit.
 
-# In[18]:
+# In[6]:
 
 
 env = _env.Single_Bernoulli_Env(seed=42)
