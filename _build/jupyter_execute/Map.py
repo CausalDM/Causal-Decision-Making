@@ -32,21 +32,26 @@
 # 
 # ## <a name="PL"></a> Causal Policy Learning (CPL)
 # ---
-# This chapter focuses on four common data dependence structures in decision making, including [**I.I.D.**](#Case1), [**Adaptive Decision Making with Independent States (ADMIS)**](#Case2), [**Adaptive Decision Making with State Transition (ADMST)**](#Case3), and [**All Others**](#Case4). The similarities and differences between four scenarios are summarized as follows.
+# This chapter focuses on six common data dependence structures in decision making, including [**I.I.D.**](#Case1), [**Offline Reinforcement Learning**](#Case2), [**Multiple-Stage DTR**](#Case3), [**Adaptive Decision Making with Independent States (ADMIS)**](#Case4), [**Online Reinforcement Learning**](#Case5), and [**All Others**](#Case6). The similarities and differences between four scenarios are summarized as follows.
 # 
 # ![Causal_DM_Causal_Structure_Table.png](Causal_DM_Causal_Structure_Table.png)
 # 
 # ### <a name="Case1"></a> Scenario 1: I.I.D
-# As the figure illustrated, observations in Scenario 1 are i.i.d. sampled. For each observation, there are three components, $S_i$ is the context information if there is any, $A_i$ is the action taken, and $R_i$ is the reward received. When there is contextual information, the action would be affected by the contextual information, while the final reward would be affected by both the contextual information and the action. There are two types of problems are widely studied in this context: the **Single-Stage Dynamic Treatment Regime (DTR)** and the **Offline Bandits**[1]. In this book, we mainly focus on the Single-Stage DTR by providing methods for policy evaluation and policy optimization, with a detailed map in [Appendix A](#SingleDTR)
+# As the figure illustrated, observations in Scenario 1 are i.i.d. sampled. For each observation, there are three components, $S_i$ is the context information if there is any, $A_i$ is the action taken, and $R_i$ is the reward received. When there is contextual information, the action would be affected by the contextual information, while the final reward would be affected by both the contextual information and the action. A classical class of problems that are widely studied in this context is the **Single-Stage Dynamic Treatment Regime (DTR)**[1]. In this book, we mainly focus on methods for policy evaluation and policy optimization for Single-Stage DTR, with a detailed map in [Appendix A](#SingleDTR)
 # 
-# ### <a name="Case2"></a> Scenario 2: Adaptive Decision Making with Independent States (ADMIS)
-# The Scenario 2 setting is widely examined in the online decision making literature, especially the bandits, where the treatment policy is time-adaptive. Specifically, $H_{t-1}$ includes all the previous observations up to time $t-1$ (include observations at time $t-1$) and is used to update the action policy at time $t$, and therefore affect the action $A_t$. While $S_t$ is i.i.d sampled from the correponding distribution, $R_t$ is influenced by both $A_t$ and $S_t$. Finally, the new observation $(S_t,A_t,R_t)$, in conjunction with all previous observations, would then be formulated as $H_{t+1}$ and affect $A_{t+1}$ only. A structure that lacks contextual information $S_t$ is also very common. In this book, a list of bandits algorithms would be introduced, with a detailed map in [Appendix B](#Bandits).
+# ### <a name="Case2"></a> Scenario 2: Offline Reinforcement Learning
+# The Scenario 2 is well-known as Markov Decision Process (MDP), whose main characteristic is the Markovian state transition. In particular, while $A_t$ is only affected by $S_t$, both $R_t$ and $S_{t+1}$ would be affected by $(S_t,A_t)$. Given $S_{t}, A_t$, a standard assumption of MDP problems is that $R_t$ and $S_{t+1}$ are independent of previous observations. A list of related learning methods will be introduced, with a map in [Appendix B](#MDP).
 # 
-# ### <a name="Case3"></a> Scenario 3: Adaptive Decision Making with State Transition (ADMST)
-# The Scenario 3 includes two data dependence structures with a Markovian state transition structure. In particular, the offline version is the well-known Markov Decision Process (MDP). While $A_t$ is only affected by $S_t$, both $R_t$ and $S_{t+1}$ would be affected by $(S_t,A_t)$. Given $S_{t}, A_t$, a standard assumption of MDP problems is that $R_t$ and $S_{t+1}$ are independent of previous observations. Build upon the MDP structure, when an adaptive policy is applied, the online version of the strucuture clearly depicts the data generating process, in which $A_t$ would be affected by all previous observations $H_{t-1}$. List of related learning methods would be introduced, with a map in [Appendix C](#MDP).
+# ### <a name="Case3"></a> Scenario 3: Multiple-Stage DTR
+# When a history-independent policy is applied, the Scenario 3 takes all the possible causal relationships into account and is well-known as the multiple-stage DTR problem [1].
 # 
-# ### <a name="Case4"></a> Scenario 4: All Others
-# The Scenario 4 also includes two versions (i.e., offline and online). Taking all the possible causal relationship into account, this scenario considers all the data dependence struacture that are not included in the previous three classical scenarios, such as **Multi-Stage DTR**, **Partially Observable MDP (POMDP)**,$\cdots$
+# ### <a name="Case4"></a> Scenario 4: Adaptive Decision Making with Independent States (ADMIS)
+# The Scenario 4 setting is widely examined in the online decision making literature, especially the bandits, where the treatment policy is time-adaptive. Specifically, $H_{t-1}$ includes all the previous observations up to time $t-1$ (include observations at time $t-1$) and is used to update the action policy at time $t$, and therefore affect the action $A_t$. While $S_t$ is i.i.d sampled from the correponding distribution, $R_t$ is influenced by both $A_t$ and $S_t$. Finally, the new observation $(S_t,A_t,R_t)$, in conjunction with all previous observations, would then be formulated as $H_{t+1}$ and affect $A_{t+1}$ only. A structure that lacks contextual information $S_t$ is also very common. In this book, a list of bandits algorithms would be introduced, with a detailed map in [Appendix D](#Bandits).
+# 
+# ### <a name="Case5"></a> Scenario 5: Online Reinforcement Learning
+# Building upon the MDP structure, when an adaptive policy is applied, the Scenario 5 clearly depicts the data-generating process, in which  $S_t$ follows the Markovian state transition and $A_t$ would be affected by all previous observations $H_{t-1}$.
+# 
+# ### <a name="Case6"></a> Scenario 6: All others
 # 
 # 
 # ## Appendix
@@ -54,22 +59,21 @@
 # ### <a name="SingelDTR"></a> A. Scenario 1
 # ![Scenario1.png](Scenario1.png)
 # 
-# ### <a name="Bandits"></a> B. Scenario 2
-# ![Online.png](Online.png)
-# 
-# ### <a name="MDP"></a> C. Scenario 3
+# ### <a name="MDP"></a> B. Scenario 2
 # ![Scenario3.png](Scenario3.png)
 # 
-# ### D. Scenario 4
+# ### C. Scenario 3
 # 
 # | Algorithm | Treatment Type | Outcome Type | Evaluation? | Optimization? | C.I.? | Advantages |
 # |:-|:-:|:-:|:-:|:-:|:-:|:-:|
 # | [Q-Learning](https://www.jmlr.org/papers/volume6/murphy05a/murphy05a.pdf) | Discrete | Continuous (Mean) |✅|✅| ||
 # | [A-Learning](https://www.researchgate.net/profile/Eric-Laber/publication/221665211_Q-_and_A-Learning_Methods_for_Estimating_Optimal_Dynamic_Treatment_Regimes/links/58825d074585150dde402268/Q-and-A-Learning-Methods-for-Estimating-Optimal-Dynamic-Treatment-Regimes.pdf) | Discrete | Continuous (Mean)  |✅|✅| ||
 # 
+# ### <a name="Bandits"></a> D. Scenario 4
+# ![Online.png](Online.png)
 # 
 # ## Reference
-# [1] Dudík, M., Langford, J., & Li, L. (2011). [Doubly robust policy evaluation and learning](https://arxiv.org/pdf/1103.4601.pdf). arXiv preprint arXiv:1103.4601.
+# [1] Tsiatis, A. A., Davidian, M., Holloway, S. T., & Laber, E. B. (2019). Dynamic treatment regimes: Statistical methods for precision medicine. Chapman and Hall/CRC.
 # 
 # 
 # 
