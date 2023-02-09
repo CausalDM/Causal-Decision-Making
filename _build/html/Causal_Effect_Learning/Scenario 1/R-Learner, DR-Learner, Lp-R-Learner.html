@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>R-Learner, DR-Learner, and Lp-R-Learner &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -20,7 +21,7 @@
     href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
@@ -36,7 +37,7 @@
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -195,12 +196,12 @@ const thebe_selector_output = ".output, .cell_output"
   <ul class="current">
    <li class="toctree-l2">
     <a class="reference internal" href="ATE.html">
-     ATE Estimation (Single Stage)
+     ATE Estimation
     </a>
    </li>
    <li class="toctree-l2 current active has-children">
     <a class="reference internal" href="HTE.html">
-     Heterogeneous Treatment Effect Estimation (Single Stage)
+     HTE Estimation
     </a>
     <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
     <label for="toctree-checkbox-3">
@@ -983,13 +984,13 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="section" id="r-learner-dr-learner-and-lp-r-learner">
+  <section id="r-learner-dr-learner-and-lp-r-learner">
 <h1><strong>R-Learner, DR-Learner, and Lp-R-Learner</strong><a class="headerlink" href="#r-learner-dr-learner-and-lp-r-learner" title="Permalink to this headline">#</a></h1>
-<div class="section" id="r-learner">
+<section id="r-learner">
 <h2><strong>4. R learner</strong><a class="headerlink" href="#r-learner" title="Permalink to this headline">#</a></h2>
 <p>The idea of classical R-learner came from Robinson 1988 [3] and was formalized by Nie and Wager in 2020 [2]. The main idea of R learner starts from the partially linear model setup, in which we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9ea03090-578b-4d68-868f-665df083538f">
-<span class="eqno">(39)<a class="headerlink" href="#equation-9ea03090-578b-4d68-868f-665df083538f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a81ac250-5ef3-4337-8c8b-e35f8e2133a1">
+<span class="eqno">(39)<a class="headerlink" href="#equation-a81ac250-5ef3-4337-8c8b-e35f8e2133a1" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{aligned}
     R&amp;=A\tau(S)+g_0(S)+U,\\
     A&amp;=m_0(S)+V,
@@ -997,45 +998,46 @@ title="Print to PDF"
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(V\)</span> satisfies <span class="math notranslate nohighlight">\(\mathbb{E}[U|D,X]=0\)</span>, <span class="math notranslate nohighlight">\(\mathbb{E}[V|X]=0\)</span>.</p>
 <p>After several manipulations, it’s easy to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cd070015-28a5-459e-86cb-43e5923b716e">
-<span class="eqno">(40)<a class="headerlink" href="#equation-cd070015-28a5-459e-86cb-43e5923b716e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6a4693d0-c8b6-4260-91ca-f8ba2ddd2184">
+<span class="eqno">(40)<a class="headerlink" href="#equation-6a4693d0-c8b6-4260-91ca-f8ba2ddd2184" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	R-\mathbb{E}[R|S]=\tau(S)\cdot(A-\mathbb{E}[A|S])+\epsilon.
 \end{equation}\]</div>
 <p>Define <span class="math notranslate nohighlight">\(m_0(X)=\mathbb{E}[A|S]\)</span> and <span class="math notranslate nohighlight">\(l_0(X)=\mathbb{E}[R|S]\)</span>. A natural way to estimate <span class="math notranslate nohighlight">\(\tau(X)\)</span> is given below, which is also the main idea of R-learner:</p>
 <p><strong>Step 1</strong>: Regress <span class="math notranslate nohighlight">\(R\)</span> on <span class="math notranslate nohighlight">\(S\)</span> to obtain model <span class="math notranslate nohighlight">\(\hat{\eta}(S)=\hat{\mathbb{E}}[R|S]\)</span>; and regress <span class="math notranslate nohighlight">\(A\)</span> on <span class="math notranslate nohighlight">\(S\)</span> to obtain model <span class="math notranslate nohighlight">\(\hat{m}(S)=\hat{\mathbb{E}}[A|S]\)</span>.</p>
 <p><strong>Step 2</strong>: Regress outcome residual <span class="math notranslate nohighlight">\(R-\hat{l}(S)\)</span> on propensity score residual <span class="math notranslate nohighlight">\(A-\hat{m}(S)\)</span>.</p>
 <p>That is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c53b07ea-2fe5-4fcd-b905-48ee392b5bfd">
-<span class="eqno">(41)<a class="headerlink" href="#equation-c53b07ea-2fe5-4fcd-b905-48ee392b5bfd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-60a8ad80-49e4-4c66-8408-8fd7c06ffe48">
+<span class="eqno">(41)<a class="headerlink" href="#equation-60a8ad80-49e4-4c66-8408-8fd7c06ffe48" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	\hat{\tau}(S)=\arg\min_{\tau}\left\{\mathbb{E}_n\left[\left(\{R_i-\hat{\eta}(S_i)\}-\{A_i-\hat{m}(S_i)\}\cdot\tau(S_i)\right)^2\right]\right\}	
 \end{equation}\]</div>
 <p>The easiest way to do so is to specify <span class="math notranslate nohighlight">\(\hat{\tau}(S)\)</span> to the linear function class. In this case, <span class="math notranslate nohighlight">\(\tau(S)=S\beta\)</span>, and the problem becomes to estimate <span class="math notranslate nohighlight">\(\beta\)</span> by solving the following linear regression:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ac13b9c4-dec5-4b24-ab37-be73352b4ca5">
-<span class="eqno">(42)<a class="headerlink" href="#equation-ac13b9c4-dec5-4b24-ab37-be73352b4ca5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1e7d80ac-a598-4126-9c31-56db9b47a155">
+<span class="eqno">(42)<a class="headerlink" href="#equation-1e7d80ac-a598-4126-9c31-56db9b47a155" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	\hat{\beta}=\arg\min_{\beta}\left\{\mathbb{E}_n\left[\left(\{R_i-\hat{\eta}(S_i)\}-\{A_i-\hat{m}(S_i)\} S_i\cdot \beta\right)^2\right]\right\}.
 \end{equation}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import related packages</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="k">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="kn">from</span> <span class="nn">lightgbm</span> <span class="k">import</span> <span class="n">LGBMRegressor</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LinearRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegression</span> 
-<span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="k">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Causal_Effect_Learning.Single_Stage.Rlearner</span> <span class="k">import</span> <span class="n">Rlearner</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span> 
+<span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.Causal_Effect_Learning.Single_Stage.Rlearner</span> <span class="kn">import</span> <span class="n">Rlearner</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">275</span><span class="n">f33df0573</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 3&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># import related packages</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
-<span class="ne">----&gt; </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">causaldm.learners.Causal_Effect_Learning.Single_Stage.Rlearner</span> <span class="kn">import</span> <span class="n">Rlearner</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span> 
 
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;causaldm&#39;
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;lightgbm&#39;
 </pre></div>
 </div>
 </div>
@@ -1123,8 +1125,8 @@ true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
 </div>
 </div>
 <p><strong>Conclusion:</strong> It’s amazing to see that the bias of R-learner is significantly smaller than all other approaches.</p>
-</div>
-<div class="section" id="dr-learner">
+</section>
+<section id="dr-learner">
 <h2><strong>5. DR-learner</strong><a class="headerlink" href="#dr-learner" title="Permalink to this headline">#</a></h2>
 <p>DR-learner is a two-stage doubly robust estimator for HTE estimation. Before Kennedy et al. 2020 [4], there are several related approaches trying to extend the doubly robust procedure to HTE estimation, such as [5, 6, 7]. Compared with the above three estimators, DR-learner is proved to be oracle efficient under some mild assumptions detailed in Theorem 2 of [4].</p>
 <p>The basic steps of DR-learner is given below:</p>
@@ -1133,18 +1135,18 @@ true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
 (b)  Using <span class="math notranslate nohighlight">\(I_{1}^n\)</span> to construct estimates <span class="math notranslate nohighlight">\(\hat\mu_a(s)\)</span> for <span class="math notranslate nohighlight">\(\mu_a(s):=\mathbb{E}[R|S=s,A=a]\)</span>;</p>
 <p><strong>Step 2</strong>: Pseudo-outcome regression: \
 Define <span class="math notranslate nohighlight">\(\widehat{\phi}(Z)\)</span> as the pseudo-outcome where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-511fea22-762f-475f-8371-2ec01ad52fff">
-<span class="eqno">(43)<a class="headerlink" href="#equation-511fea22-762f-475f-8371-2ec01ad52fff" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-eb4a3209-1ea4-44de-82de-4ce5a049f664">
+<span class="eqno">(43)<a class="headerlink" href="#equation-eb4a3209-1ea4-44de-82de-4ce5a049f664" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \widehat{\phi}(Z)=\frac{A-\hat{\pi}(S)}{\hat{\pi}(S)\{1-\hat{\pi}(S)\}}\Big\{R-\hat{\mu}_A(S)\Big\}+\hat{\mu}_1(S)-\hat{\mu}_0(S),
 \end{equation}\]</div>
 <p>and regress it on covariates <span class="math notranslate nohighlight">\(S\)</span> in the test sample <span class="math notranslate nohighlight">\(I_2^n\)</span>, yielding</p>
-<div class="amsmath math notranslate nohighlight" id="equation-21d57aa8-27f5-4e22-9819-f1c1092d8491">
-<span class="eqno">(44)<a class="headerlink" href="#equation-21d57aa8-27f5-4e22-9819-f1c1092d8491" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8d1d9685-5b25-4670-a88a-ca63876aebd4">
+<span class="eqno">(44)<a class="headerlink" href="#equation-8d1d9685-5b25-4670-a88a-ca63876aebd4" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \widehat{\tau}_{\text{DR-learner}}(s)=\widehat{\mathbb{E}}_n[\widehat{\phi}(Z)|S=s].
 \end{equation}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Causal_Effect_Learning.Single_Stage.DRlearner</span> <span class="k">import</span> <span class="n">DRlearner</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Causal_Effect_Learning.Single_Stage.DRlearner</span> <span class="kn">import</span> <span class="n">DRlearner</span>
 </pre></div>
 </div>
 </div>
@@ -1205,8 +1207,8 @@ true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="lp-r-learner">
+</section>
+<section id="lp-r-learner">
 <h2><strong>6. Lp-R-learner</strong><a class="headerlink" href="#lp-r-learner" title="Permalink to this headline">#</a></h2>
 <p>As an extension of R-learner, Lp-R-learner combined the idea of residual regression with local polynomial adaptation, and leveraged the idea of cross fitting to further relax the conditions needed to obtain the oracle convergence rate. For brevity of content, we will just introduce their main algorithm. For more details about its theory and real data performance please see the paper written by Kennedy [4].</p>
 <p>Let <span class="math notranslate nohighlight">\((I_{1a}^n, I_{1b}^n,I_{2}^n)\)</span> denote three independent samples of <span class="math notranslate nohighlight">\(n\)</span> observations of <span class="math notranslate nohighlight">\(Z_i = (S_i, A_i, R_i)\)</span>. Let <span class="math notranslate nohighlight">\(b:\mathbb{R}^d\rightarrow \mathbb{R}^p\)</span> denote the vector of basis functions consisting of all powers of each covariate, up to order <span class="math notranslate nohighlight">\(\gamma\)</span>, and all interactions up to degree <span class="math notranslate nohighlight">\(\gamma\)</span> polynomials. Let <span class="math notranslate nohighlight">\(K_{hs}(S)=\frac{1}{h^d}K\left(\frac{S-s}{h}\right)\)</span> for <span class="math notranslate nohighlight">\(k:\mathbb{R}^d\rightarrow \mathbb{R}\)</span> a bounded kernel function with support <span class="math notranslate nohighlight">\([-1,1]^d\)</span>, and <span class="math notranslate nohighlight">\(h\)</span> is a bandwidth parameter.</p>
@@ -1215,8 +1217,8 @@ true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
 (b)  Using <span class="math notranslate nohighlight">\(I_{1b}^n\)</span> to construct estimates <span class="math notranslate nohighlight">\(\hat{\eta}\)</span> of the regression function <span class="math notranslate nohighlight">\(\eta=\pi\mu_1+(1-\pi)\mu_0\)</span>, and estimtes <span class="math notranslate nohighlight">\(\hat{\pi}_b\)</span> of the propensity scores <span class="math notranslate nohighlight">\(\pi\)</span>.</p>
 <p><strong>Step 2</strong>: Localized double-residual regression: \
 Define <span class="math notranslate nohighlight">\(\hat{\tau}_r(s)\)</span> as the fitted value from a kernel-weighted least squares regression (in the test sample <span class="math notranslate nohighlight">\(I_2^n\)</span>) of outcome residual <span class="math notranslate nohighlight">\((R-\hat{\eta})\)</span> on basis terms <span class="math notranslate nohighlight">\(b\)</span> scaled by the treatment residual <span class="math notranslate nohighlight">\(A-\hat{\pi}_b\)</span>, with weights <span class="math notranslate nohighlight">\(\Big(\frac{A-\hat{\pi}_a}{A-\hat{\pi}_b}\Big)\cdot K_{hs}\)</span>. Thus <span class="math notranslate nohighlight">\(\hat{\tau}_r(s)=b(0)^T\hat{\theta}\)</span> for</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f9929f36-6693-4fcb-b348-224508f77ae8">
-<span class="eqno">(45)<a class="headerlink" href="#equation-f9929f36-6693-4fcb-b348-224508f77ae8" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3b85cdb1-770a-4ae1-a0bc-ed5ff72d0523">
+<span class="eqno">(45)<a class="headerlink" href="#equation-3b85cdb1-770a-4ae1-a0bc-ed5ff72d0523" title="Permalink to this equation">#</a></span>\[\begin{equation}
 		\hat{\theta}=\arg\min_{\theta\in\mathbb{R}^p}\mathbb{P}_n\left(K_{hs}(S)\Big\{ \frac{A-\hat{\pi}_a(S)}{A-\hat{\pi}_b(S)}\Big\} \left[  \big\{R-\hat{\eta}(S)\big\}-\theta^Tb(S-s_0)\big\{A-\hat{\pi}_b(S)\big\} \right] \right).
 \end{equation}\]</div>
 <p><strong>Step 3</strong>: Cross-fitting(optional): \
@@ -1224,7 +1226,7 @@ Repeat Step 1–2 twice, first using <span class="math notranslate nohighlight">
 <p>In the theory section, Kennedy proved that Lp-R-learner, compared with traditional DR learner, can achieve the oracle convergence rate under milder conditions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Causal_Effect_Learning.Single_Stage.LpRlearner</span> <span class="k">import</span> <span class="n">LpRlearner</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Causal_Effect_Learning.Single_Stage.LpRlearner</span> <span class="kn">import</span> <span class="n">LpRlearner</span>
 </pre></div>
 </div>
 </div>
@@ -1282,9 +1284,9 @@ true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
 </div>
 </div>
 <p><strong>Conclusion</strong>: It will cost more time to use Lp-R-learner than other approaches. However, the overall estimation variance of Lp-R-learner is incredibly smaller than other approaches.</p>
-</div>
-</div>
-<div class="section" id="references">
+</section>
+</section>
+<section id="references">
 <h1>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h1>
 <ol class="simple">
 <li><p>Xinkun Nie and Stefan Wager. Quasi-oracle estimation of heterogeneous treatment effects. Biometrika, 108(2):299–319, 2021.</p></li>
@@ -1294,7 +1296,7 @@ true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
 <li><p>S. Lee, R. Okui, and Y.-J. Whang. Doubly robust uniform confidence band for the conditional average treatment effect function. Journal of Applied Econometrics, 32(7):1207–1225, 2017.</p></li>
 <li><p>D. J. Foster and V. Syrgkanis. Orthogonal statistical learning. arXiv preprint arXiv:1901.09036, 2019.</p></li>
 </ol>
-</div>
+</section>
 
     <script type="text/x-thebe-config">
     {

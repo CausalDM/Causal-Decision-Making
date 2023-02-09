@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Meta Learners &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -20,7 +21,7 @@
     href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
@@ -36,7 +37,7 @@
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -54,7 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="R-Learner, DR-Learner, and Lp-R-Learner" href="R-Learner%2C%20DR-Learner%2C%20Lp-R-Learner.html" />
-    <link rel="prev" title="Heterogeneous Treatment Effect Estimation (Single Stage)" href="HTE.html" />
+    <link rel="prev" title="HTE Estimation" href="HTE.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -195,12 +196,12 @@ const thebe_selector_output = ".output, .cell_output"
   <ul class="current">
    <li class="toctree-l2">
     <a class="reference internal" href="ATE.html">
-     ATE Estimation (Single Stage)
+     ATE Estimation
     </a>
    </li>
    <li class="toctree-l2 current active has-children">
     <a class="reference internal" href="HTE.html">
-     Heterogeneous Treatment Effect Estimation (Single Stage)
+     HTE Estimation
     </a>
     <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
     <label for="toctree-checkbox-3">
@@ -983,10 +984,10 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="section" id="meta-learners">
+  <section id="meta-learners">
 <h1><strong>Meta Learners</strong><a class="headerlink" href="#meta-learners" title="Permalink to this headline">#</a></h1>
 <p>In this section, we introduce three classical learners in HTE estimation. These meta learners are easy to implement, and can handle general data without additional assumptions.</p>
-<div class="section" id="s-learner">
+<section id="s-learner">
 <h2><strong>1. S-learner</strong><a class="headerlink" href="#s-learner" title="Permalink to this headline">#</a></h2>
 <p>The first estimator we would like to introduce is the S-learner, also known as a ``single learner”. This is one of the most foundamental learners in HTE esitmation, and is very easy to implement.</p>
 <p>Under three common assumptions in causal inference, i.e. (1) consistency, (2) no unmeasured confounders (NUC), (3) positivity assumption, the heterogeneous treatment effect can be identified by the observed data, where</p>
@@ -1004,16 +1005,16 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import related packages</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="k">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LinearRegression</span>
-<span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">ece55a445c76</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 4&gt;</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
 <span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
@@ -1298,8 +1299,8 @@ true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
 </div>
 </div>
 <p><strong>Conclusion:</strong> The performance of S-learner, at least in this toy example, is not very attractive. Although it is the easiest approach to implement, the over-simplicity tends to cover some information that can be better explored with some advanced approaches.</p>
-</div>
-<div class="section" id="t-learner">
+</section>
+<section id="t-learner">
 <h2><strong>2. T-learner</strong><a class="headerlink" href="#t-learner" title="Permalink to this headline">#</a></h2>
 <p>The second learner is called T-learner, which denotes ``two learners”. Instead of fitting a single model to estimate the potential outcomes under both treatment and control groups, T-learner aims to learn different models for <span class="math notranslate nohighlight">\(\mathbb{E}[R(1)|S]\)</span> and <span class="math notranslate nohighlight">\(\mathbb{E}[R(0)|S]\)</span> separately, and finally combines them to obtain a final HTE estimator.</p>
 <p>Define the control response function as <span class="math notranslate nohighlight">\(\mu_0(s)=\mathbb{E}[R(0)|S=s]\)</span>, and the treatment response function as <span class="math notranslate nohighlight">\(\mu_1(s)=\mathbb{E}[R(1)|S=s]\)</span>. The algorithm of T-learner is summarized below:</p>
@@ -1357,8 +1358,8 @@ true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
 </div>
 <p><strong>Conclusion:</strong> In this toy example, the overall estimation variance of T-learner is smaller than that of S-learner. In some cases when the treatment effect is relatively complex, it’s likely to yield better performance by fitting two models separately.</p>
 <p>However, in an extreme case when both <span class="math notranslate nohighlight">\(\mu_0(s)\)</span> and <span class="math notranslate nohighlight">\(\mu_1(s)\)</span> are nonlinear complicated function of state <span class="math notranslate nohighlight">\(s\)</span> while their difference is just a constant, T-learner will overfit each model very easily, yielding a nonlinear treatment effect estimator. In this case, other estimators are often preferred.</p>
-</div>
-<div class="section" id="x-learner">
+</section>
+<section id="x-learner">
 <h2><strong>3. X-learner</strong><a class="headerlink" href="#x-learner" title="Permalink to this headline">#</a></h2>
 <p>Next, let’s introduce the X-learner. As a combination of S-learner and T-learner, the X-learner can use information from the control(treatment) group to derive better estimators for the treatment(control) group, which is provably more efficient than the above two.</p>
 <p>The basic</p>
@@ -1433,7 +1434,7 @@ true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 4: fit the propensity score model $\hat{g}(s)$ and obtain the final HTE estimator by taking weighted average of tau0 and tau1</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegression</span> 
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span> 
 
 <span class="n">g</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
 <span class="n">g</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span><span class="n">data_behavior</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">])</span>
@@ -1475,14 +1476,14 @@ true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
 </div>
 <p><strong>Conclusion:</strong> In this toy example, the overall estimation variance of X-learner is the smallest, followed by T-learner, and the worst is given by S-learner.</p>
 <p><strong>Note</strong>: For more details about the meta learners, please refer to [1].</p>
-</div>
-</div>
-<div class="section" id="references">
+</section>
+</section>
+<section id="references">
 <h1>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h1>
 <ol class="simple">
 <li><p>Kunzel, S. R., Sekhon, J. S., Bickel, P. J., and Yu, B. (2019). Metalearners for estimating heterogeneous treatment effects using machine learning. Proceedings of the national academy of sciences 116, 4156–4165.</p></li>
 </ol>
-</div>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1515,7 +1516,7 @@ true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Heterogeneous Treatment Effect Estimation (Single Stage)</p>
+            <p class="prev-next-title">HTE Estimation</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="R-Learner%2C%20DR-Learner%2C%20Lp-R-Learner.html" title="next page">
