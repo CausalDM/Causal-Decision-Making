@@ -37,7 +37,8 @@ Otherwise, continue with the steps in the next section.
 ### Potential Error Messages when Running ghp-import
 1. File not found error: you may not have Git installed. Try installing/reinstalling the Git 
 2. Fail identification: the credential information saved in your local credential manager needs to be updated. You can generate personal access token at https://github.com/settings/tokens
-3. the 'causaldm.com' cannot be opened: It seems that only Runzhe can automatically change the link. For the rest of us, every time we push the `gh-pages` branch, we need to manually add a 'CNAME' file to the `gh-pages` branch. Then, within the 'CNAME' file, type `causaldm.com`.
+3. The default website link is https://causaldm.github.io/Causal-Decision-Making/
+  - If we want to change the link to the 'causaldm.com': manually add a 'CNAME' file to the `gh-pages` branch. Then, within the 'CNAME' file, type `causaldm.com`.
 
 
 One command line for the two steps: 
