@@ -989,8 +989,8 @@ title="Print to PDF"
 <section id="r-learner">
 <h2><strong>4. R learner</strong><a class="headerlink" href="#r-learner" title="Permalink to this headline">#</a></h2>
 <p>The idea of classical R-learner came from Robinson 1988 [3] and was formalized by Nie and Wager in 2020 [2]. The main idea of R learner starts from the partially linear model setup, in which we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9606884f-4b92-4e6e-a6d6-e40f3e7158c5">
-<span class="eqno">(39)<a class="headerlink" href="#equation-9606884f-4b92-4e6e-a6d6-e40f3e7158c5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-cc0b3c9d-24a8-4e29-b782-ba4b6a5de0bb">
+<span class="eqno">(39)<a class="headerlink" href="#equation-cc0b3c9d-24a8-4e29-b782-ba4b6a5de0bb" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{aligned}
     R&amp;=A\tau(S)+g_0(S)+U,\\
     A&amp;=m_0(S)+V,
@@ -998,21 +998,21 @@ title="Print to PDF"
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(V\)</span> satisfies <span class="math notranslate nohighlight">\(\mathbb{E}[U|D,X]=0\)</span>, <span class="math notranslate nohighlight">\(\mathbb{E}[V|X]=0\)</span>.</p>
 <p>After several manipulations, it’s easy to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-86c91f8a-ecbb-49bb-b9b1-c065889f4102">
-<span class="eqno">(40)<a class="headerlink" href="#equation-86c91f8a-ecbb-49bb-b9b1-c065889f4102" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-de3c4657-8b34-4501-b35e-e1f7791b0d10">
+<span class="eqno">(40)<a class="headerlink" href="#equation-de3c4657-8b34-4501-b35e-e1f7791b0d10" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	R-\mathbb{E}[R|S]=\tau(S)\cdot(A-\mathbb{E}[A|S])+\epsilon.
 \end{equation}\]</div>
 <p>Define <span class="math notranslate nohighlight">\(m_0(X)=\mathbb{E}[A|S]\)</span> and <span class="math notranslate nohighlight">\(l_0(X)=\mathbb{E}[R|S]\)</span>. A natural way to estimate <span class="math notranslate nohighlight">\(\tau(X)\)</span> is given below, which is also the main idea of R-learner:</p>
 <p><strong>Step 1</strong>: Regress <span class="math notranslate nohighlight">\(R\)</span> on <span class="math notranslate nohighlight">\(S\)</span> to obtain model <span class="math notranslate nohighlight">\(\hat{\eta}(S)=\hat{\mathbb{E}}[R|S]\)</span>; and regress <span class="math notranslate nohighlight">\(A\)</span> on <span class="math notranslate nohighlight">\(S\)</span> to obtain model <span class="math notranslate nohighlight">\(\hat{m}(S)=\hat{\mathbb{E}}[A|S]\)</span>.</p>
 <p><strong>Step 2</strong>: Regress outcome residual <span class="math notranslate nohighlight">\(R-\hat{l}(S)\)</span> on propensity score residual <span class="math notranslate nohighlight">\(A-\hat{m}(S)\)</span>.</p>
 <p>That is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-976eb208-c0a3-4b43-ba2a-ff56b88fbb06">
-<span class="eqno">(41)<a class="headerlink" href="#equation-976eb208-c0a3-4b43-ba2a-ff56b88fbb06" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8f38a79d-991d-4502-8ead-d5900c0c91a1">
+<span class="eqno">(41)<a class="headerlink" href="#equation-8f38a79d-991d-4502-8ead-d5900c0c91a1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	\hat{\tau}(S)=\arg\min_{\tau}\left\{\mathbb{E}_n\left[\left(\{R_i-\hat{\eta}(S_i)\}-\{A_i-\hat{m}(S_i)\}\cdot\tau(S_i)\right)^2\right]\right\}	
 \end{equation}\]</div>
 <p>The easiest way to do so is to specify <span class="math notranslate nohighlight">\(\hat{\tau}(S)\)</span> to the linear function class. In this case, <span class="math notranslate nohighlight">\(\tau(S)=S\beta\)</span>, and the problem becomes to estimate <span class="math notranslate nohighlight">\(\beta\)</span> by solving the following linear regression:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-553d467b-9400-48aa-9ace-d41f14af5f31">
-<span class="eqno">(42)<a class="headerlink" href="#equation-553d467b-9400-48aa-9ace-d41f14af5f31" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-43a016c1-e835-4410-962b-edf061bcee35">
+<span class="eqno">(42)<a class="headerlink" href="#equation-43a016c1-e835-4410-962b-edf061bcee35" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	\hat{\beta}=\arg\min_{\beta}\left\{\mathbb{E}_n\left[\left(\{R_i-\hat{\eta}(S_i)\}-\{A_i-\hat{m}(S_i)\} S_i\cdot \beta\right)^2\right]\right\}.
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -1135,13 +1135,13 @@ true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
 (b)  Using <span class="math notranslate nohighlight">\(I_{1}^n\)</span> to construct estimates <span class="math notranslate nohighlight">\(\hat\mu_a(s)\)</span> for <span class="math notranslate nohighlight">\(\mu_a(s):=\mathbb{E}[R|S=s,A=a]\)</span>;</p>
 <p><strong>Step 2</strong>: Pseudo-outcome regression: \
 Define <span class="math notranslate nohighlight">\(\widehat{\phi}(Z)\)</span> as the pseudo-outcome where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8e98a5d0-3560-4feb-8609-a76dcd617980">
-<span class="eqno">(43)<a class="headerlink" href="#equation-8e98a5d0-3560-4feb-8609-a76dcd617980" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ed15bd78-bede-45a6-b260-4d0e898a5dae">
+<span class="eqno">(43)<a class="headerlink" href="#equation-ed15bd78-bede-45a6-b260-4d0e898a5dae" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \widehat{\phi}(Z)=\frac{A-\hat{\pi}(S)}{\hat{\pi}(S)\{1-\hat{\pi}(S)\}}\Big\{R-\hat{\mu}_A(S)\Big\}+\hat{\mu}_1(S)-\hat{\mu}_0(S),
 \end{equation}\]</div>
 <p>and regress it on covariates <span class="math notranslate nohighlight">\(S\)</span> in the test sample <span class="math notranslate nohighlight">\(I_2^n\)</span>, yielding</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e296358f-5311-4a75-bb4b-20c7242cac49">
-<span class="eqno">(44)<a class="headerlink" href="#equation-e296358f-5311-4a75-bb4b-20c7242cac49" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-84de3ea5-e214-4ab6-9f8e-24e2f9bb436c">
+<span class="eqno">(44)<a class="headerlink" href="#equation-84de3ea5-e214-4ab6-9f8e-24e2f9bb436c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \widehat{\tau}_{\text{DR-learner}}(s)=\widehat{\mathbb{E}}_n[\widehat{\phi}(Z)|S=s].
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -1217,8 +1217,8 @@ true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
 (b)  Using <span class="math notranslate nohighlight">\(I_{1b}^n\)</span> to construct estimates <span class="math notranslate nohighlight">\(\hat{\eta}\)</span> of the regression function <span class="math notranslate nohighlight">\(\eta=\pi\mu_1+(1-\pi)\mu_0\)</span>, and estimtes <span class="math notranslate nohighlight">\(\hat{\pi}_b\)</span> of the propensity scores <span class="math notranslate nohighlight">\(\pi\)</span>.</p>
 <p><strong>Step 2</strong>: Localized double-residual regression: \
 Define <span class="math notranslate nohighlight">\(\hat{\tau}_r(s)\)</span> as the fitted value from a kernel-weighted least squares regression (in the test sample <span class="math notranslate nohighlight">\(I_2^n\)</span>) of outcome residual <span class="math notranslate nohighlight">\((R-\hat{\eta})\)</span> on basis terms <span class="math notranslate nohighlight">\(b\)</span> scaled by the treatment residual <span class="math notranslate nohighlight">\(A-\hat{\pi}_b\)</span>, with weights <span class="math notranslate nohighlight">\(\Big(\frac{A-\hat{\pi}_a}{A-\hat{\pi}_b}\Big)\cdot K_{hs}\)</span>. Thus <span class="math notranslate nohighlight">\(\hat{\tau}_r(s)=b(0)^T\hat{\theta}\)</span> for</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eb9e3713-96c7-4e0d-acd0-46bbd90367d8">
-<span class="eqno">(45)<a class="headerlink" href="#equation-eb9e3713-96c7-4e0d-acd0-46bbd90367d8" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0eb197e8-3a9e-4dd0-8657-482020cd4c9f">
+<span class="eqno">(45)<a class="headerlink" href="#equation-0eb197e8-3a9e-4dd0-8657-482020cd4c9f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 		\hat{\theta}=\arg\min_{\theta\in\mathbb{R}^p}\mathbb{P}_n\left(K_{hs}(S)\Big\{ \frac{A-\hat{\pi}_a(S)}{A-\hat{\pi}_b(S)}\Big\} \left[  \big\{R-\hat{\eta}(S)\big\}-\theta^Tb(S-s_0)\big\{A-\hat{\pi}_b(S)\big\} \right] \right).
 \end{equation}\]</div>
 <p><strong>Step 3</strong>: Cross-fitting(optional): \

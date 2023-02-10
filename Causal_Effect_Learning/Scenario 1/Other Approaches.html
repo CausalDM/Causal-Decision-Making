@@ -975,25 +975,25 @@ title="Print to PDF"
 <section id="generalized-random-forest">
 <h2><strong>7. Generalized Random Forest</strong><a class="headerlink" href="#generalized-random-forest" title="Permalink to this headline">#</a></h2>
 <p>Developed by Susan Athey, Julie Tibshirani and Stefan Wager, Generalized Random Forest [8] aims to give the solution to a set of local moment equations:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eed0d423-82c0-4119-8fba-94a7d5b0f1ed">
-<span class="eqno">(46)<a class="headerlink" href="#equation-eed0d423-82c0-4119-8fba-94a7d5b0f1ed" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ae3747d6-435a-4b51-8267-cb5f6d47bc84">
+<span class="eqno">(46)<a class="headerlink" href="#equation-ae3747d6-435a-4b51-8267-cb5f6d47bc84" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \mathbb{E}\big[\psi_{\tau(s),\nu(s)}(O_i)\big| S_i=s\big]=0,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\tau(s)\)</span> is the parameter we care about and <span class="math notranslate nohighlight">\(\nu(s)\)</span> is an optional nuisance parameter. In the problem of Heterogeneous Treatment Effect Evaluation, our parameter of interest <span class="math notranslate nohighlight">\(\tau(s)=\xi\cdot \beta(s)\)</span> is identified by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9fb9a40d-209b-47de-99d0-d57e25916367">
-<span class="eqno">(47)<a class="headerlink" href="#equation-9fb9a40d-209b-47de-99d0-d57e25916367" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-dfbe4892-447d-4b0d-8960-04bf2ae8f9b4">
+<span class="eqno">(47)<a class="headerlink" href="#equation-dfbe4892-447d-4b0d-8960-04bf2ae8f9b4" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \psi_{\beta(s),\nu(s)}(R_i,A_i)=(R_i-\beta(s)\cdot A_i-c(s))(1 \quad A_i^T)^T.
 \end{equation}\]</div>
 <p>The induced estimator <span class="math notranslate nohighlight">\(\hat{\tau}(s)\)</span> for <span class="math notranslate nohighlight">\(\tau(s)\)</span> can thus be solved by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9bc39564-d2a0-4240-8cd0-6b28d70b4393">
-<span class="eqno">(48)<a class="headerlink" href="#equation-9bc39564-d2a0-4240-8cd0-6b28d70b4393" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-fa93aec7-23c9-4ca5-82be-6d1e6fc32ef8">
+<span class="eqno">(48)<a class="headerlink" href="#equation-fa93aec7-23c9-4ca5-82be-6d1e6fc32ef8" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \hat{\tau}(s)=\xi^T\left(\sum_{i=1}^n \alpha_i(s)\big(A_i-\bar{A}_\alpha\big)^{\otimes 2}\right)^{-1}\sum_{i=1}^n \alpha_i(s)\big(A_i-\bar{A}_\alpha\big)\big(R_i-\bar{R}_\alpha\big),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\bar{A}_\alpha=\sum \alpha_i(s)A_i\)</span> and <span class="math notranslate nohighlight">\(\bar{R}_\alpha=\sum \alpha_i(s)R_i\)</span>, and we write <span class="math notranslate nohighlight">\(v^{\otimes 2}=vv^T\)</span>.</p>
 <p>Notice that this formula is just a weighted version of R-learner introduced above. However, instead of using ordinary kernel weighting functions that are prone to a strong curse of dimensionality, GRF uses an adaptive weighting function <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span> derived from a forest designed to express heterogeneity in the specified quantity of interest.</p>
 <p>To be more specific, in order to obtain <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span>, GRF first grows a set of <span class="math notranslate nohighlight">\(B\)</span> trees indexed by <span class="math notranslate nohighlight">\(1,\dots,B\)</span>. Then for each such tree, define <span class="math notranslate nohighlight">\(L_b(s)\)</span> as the set of training samples falling in the same ``leaf” as x. The weights <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span> then capture the frequency with which the <span class="math notranslate nohighlight">\(i\)</span>-th training example falls into the same leaf as <span class="math notranslate nohighlight">\(s\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e2c0ca28-e09f-4a63-bd7f-7baab2161ed6">
-<span class="eqno">(49)<a class="headerlink" href="#equation-e2c0ca28-e09f-4a63-bd7f-7baab2161ed6" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-94d1c64a-495c-4098-bb6d-2a9257e431ba">
+<span class="eqno">(49)<a class="headerlink" href="#equation-94d1c64a-495c-4098-bb6d-2a9257e431ba" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \alpha_{bi}(s)=\frac{\boldsymbol{1}\big(\{S_i\in L_b(s)\}\big)}{\big|L_b(s)\big|},\quad \alpha_i(s)=\frac{1}{B}\sum_{b=1}^B \alpha_{bi}(s).
 \end{equation}\]</div>
 <p>To sum up, GRF aims to leverage the splitting result of a series of trees to decide the ``localized” weight for HTE estimation at each point <span class="math notranslate nohighlight">\(x_0\)</span>. Compared with kernel functions, we may expect tree-based weights to be more flexible and better performed in real settings.</p>
