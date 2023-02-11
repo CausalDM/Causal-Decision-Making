@@ -55,7 +55,6 @@ data_behavior = get_data_simulation(n, seed, policy="behavior")
 HTE_true = get_data_simulation(n, seed, policy="1")['R']-get_data_simulation(n, seed, policy="0")['R']
 
 
-
 # In[ ]:
 
 
@@ -230,7 +229,6 @@ g = LogisticRegression()
 g.fit(data_behavior.iloc[:,0:2],data_behavior['A'])
 
 HTE_X_learner = g.predict_proba(data_behavior.iloc[:,0:2])[:,0]*tau0.predict(data_behavior.iloc[:,0:2]) + g.predict_proba(data_behavior.iloc[:,0:2])[:,1]*tau1.predict(data_behavior.iloc[:,0:2])
-
 
 
 

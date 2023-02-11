@@ -22,6 +22,15 @@ Following is a brief summary of the contents of each chapter.
 
 ## <a name="SL"></a> Causal Structure Learning (CSL)
 ---
+The main goal of causal structure learning is to learn the unknown causal relationships among different variables.
+
+![CSL_aim.png](CSL_aim.png)
+
+The classical causal structure learning methods can be categorized into three types.
+
+![CSL_type.png](CSL_type.png)
+
+
 This chapter discusses three classical techniques for learning causal graphs, each with its own merits and downsides.
 
 | Learners      Type    | Supported Model  | Noise Required for Training |   Complexity     | Scale-Free? | Learners Example |

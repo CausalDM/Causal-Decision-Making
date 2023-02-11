@@ -209,23 +209,58 @@ const thebe_selector_output = ".output, .cell_output"
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/Meta%20Learners.html">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/S-learner.html">
        <strong>
-        Meta Learners
+        1. S-learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/R-Learner%2C%20DR-Learner%2C%20Lp-R-Learner.html">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/T-learner.html">
        <strong>
-        R-Learner, DR-Learner, and Lp-R-Learner
+        2. T-learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/Other%20Approaches.html">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/X-learner.html">
        <strong>
-        Other Approaches
+        3. X-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/R-Learner.html">
+       <strong>
+        4. R learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/DR-Learner.html">
+       <strong>
+        5. DR-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/Lp-R-Learner.html">
+       <strong>
+        6. Lp-R-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/GRF.html">
+       <strong>
+        7. Generalized Random Forest
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/Dragonnet.html">
+       <strong>
+        8. Dragon Net
        </strong>
       </a>
      </li>
@@ -1006,8 +1041,8 @@ title="Print to PDF"
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>MTSS_Comb is an example of the general Thompson Sampling(TS)-based framework, MTSS [1], to deal with online combinatorial optimization problems.</p>
 <p><strong>Review of MTSS:</strong> MTSS[1] is a meta-learning framework designed for large-scale structured bandit problems [2]. Mainly, it is a TS-based algorithm that learns the information-sharing structure while minimizing the cumulative regrets. Adapting the TS framework to a problem-specific Bayesian hierarchical model, MTSS simultaneously enables information sharing among items via their features and models the inter-item heterogeneity. Specifically, it assumes that the item-specific parameter <span class="math notranslate nohighlight">\(\theta_i = E[Y_{t}(i)]\)</span> is sampled from a distribution <span class="math notranslate nohighlight">\(g(\theta_i|\boldsymbol{s}_i, \boldsymbol{\gamma})\)</span> instead of being entirely determined by <span class="math notranslate nohighlight">\(\boldsymbol{s}_i\)</span> via a deterministic function. Here, <span class="math notranslate nohighlight">\(g\)</span> is a model parameterized by an <strong>unknown</strong> vector <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>. The following is the general feature-based hierarchical model MTSS considered.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-713b6b41-e293-4d4e-8ff1-530a88d6bb34">
-<span class="eqno">(125)<a class="headerlink" href="#equation-713b6b41-e293-4d4e-8ff1-530a88d6bb34" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:general_hierachical}
+<div class="amsmath math notranslate nohighlight" id="equation-5ef85de4-3da6-4f8e-960e-3079a761551e">
+<span class="eqno">(125)<a class="headerlink" href="#equation-5ef85de4-3da6-4f8e-960e-3079a761551e" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:general_hierachical}
   \begin{alignedat}{2}
 &amp;\text{(Prior)} \quad
 \quad\quad\quad\quad\quad\quad\quad\quad\quad
@@ -1023,8 +1058,8 @@ title="Print to PDF"
 <p>where <span class="math notranslate nohighlight">\(Q(\boldsymbol{\gamma})\)</span> is the prior distribution for <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>.
 Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class of practical problems, <strong>scalable</strong> to large systems, and <strong>robust</strong> to the specification of the generalization model.</p>
 <p><strong>Review of MTSS_Comb:</strong> In this tutorial, as an example, we focus on the combinatorial semi-bandits with Gaussian outcome, <span class="math notranslate nohighlight">\(Y_{i, t}\)</span>, and consider using a linear mixed model (LMM) as the generalization model to share information. Specifically, the full model is as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7c175d79-e6db-4e56-b57e-c6efa60f0249">
-<span class="eqno">(126)<a class="headerlink" href="#equation-7c175d79-e6db-4e56-b57e-c6efa60f0249" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:LMM}
+<div class="amsmath math notranslate nohighlight" id="equation-5471ae24-c495-4d03-8a44-5e050f60cf69">
+<span class="eqno">(126)<a class="headerlink" href="#equation-5471ae24-c495-4d03-8a44-5e050f60cf69" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:LMM}
     \begin{split}
      \theta_i &amp;\sim \mathcal{N}(\boldsymbol{s}_i^T \boldsymbol{\gamma}, \sigma_1^2), \forall i \in [N],\\
     Y_{i, t}(a) &amp;\sim \mathcal{N}(\theta_i, \sigma_2^2), \forall i \in a,\\
@@ -1068,7 +1103,7 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:\GitHub\CausalDM&#39;</span><span class="p">)</span>
 
-<span class="ne">FileNotFoundError</span>: [WinError 3] The system cannot find the path specified: &#39;D:\\GitHub\\CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;D:\\GitHub\\CausalDM&#39;
 </pre></div>
 </div>
 </div>
@@ -1078,7 +1113,7 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Structured_Bandits.Combinatorial_Semi</span> <span class="k">import</span> <span class="n">MTSS_Comb</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Structured_Bandits.Combinatorial_Semi</span> <span class="kn">import</span> <span class="n">MTSS_Comb</span>
 </pre></div>
 </div>
 </div>
@@ -1089,7 +1124,7 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
 <p>Here, we imitate an environment based on the Adult dataset. The length of horizon, <span class="math notranslate nohighlight">\(T\)</span>, is specified as <span class="math notranslate nohighlight">\(500\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Structured_Bandits.Combinatorial_Semi</span> <span class="k">import</span> <span class="n">_env_realComb</span> <span class="k">as</span> <span class="n">_env</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Structured_Bandits.Combinatorial_Semi</span> <span class="kn">import</span> <span class="n">_env_realComb</span> <span class="k">as</span> <span class="n">_env</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">_env</span><span class="o">.</span><span class="n">CombSemi_env</span><span class="p">(</span><span class="n">T</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1187,8 +1222,8 @@ Starting from t = 0, for each step t, there are three steps:</p>
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
-            path: "./Causal_Policy_Learning\Scenario4\Structured_Bandits\Combinatorial-Semi"
+            name: "python3",
+            path: "./Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi"
         },
         predefinedOutput: true
     }

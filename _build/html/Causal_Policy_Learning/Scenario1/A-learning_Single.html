@@ -209,23 +209,58 @@ const thebe_selector_output = ".output, .cell_output"
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/Meta%20Learners.html">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/S-learner.html">
        <strong>
-        Meta Learners
+        1. S-learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/R-Learner%2C%20DR-Learner%2C%20Lp-R-Learner.html">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/T-learner.html">
        <strong>
-        R-Learner, DR-Learner, and Lp-R-Learner
+        2. T-learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/Other%20Approaches.html">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/X-learner.html">
        <strong>
-        Other Approaches
+        3. X-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/R-Learner.html">
+       <strong>
+        4. R learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/DR-Learner.html">
+       <strong>
+        5. DR-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/Lp-R-Learner.html">
+       <strong>
+        6. Lp-R-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/GRF.html">
+       <strong>
+        7. Generalized Random Forest
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/Dragonnet.html">
+       <strong>
+        8. Dragon Net
        </strong>
       </a>
      </li>
@@ -984,32 +1019,32 @@ title="Print to PDF"
 <p>Suppose there are <span class="math notranslate nohighlight">\(m\)</span> number of options, and the action space <span class="math notranslate nohighlight">\(\mathcal{A}=\{0,1,\dots,m-1\}\)</span>. Contrast-based A-learning, as the name suggested, aims to learn and estimate the constrast function, <span class="math notranslate nohighlight">\(C_{j}(X)\)</span> for each treatment <span class="math notranslate nohighlight">\(j=1,2,\cdots, m-1\)</span>. Furthermore, we also need to posit a model for the conditional expected potential outcome for the control option (treatment <span class="math notranslate nohighlight">\(0\)</span>), <span class="math notranslate nohighlight">\(Q(S,0)\)</span>, and the propensity function <span class="math notranslate nohighlight">\(\omega(S,A)\)</span>, if the true values are not specified. Detailed definitions are provided in the following.</p>
 <ul>
 <li><p>Q-function:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a3b9c775-a810-4bc6-9ce9-1a4e8c51f12b">
-<span class="eqno">(54)<a class="headerlink" href="#equation-a3b9c775-a810-4bc6-9ce9-1a4e8c51f12b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b6f05aaf-4976-4eaa-aa18-7178dbecccc5">
+<span class="eqno">(54)<a class="headerlink" href="#equation-b6f05aaf-4976-4eaa-aa18-7178dbecccc5" title="Permalink to this equation">#</a></span>\[\begin{align}
     Q(s,a)=E[R(a)|S=s],
     \end{align}\]</div>
 <p>Alternatively, with the contrast function <span class="math notranslate nohighlight">\(C_j(S)\)</span> which will be defined later,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-339f4e24-f6bc-4199-936a-375b7a2d2e67">
-<span class="eqno">(55)<a class="headerlink" href="#equation-339f4e24-f6bc-4199-936a-375b7a2d2e67" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-935b16ec-9a41-4fd0-ae4a-9fa2059b72bb">
+<span class="eqno">(55)<a class="headerlink" href="#equation-935b16ec-9a41-4fd0-ae4a-9fa2059b72bb" title="Permalink to this equation">#</a></span>\[\begin{align}
     Q(s,j) = Q(s,0) + C_{j}(s),\quad j=0,\dots,m-1.
     \end{align}\]</div>
 </li>
 <li><p>Contrast functions (optimal blip to zero functions)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3fbecfe2-d661-4d00-9f4e-9ca1bd4d0497">
-<span class="eqno">(56)<a class="headerlink" href="#equation-3fbecfe2-d661-4d00-9f4e-9ca1bd4d0497" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-235a30c3-c712-42a3-ae28-258791d4b37e">
+<span class="eqno">(56)<a class="headerlink" href="#equation-235a30c3-c712-42a3-ae28-258791d4b37e" title="Permalink to this equation">#</a></span>\[\begin{align}
     C_{j}(s)=Q(s,j)-Q(s,0),\quad j=0,\dots,m-1,
     \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(C_{0}(s) = 0\)</span>.</p>
 </li>
 <li><p>Propensity score</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bf6cd9b1-0a5f-46c6-9762-cc4668436ef5">
-<span class="eqno">(57)<a class="headerlink" href="#equation-bf6cd9b1-0a5f-46c6-9762-cc4668436ef5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1b5ce61a-fc01-4b9b-a931-804a31a4cfdf">
+<span class="eqno">(57)<a class="headerlink" href="#equation-1b5ce61a-fc01-4b9b-a931-804a31a4cfdf" title="Permalink to this equation">#</a></span>\[\begin{align}
     \omega(s,a)=P(A=a|S=s)
     \end{align}\]</div>
 </li>
 <li><p>Optimal regime</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0b0731fc-ce2e-4d9d-a780-fd43e26cfb76">
-<span class="eqno">(58)<a class="headerlink" href="#equation-0b0731fc-ce2e-4d9d-a780-fd43e26cfb76" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d1aac364-872f-4cb6-80d6-800bd451e039">
+<span class="eqno">(58)<a class="headerlink" href="#equation-d1aac364-872f-4cb6-80d6-800bd451e039" title="Permalink to this equation">#</a></span>\[\begin{align}
     d^{opt}(s)=\arg\max_{j\in\mathcal{A}}C_{j}(S)
     \end{align}\]</div>
 </li>
@@ -1039,8 +1074,8 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import learner</span>
-<span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="k">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="k">import</span> <span class="n">ALearning</span>
+<span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">ALearning</span>
 </pre></div>
 </div>
 </div>
@@ -1087,8 +1122,8 @@ title="Print to PDF"
 </div>
 </div>
 <p>By specifing the model_info, we assume  the following models:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b43f7e63-8092-44cd-97a9-b194124a53e1">
-<span class="eqno">(59)<a class="headerlink" href="#equation-b43f7e63-8092-44cd-97a9-b194124a53e1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2513bdc8-ca8a-4ff6-8929-9a84b1a20d37">
+<span class="eqno">(59)<a class="headerlink" href="#equation-2513bdc8-ca8a-4ff6-8929-9a84b1a20d37" title="Permalink to this equation">#</a></span>\[\begin{align}
 Q(s,0,\phi) &amp;= \phi_{00}+\phi_{01}*recency+\phi_{02}*history,\\
 C_{1}(s,\psi_{0}) &amp;= 0\\
 C_{1}(s,\psi_{1}) &amp;= \psi_{10}+\psi_{11}*recency+\psi_{12}*history,\\
@@ -1130,8 +1165,8 @@ opt value: 126.18615811062617
 </div>
 </div>
 <p><strong>Interpretation:</strong> the fitted contrast models are</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e275524d-c14f-4234-a948-7a036177d9ee">
-<span class="eqno">(60)<a class="headerlink" href="#equation-e275524d-c14f-4234-a948-7a036177d9ee" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f6b4d353-f0c9-4ea4-9d1c-35222a6df057">
+<span class="eqno">(60)<a class="headerlink" href="#equation-f6b4d353-f0c9-4ea4-9d1c-35222a6df057" title="Permalink to this equation">#</a></span>\[\begin{align}
 C_{0}(s,\psi_{0}) &amp;= 0\\
 C_{1}(s,\psi_{1}) &amp;= 23.39-4.03*recency+.005*history,\\
 C_{2}(s,\psi_{2}) &amp;= 21.03-4.71*recency-.003*history,\\
@@ -1246,8 +1281,8 @@ C_{2}(s,\psi_{2}) &amp;= 21.03-4.71*recency-.003*history,\\
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
-            path: "./Causal_Policy_Learning\Scenario1"
+            name: "python3",
+            path: "./Causal_Policy_Learning/Scenario1"
         },
         predefinedOutput: true
     }

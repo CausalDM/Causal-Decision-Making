@@ -209,23 +209,58 @@ const thebe_selector_output = ".output, .cell_output"
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/Meta%20Learners.html">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/S-learner.html">
        <strong>
-        Meta Learners
+        1. S-learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/R-Learner%2C%20DR-Learner%2C%20Lp-R-Learner.html">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/T-learner.html">
        <strong>
-        R-Learner, DR-Learner, and Lp-R-Learner
+        2. T-learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/Other%20Approaches.html">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/X-learner.html">
        <strong>
-        Other Approaches
+        3. X-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/R-Learner.html">
+       <strong>
+        4. R learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/DR-Learner.html">
+       <strong>
+        5. DR-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/Lp-R-Learner.html">
+       <strong>
+        6. Lp-R-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/GRF.html">
+       <strong>
+        7. Generalized Random Forest
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/Dragonnet.html">
+       <strong>
+        8. Dragon Net
        </strong>
       </a>
      </li>
@@ -1005,8 +1040,8 @@ title="Print to PDF"
 <div class="section" id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>The <strong>Meta-TS</strong>[1] assumes that the mean potential rewards, <span class="math notranslate nohighlight">\(\mu_{j,a} = E(R_{j,t}(a))\)</span>, for each task <span class="math notranslate nohighlight">\(j\)</span> are i.i.d sampled from some distribution parameterized by <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>. Specifically, it assumes that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a08e5b90-74ea-430b-b53e-03ba43f8e979">
-<span class="eqno">(110)<a class="headerlink" href="#equation-a08e5b90-74ea-430b-b53e-03ba43f8e979" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-72cad238-8400-4237-9b29-3397596baa50">
+<span class="eqno">(110)<a class="headerlink" href="#equation-72cad238-8400-4237-9b29-3397596baa50" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{alignedat}{2}
 &amp;\text{(meta-Prior)} \quad
 \quad\quad\quad    \boldsymbol{\gamma} &amp;&amp;\sim Q(\boldsymbol{\gamma}), \\
@@ -1018,8 +1053,8 @@ title="Print to PDF"
 \end{equation}\]</div>
 <p>To learn the prior distribution of <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_{j}\)</span>, it introduces a meta-parameter <span class="math notranslate nohighlight">\(\gamma\)</span> with a meta-prior distribution <span class="math notranslate nohighlight">\(Q(\gamma)\)</span>. The <strong>Meta-TS</strong> efficiently leverages the knowledge received from different tasks to learn the prior distribution and to guide the exploration of each task by maintaining the meta-posterior distribution of <span class="math notranslate nohighlight">\(\gamma\)</span>. Theoretically, it is demonstrated to have a regret bound comparable to that of the Thompson sampling method with known prior distribution of <span class="math notranslate nohighlight">\(\mu_{j,a}\)</span>. Both the</p>
 <p>Considering a Gaussian bandits, we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a7210520-0cee-425f-9b6b-5a67e6845e5f">
-<span class="eqno">(111)<a class="headerlink" href="#equation-a7210520-0cee-425f-9b6b-5a67e6845e5f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c80bbb6b-3280-4797-bfce-845a5ea14ffd">
+<span class="eqno">(111)<a class="headerlink" href="#equation-c80bbb6b-3280-4797-bfce-845a5ea14ffd" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{alignedat}{2}
 &amp;\text{(meta-Prior)} \quad
 \quad\quad\quad    \boldsymbol{\gamma} &amp;&amp;\sim Q(\boldsymbol{\gamma}), \\
@@ -1030,8 +1065,8 @@ title="Print to PDF"
       \end{alignedat}
 \end{equation}\]</div>
 <p>Similarly, considering the Bernoulli bandits, we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5540903e-f551-4715-b7ef-738b053d8679">
-<span class="eqno">(112)<a class="headerlink" href="#equation-5540903e-f551-4715-b7ef-738b053d8679" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f3b85f98-41a6-4dae-b1db-3eda6e23cefe">
+<span class="eqno">(112)<a class="headerlink" href="#equation-f3b85f98-41a6-4dae-b1db-3eda6e23cefe" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{alignedat}{2}
 &amp;\text{(meta-Prior)} \quad
 \quad\quad\quad    \boldsymbol{\gamma} &amp;&amp;\sim Q(\boldsymbol{\gamma}), \\
@@ -1042,8 +1077,8 @@ title="Print to PDF"
       \end{alignedat}
 \end{equation}\]</div>
 <p>While various meta-priors can be used, by default, we consider a finite space of <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4db6574e-768c-49e5-b395-38ddc8b659ce">
-<span class="eqno">(113)<a class="headerlink" href="#equation-4db6574e-768c-49e5-b395-38ddc8b659ce" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-595a0dc5-b906-4bf9-9a75-40134f908de0">
+<span class="eqno">(113)<a class="headerlink" href="#equation-595a0dc5-b906-4bf9-9a75-40134f908de0" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \mathcal{P} = \{(\alpha_{i,j})_{i=1}^{K}, (\beta_{i,j})_{i=1}^{K}\}_{j=1}^{L},
 \end{equation}\]</div>
 <p>which contains <strong>L</strong> potential instance priors and assume a categorical distribution over the <span class="math notranslate nohighlight">\(\mathcal{P}\)</span> as the meta-prior. See [1] for more information about the corresponding meta-posterior updating.</p>
@@ -1078,7 +1113,7 @@ title="Print to PDF"
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:\GitHub\CausalDM&#39;</span><span class="p">)</span>
 
-<span class="ne">FileNotFoundError</span>: [WinError 3] The system cannot find the path specified: &#39;D:\\GitHub\\CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;D:\\GitHub\\CausalDM&#39;
 </pre></div>
 </div>
 </div>
@@ -1088,7 +1123,7 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Meta_Bandits</span> <span class="k">import</span> <span class="n">meta_TS_Gaussian</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Meta_Bandits</span> <span class="kn">import</span> <span class="n">meta_TS_Gaussian</span>
 </pre></div>
 </div>
 </div>
@@ -1099,7 +1134,7 @@ title="Print to PDF"
 <p>Here, we imitate an environment based on the MovieLens data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Meta_Bandits</span> <span class="k">import</span> <span class="n">_env_realMultiTask</span> <span class="k">as</span> <span class="n">_env</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Meta_Bandits</span> <span class="kn">import</span> <span class="n">_env_realMultiTask</span> <span class="k">as</span> <span class="n">_env</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">_env</span><span class="o">.</span><span class="n">MultiTask_Env</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Binary</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1181,7 +1216,7 @@ title="Print to PDF"
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Meta_Bandits</span> <span class="k">import</span> <span class="n">meta_TS_Binary</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Meta_Bandits</span> <span class="kn">import</span> <span class="n">meta_TS_Binary</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">_env</span><span class="o">.</span><span class="n">MultiTask_Env</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Binary</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 <span class="n">K</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">K</span>
 <span class="n">N</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">N</span>
@@ -1233,8 +1268,8 @@ title="Print to PDF"
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
-            path: "./Causal_Policy_Learning\Scenario4\Meta_Bandits"
+            name: "python3",
+            path: "./Causal_Policy_Learning/Scenario4/Meta_Bandits"
         },
         predefinedOutput: true
     }

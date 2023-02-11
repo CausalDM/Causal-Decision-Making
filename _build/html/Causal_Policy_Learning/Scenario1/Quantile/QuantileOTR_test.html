@@ -209,23 +209,58 @@ const thebe_selector_output = ".output, .cell_output"
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/Meta%20Learners.html">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/S-learner.html">
        <strong>
-        Meta Learners
+        1. S-learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/R-Learner%2C%20DR-Learner%2C%20Lp-R-Learner.html">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/T-learner.html">
        <strong>
-        R-Learner, DR-Learner, and Lp-R-Learner
+        2. T-learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/Other%20Approaches.html">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/X-learner.html">
        <strong>
-        Other Approaches
+        3. X-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/R-Learner.html">
+       <strong>
+        4. R learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/DR-Learner.html">
+       <strong>
+        5. DR-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/Lp-R-Learner.html">
+       <strong>
+        6. Lp-R-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/GRF.html">
+       <strong>
+        7. Generalized Random Forest
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/Dragonnet.html">
+       <strong>
+        8. Dragon Net
        </strong>
       </a>
      </li>
@@ -1287,8 +1322,8 @@ Thus, the optimal policy to maximize a specific quantile of the outcome distribu
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">n0</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># the number of samples used to estimate the true reward distribution by MC</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> 
 <span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">223</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="ne">NameError</span>: name &#39;np&#39; is not defined
 </pre></div>
@@ -1406,7 +1441,7 @@ Successfully installed scikit-uplift-0.4.0
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklift.datasets</span> <span class="k">import</span> <span class="n">fetch_hillstrom</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklift.datasets</span> <span class="kn">import</span> <span class="n">fetch_hillstrom</span>
 <span class="c1"># continuous Y</span>
 <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">treatment</span> <span class="o">=</span> <span class="n">fetch_hillstrom</span><span class="p">(</span><span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;spend&#39;</span><span class="p">,</span> <span class="n">return_X_y_t</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
@@ -2377,8 +2412,8 @@ settings, we are interested in evaluating the outcome of some fixed policy <span
 <hr class="docutils" />
 <p>###<strong>Main idea:</strong>
 The doubly robust estimator of quantile estimation is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c64d4dbb-e568-4e7f-8557-e3e1b03a4a5f">
-<span class="eqno">(62)<a class="headerlink" href="#equation-c64d4dbb-e568-4e7f-8557-e3e1b03a4a5f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8e83455e-644d-4676-bf99-dd1f2fe5599a">
+<span class="eqno">(62)<a class="headerlink" href="#equation-8e83455e-644d-4676-bf99-dd1f2fe5599a" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \hat{\eta}_n=\arg\min_{\eta} \frac{1}{n}\sum_{i=1}^n\left[\frac{C(A_i,X_i)}{\hat{K}_C(X_i)}\rho_{\tau}(Y_i-\eta)+\left(1-\frac{C(A_i,X_i)}{\hat{K}_C(X_i)}\right)\hat{\mathbb{E}}[\rho_{\tau}(\hat{Y}-\eta)|X=X_i,A=\pi(X_i)]\right],
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\hat{K}_C(X)=\hat{b}(X)\pi(X)+(1-\hat{b}(X))(1-\pi(X))\)</span>, and</p>
@@ -2717,7 +2752,7 @@ Successfully installed scikit-uplift-0.4.0
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklift.datasets</span> <span class="k">import</span> <span class="n">fetch_hillstrom</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklift.datasets</span> <span class="kn">import</span> <span class="n">fetch_hillstrom</span>
 <span class="c1"># continuous Y</span>
 <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">treatment</span> <span class="o">=</span> <span class="n">fetch_hillstrom</span><span class="p">(</span><span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;spend&#39;</span><span class="p">,</span> <span class="n">return_X_y_t</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
@@ -3123,8 +3158,8 @@ fold:  4
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
-            path: "./Causal_Policy_Learning\Scenario1\Quantile"
+            name: "python3",
+            path: "./Causal_Policy_Learning/Scenario1/Quantile"
         },
         predefinedOutput: true
     }

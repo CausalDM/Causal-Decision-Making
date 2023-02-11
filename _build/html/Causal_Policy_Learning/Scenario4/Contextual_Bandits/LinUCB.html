@@ -209,23 +209,58 @@ const thebe_selector_output = ".output, .cell_output"
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/Meta%20Learners.html">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/S-learner.html">
        <strong>
-        Meta Learners
+        1. S-learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/R-Learner%2C%20DR-Learner%2C%20Lp-R-Learner.html">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/T-learner.html">
        <strong>
-        R-Learner, DR-Learner, and Lp-R-Learner
+        2. T-learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/Other%20Approaches.html">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/X-learner.html">
        <strong>
-        Other Approaches
+        3. X-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/R-Learner.html">
+       <strong>
+        4. R learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/DR-Learner.html">
+       <strong>
+        5. DR-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/Lp-R-Learner.html">
+       <strong>
+        6. Lp-R-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/GRF.html">
+       <strong>
+        7. Generalized Random Forest
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/Dragonnet.html">
+       <strong>
+        8. Dragon Net
        </strong>
       </a>
      </li>
@@ -1005,21 +1040,21 @@ title="Print to PDF"
 <div class="section" id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. <strong>LinUCB</strong>[1] uses feature information to guide exploration by assuming a linear model between the expected potential reward and the features. Specifcially, for the Gaussain bandits, we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f1963b78-f095-4011-b8de-df6a5187c9bb">
-<span class="eqno">(104)<a class="headerlink" href="#equation-f1963b78-f095-4011-b8de-df6a5187c9bb" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-973c7bf7-6978-45ed-a72a-9951ed4ea6fe">
+<span class="eqno">(104)<a class="headerlink" href="#equation-973c7bf7-6978-45ed-a72a-9951ed4ea6fe" title="Permalink to this equation">#</a></span>\[\begin{align}
 E(R_{t}(a)) = \theta_a = \boldsymbol{s}_a^T \boldsymbol{\gamma}.
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-b9d37376-b686-48cf-8b76-26538d3a64d6">
-<span class="eqno">(105)<a class="headerlink" href="#equation-b9d37376-b686-48cf-8b76-26538d3a64d6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d83f90fd-9146-4407-82c5-8c90da36c137">
+<span class="eqno">(105)<a class="headerlink" href="#equation-d83f90fd-9146-4407-82c5-8c90da36c137" title="Permalink to this equation">#</a></span>\[\begin{align}
 U_a^t = \boldsymbol{s}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{s}_a^T V^{-1}  \boldsymbol{s}_a},
 \end{align}\]</div>
 <p>As for the Bernoulli bandits, we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9a5aff0d-cea3-4924-b643-7b962b44c1e4">
-<span class="eqno">(106)<a class="headerlink" href="#equation-9a5aff0d-cea3-4924-b643-7b962b44c1e4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-31779a18-d6ab-4096-b417-5264e4814620">
+<span class="eqno">(106)<a class="headerlink" href="#equation-31779a18-d6ab-4096-b417-5264e4814620" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta_{a} = logistic(\boldsymbol{s}_a^T \boldsymbol{\gamma}),
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-f74382fb-9943-40e6-bae0-d184185857db">
-<span class="eqno">(107)<a class="headerlink" href="#equation-f74382fb-9943-40e6-bae0-d184185857db" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d3278465-485d-4405-8ab1-0f02a851fc29">
+<span class="eqno">(107)<a class="headerlink" href="#equation-d3278465-485d-4405-8ab1-0f02a851fc29" title="Permalink to this equation">#</a></span>\[\begin{align}
 U_a^t = \boldsymbol{s}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{s}_a^T V^{-1}  \boldsymbol{s}_a},
 \end{align}\]</div>
 <p>Finally, using the estimated upper confidence bounds, <span class="math notranslate nohighlight">\(A_t = \arg \max_{a \in \mathcal{A}} U_a^t\)</span> would be selected.</p>
@@ -1055,7 +1090,7 @@ U_a^t = \boldsymbol{s}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{s
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:\GitHub\CausalDM&#39;</span><span class="p">)</span>
 
-<span class="ne">FileNotFoundError</span>: [WinError 3] The system cannot find the path specified: &#39;D:\\GitHub\\CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;D:\\GitHub\\CausalDM&#39;
 </pre></div>
 </div>
 </div>
@@ -1065,7 +1100,7 @@ U_a^t = \boldsymbol{s}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{s
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.CMAB</span> <span class="k">import</span> <span class="n">LinUCB</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.Online.CMAB</span> <span class="kn">import</span> <span class="n">LinUCB</span>
 </pre></div>
 </div>
 </div>
@@ -1076,7 +1111,7 @@ U_a^t = \boldsymbol{s}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{s
 <p>Here, we imitate an environment based on the MovieLens data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.CMAB</span> <span class="k">import</span> <span class="n">_env_realCMAB</span> <span class="k">as</span> <span class="n">_env</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.CMAB</span> <span class="kn">import</span> <span class="n">_env_realCMAB</span> <span class="k">as</span> <span class="n">_env</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">_env</span><span class="o">.</span><span class="n">Single_Contextual_Env</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Binary</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1187,8 +1222,8 @@ U_a^t = \boldsymbol{s}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{s
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
-            path: "./Causal_Policy_Learning\Scenario4\Contextual_Bandits"
+            name: "python3",
+            path: "./Causal_Policy_Learning/Scenario4/Contextual_Bandits"
         },
         predefinedOutput: true
     }
