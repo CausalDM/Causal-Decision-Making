@@ -1194,6 +1194,8 @@ title="Print to PDF"
 <hr class="docutils" />
 <p>The diagram below depicts the overall structure of this book, which is comprised of three primary components: <strong>Causal Structure Learning</strong>, <strong>Causal Policy Learning</strong>, and <strong>Causal Effect Learning</strong>. Specifically, in the chapter <a class="reference external" href="#SL"><strong>Causal Structure Learning (CSL)</strong></a>, we present state-of-the-art techniques for learning the skeleton of causal relationships among input variables. When a causal structure is known, the second chapter of <a class="reference external" href="#ML"><strong>Causal Effect Learning (CEL)</strong></a> introduces approaches making causal inference. Finally, the <a class="reference external" href="#PL"><strong>Causal Policy Learning (CPL)</strong></a> chapter introduces diverse policy learners to learn optimal policies and evaluate various policies of interest.</p>
 <p><img alt="Overall.png" src="_images/Overall.png" /></p>
+<p>[A new overall figure:]</p>
+<p><img alt="Overall.new.png" src="_images/Overall.new.png" /></p>
 <p>Following is a brief summary of the contents of each chapter.</p>
 </div>
 <div class="section" id="a-name-sl-a-causal-structure-learning-csl">
@@ -1241,15 +1243,36 @@ title="Print to PDF"
 <hr class="docutils" />
 <div class="section" id="a-name-case1-a-scenario-1-i-i-d">
 <h3><a name="Case1"></a> Scenario 1: I.I.D<a class="headerlink" href="#a-name-case1-a-scenario-1-i-i-d" title="Permalink to this headline">#</a></h3>
-<p>Observations in Scenario 1 are i.i.d. sampled.</p>
+<p>In Scenario 1, we consider the standard case where all observations are i.i.d.. The full data of interest is <span class="math notranslate nohighlight">\((S_i,A_i,R_i)\)</span> where <span class="math notranslate nohighlight">\(i\in\{1,\dots,N\}\)</span>.</p>
 <a class="reference internal image-reference" href="_images/CEL-IID.png"><img alt="Scenario1" class="align-center" src="_images/CEL-IID.png" style="width: 400px;" /></a>
 </div>
 <div class="section" id="a-name-case1-a-scenario-2-off-policy-evaluation-under-mdp">
 <h3><a name="Case1"></a> Scenario 2: Off-Policy Evaluation under MDP<a class="headerlink" href="#a-name-case1-a-scenario-2-off-policy-evaluation-under-mdp" title="Permalink to this headline">#</a></h3>
+<p>[Same as Causal Policy Learning – offline + evaluation part. Shall we move some contents here?]</p>
 </div>
 <div class="section" id="a-name-case1-a-scenario-3-panel-data">
 <h3><a name="Case1"></a> Scenario 3: Panel Data<a class="headerlink" href="#a-name-case1-a-scenario-3-panel-data" title="Permalink to this headline">#</a></h3>
+<p>In Scenario 3, we consider the panel data where samples are measured over time. This type of data can be found in economics, social sciences, medicine and epidemiology, finance, and the physical sciences. The outcome of interest is defined as <span class="math notranslate nohighlight">\(R_{i,t}\)</span>, which denotes the reward of observation <span class="math notranslate nohighlight">\(i\)</span>  at time <span class="math notranslate nohighlight">\(t\)</span>.</p>
+<p>Consider a (either experimental or observational) study with <span class="math notranslate nohighlight">\(N = m + n\)</span> units and <span class="math notranslate nohighlight">\(T = T_0 + T_1\)</span> time periods in total. Without loss of generality, we assume that the first m units are treated units and the last n units are control units. Each unit <span class="math notranslate nohighlight">\(i\)</span> is associated with a <span class="math notranslate nohighlight">\(d\)</span>-dimensional time-invariant feature vector <span class="math notranslate nohighlight">\(S_i\in \mathbb{R}^d\)</span>,  and receives an unit-level outcome <span class="math notranslate nohighlight">\(R_{i,t}\)</span> at time <span class="math notranslate nohighlight">\(t\)</span>. The full data structure is given below:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left[
+\begin{array}{ccc:ccc}
+S_{1} &amp; \cdots &amp; S_{m} &amp; S_{m+1} &amp; \cdots &amp; S_{n} \\
+\hline
+R_{1,1} &amp; \cdots &amp; R_{m,1} &amp; R_{m+1,1} &amp; \cdots &amp; R_{m+n,1} \\
+\vdots &amp; &amp; \vdots &amp;\vdots &amp; &amp; \vdots \\
+R_{1,T_0} &amp; \cdots &amp; R_{m,T_0} &amp; R_{m+1,T_0} &amp; \cdots &amp; R_{m+n,T_0} \\
+\hdashline
+R_{1,T_0+1} &amp; \cdots &amp; R_{m,T_0+1} &amp; R_{m+1,T_0+1} &amp; \cdots &amp; R_{m+n,T_0+1} \\
+\vdots &amp; &amp; \vdots &amp;\vdots &amp; &amp; \vdots \\
+R_{1,T} &amp; \cdots &amp; R_{m,T} &amp; R_{m+1,T} &amp; \cdots &amp; R_{m+n,T} \\
+\end{array}
+\right]
+\end{split}\]</div>
+<p>The current literature in dealing with panel data can be roughly divided into two categories: Difference-in-difference and synthetic control.</p>
 <a class="reference internal image-reference" href="_images/CEL-PanelData.png"><img alt="Scenario3" class="align-center" src="_images/CEL-PanelData.png" style="width: 400px;" /></a>
+<p>In general, DiD methods are applied in cases where we have a substantial number of units that are exposed to the policy, and researchers are willing to make a “parallel trends” assumption which implies that we can adequately control for selection effects by accounting for additive unit-specific and time-specific fixed effects. In contrast, synthetic control (SC) methods, introduced in a setting with only a single (or small number) of units exposed, seek to compensate for the lack of parallel trends by re-weighting units to match their pre-exposure trends. [2]</p>
 </div>
 <div class="section" id="a-name-case1-a-scenario-4-online-treatment-effect-evaluation">
 <h3><a name="Case1"></a> Scenario 4: Online Treatment Effect Evaluation<a class="headerlink" href="#a-name-case1-a-scenario-4-online-treatment-effect-evaluation" title="Permalink to this headline">#</a></h3>
@@ -1557,6 +1580,8 @@ title="Print to PDF"
 <div class="section" id="reference">
 <h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">#</a></h2>
 <p>[1] Tsiatis, A. A., Davidian, M., Holloway, S. T., &amp; Laber, E. B. (2019). Dynamic treatment regimes: Statistical methods for precision medicine. Chapman and Hall/CRC.</p>
+<p>[2] Dmitry Arkhangelsky, Susan Athey, David A Hirshberg, Guido W Imbens, and Stefan Wager. Synthetic
+difference in differences. Technical report, National Bureau of Economic Research, 2019.</p>
 </div>
 <div class="toctree-wrapper compound">
 </div>
