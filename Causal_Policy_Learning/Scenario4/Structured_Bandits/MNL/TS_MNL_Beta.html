@@ -209,23 +209,58 @@ const thebe_selector_output = ".output, .cell_output"
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/Meta%20Learners.html">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/S-learner.html">
        <strong>
-        Meta Learners
+        1. S-learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/R-Learner%2C%20DR-Learner%2C%20Lp-R-Learner.html">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/T-learner.html">
        <strong>
-        R-Learner, DR-Learner, and Lp-R-Learner
+        2. T-learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/Other%20Approaches.html">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/X-learner.html">
        <strong>
-        Other Approaches
+        3. X-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/R-Learner.html">
+       <strong>
+        4. R learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/DR-Learner.html">
+       <strong>
+        5. DR-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/Lp-R-Learner.html">
+       <strong>
+        6. Lp-R-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/GRF.html">
+       <strong>
+        7. Generalized Random Forest
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/Dragonnet.html">
+       <strong>
+        8. Dragon Net
        </strong>
       </a>
      </li>
@@ -995,14 +1030,14 @@ title="Print to PDF"
 <div class="section" id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>The first TS-based algorithm is developed by [1]. Noticing that direct inference under the standard multinomila logit model is intractable due to the complex dependency of the reward distribution on action slate <span class="math notranslate nohighlight">\(a\)</span>, an epoch-based algorithmic structure is introduced and is being more popular in recent bandit literature [1,2,3]. Under the epoch-type offering framework,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3d66ca8c-2afa-4560-9b4c-83865bad90a2">
-<span class="eqno">(130)<a class="headerlink" href="#equation-3d66ca8c-2afa-4560-9b4c-83865bad90a2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-91ac3b3e-72ef-40fb-b3a6-49ee9764ec3b">
+<span class="eqno">(130)<a class="headerlink" href="#equation-91ac3b3e-72ef-40fb-b3a6-49ee9764ec3b" title="Permalink to this equation">#</a></span>\[\begin{align}
     Y_{i}^l(a) &amp;\sim Geometric(\theta_i), \forall i \in a,\\
     R^l(a) &amp;= \sum_{i\in a}Y_{i}^l(a)\eta_{i}.
 \end{align}\]</div>
 <p>Taking the advantage of the nice conjugate relationship between the geometric distribution and the Beta distribution, the TS-based algorithm <strong>TS_MNL</strong> [1] is tractable and computationally efficient. Assuming a Beta prior over parameters <span class="math notranslate nohighlight">\(\theta_{i}\)</span>, at each epoch <span class="math notranslate nohighlight">\(l\)</span>, <strong>TS_MNL</strong> updates the posterior distribution of <span class="math notranslate nohighlight">\(\theta_{i}\)</span> according to the property of the Beta-Geometric conjugate pair, from which we then sample a <span class="math notranslate nohighlight">\(\tilde{\theta}_{i}^{l}\)</span>, and <span class="math notranslate nohighlight">\(\tilde{v}_{i}^{l}\)</span> is calculated directly as <span class="math notranslate nohighlight">\(\tilde{v}_{i}^{l}=1/\tilde{\theta}_{i}^{l}-1\)</span>. Finally, the optimal assortment <span class="math notranslate nohighlight">\(A^{l}\)</span> is determined efficiently through linear programming [1], such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-743c9ebe-9989-4ba4-ba7e-497acaa32770">
-<span class="eqno">(131)<a class="headerlink" href="#equation-743c9ebe-9989-4ba4-ba7e-497acaa32770" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d8ddc464-3618-4aaa-87d8-aba7adaeeef9">
+<span class="eqno">(131)<a class="headerlink" href="#equation-d8ddc464-3618-4aaa-87d8-aba7adaeeef9" title="Permalink to this equation">#</a></span>\[\begin{equation}
     A^{l} = arg max_{a \in \mathcal{A}} E(R_t(a) \mid\tilde{\boldsymbol{v}})=argmax_{a \in \mathcal{A}} \frac{\sum_{i\in a}\eta_{i}\tilde{v}_{i}}{1+\sum_{j\in a} \tilde{v}_{j}},
 \end{equation}\]</div>
 </div>
@@ -1040,7 +1075,7 @@ title="Print to PDF"
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:\GitHub\CausalDM&#39;</span><span class="p">)</span>
 
-<span class="ne">FileNotFoundError</span>: [WinError 3] The system cannot find the path specified: &#39;D:\\GitHub\\CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;D:\\GitHub\\CausalDM&#39;
 </pre></div>
 </div>
 </div>
@@ -1050,7 +1085,7 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Structured_Bandits.MNL</span> <span class="k">import</span> <span class="n">TS_MNL_Beta</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Structured_Bandits.MNL</span> <span class="kn">import</span> <span class="n">TS_MNL_Beta</span>
 </pre></div>
 </div>
 </div>
@@ -1061,7 +1096,7 @@ title="Print to PDF"
 <p>Here, we imitate an environment based on the MovieLens dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Structured_Bandits.MNL</span> <span class="k">import</span> <span class="n">_env_realMNL</span> <span class="k">as</span> <span class="n">_env</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Structured_Bandits.MNL</span> <span class="kn">import</span> <span class="n">_env_realMNL</span> <span class="k">as</span> <span class="n">_env</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">_env</span><span class="o">.</span><span class="n">MNL_env</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1148,8 +1183,8 @@ title="Print to PDF"
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
-            path: "./Causal_Policy_Learning\Scenario4\Structured_Bandits\MNL"
+            name: "python3",
+            path: "./Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL"
         },
         predefinedOutput: true
     }

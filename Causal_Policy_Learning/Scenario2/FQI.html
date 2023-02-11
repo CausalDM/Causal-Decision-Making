@@ -209,23 +209,58 @@ const thebe_selector_output = ".output, .cell_output"
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/Meta%20Learners.html">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/S-learner.html">
        <strong>
-        Meta Learners
+        1. S-learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/R-Learner%2C%20DR-Learner%2C%20Lp-R-Learner.html">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/T-learner.html">
        <strong>
-        R-Learner, DR-Learner, and Lp-R-Learner
+        2. T-learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/Other%20Approaches.html">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/X-learner.html">
        <strong>
-        Other Approaches
+        3. X-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/R-Learner.html">
+       <strong>
+        4. R learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/DR-Learner.html">
+       <strong>
+        5. DR-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/Lp-R-Learner.html">
+       <strong>
+        6. Lp-R-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/GRF.html">
+       <strong>
+        7. Generalized Random Forest
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/Dragonnet.html">
+       <strong>
+        8. Dragon Net
        </strong>
       </a>
      </li>
@@ -924,16 +959,16 @@ title="Print to PDF"
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p><strong>Q-function.</strong>
 The Q-function-based approach aims to direct learn the state-action value function (referred to as the Q-function)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0a73a741-e58a-44b3-806b-e5c66b20a96e">
-<span class="eqno">(85)<a class="headerlink" href="#equation-0a73a741-e58a-44b3-806b-e5c66b20a96e" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-e9ba60af-30dc-41ad-a463-ffe6249705c7">
+<span class="eqno">(85)<a class="headerlink" href="#equation-e9ba60af-30dc-41ad-a463-ffe6249705c7" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 Q^\pi(a,s)&amp;= \mathbb{E}^{\pi} (\sum_{t=0}^{+\infty} \gamma^t R_{t}|A_{0}=a,S_{0}=s)   
 \end{eqnarray}\]</div>
 <p>of either the policy <span class="math notranslate nohighlight">\(\pi\)</span> that we aim to evaluate or the optimal policy <span class="math notranslate nohighlight">\(\pi = \pi^*\)</span>.</p>
 <p><strong>Bellman optimality equations.</strong>
 The Q-learning-type policy learning is commonly based on the Bellman optimality equation, which characterizes the optimal policy <span class="math notranslate nohighlight">\(\pi^*\)</span> and is commonly used in policy optimization.
 Specifically, <span class="math notranslate nohighlight">\(Q^*\)</span> is the unique solution of</p>
-<div class="amsmath math notranslate nohighlight" id="equation-881ac21a-145e-4871-bcae-ba800ce44449">
-<span class="eqno">(86)<a class="headerlink" href="#equation-881ac21a-145e-4871-bcae-ba800ce44449" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1a7d3206-096d-408b-a960-800bf9cbe007">
+<span class="eqno">(86)<a class="headerlink" href="#equation-1a7d3206-096d-408b-a960-800bf9cbe007" title="Permalink to this equation">#</a></span>\[\begin{equation}
     Q(a, s) = \mathbb{E} \Big(R_t + \gamma \arg \max_{a'} Q(a, S_{t+1})  | A_t = a, S_t = s \Big).  \;\;\;\;\; \text{(2)} 
 \end{equation}\]</div>
 <p><strong>FQI.</strong>
@@ -943,8 +978,8 @@ Besides, the right-hand side of (2) is a contraction mapping.
 Therefore, we can consider a fixed-point method:
 with an initial estimate <span class="math notranslate nohighlight">\(\widehat{Q}^{0}\)</span>,
 FQI iteratively solves the following optimization problem,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aae4da48-ca98-429c-9047-e731131bf209">
-<span class="eqno">(87)<a class="headerlink" href="#equation-aae4da48-ca98-429c-9047-e731131bf209" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-7e63c2b8-7648-4412-bad4-b5d730429922">
+<span class="eqno">(87)<a class="headerlink" href="#equation-7e63c2b8-7648-4412-bad4-b5d730429922" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 	\widehat{Q}^{{\ell}}=\arg \min_{Q} 
 	\sum_{\substack{i \le n}}\sum_{t&lt;T}
 	\Big\{
@@ -977,7 +1012,7 @@ The final estimate is denoted as <span class="math notranslate nohighlight">\(\w
 <span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
 <span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
 
-<span class="ne">FileNotFoundError</span>: [WinError 2] The system cannot find the file specified: &#39;../CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;../CausalDM&#39;
 </pre></div>
 </div>
 </div>
@@ -1001,8 +1036,8 @@ The final estimate is denoted as <span class="math notranslate nohighlight">\(\w
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
-            path: "./Causal_Policy_Learning\Scenario2"
+            name: "python3",
+            path: "./Causal_Policy_Learning/Scenario2"
         },
         predefinedOutput: true
     }

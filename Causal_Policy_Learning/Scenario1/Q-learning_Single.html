@@ -209,23 +209,58 @@ const thebe_selector_output = ".output, .cell_output"
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/Meta%20Learners.html">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/S-learner.html">
        <strong>
-        Meta Learners
+        1. S-learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/R-Learner%2C%20DR-Learner%2C%20Lp-R-Learner.html">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/T-learner.html">
        <strong>
-        R-Learner, DR-Learner, and Lp-R-Learner
+        2. T-learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/Other%20Approaches.html">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/X-learner.html">
        <strong>
-        Other Approaches
+        3. X-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/R-Learner.html">
+       <strong>
+        4. R learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/DR-Learner.html">
+       <strong>
+        5. DR-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/Lp-R-Learner.html">
+       <strong>
+        6. Lp-R-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/GRF.html">
+       <strong>
+        7. Generalized Random Forest
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/Dragonnet.html">
+       <strong>
+        8. Dragon Net
        </strong>
       </a>
      </li>
@@ -972,12 +1007,12 @@ title="Print to PDF"
 <div class="section" id="algorithm-details">
 <h2>Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this headline">#</a></h2>
 <p>Q-learning with a single decision point is mainly a regression modeling problem, as the major component is to find the relationship between the expectation of potential reward <span class="math notranslate nohighlight">\(R(a)\)</span> and <span class="math notranslate nohighlight">\(\{s,a\}\)</span>. Let’s first define a Q-function, such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7c0b202d-f93c-49e4-b16c-1bf08aa5af40">
-<span class="eqno">(50)<a class="headerlink" href="#equation-7c0b202d-f93c-49e4-b16c-1bf08aa5af40" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-01bf6a23-a811-426d-b7b5-5516a8ff3cd1">
+<span class="eqno">(50)<a class="headerlink" href="#equation-01bf6a23-a811-426d-b7b5-5516a8ff3cd1" title="Permalink to this equation">#</a></span>\[\begin{align}
     Q(s,a) = E(R(a)|S=s).
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-baa4ad7c-9f2c-4518-9d68-a6c219f879f2">
-<span class="eqno">(51)<a class="headerlink" href="#equation-baa4ad7c-9f2c-4518-9d68-a6c219f879f2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1f36bd14-0d0a-41cf-8441-7b123f2ad181">
+<span class="eqno">(51)<a class="headerlink" href="#equation-1f36bd14-0d0a-41cf-8441-7b123f2ad181" title="Permalink to this equation">#</a></span>\[\begin{align}
     \text{arg max}_{\pi}Q(s_{i},\pi(s_{i})).
 \end{align}\]</div>
 </div>
@@ -1003,8 +1038,8 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import learner</span>
-<span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="k">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="k">import</span> <span class="n">QLearning</span>
+<span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">QLearning</span>
 </pre></div>
 </div>
 </div>
@@ -1042,8 +1077,8 @@ title="Print to PDF"
 </div>
 </div>
 <p>By specifing the model_info, we assume a regression model that:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-be098ae2-a63d-406f-b4e5-bece540f3d1b">
-<span class="eqno">(52)<a class="headerlink" href="#equation-be098ae2-a63d-406f-b4e5-bece540f3d1b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0d0af9d1-5ce6-4890-a12a-ae9274266d3e">
+<span class="eqno">(52)<a class="headerlink" href="#equation-0d0af9d1-5ce6-4890-a12a-ae9274266d3e" title="Permalink to this equation">#</a></span>\[\begin{align}
 Q(s,a,\beta) &amp;= \beta_{00}+\beta_{01}*recency+\beta_{02}*history\\
 &amp;+I(a=1)*\{\beta_{10}+\beta_{11}*recency+\beta_{12}*history\} \\
 &amp;+I(a=2)*\{\beta_{20}+\beta_{21}*recency+\beta_{22}*history\} 
@@ -1091,8 +1126,8 @@ opt value: 126.48792828230047
 </div>
 </div>
 <p><strong>Interpretation:</strong> the fitted model is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-96ae0d75-6292-4092-aba0-9f519d6c4249">
-<span class="eqno">(53)<a class="headerlink" href="#equation-96ae0d75-6292-4092-aba0-9f519d6c4249" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9e7cc5a3-2489-4170-b15e-b401f57ccb3a">
+<span class="eqno">(53)<a class="headerlink" href="#equation-9e7cc5a3-2489-4170-b15e-b401f57ccb3a" title="Permalink to this equation">#</a></span>\[\begin{align}
 Q(s,a,\beta) &amp;= 94.20+4.53*recency+0.0005*history\\
 &amp;+I(a=1)*\{23.24-4.15*recency+0.0076*history\} \\
 &amp;+I(a=2)*\{20.61-4.84*recency+0.0004history\}. 
@@ -1194,8 +1229,8 @@ Q(s,a,\beta) &amp;= 94.20+4.53*recency+0.0005*history\\
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
-            path: "./Causal_Policy_Learning\Scenario1"
+            name: "python3",
+            path: "./Causal_Policy_Learning/Scenario1"
         },
         predefinedOutput: true
     }

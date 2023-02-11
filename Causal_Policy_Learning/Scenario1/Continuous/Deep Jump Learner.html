@@ -209,23 +209,58 @@ const thebe_selector_output = ".output, .cell_output"
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/Meta%20Learners.html">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/S-learner.html">
        <strong>
-        Meta Learners
+        1. S-learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/R-Learner%2C%20DR-Learner%2C%20Lp-R-Learner.html">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/T-learner.html">
        <strong>
-        R-Learner, DR-Learner, and Lp-R-Learner
+        2. T-learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/Other%20Approaches.html">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/X-learner.html">
        <strong>
-        Other Approaches
+        3. X-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/R-Learner.html">
+       <strong>
+        4. R learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/DR-Learner.html">
+       <strong>
+        5. DR-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/Lp-R-Learner.html">
+       <strong>
+        6. Lp-R-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/GRF.html">
+       <strong>
+        7. Generalized Random Forest
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../Causal_Effect_Learning/Scenario%201/Dragonnet.html">
+       <strong>
+        8. Dragon Net
        </strong>
       </a>
      </li>
@@ -1008,13 +1043,13 @@ title="Print to PDF"
 <div class="section" id="difficulties-in-continuous-actions">
 <h3>Difficulties in Continuous Actions<a class="headerlink" href="#difficulties-in-continuous-actions" title="Permalink to this headline">#</a></h3>
 <p>Let the observed offline datasets as <span class="math notranslate nohighlight">\(\{(X_i,A_i,Y_i)\}_{1\le i\le n}\)</span> and <span class="math notranslate nohighlight">\(n\)</span> as the total sample size. A decision rule or policy <span class="math notranslate nohighlight">\(d: \mathcal{X} \to \mathcal{A}\)</span>. We use <span class="math notranslate nohighlight">\(b\)</span> to denote the propensity score and <span class="math notranslate nohighlight">\(p(\bullet|x)\)</span> denotes the probability density function of <span class="math notranslate nohighlight">\(A\)</span> given <span class="math notranslate nohighlight">\(X=x\)</span>. Define the <span class="math notranslate nohighlight">\(Q\)</span>-function as <span class="math notranslate nohighlight">\(Q(x, a) = E(Y|X=x,A=a).\)</span> The doubly robust (DR) estimator of value <span class="math notranslate nohighlight">\(V(d) = E [Q\{X, d(X)\}]\)</span> for discrete treatments is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-132acd16-d7ed-4aaa-9baf-5665f16738dc">
-<span class="eqno">(63)<a class="headerlink" href="#equation-132acd16-d7ed-4aaa-9baf-5665f16738dc" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:DR}
+<div class="amsmath math notranslate nohighlight" id="equation-fe9be589-b3a3-4464-852a-93f9429c9904">
+<span class="eqno">(63)<a class="headerlink" href="#equation-fe9be589-b3a3-4464-852a-93f9429c9904" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:DR}
 \frac{1}{n}\sum_{i=1}^n \psi(O_i,d,\widehat{Q},\widehat{p})=\frac{1}{n}\sum_{i=1}^n \left[\widehat{Q}\{X_i,d(X_i)\}+\frac{\mathbb{I}\{A_i=d(X_i)\}}{\widehat{p}(A_i|X_i)}\{Y_i-\widehat{Q}(X_i,A_i)\}\right],
 \end{eqnarray}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathbb{I}(\bullet)\)</span> denotes the indicator function, <span class="math notranslate nohighlight">\(\widehat{Q}\)</span> and <span class="math notranslate nohighlight">\(\widehat{p}(a|x)\)</span> denote some estimators for the conditional mean function <span class="math notranslate nohighlight">\(Q\)</span> and the propensity score <span class="math notranslate nohighlight">\(b\)</span>, respectively. In continuous treatment domains, the indicator function <span class="math notranslate nohighlight">\(\mathbb{I}\{A_i=d(X_i)\}\)</span> equals zero almost surely. Consequently, naively applying the DR method yields a plug-in estimator <span class="math notranslate nohighlight">\(\sum_{i=1}^n \widehat{Q}\{X_i,d(X_i)\}/n\)</span>. To address this concern, the kernel-based methods proposed to replace the indicator function with a kernel function <span class="math notranslate nohighlight">\(K[\{A_i-d(X_i)\}/h]\)</span>, i.e.,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0d06ae22-4d0a-482c-bf85-edf4cf0d6e70">
-<span class="eqno">(64)<a class="headerlink" href="#equation-0d06ae22-4d0a-482c-bf85-edf4cf0d6e70" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:kernel}
+<div class="amsmath math notranslate nohighlight" id="equation-101afb75-2f6e-4987-bbf1-2a6e290c65f7">
+<span class="eqno">(64)<a class="headerlink" href="#equation-101afb75-2f6e-4987-bbf1-2a6e290c65f7" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:kernel}
 	\frac{1}{n}\sum_{i=1}^n \psi_h(O_i,d,\widehat{Q},\widehat{p})=\frac{1}{n}\sum_{i=1}^n \left[\widehat{Q}\{X_i,d(X_i)\}+\frac{K\{{A_i-d(X_i)\over h}\}}{\widehat{p}(A_i|X_i)}\{Y_i-\widehat{Q}(X_i,A_i)\}\right].
 \end{eqnarray}\]</div>
 <p>Here, the bandwidth <span class="math notranslate nohighlight">\(h\)</span> represents a trade-off. The variance of the resulting value estimator decays with <span class="math notranslate nohighlight">\(h\)</span>. Yet, its bias increases with <span class="math notranslate nohighlight">\(h\)</span>. This method requires the expected second derivative of the function <span class="math notranslate nohighlight">\(Q(x,a)\)</span> exists, and thus <span class="math notranslate nohighlight">\(Q(x,a)\)</span> needs to be a <strong>smooth</strong> function of <span class="math notranslate nohighlight">\(a\)</span>.</p>
@@ -1022,22 +1057,22 @@ title="Print to PDF"
 <div class="section" id="details-of-deep-jump-learner">
 <h3>Details of Deep Jump Learner<a class="headerlink" href="#details-of-deep-jump-learner" title="Permalink to this headline">#</a></h3>
 <p>To overcome these difficulties, the deep jump learner proposes to adaptively discretizing the treatment space. We define <span class="math notranslate nohighlight">\(\mathcal{B}(m)\)</span> as the set of discretizations <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> such that each interval <span class="math notranslate nohighlight">\(\mathcal{I}\in \mathcal{D}\)</span> corresponds to a union of some of the <span class="math notranslate nohighlight">\(m\)</span> initial intervals.  Each discretization <span class="math notranslate nohighlight">\(\mathcal{D}\in \mathcal{B}(m)\)</span> is associated with a set of functions <span class="math notranslate nohighlight">\(\{q_{\mathcal{I}}\}_{\mathcal{I}\in \mathcal{D}}\)</span>. We model these <span class="math notranslate nohighlight">\(q_{\mathcal{I}}\)</span> using deep neural networks (DNNs), to capture the complex dependence between the outcome and features.  Thus, <span class="math notranslate nohighlight">\(\widehat{\mathcal{D}}\)</span> can be estimated by solving</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bacc7cad-c751-4962-a207-002ee73e37e2">
-<span class="eqno">(65)<a class="headerlink" href="#equation-bacc7cad-c751-4962-a207-002ee73e37e2" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:optimize}
+<div class="amsmath math notranslate nohighlight" id="equation-438b4ac8-c0f3-4bcc-b0e7-fced0c9d5cf6">
+<span class="eqno">(65)<a class="headerlink" href="#equation-438b4ac8-c0f3-4bcc-b0e7-fced0c9d5cf6" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:optimize}
  \left(\widehat{\mathcal{D}},\{\widehat{q}_{\mathcal{I}}:\mathcal{I}\in \widehat{\mathcal{D}} \}\right)=argmin_{\left(\substack{\mathcal{D}\in \mathcal{B}(m),\\ \{q_{\mathcal{I}}\in \mathcal{Q}_{\mathcal{I}}: \mathcal{I}\in \mathcal{D} \} }\right)}\left(\sum_{\mathcal{I}\in \mathcal{D}} \left[ {1\over n} \sum_{i=1}^{n} \mathbb{I}(A_i\in \mathcal{I})  \big\{Y_i - q_{\mathcal{I}}(X_i) \big\}^2\right]+\gamma_n |\mathcal{D}| \right),
 \end{eqnarray}\]</div>
 <p>for some regularization parameter <span class="math notranslate nohighlight">\(\gamma_n\)</span> and some function class of DNNs <span class="math notranslate nohighlight">\(\mathcal{Q}_{\mathcal{I}}\)</span>.</p>
 <p><em><strong>Policy Optimization</strong></em>:</p>
 <p>Given <span class="math notranslate nohighlight">\(\widehat{\mathcal{D}}\)</span> and <span class="math notranslate nohighlight">\(\{\widehat{q}_{\mathcal{I}}:\mathcal{I}\in \widehat{\mathcal{D}} \}\)</span>, to maximize the expected outcome of interest, our proposed I2DR is then given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bf47829b-2ac8-41db-996d-de415552ae49">
-<span class="eqno">(66)<a class="headerlink" href="#equation-bf47829b-2ac8-41db-996d-de415552ae49" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{I2DR}
+<div class="amsmath math notranslate nohighlight" id="equation-fe931356-0749-4ba9-b4df-b31df7700de3">
+<span class="eqno">(66)<a class="headerlink" href="#equation-fe931356-0749-4ba9-b4df-b31df7700de3" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{I2DR}
 	\widehat{d}(x)=argmax_{\mathcal{I}\in \widehat{\mathcal{D}}}  \widehat{q}_{\mathcal{I}}(x),\,\,\,\,\,\,\,\,\forall x\in \mathbb{X}.
 \end{eqnarray}\]</div>
 <p>When the argmax in the above equation is not unique, <span class="math notranslate nohighlight">\(\widehat{d}(\cdot)\)</span> outputs the interval that contains the smallest treatment.</p>
 <p><em><strong>Policy Evaluation</strong></em>:</p>
 <p>Given <span class="math notranslate nohighlight">\(\widehat{\mathcal{D}}\)</span> and <span class="math notranslate nohighlight">\(\{\widehat{q}_{\mathcal{I}}:\mathcal{I}\in \widehat{\mathcal{D}} \}\)</span>, we apply the DR estimator to derive the value estimate for any target policy of interest <span class="math notranslate nohighlight">\(d\)</span>, i.e.,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b3049048-a662-4071-8185-b2d79c68e638">
-<span class="eqno">(67)<a class="headerlink" href="#equation-b3049048-a662-4071-8185-b2d79c68e638" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{value_djqe}
+<div class="amsmath math notranslate nohighlight" id="equation-235abfa3-97c6-42e9-a048-26d2ff2aa0ff">
+<span class="eqno">(67)<a class="headerlink" href="#equation-235abfa3-97c6-42e9-a048-26d2ff2aa0ff" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{value_djqe}
 	\widehat{V}^{DR}(d)={1\over n} \sum_{\mathcal{I}\in \widehat{\mathcal{D}}}  \sum_{i=1}^{n} \left( \mathbb{I}\{d(X_i)\in \mathcal{I}\}  \left[  {\mathbb{I}(A_i\in \mathcal{I})\over  \widehat{p}_\mathcal{I}(X_i)}\big\{Y_i - \widehat{q}_\mathcal{I}(X_i) \big\} + \widehat{q}_\mathcal{I}(X_i) \right]\right),
 \end{eqnarray}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\widehat{p}_{\mathcal{I}}(x)\)</span> is some estimator of the generalized propensity score function <span class="math notranslate nohighlight">\(p(A\in \mathcal{I}|X=x)\)</span>.</p>
@@ -1054,7 +1089,7 @@ title="Print to PDF"
 <span class="c1"># of Warfarin Dosing (20 features)</span>
 
 <span class="c1"># code used to import the learner  </span>
-<span class="kn">from</span> <span class="nn">DJL_opt</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">DJL_opt</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="c1"># real data generator</span>
 <span class="n">data_gen</span> <span class="o">=</span> <span class="n">data_generator</span><span class="o">.</span><span class="n">RealDataGenerator</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;real_envir.pickle&#39;</span><span class="p">)</span> 
@@ -1105,7 +1140,7 @@ title="Print to PDF"
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># To evaluate the deep jump learner on the Real Data of Warfarin Dosing (20 features)</span>
 
 <span class="c1"># code used to import the learner  </span>
-<span class="kn">from</span> <span class="nn">DJL_eval</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">DJL_eval</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="c1"># real data generator</span>
 <span class="n">data_gen</span> <span class="o">=</span> <span class="n">data_generator</span><span class="o">.</span><span class="n">RealDataGenerator</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;real_envir.pickle&#39;</span><span class="p">)</span> 
@@ -1161,8 +1196,8 @@ title="Print to PDF"
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
-            path: "./Causal_Policy_Learning\Scenario1\Continuous"
+            name: "python3",
+            path: "./Causal_Policy_Learning/Scenario1/Continuous"
         },
         predefinedOutput: true
     }

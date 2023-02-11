@@ -207,23 +207,58 @@ const thebe_selector_output = ".output, .cell_output"
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/Meta%20Learners.html">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/S-learner.html">
        <strong>
-        Meta Learners
+        1. S-learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/R-Learner%2C%20DR-Learner%2C%20Lp-R-Learner.html">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/T-learner.html">
        <strong>
-        R-Learner, DR-Learner, and Lp-R-Learner
+        2. T-learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/Other%20Approaches.html">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/X-learner.html">
        <strong>
-        Other Approaches
+        3. X-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/R-Learner.html">
+       <strong>
+        4. R learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/DR-Learner.html">
+       <strong>
+        5. DR-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/Lp-R-Learner.html">
+       <strong>
+        6. Lp-R-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/GRF.html">
+       <strong>
+        7. Generalized Random Forest
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/Dragonnet.html">
+       <strong>
+        8. Dragon Net
        </strong>
       </a>
      </li>
@@ -947,8 +982,8 @@ At each time point <span class="math notranslate nohighlight">\(t \ge 0\)</span>
 <div class="section" id="value-functions">
 <h2>Value functions<a class="headerlink" href="#value-functions" title="Permalink to this headline">#</a></h2>
 <p>The state value function (referred to as the V-function) and state-action value function (referred to as the Q-function) for a policy <span class="math notranslate nohighlight">\(\pi\)</span> are given as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6cc32769-bd93-45ac-9e7b-d89fe2222c44">
-<span class="eqno">()<a class="headerlink" href="#equation-6cc32769-bd93-45ac-9e7b-d89fe2222c44" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-94e1f072-1fa9-4a2a-aee8-fef1233b797a">
+<span class="eqno">()<a class="headerlink" href="#equation-94e1f072-1fa9-4a2a-aee8-fef1233b797a" title="Permalink to this equation">#</a></span>\[\begin{align}
 	V^\pi(s)&amp;=\mathbb{E}^{\pi} (\sum_{t=0}^{+\infty} \gamma^t R_{t}|S_{0}=s),\\
 	Q^\pi(a,s)&amp;= \mathbb{E}^{\pi} (\sum_{t=0}^{+\infty} \gamma^t R_{t}|A_{0}=a,S_{0}=s) \label{eqn:Q},
 \end{align}\]</div>
@@ -966,16 +1001,16 @@ The optimal policy is defined as <span class="math notranslate nohighlight">\(\p
 <p>where the last equality follows from the stationarity of the MDP.
 Motivated by this fact,
 the Bellman equation for the Q-function is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e995699b-ed94-4ca8-96f1-bf5c65e5d341">
-<span class="eqno">()<a class="headerlink" href="#equation-e995699b-ed94-4ca8-96f1-bf5c65e5d341" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
+<div class="amsmath math notranslate nohighlight" id="equation-9c3e3646-7c6c-45cc-bbaf-bac5d315b1f8">
+<span class="eqno">()<a class="headerlink" href="#equation-9c3e3646-7c6c-45cc-bbaf-bac5d315b1f8" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
     Q(a, s) = \mathbb{E}^\pi \Big(R_t + \gamma Q(A_{t + 1}, S_{t+1})  | A_t = a, S_t = s \Big), 
 \end{equation}\]</div>
 <p>for which <span class="math notranslate nohighlight">\(Q^\pi\)</span> is the unique solution [2].
 The Bellman equation relates different components of the MDP via a recursive form and is the foundation for lots of RL algorithms.</p>
 <p>Similarly, we have the Bellman optimality equation, which characterizes the optimal policy <span class="math notranslate nohighlight">\(\pi^*\)</span> and is commonly used in policy optimization.
 Specifically, its value function <span class="math notranslate nohighlight">\(Q^*\)</span> is the unique solution of</p>
-<div class="amsmath math notranslate nohighlight" id="equation-64ed2b09-2bd8-4c2e-a09b-fe22e3c94ab7">
-<span class="eqno">()<a class="headerlink" href="#equation-64ed2b09-2bd8-4c2e-a09b-fe22e3c94ab7" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f70e6968-169e-4dca-9665-cdee722ab396">
+<span class="eqno">()<a class="headerlink" href="#equation-f70e6968-169e-4dca-9665-cdee722ab396" title="Permalink to this equation">#</a></span>\[\begin{equation}
     Q(a, s) = \mathbb{E} \Big(R_t + \gamma \arg \max_{a'} Q(a, S_{t+1})  | A_t = a, S_t = s \Big).  \;\;\;\;\; \text{(2)} 
 \end{equation}\]</div>
 </div>
@@ -984,8 +1019,8 @@ Specifically, its value function <span class="math notranslate nohighlight">\(Q^
 <p>In the off-policy setting, the observed data consists of <span class="math notranslate nohighlight">\(n\)</span> i.i.d. trajectories <span class="math notranslate nohighlight">\(\{(S_{i,t},A_{i,t},R_{i,t},S_{i,t+1})\}_{0\le t&lt;T_i,1\le i\le n}\)</span>, where <span class="math notranslate nohighlight">\(T_i\)</span> denotes the length of the <span class="math notranslate nohighlight">\(i\)</span>th trajectory. Without loss of generality, we assume <span class="math notranslate nohighlight">\(T_1=\cdots=T_n=T\)</span> and the immediate rewards are uniformly bounded.
 The dataset is collected by following a stationary policy <span class="math notranslate nohighlight">\(b\)</span>, known as the <em>behavior policy</em>.</p>
 <p><strong>Off-Policy Evaluation(OPE).</strong> The goal of OPE is to estimate the value of a given <em>target policy</em> <span class="math notranslate nohighlight">\(\pi\)</span> with respect to the initial state distribution <span class="math notranslate nohighlight">\(\mathbb{G}\)</span>, defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-13037876-4d7f-4fb5-8967-ac73b3c78f37">
-<span class="eqno">()<a class="headerlink" href="#equation-13037876-4d7f-4fb5-8967-ac73b3c78f37" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:def_value}
+<div class="amsmath math notranslate nohighlight" id="equation-9199b35b-aa1f-408e-86b6-d98ef6932d72">
+<span class="eqno">()<a class="headerlink" href="#equation-9199b35b-aa1f-408e-86b6-d98ef6932d72" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:def_value}
 	\eta^{\pi} =  \mathbb{E}_{s \sim \mathbb{G}} V^{\pi}(s). 
 \end{eqnarray}\]</div>
 <p>By definition, we directly have <span class="math notranslate nohighlight">\(\eta^{\pi} = \mathbb{E}_{s \sim \mathbb{G}, a \sim \pi(\cdot|s)} Q^{\pi}(a, s)\)</span>.</p>
@@ -1012,8 +1047,8 @@ We refer to an interval <span class="math notranslate nohighlight">\([\hat{\eta}
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
-            path: "./Causal_Policy_Learning\Scenario2"
+            name: "python3",
+            path: "./Causal_Policy_Learning/Scenario2"
         },
         predefinedOutput: true
     }

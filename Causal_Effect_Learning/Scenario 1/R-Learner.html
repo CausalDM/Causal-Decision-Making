@@ -950,8 +950,8 @@ title="Print to PDF"
   <div class="section" id="r-learner">
 <h1><strong>4. R learner</strong><a class="headerlink" href="#r-learner" title="Permalink to this headline">#</a></h1>
 <p>The idea of classical R-learner came from Robinson 1988 [3] and was formalized by Nie and Wager in 2020 [2]. The main idea of R learner starts from the partially linear model setup, in which we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3e58721f-4cab-48da-a4c1-5d78b8ab442c">
-<span class="eqno">(39)<a class="headerlink" href="#equation-3e58721f-4cab-48da-a4c1-5d78b8ab442c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-14184b7e-4e23-45e8-b5dd-544ee8021d8c">
+<span class="eqno">(39)<a class="headerlink" href="#equation-14184b7e-4e23-45e8-b5dd-544ee8021d8c" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{aligned}
     R&amp;=A\tau(S)+g_0(S)+U,\\
     A&amp;=m_0(S)+V,
@@ -959,21 +959,21 @@ title="Print to PDF"
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(V\)</span> satisfies <span class="math notranslate nohighlight">\(\mathbb{E}[U|D,X]=0\)</span>, <span class="math notranslate nohighlight">\(\mathbb{E}[V|X]=0\)</span>.</p>
 <p>After several manipulations, it’s easy to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2a2a835e-0d54-46cc-9b0c-c22ca7ca45e2">
-<span class="eqno">(40)<a class="headerlink" href="#equation-2a2a835e-0d54-46cc-9b0c-c22ca7ca45e2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ef1c8793-632e-474f-8cc1-ee8ef470aee6">
+<span class="eqno">(40)<a class="headerlink" href="#equation-ef1c8793-632e-474f-8cc1-ee8ef470aee6" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	R-\mathbb{E}[R|S]=\tau(S)\cdot(A-\mathbb{E}[A|S])+\epsilon.
 \end{equation}\]</div>
 <p>Define <span class="math notranslate nohighlight">\(m_0(X)=\mathbb{E}[A|S]\)</span> and <span class="math notranslate nohighlight">\(l_0(X)=\mathbb{E}[R|S]\)</span>. A natural way to estimate <span class="math notranslate nohighlight">\(\tau(X)\)</span> is given below, which is also the main idea of R-learner:</p>
 <p><strong>Step 1</strong>: Regress <span class="math notranslate nohighlight">\(R\)</span> on <span class="math notranslate nohighlight">\(S\)</span> to obtain model <span class="math notranslate nohighlight">\(\hat{\eta}(S)=\hat{\mathbb{E}}[R|S]\)</span>; and regress <span class="math notranslate nohighlight">\(A\)</span> on <span class="math notranslate nohighlight">\(S\)</span> to obtain model <span class="math notranslate nohighlight">\(\hat{m}(S)=\hat{\mathbb{E}}[A|S]\)</span>.</p>
 <p><strong>Step 2</strong>: Regress outcome residual <span class="math notranslate nohighlight">\(R-\hat{l}(S)\)</span> on propensity score residual <span class="math notranslate nohighlight">\(A-\hat{m}(S)\)</span>.</p>
 <p>That is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-740598f1-560f-4a18-abe3-1934c1a8bbcc">
-<span class="eqno">(41)<a class="headerlink" href="#equation-740598f1-560f-4a18-abe3-1934c1a8bbcc" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-236a9408-07ce-4a59-a23b-ae1d1dbc75fa">
+<span class="eqno">(41)<a class="headerlink" href="#equation-236a9408-07ce-4a59-a23b-ae1d1dbc75fa" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	\hat{\tau}(S)=\arg\min_{\tau}\left\{\mathbb{E}_n\left[\left(\{R_i-\hat{\eta}(S_i)\}-\{A_i-\hat{m}(S_i)\}\cdot\tau(S_i)\right)^2\right]\right\}	
 \end{equation}\]</div>
 <p>The easiest way to do so is to specify <span class="math notranslate nohighlight">\(\hat{\tau}(S)\)</span> to the linear function class. In this case, <span class="math notranslate nohighlight">\(\tau(S)=S\beta\)</span>, and the problem becomes to estimate <span class="math notranslate nohighlight">\(\beta\)</span> by solving the following linear regression:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fc6be372-dfbb-4f87-b306-4bc2a52ab875">
-<span class="eqno">(42)<a class="headerlink" href="#equation-fc6be372-dfbb-4f87-b306-4bc2a52ab875" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4e8a9784-13e7-49cc-bf2e-612d51d34d98">
+<span class="eqno">(42)<a class="headerlink" href="#equation-4e8a9784-13e7-49cc-bf2e-612d51d34d98" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	\hat{\beta}=\arg\min_{\beta}\left\{\mathbb{E}_n\left[\left(\{R_i-\hat{\eta}(S_i)\}-\{A_i-\hat{m}(S_i)\} S_i\cdot \beta\right)^2\right]\right\}.
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -984,30 +984,28 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: scikit-uplift in c:\faked\anaconda\lib\site-packages (0.5.1)
-Requirement already satisfied: requests in c:\faked\anaconda\lib\site-packages (from scikit-uplift) (2.22.0)
-Requirement already satisfied: tqdm in c:\faked\anaconda\lib\site-packages (from scikit-uplift) (4.36.1)
-Requirement already satisfied: numpy&gt;=1.16 in c:\faked\anaconda\lib\site-packages (from scikit-uplift) (1.16.5)
-Requirement already satisfied: pandas in c:\faked\anaconda\lib\site-packages (from scikit-uplift) (0.25.1)
-Requirement already satisfied: scikit-learn&gt;=0.21.0 in c:\faked\anaconda\lib\site-packages (from scikit-uplift) (0.21.3)
-Requirement already satisfied: matplotlib in c:\faked\anaconda\lib\site-packages (from scikit-uplift) (3.1.1)
-Requirement already satisfied: scipy&gt;=0.17.0 in c:\faked\anaconda\lib\site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (1.3.1)
-Requirement already satisfied: joblib&gt;=0.11 in c:\faked\anaconda\lib\site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (0.13.2)
-Requirement already satisfied: cycler&gt;=0.10 in c:\faked\anaconda\lib\site-packages (from matplotlib-&gt;scikit-uplift) (0.10.0)
-Requirement already satisfied: kiwisolver&gt;=1.0.1 in c:\faked\anaconda\lib\site-packages (from matplotlib-&gt;scikit-uplift) (1.1.0)
-Requirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,&gt;=2.0.1 in c:\faked\anaconda\lib\site-packages (from matplotlib-&gt;scikit-uplift) (2.4.2)
-Requirement already satisfied: python-dateutil&gt;=2.1 in c:\users\yang xu\appdata\roaming\python\python37\site-packages (from matplotlib-&gt;scikit-uplift) (2.8.2)
-Requirement already satisfied: pytz&gt;=2017.2 in c:\faked\anaconda\lib\site-packages (from pandas-&gt;scikit-uplift) (2019.3)
-Requirement already satisfied: idna&lt;2.9,&gt;=2.5 in c:\faked\anaconda\lib\site-packages (from requests-&gt;scikit-uplift) (2.8)
-Requirement already satisfied: certifi&gt;=2017.4.17 in c:\faked\anaconda\lib\site-packages (from requests-&gt;scikit-uplift) (2019.9.11)
-Requirement already satisfied: chardet&lt;3.1.0,&gt;=3.0.2 in c:\faked\anaconda\lib\site-packages (from requests-&gt;scikit-uplift) (3.0.4)
-Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in c:\faked\anaconda\lib\site-packages (from requests-&gt;scikit-uplift) (1.24.2)
-Requirement already satisfied: six in c:\faked\anaconda\lib\site-packages (from cycler&gt;=0.10-&gt;matplotlib-&gt;scikit-uplift) (1.12.0)
-Requirement already satisfied: setuptools in c:\faked\anaconda\lib\site-packages (from kiwisolver&gt;=1.0.1-&gt;matplotlib-&gt;scikit-uplift) (41.4.0)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: scikit-uplift in /opt/anaconda3/lib/python3.8/site-packages (0.5.1)
+Requirement already satisfied: scikit-learn&gt;=0.21.0 in /opt/anaconda3/lib/python3.8/site-packages (from scikit-uplift) (0.23.1)
+Requirement already satisfied: numpy&gt;=1.16 in /opt/anaconda3/lib/python3.8/site-packages (from scikit-uplift) (1.22.4)
+Requirement already satisfied: requests in /opt/anaconda3/lib/python3.8/site-packages (from scikit-uplift) (2.24.0)
+Requirement already satisfied: matplotlib in /opt/anaconda3/lib/python3.8/site-packages (from scikit-uplift) (3.2.2)
+Requirement already satisfied: tqdm in /opt/anaconda3/lib/python3.8/site-packages (from scikit-uplift) (4.47.0)
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip available: 22.3.1 -&gt; 23.0
-[notice] To update, run: python.exe -m pip install --upgrade pip
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: pandas in /opt/anaconda3/lib/python3.8/site-packages (from scikit-uplift) (1.4.2)
+Requirement already satisfied: scipy&gt;=0.19.1 in /opt/anaconda3/lib/python3.8/site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (1.5.0)
+Requirement already satisfied: threadpoolctl&gt;=2.0.0 in /opt/anaconda3/lib/python3.8/site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (2.1.0)
+Requirement already satisfied: joblib&gt;=0.11 in /opt/anaconda3/lib/python3.8/site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (0.16.0)
+Requirement already satisfied: idna&lt;3,&gt;=2.5 in /opt/anaconda3/lib/python3.8/site-packages (from requests-&gt;scikit-uplift) (2.10)
+Requirement already satisfied: chardet&lt;4,&gt;=3.0.2 in /opt/anaconda3/lib/python3.8/site-packages (from requests-&gt;scikit-uplift) (3.0.4)
+Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /opt/anaconda3/lib/python3.8/site-packages (from requests-&gt;scikit-uplift) (1.25.9)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /opt/anaconda3/lib/python3.8/site-packages (from requests-&gt;scikit-uplift) (2020.6.20)
+Requirement already satisfied: kiwisolver&gt;=1.0.1 in /opt/anaconda3/lib/python3.8/site-packages (from matplotlib-&gt;scikit-uplift) (1.2.0)
+Requirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,&gt;=2.0.1 in /opt/anaconda3/lib/python3.8/site-packages (from matplotlib-&gt;scikit-uplift) (2.4.7)
+Requirement already satisfied: cycler&gt;=0.10 in /opt/anaconda3/lib/python3.8/site-packages (from matplotlib-&gt;scikit-uplift) (0.10.0)
+Requirement already satisfied: python-dateutil&gt;=2.1 in /opt/anaconda3/lib/python3.8/site-packages (from matplotlib-&gt;scikit-uplift) (2.8.1)
+Requirement already satisfied: pytz&gt;=2020.1 in /opt/anaconda3/lib/python3.8/site-packages (from pandas-&gt;scikit-uplift) (2020.1)
+Requirement already satisfied: six in /opt/anaconda3/lib/python3.8/site-packages (from cycler&gt;=0.10-&gt;matplotlib-&gt;scikit-uplift) (1.15.0)
 </pre></div>
 </div>
 </div>
@@ -1015,12 +1013,12 @@ Requirement already satisfied: setuptools in c:\faked\anaconda\lib\site-packages
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import related packages</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="k">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="kn">from</span> <span class="nn">lightgbm</span> <span class="k">import</span> <span class="n">LGBMRegressor</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LinearRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegression</span> 
-<span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="k">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Causal_Effect_Learning.Single_Stage.Rlearner</span> <span class="k">import</span> <span class="n">Rlearner</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span> 
+<span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.Causal_Effect_Learning.Single_Stage.Rlearner</span> <span class="kn">import</span> <span class="n">Rlearner</span>
 </pre></div>
 </div>
 </div>
@@ -1028,12 +1026,13 @@ Requirement already satisfied: setuptools in c:\faked\anaconda\lib\site-packages
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
 <span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">275</span><span class="n">f33df0573</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># import related packages</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
-<span class="ne">----&gt; </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">causaldm.learners.Causal_Effect_Learning.Single_Stage.Rlearner</span> <span class="kn">import</span> <span class="n">Rlearner</span>
 
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;causaldm&#39;
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;lightgbm&#39;
 </pre></div>
 </div>
 </div>
@@ -1146,8 +1145,8 @@ true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
-            path: "./Causal_Effect_Learning\Scenario 1"
+            name: "python3",
+            path: "./Causal_Effect_Learning/Scenario 1"
         },
         predefinedOutput: true
     }

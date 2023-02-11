@@ -209,23 +209,58 @@ const thebe_selector_output = ".output, .cell_output"
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/Meta%20Learners.html">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/S-learner.html">
        <strong>
-        Meta Learners
+        1. S-learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/R-Learner%2C%20DR-Learner%2C%20Lp-R-Learner.html">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/T-learner.html">
        <strong>
-        R-Learner, DR-Learner, and Lp-R-Learner
+        2. T-learner
        </strong>
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/Other%20Approaches.html">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/X-learner.html">
        <strong>
-        Other Approaches
+        3. X-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/R-Learner.html">
+       <strong>
+        4. R learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/DR-Learner.html">
+       <strong>
+        5. DR-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/Lp-R-Learner.html">
+       <strong>
+        6. Lp-R-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/GRF.html">
+       <strong>
+        7. Generalized Random Forest
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../Causal_Effect_Learning/Scenario%201/Dragonnet.html">
+       <strong>
+        8. Dragon Net
        </strong>
       </a>
      </li>
@@ -936,8 +971,8 @@ title="Print to PDF"
 <p>Suppose that, at each round t, we need to recommend an ordered list of <span class="math notranslate nohighlight">\(K\)</span> items. In cascading bandits, <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> contains all the subsets of <span class="math notranslate nohighlight">\([N]\)</span> with length <span class="math notranslate nohighlight">\(K\)</span>, <span class="math notranslate nohighlight">\(A_t = (a_t^1, \dots, a_t^K) \in \mathcal{A}\)</span> is a sorted list of items being displayed with any element <span class="math notranslate nohighlight">\(a_t^k \in [N]\)</span>, <span class="math notranslate nohighlight">\(\boldsymbol{Y}_t(a)\)</span> is a vector indicating the potential outcome that will be observed if slate <span class="math notranslate nohighlight">\(a\)</span> is recommended, with the <span class="math notranslate nohighlight">\(i\)</span>th entry equal to <span class="math notranslate nohighlight">\(1\)</span> when the <span class="math notranslate nohighlight">\(i\)</span>th displayed item will be clicked, and <span class="math notranslate nohighlight">\(R_t(a)\)</span> is the corresponding potential reward would be received, with <span class="math notranslate nohighlight">\(f_r[\boldsymbol{Y}_t(a)] \equiv \sum_{k \in [K]} Y_{k,t}(a)  \in \{0,1\}\)</span>, where <span class="math notranslate nohighlight">\(Y_{k,t}(a)\)</span> is the <span class="math notranslate nohighlight">\(k\)</span>th entry of <span class="math notranslate nohighlight">\(\boldsymbol{Y}_t(a)\)</span>.</p>
 <p>At each round <span class="math notranslate nohighlight">\(t\)</span>, the user will examine the <span class="math notranslate nohighlight">\(K\)</span> displayed items from top to bottom and stop to click one item once she is attracted (or leave if none of them is attractive). Similar to the definition of the potential reward <span class="math notranslate nohighlight">\(R_t(a)\)</span>. denote <span class="math notranslate nohighlight">\(I_t(a)\)</span> the index of the potential chosen item if it exists, and otherwise, let <span class="math notranslate nohighlight">\(I_t(a) = K\)</span>. To formally define the model <span class="math notranslate nohighlight">\(f\)</span>, it is useful to introduce a latent binary variable <span class="math notranslate nohighlight">\(E_{k,t}(a)\)</span> to indicate if the <span class="math notranslate nohighlight">\(k\)</span>th displayed item will be examined by the <span class="math notranslate nohighlight">\(t\)</span>th user, and a latent variable <span class="math notranslate nohighlight">\(W_{k,t}(a)\)</span> to indicate if the <span class="math notranslate nohighlight">\(k\)</span>th displayed item is attractive to the <span class="math notranslate nohighlight">\(t\)</span>th user. Therefore, the value of <span class="math notranslate nohighlight">\(W_{k,t}(a)\)</span> is only visible when <span class="math notranslate nohighlight">\(k \le I_t(a)\)</span>. Let <span class="math notranslate nohighlight">\(\theta_i\)</span> be the attractiveness of the item <span class="math notranslate nohighlight">\(i\)</span>. The key probabilistic assumption is that <span class="math notranslate nohighlight">\(W_{k, t}(a) \sim Bernoulli(\theta_{a^k}), \forall k \in [K]\)</span>.</p>
 <p>Mathmatically,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d23be9ca-f1a9-40e5-845f-24aca9f63cb2">
-<span class="eqno">(118)<a class="headerlink" href="#equation-d23be9ca-f1a9-40e5-845f-24aca9f63cb2" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:model_cascading}
+<div class="amsmath math notranslate nohighlight" id="equation-86486272-54d0-48b4-974c-47082242b4a4">
+<span class="eqno">(118)<a class="headerlink" href="#equation-86486272-54d0-48b4-974c-47082242b4a4" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:model_cascading}
     \begin{split}
     W_{k, t}(a) &amp;\sim Bernoulli(\theta_{a^k}), \forall k \in [K], \\
     Y_{k,t}(a) &amp;= W_{k,t}(a) E_{k,t}(a), \forall k \in [K],\\
@@ -1005,8 +1040,8 @@ title="Print to PDF"
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
-            path: "./Causal_Policy_Learning\Scenario4\Structured_Bandits\Cascade"
+            name: "python3",
+            path: "./Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade"
         },
         predefinedOutput: true
     }
