@@ -10,6 +10,14 @@ The diagram below depicts the overall structure of this book, which is comprised
 
 ![Overall.png](Overall.png)
 
+
+
+[A new overall figure:]
+
+![Overall.new.png](Overall.new.png)
+
+
+
 Following is a brief summary of the contents of each chapter.
 
 ## <a name="SL"></a> Causal Structure Learning (CSL)
@@ -27,7 +35,76 @@ This chapter discusses three classical techniques for learning causal graphs, e
 ## <a name="ML"></a> Causal Effect Learning (CEL)
 ---
 
+### <a name="Case1"></a> Scenario 1: I.I.D
+
+In Scenario 1, we consider the standard case where all observations are i.i.d.. The full data of interest is $(S_i,A_i,R_i)$ where $i\in\{1,\dots,N\}$.
+
+
+
+```{image} CEL-IID.png
+:alt: Scenario1
+:width: 400px
+:align: center
+```
+
+
+
+
+
+### <a name="Case1"></a> Scenario 2: Off-Policy Evaluation under MDP
+
+[Same as Causal Policy Learning -- offline + evaluation part. Shall we move some contents here?]
+
+
+
+### <a name="Case1"></a> Scenario 3: Panel Data
+
+In Scenario 3, we consider the panel data where samples are measured over time. This type of data can be found in economics, social sciences, medicine and epidemiology, finance, and the physical sciences. The outcome of interest is defined as $R_{i,t}$, which denotes the reward of observation $i$  at time $t$. 
+
+Consider a (either experimental or observational) study with $N = m + n$ units and $T = T_0 + T_1$ time periods in total. Without loss of generality, we assume that the first m units are treated units and the last n units are control units. Each unit $i$ is associated with a $d$-dimensional time-invariant feature vector $S_i\in \mathbb{R}^d$,  and receives an unit-level outcome $R_{i,t}$ at time $t$. The full data structure is given below:
+
+
+$$
+\left[
+\begin{array}{ccc:ccc}
+S_{1} & \cdots & S_{m} & S_{m+1} & \cdots & S_{n} \\
+\hline
+R_{1,1} & \cdots & R_{m,1} & R_{m+1,1} & \cdots & R_{m+n,1} \\
+\vdots & & \vdots &\vdots & & \vdots \\
+R_{1,T_0} & \cdots & R_{m,T_0} & R_{m+1,T_0} & \cdots & R_{m+n,T_0} \\
+\hdashline
+R_{1,T_0+1} & \cdots & R_{m,T_0+1} & R_{m+1,T_0+1} & \cdots & R_{m+n,T_0+1} \\
+\vdots & & \vdots &\vdots & & \vdots \\
+R_{1,T} & \cdots & R_{m,T} & R_{m+1,T} & \cdots & R_{m+n,T} \\
+\end{array}
+\right]
+$$
+
+
+The current literature in dealing with panel data can be roughly divided into two categories: Difference-in-difference and synthetic control. 
+
+```{image} CEL-PanelData.png
+:alt: Scenario3
+:width: 400px
+:align: center
+```
+
+In general, DiD methods are applied in cases where we have a substantial number of units that are exposed to the policy, and researchers are willing to make a “parallel trends” assumption which implies that we can adequately control for selection effects by accounting for additive unit-specific and time-specific fixed effects. In contrast, synthetic control (SC) methods, introduced in a setting with only a single (or small number) of units exposed, seek to compensate for the lack of parallel trends by re-weighting units to match their pre-exposure trends. [2]
+
+
+
+### <a name="Case1"></a> Scenario 4: Online Treatment Effect Evaluation
+
+
+
+
+
+
+
+
+
 ## <a name="PL"></a> Causal Policy Learning (CPL)
+
 ---
 This chapter focuses on six common data dependence structures in decision making, including [**I.I.D.**](#Case1), [**Offline Reinforcement Learning**](#Case2), [**Multiple-Stage DTR**](#Case3), [**Adaptive Decision Making with Independent States (ADMIS)**](#Case4), [**Online Reinforcement Learning**](#Case5), and [**All Others**](#Case6). The similarities and differences between four scenarios are summarized as follows.
 
@@ -124,3 +201,6 @@ Building upon the MDP structure, when an adaptive policy is applied, the Scenari
 
 ## Reference
 [1] Tsiatis, A. A., Davidian, M., Holloway, S. T., & Laber, E. B. (2019). Dynamic treatment regimes: Statistical methods for precision medicine. Chapman and Hall/CRC.
+
+[2] Dmitry Arkhangelsky, Susan Athey, David A Hirshberg, Guido W Imbens, and Stefan Wager. Synthetic
+difference in differences. Technical report, National Bureau of Economic Research, 2019.
