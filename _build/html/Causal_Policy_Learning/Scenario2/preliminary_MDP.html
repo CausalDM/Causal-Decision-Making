@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -21,7 +20,7 @@
     href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
@@ -37,7 +36,7 @@
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -927,9 +926,9 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="preliminary-off-policy-evaluation-and-optimization-in-markov-decision-processes">
+  <div class="tex2jax_ignore mathjax_ignore section" id="preliminary-off-policy-evaluation-and-optimization-in-markov-decision-processes">
 <h1>Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes<a class="headerlink" href="#preliminary-off-policy-evaluation-and-optimization-in-markov-decision-processes" title="Permalink to this headline">#</a></h1>
-<section id="markov-decision-process">
+<div class="section" id="markov-decision-process">
 <h2>Markov Decision Process<a class="headerlink" href="#markov-decision-process" title="Permalink to this headline">#</a></h2>
 <p>As the underlying data generation model for RL,
 we consider an infinite-horizon discounted Markov Decision Process MDP [1] defined by a tuple <span class="math notranslate nohighlight">\((\mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R}, \gamma)\)</span>. Here, <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> is the state space, <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> is the action space,
@@ -944,12 +943,12 @@ the agent will select action <span class="math notranslate nohighlight">\(a\)</s
 A trajectory following policy <span class="math notranslate nohighlight">\(\pi\)</span> is generated as follows.
 The agent starts from a state <span class="math notranslate nohighlight">\(S_0\)</span> sampled from the initial state distribution,  denoted by <span class="math notranslate nohighlight">\(\mathbb{G}\)</span>.
 At each time point <span class="math notranslate nohighlight">\(t \ge 0\)</span>, the agent will select an action <span class="math notranslate nohighlight">\(A_{t}\)</span> following <span class="math notranslate nohighlight">\(\pi(\cdot|S_{t})\)</span>, and then receive a random reward <span class="math notranslate nohighlight">\(R_{t}\)</span> following  <span class="math notranslate nohighlight">\(\mathcal{R}(\cdot|S_{t}, A_{t})\)</span>, and finally moves to the next state  <span class="math notranslate nohighlight">\(S_{t+1}\)</span> following <span class="math notranslate nohighlight">\(\mathcal{P}(\cdot; S_{t}, A_{t})\)</span>.</p>
-</section>
-<section id="value-functions">
+</div>
+<div class="section" id="value-functions">
 <h2>Value functions<a class="headerlink" href="#value-functions" title="Permalink to this headline">#</a></h2>
 <p>The state value function (referred to as the V-function) and state-action value function (referred to as the Q-function) for a policy <span class="math notranslate nohighlight">\(\pi\)</span> are given as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1ac73fa4-0787-4763-b186-f964c31b2e41">
-<span class="eqno">()<a class="headerlink" href="#equation-1ac73fa4-0787-4763-b186-f964c31b2e41" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6cc32769-bd93-45ac-9e7b-d89fe2222c44">
+<span class="eqno">()<a class="headerlink" href="#equation-6cc32769-bd93-45ac-9e7b-d89fe2222c44" title="Permalink to this equation">#</a></span>\[\begin{align}
 	V^\pi(s)&amp;=\mathbb{E}^{\pi} (\sum_{t=0}^{+\infty} \gamma^t R_{t}|S_{0}=s),\\
 	Q^\pi(a,s)&amp;= \mathbb{E}^{\pi} (\sum_{t=0}^{+\infty} \gamma^t R_{t}|A_{0}=a,S_{0}=s) \label{eqn:Q},
 \end{align}\]</div>
@@ -967,39 +966,39 @@ The optimal policy is defined as <span class="math notranslate nohighlight">\(\p
 <p>where the last equality follows from the stationarity of the MDP.
 Motivated by this fact,
 the Bellman equation for the Q-function is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-12be7c42-d33b-469f-93ff-bdf28a1bd29d">
-<span class="eqno">()<a class="headerlink" href="#equation-12be7c42-d33b-469f-93ff-bdf28a1bd29d" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
+<div class="amsmath math notranslate nohighlight" id="equation-e995699b-ed94-4ca8-96f1-bf5c65e5d341">
+<span class="eqno">()<a class="headerlink" href="#equation-e995699b-ed94-4ca8-96f1-bf5c65e5d341" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
     Q(a, s) = \mathbb{E}^\pi \Big(R_t + \gamma Q(A_{t + 1}, S_{t+1})  | A_t = a, S_t = s \Big), 
 \end{equation}\]</div>
 <p>for which <span class="math notranslate nohighlight">\(Q^\pi\)</span> is the unique solution [2].
 The Bellman equation relates different components of the MDP via a recursive form and is the foundation for lots of RL algorithms.</p>
 <p>Similarly, we have the Bellman optimality equation, which characterizes the optimal policy <span class="math notranslate nohighlight">\(\pi^*\)</span> and is commonly used in policy optimization.
 Specifically, its value function <span class="math notranslate nohighlight">\(Q^*\)</span> is the unique solution of</p>
-<div class="amsmath math notranslate nohighlight" id="equation-36310714-9ff5-4850-a3e4-7e1f5beb36ff">
-<span class="eqno">()<a class="headerlink" href="#equation-36310714-9ff5-4850-a3e4-7e1f5beb36ff" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-64ed2b09-2bd8-4c2e-a09b-fe22e3c94ab7">
+<span class="eqno">()<a class="headerlink" href="#equation-64ed2b09-2bd8-4c2e-a09b-fe22e3c94ab7" title="Permalink to this equation">#</a></span>\[\begin{equation}
     Q(a, s) = \mathbb{E} \Big(R_t + \gamma \arg \max_{a'} Q(a, S_{t+1})  | A_t = a, S_t = s \Big).  \;\;\;\;\; \text{(2)} 
 \end{equation}\]</div>
-</section>
-<section id="off-policy-evaluation-and-optimization">
+</div>
+<div class="section" id="off-policy-evaluation-and-optimization">
 <h2>Off-policy Evaluation and Optimization<a class="headerlink" href="#off-policy-evaluation-and-optimization" title="Permalink to this headline">#</a></h2>
 <p>In the off-policy setting, the observed data consists of <span class="math notranslate nohighlight">\(n\)</span> i.i.d. trajectories <span class="math notranslate nohighlight">\(\{(S_{i,t},A_{i,t},R_{i,t},S_{i,t+1})\}_{0\le t&lt;T_i,1\le i\le n}\)</span>, where <span class="math notranslate nohighlight">\(T_i\)</span> denotes the length of the <span class="math notranslate nohighlight">\(i\)</span>th trajectory. Without loss of generality, we assume <span class="math notranslate nohighlight">\(T_1=\cdots=T_n=T\)</span> and the immediate rewards are uniformly bounded.
 The dataset is collected by following a stationary policy <span class="math notranslate nohighlight">\(b\)</span>, known as the <em>behavior policy</em>.</p>
 <p><strong>Off-Policy Evaluation(OPE).</strong> The goal of OPE is to estimate the value of a given <em>target policy</em> <span class="math notranslate nohighlight">\(\pi\)</span> with respect to the initial state distribution <span class="math notranslate nohighlight">\(\mathbb{G}\)</span>, defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0dcf4b7c-023b-4d90-8fdd-d9d68338a564">
-<span class="eqno">()<a class="headerlink" href="#equation-0dcf4b7c-023b-4d90-8fdd-d9d68338a564" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:def_value}
+<div class="amsmath math notranslate nohighlight" id="equation-13037876-4d7f-4fb5-8967-ac73b3c78f37">
+<span class="eqno">()<a class="headerlink" href="#equation-13037876-4d7f-4fb5-8967-ac73b3c78f37" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:def_value}
 	\eta^{\pi} =  \mathbb{E}_{s \sim \mathbb{G}} V^{\pi}(s). 
 \end{eqnarray}\]</div>
 <p>By definition, we directly have <span class="math notranslate nohighlight">\(\eta^{\pi} = \mathbb{E}_{s \sim \mathbb{G}, a \sim \pi(\cdot|s)} Q^{\pi}(a, s)\)</span>.</p>
 <p>In addition to a point estimator, many applications would benefit from having a CI for <span class="math notranslate nohighlight">\(\eta^{\pi}\)</span>.
 We refer to an interval <span class="math notranslate nohighlight">\([\hat{\eta}^{\pi}_l, \hat{\eta}^{\pi}_u]\)</span> as an <span class="math notranslate nohighlight">\((1-\alpha)\)</span>-CI for <span class="math notranslate nohighlight">\(\eta^{\pi}\)</span> if and only if <span class="math notranslate nohighlight">\(P(\hat{\eta}^{\pi}_l \le \eta^{\pi} \le \hat{\eta}^{\pi}_u) \ge 1 - \alpha\)</span>, for any <span class="math notranslate nohighlight">\(\alpha \in (0, 1)\)</span>.</p>
 <p><strong>Off-Policy Optimization(OPO).</strong> The goal of OPO is to solve the optimal policy <span class="math notranslate nohighlight">\(\pi^*\)</span>, or in other words, to learn a policy <span class="math notranslate nohighlight">\(\hat{\pi}\)</span> so as to minimize the regret <span class="math notranslate nohighlight">\(\eta^{\pi^*} - \eta^{\hat{\pi}}\)</span>.</p>
-</section>
-<section id="reference">
+</div>
+<div class="section" id="reference">
 <h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">#</a></h2>
 <p>[1] Puterman M L. Markov decision processes: discrete stochastic dynamic programming[M]. John Wiley &amp; Sons, 2014.</p>
 <p>[2] Sutton R S, Barto A G. Reinforcement learning: An introduction[M]. MIT press, 2018.</p>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

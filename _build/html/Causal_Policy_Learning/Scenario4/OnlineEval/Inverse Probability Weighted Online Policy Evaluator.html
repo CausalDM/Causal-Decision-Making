@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Inverse Probability Weighted Online Policy Evaluator &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -21,7 +20,7 @@
     href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
@@ -37,7 +36,7 @@
     <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -985,7 +984,7 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="inverse-probability-weighted-online-policy-evaluator">
+  <div class="tex2jax_ignore mathjax_ignore section" id="inverse-probability-weighted-online-policy-evaluator">
 <h1>Inverse Probability Weighted Online Policy Evaluator<a class="headerlink" href="#inverse-probability-weighted-online-policy-evaluator" title="Permalink to this headline">#</a></h1>
 <p>Evaluating the performance of an ongoing policy plays a vital role in many areas such as medicine and economics, to provide crucial instruction on the early-stop of the online experiment and timely feedback from the environment. Policy evaluation in online learning thus attracts increasing attention by inferring the mean outcome
 of the optimal policy (i.e., the value) in real-time. We introduce the <strong>inverse probability weighted online policy evaluator</strong> to infer the value under the estimated optimal policy in online learning.</p>
@@ -1001,9 +1000,9 @@ of the optimal policy (i.e., the value) in real-time. We introduce the <strong>i
 <li><p>Flexible to implement in practice;</p></li>
 <li><p>Without modeling the conditional mean outcome function.</p></li>
 </ol>
-<section id="main-idea">
+<div class="section" id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
-<section id="framework">
+<div class="section" id="framework">
 <h3>Framework<a class="headerlink" href="#framework" title="Permalink to this headline">#</a></h3>
 <p>We focus on online policy evaluation for contextual linear bandits with deterministic policy for illustration. We first explicitly characterize the <strong>probability of exploration</strong> in the online policy optimization under three commonly used bandit algorithms for exposition, including Upper Confidence Bound (UCB), Thompson Sampling (TS), and <span class="math notranslate nohighlight">\(\epsilon\)</span>-Greedy (EG) methods [[[link to be added]]]. We then propose <strong>inverse probability weighted online policy evaluator</strong> to infer the mean outcome of the optimal online policy. Given a context <span class="math notranslate nohighlight">\(\boldsymbol{x}_t\)</span>, we choose an action <span class="math notranslate nohighlight">\(a_t\)</span> based on a policy  <span class="math notranslate nohighlight">\(\pi(\cdot)\)</span> which is defined as a deterministic function that maps the context space to the action space as <span class="math notranslate nohighlight">\(\pi: \mathcal{X} \to \mathcal{A}\)</span>. We then receive a reward  <span class="math notranslate nohighlight">\(r_t\)</span> for all <span class="math notranslate nohighlight">\(t \in  \mathcal{T} \)</span>. Denote the history observations previous to time step <span class="math notranslate nohighlight">\(t\)</span> as <span class="math notranslate nohighlight">\(\mathcal{H}_{t-1}=\{\boldsymbol{x}_i,a_i,r_i\}_{1\leq i\leq t-1}\)</span>. Define the potential reward <span class="math notranslate nohighlight">\(R^*(A=a)\)</span> as the reward we would observe given the action as <span class="math notranslate nohighlight">\(A=a\)</span>. Then the value (Dudík et al., 2011) of a given policy <span class="math notranslate nohighlight">\(\pi(\cdot)\)</span> is</p>
 <div class="amsmath math notranslate nohighlight">
@@ -1017,8 +1016,8 @@ Thus, the optimal value can be defined as  <span class="math notranslate nohighl
 \pi^*(\boldsymbol{x}) \equiv argmax_{a\in \mathcal{A}} \mu(\boldsymbol{x},a) = \mathbb{I}\{\mu(\boldsymbol{x},1)&gt;\mu(\boldsymbol{x},0)\}, \quad \forall \boldsymbol{x} \in \mathcal{X}.
 \end{equation*}\]</div>
 <p>Our goal is to infer the value under the optimal policy <span class="math notranslate nohighlight">\(\pi^* \)</span> from the online data generated sequentially by some bandit algorithms. Since the optimal policy is unknown, we estimate the optimal policy from the online data as <span class="math notranslate nohighlight">\(\widehat{\pi}_t\)</span> by <span class="math notranslate nohighlight">\(\mathcal{H}_{t}\)</span>.</p>
-</section>
-<section id="probability-of-exploration">
+</div>
+<div class="section" id="probability-of-exploration">
 <h3>Probability of Exploration<a class="headerlink" href="#probability-of-exploration" title="Permalink to this headline">#</a></h3>
 <p>We next quantify the probability of exploring non-optimal actions at each time step.  Define the status of exploration as <span class="math notranslate nohighlight">\(\mathbb{I}\{a_t\not = \widehat{\pi}_t(\boldsymbol{x}_t )\}\)</span>, indicating whether the action taken by the bandit algorithm is different from the estimated optimal action that exploits the historical information. Here, <span class="math notranslate nohighlight">\(\widehat{\pi}_t\)</span> can be viewed as the greedy policy at time step <span class="math notranslate nohighlight">\(t\)</span>. Thus the probability of exploration is defined by</p>
 <div class="amsmath math notranslate nohighlight">
@@ -1026,8 +1025,8 @@ Thus, the optimal value can be defined as  <span class="math notranslate nohighl
 \kappa_t(\boldsymbol{x}_t)\equiv  Pr\{a_t\not = \widehat{\pi}_t(\boldsymbol{x}_t )\} =  \mathbb{E} [ \mathbb{I}\{a_t\not = \widehat{\pi}_t(\boldsymbol{x}_t )\}],
 \end{equation*}\]</div>
 <p>where the expectation in the last term is taken respect to <span class="math notranslate nohighlight">\(a_t \in \mathcal{A}\)</span> and history <span class="math notranslate nohighlight">\(\mathcal{H}_{t-1}\)</span>.</p>
-</section>
-<section id="id1">
+</div>
+<div class="section" id="id1">
 <h3>Inverse Probability Weighted Online Policy Evaluator<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
 <p>In contrast to the probability of exploration, we define the probability of exploitation as</p>
 <div class="amsmath math notranslate nohighlight">
@@ -1035,34 +1034,34 @@ Thus, the optimal value can be defined as  <span class="math notranslate nohighl
 Pr\{a_t = \widehat{\pi}_t(\boldsymbol{x}_t )\} = 1-{\kappa}_t (\boldsymbol{x}_t ) =  \mathbb{E}[ \mathbb{I}\{a_t = \widehat{\pi}_t(\boldsymbol{x}_t )\}].
 \end{equation*}\]</div>
 <p>Following the inverse probability weighted value estimator in Dudík et al., (2011), we propose the inverse probability weighted mean outcome estimator as the value estimator under the optimal policy as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0a0af869-ecea-4002-a8eb-9263c4784437">
-<span class="eqno">()<a class="headerlink" href="#equation-0a0af869-ecea-4002-a8eb-9263c4784437" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{dr_est}
+<div class="amsmath math notranslate nohighlight" id="equation-0705266b-9398-4273-a0fc-44227e073e2e">
+<span class="eqno">()<a class="headerlink" href="#equation-0705266b-9398-4273-a0fc-44227e073e2e" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{dr_est}
 \widehat{V}_T={1\over T }\sum_{t=1}^T {\mathbb{I}\{a_t=\widehat{\pi}_t(\boldsymbol{x}_t )\} \over 1-\widehat{\kappa}_{t}(\boldsymbol{x}_t )}  r_t,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(T\)</span> is the current/termination time, and <span class="math notranslate nohighlight">\(1-\widehat{\kappa}_{t}(\boldsymbol{x}_t )\)</span> is the estimated matching probability between the chosen action <span class="math notranslate nohighlight">\(a_t\)</span> and estimated optimal action given <span class="math notranslate nohighlight">\(\boldsymbol{x}_t \)</span>, which captures the probability of exploitation.</p>
-</section>
-</section>
-<section id="demo-code">
+</div>
+</div>
+<div class="section" id="demo-code">
 <h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
 <p>In the following, we exhibit how to apply the inverse probability weighted online policy evaluator on real data under UCB, TS, and EG, respectively.</p>
-<section id="policy-evaluation-under-ucb">
+<div class="section" id="policy-evaluation-under-ucb">
 <h3>1. Policy Evaluation under UCB<a class="headerlink" href="#policy-evaluation-under-ucb" title="Permalink to this headline">#</a></h3>
-</section>
-<section id="policy-evaluation-under-ts">
+</div>
+<div class="section" id="policy-evaluation-under-ts">
 <h3>2. Policy Evaluation under TS<a class="headerlink" href="#policy-evaluation-under-ts" title="Permalink to this headline">#</a></h3>
-</section>
-<section id="policy-evaluation-under-eg">
+</div>
+<div class="section" id="policy-evaluation-under-eg">
 <h3>3. Policy Evaluation under EG<a class="headerlink" href="#policy-evaluation-under-eg" title="Permalink to this headline">#</a></h3>
-</section>
-</section>
-<section id="references">
+</div>
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <p>[1] Cai, H., Shen, Y., &amp; Song, R. (2021). Doubly Robust Interval Estimation for Optimal Policy Evaluation in Online Learning. arXiv preprint arXiv:2110.15501.</p>
 <p>[2] Chen, H., Lu, W., &amp; Song, R. (2021). Statistical inference for online decision making: In a contextual bandit setting. Journal of the American Statistical Association, 116(533), 240-255.</p>
 <p>[3] Chen, H., Lu, W., &amp; Song, R. (2021). Statistical inference for online decision making via stochastic gradient descent. Journal of the American Statistical Association, 116(534), 708-719.</p>
 <p>[4] Dudík, M., Langford, J., &amp; Li, L. (2011). Doubly robust policy evaluation and learning. arXiv preprint arXiv:1103.4601.</p>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

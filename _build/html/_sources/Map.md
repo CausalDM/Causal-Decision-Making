@@ -27,7 +27,50 @@ This chapter discusses three classical techniques for learning causal graphs, e
 ## <a name="ML"></a> Causal Effect Learning (CEL)
 ---
 
+### <a name="Case1"></a> Scenario 1: I.I.D
+
+Observations in Scenario 1 are i.i.d. sampled. 
+
+
+
+```{image} CEL-IID.png
+:alt: Scenario1
+:width: 400px
+:align: center
+```
+
+
+
+
+
+### <a name="Case1"></a> Scenario 2: Off-Policy Evaluation under MDP
+
+### <a name="Case1"></a> Scenario 3: Panel Data
+
+
+
+```{image} CEL-PanelData.png
+:alt: Scenario3
+:width: 400px
+:align: center
+```
+
+
+
+### <a name="Case1"></a> Scenario 4: Online Treatment Effect Evaluation
+
+
+
+
+
+
+
+
+
+
+
 ## <a name="PL"></a> Causal Policy Learning (CPL)
+
 ---
 This chapter focuses on six common data dependence structures in decision making, including [**I.I.D.**](#Case1), [**Offline Reinforcement Learning**](#Case2), [**Multiple-Stage DTR**](#Case3), [**Adaptive Decision Making with Independent States (ADMIS)**](#Case4), [**Online Reinforcement Learning**](#Case5), and [**All Others**](#Case6). The similarities and differences between four scenarios are summarized as follows.
 
