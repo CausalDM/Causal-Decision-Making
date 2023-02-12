@@ -1,0 +1,1116 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes &#8212; Causal Decision Making</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Policy Evaluation" href="Evaluation.html" />
+    <link rel="prev" title="Plan To Do" href="../Scenario1/PlanToDo.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Causal Decision Making</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../Map.html">
+                    Overview
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Examples.html">
+   <em>
+    Motivating Examples
+   </em>
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../Preliminary/Preliminary.html">
+   Preliminary
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Preliminary/Causal%20Inference%20Preliminary.html">
+     Average Treatment Effect
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Preliminary/Heterogenous%20Treatement%20Effect.html">
+     Heterogenous Treatment Effect
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Structure Learning (CSL)
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Preliminary/Causal%20Discovery%20Preliminary.html">
+   Causal Discovery Preliminary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Causal_Structure_Learning/Testing-based%20Learner%20-%20PC%20Algorithm.html">
+   Testing-based Learner - PC Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Causal_Structure_Learning/Functional-based%20Learner%20-%20LiNGAM%20Algorithm.html">
+   Functional-based Learner - LiNGAM Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Causal_Structure_Learning/Score-based%20Learner%20-%20NOTEARS%20Algorithm.html">
+   Score-based Learner - NOTEARS Algorithm
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Effect Learning (CEL)
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/Single%20Stage.html">
+   Single Stage
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/ATE.html">
+     ATE Estimation
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/HTE.html">
+     HTE Estimation
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/S-learner.html">
+       <strong>
+        1. S-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/T-learner.html">
+       <strong>
+        2. T-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/X-learner.html">
+       <strong>
+        3. X-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/R-Learner.html">
+       <strong>
+        4. R learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/DR-Learner.html">
+       <strong>
+        5. DR-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/Lp-R-Learner.html">
+       <strong>
+        6. Lp-R-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/GRF.html">
+       <strong>
+        7. Generalized Random Forest
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%201/Dragonnet.html">
+       <strong>
+        8. Dragon Net
+       </strong>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%202/underMDP.html">
+   Markov Decision Processes
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%202/ATE.html">
+     ATE
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%202/HTE.html">
+     HTE
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%203/Multiple%20Stage.html">
+   Multiple Stage–Finite Horizon
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Causal_Effect_Learning/Scenario%204/Miscellaneous.html">
+   Miscellaneous
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Scenario 1
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Scenario1/Single%20Stage.html">
+   Single Stage (DTR)
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Scenario1/Discrete.html">
+   Discrete Action Space
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Scenario1/Q-learning_Single.html">
+     Q-Learning (Single Stage)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Scenario1/A-learning_Single.html">
+     A-Learning (Single Stage)
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../Scenario1/Classification.html">
+     Reduction to Classification Problems
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Scenario1/Classification/O-Learning.html">
+       Outcome Weighted Learning
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Scenario1/Classification/E-learning.html">
+       Entropy learning
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Scenario1/Quantile/QuantileOTR_test.html">
+     <strong>
+      Quantile Optimal Treatment Regime
+     </strong>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Scenario1/Continuous.html">
+   Continuous Action Space
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Scenario1/Continuous/Deep%20Jump%20Learner.html">
+     Deep Jump Learner for Continuous Actions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Scenario1/Continuous/Kernel-Based%20Learner.html">
+     Kernel-Based Learner
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Scenario1/Continuous/Outcome%20Learning.html">
+     Outcome Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Scenario1/PlanToDo.html">
+   Plan To Do
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="simple">
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Scenario 2
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="Evaluation.html">
+   Policy Evaluation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="FQE.html">
+     Fitted-Q Evaluation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="IPW_Infinite.html">
+     Importance Sampling for Policy Evaluation (Infinite Horizon)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="DR_Infinite.html">
+     Doubly Robust Estimator for Policy Evaluation (Infinite Horizon)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Deeply_Debiased.html">
+     Deeply-Debiased Off-Policy Evaluation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="Optimization.html">
+   Policy Optimization
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="FQI.html">
+     Fitted-Q Iteration
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Scenario 3
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Scenario3/Multi%20Stage.html">
+   Multiple Stages (DTR)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Scenario3/Q-learning_Multiple.html">
+   Q-Learning (Multiple Stages)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Scenario3/A-learning_Multiple.html">
+   A-Learning (Multiple Stages)
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Scenario 4
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Scenario4/Bandits.html">
+   Overview: Bandits ALgorithm
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Scenario4/MAB/MAB.html">
+   Multi-Armed Bandits (MAB)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Scenario4/MAB/Epsilon_Greedy.html">
+     <span class="math notranslate nohighlight">
+      \(\epsilon\)
+     </span>
+     -Greedy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Scenario4/MAB/UCB.html">
+     UCB
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Scenario4/MAB/TS.html">
+     TS
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Scenario4/Contextual_Bandits/Contextual_Bandits.html">
+   Contextual Bandits
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+  <label for="toctree-checkbox-12">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Scenario4/Contextual_Bandits/LinUCB.html">
+     LinUCB
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Scenario4/Contextual_Bandits/LinTS.html">
+     LinTS
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Scenario4/Meta_Bandits/Meta_Bandits.html">
+   Meta Bandits
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+  <label for="toctree-checkbox-13">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Scenario4/Meta_Bandits/Meta_TS.html">
+     Meta Thompson Sampling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Scenario4/Meta_Bandits/MTTS.html">
+     Multi-Task Thompson Sampling (MTTS)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Scenario4/Structured_Bandits/Structured_Bandit.html">
+   Structured Bandit (Slate Recommendation)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+  <label for="toctree-checkbox-14">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../Scenario4/Structured_Bandits/Cascade/Learning%20to%20rank.html">
+     Online Learning to Rank (Cascading Bandit)
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+    <label for="toctree-checkbox-15">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Scenario4/Structured_Bandits/Cascade/TS_Cascade.html">
+       TS_Cascade
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Scenario4/Structured_Bandits/Cascade/CascadeLinTS.html">
+       CascadeLinTS
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Scenario4/Structured_Bandits/Cascade/MTSS_Cascade.html">
+       MTSS_Cascade
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../Scenario4/Structured_Bandits/Combinatorial-Semi/Combinatorial%20Optimization.html">
+     Online Combinatorial Optimization (Combinatorial Semi-Bandit)
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Scenario4/Structured_Bandits/Combinatorial-Semi/CombTS.html">
+       CombTS
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Scenario4/Structured_Bandits/Combinatorial-Semi/CombLinTS.html">
+       CombLinTS
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Scenario4/Structured_Bandits/Combinatorial-Semi/MTSS_Comb.html">
+       MTSS_Comb
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../Scenario4/Structured_Bandits/MNL/Assortment%20Optimization.html">
+     Dynamic Assortment Optimization (Multinomial Logit Bandit)
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Scenario4/Structured_Bandits/MNL/TS_MNL_Beta.html">
+       TS_MNL
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Scenario4/Structured_Bandits/MNL/TS_Contextual_MNL.html">
+       TS_Contextual_MNL
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../Scenario4/Structured_Bandits/MNL/MTSS_MNL.html">
+       MTSS_MNL
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Scenario4/OnlineEval/Online%20Policy%20Evaluation.html">
+   Online Policy Evaluation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+  <label for="toctree-checkbox-18">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="simple">
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Scenario 5
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Scenario5/OnlineRL.html">
+   Online RL
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/Causal_Policy_Learning/Scenario2/preliminary_MDP-potential-outcome.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FCausal_Policy_Learning/Scenario2/preliminary_MDP-potential-outcome.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/Causal_Policy_Learning/Scenario2/preliminary_MDP-potential-outcome.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#markov-decision-process-under-a-potential-outcome-framework">
+   Markov Decision Process under a Potential Outcome Framework
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#off-policy-evaluation-and-optimization">
+   Off-policy Evaluation and Optimization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#causal-identifiability">
+   Causal Identifiability
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reference">
+   Reference
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#markov-decision-process-under-a-potential-outcome-framework">
+   Markov Decision Process under a Potential Outcome Framework
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#off-policy-evaluation-and-optimization">
+   Off-policy Evaluation and Optimization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#causal-identifiability">
+   Causal Identifiability
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reference">
+   Reference
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="preliminary-off-policy-evaluation-and-optimization-in-markov-decision-processes">
+<h1>Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes<a class="headerlink" href="#preliminary-off-policy-evaluation-and-optimization-in-markov-decision-processes" title="Permalink to this headline">#</a></h1>
+<p>In this section, we introduce the formulation of the Markov Decision Process and a few related concepts which will be used repeatedly in this chapter.
+We will proceed under the potential outcome framework, which provides a unique causal perspectiy, is different from the conventional notations [2], and is largely based on [3].
+Some of the assumptions to be discussed (such as the sequential randomization assumption) are imposed implicitly in the RL literature.
+By writting these assumptions out, we aim to provide a more formal theoretical ground as well as to connect RL to the causal inference literautre.</p>
+<div class="section" id="markov-decision-process-under-a-potential-outcome-framework">
+<h2>Markov Decision Process under a Potential Outcome Framework<a class="headerlink" href="#markov-decision-process-under-a-potential-outcome-framework" title="Permalink to this headline">#</a></h2>
+<p>As the underlying data generation model for RL, we consider an infinite-horizon discounted Markov Decision Process (MDP) [1].
+For any <span class="math notranslate nohighlight">\(t\ge 0\)</span>, let <span class="math notranslate nohighlight">\(\bar{a}_t=(a_0,a_1,\cdots,a_t)^\top\in \mathcal{A}^{t+1}\)</span> denote a treatment history vector up to time <span class="math notranslate nohighlight">\(t\)</span>. Let <span class="math notranslate nohighlight">\(\mathbb{S} \subset \mathbb{R}^d\)</span> denote the support of state variables and <span class="math notranslate nohighlight">\(S_0\)</span> denote the initial state variable.
+For any <span class="math notranslate nohighlight">\((\bar{a}_{t-1},\bar{a}_{t})\)</span>, let <span class="math notranslate nohighlight">\(S_{t}^*(\bar{a}_{t-1})\)</span> and <span class="math notranslate nohighlight">\(Y_t^*(\bar{a}_t)\)</span> be the counterfactual state and counterfactual outcome, respectively,  that would occur at time <span class="math notranslate nohighlight">\(t\)</span> had the agent followed the treatment history <span class="math notranslate nohighlight">\(\bar{a}_{t}\)</span>.
+The set of potential outcomes up to time <span class="math notranslate nohighlight">\(t\)</span> is given by</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{eqnarray*}
+	W_t^*(\bar{a}_t)=\{S_0,Y_0^*(a_0),S_1^*(a_0),\cdots,S_{t}^*(\bar{a}_{t-1}),Y_t^*(\bar{a}_t)\}.
+\end{eqnarray*}\]</div>
+<p>Let <span class="math notranslate nohighlight">\(W^*=\cup_{t\ge 0,\bar{a}_t\in \{0,1\}^{t+1}} W_t^*(\bar{a}_t)\)</span> be the set of all potential outcomes.</p>
+<p>A deterministic policy <span class="math notranslate nohighlight">\(\pi\)</span> is a time-homogeneous function that maps the space of state variables to the set of available actions.
+Following <span class="math notranslate nohighlight">\(\pi\)</span>, the agent will assign actions according to <span class="math notranslate nohighlight">\(\pi\)</span> at each time.  We use <span class="math notranslate nohighlight">\(S_t^*(\pi)\)</span> and <span class="math notranslate nohighlight">\(Y_t^*(\pi)\)</span> to denote the associated potential state and outcome that would occur at time <span class="math notranslate nohighlight">\(t\)</span> had the agent followed <span class="math notranslate nohighlight">\(\pi\)</span>.</p>
+<p>The goodness of  a policy <span class="math notranslate nohighlight">\(\pi\)</span> is measured by its (state) value function,</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{eqnarray*}
+	V^{\pi}(s)=\sum_{t\ge 0} \gamma^t \mathbb{E} \{Y_t^*(\pi)|S_0=s\},
+\end{eqnarray*}\]</div>
+<p>where <span class="math notranslate nohighlight">\(0&lt;\gamma&lt;1\)</span> is a discount factor that reflects the trade-off between immediate and future outcomes. The value function measures the discounted cumulative outcome that the agent would receive had they followed <span class="math notranslate nohighlight">\(\pi\)</span>. Note that our definition of the value function is slightly different from those in the existing literature [2]. Specifically, <span class="math notranslate nohighlight">\(V(\pi;s)\)</span> is defined through potential outcomes rather than the observed data.</p>
+<p>Similarly, we define the Q function by</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{eqnarray*}
+	Q^{\pi}(a,s)=\sum_{t\ge 0} \gamma^t \mathbb{E} \{Y_t^*(\pi)|S_0=s, A_0 = a\}. 
+\end{eqnarray*}\]</div>
+<p>The optimal policy is defined as <span class="math notranslate nohighlight">\(\pi^* = \arg \max_{\pi} V^\pi(s), \forall s \in \mathcal{S}\)</span>.</p>
+<p>The following two assumptions are central to and also unique in the reinforcement learning setting.</p>
+<p><strong>(MA) Markov assumption</strong>:  there exists a Markov transition kernel <span class="math notranslate nohighlight">\(\mathcal{P}\)</span> such that  for any <span class="math notranslate nohighlight">\(t\ge 0\)</span>, <span class="math notranslate nohighlight">\(\bar{a}_{t}\in \{0,1\}^{t+1}\)</span> and <span class="math notranslate nohighlight">\(\mathcal{S}\subseteq \mathbb{R}^d\)</span>, we have
+<span class="math notranslate nohighlight">\(\mathbb{P}\{S_{t+1}^*(\bar{a}_{t})\in \mathcal{S}|W_t^*(\bar{a}_t)\}=\mathcal{P}(\mathcal{S};a_t,S_t^*(\bar{a}_{t-1})).\)</span></p>
+<p><strong>(CMIA) Conditional mean independence assumption</strong>: there exists a function <span class="math notranslate nohighlight">\(r\)</span> such that  for any <span class="math notranslate nohighlight">\(t\ge 0, \bar{a}_{t}\in \{0,1\}^{t+1}\)</span>, we have
+<span class="math notranslate nohighlight">\(\mathbb{E} \{Y_t^*(\bar{a}_t)|S_t^*(\bar{a}_{t-1}),W_{t-1}^*(\bar{a}_{t-1})\}=r(a_t,S_t^*(\bar{a}_{t-1}))\)</span>.</p>
+<p>They assume (i) the process is statioanry, and (ii) the state variables shall be chosen to include those that serve as important mediators between past treatments and current outcomes.
+These two conditions are central to the empirical validity of most RL algorithms.
+Specifically, under these two conditions, one can show that there exists an optimal time-homogenous stationary policy whose value is no worse than any history-dependent policy [1].</p>
+</div>
+<div class="section" id="off-policy-evaluation-and-optimization">
+<h2>Off-policy Evaluation and Optimization<a class="headerlink" href="#off-policy-evaluation-and-optimization" title="Permalink to this headline">#</a></h2>
+<p>In the off-policy setting, the observed data consists of <span class="math notranslate nohighlight">\(n\)</span> i.i.d. trajectories <span class="math notranslate nohighlight">\(\{(S_{i,t},A_{i,t},R_{i,t},S_{i,t+1})\}_{0\le t&lt;T_i,1\le i\le n}\)</span>, where <span class="math notranslate nohighlight">\(T_i\)</span> denotes the length of the <span class="math notranslate nohighlight">\(i\)</span>th trajectory. Without loss of generality, we assume <span class="math notranslate nohighlight">\(T_1=\cdots=T_n=T\)</span> and the immediate rewards are uniformly bounded.
+The dataset is collected by following a stationary policy <span class="math notranslate nohighlight">\(b\)</span>, known as the <em>behavior policy</em>.</p>
+<p><strong>Off-Policy Evaluation(OPE).</strong> The goal of OPE is to estimate the value of a given <em>target policy</em> <span class="math notranslate nohighlight">\(\pi\)</span> with respect to the initial state distribution <span class="math notranslate nohighlight">\(\mathbb{G}\)</span>, defined as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-e3e99d14-0de3-4a36-ac91-40b78d16d8cf">
+<span class="eqno">(68)<a class="headerlink" href="#equation-e3e99d14-0de3-4a36-ac91-40b78d16d8cf" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:def_value}
+	\eta^{\pi} =  \mathbb{E}_{s \sim \mathbb{G}} V^{\pi}(s). 
+\end{eqnarray}\]</div>
+<p>By definition, we directly have <span class="math notranslate nohighlight">\(\eta^{\pi} = \mathbb{E}_{s \sim \mathbb{G}, a \sim \pi(\cdot|s)} Q^{\pi}(a, s)\)</span>.</p>
+<p>In addition to a point estimator, many applications would benefit from having a CI for <span class="math notranslate nohighlight">\(\eta^{\pi}\)</span>.
+We refer to an interval <span class="math notranslate nohighlight">\([\hat{\eta}^{\pi}_l, \hat{\eta}^{\pi}_u]\)</span> as an <span class="math notranslate nohighlight">\((1-\alpha)\)</span>-CI for <span class="math notranslate nohighlight">\(\eta^{\pi}\)</span> if and only if <span class="math notranslate nohighlight">\(P(\hat{\eta}^{\pi}_l \le \eta^{\pi} \le \hat{\eta}^{\pi}_u) \ge 1 - \alpha\)</span>, for any <span class="math notranslate nohighlight">\(\alpha \in (0, 1)\)</span>.</p>
+<p><strong>Off-Policy Optimization(OPO).</strong> The goal of OPO is to solve the optimal policy <span class="math notranslate nohighlight">\(\pi^*\)</span>, or in other words, to learn a policy <span class="math notranslate nohighlight">\(\hat{\pi}\)</span> so as to minimize the regret <span class="math notranslate nohighlight">\(\eta^{\pi^*} - \eta^{\hat{\pi}}\)</span>.</p>
+</div>
+<div class="section" id="causal-identifiability">
+<h2>Causal Identifiability<a class="headerlink" href="#causal-identifiability" title="Permalink to this headline">#</a></h2>
+<p>In general, the set <span class="math notranslate nohighlight">\(W^*\)</span> cannot be observed, whereas at time <span class="math notranslate nohighlight">\(t\)</span>, we observe the state-action-outcome triplet <span class="math notranslate nohighlight">\((S_t,A_t,Y_t)\)</span>.
+For any <span class="math notranslate nohighlight">\(t\ge 0\)</span>, let <span class="math notranslate nohighlight">\(\bar{A}_t=(A_0,A_1,\cdots,A_t)^\top\)</span> denote the observed treatment history.
+Similar to our discussions in previous chapters,
+the off-policy evaluation/optimization tasks requires certain assumptions to ensure the causal identifiability.
+The two critical assumptions are:</p>
+<p><strong>(CA) Consistency assumption</strong>: <span class="math notranslate nohighlight">\(S_{t+1}=S_{t+1}^*(\bar{A}_{t})\)</span> and <span class="math notranslate nohighlight">\(Y_t=Y_t^*(\bar{A}_t)\)</span> for all <span class="math notranslate nohighlight">\(t\ge 0\)</span>, almost surely.</p>
+<p><strong>(SRA) Sequential randomization assumption</strong>: <span class="math notranslate nohighlight">\(A_t\perp W^*| S_{t}, \{S_j,A_j,Y_j\}_{0\le j&lt;t}\)</span>.</p>
+<p>The CA requires that the observed state and outcome correspond to the potential state and outcome whose treatments are assigned according to the observed treatment history.
+It generalizes SUTVA to our setting, allowing the potential outcomes to depend on past treatments.
+The SRA implies that  there are no unmeasured confounders and it automatically holds in online randomized experiments (or when all trajectories are collected by following policies that depend on the same set of state variables), in which the treatment assignment mechanism is pre-specified.
+In SRA, we allow <span class="math notranslate nohighlight">\(A_t\)</span> to depend on the observed data history <span class="math notranslate nohighlight">\(S_{t}, \{S_j,A_j,Y_j\}_{0\le j&lt;t}\)</span> and thus, the treatments can be adaptively chosen.</p>
+<p>In addition, these two conditions guarantee that MA and CMIA hold on the observed dataset as well.</p>
+<div class="amsmath math notranslate nohighlight" id="equation-b96dbe29-f9e0-4a03-a29a-5404384d4b56">
+<span class="eqno">(69)<a class="headerlink" href="#equation-b96dbe29-f9e0-4a03-a29a-5404384d4b56" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:Markovobserve}
+	P(S_{t+1}\in \mathcal{S}|A_t,S_t,\{S_j,A_j,Y_j\}_{0\le j&lt;t})&amp;=&amp;\mathcal{P}(\mathcal{S};A_t,S_t),\\\label{eqn:robserve}
+	\mathbb{E}(Y_t|A_t,S_t,\{S_j,A_j,Y_j\}_{0\le j&lt;t})&amp;=&amp;r(A_t,S_t).
+\end{eqnarray}\]</div>
+<p>As such, <span class="math notranslate nohighlight">\(\mathcal{P}\)</span> corresponds to the transition function that defines the next state distribution conditional on the current state-action pair and <span class="math notranslate nohighlight">\(r\)</span> corresponds to the conditional expectation of the immediate reward as a function of the state-action pair.
+In this chapter, we may use both the potential outcomes and the observed variables interchangeably.</p>
+</div>
+<div class="section" id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">#</a></h2>
+<p>[1] Puterman M L. Markov decision processes: discrete stochastic dynamic programming[M]. John Wiley &amp; Sons, 2014.</p>
+<p>[2] Sutton R S, Barto A G. Reinforcement learning: An introduction[M]. MIT press, 2018.</p>
+<p>[3] Shi C, Wang X, Luo S, et al. A Reinforcement Learning Framework for Time-Dependent Causal Effects Evaluation in A/B Testing[J]. arXiv preprint arXiv:2002.01711, 2020.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Causal_Policy_Learning/Scenario2"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../Scenario1/PlanToDo.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Plan To Do</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Evaluation.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Policy Evaluation</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Causal Decision Making Team<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
