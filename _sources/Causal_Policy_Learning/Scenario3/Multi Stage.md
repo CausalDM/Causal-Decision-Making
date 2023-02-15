@@ -2,6 +2,7 @@
 
 ## Problem Setting
 Suppose we have a dataset containning observations from $N$ individuals, and each individual has $T$ observations. For each individual $i$, the observed data is structured as follows
+
     \begin{align}
     (S_{1i},A_{1i},\cdots,S_{Ti},A_{Ti},R_i), i=1,\cdots, N.
     \end{align} 
