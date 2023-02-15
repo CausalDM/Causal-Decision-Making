@@ -1084,8 +1084,8 @@ title="Print to PDF"
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>As the name suggested, the UCB algorithm estimates the upper confidence bound <span class="math notranslate nohighlight">\(U_{a}^{t}\)</span> of the mean of the potential reward of arm <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(R_t(a)\)</span>, based on the observations and then choose the action has the highest estimates. The class of UCB-based algorithms is firstly introduced by Auer et al. [1]. Generally, at each round <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(U_{a}^{t}\)</span> is calculated as the sum of the estimated reward (exploitation) and the estimated confidence radius (exploration) of item <span class="math notranslate nohighlight">\(i\)</span> based on previous observations. Then, <span class="math notranslate nohighlight">\(A_{t}\)</span> is selected as
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-01b13615-fa56-4ae8-a445-3e5564c9a519">
-<span class="eqno">(100)<a class="headerlink" href="#equation-01b13615-fa56-4ae8-a445-3e5564c9a519" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-62f9a6b0-c931-4d10-acd4-511c7f56508d">
+<span class="eqno">(100)<a class="headerlink" href="#equation-62f9a6b0-c931-4d10-acd4-511c7f56508d" title="Permalink to this equation">#</a></span>\[\begin{equation}
     A_t = \arg \max_{a \in \mathcal{A}} U_a^t.
 \end{equation}\]</div>
 <p>$<span class="math notranslate nohighlight">\(
@@ -1094,13 +1094,13 @@ As an example, **UCB** [1] estimates the confidence radius as \)</span>\sqrt{\fr
 <section id="algorithms-details">
 <h2>Algorithms Details<a class="headerlink" href="#algorithms-details" title="Permalink to this headline">#</a></h2>
 <p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. The UCB1 algorithm start with initializing the estimated upper confidence bound <span class="math notranslate nohighlight">\(U_a^{0}\)</span> and the count of being pulled <span class="math notranslate nohighlight">\(C_a^{0}\)</span> for each action <span class="math notranslate nohighlight">\(a\)</span> as 0. At each round <span class="math notranslate nohighlight">\(t\)</span>, we greedily select an action <span class="math notranslate nohighlight">\(A_t\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8fb217c3-7f5a-42d7-a5dd-1ccf733f1370">
-<span class="eqno">(101)<a class="headerlink" href="#equation-8fb217c3-7f5a-42d7-a5dd-1ccf733f1370" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2620f44c-86ab-42e5-a6cf-182a55e74215">
+<span class="eqno">(101)<a class="headerlink" href="#equation-2620f44c-86ab-42e5-a6cf-182a55e74215" title="Permalink to this equation">#</a></span>\[\begin{align}
 A_t = \arg \max_{a\in \mathcal{A}} U_{a}^{t}.
 \end{align}\]</div>
 <p>After observing the rewards corresponding to the selected action <span class="math notranslate nohighlight">\(A_t\)</span>, we first update the total number of being pulled for <span class="math notranslate nohighlight">\(A_t\)</span> accordingly. Then, we estimate the upper confidence bound for each action <span class="math notranslate nohighlight">\(a\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f0ff4fc7-b28e-4b3d-aa7f-3fcfb2a4ae53">
-<span class="eqno">(102)<a class="headerlink" href="#equation-f0ff4fc7-b28e-4b3d-aa7f-3fcfb2a4ae53" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c80871fe-9895-4e6d-afa0-e1da9a788467">
+<span class="eqno">(102)<a class="headerlink" href="#equation-c80871fe-9895-4e6d-afa0-e1da9a788467" title="Permalink to this equation">#</a></span>\[\begin{align}
 U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} ,
 \end{align}\]</div>
 </section>
@@ -1112,8 +1112,8 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 <ul>
 <li><p>select action <span class="math notranslate nohighlight">\(A_t\)</span> as the arm with the maximum <span class="math notranslate nohighlight">\(U_a^t\)</span></p></li>
 <li><p>Received the reward R, and update <span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(U\)</span> with</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6ccf8506-c83e-4a57-a2d8-b24282fd4ad6">
-<span class="eqno">(103)<a class="headerlink" href="#equation-6ccf8506-c83e-4a57-a2d8-b24282fd4ad6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-483bd0a2-d59e-441f-96a4-2c064bb98d09">
+<span class="eqno">(103)<a class="headerlink" href="#equation-483bd0a2-d59e-441f-96a4-2c064bb98d09" title="Permalink to this equation">#</a></span>\[\begin{align}
         C_{A_{t}}^{t+1} &amp;= C_{A_{t}}^{t} + 1 \\
         U_{A_{t}}^{t+1} &amp;= \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} 
         \end{align}\]</div>

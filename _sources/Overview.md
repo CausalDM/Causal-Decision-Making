@@ -9,10 +9,10 @@
 
 ```{figure} Workflow_CausalDM.png
 ---
-:width: 800px
-:align: center
+width: 800px
+align: center
 ---
-Fig 1. Workflow of the Causal Decision Making.
+Workflow of the Causal Decision Making.
 ```
 
 The Fig 1 depicts the overall structure of this book, which is comprised of three primary components: **Causal Structure Learning**, **Causal Policy Learning**, and **Causal Effect Learning**. Specifically, in the chapter [**Causal Structure Learning (CSL)**](#SL), we present state-of-the-art techniques for learning the skeleton of causal relationships among input variables. When a causal structure is known, the second chapter of [**Causal Effect Learning (CEL)**](#ML) introduces approaches making causal inference. Finally, the [**Causal Policy Learning (CPL)**](#PL) chapter introduces diverse policy learners to learn optimal policies and evaluate various policies of interest.

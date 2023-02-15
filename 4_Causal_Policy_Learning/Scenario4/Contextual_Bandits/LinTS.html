@@ -1073,13 +1073,13 @@ title="Print to PDF"
 <section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. Noticing that feature information are commonly avialable, the <strong>LinTS</strong>[1,2] algorithm consdiers modeling the expectation of the potential reward <span class="math notranslate nohighlight">\(R_t(i)\)</span> with features of item <span class="math notranslate nohighlight">\(i\)</span>. As an example, considering the Gaussian reward, we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5129378e-e3d7-40a3-8852-91257a848f3c">
-<span class="eqno">(108)<a class="headerlink" href="#equation-5129378e-e3d7-40a3-8852-91257a848f3c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c544fcb2-017d-4b9b-ac81-99239c2825a2">
+<span class="eqno">(108)<a class="headerlink" href="#equation-c544fcb2-017d-4b9b-ac81-99239c2825a2" title="Permalink to this equation">#</a></span>\[\begin{align}
 R_t(i)\sim \mathcal{N}(\boldsymbol{s}_i^T \boldsymbol{\gamma},\sigma^2).
 \end{align}\]</div>
 <p>As for the Bernoulli reward, we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cfbb5db4-51d4-4071-8e52-9603ca9e108a">
-<span class="eqno">(109)<a class="headerlink" href="#equation-cfbb5db4-51d4-4071-8e52-9603ca9e108a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2bb8bb04-70a4-44e3-bf65-db9c3360b7a3">
+<span class="eqno">(109)<a class="headerlink" href="#equation-2bb8bb04-70a4-44e3-bf65-db9c3360b7a3" title="Permalink to this equation">#</a></span>\[\begin{align}
 R_t(i) \sim Bernoulli(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})).
 \end{align}\]</div>
 <p>Similar as the standard TS algorithm, the LinTS algorithm starts with specifying a prior distribution of the parameter <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>, and a variance of the reward, based on the domian knowledge. At each round <span class="math notranslate nohighlight">\(t\)</span>, the agent will samples a vector of <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\gamma}}^{t}\)</span> from thecorresponding posterior distribution, and the mean reward <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\theta}}^{t}\)</span> is then calculated accordingly. The action <span class="math notranslate nohighlight">\(a\)</span> with the greatest <span class="math notranslate nohighlight">\(\tilde{\theta}_{a}^{t}\)</span> is then selected. Finally, the posterior distribution would be updated after receiving the feedback at the end of each round. It should be noted that the posterior updating step differs for different pairs of the prior distribution of expected potential reward and reward distribution, and the code can be easily modified to different prior/reward distribution specifications if necessary.</p>
@@ -1120,59 +1120,6 @@ R_t(i) \sim Bernoulli(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})).
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="nn">Input In [2],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">causaldm.learners.Online.CMAB</span> <span class="kn">import</span> <span class="n">LinTS</span>
-
-<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">GitHub</span>\<span class="n">CausalDM</span>\<span class="n">causaldm</span>\<span class="n">learners</span>\<span class="n">Online</span>\<span class="n">CMAB</span>\<span class="n">LinTS</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">.._base_online_learner</span> <span class="kn">import</span> <span class="n">BaseOnlineLearner</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">.._util_online</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">SGDClassifier</span>
-
-<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">GitHub</span>\<span class="n">CausalDM</span>\<span class="n">causaldm</span>\<span class="n">learners</span>\<span class="n">Online</span>\<span class="n">_base_online_learner</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">._util_online</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="k">class</span> <span class="nc">BaseOnlineLearner</span><span class="p">():</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="nd">@autoargs</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">GitHub</span>\<span class="n">CausalDM</span>\<span class="n">causaldm</span>\<span class="n">learners</span>\<span class="n">Online</span>\<span class="n">_util_online</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">36</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="g g-Whitespace">     </span><span class="mi">35</span> <span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span> <span class="k">as</span> <span class="n">DF</span>
-<span class="ne">---&gt; </span><span class="mi">36</span> <span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
-<span class="g g-Whitespace">     </span><span class="mi">37</span> <span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">hist</span>
-<span class="g g-Whitespace">     </span><span class="mi">38</span> <span class="kn">import</span> <span class="nn">pickle</span>
-
-<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">statsmodels</span>\<span class="n">api</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">124</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">    </span><span class="mi">122</span> <span class="kn">from</span> <span class="nn">.tools.tools</span> <span class="kn">import</span> <span class="n">add_constant</span><span class="p">,</span> <span class="n">categorical</span>
-<span class="g g-Whitespace">    </span><span class="mi">123</span> <span class="kn">from</span> <span class="nn">.tools.web</span> <span class="kn">import</span> <span class="n">webdoc</span>
-<span class="ne">--&gt; </span><span class="mi">124</span> <span class="kn">from</span> <span class="nn">.tsa</span> <span class="kn">import</span> <span class="n">api</span> <span class="k">as</span> <span class="n">tsa</span>
-<span class="g g-Whitespace">    </span><span class="mi">125</span> <span class="kn">from</span> <span class="nn">._version</span> <span class="kn">import</span> <span class="n">get_versions</span>
-<span class="g g-Whitespace">    </span><span class="mi">127</span> <span class="n">__version__</span> <span class="o">=</span> <span class="n">get_versions</span><span class="p">()[</span><span class="s2">&quot;version&quot;</span><span class="p">]</span>
-
-<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">statsmodels</span>\<span class="n">tsa</span>\<span class="n">api</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">74</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">72</span> <span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">datetools</span>
-<span class="g g-Whitespace">     </span><span class="mi">73</span> <span class="kn">from</span> <span class="nn">.exponential_smoothing.ets</span> <span class="kn">import</span> <span class="n">ETSModel</span>
-<span class="ne">---&gt; </span><span class="mi">74</span> <span class="kn">from</span> <span class="nn">.filters</span> <span class="kn">import</span> <span class="n">api</span> <span class="k">as</span> <span class="n">filters</span><span class="p">,</span> <span class="n">bk_filter</span><span class="p">,</span> <span class="n">cf_filter</span><span class="p">,</span> <span class="n">hp_filter</span>
-<span class="g g-Whitespace">     </span><span class="mi">75</span> <span class="kn">from</span> <span class="nn">.forecasting.stl</span> <span class="kn">import</span> <span class="n">STLForecast</span>
-<span class="g g-Whitespace">     </span><span class="mi">76</span> <span class="kn">from</span> <span class="nn">.holtwinters</span> <span class="kn">import</span> <span class="n">ExponentialSmoothing</span><span class="p">,</span> <span class="n">Holt</span><span class="p">,</span> <span class="n">SimpleExpSmoothing</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap&gt;:1007,</span> in <span class="ni">_find_and_load</span><span class="nt">(name, import_)</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap&gt;:986,</span> in <span class="ni">_find_and_load_unlocked</span><span class="nt">(name, import_)</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap&gt;:680,</span> in <span class="ni">_load_unlocked</span><span class="nt">(spec)</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap_external&gt;:846,</span> in <span class="ni">exec_module</span><span class="nt">(self, module)</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap_external&gt;:941,</span> in <span class="ni">get_code</span><span class="nt">(self, fullname)</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap_external&gt;:1039,</span> in <span class="ni">get_data</span><span class="nt">(self, path)</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
