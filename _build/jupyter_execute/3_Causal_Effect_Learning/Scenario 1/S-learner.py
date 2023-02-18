@@ -26,85 +26,82 @@
 # In[1]:
 
 
-import sys
-get_ipython().system('{sys.executable} -m pip install scikit-uplift')
+# import related packages
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt;
+from lightgbm import LGBMRegressor;
+from sklearn.linear_model import LinearRegression
 
+
+# ### Mimic3 Data
 
 # In[2]:
 
 
-# import related packages
-from matplotlib import pyplot as plt;
-from lightgbm import LGBMRegressor;
-from sklearn.linear_model import LinearRegression
-from causaldm._util_causaldm import *;
-
-
-# In[ ]:
-
-
-n = 10**3  # sample size in observed data
-n0 = 10**5 # the number of samples used to estimate the true reward distribution by MC
-seed=223
-
-
-# In[ ]:
-
-
 # Get data
-data_behavior = get_data_simulation(n, seed, policy="behavior")
-#data_target = get_data_simulation(n0, seed, policy="target")
-
-# The true expected heterogeneous treatment effect
-HTE_true = get_data_simulation(n, seed, policy="1")['R']-get_data_simulation(n, seed, policy="0")['R']
-
-
-# In[ ]:
+n = 5000
+selected = ['Glucose','paO2','PaO2_FiO2',  'iv_input', 'SOFA','reward']
+data_CEL_selected = pd.read_csv("C:/Users/Public/CausalDM/causaldm/data/mimic3_CEL_selected.csv")
+data_CEL_selected.pop(data_CEL_selected.columns[0])
+data_CEL_selected
 
 
-data_behavior
+# In[3]:
 
 
-# In[ ]:
+userinfo_index = np.array([0,1,2,4])
+SandA = data_CEL_selected.iloc[:, np.array([0,1,2,3,4])]
 
 
-SandA = data_behavior.iloc[:,0:3]
-
-
-# In[ ]:
+# In[4]:
 
 
 # S-learner
 S_learner = LGBMRegressor(max_depth=5)
 #S_learner = LinearRegression()
 #SandA = np.hstack((S.to_numpy(),A.to_numpy().reshape(-1,1)))
-S_learner.fit(SandA, data_behavior['R'])
+S_learner.fit(SandA, data_CEL_selected['reward'])
 
 
-# In[ ]:
+# In[5]:
 
 
-HTE_S_learner = S_learner.predict(np.hstack(( data_behavior.iloc[:,0:2].to_numpy(),np.ones(n).reshape(-1,1)))) - S_learner.predict(np.hstack(( data_behavior.iloc[:,0:2].to_numpy(),np.zeros(n).reshape(-1,1))))
+SandA_all1 = SandA.copy()
+SandA_all0 = SandA.copy()
+SandA_all1.iloc[:,3]=np.ones(n)
+SandA_all0.iloc[:,3]=np.zeros(n)
+
+HTE_S_learner = S_learner.predict(SandA_all1) - S_learner.predict(SandA_all0)
 
 
-# To evaluate how well S-learner is in estimating heterogeneous treatment effect, we compare its estimates with the true value for the first 10 subjects:
+# In[6]:
 
-# In[ ]:
+
+S_learner.predict(np.array([100,200,1000,1,5]).reshape(1, -1))
+
+
+# In[7]:
+
+
+S_learner.predict(np.array([100,200,1000,0,5]).reshape(1, -1))
+
+
+# In[8]:
+
+
+S_learner.predict(np.array([0,0,1000,0,5]).reshape(1, -1))
+
+
+# Let's focus on the estimated HTEs for the first 8 patients:
+
+# In[9]:
 
 
 print("S-learner:  ",HTE_S_learner[0:8])
-print("true value: ",HTE_true[0:8].to_numpy())
 
 
-# In[ ]:
-
-
-Bias_S_learner = np.sum(HTE_S_learner-HTE_true)/n
-Variance_S_learner = np.sum((HTE_S_learner-HTE_true)**2)/n
-print("The overall estimation bias of S-learner is :     ", Bias_S_learner, ", \n", "The overall estimation variance of S-learner is :",Variance_S_learner,". \n")
-
-
-# **Conclusion:** The performance of S-learner, at least in this toy example, is not very attractive. Although it is the easiest approach to implement, the over-simplicity tends to cover some information that can be better explored with some advanced approaches.
+# **Conclusion:** Due to the difference of scales across state variables, S-learner failed to detect the heterogeneous treatment effect in this mimic3 dataset. Although it is the easiest approach to implement, the over-simplicity tends to cover some information that can be better explored with some advanced approaches.
 
 # ## References
 # 1. Kunzel, S. R., Sekhon, J. S., Bickel, P. J., and Yu, B. (2019). Metalearners for estimating heterogeneous treatment effects using machine learning. Proceedings of the national academy of sciences 116, 4156–4165.

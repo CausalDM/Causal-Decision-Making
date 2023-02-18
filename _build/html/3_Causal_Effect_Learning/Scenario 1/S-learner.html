@@ -943,6 +943,11 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mimic3-data">
+   Mimic3 Data
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
    References
   </a>
@@ -971,6 +976,11 @@ title="Print to PDF"
    <strong>
     1. S-learner
    </strong>
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mimic3-data">
+   Mimic3 Data
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
@@ -1005,97 +1015,32 @@ title="Print to PDF"
 \end{equation*}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="o">!{</span>sys.executable<span class="o">}</span> -m pip install scikit-uplift
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: scikit-uplift in /opt/anaconda3/lib/python3.8/site-packages (0.5.1)
-Requirement already satisfied: requests in /opt/anaconda3/lib/python3.8/site-packages (from scikit-uplift) (2.24.0)
-Requirement already satisfied: tqdm in /opt/anaconda3/lib/python3.8/site-packages (from scikit-uplift) (4.47.0)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: numpy&gt;=1.16 in /opt/anaconda3/lib/python3.8/site-packages (from scikit-uplift) (1.22.4)
-Requirement already satisfied: scikit-learn&gt;=0.21.0 in /opt/anaconda3/lib/python3.8/site-packages (from scikit-uplift) (0.23.1)
-Requirement already satisfied: pandas in /opt/anaconda3/lib/python3.8/site-packages (from scikit-uplift) (1.4.2)
-Requirement already satisfied: matplotlib in /opt/anaconda3/lib/python3.8/site-packages (from scikit-uplift) (3.2.2)
-Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /opt/anaconda3/lib/python3.8/site-packages (from requests-&gt;scikit-uplift) (1.25.9)
-Requirement already satisfied: idna&lt;3,&gt;=2.5 in /opt/anaconda3/lib/python3.8/site-packages (from requests-&gt;scikit-uplift) (2.10)
-Requirement already satisfied: chardet&lt;4,&gt;=3.0.2 in /opt/anaconda3/lib/python3.8/site-packages (from requests-&gt;scikit-uplift) (3.0.4)
-Requirement already satisfied: certifi&gt;=2017.4.17 in /opt/anaconda3/lib/python3.8/site-packages (from requests-&gt;scikit-uplift) (2020.6.20)
-Requirement already satisfied: joblib&gt;=0.11 in /opt/anaconda3/lib/python3.8/site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (0.16.0)
-Requirement already satisfied: scipy&gt;=0.19.1 in /opt/anaconda3/lib/python3.8/site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (1.5.0)
-Requirement already satisfied: threadpoolctl&gt;=2.0.0 in /opt/anaconda3/lib/python3.8/site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (2.1.0)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: python-dateutil&gt;=2.8.1 in /opt/anaconda3/lib/python3.8/site-packages (from pandas-&gt;scikit-uplift) (2.8.1)
-Requirement already satisfied: pytz&gt;=2020.1 in /opt/anaconda3/lib/python3.8/site-packages (from pandas-&gt;scikit-uplift) (2020.1)
-Requirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,&gt;=2.0.1 in /opt/anaconda3/lib/python3.8/site-packages (from matplotlib-&gt;scikit-uplift) (2.4.7)
-Requirement already satisfied: cycler&gt;=0.10 in /opt/anaconda3/lib/python3.8/site-packages (from matplotlib-&gt;scikit-uplift) (0.10.0)
-Requirement already satisfied: kiwisolver&gt;=1.0.1 in /opt/anaconda3/lib/python3.8/site-packages (from matplotlib-&gt;scikit-uplift) (1.2.0)
-Requirement already satisfied: six&gt;=1.5 in /opt/anaconda3/lib/python3.8/site-packages (from python-dateutil&gt;=2.8.1-&gt;pandas-&gt;scikit-uplift) (1.15.0)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import related packages</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span><span class="p">;</span>
-<span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span><span class="p">;</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">d2906cddc1f8</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># import related packages</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span><span class="p">;</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span><span class="p">;</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span><span class="p">;</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;lightgbm&#39;
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="k">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span><span class="p">;</span>
+<span class="kn">from</span> <span class="nn">lightgbm</span> <span class="k">import</span> <span class="n">LGBMRegressor</span><span class="p">;</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LinearRegression</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">3</span>  <span class="c1"># sample size in observed data</span>
-<span class="n">n0</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">5</span> <span class="c1"># the number of samples used to estimate the true reward distribution by MC</span>
-<span class="n">seed</span><span class="o">=</span><span class="mi">223</span>
-</pre></div>
 </div>
-</div>
-</div>
+<div class="section" id="mimic3-data">
+<h1>Mimic3 Data<a class="headerlink" href="#mimic3-data" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get data</span>
-<span class="n">data_behavior</span> <span class="o">=</span> <span class="n">get_data_simulation</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">policy</span><span class="o">=</span><span class="s2">&quot;behavior&quot;</span><span class="p">)</span>
-<span class="c1">#data_target = get_data_simulation(n0, seed, policy=&quot;target&quot;)</span>
-
-<span class="c1"># The true expected heterogeneous treatment effect</span>
-<span class="n">HTE_true</span> <span class="o">=</span> <span class="n">get_data_simulation</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">policy</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">)[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">get_data_simulation</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">policy</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="p">)[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_behavior</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
+<span class="n">selected</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Glucose&#39;</span><span class="p">,</span><span class="s1">&#39;paO2&#39;</span><span class="p">,</span><span class="s1">&#39;PaO2_FiO2&#39;</span><span class="p">,</span>  <span class="s1">&#39;iv_input&#39;</span><span class="p">,</span> <span class="s1">&#39;SOFA&#39;</span><span class="p">,</span><span class="s1">&#39;reward&#39;</span><span class="p">]</span>
+<span class="n">data_CEL_selected</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;C:/Users/Public/CausalDM/causaldm/data/mimic3_CEL_selected.csv&quot;</span><span class="p">)</span>
+<span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">data_CEL_selected</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html">
-  <div id="df-c61c9893-973f-4fb6-a9fc-be419e504f49">
-    <div class="colab-df-container">
-      <div>
+<div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -1113,174 +1058,123 @@ Requirement already satisfied: six&gt;=1.5 in /opt/anaconda3/lib/python3.8/site-
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>S1</th>
-      <th>S2</th>
-      <th>A</th>
-      <th>R</th>
+      <th>Glucose</th>
+      <th>paO2</th>
+      <th>PaO2_FiO2</th>
+      <th>iv_input</th>
+      <th>SOFA</th>
+      <th>reward</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>0.034775</td>
-      <td>2.453145</td>
-      <td>1</td>
-      <td>7.167637</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.084880</td>
-      <td>-1.234459</td>
       <td>0</td>
-      <td>-1.553798</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>-0.144626</td>
-      <td>2.040543</td>
+      <td>1.0</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.0</td>
       <td>1</td>
-      <td>5.956732</td>
+      <td>1.000000</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>0.148426</td>
-      <td>-0.021139</td>
       <td>1</td>
-      <td>1.095578</td>
+      <td>122.0</td>
+      <td>59.444444</td>
+      <td>198.148148</td>
+      <td>0.0</td>
+      <td>12</td>
+      <td>0.383136</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>-0.120852</td>
-      <td>1.377594</td>
+      <td>2</td>
+      <td>125.0</td>
+      <td>192.000000</td>
+      <td>690.647482</td>
+      <td>0.0</td>
+      <td>4</td>
+      <td>0.976040</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>1.0</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.0</td>
       <td>1</td>
-      <td>4.323133</td>
+      <td>1.000000</td>
     </tr>
     <tr>
-      <th>...</th>
+      <td>4</td>
+      <td>1.0</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
       <td>...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
-      <th>995</th>
-      <td>-2.022440</td>
-      <td>1.887551</td>
-      <td>0</td>
-      <td>6.797542</td>
+      <td>4995</td>
+      <td>1.0</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>1.000000</td>
     </tr>
     <tr>
-      <th>996</th>
-      <td>0.411179</td>
-      <td>-1.655833</td>
-      <td>0</td>
-      <td>-2.722846</td>
+      <td>4996</td>
+      <td>108.0</td>
+      <td>62.333333</td>
+      <td>143.846153</td>
+      <td>0.0</td>
+      <td>11</td>
+      <td>-0.025000</td>
     </tr>
     <tr>
-      <th>997</th>
-      <td>0.155706</td>
-      <td>-0.992197</td>
-      <td>0</td>
-      <td>-1.140100</td>
+      <td>4997</td>
+      <td>106.0</td>
+      <td>258.500000</td>
+      <td>923.214286</td>
+      <td>0.0</td>
+      <td>7</td>
+      <td>0.402531</td>
     </tr>
     <tr>
-      <th>998</th>
-      <td>-1.510241</td>
-      <td>0.828438</td>
-      <td>0</td>
-      <td>4.167118</td>
+      <td>4998</td>
+      <td>1.0</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>1.000000</td>
     </tr>
     <tr>
-      <th>999</th>
-      <td>-1.744187</td>
-      <td>0.857147</td>
-      <td>0</td>
-      <td>4.458481</td>
+      <td>4999</td>
+      <td>1.0</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>1.000000</td>
     </tr>
   </tbody>
 </table>
-<p>1000 rows × 4 columns</p>
-</div>
-      <button class="colab-df-convert" onclick="convertToInteractive('df-c61c9893-973f-4fb6-a9fc-be419e504f49')"
-              title="Convert this dataframe to an interactive table."
-              style="display:none;">
-
-  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
-       width="24px">
-    <path d="M0 0h24v24H0V0z" fill="none"/>
-    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
-  </svg>
-      </button>
-
-  <style>
-    .colab-df-container {
-      display:flex;
-      flex-wrap:wrap;
-      gap: 12px;
-    }
-
-    .colab-df-convert {
-      background-color: #E8F0FE;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      display: none;
-      fill: #1967D2;
-      height: 32px;
-      padding: 0 0 0 0;
-      width: 32px;
-    }
-
-    .colab-df-convert:hover {
-      background-color: #E2EBFA;
-      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
-      fill: #174EA6;
-    }
-
-    [theme=dark] .colab-df-convert {
-      background-color: #3B4455;
-      fill: #D2E3FC;
-    }
-
-    [theme=dark] .colab-df-convert:hover {
-      background-color: #434B5C;
-      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
-      fill: #FFFFFF;
-    }
-  </style>
-
-      <script>
-        const buttonEl =
-          document.querySelector('#df-c61c9893-973f-4fb6-a9fc-be419e504f49 button.colab-df-convert');
-        buttonEl.style.display =
-          google.colab.kernel.accessAllowed ? 'block' : 'none';
-
-        async function convertToInteractive(key) {
-          const element = document.querySelector('#df-c61c9893-973f-4fb6-a9fc-be419e504f49');
-          const dataTable =
-            await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                     [key], {});
-          if (!dataTable) return;
-
-          const docLinkHtml = 'Like what you see? Visit the ' +
-            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-            + ' to learn more about interactive tables.';
-          element.innerHTML = '';
-          dataTable['output_type'] = 'display_data';
-          await google.colab.output.renderOutput(dataTable, element);
-          const docLink = document.createElement('div');
-          docLink.innerHTML = docLinkHtml;
-          element.appendChild(docLink);
-        }
-      </script>
-    </div>
-  </div>
-</div></div>
+<p>5000 rows × 6 columns</p>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SandA</span> <span class="o">=</span> <span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">userinfo_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">SandA</span> <span class="o">=</span> <span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])]</span>
 </pre></div>
 </div>
 </div>
@@ -1291,54 +1185,83 @@ Requirement already satisfied: six&gt;=1.5 in /opt/anaconda3/lib/python3.8/site-
 <span class="n">S_learner</span> <span class="o">=</span> <span class="n">LGBMRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 <span class="c1">#S_learner = LinearRegression()</span>
 <span class="c1">#SandA = np.hstack((S.to_numpy(),A.to_numpy().reshape(-1,1)))</span>
-<span class="n">S_learner</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">SandA</span><span class="p">,</span> <span class="n">data_behavior</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">])</span>
+<span class="n">S_learner</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">SandA</span><span class="p">,</span> <span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;reward&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LGBMRegressor(max_depth=5)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LGBMRegressor(boosting_type=&#39;gbdt&#39;, class_weight=None, colsample_bytree=1.0,
+              importance_type=&#39;split&#39;, learning_rate=0.1, max_depth=5,
+              min_child_samples=20, min_child_weight=0.001, min_split_gain=0.0,
+              n_estimators=100, n_jobs=-1, num_leaves=31, objective=None,
+              random_state=None, reg_alpha=0.0, reg_lambda=0.0, silent=&#39;warn&#39;,
+              subsample=1.0, subsample_for_bin=200000, subsample_freq=0)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">HTE_S_learner</span> <span class="o">=</span> <span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span> <span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))))</span> <span class="o">-</span> <span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span> <span class="n">data_behavior</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SandA_all1</span> <span class="o">=</span> <span class="n">SandA</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">SandA_all0</span> <span class="o">=</span> <span class="n">SandA</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">SandA_all1</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">SandA_all0</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="n">HTE_S_learner</span> <span class="o">=</span> <span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">SandA_all1</span><span class="p">)</span> <span class="o">-</span> <span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">SandA_all0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>To evaluate how well S-learner is in estimating heterogeneous treatment effect, we compare its estimates with the true value for the first 10 subjects:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.15234589])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.15234589])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.01825633])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s focus on the estimated HTEs for the first 8 patients:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;S-learner:  &quot;</span><span class="p">,</span><span class="n">HTE_S_learner</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;true value: &quot;</span><span class="p">,</span><span class="n">HTE_true</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>S-learner:   [-0.1492  0.1687 -0.589  -0.0319 -0.8354 -0.5843 -0.4577 -2.0791]
-true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>S-learner:   [0. 0. 0. 0. 0. 0. 0. 0.]
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Bias_S_learner</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">HTE_S_learner</span><span class="o">-</span><span class="n">HTE_true</span><span class="p">)</span><span class="o">/</span><span class="n">n</span>
-<span class="n">Variance_S_learner</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">HTE_S_learner</span><span class="o">-</span><span class="n">HTE_true</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">n</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The overall estimation bias of S-learner is :     &quot;</span><span class="p">,</span> <span class="n">Bias_S_learner</span><span class="p">,</span> <span class="s2">&quot;, </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;The overall estimation variance of S-learner is :&quot;</span><span class="p">,</span><span class="n">Variance_S_learner</span><span class="p">,</span><span class="s2">&quot;. </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The overall estimation bias of S-learner is :      0.2857192464627009 , 
- The overall estimation variance of S-learner is : 4.079505077680185 . 
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Conclusion:</strong> The performance of S-learner, at least in this toy example, is not very attractive. Although it is the easiest approach to implement, the over-simplicity tends to cover some information that can be better explored with some advanced approaches.</p>
+<p><strong>Conclusion:</strong> Due to the difference of scales across state variables, S-learner failed to detect the heterogeneous treatment effect in this mimic3 dataset. Although it is the easiest approach to implement, the over-simplicity tends to cover some information that can be better explored with some advanced approaches.</p>
 </div>
 <div class="section" id="references">
 <h1>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h1>
@@ -1359,8 +1282,8 @@ true value:  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3.3869 -1.238 ]
             mode: "python"
         },
         kernelOptions: {
-            name: "python3",
-            path: "./3_Causal_Effect_Learning/Scenario 1"
+            kernelName: "python3",
+            path: "./3_Causal_Effect_Learning\Scenario 1"
         },
         predefinedOutput: true
     }

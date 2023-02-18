@@ -16,76 +16,62 @@
 # 
 # 
 
+# ### Mimic3 Data
+
 # In[1]:
 
 
-import sys
-get_ipython().system('{sys.executable} -m pip install scikit-uplift')
+# import related packages
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt;
+from lightgbm import LGBMRegressor;
+from sklearn.linear_model import LinearRegression
 
 
 # In[2]:
 
 
-# import related packages
-from matplotlib import pyplot as plt;
-from lightgbm import LGBMRegressor;
-from sklearn.linear_model import LinearRegression
-from causaldm._util_causaldm import *;
-
-
-# In[ ]:
-
-
-n = 10**3  # sample size in observed data
-n0 = 10**5 # the number of samples used to estimate the true reward distribution by MC
-seed=223
-
-
-# In[ ]:
-
-
 # Get data
-data_behavior = get_data_simulation(n, seed, policy="behavior")
-#data_target = get_data_simulation(n0, seed, policy="target")
+n = 5000
+selected = ['Glucose','paO2','PaO2_FiO2',  'iv_input', 'SOFA','reward']
+data_CEL_selected = pd.read_csv("C:/Users/Public/CausalDM/causaldm/data/mimic3_CEL_selected.csv")
+data_CEL_selected.pop(data_CEL_selected.columns[0])
+data_CEL_selected
 
-# The true expected heterogeneous treatment effect
-HTE_true = get_data_simulation(n, seed, policy="1")['R']-get_data_simulation(n, seed, policy="0")['R']
+
+# In[3]:
 
 
-# In[ ]:
+userinfo_index = np.array([0,1,2,4])
+SandA = data_CEL_selected.iloc[:, np.array([0,1,2,3,4])]
+
+
+# In[4]:
 
 
 mu0 = LGBMRegressor(max_depth=3)
 mu1 = LGBMRegressor(max_depth=3)
 
-mu0.fit(data_behavior.iloc[np.where(data_behavior['A']==0)[0],0:2],data_behavior.iloc[np.where(data_behavior['A']==0)[0],3] )
-mu1.fit(data_behavior.iloc[np.where(data_behavior['A']==1)[0],0:2],data_behavior.iloc[np.where(data_behavior['A']==1)[0],3] )
+mu0.fit(data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==0)[0],userinfo_index],data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==0)[0],5] )
+mu1.fit(data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==1)[0],userinfo_index],data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==1)[0],5] )
 
 
 # estimate the HTE by T-learner
-HTE_T_learner = mu1.predict(data_behavior.iloc[:,0:2]) - mu0.predict(data_behavior.iloc[:,0:2])
+HTE_T_learner = mu1.predict(data_CEL_selected.iloc[:,userinfo_index]) - mu0.predict(data_CEL_selected.iloc[:,userinfo_index])
 
 
-# Now let's take a glance at the performance of T-learner by comparing it with the true value for the first 10 subjects:
+# Now let's take a glance at the performance of T-learner by comparing it with the true value for the first 8 subjects:
 
-# In[ ]:
+# In[5]:
 
 
 print("T-learner:  ",HTE_T_learner[0:8])
-print("true value: ",HTE_true[0:8].to_numpy())
 
 
 # This is quite good! T-learner captures the overall trend of the treatment effect w.r.t. the heterogeneity of different subjects.
 
-# In[ ]:
-
-
-Bias_T_learner = np.sum(HTE_T_learner-HTE_true)/n
-Variance_T_learner = np.sum((HTE_T_learner-HTE_true)**2)/n
-print("The overall estimation bias of T-learner is :     ", Bias_T_learner, ", \n", "The overall estimation variance of T-learner is :",Variance_T_learner,". \n")
-
-
-# **Conclusion:** In this toy example, the overall estimation variance of T-learner is smaller than that of S-learner. In some cases when the treatment effect is relatively complex, it's likely to yield better performance by fitting two models separately. 
+# **Conclusion:** In Mimic3 data, HTE can be successfully estimated by T-learner. In some cases when the treatment effect is relatively complex, it's likely to yield better performance by fitting two models separately. 
 # 
 # However, in an extreme case when both $\mu_0(s)$ and $\mu_1(s)$ are nonlinear complicated function of state $s$ while their difference is just a constant, T-learner will overfit each model very easily, yielding a nonlinear treatment effect estimator. In this case, other estimators are often preferred.
 

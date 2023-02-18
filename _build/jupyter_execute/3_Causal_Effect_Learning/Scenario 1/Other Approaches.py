@@ -60,6 +60,7 @@ data_behavior = get_data_simulation(n, seed, policy="behavior")
 HTE_true = get_data_simulation(n, seed, policy="1")['R']-get_data_simulation(n, seed, policy="0")['R']
 
 
+
 # The generalized random forest (GRF) approach has been implemented in package *grf* for R and C++, and *econml* in python. Here we implement the package of *econml* for a simple illustration.
 
 # In[ ]:

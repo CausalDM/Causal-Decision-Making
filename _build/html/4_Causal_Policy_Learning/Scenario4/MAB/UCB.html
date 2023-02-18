@@ -1092,8 +1092,8 @@ title="Print to PDF"
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>As the name suggested, the UCB algorithm estimates the upper confidence bound <span class="math notranslate nohighlight">\(U_{a}^{t}\)</span> of the mean of the potential reward of arm <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(R_t(a)\)</span>, based on the observations and then choose the action has the highest estimates. The class of UCB-based algorithms is firstly introduced by Auer et al. [1]. Generally, at each round <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(U_{a}^{t}\)</span> is calculated as the sum of the estimated reward (exploitation) and the estimated confidence radius (exploration) of item <span class="math notranslate nohighlight">\(i\)</span> based on previous observations. Then, <span class="math notranslate nohighlight">\(A_{t}\)</span> is selected as
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c68cd291-10d0-4471-b431-1502361993a2">
-<span class="eqno">(100)<a class="headerlink" href="#equation-c68cd291-10d0-4471-b431-1502361993a2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ff5a465b-a6e5-4e50-a4e4-9de1a0c66c44">
+<span class="eqno">(100)<a class="headerlink" href="#equation-ff5a465b-a6e5-4e50-a4e4-9de1a0c66c44" title="Permalink to this equation">#</a></span>\[\begin{equation}
     A_t = \arg \max_{a \in \mathcal{A}} U_a^t.
 \end{equation}\]</div>
 <p>$<span class="math notranslate nohighlight">\(
@@ -1102,13 +1102,13 @@ As an example, **UCB** [1] estimates the confidence radius as \)</span>\sqrt{\fr
 <div class="section" id="algorithms-details">
 <h2>Algorithms Details<a class="headerlink" href="#algorithms-details" title="Permalink to this headline">#</a></h2>
 <p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. The UCB1 algorithm start with initializing the estimated upper confidence bound <span class="math notranslate nohighlight">\(U_a^{0}\)</span> and the count of being pulled <span class="math notranslate nohighlight">\(C_a^{0}\)</span> for each action <span class="math notranslate nohighlight">\(a\)</span> as 0. At each round <span class="math notranslate nohighlight">\(t\)</span>, we greedily select an action <span class="math notranslate nohighlight">\(A_t\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4482e75d-f93e-4b84-bf4e-46a2aeff1085">
-<span class="eqno">(101)<a class="headerlink" href="#equation-4482e75d-f93e-4b84-bf4e-46a2aeff1085" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-cf3cfec3-5d8c-4d60-b710-56f549e25c43">
+<span class="eqno">(101)<a class="headerlink" href="#equation-cf3cfec3-5d8c-4d60-b710-56f549e25c43" title="Permalink to this equation">#</a></span>\[\begin{align}
 A_t = \arg \max_{a\in \mathcal{A}} U_{a}^{t}.
 \end{align}\]</div>
 <p>After observing the rewards corresponding to the selected action <span class="math notranslate nohighlight">\(A_t\)</span>, we first update the total number of being pulled for <span class="math notranslate nohighlight">\(A_t\)</span> accordingly. Then, we estimate the upper confidence bound for each action <span class="math notranslate nohighlight">\(a\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ff737cb5-aac1-420f-ad4b-ad3549c0e6b1">
-<span class="eqno">(102)<a class="headerlink" href="#equation-ff737cb5-aac1-420f-ad4b-ad3549c0e6b1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8e5014ae-efff-4811-8a07-92c2aa93a91f">
+<span class="eqno">(102)<a class="headerlink" href="#equation-8e5014ae-efff-4811-8a07-92c2aa93a91f" title="Permalink to this equation">#</a></span>\[\begin{align}
 U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} ,
 \end{align}\]</div>
 </div>
@@ -1120,8 +1120,8 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 <ul>
 <li><p>select action <span class="math notranslate nohighlight">\(A_t\)</span> as the arm with the maximum <span class="math notranslate nohighlight">\(U_a^t\)</span></p></li>
 <li><p>Received the reward R, and update <span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(U\)</span> with</p>
-<div class="amsmath math notranslate nohighlight" id="equation-49ec4c82-1f6c-4b8f-8b5f-eae37d154a49">
-<span class="eqno">(103)<a class="headerlink" href="#equation-49ec4c82-1f6c-4b8f-8b5f-eae37d154a49" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-401966bb-36fa-4c38-ab4d-5bfbb657b78f">
+<span class="eqno">(103)<a class="headerlink" href="#equation-401966bb-36fa-4c38-ab4d-5bfbb657b78f" title="Permalink to this equation">#</a></span>\[\begin{align}
         C_{A_{t}}^{t+1} &amp;= C_{A_{t}}^{t} + 1 \\
         U_{A_{t}}^{t+1} &amp;= \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} 
         \end{align}\]</div>
@@ -1148,7 +1148,7 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:\GitHub\CausalDM&#39;</span><span class="p">)</span>
 
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;D:\\GitHub\\CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [WinError 3] The system cannot find the path specified: &#39;D:\\GitHub\\CausalDM&#39;
 </pre></div>
 </div>
 </div>
@@ -1158,7 +1158,7 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.MAB</span> <span class="kn">import</span> <span class="n">UCB</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.Online.MAB</span> <span class="k">import</span> <span class="n">UCB</span>
 </pre></div>
 </div>
 </div>
@@ -1169,7 +1169,7 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 <p>Here, we imitate an environment based on the MovieLens data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.MAB</span> <span class="kn">import</span> <span class="n">_env_realMAB</span> <span class="k">as</span> <span class="n">_env</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.MAB</span> <span class="k">import</span> <span class="n">_env_realMAB</span> <span class="k">as</span> <span class="n">_env</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">_env</span><span class="o">.</span><span class="n">Single_Gaussian_Env</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1262,8 +1262,8 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
             mode: "python"
         },
         kernelOptions: {
-            name: "python3",
-            path: "./4_Causal_Policy_Learning/Scenario4/MAB"
+            kernelName: "python3",
+            path: "./4_Causal_Policy_Learning\Scenario4\MAB"
         },
         predefinedOutput: true
     }

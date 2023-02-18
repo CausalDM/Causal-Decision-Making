@@ -1046,7 +1046,7 @@ title="Print to PDF"
 <span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
 <span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
 
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;../CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [WinError 2] The system cannot find the file specified: &#39;../CausalDM&#39;
 </pre></div>
 </div>
 </div>
@@ -1057,8 +1057,8 @@ title="Print to PDF"
 Outcome Weighted Learning (OWL) shares similar ideas.
 OWL was first proposed in [1] under the binary treatment case, and extended in [3] to allow multiple treatments.
 The foundation of OWL is built on the relationship that, maximizing <span class="math notranslate nohighlight">\(V(\pi)\)</span> is equivalent to solve</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c10b7654-b103-4deb-aba9-f109172f3d71">
-<span class="eqno">(61)<a class="headerlink" href="#equation-c10b7654-b103-4deb-aba9-f109172f3d71" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1e782439-3025-4031-b3a1-59f9b08943d7">
+<span class="eqno">(61)<a class="headerlink" href="#equation-1e782439-3025-4031-b3a1-59f9b08943d7" title="Permalink to this equation">#</a></span>\[\begin{align}
     \text{arg min}_{\pi} \mathbb{E}\Big[ \frac{Y_i}{b(A_i|X_i)}\mathbb{I}(A_i \neq \pi(X_i))\Big]. 
 \end{align}\]</div>
 <p>When <span class="math notranslate nohighlight">\(Y_i\)</span> is non-negative, this goal corresponds to the objective function of a cost-sensitive classification problem with <span class="math notranslate nohighlight">\({Y_i}/{b(A_i|X_i)}\)</span> as the weight,
@@ -1090,10 +1090,10 @@ This is why the estimator is called <em>outcome weighted</em>.
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A demo with code on how to use the package</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">OWL</span>
-<span class="kn">from</span> <span class="nn">causaldm.test</span> <span class="kn">import</span> <span class="n">shared_simulation</span>
-<span class="kn">from</span> <span class="nn">causaldm.test</span> <span class="kn">import</span> <span class="n">OWL_simu</span>
-<span class="kn">from</span> <span class="nn">causaldm.metric</span> <span class="kn">import</span> <span class="n">metric</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="k">import</span> <span class="n">OWL</span>
+<span class="kn">from</span> <span class="nn">causaldm.test</span> <span class="k">import</span> <span class="n">shared_simulation</span>
+<span class="kn">from</span> <span class="nn">causaldm.test</span> <span class="k">import</span> <span class="n">OWL_simu</span>
+<span class="kn">from</span> <span class="nn">causaldm.metric</span> <span class="k">import</span> <span class="n">metric</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </pre></div>
 </div>
@@ -1113,8 +1113,8 @@ This is why the estimator is called <em>outcome weighted</em>.
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># initialize the learner</span>
 <span class="n">owl</span> <span class="o">=</span> <span class="n">OWL</span><span class="o">.</span><span class="n">OutcomeWeightedLearning</span><span class="p">()</span>
 <span class="c1"># specify the classifier you would like to use</span>
-<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">LinearSVC</span><span class="p">,</span> <span class="n">SVC</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span><span class="p">,</span> <span class="n">cross_val_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="k">import</span> <span class="n">LinearSVC</span><span class="p">,</span> <span class="n">SVC</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">GridSearchCV</span><span class="p">,</span> <span class="n">cross_val_score</span>
 <span class="n">clf</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span> <span class="c1"># fit_intercept = True, </span>
 <span class="c1"># Cs = np.logspace(-6, -1, 10)</span>
 <span class="c1"># clf = GridSearchCV(estimator=clf, param_grid=dict(C=Cs),</span>
@@ -1182,8 +1182,8 @@ V(\pi)
             mode: "python"
         },
         kernelOptions: {
-            name: "python3",
-            path: "./4_Causal_Policy_Learning/Scenario1/Classification"
+            kernelName: "python3",
+            path: "./4_Causal_Policy_Learning\Scenario1\Classification"
         },
         predefinedOutput: true
     }

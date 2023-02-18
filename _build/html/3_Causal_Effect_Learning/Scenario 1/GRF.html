@@ -991,25 +991,25 @@ title="Print to PDF"
   <div class="section" id="generalized-random-forest">
 <h1><strong>7. Generalized Random Forest</strong><a class="headerlink" href="#generalized-random-forest" title="Permalink to this headline">#</a></h1>
 <p>Developed by Susan Athey, Julie Tibshirani and Stefan Wager, Generalized Random Forest [8] aims to give the solution to a set of local moment equations:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ce821d13-de79-46ce-88d9-837340d8b320">
-<span class="eqno">(46)<a class="headerlink" href="#equation-ce821d13-de79-46ce-88d9-837340d8b320" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1ed6a164-c012-48ee-876b-92d5afef95ee">
+<span class="eqno">(46)<a class="headerlink" href="#equation-1ed6a164-c012-48ee-876b-92d5afef95ee" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \mathbb{E}\big[\psi_{\tau(s),\nu(s)}(O_i)\big| S_i=s\big]=0,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\tau(s)\)</span> is the parameter we care about and <span class="math notranslate nohighlight">\(\nu(s)\)</span> is an optional nuisance parameter. In the problem of Heterogeneous Treatment Effect Evaluation, our parameter of interest <span class="math notranslate nohighlight">\(\tau(s)=\xi\cdot \beta(s)\)</span> is identified by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d1c38e0c-5435-4c60-95c0-0b9661a380a9">
-<span class="eqno">(47)<a class="headerlink" href="#equation-d1c38e0c-5435-4c60-95c0-0b9661a380a9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-af8ce2bb-421c-497a-a767-3668608afe71">
+<span class="eqno">(47)<a class="headerlink" href="#equation-af8ce2bb-421c-497a-a767-3668608afe71" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \psi_{\beta(s),\nu(s)}(R_i,A_i)=(R_i-\beta(s)\cdot A_i-c(s))(1 \quad A_i^T)^T.
 \end{equation}\]</div>
 <p>The induced estimator <span class="math notranslate nohighlight">\(\hat{\tau}(s)\)</span> for <span class="math notranslate nohighlight">\(\tau(s)\)</span> can thus be solved by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-23735fad-709d-4da2-ad5f-a90c1b5db5e9">
-<span class="eqno">(48)<a class="headerlink" href="#equation-23735fad-709d-4da2-ad5f-a90c1b5db5e9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b7667557-854e-4ac1-ac60-8560e2dd5abf">
+<span class="eqno">(48)<a class="headerlink" href="#equation-b7667557-854e-4ac1-ac60-8560e2dd5abf" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \hat{\tau}(s)=\xi^T\left(\sum_{i=1}^n \alpha_i(s)\big(A_i-\bar{A}_\alpha\big)^{\otimes 2}\right)^{-1}\sum_{i=1}^n \alpha_i(s)\big(A_i-\bar{A}_\alpha\big)\big(R_i-\bar{R}_\alpha\big),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\bar{A}_\alpha=\sum \alpha_i(s)A_i\)</span> and <span class="math notranslate nohighlight">\(\bar{R}_\alpha=\sum \alpha_i(s)R_i\)</span>, and we write <span class="math notranslate nohighlight">\(v^{\otimes 2}=vv^T\)</span>.</p>
 <p>Notice that this formula is just a weighted version of R-learner introduced above. However, instead of using ordinary kernel weighting functions that are prone to a strong curse of dimensionality, GRF uses an adaptive weighting function <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span> derived from a forest designed to express heterogeneity in the specified quantity of interest.</p>
 <p>To be more specific, in order to obtain <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span>, GRF first grows a set of <span class="math notranslate nohighlight">\(B\)</span> trees indexed by <span class="math notranslate nohighlight">\(1,\dots,B\)</span>. Then for each such tree, define <span class="math notranslate nohighlight">\(L_b(s)\)</span> as the set of training samples falling in the same ``leaf” as x. The weights <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span> then capture the frequency with which the <span class="math notranslate nohighlight">\(i\)</span>-th training example falls into the same leaf as <span class="math notranslate nohighlight">\(s\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0792b6bf-dd79-44cd-bbe0-2483c0e2b33a">
-<span class="eqno">(49)<a class="headerlink" href="#equation-0792b6bf-dd79-44cd-bbe0-2483c0e2b33a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ea7097d1-337f-4b04-9fbe-11d0c3e57b73">
+<span class="eqno">(49)<a class="headerlink" href="#equation-ea7097d1-337f-4b04-9fbe-11d0c3e57b73" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \alpha_{bi}(s)=\frac{\boldsymbol{1}\big(\{S_i\in L_b(s)\}\big)}{\big|L_b(s)\big|},\quad \alpha_i(s)=\frac{1}{B}\sum_{b=1}^B \alpha_{bi}(s).
 \end{equation}\]</div>
 <p>To sum up, GRF aims to leverage the splitting result of a series of trees to decide the ``localized” weight for HTE estimation at each point <span class="math notranslate nohighlight">\(x_0\)</span>. Compared with kernel functions, we may expect tree-based weights to be more flexible and better performed in real settings.</p>
@@ -1021,28 +1021,30 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: scikit-uplift in /opt/anaconda3/lib/python3.8/site-packages (0.5.1)
-Requirement already satisfied: scikit-learn&gt;=0.21.0 in /opt/anaconda3/lib/python3.8/site-packages (from scikit-uplift) (0.23.1)
-Requirement already satisfied: matplotlib in /opt/anaconda3/lib/python3.8/site-packages (from scikit-uplift) (3.2.2)
-Requirement already satisfied: tqdm in /opt/anaconda3/lib/python3.8/site-packages (from scikit-uplift) (4.47.0)
-Requirement already satisfied: pandas in /opt/anaconda3/lib/python3.8/site-packages (from scikit-uplift) (1.4.2)
-Requirement already satisfied: numpy&gt;=1.16 in /opt/anaconda3/lib/python3.8/site-packages (from scikit-uplift) (1.22.4)
-Requirement already satisfied: requests in /opt/anaconda3/lib/python3.8/site-packages (from scikit-uplift) (2.24.0)
-Requirement already satisfied: joblib&gt;=0.11 in /opt/anaconda3/lib/python3.8/site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (0.16.0)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: scikit-uplift in c:\faked\anaconda\lib\site-packages (0.5.1)
+Requirement already satisfied: requests in c:\faked\anaconda\lib\site-packages (from scikit-uplift) (2.22.0)
+Requirement already satisfied: matplotlib in c:\faked\anaconda\lib\site-packages (from scikit-uplift) (3.1.1)
+Requirement already satisfied: tqdm in c:\faked\anaconda\lib\site-packages (from scikit-uplift) (4.36.1)
+Requirement already satisfied: numpy&gt;=1.16 in c:\faked\anaconda\lib\site-packages (from scikit-uplift) (1.16.5)
+Requirement already satisfied: pandas in c:\faked\anaconda\lib\site-packages (from scikit-uplift) (0.25.1)
+Requirement already satisfied: scikit-learn&gt;=0.21.0 in c:\faked\anaconda\lib\site-packages (from scikit-uplift) (0.21.3)
+Requirement already satisfied: scipy&gt;=0.17.0 in c:\faked\anaconda\lib\site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (1.3.1)
+Requirement already satisfied: joblib&gt;=0.11 in c:\faked\anaconda\lib\site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (0.13.2)
+Requirement already satisfied: cycler&gt;=0.10 in c:\faked\anaconda\lib\site-packages (from matplotlib-&gt;scikit-uplift) (0.10.0)
+Requirement already satisfied: kiwisolver&gt;=1.0.1 in c:\faked\anaconda\lib\site-packages (from matplotlib-&gt;scikit-uplift) (1.1.0)
+Requirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,&gt;=2.0.1 in c:\faked\anaconda\lib\site-packages (from matplotlib-&gt;scikit-uplift) (2.4.2)
+Requirement already satisfied: python-dateutil&gt;=2.1 in c:\users\yang xu\appdata\roaming\python\python37\site-packages (from matplotlib-&gt;scikit-uplift) (2.8.2)
+Requirement already satisfied: pytz&gt;=2017.2 in c:\faked\anaconda\lib\site-packages (from pandas-&gt;scikit-uplift) (2019.3)
+Requirement already satisfied: chardet&lt;3.1.0,&gt;=3.0.2 in c:\faked\anaconda\lib\site-packages (from requests-&gt;scikit-uplift) (3.0.4)
+Requirement already satisfied: certifi&gt;=2017.4.17 in c:\faked\anaconda\lib\site-packages (from requests-&gt;scikit-uplift) (2019.9.11)
+Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in c:\faked\anaconda\lib\site-packages (from requests-&gt;scikit-uplift) (1.24.2)
+Requirement already satisfied: idna&lt;2.9,&gt;=2.5 in c:\faked\anaconda\lib\site-packages (from requests-&gt;scikit-uplift) (2.8)
+Requirement already satisfied: six in c:\faked\anaconda\lib\site-packages (from cycler&gt;=0.10-&gt;matplotlib-&gt;scikit-uplift) (1.12.0)
+Requirement already satisfied: setuptools in c:\faked\anaconda\lib\site-packages (from kiwisolver&gt;=1.0.1-&gt;matplotlib-&gt;scikit-uplift) (41.4.0)
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: threadpoolctl&gt;=2.0.0 in /opt/anaconda3/lib/python3.8/site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (2.1.0)
-Requirement already satisfied: scipy&gt;=0.19.1 in /opt/anaconda3/lib/python3.8/site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (1.5.0)
-Requirement already satisfied: kiwisolver&gt;=1.0.1 in /opt/anaconda3/lib/python3.8/site-packages (from matplotlib-&gt;scikit-uplift) (1.2.0)
-Requirement already satisfied: python-dateutil&gt;=2.1 in /opt/anaconda3/lib/python3.8/site-packages (from matplotlib-&gt;scikit-uplift) (2.8.1)
-Requirement already satisfied: cycler&gt;=0.10 in /opt/anaconda3/lib/python3.8/site-packages (from matplotlib-&gt;scikit-uplift) (0.10.0)
-Requirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,&gt;=2.0.1 in /opt/anaconda3/lib/python3.8/site-packages (from matplotlib-&gt;scikit-uplift) (2.4.7)
-Requirement already satisfied: pytz&gt;=2020.1 in /opt/anaconda3/lib/python3.8/site-packages (from pandas-&gt;scikit-uplift) (2020.1)
-Requirement already satisfied: idna&lt;3,&gt;=2.5 in /opt/anaconda3/lib/python3.8/site-packages (from requests-&gt;scikit-uplift) (2.10)
-Requirement already satisfied: chardet&lt;4,&gt;=3.0.2 in /opt/anaconda3/lib/python3.8/site-packages (from requests-&gt;scikit-uplift) (3.0.4)
-Requirement already satisfied: certifi&gt;=2017.4.17 in /opt/anaconda3/lib/python3.8/site-packages (from requests-&gt;scikit-uplift) (2020.6.20)
-Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /opt/anaconda3/lib/python3.8/site-packages (from requests-&gt;scikit-uplift) (1.25.9)
-Requirement already satisfied: six&gt;=1.5 in /opt/anaconda3/lib/python3.8/site-packages (from python-dateutil&gt;=2.1-&gt;matplotlib-&gt;scikit-uplift) (1.15.0)
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip available: 22.3.1 -&gt; 23.0.1
+[notice] To update, run: python.exe -m pip install --upgrade pip
 </pre></div>
 </div>
 </div>
@@ -1050,7 +1052,7 @@ Requirement already satisfied: six&gt;=1.5 in /opt/anaconda3/lib/python3.8/site-
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import related packages</span>
-<span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="k">import</span> <span class="o">*</span>
 </pre></div>
 </div>
 </div>
@@ -1137,8 +1139,8 @@ Successfully installed econml-0.14.0 shap-0.40.0 slicer-0.0.7 sparse-0.13.0
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A demo code of Causal Random Forest</span>
-<span class="kn">from</span> <span class="nn">econml.grf</span> <span class="kn">import</span> <span class="n">CausalForest</span><span class="p">,</span> <span class="n">CausalIVForest</span><span class="p">,</span> <span class="n">RegressionForest</span>
-<span class="kn">from</span> <span class="nn">econml.dml</span> <span class="kn">import</span> <span class="n">CausalForestDML</span>
+<span class="kn">from</span> <span class="nn">econml.grf</span> <span class="k">import</span> <span class="n">CausalForest</span><span class="p">,</span> <span class="n">CausalIVForest</span><span class="p">,</span> <span class="n">RegressionForest</span>
+<span class="kn">from</span> <span class="nn">econml.dml</span> <span class="k">import</span> <span class="n">CausalForestDML</span>
 <span class="n">est</span> <span class="o">=</span> <span class="n">CausalForest</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;het&#39;</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">min_samples_leaf</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                     <span class="n">min_var_fraction_leaf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">min_var_leaf_on_val</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                     <span class="n">min_impurity_decrease</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">max_samples</span><span class="o">=</span><span class="mf">0.45</span><span class="p">,</span> <span class="n">min_balancedness_tol</span><span class="o">=.</span><span class="mi">45</span><span class="p">,</span>
@@ -1204,8 +1206,8 @@ true value:                  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3
             mode: "python"
         },
         kernelOptions: {
-            name: "python3",
-            path: "./3_Causal_Effect_Learning/Scenario 1"
+            kernelName: "python3",
+            path: "./3_Causal_Effect_Learning\Scenario 1"
         },
         predefinedOutput: true
     }

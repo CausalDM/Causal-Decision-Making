@@ -1081,8 +1081,8 @@ title="Print to PDF"
 <div class="section" id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>The <strong>MTTS</strong>[1] utilize baseline information to share information among different tasks efficiently, by constructing a Bayesian hierarchical model. Specifically, it assumes that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-35f9cff0-9d34-4d5a-9fe2-ea843ed37115">
-<span class="eqno">(114)<a class="headerlink" href="#equation-35f9cff0-9d34-4d5a-9fe2-ea843ed37115" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6d586f77-2bd1-4832-a869-47c12318b1eb">
+<span class="eqno">(114)<a class="headerlink" href="#equation-6d586f77-2bd1-4832-a869-47c12318b1eb" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{alignedat}{2}
 &amp;\text{(Prior)} \quad
 \quad\quad\quad    \boldsymbol{\gamma} &amp;&amp;\sim Q(\boldsymbol{\gamma}), \\
@@ -1093,8 +1093,8 @@ title="Print to PDF"
       \end{alignedat}
 \end{equation}\]</div>
 <p>Similarly, considering the Bernoulli bandit, it assumes that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-15164486-3623-45ad-85ab-d95941b9d804">
-<span class="eqno">(115)<a class="headerlink" href="#equation-15164486-3623-45ad-85ab-d95941b9d804" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:hierachical_model}
+<div class="amsmath math notranslate nohighlight" id="equation-f4b628a1-1c4f-45af-9057-9c671ec1e5ac">
+<span class="eqno">(115)<a class="headerlink" href="#equation-f4b628a1-1c4f-45af-9057-9c671ec1e5ac" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:hierachical_model}
   \begin{alignedat}{2}
 &amp;\text{(Prior)} \quad
 \quad\quad\quad    \boldsymbol{\gamma} &amp;&amp;\sim Q(\boldsymbol{\gamma}), \\
@@ -1106,8 +1106,8 @@ title="Print to PDF"
 \end{equation}\]</div>
 <p>where  <span class="math notranslate nohighlight">\(logistic(s) \equiv 1 / (1 + exp^{-1}(s))\)</span>, <span class="math notranslate nohighlight">\(\psi\)</span> is a known parameter, and  <span class="math notranslate nohighlight">\(\text{Beta}(\mu, \psi)\)</span> denotes a Beta distribution with mean <span class="math notranslate nohighlight">\(\mu\)</span> and precision <span class="math notranslate nohighlight">\(\psi\)</span>. Still, we assume a Normal prior of <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>. As there is no explicit form of the corresponding posterior, we update the posterior distribution by <strong>Pymc3</strong>.</p>
 <p>Under the TS framework, at each round <span class="math notranslate nohighlight">\(t\)</span> with task <span class="math notranslate nohighlight">\(j\)</span>, the agent will sample a <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\mu}}_{j}\)</span> from its posterior distribution updated according to the hierarchical model, then the action <span class="math notranslate nohighlight">\(a\)</span> with the maximum sampled <span class="math notranslate nohighlight">\(\tilde{\mu}_{j,a}\)</span> will be pulled. Mathmetically,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2769e4da-3919-4a64-ad89-0d3951777fda">
-<span class="eqno">(116)<a class="headerlink" href="#equation-2769e4da-3919-4a64-ad89-0d3951777fda" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-bcd7ffbe-dad9-4c0c-8dbf-0f59f4f38121">
+<span class="eqno">(116)<a class="headerlink" href="#equation-bcd7ffbe-dad9-4c0c-8dbf-0f59f4f38121" title="Permalink to this equation">#</a></span>\[\begin{equation}
     A_{j,t} = argmax_{a \in \mathcal{A}} \hat{E}(R_{j,t}(a)) = argmax_{a \in \mathcal{A}} \tilde\mu_{j,a}.
 \end{equation}\]</div>
 <p>Essentially, <strong>MTTS</strong> assumes that the mean reward <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_{j}\)</span> is sampled from model <span class="math notranslate nohighlight">\(g\)</span> parameterized by unknown parameter <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span> and conditional on task feature <span class="math notranslate nohighlight">\(\boldsymbol{s}_{j}\)</span>. Instead of assuming that <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_j\)</span> is fully determined by its features through a deterministic function, <strong>MTTS</strong> adds an item-specific noise term to account for the inter-task heterogeneity. Simultaneously modeling heterogeneity and sharing information across tasks via <span class="math notranslate nohighlight">\(g\)</span>, <strong>MTTS</strong> is able to provide an informative prior distribution to guide the exploration. Appropriately addressing the heterogeneity between tasks, the MTTS has been shown to have a superior performance in practice[1].</p>
@@ -1141,7 +1141,7 @@ title="Print to PDF"
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:\GitHub\CausalDM&#39;</span><span class="p">)</span>
 
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;D:\\GitHub\\CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [WinError 3] The system cannot find the path specified: &#39;D:\\GitHub\\CausalDM&#39;
 </pre></div>
 </div>
 </div>
@@ -1151,7 +1151,7 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Meta_Bandits</span> <span class="kn">import</span> <span class="n">MTTS_Gaussian</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Meta_Bandits</span> <span class="k">import</span> <span class="n">MTTS_Gaussian</span>
 </pre></div>
 </div>
 </div>
@@ -1162,7 +1162,7 @@ title="Print to PDF"
 <p>Here, we imitate an environment based on the MovieLens data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Meta_Bandits</span> <span class="kn">import</span> <span class="n">_env_realMultiTask</span> <span class="k">as</span> <span class="n">_env</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Meta_Bandits</span> <span class="k">import</span> <span class="n">_env_realMultiTask</span> <span class="k">as</span> <span class="n">_env</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">_env</span><span class="o">.</span><span class="n">MultiTask_Env</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Binary</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1243,7 +1243,7 @@ title="Print to PDF"
 <p>The steps are similar to those previously performed with a Gaussian Bandit. Note that, when specifying the prior distribution of the expected reward, the mean-precision form of the Beta distribution is used here, i.e., Beta(<span class="math notranslate nohighlight">\(\mu\)</span>, <span class="math notranslate nohighlight">\(\phi\)</span>), where <span class="math notranslate nohighlight">\(\mu\)</span> is the mean reward of each arm and <span class="math notranslate nohighlight">\(\phi\)</span> is the precision of the Beta distribution. By default, Algorithm 2 in [1] is applied to save computational time updating meta-posteriors. If <code class="docutils literal notranslate"><span class="pre">update_freq</span></code> is specified, then the meta-posterior will be updated every <code class="docutils literal notranslate"><span class="pre">update_freq</span></code> rounds of interactions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Meta_Bandits</span> <span class="kn">import</span> <span class="n">MTTS_Binary</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Meta_Bandits</span> <span class="k">import</span> <span class="n">MTTS_Binary</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">_env</span><span class="o">.</span><span class="n">MultiTask_Env</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Binary</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 <span class="n">theta_prior_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">p</span><span class="p">)</span>
 <span class="n">theta_prior_cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">p</span><span class="p">)</span>
@@ -1296,8 +1296,8 @@ title="Print to PDF"
             mode: "python"
         },
         kernelOptions: {
-            name: "python3",
-            path: "./4_Causal_Policy_Learning/Scenario4/Meta_Bandits"
+            kernelName: "python3",
+            path: "./4_Causal_Policy_Learning\Scenario4\Meta_Bandits"
         },
         predefinedOutput: true
     }

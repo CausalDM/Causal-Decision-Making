@@ -1039,13 +1039,13 @@ IS has been widely used in statistics, and the idea can be extended to OPE after
 \end{align*}\]</div>
 <p>Since the transition and reward generation probabilities are shared  between both policies, this ratio is equal to the probability ratio of observing the <span class="math notranslate nohighlight">\(i\)</span>th trajectory until time point <span class="math notranslate nohighlight">\(t\)</span>.</p>
 <p>The standard <strong>(trajectory-wise) IS</strong> estimator [2] regards each trajectory (and the corresponding observed cumulative reward, <span class="math notranslate nohighlight">\(\sum_{t=0}^{T-1} \gamma^t R_{i,t}\)</span>) as one realization, and it estimates <span class="math notranslate nohighlight">\(\eta^{\pi}\)</span> by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ec882ca5-0e47-4a9e-8c44-9324ac18c945">
-<span class="eqno">(73)<a class="headerlink" href="#equation-ec882ca5-0e47-4a9e-8c44-9324ac18c945" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:IS}
+<div class="amsmath math notranslate nohighlight" id="equation-0ecab75f-0a86-4f38-8e34-c2eeab61ce78">
+<span class="eqno">(73)<a class="headerlink" href="#equation-0ecab75f-0a86-4f38-8e34-c2eeab61ce78" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:IS}
     \hat{\eta}^{\pi}_{IS} = \frac{1}{n} \sum_{i=1}^n \rho^i_T (\sum_{t=0}^{T-1} \gamma^t R_{i,t}). 
 \end{align}\]</div>
 <p>In contrast, the <strong>step-wise IS</strong> [2]  focuses on reweighting each immediate reward <span class="math notranslate nohighlight">\(R_{i,t}\)</span> and typically yields a lower variance than the trajectory-wise IS. It is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-34cfcd2c-54fd-4722-a0c8-09478a013281">
-<span class="eqno">(74)<a class="headerlink" href="#equation-34cfcd2c-54fd-4722-a0c8-09478a013281" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:stepIS}
+<div class="amsmath math notranslate nohighlight" id="equation-3bae4803-1693-459d-a826-f9f78d9c1b28">
+<span class="eqno">(74)<a class="headerlink" href="#equation-3bae4803-1693-459d-a826-f9f78d9c1b28" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:stepIS}
     \hat{\eta}^{\pi}_{StepIS} = \frac{1}{n} \sum_{i=1}^n \Big[ \sum_{t=0}^{T-1} \rho^i_t  \gamma^t R_{i,t} \Big]. 
 \end{align}\]</div>
 <p>In addition to these two IS-type estimators, their <strong>self-normalized variants</strong> are also commonly considered [3].
@@ -1061,8 +1061,8 @@ The key observation is that, under the stationary assumption and when the data i
 We introduce the average visitation distribution under a policy <span class="math notranslate nohighlight">\(\pi\)</span> as <span class="math notranslate nohighlight">\(d^{\pi}(s)= (1 - \gamma)^{-1} \sum_{t=0}^{+\infty} \gamma^{t} p_t^{\pi}(s)\)</span>, where <span class="math notranslate nohighlight">\(p_t^{\pi}(s)\)</span> denotes the probability of <span class="math notranslate nohighlight">\(\{S_t = s\}\)</span> following policy <span class="math notranslate nohighlight">\(\pi\)</span> with  <span class="math notranslate nohighlight">\(S_{0}\sim \mathbb{G}\)</span>.
 Define <span class="math notranslate nohighlight">\(\widetilde{\omega}^{\pi}(s) = d^{\pi}(s) / d^{b}(s)\)</span>.
 Therefore, <span class="math notranslate nohighlight">\(\widetilde{\omega}^{\pi}(s)\)</span> can be understood as a marginalized version of the importance ratio. With a similar change-of-measure trick as in IS, we can obtain the relationship that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5547851a-f3ed-4a12-b3e9-9a141ff0caa3">
-<span class="eqno">(75)<a class="headerlink" href="#equation-5547851a-f3ed-4a12-b3e9-9a141ff0caa3" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:breaking}
+<div class="amsmath math notranslate nohighlight" id="equation-0a6828fa-5a7f-4cd9-a14f-cb543f111842">
+<span class="eqno">(75)<a class="headerlink" href="#equation-0a6828fa-5a7f-4cd9-a14f-cb543f111842" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:breaking}
     \eta^{\pi} =  \mathbb{E}_{(s,a) \sim p_b(s, a), r \sim \mathcal{R}(\cdot; s, a)} \widetilde{\omega}^{\pi}(s) \frac{\pi(a|s)}{b(a|s)} r. 
 \end{equation}\]</div>
 <p>According to this relationship, we can construct an estimator by replacing the nuisance functions  with their estimates and then approximating the expectation by its empirical mean over <span class="math notranslate nohighlight">\(\{(S_{i,t},A_{i,t},R_{i,t},S_{i,t+1})\}\)</span>.
@@ -1092,7 +1092,7 @@ The optimization is similar to a relevant task that we will discuss in the next 
 <span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
 <span class="g g-Whitespace">      </span><span class="mi">8</span> 
 
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;../CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [WinError 2] The system cannot find the file specified: &#39;../CausalDM&#39;
 </pre></div>
 </div>
 </div>
@@ -1131,8 +1131,8 @@ However, when <span class="math notranslate nohighlight">\(T\)</span> is relativ
             mode: "python"
         },
         kernelOptions: {
-            name: "python3",
-            path: "./4_Causal_Policy_Learning/Scenario2"
+            kernelName: "python3",
+            path: "./4_Causal_Policy_Learning\Scenario2"
         },
         predefinedOutput: true
     }
