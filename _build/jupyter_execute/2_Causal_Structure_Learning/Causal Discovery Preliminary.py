@@ -12,7 +12,7 @@
 
 # ### Toy Example 1:  Causal Graph for Heterogeneous Treatment Effect and Personalized Decision Making
 # In this example, the feature $S$ determines the treatment assignment $A$ (i.e., $S\rightarrow A$) and the outcome $R$ (i.e., $S\rightarrow R$), and the treatment assignment $A$ further influences the outcome $R$ (i.e., $A\rightarrow R$).
-# <img src="xay.png" alt="drawing" width="400"/> 
+# <img src="xay.png" alt="drawing" width="300"/> 
 # 
 # Based on this causal graph, to optimize the outcome of interest, the doctor should assign the right treatment according to different features. Thus, the methods for personalized decision making focus on modeling the conditional mean outcome and the propensity score.
 
@@ -20,7 +20,7 @@
 # 
 # Causal mediation analysis (CMA) is a method to dissect total effect of a treatment into direct and indirect effect. The direct effect is how the treatment directly affects the outcome, and the indirect effect is transmitted via mediator $M$ to the outcome.
 # 
-# <img src="amy.png" alt="drawing" width="400"/> 
+# <img src="amy.png" alt="drawing" width="300"/> 
 # 
 # Pearl et al. (2009) provided a comprehensive review of recent advances in causal mediation analysis using ‘do-operator’ by graphical methods. Let $M=[M_1,M_2,\cdots,M_p]^\top $ be mediators with dimension $p$. Suppose there exists a weighted DAG $\mathcal{G}=(Z,E)$ that characterizes the causal relationship among $Z=[A, M^\top, R]^\top $.  The total effect ($TE$), the natural direct effect that is not mediated by mediators ($DE$), and the natural indirect effect that is regulated by mediators ($IE$) are defined as:
 # \begin{equation*}
@@ -41,7 +41,7 @@
 # ### Toy Example 3:  Causal Graph for Mediated Personalized Decision Making
 # In this example, the feature $S$ determines the treatment assignment $A$ (i.e., $S\rightarrow A$), the mediators $M$ (i.e., $S\rightarrow M$), and the outcome $R$ (i.e., $S\rightarrow R$), and the treatment assignment $A$ further influences the mediators $M$ (i.e., $A\rightarrow M$) and the outcome $R$ (i.e., $A\rightarrow R$). In addition, the mediators $M$ also affects the outcome $R$ (i.e., $M\rightarrow R$).
 # 
-# <img src="mxay.png" alt="drawing" width="400"/> 
+# <img src="mxay.png" alt="drawing" width="300"/> 
 # 
 # Based on this causal graph, to optimize the outcome of interest, the doctor should assign the right treatment through useful mediators according to different features. 
 
@@ -131,7 +131,7 @@
 # 
 # Based on the result $TE = DE+ IE$ in Pearl (2009) and above definitions, we summarize the defined causal effects and their relationship in Table 1 for the analysis of causal effects (ANOCE). Firstly, the causal effect of $A$ on $Y$ has two sources, the direct effect from $A$ and the indirect effect via $p$ mediators $M$ ($M_1,\cdots, M_p$). Next, the direct source has the degree of freedom ($d.f.$) as 1, while the indirect source has $d.f.$ as $p$ from $p$ mediators. Note the true $d.f.$ of the indirect effect may be smaller than $p$, since $A$ may not be regulated by all mediators. Then, the causal effect for the direct source is the $DE$ and for the indirect source is the $IE$, where the $IE$ can be further decomposed into $p$ $DM$s and each component corresponds to the natural direct effect for a specific mediator. The last row in the table shows that the $DE$ and the $IE$ compose the total effect $TE$ with $d.f.$ as $p+1$. 
 # 
-# ![title](anoce.png)
+# <img src="anoce.png" alt="drawing" width="700"/>  
 
 # ## References
 # 
