@@ -14,22 +14,24 @@ The tutorial surveys and discusses classic methods and recent advanced in the th
 
 This book is powered by a package call [Jupyter Book](https://jupyterbook.org/intro.html). 
 Refer to its documents for more details. 
+
 To compile, we need to first install this package
 
 ```
 pip install -U jupyter-book
 ```
 
-### Compile a new version
-1. switch to the main branch in Github Desktop
-2. `jupyter-book build Causal-Decision-Making`
-3. The static html should then be visiable locally at `Causal-Decision-Making/_build/html/index.html`
-4. Commit & push this version (main branch)
+### Step 1: Compile a new version
+1. in Github Desktop, switch to the main branch
+2. in your terminal, go to the parent folder of `Causal-Decision-Making`
+3. run `jupyter-book build Causal-Decision-Making`
+4. The static html should then be visiable locally at `Causal-Decision-Making/_build/html/index.html`
+5. Commit & push this version (main branch)
 
 If you only want to share this version internally instead of publishing it online, the steps above are enough. 
 Otherwise, continue with the steps in the next section. 
 
-### Publish a new version
+### Step 2 (optional): Publish a new version
 4. `cd Causal-Decision-Making`
 5. run `ghp-import -n -p -f _build/html` at the `main` branch. Ignores the password part.  
 6. push the `gh-pages` branch
