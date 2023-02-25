@@ -15,7 +15,7 @@ align: center
 Workflow of the Causal Decision Making.
 ```
 
-The Fig 1 depicts the overall structure of this book, which is comprised of three primary components: **Causal Structure Learning**, **Causal Policy Learning**, and **Causal Effect Learning**. Specifically, in the chapter [**Causal Structure Learning (CSL)**](#SL), we present state-of-the-art techniques for learning the skeleton of causal relationships among input variables. When a causal structure is known, the second chapter of [**Causal Effect Learning (CEL)**](#ML) introduces approaches making causal inference. Finally, the [**Causal Policy Learning (CPL)**](#PL) chapter introduces diverse policy learners to learn optimal policies and evaluate various policies of interest.
+The Fig 1 depicts the overall structure of this book, which is comprised of three primary components: **Causal Structure Learning**, **Causal Policy Learning**, and **Causal Effect Learning**. Specifically, in the chapter [**Causal Structure Learning (CSL)**](#SL), we present state-of-the-art techniques for learning the skeleton of causal relationships among input variables. When a causal structure is known, the second chapter [**Causal Effect Learning (CEL)**](#ML) introduces approaches for treatment effect identification, estimation and inference. Finally, the [**Causal Policy Learning (CPL)**](#PL) chapter introduces diverse policy learners to learn optimal policies and evaluate various policies of interest.
 
 Following is a brief summary of the contents of each chapter.
 
@@ -50,6 +50,18 @@ This chapter discusses three classical techniques for learning causal graphs, e
 ## <a name="ML"></a> Causal Effect Learning (CEL)
 ---
 
+Causal effect learning, as we've mentioned at the beginning, aims to infer on the effect of a specific treatment in the context of causal inference. According to the data structure, we mainly divide the problem settings of CEL into three categories: independent states, Markovian state transition, and non-Markovian state transition. 
+
+
+
+![CEL-structure.png](CEL-structure.png)
+
+
+
+1. **Independent states**, or scenario 1, denotes the single-stage setup where the full data can be summarized as a number of state-action-reward triplet with size $n$, i.e. $(S_i,A_i,R_i)_{1\leq i\leq n}$. Due to the simplicity of data structure, there are quite a few methods proposed to handle the estimation of both average treatment effect and heterogeneous treatment effect, ranging from basic learners to deep-learning related approaches. 
+2. **Markovian state transition**, or scenario 2, denotes the case where the data contains $T$ stages, i.e.  $(S_{i,t},A_{i,t},R_{i,t})_{1\leq i\leq n,0\leq t\leq T}$, and the transition of stages follows a Markov decision process. 
+3. **Non-Markovian state transition**, or scenario 3, denotes other miscellaneous cases where the data have a relatively complex data structure, while the transition of stages doesn't follow the Markov assumption. In this section, we will mainly discuss some representative methods to deal with panel data.
+
 ### <a name="Case1"></a> Scenario 1: I.I.D
 
 In Scenario 1, we consider the standard case where all observations are i.i.d.. The full data of interest is $(S_i,A_i,R_i)$ where $i\in\{1,\dots,N\}$.
@@ -64,11 +76,25 @@ In Scenario 1, we consider the standard case where all observations are i.i.d.. 
 
 
 
+### <a name="Case1"></a> Scenario 2: Markovian State Transition
+
+In scenario 2, the data we observed can be denoted as $(S_{i,t},A_{i,t},R_{i,t})_{1\leq i\leq n,0\leq t\leq T}$, where $n$ is the number of trajectories, and $T$ is the number of stages. This data structure is widely named as Markov decision processes (MDPs). 
+
+In causal effect learning, we focus on estimating the difference of the effect between a specific target policy (or treatment) and control at all stages. Due to the long-stage or even infinite-horizon structure of the data, most of the existing approaches paid attention to evaluating the expected reward of any given policy (treatment), and then do subtraction to obtain the effect of treatment versus control. 
+
+In observational data analysis, the data we obtained does not come from the target policy (or treatment) we wish to evaluate, resulting in the shift of data distribution. This problem is widely known as offline policy evaluation (OPE) under MDPs. The figure below depicts several groups of methods to address this problem.
 
 
-### <a name="Case1"></a> Scenario 2: Off-Policy Evaluation under MDP
 
-[Same as Causal Policy Learning -- offline + evaluation part. Shall we move some contents here?]
+```{image} CEL-Markovian.png
+:alt: Scenario2
+:width: 200px
+:align: center
+```
+
+
+
+Since this problem can be regarded as a special case of causal policy learning, we leave the detailed introduction of this part to scenario 2 of chapter 3 (Causal Policy Learning).
 
 
 
@@ -95,8 +121,9 @@ R_{1,T} & \cdots & R_{m,T} & R_{m+1,T} & \cdots & R_{m+n,T} \\
 \right]
 $$
 
-
 The current literature in dealing with panel data can be roughly divided into two categories: Difference-in-difference and synthetic control. 
+
+
 
 ```{image} CEL-PanelData.png
 :alt: Scenario3
@@ -104,15 +131,9 @@ The current literature in dealing with panel data can be roughly divided into tw
 :align: center
 ```
 
+
+
 In general, DiD methods are applied in cases where we have a substantial number of units that are exposed to the policy, and researchers are willing to make a “parallel trends” assumption which implies that we can adequately control for selection effects by accounting for additive unit-specific and time-specific fixed effects. In contrast, synthetic control (SC) methods, introduced in a setting with only a single (or small number) of units exposed, seek to compensate for the lack of parallel trends by re-weighting units to match their pre-exposure trends. [2]
-
-
-
-### <a name="Case1"></a> Scenario 4: Online Treatment Effect Evaluation
-
-
-
-
 
 
 

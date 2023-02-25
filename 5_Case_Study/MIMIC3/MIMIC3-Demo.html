@@ -1,0 +1,4710 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mimic3 Demo &#8212; Causal Decision Making</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="MovieLens" href="../MovieLens/Case_Study_2.html" />
+    <link rel="prev" title="Online RL" href="../../4_Causal_Policy_Learning/Scenario5/OnlineRL.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Causal Decision Making</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../Overview.html">
+                    Overview
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Motivating Examples
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../0_Motivating_Examples/CSL.html">
+   <em>
+    Causal Structure Learning (CSL)
+   </em>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../0_Motivating_Examples/CEL.html">
+   <em>
+    Causal Effect Learning (CEL)
+   </em>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../0_Motivating_Examples/CPL.html">
+   <em>
+    Causal Policy Learning (CPL)
+   </em>
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Preliminary
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../1_Preliminary/Causal%20Inference%20Preliminary.html">
+   Causal Inference Preliminary
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Structure Learning (CSL)
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../2_Causal_Structure_Learning/Causal%20Discovery%20Preliminary.html">
+   Causal Discovery Preliminary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../2_Causal_Structure_Learning/Testing-based%20Learner%20-%20PC%20Algorithm.html">
+   Testing-based Learner - PC Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../2_Causal_Structure_Learning/Functional-based%20Learner%20-%20LiNGAM%20Algorithm.html">
+   Functional-based Learner - LiNGAM Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../2_Causal_Structure_Learning/Score-based%20Learner%20-%20NOTEARS%20Algorithm.html">
+   Score-based Learner - NOTEARS Algorithm
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Effect Learning (CEL)
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/Single%20Stage.html">
+   <strong>
+    Single Stage
+   </strong>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/ATE.html">
+     ATE Estimation
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/HTE.html">
+     HTE Estimation
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/S-learner.html">
+       <strong>
+        1. S-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/T-learner.html">
+       <strong>
+        2. T-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/X-learner.html">
+       <strong>
+        3. X-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/R-Learner.html">
+       <strong>
+        4. R learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/DR-Learner.html">
+       <strong>
+        5. DR-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/Lp-R-Learner.html">
+       <strong>
+        6. Lp-R-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/GRF.html">
+       <strong>
+        7. Generalized Random Forest
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/Dragonnet.html">
+       <strong>
+        8. Dragon Net
+       </strong>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%202/underMDP.html">
+   Markov Decision Processes
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%202/ATE.html">
+     ATE
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%202/HTE.html">
+     HTE
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%203/Multiple%20Stage.html">
+   Multiple Stage–Finite Horizon
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%204/Miscellaneous.html">
+   Miscellaneous
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Scenario 1
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Single%20Stage.html">
+   Single Stage (DTR)
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Discrete.html">
+   Discrete Action Space
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Q-learning_Single.html">
+     Q-Learning (Single Stage)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/A-learning_Single.html">
+     A-Learning (Single Stage)
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Classification.html">
+     Reduction to Classification Problems
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Classification/O-Learning.html">
+       Outcome Weighted Learning
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Classification/E-learning.html">
+       Entropy learning
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Quantile/QuantileOTR_test.html">
+     <strong>
+      Quantile Optimal Treatment Regime
+     </strong>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Continuous.html">
+   Continuous Action Space
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Continuous/Deep%20Jump%20Learner.html">
+     Deep Jump Learner for Continuous Actions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Continuous/Kernel-Based%20Learner.html">
+     Kernel-Based Learner
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Continuous/Outcome%20Learning.html">
+     Outcome Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/PlanToDo.html">
+   Plan To Do
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="simple">
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Scenario 2
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/preliminary_MDP-potential-outcome.html">
+   Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/Evaluation.html">
+   Policy Evaluation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/FQE.html">
+     Fitted-Q Evaluation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/IPW_Infinite.html">
+     Importance Sampling for Policy Evaluation (Infinite Horizon)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/DR_Infinite.html">
+     Doubly Robust Estimator for Policy Evaluation (Infinite Horizon)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/Deeply_Debiased.html">
+     Deeply-Debiased Off-Policy Evaluation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/Optimization.html">
+   Policy Optimization
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/FQI.html">
+     Fitted-Q Iteration
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Scenario 3
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario3/Multi%20Stage.html">
+   Multiple Stages (DTR)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario3/Q-learning_Multiple.html">
+   Q-Learning (Multiple Stages)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario3/A-learning_Multiple.html">
+   A-Learning (Multiple Stages)
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Scenario 4
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Bandits.html">
+   Overview: Bandits ALgorithm
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/MAB/MAB.html">
+   Multi-Armed Bandits (MAB)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/MAB/Epsilon_Greedy.html">
+     <span class="math notranslate nohighlight">
+      \(\epsilon\)
+     </span>
+     -Greedy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/MAB/UCB.html">
+     UCB
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/MAB/TS.html">
+     TS
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/Contextual_Bandits.html">
+   Contextual Bandits
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/LinUCB.html">
+     LinUCB
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/LinTS.html">
+     LinTS
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/Meta_Bandits.html">
+   Meta Bandits
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+  <label for="toctree-checkbox-12">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/Meta_TS.html">
+     Meta Thompson Sampling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/MTTS.html">
+     Multi-Task Thompson Sampling (MTTS)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Structured_Bandit.html">
+   Structured Bandit (Slate Recommendation)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+  <label for="toctree-checkbox-13">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/Learning%20to%20rank.html">
+     Online Learning to Rank (Cascading Bandit)
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+    <label for="toctree-checkbox-14">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/TS_Cascade.html">
+       TS_Cascade
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/CascadeLinTS.html">
+       CascadeLinTS
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/MTSS_Cascade.html">
+       MTSS_Cascade
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/Combinatorial%20Optimization.html">
+     Online Combinatorial Optimization (Combinatorial Semi-Bandit)
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+    <label for="toctree-checkbox-15">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/CombTS.html">
+       CombTS
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/CombLinTS.html">
+       CombLinTS
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/MTSS_Comb.html">
+       MTSS_Comb
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/Assortment%20Optimization.html">
+     Dynamic Assortment Optimization (Multinomial Logit Bandit)
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/TS_MNL_Beta.html">
+       TS_MNL
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/TS_Contextual_MNL.html">
+       TS_Contextual_MNL
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/MTSS_MNL.html">
+       MTSS_MNL
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/OnlineEval/Online%20Policy%20Evaluation.html">
+   Online Policy Evaluation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+  <label for="toctree-checkbox-17">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/OnlineEval/Direct%20Online%20Policy%20Evaluator.html">
+     Direct Online Policy Evaluator
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/OnlineEval/Inverse%20Probability%20Weighted%20Online%20Policy%20Evaluator.html">
+     Inverse Probability Weighted Online Policy Evaluator
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/OnlineEval/Doubly%20Robust%20Online%20Policy%20Evaluator.html">
+     Doubly Robust Online Policy Evaluator
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Scenario 5
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario5/OnlineRL.html">
+   Online RL
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Case Studies
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Mimic3 Demo
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../MovieLens/Case_Study_2.html">
+   MovieLens
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/5_Case_Study/MIMIC3/MIMIC3-Demo.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F5_Case_Study/MIMIC3/MIMIC3-Demo.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/5_Case_Study/MIMIC3/MIMIC3-Demo.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Mimic3 Demo
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#causal-discovery-learning">
+   Causal Discovery Learning
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#causal-effect-learning">
+   Causal Effect Learning
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exclude-sofa-from-the-covariates-list">
+     exclude SOFA from the covariates list
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#regard-sofa-as-outcome-variable">
+     Regard SOFA as outcome variable
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#change-to-another-outcome-variable">
+     2023.02.11 change to another outcome variable
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Mimic3 Demo</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Mimic3 Demo
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#causal-discovery-learning">
+   Causal Discovery Learning
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#causal-effect-learning">
+   Causal Effect Learning
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exclude-sofa-from-the-covariates-list">
+     exclude SOFA from the covariates list
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#regard-sofa-as-outcome-variable">
+     Regard SOFA as outcome variable
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#change-to-another-outcome-variable">
+     2023.02.11 change to another outcome variable
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <div class="section" id="mimic3-demo">
+<h1>Mimic3 Demo<a class="headerlink" href="#mimic3-demo" title="Permalink to this headline">#</a></h1>
+<p><a class="reference external" href="https://www.kaggle.com/datasets/asjad99/mimiciii">Mimic3</a> is a large open-access anonymized single-center database which consists of comprehensive clinical data of 61,532 critical care admissions from 2001–2012 collected at a Boston teaching hospital. Dataset consists of 47 features (including demographics, vitals, and lab test results) on a cohort of sepsis patients who meet the sepsis-3 definition criteria.</p>
+<p>Due to the privacy concerns, we utilized a subset of he original Mimic3 data that is publicly available on Kaggle. For illustration purpose, we selected several representative features for the following analysis:</p>
+<ul class="simple">
+<li><p><strong>Glucose</strong>: glucose values of patients</p></li>
+<li><p><strong>paO2</strong>: The partial pressure of oxygen</p></li>
+<li><p><strong>PaO2_FiO2</strong>: The partial pressure of oxygen (PaO2)/fraction of oxygen delivered (FIO2) ratio.</p></li>
+<li><p><strong>SOFA</strong>: Sepsis-related Organ Failure Assessment score to describe organ dysfunction/failure.</p></li>
+<li><p><strong>iv-input</strong>: the volumn of fluids that have been administered to the patient.</p></li>
+<li><p><strong>died_within_48h_of_out_time</strong>:  the mortality status of the patient after 48 hours of being administered.</p></li>
+</ul>
+<p>In the next sections, we will start from causal discovery learning to learn significant causal diagram from the data, and then quantify the effect of treatment (‘iv_input’) on the outcome (mortality status, denoted by ‘died_within_48h_of_out_time’ variable in the data) through causal effect learning.</p>
+</div>
+<div class="section" id="causal-discovery-learning">
+<h1>Causal Discovery Learning<a class="headerlink" href="#causal-discovery-learning" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">time</span> 
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="k">import</span> <span class="n">Pool</span>
+ 
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">partial</span> 
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;OMP_NUM_THREADS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mimic3_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;C:/Users/Public/Causal-Decision-Making/5_Case_Study/MIMIC3/subset_mimic3_sepsis_data.csv&quot;</span><span class="p">)</span>
+<span class="n">mimic3_data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>bloc</th>
+      <th>icustayid</th>
+      <th>charttime</th>
+      <th>gender</th>
+      <th>age</th>
+      <th>elixhauser</th>
+      <th>re_admission</th>
+      <th>died_in_hosp</th>
+      <th>died_within_48h_of_out_time</th>
+      <th>mortality_90d</th>
+      <th>...</th>
+      <th>input_total</th>
+      <th>input_4hourly</th>
+      <th>output_total</th>
+      <th>output_4hourly</th>
+      <th>cumulated_balance</th>
+      <th>SOFA</th>
+      <th>SIRS</th>
+      <th>vaso_input</th>
+      <th>iv_input</th>
+      <th>reward</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>1</td>
+      <td>1006</td>
+      <td>4330305900</td>
+      <td>0</td>
+      <td>25154.170995</td>
+      <td>3</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>8</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>-0.025000</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>1204</td>
+      <td>4794582600</td>
+      <td>1</td>
+      <td>29424.868472</td>
+      <td>5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>5036.666667</td>
+      <td>36.666667</td>
+      <td>135.0</td>
+      <td>135.0</td>
+      <td>4901.666667</td>
+      <td>8</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>-0.250000</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1</td>
+      <td>3766</td>
+      <td>5046235200</td>
+      <td>1</td>
+      <td>25080.949271</td>
+      <td>8</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>...</td>
+      <td>39172.742000</td>
+      <td>3555.000000</td>
+      <td>803.0</td>
+      <td>71.0</td>
+      <td>38369.742000</td>
+      <td>14</td>
+      <td>1</td>
+      <td>1.0</td>
+      <td>4.0</td>
+      <td>-1.962204</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>1</td>
+      <td>4132</td>
+      <td>5522112000</td>
+      <td>0</td>
+      <td>14995.678252</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>...</td>
+      <td>3364.024983</td>
+      <td>1040.000000</td>
+      <td>5105.0</td>
+      <td>460.0</td>
+      <td>-1740.975017</td>
+      <td>8</td>
+      <td>3</td>
+      <td>0.0</td>
+      <td>4.0</td>
+      <td>-1.091746</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>1</td>
+      <td>4201</td>
+      <td>4753951200</td>
+      <td>1</td>
+      <td>25756.991238</td>
+      <td>4</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>7</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.019751</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>1</td>
+      <td>5170</td>
+      <td>7227673800</td>
+      <td>0</td>
+      <td>22814.718241</td>
+      <td>3</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>5000.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>5000.000000</td>
+      <td>9</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.463100</td>
+    </tr>
+  </tbody>
+</table>
+<p>6 rows × 62 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">##### Import Packages </span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.Causal_Discovery_Learning.utils</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.Case_Study.MIMIC3</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">numpy.random</span> <span class="k">import</span> <span class="n">randn</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="k">import</span> <span class="n">seed</span> <span class="k">as</span> <span class="n">rseed</span>
+<span class="kn">from</span> <span class="nn">numpy.random</span> <span class="k">import</span> <span class="n">seed</span> <span class="k">as</span> <span class="n">npseed</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="mi">9</span><span class="n">c014b9e403f</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1">##### Import Packages</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">causaldm.learners.Causal_Discovery_Learning.utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">causaldm.learners.Case_Study.MIMIC3</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">randn</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">seed</span> <span class="k">as</span> <span class="n">rseed</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;causaldm&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mimic3_data</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;bloc&#39;, &#39;icustayid&#39;, &#39;charttime&#39;, &#39;gender&#39;, &#39;age&#39;, &#39;elixhauser&#39;,
+       &#39;re_admission&#39;, &#39;died_in_hosp&#39;, &#39;died_within_48h_of_out_time&#39;,
+       &#39;mortality_90d&#39;, &#39;delay_end_of_record_and_discharge_or_death&#39;,
+       &#39;Weight_kg&#39;, &#39;GCS&#39;, &#39;HR&#39;, &#39;SysBP&#39;, &#39;MeanBP&#39;, &#39;DiaBP&#39;, &#39;RR&#39;, &#39;SpO2&#39;,
+       &#39;Temp_C&#39;, &#39;FiO2_1&#39;, &#39;Potassium&#39;, &#39;Sodium&#39;, &#39;Chloride&#39;, &#39;Glucose&#39;, &#39;BUN&#39;,
+       &#39;Creatinine&#39;, &#39;Magnesium&#39;, &#39;Calcium&#39;, &#39;Ionised_Ca&#39;, &#39;CO2_mEqL&#39;, &#39;SGOT&#39;,
+       &#39;SGPT&#39;, &#39;Total_bili&#39;, &#39;Albumin&#39;, &#39;Hb&#39;, &#39;WBC_count&#39;, &#39;Platelets_count&#39;,
+       &#39;PTT&#39;, &#39;PT&#39;, &#39;INR&#39;, &#39;Arterial_pH&#39;, &#39;paO2&#39;, &#39;paCO2&#39;, &#39;Arterial_BE&#39;,
+       &#39;Arterial_lactate&#39;, &#39;HCO3&#39;, &#39;mechvent&#39;, &#39;Shock_Index&#39;, &#39;PaO2_FiO2&#39;,
+       &#39;median_dose_vaso&#39;, &#39;max_dose_vaso&#39;, &#39;input_total&#39;, &#39;input_4hourly&#39;,
+       &#39;output_total&#39;, &#39;output_4hourly&#39;, &#39;cumulated_balance&#39;, &#39;SOFA&#39;, &#39;SIRS&#39;,
+       &#39;vaso_input&#39;, &#39;iv_input&#39;, &#39;reward&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ----------- Estimated DAG based on NOTEARS</span>
+<span class="c1">#from obspy.imaging.beachball import plot_mt</span>
+<span class="n">mimic3_data_final</span> <span class="o">=</span> <span class="n">mimic3_data</span>
+<span class="c1"># selected = [&#39;gender&#39;,  </span>
+<span class="c1">#        &#39;re_admission&#39;, &#39;died_within_48h_of_out_time&#39;, </span>
+<span class="c1">#        &#39;Weight_kg&#39;, &#39;GCS&#39;,  &#39;SpO2&#39;,</span>
+<span class="c1">#        &#39;Temp_C&#39;, &#39;FiO2_1&#39;,  &#39;Chloride&#39;, &#39;Glucose&#39;, &#39;BUN&#39;, &#39;WBC_count&#39;, &#39;paO2&#39;, &#39;paCO2&#39;, </span>
+<span class="c1">#             &#39;PaO2_FiO2&#39;,</span>
+<span class="c1">#        &#39;median_dose_vaso&#39;, &#39;max_dose_vaso&#39;, &#39;SOFA&#39;, &#39;SIRS&#39;,</span>
+<span class="c1">#        &#39;vaso_input&#39;, &#39;iv_input&#39;, &#39;reward&#39;]</span>
+<span class="c1"># selected = [&#39;gender&#39;,   </span>
+<span class="c1">#        &#39;Weight_kg&#39;, &#39;GCS&#39;, # &#39;SpO2&#39;, &#39;FiO2_1&#39;,  &#39;Chloride&#39;, &#39;paO2&#39;, &#39;paCO2&#39;,  &#39;PaO2_FiO2&#39;,</span>
+<span class="c1">#        #&#39;median_dose_vaso&#39;, &#39;max_dose_vaso&#39;,  </span>
+<span class="c1">#             &#39;cumulated_balance&#39;, </span>
+<span class="c1">#        &#39;vaso_input&#39;, &#39;iv_input&#39;, &#39;SOFA&#39;]</span>
+
+<span class="n">selected</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Glucose&#39;</span><span class="p">,</span><span class="s1">&#39;paO2&#39;</span><span class="p">,</span><span class="s1">&#39;PaO2_FiO2&#39;</span><span class="p">,</span>  <span class="s1">&#39;iv_input&#39;</span><span class="p">,</span> <span class="s1">&#39;SOFA&#39;</span><span class="p">,</span><span class="s1">&#39;died_within_48h_of_out_time&#39;</span><span class="p">]</span>
+
+<span class="n">sample_demo</span> <span class="o">=</span> <span class="n">mimic3_data_final</span><span class="p">[:</span><span class="mi">5000</span><span class="p">][</span><span class="n">selected</span><span class="p">]</span>
+<span class="n">est_mt</span> <span class="o">=</span> <span class="n">notears_linear</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sample_demo</span><span class="p">),</span> <span class="n">lambda1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">loss_type</span><span class="o">=</span><span class="s1">&#39;l2&#39;</span><span class="p">,</span><span class="n">w_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1"># ----------- Plot Associated Matrix for the Estimated DAG based on NOTEARS</span>
+
+<span class="c1"># calculate_effect(est_mt)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_mt</span><span class="p">(</span><span class="n">est_mt</span><span class="p">,</span> <span class="n">labels_name</span><span class="o">=</span><span class="n">selected</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;demo_res_mt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/MIMIC3-Demo_8_0.png" src="../../_images/MIMIC3-Demo_8_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">est_mt</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span> <span class="c1"># SOFA -&gt; iv_input </span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.4497709639893197
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">est_mt</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="c1"># iv_input -&gt; died_within_48h_of_out_time</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.2259495770059539
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_net</span><span class="p">(</span><span class="n">est_mt</span><span class="p">,</span> <span class="n">labels_name</span><span class="o">=</span><span class="n">selected</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;demo_res_net&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/MIMIC3-Demo_11_0.png" src="../../_images/MIMIC3-Demo_11_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">sum</span><span class="p">(</span><span class="n">mimic3_data</span><span class="p">[</span><span class="s1">&#39;cumulated_balance&#39;</span><span class="p">])</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">mimic3_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2764.968979885058
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">sum</span><span class="p">(</span><span class="n">mimic3_data</span><span class="p">[</span><span class="s1">&#39;output_total&#39;</span><span class="p">])</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">mimic3_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>961.0344827586207
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">sum</span><span class="p">(</span><span class="n">mimic3_data</span><span class="p">[</span><span class="s1">&#39;input_total&#39;</span><span class="p">])</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">mimic3_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3726.0034626436773
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="causal-effect-learning">
+<h1>Causal Effect Learning<a class="headerlink" href="#causal-effect-learning" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># in_input is the treatment, SOFA is the mediator, and the died_within_48hour is the outcome. </span>
+<span class="c1"># All the rest nodes can be viewed as the confounders.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mimic3_data</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;bloc&#39;, &#39;icustayid&#39;, &#39;charttime&#39;, &#39;gender&#39;, &#39;age&#39;, &#39;elixhauser&#39;,
+       &#39;re_admission&#39;, &#39;died_in_hosp&#39;, &#39;died_within_48h_of_out_time&#39;,
+       &#39;mortality_90d&#39;, &#39;delay_end_of_record_and_discharge_or_death&#39;,
+       &#39;Weight_kg&#39;, &#39;GCS&#39;, &#39;HR&#39;, &#39;SysBP&#39;, &#39;MeanBP&#39;, &#39;DiaBP&#39;, &#39;RR&#39;, &#39;SpO2&#39;,
+       &#39;Temp_C&#39;, &#39;FiO2_1&#39;, &#39;Potassium&#39;, &#39;Sodium&#39;, &#39;Chloride&#39;, &#39;Glucose&#39;, &#39;BUN&#39;,
+       &#39;Creatinine&#39;, &#39;Magnesium&#39;, &#39;Calcium&#39;, &#39;Ionised_Ca&#39;, &#39;CO2_mEqL&#39;, &#39;SGOT&#39;,
+       &#39;SGPT&#39;, &#39;Total_bili&#39;, &#39;Albumin&#39;, &#39;Hb&#39;, &#39;WBC_count&#39;, &#39;Platelets_count&#39;,
+       &#39;PTT&#39;, &#39;PT&#39;, &#39;INR&#39;, &#39;Arterial_pH&#39;, &#39;paO2&#39;, &#39;paCO2&#39;, &#39;Arterial_BE&#39;,
+       &#39;Arterial_lactate&#39;, &#39;HCO3&#39;, &#39;mechvent&#39;, &#39;Shock_Index&#39;, &#39;PaO2_FiO2&#39;,
+       &#39;median_dose_vaso&#39;, &#39;max_dose_vaso&#39;, &#39;input_total&#39;, &#39;input_4hourly&#39;,
+       &#39;output_total&#39;, &#39;output_4hourly&#39;, &#39;cumulated_balance&#39;, &#39;SOFA&#39;, &#39;SIRS&#39;,
+       &#39;vaso_input&#39;, &#39;iv_input&#39;, &#39;reward&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selected</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Glucose&#39;</span><span class="p">,</span><span class="s1">&#39;paO2&#39;</span><span class="p">,</span><span class="s1">&#39;PaO2_FiO2&#39;</span><span class="p">,</span>  <span class="s1">&#39;iv_input&#39;</span><span class="p">,</span> <span class="s1">&#39;SOFA&#39;</span><span class="p">,</span><span class="s1">&#39;died_within_48h_of_out_time&#39;</span><span class="p">]</span>
+
+<span class="n">sample_demo</span> <span class="o">=</span> <span class="n">mimic3_data</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">userinfo_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<span class="c1"># outcome: died_within_48h_of_out_time (binary)</span>
+<span class="c1"># treatment: iv_input (binary)</span>
+<span class="c1"># others: covariates</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_demo</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sample_demo</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">!=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span> <span class="c1"># change the discrete action to binary</span>
+<span class="n">data_CEL_selected</span> <span class="o">=</span> <span class="n">sample_demo</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/local/lib/python3.8/dist-packages/pandas/core/indexing.py:1817: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  self._setitem_single_column(loc, value, pi)
+</pre></div>
+</div>
+<div class="output text_html">
+  <div id="df-240b723c-af0d-43fe-9189-48220f324d56">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Glucose</th>
+      <th>paO2</th>
+      <th>PaO2_FiO2</th>
+      <th>iv_input</th>
+      <th>SOFA</th>
+      <th>died_within_48h_of_out_time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>91.000000</td>
+      <td>103.000000</td>
+      <td>206.000000</td>
+      <td>0.0</td>
+      <td>8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>193.000000</td>
+      <td>42.000000</td>
+      <td>105.000000</td>
+      <td>1.0</td>
+      <td>8</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>117.000000</td>
+      <td>83.000000</td>
+      <td>166.000000</td>
+      <td>1.0</td>
+      <td>14</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>123.200000</td>
+      <td>133.000000</td>
+      <td>266.000000</td>
+      <td>1.0</td>
+      <td>8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>214.000000</td>
+      <td>113.000000</td>
+      <td>282.500000</td>
+      <td>0.0</td>
+      <td>7</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>229.333333</td>
+      <td>39.000000</td>
+      <td>39.000000</td>
+      <td>0.0</td>
+      <td>9</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>149.000000</td>
+      <td>64.000000</td>
+      <td>304.761905</td>
+      <td>1.0</td>
+      <td>3</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>162.750000</td>
+      <td>84.000000</td>
+      <td>210.000000</td>
+      <td>0.0</td>
+      <td>6</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>120.000000</td>
+      <td>85.000000</td>
+      <td>170.000000</td>
+      <td>1.0</td>
+      <td>5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>105.000000</td>
+      <td>161.000000</td>
+      <td>766.666667</td>
+      <td>0.0</td>
+      <td>8</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>190.000000</td>
+      <td>143.000000</td>
+      <td>510.714286</td>
+      <td>1.0</td>
+      <td>3</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>230.000000</td>
+      <td>74.285714</td>
+      <td>74.285714</td>
+      <td>0.0</td>
+      <td>7</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>491.000000</td>
+      <td>98.000000</td>
+      <td>163.333333</td>
+      <td>0.0</td>
+      <td>11</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>190.000000</td>
+      <td>117.142857</td>
+      <td>418.367347</td>
+      <td>0.0</td>
+      <td>5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>113.000000</td>
+      <td>61.000000</td>
+      <td>169.444444</td>
+      <td>1.0</td>
+      <td>6</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>115.000000</td>
+      <td>105.333333</td>
+      <td>501.587302</td>
+      <td>0.0</td>
+      <td>5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>131.000000</td>
+      <td>176.750000</td>
+      <td>353.500000</td>
+      <td>0.0</td>
+      <td>8</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>176.000000</td>
+      <td>92.000000</td>
+      <td>92.000000</td>
+      <td>0.0</td>
+      <td>8</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>153.000000</td>
+      <td>346.714286</td>
+      <td>577.857120</td>
+      <td>1.0</td>
+      <td>12</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>196.111111</td>
+      <td>113.571429</td>
+      <td>324.489796</td>
+      <td>0.0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>87.000000</td>
+      <td>114.000000</td>
+      <td>542.857143</td>
+      <td>0.0</td>
+      <td>9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>116.833333</td>
+      <td>86.000000</td>
+      <td>172.000000</td>
+      <td>1.0</td>
+      <td>9</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>127.000000</td>
+      <td>384.772727</td>
+      <td>769.545455</td>
+      <td>0.0</td>
+      <td>8</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>120.000000</td>
+      <td>110.000000</td>
+      <td>275.000000</td>
+      <td>1.0</td>
+      <td>5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>115.000000</td>
+      <td>292.000000</td>
+      <td>584.000000</td>
+      <td>1.0</td>
+      <td>5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>168.500000</td>
+      <td>62.600000</td>
+      <td>260.833333</td>
+      <td>0.0</td>
+      <td>3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>154.500000</td>
+      <td>64.000000</td>
+      <td>213.333325</td>
+      <td>1.0</td>
+      <td>13</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>106.500000</td>
+      <td>93.000000</td>
+      <td>186.000000</td>
+      <td>0.0</td>
+      <td>8</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>60.666667</td>
+      <td>100.000000</td>
+      <td>249.999996</td>
+      <td>0.0</td>
+      <td>6</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>85.000000</td>
+      <td>107.000000</td>
+      <td>267.499996</td>
+      <td>0.0</td>
+      <td>10</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>111.000000</td>
+      <td>86.333333</td>
+      <td>172.666667</td>
+      <td>1.0</td>
+      <td>4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>144.400000</td>
+      <td>157.000000</td>
+      <td>314.000000</td>
+      <td>1.0</td>
+      <td>7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>102.000000</td>
+      <td>99.000000</td>
+      <td>282.857143</td>
+      <td>0.0</td>
+      <td>7</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>82.000000</td>
+      <td>305.000000</td>
+      <td>305.000000</td>
+      <td>0.0</td>
+      <td>10</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>108.000000</td>
+      <td>163.000000</td>
+      <td>326.000000</td>
+      <td>1.0</td>
+      <td>4</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>162.000000</td>
+      <td>262.000000</td>
+      <td>873.333299</td>
+      <td>0.0</td>
+      <td>5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>93.000000</td>
+      <td>89.000000</td>
+      <td>317.857143</td>
+      <td>0.0</td>
+      <td>9</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>353.500000</td>
+      <td>67.000000</td>
+      <td>85.531914</td>
+      <td>0.0</td>
+      <td>8</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>158.750000</td>
+      <td>57.000000</td>
+      <td>94.999996</td>
+      <td>0.0</td>
+      <td>11</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>344.666667</td>
+      <td>51.000000</td>
+      <td>145.714286</td>
+      <td>0.0</td>
+      <td>10</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>101.000000</td>
+      <td>187.000000</td>
+      <td>467.500000</td>
+      <td>1.0</td>
+      <td>2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>123.000000</td>
+      <td>91.250000</td>
+      <td>260.714290</td>
+      <td>0.0</td>
+      <td>11</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>150.000000</td>
+      <td>120.933333</td>
+      <td>127.298246</td>
+      <td>0.0</td>
+      <td>8</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>144.000000</td>
+      <td>91.000000</td>
+      <td>232.340426</td>
+      <td>1.0</td>
+      <td>5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>134.000000</td>
+      <td>155.000000</td>
+      <td>310.000000</td>
+      <td>0.0</td>
+      <td>2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>134.666667</td>
+      <td>248.000000</td>
+      <td>496.000000</td>
+      <td>0.0</td>
+      <td>10</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>83.000000</td>
+      <td>92.750000</td>
+      <td>309.166667</td>
+      <td>0.0</td>
+      <td>8</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>200.000000</td>
+      <td>226.000000</td>
+      <td>565.000000</td>
+      <td>0.0</td>
+      <td>7</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>194.500000</td>
+      <td>27.000000</td>
+      <td>38.571429</td>
+      <td>0.0</td>
+      <td>10</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>148.000000</td>
+      <td>100.181818</td>
+      <td>250.454545</td>
+      <td>0.0</td>
+      <td>8</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>180.000000</td>
+      <td>87.000000</td>
+      <td>150.357569</td>
+      <td>1.0</td>
+      <td>11</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>115.000000</td>
+      <td>73.000000</td>
+      <td>146.000000</td>
+      <td>1.0</td>
+      <td>7</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>93.000000</td>
+      <td>83.000000</td>
+      <td>224.324322</td>
+      <td>0.0</td>
+      <td>8</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>132.555556</td>
+      <td>394.111111</td>
+      <td>985.277763</td>
+      <td>0.0</td>
+      <td>4</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>100.000000</td>
+      <td>58.733333</td>
+      <td>169.423077</td>
+      <td>0.0</td>
+      <td>8</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>55</th>
+      <td>141.500000</td>
+      <td>49.200000</td>
+      <td>175.714286</td>
+      <td>1.0</td>
+      <td>9</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>240.000000</td>
+      <td>201.000000</td>
+      <td>201.000000</td>
+      <td>1.0</td>
+      <td>7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>134.000000</td>
+      <td>100.500000</td>
+      <td>251.250000</td>
+      <td>1.0</td>
+      <td>7</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-240b723c-af0d-43fe-9189-48220f324d56')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-240b723c-af0d-43fe-9189-48220f324d56 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-240b723c-af0d-43fe-9189-48220f324d56');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">))</span>
+<span class="c1"># 58 patients in total</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>32
+4
+16
+6
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lightgbm</span> <span class="k">import</span> <span class="n">LGBMRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">GradientBoostingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegression</span>
+
+<span class="c1">#mu0 = GradientBoostingClassifier(max_depth=2)</span>
+<span class="c1">#mu1 = GradientBoostingClassifier(max_depth=2)</span>
+
+<span class="n">mu0</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="n">mu1</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+
+<span class="n">mu0</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">userinfo_index</span><span class="p">],</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span> <span class="p">)</span>
+<span class="n">mu1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">userinfo_index</span><span class="p">],</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span> <span class="p">)</span>
+
+
+<span class="c1"># estimate the HTE by T-learner</span>
+<span class="n">HTE_T_learner</span> <span class="o">=</span> <span class="p">(</span><span class="n">mu1</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span> <span class="o">-</span> <span class="n">mu0</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">]))[:,</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">HTE_T_learner</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.35193837,  0.15100322,  0.37937706,  0.21685053, -0.00572692,
+        0.35366461, -0.10757065,  0.05879746,  0.30753862, -0.27232834,
+       -0.08068463,  0.45049988,  0.0060788 , -0.07484116,  0.13040501,
+       -0.19635191,  0.1242306 ,  0.66716023,  0.32382886, -0.04121226,
+       -0.26585647,  0.33936103, -0.04903773,  0.02095465, -0.00546565,
+       -0.06986865, -0.00787551,  0.34063497,  0.11724709,  0.07787983,
+        0.31888453,  0.13037105, -0.04135072,  0.90892501,  0.16500385,
+       -0.1283525 , -0.14416355,  0.08225486,  0.42131848,  0.00556242,
+       -0.10858594, -0.01104204,  0.75754023,  0.03973348,  0.12670468,
+        0.03626968, -0.12951083, -0.05274683,  0.3620197 ,  0.0364981 ,
+        0.32033171,  0.35990093,  0.07887963, -0.11768663,  0.14273112,
+        0.02035232,  0.7821337 ,  0.04273572])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mu1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span><span class="o">-</span><span class="n">mu0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0,  2, 17, 33, 38, 42, 56])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">sum</span><span class="p">(</span><span class="n">HTE_T_learner</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.13181626090930249
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Conclusion</strong>: iv-input is expected to improve the death-within-48-hours rate by 13.18%.</p>
+<div class="section" id="exclude-sofa-from-the-covariates-list">
+<h2>exclude SOFA from the covariates list<a class="headerlink" href="#exclude-sofa-from-the-covariates-list" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selected</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Glucose&#39;</span><span class="p">,</span><span class="s1">&#39;paO2&#39;</span><span class="p">,</span><span class="s1">&#39;PaO2_FiO2&#39;</span><span class="p">,</span>  <span class="s1">&#39;iv_input&#39;</span><span class="p">,</span><span class="s1">&#39;died_within_48h_of_out_time&#39;</span><span class="p">]</span>
+
+<span class="n">sample_demo</span> <span class="o">=</span> <span class="n">mimic3_data</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">userinfo_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="c1"># outcome: died_within_48h_of_out_time (binary)</span>
+<span class="c1"># treatment: iv_input (binary)</span>
+<span class="c1"># others: covariates</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_demo</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sample_demo</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">!=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span> <span class="c1"># change the discrete action to binary</span>
+<span class="n">data_CEL_selected</span> <span class="o">=</span> <span class="n">sample_demo</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/local/lib/python3.8/dist-packages/pandas/core/indexing.py:1817: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  self._setitem_single_column(loc, value, pi)
+</pre></div>
+</div>
+<div class="output text_html">
+  <div id="df-5b6c66f9-b743-40c1-9300-061fcf3644aa">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Glucose</th>
+      <th>paO2</th>
+      <th>PaO2_FiO2</th>
+      <th>iv_input</th>
+      <th>died_within_48h_of_out_time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>91.000000</td>
+      <td>103.000000</td>
+      <td>206.000000</td>
+      <td>0.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>193.000000</td>
+      <td>42.000000</td>
+      <td>105.000000</td>
+      <td>1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>117.000000</td>
+      <td>83.000000</td>
+      <td>166.000000</td>
+      <td>1.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>123.200000</td>
+      <td>133.000000</td>
+      <td>266.000000</td>
+      <td>1.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>214.000000</td>
+      <td>113.000000</td>
+      <td>282.500000</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>229.333333</td>
+      <td>39.000000</td>
+      <td>39.000000</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>149.000000</td>
+      <td>64.000000</td>
+      <td>304.761905</td>
+      <td>1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>162.750000</td>
+      <td>84.000000</td>
+      <td>210.000000</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>120.000000</td>
+      <td>85.000000</td>
+      <td>170.000000</td>
+      <td>1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>105.000000</td>
+      <td>161.000000</td>
+      <td>766.666667</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>190.000000</td>
+      <td>143.000000</td>
+      <td>510.714286</td>
+      <td>1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>230.000000</td>
+      <td>74.285714</td>
+      <td>74.285714</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>491.000000</td>
+      <td>98.000000</td>
+      <td>163.333333</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>190.000000</td>
+      <td>117.142857</td>
+      <td>418.367347</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>113.000000</td>
+      <td>61.000000</td>
+      <td>169.444444</td>
+      <td>1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>115.000000</td>
+      <td>105.333333</td>
+      <td>501.587302</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>131.000000</td>
+      <td>176.750000</td>
+      <td>353.500000</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>176.000000</td>
+      <td>92.000000</td>
+      <td>92.000000</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>153.000000</td>
+      <td>346.714286</td>
+      <td>577.857120</td>
+      <td>1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>196.111111</td>
+      <td>113.571429</td>
+      <td>324.489796</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>87.000000</td>
+      <td>114.000000</td>
+      <td>542.857143</td>
+      <td>0.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>116.833333</td>
+      <td>86.000000</td>
+      <td>172.000000</td>
+      <td>1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>127.000000</td>
+      <td>384.772727</td>
+      <td>769.545455</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>120.000000</td>
+      <td>110.000000</td>
+      <td>275.000000</td>
+      <td>1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>115.000000</td>
+      <td>292.000000</td>
+      <td>584.000000</td>
+      <td>1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>168.500000</td>
+      <td>62.600000</td>
+      <td>260.833333</td>
+      <td>0.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>154.500000</td>
+      <td>64.000000</td>
+      <td>213.333325</td>
+      <td>1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>106.500000</td>
+      <td>93.000000</td>
+      <td>186.000000</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>60.666667</td>
+      <td>100.000000</td>
+      <td>249.999996</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>85.000000</td>
+      <td>107.000000</td>
+      <td>267.499996</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>111.000000</td>
+      <td>86.333333</td>
+      <td>172.666667</td>
+      <td>1.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>144.400000</td>
+      <td>157.000000</td>
+      <td>314.000000</td>
+      <td>1.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>102.000000</td>
+      <td>99.000000</td>
+      <td>282.857143</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>82.000000</td>
+      <td>305.000000</td>
+      <td>305.000000</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>108.000000</td>
+      <td>163.000000</td>
+      <td>326.000000</td>
+      <td>1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>162.000000</td>
+      <td>262.000000</td>
+      <td>873.333299</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>93.000000</td>
+      <td>89.000000</td>
+      <td>317.857143</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>353.500000</td>
+      <td>67.000000</td>
+      <td>85.531914</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>158.750000</td>
+      <td>57.000000</td>
+      <td>94.999996</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>344.666667</td>
+      <td>51.000000</td>
+      <td>145.714286</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>101.000000</td>
+      <td>187.000000</td>
+      <td>467.500000</td>
+      <td>1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>123.000000</td>
+      <td>91.250000</td>
+      <td>260.714290</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>150.000000</td>
+      <td>120.933333</td>
+      <td>127.298246</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>144.000000</td>
+      <td>91.000000</td>
+      <td>232.340426</td>
+      <td>1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>134.000000</td>
+      <td>155.000000</td>
+      <td>310.000000</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>134.666667</td>
+      <td>248.000000</td>
+      <td>496.000000</td>
+      <td>0.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>83.000000</td>
+      <td>92.750000</td>
+      <td>309.166667</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>200.000000</td>
+      <td>226.000000</td>
+      <td>565.000000</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>194.500000</td>
+      <td>27.000000</td>
+      <td>38.571429</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>148.000000</td>
+      <td>100.181818</td>
+      <td>250.454545</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>180.000000</td>
+      <td>87.000000</td>
+      <td>150.357569</td>
+      <td>1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>115.000000</td>
+      <td>73.000000</td>
+      <td>146.000000</td>
+      <td>1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>93.000000</td>
+      <td>83.000000</td>
+      <td>224.324322</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>132.555556</td>
+      <td>394.111111</td>
+      <td>985.277763</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>100.000000</td>
+      <td>58.733333</td>
+      <td>169.423077</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>55</th>
+      <td>141.500000</td>
+      <td>49.200000</td>
+      <td>175.714286</td>
+      <td>1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>240.000000</td>
+      <td>201.000000</td>
+      <td>201.000000</td>
+      <td>1.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>134.000000</td>
+      <td>100.500000</td>
+      <td>251.250000</td>
+      <td>1.0</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-5b6c66f9-b743-40c1-9300-061fcf3644aa')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-5b6c66f9-b743-40c1-9300-061fcf3644aa button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-5b6c66f9-b743-40c1-9300-061fcf3644aa');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">4</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">4</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">4</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">4</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">))</span>
+<span class="c1"># 58 patients in total</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>32
+4
+16
+6
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lightgbm</span> <span class="k">import</span> <span class="n">LGBMRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">GradientBoostingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegression</span>
+
+<span class="c1">#mu0 = GradientBoostingClassifier(max_depth=2)</span>
+<span class="c1">#mu1 = GradientBoostingClassifier(max_depth=2)</span>
+
+<span class="n">mu0</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="n">mu1</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+
+<span class="n">mu0</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">userinfo_index</span><span class="p">],</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">4</span><span class="p">]</span> <span class="p">)</span>
+<span class="n">mu1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">userinfo_index</span><span class="p">],</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">4</span><span class="p">]</span> <span class="p">)</span>
+
+
+<span class="c1"># estimate the HTE by T-learner</span>
+<span class="n">HTE_T_learner</span> <span class="o">=</span> <span class="p">(</span><span class="n">mu1</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span> <span class="o">-</span> <span class="n">mu0</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">]))[:,</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">HTE_T_learner</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.34214908,  0.15483742,  0.33360699,  0.21308046, -0.00311157,
+        0.359681  , -0.11028062,  0.06525265,  0.32251312, -0.26930135,
+       -0.08273835,  0.47329251,  0.00722481, -0.07548401,  0.13385522,
+       -0.1992917 ,  0.12232846,  0.67345188,  0.30241027, -0.03958685,
+       -0.26278474,  0.32718327, -0.04868508,  0.0261224 , -0.00102555,
+       -0.07001004, -0.01674666,  0.33343453,  0.11249884,  0.05936183,
+        0.33902806,  0.13446026, -0.04408134,  0.90951684,  0.18122974,
+       -0.12890962, -0.14675372,  0.09387125,  0.40208288,  0.00692851,
+       -0.1096049 , -0.02037488,  0.76030491,  0.04719836,  0.15350811,
+        0.03047809, -0.13395765, -0.05205824,  0.35508516,  0.03555667,
+        0.30540774,  0.36072918,  0.07001589, -0.11951063,  0.13380248,
+        0.01573469,  0.80052499,  0.04350663])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mu1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span><span class="o">-</span><span class="n">mu0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([11, 17, 33, 42, 56])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">sum</span><span class="p">(</span><span class="n">HTE_T_learner</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.1311544427995885
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Conclusion</strong>: iv-input is expected to improve the death-within-48-hours rate by 13.18%.</p>
+</div>
+<div class="section" id="regard-sofa-as-outcome-variable">
+<h2>Regard SOFA as outcome variable<a class="headerlink" href="#regard-sofa-as-outcome-variable" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selected</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Glucose&#39;</span><span class="p">,</span><span class="s1">&#39;paO2&#39;</span><span class="p">,</span><span class="s1">&#39;PaO2_FiO2&#39;</span><span class="p">,</span>  <span class="s1">&#39;iv_input&#39;</span><span class="p">,</span> <span class="s1">&#39;SOFA&#39;</span><span class="p">]</span>
+
+<span class="n">sample_demo</span> <span class="o">=</span> <span class="n">mimic3_data</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">userinfo_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="c1"># outcome: SOFA score (treated as continuous). The smaller, the better</span>
+<span class="c1"># treatment: iv_input (binary)</span>
+<span class="c1"># others: covariates</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_demo</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sample_demo</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">!=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span> <span class="c1"># change the discrete action to binary</span>
+<span class="n">data_CEL_selected</span> <span class="o">=</span> <span class="n">sample_demo</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/local/lib/python3.8/dist-packages/pandas/core/indexing.py:1817: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  self._setitem_single_column(loc, value, pi)
+</pre></div>
+</div>
+<div class="output text_html">
+  <div id="df-5fae21f7-8b05-4faa-99ab-b406ff5341cb">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Glucose</th>
+      <th>paO2</th>
+      <th>PaO2_FiO2</th>
+      <th>iv_input</th>
+      <th>SOFA</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>91.000000</td>
+      <td>103.000000</td>
+      <td>206.000000</td>
+      <td>0.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>193.000000</td>
+      <td>42.000000</td>
+      <td>105.000000</td>
+      <td>1.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>117.000000</td>
+      <td>83.000000</td>
+      <td>166.000000</td>
+      <td>1.0</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>123.200000</td>
+      <td>133.000000</td>
+      <td>266.000000</td>
+      <td>1.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>214.000000</td>
+      <td>113.000000</td>
+      <td>282.500000</td>
+      <td>0.0</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>229.333333</td>
+      <td>39.000000</td>
+      <td>39.000000</td>
+      <td>0.0</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>149.000000</td>
+      <td>64.000000</td>
+      <td>304.761905</td>
+      <td>1.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>162.750000</td>
+      <td>84.000000</td>
+      <td>210.000000</td>
+      <td>0.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>120.000000</td>
+      <td>85.000000</td>
+      <td>170.000000</td>
+      <td>1.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>105.000000</td>
+      <td>161.000000</td>
+      <td>766.666667</td>
+      <td>0.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>190.000000</td>
+      <td>143.000000</td>
+      <td>510.714286</td>
+      <td>1.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>230.000000</td>
+      <td>74.285714</td>
+      <td>74.285714</td>
+      <td>0.0</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>491.000000</td>
+      <td>98.000000</td>
+      <td>163.333333</td>
+      <td>0.0</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>190.000000</td>
+      <td>117.142857</td>
+      <td>418.367347</td>
+      <td>0.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>113.000000</td>
+      <td>61.000000</td>
+      <td>169.444444</td>
+      <td>1.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>115.000000</td>
+      <td>105.333333</td>
+      <td>501.587302</td>
+      <td>0.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>131.000000</td>
+      <td>176.750000</td>
+      <td>353.500000</td>
+      <td>0.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>176.000000</td>
+      <td>92.000000</td>
+      <td>92.000000</td>
+      <td>0.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>153.000000</td>
+      <td>346.714286</td>
+      <td>577.857120</td>
+      <td>1.0</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>196.111111</td>
+      <td>113.571429</td>
+      <td>324.489796</td>
+      <td>0.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>87.000000</td>
+      <td>114.000000</td>
+      <td>542.857143</td>
+      <td>0.0</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>116.833333</td>
+      <td>86.000000</td>
+      <td>172.000000</td>
+      <td>1.0</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>127.000000</td>
+      <td>384.772727</td>
+      <td>769.545455</td>
+      <td>0.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>120.000000</td>
+      <td>110.000000</td>
+      <td>275.000000</td>
+      <td>1.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>115.000000</td>
+      <td>292.000000</td>
+      <td>584.000000</td>
+      <td>1.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>168.500000</td>
+      <td>62.600000</td>
+      <td>260.833333</td>
+      <td>0.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>154.500000</td>
+      <td>64.000000</td>
+      <td>213.333325</td>
+      <td>1.0</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>106.500000</td>
+      <td>93.000000</td>
+      <td>186.000000</td>
+      <td>0.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>60.666667</td>
+      <td>100.000000</td>
+      <td>249.999996</td>
+      <td>0.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>85.000000</td>
+      <td>107.000000</td>
+      <td>267.499996</td>
+      <td>0.0</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>111.000000</td>
+      <td>86.333333</td>
+      <td>172.666667</td>
+      <td>1.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>144.400000</td>
+      <td>157.000000</td>
+      <td>314.000000</td>
+      <td>1.0</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>102.000000</td>
+      <td>99.000000</td>
+      <td>282.857143</td>
+      <td>0.0</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>82.000000</td>
+      <td>305.000000</td>
+      <td>305.000000</td>
+      <td>0.0</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>108.000000</td>
+      <td>163.000000</td>
+      <td>326.000000</td>
+      <td>1.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>162.000000</td>
+      <td>262.000000</td>
+      <td>873.333299</td>
+      <td>0.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>93.000000</td>
+      <td>89.000000</td>
+      <td>317.857143</td>
+      <td>0.0</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>353.500000</td>
+      <td>67.000000</td>
+      <td>85.531914</td>
+      <td>0.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>158.750000</td>
+      <td>57.000000</td>
+      <td>94.999996</td>
+      <td>0.0</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>344.666667</td>
+      <td>51.000000</td>
+      <td>145.714286</td>
+      <td>0.0</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>101.000000</td>
+      <td>187.000000</td>
+      <td>467.500000</td>
+      <td>1.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>123.000000</td>
+      <td>91.250000</td>
+      <td>260.714290</td>
+      <td>0.0</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>150.000000</td>
+      <td>120.933333</td>
+      <td>127.298246</td>
+      <td>0.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>144.000000</td>
+      <td>91.000000</td>
+      <td>232.340426</td>
+      <td>1.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>134.000000</td>
+      <td>155.000000</td>
+      <td>310.000000</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>134.666667</td>
+      <td>248.000000</td>
+      <td>496.000000</td>
+      <td>0.0</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>83.000000</td>
+      <td>92.750000</td>
+      <td>309.166667</td>
+      <td>0.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>200.000000</td>
+      <td>226.000000</td>
+      <td>565.000000</td>
+      <td>0.0</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>194.500000</td>
+      <td>27.000000</td>
+      <td>38.571429</td>
+      <td>0.0</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>148.000000</td>
+      <td>100.181818</td>
+      <td>250.454545</td>
+      <td>0.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>180.000000</td>
+      <td>87.000000</td>
+      <td>150.357569</td>
+      <td>1.0</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>115.000000</td>
+      <td>73.000000</td>
+      <td>146.000000</td>
+      <td>1.0</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>93.000000</td>
+      <td>83.000000</td>
+      <td>224.324322</td>
+      <td>0.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>132.555556</td>
+      <td>394.111111</td>
+      <td>985.277763</td>
+      <td>0.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>100.000000</td>
+      <td>58.733333</td>
+      <td>169.423077</td>
+      <td>0.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>55</th>
+      <td>141.500000</td>
+      <td>49.200000</td>
+      <td>175.714286</td>
+      <td>1.0</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>240.000000</td>
+      <td>201.000000</td>
+      <td>201.000000</td>
+      <td>1.0</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>134.000000</td>
+      <td>100.500000</td>
+      <td>251.250000</td>
+      <td>1.0</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-5fae21f7-8b05-4faa-99ab-b406ff5341cb')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-5fae21f7-8b05-4faa-99ab-b406ff5341cb button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-5fae21f7-8b05-4faa-99ab-b406ff5341cb');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">4</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">4</span><span class="p">]))</span>
+<span class="c1"># 58 patients in total</span>
+<span class="c1"># the trend looks great: iv_input helps to decrease the overall SOFA score of patients</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>271
+154
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lightgbm</span> <span class="k">import</span> <span class="n">LGBMRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">GradientBoostingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LinearRegression</span>
+
+<span class="c1">#mu0 = LGBMRegressor(max_depth=2)</span>
+<span class="c1">#mu1 = LGBMRegressor(max_depth=2)</span>
+
+<span class="n">mu0</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">mu1</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+
+<span class="n">mu0</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">userinfo_index</span><span class="p">],</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">4</span><span class="p">]</span> <span class="p">)</span>
+<span class="n">mu1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">userinfo_index</span><span class="p">],</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">4</span><span class="p">]</span> <span class="p">)</span>
+
+
+<span class="c1"># estimate the HTE by T-learner</span>
+<span class="n">HTE_T_learner</span> <span class="o">=</span> <span class="p">(</span><span class="n">mu1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span> <span class="o">-</span> <span class="n">mu0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 7.21870224,  8.40566972,  7.66622106,  7.1879345 ,  7.1901635 ,
+        9.85648741,  4.9401981 ,  7.30275857,  7.67184641, -1.36721931,
+        3.59254365, 10.12774396, 11.4649726 ,  4.60819096,  7.0017973 ,
+        2.11530562,  6.7907991 ,  9.77513013,  7.27653223,  6.27977167,
+        1.33523561,  7.63267806,  4.5328774 ,  6.40388746,  5.41585275,
+        5.87905889,  6.65355666,  7.46495149,  6.06793454,  6.14837157,
+        7.57664137,  7.12229885,  5.81609308, 10.53073325,  6.7307595 ,
+       -0.19831203,  4.84101367, 10.84671498,  8.66528849,  9.26055158,
+        4.70986044,  6.20867846,  9.64290819,  6.90753136,  7.05010359,
+        6.06274677,  5.00564529,  4.82901546,  9.2423345 ,  6.84998288,
+        8.6205014 ,  7.75504146,  6.38889206,  0.89695554,  6.82694905,
+        6.84062773, 11.17027401,  6.71774599])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span> <span class="n">mu0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([7.89250861, 8.12039556, 7.99682994, 7.8115788 , 7.67692267,
+       8.49726147, 7.14091275, 7.81277854, 7.99234011, 5.26287652,
+       6.6201452 , 8.55478225, 8.51406748, 6.94066256, 7.81857514,
+       6.32446681, 7.65200423, 8.52600314, 7.65274637, 7.43326703,
+       6.1311298 , 7.98514328, 6.84965923, 7.59685668, 7.19285778,
+       7.39099085, 7.64473278, 7.94732209, 7.59949607, 7.57939714,
+       7.97767451, 7.74199621, 7.4573362 , 8.7692076 , 7.68035161,
+       5.4551159 , 7.18658372, 8.57316288, 8.24437089, 8.12308573,
+       7.07157904, 7.54553513, 8.51033153, 7.72059844, 7.73863371,
+       7.3825371 , 7.24976983, 6.92079241, 8.3779517 , 7.690975  ,
+       8.17710764, 8.03307371, 7.65368796, 5.74642474, 7.78890149,
+       7.73139714, 8.76941559, 7.67403198])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">HTE_T_learner</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-0.67380637,  0.28527416, -0.33060888, -0.6236443 , -0.48675916,
+        1.35922594, -2.20071466, -0.51001997, -0.3204937 , -6.63009583,
+       -3.02760156,  1.57296171,  2.95090512, -2.3324716 , -0.81677784,
+       -4.20916119, -0.86120512,  1.249127  , -0.37621414, -1.15349536,
+       -4.79589419, -0.35246522, -2.31678183, -1.19296922, -1.77700503,
+       -1.51193196, -0.99117612, -0.4823706 , -1.53156153, -1.43102557,
+       -0.40103314, -0.61969736, -1.64124312,  1.76152565, -0.94959211,
+       -5.65342793, -2.34557005,  2.27355209,  0.4209176 ,  1.13746585,
+       -2.36171859, -1.33685667,  1.13257665, -0.81306708, -0.68853012,
+       -1.31979033, -2.24412454, -2.09177695,  0.86438281, -0.84099211,
+        0.44339376, -0.27803224, -1.26479591, -4.8494692 , -0.96195243,
+       -0.89076941,  2.40085841, -0.95628598])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">sum</span><span class="p">(</span><span class="n">HTE_T_learner</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.9584967152996288
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Conclusion</strong>: iv-input is expected to decrease the SOFA score by 0.958.</p>
+</div>
+<div class="section" id="change-to-another-outcome-variable">
+<h2>2023.02.11 change to another outcome variable<a class="headerlink" href="#change-to-another-outcome-variable" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set the reward variable as the original one in the data</span>
+<span class="n">mimic3_data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-69a618e8-6cd6-4ea0-a04f-58489819a277">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>bloc</th>
+      <th>icustayid</th>
+      <th>charttime</th>
+      <th>gender</th>
+      <th>age</th>
+      <th>elixhauser</th>
+      <th>re_admission</th>
+      <th>died_in_hosp</th>
+      <th>died_within_48h_of_out_time</th>
+      <th>mortality_90d</th>
+      <th>...</th>
+      <th>input_total</th>
+      <th>input_4hourly</th>
+      <th>output_total</th>
+      <th>output_4hourly</th>
+      <th>cumulated_balance</th>
+      <th>SOFA</th>
+      <th>SIRS</th>
+      <th>vaso_input</th>
+      <th>iv_input</th>
+      <th>reward</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>3</td>
+      <td>7245486000</td>
+      <td>0</td>
+      <td>17639.826435</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>6527.000</td>
+      <td>50.0</td>
+      <td>13617.0</td>
+      <td>520.0</td>
+      <td>-7090.000</td>
+      <td>5</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>2.0</td>
+      <td>-0.884898</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>11</td>
+      <td>6898241400</td>
+      <td>1</td>
+      <td>30766.069028</td>
+      <td>6</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0.000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000</td>
+      <td>12</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.383136</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>12</td>
+      <td>5805732000</td>
+      <td>1</td>
+      <td>12049.217303</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0.000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000</td>
+      <td>4</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.976040</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>14</td>
+      <td>4264269300</td>
+      <td>0</td>
+      <td>30946.970000</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>1300.000</td>
+      <td>1300.0</td>
+      <td>340.0</td>
+      <td>160.0</td>
+      <td>960.000</td>
+      <td>5</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>4.0</td>
+      <td>0.125000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>30</td>
+      <td>5707825200</td>
+      <td>0</td>
+      <td>19793.588912</td>
+      <td>6</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>9552.000</td>
+      <td>50.0</td>
+      <td>6830.0</td>
+      <td>540.0</td>
+      <td>2722.000</td>
+      <td>6</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>2.0</td>
+      <td>0.457625</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>20950</th>
+      <td>1</td>
+      <td>99961</td>
+      <td>4379511600</td>
+      <td>0</td>
+      <td>18316.820324</td>
+      <td>7</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>7665.000</td>
+      <td>0.0</td>
+      <td>11314.0</td>
+      <td>0.0</td>
+      <td>-3649.000</td>
+      <td>6</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>-0.025000</td>
+    </tr>
+    <tr>
+      <th>20951</th>
+      <td>1</td>
+      <td>99984</td>
+      <td>6807542400</td>
+      <td>1</td>
+      <td>28815.459329</td>
+      <td>3</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>9572.600</td>
+      <td>21.3</td>
+      <td>15517.0</td>
+      <td>605.0</td>
+      <td>-5944.400</td>
+      <td>10</td>
+      <td>3</td>
+      <td>4.0</td>
+      <td>1.0</td>
+      <td>-0.690146</td>
+    </tr>
+    <tr>
+      <th>20952</th>
+      <td>1</td>
+      <td>99988</td>
+      <td>6946088400</td>
+      <td>0</td>
+      <td>11978.343576</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>30918.650</td>
+      <td>57.0</td>
+      <td>19835.0</td>
+      <td>480.0</td>
+      <td>11083.650</td>
+      <td>5</td>
+      <td>3</td>
+      <td>0.0</td>
+      <td>2.0</td>
+      <td>1.773188</td>
+    </tr>
+    <tr>
+      <th>20953</th>
+      <td>1</td>
+      <td>99992</td>
+      <td>4289137200</td>
+      <td>0</td>
+      <td>15191.885116</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>14948.442</td>
+      <td>91.0</td>
+      <td>30256.0</td>
+      <td>950.0</td>
+      <td>-15307.558</td>
+      <td>13</td>
+      <td>3</td>
+      <td>3.0</td>
+      <td>2.0</td>
+      <td>0.250000</td>
+    </tr>
+    <tr>
+      <th>20954</th>
+      <td>1</td>
+      <td>99995</td>
+      <td>4612773240</td>
+      <td>0</td>
+      <td>8538.739340</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0.000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000</td>
+      <td>7</td>
+      <td>3</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.250000</td>
+    </tr>
+  </tbody>
+</table>
+<p>20955 rows × 62 columns</p>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-69a618e8-6cd6-4ea0-a04f-58489819a277')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-69a618e8-6cd6-4ea0-a04f-58489819a277 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-69a618e8-6cd6-4ea0-a04f-58489819a277');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selected</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Glucose&#39;</span><span class="p">,</span><span class="s1">&#39;paO2&#39;</span><span class="p">,</span><span class="s1">&#39;PaO2_FiO2&#39;</span><span class="p">,</span>  <span class="s1">&#39;iv_input&#39;</span><span class="p">,</span> <span class="s1">&#39;SOFA&#39;</span><span class="p">,</span><span class="s1">&#39;reward&#39;</span><span class="p">]</span>
+
+<span class="n">smaple_demo</span> <span class="o">=</span> <span class="n">mimic3_data_final</span><span class="p">[:</span><span class="mi">5000</span><span class="p">][</span><span class="n">selected</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">userinfo_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">smaple_demo</span>
+<span class="c1"># outcome: died_within_48h_of_out_time (binary)</span>
+<span class="c1"># treatment: iv_input (binary)</span>
+<span class="c1"># others: covariates</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-8a43f2b6-f8d4-4039-92ed-0d3b1f4e3009">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Glucose</th>
+      <th>paO2</th>
+      <th>PaO2_FiO2</th>
+      <th>iv_input</th>
+      <th>SOFA</th>
+      <th>reward</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>84.000000</td>
+      <td>84.000000</td>
+      <td>168.000000</td>
+      <td>2.0</td>
+      <td>5</td>
+      <td>-0.884898</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>122.000000</td>
+      <td>59.444444</td>
+      <td>198.148148</td>
+      <td>0.0</td>
+      <td>12</td>
+      <td>0.383136</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>125.000000</td>
+      <td>192.000000</td>
+      <td>690.647482</td>
+      <td>0.0</td>
+      <td>4</td>
+      <td>0.976040</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>110.727273</td>
+      <td>179.000000</td>
+      <td>447.499993</td>
+      <td>4.0</td>
+      <td>5</td>
+      <td>0.125000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>187.000000</td>
+      <td>125.000000</td>
+      <td>347.222222</td>
+      <td>2.0</td>
+      <td>6</td>
+      <td>0.457625</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>4995</th>
+      <td>121.375000</td>
+      <td>136.787683</td>
+      <td>206.005547</td>
+      <td>3.0</td>
+      <td>4</td>
+      <td>-1.965110</td>
+    </tr>
+    <tr>
+      <th>4996</th>
+      <td>108.000000</td>
+      <td>62.333333</td>
+      <td>143.846153</td>
+      <td>0.0</td>
+      <td>11</td>
+      <td>-0.025000</td>
+    </tr>
+    <tr>
+      <th>4997</th>
+      <td>106.000000</td>
+      <td>258.500000</td>
+      <td>923.214286</td>
+      <td>0.0</td>
+      <td>7</td>
+      <td>0.402531</td>
+    </tr>
+    <tr>
+      <th>4998</th>
+      <td>144.000000</td>
+      <td>376.000000</td>
+      <td>752.000000</td>
+      <td>1.0</td>
+      <td>4</td>
+      <td>-0.172130</td>
+    </tr>
+    <tr>
+      <th>4999</th>
+      <td>113.000000</td>
+      <td>108.000000</td>
+      <td>269.999996</td>
+      <td>4.0</td>
+      <td>5</td>
+      <td>-0.025000</td>
+    </tr>
+  </tbody>
+</table>
+<p>5000 rows × 6 columns</p>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-8a43f2b6-f8d4-4039-92ed-0d3b1f4e3009')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-8a43f2b6-f8d4-4039-92ed-0d3b1f4e3009 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-8a43f2b6-f8d4-4039-92ed-0d3b1f4e3009');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">smaple_demo</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3098
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_CEL_selected</span> <span class="o">=</span> <span class="n">smaple_demo</span>
+<span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">smaple_demo</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">!=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],:]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="c1"># change the discrete action to binary</span>
+<span class="n">data_CEL_selected</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-4a3dbc6d-f747-4682-9c9c-a22ecb99cae1">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Glucose</th>
+      <th>paO2</th>
+      <th>PaO2_FiO2</th>
+      <th>iv_input</th>
+      <th>SOFA</th>
+      <th>reward</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.0</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>122.0</td>
+      <td>59.444444</td>
+      <td>198.148148</td>
+      <td>0.0</td>
+      <td>12</td>
+      <td>0.383136</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>125.0</td>
+      <td>192.000000</td>
+      <td>690.647482</td>
+      <td>0.0</td>
+      <td>4</td>
+      <td>0.976040</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.0</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.0</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>4995</th>
+      <td>1.0</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>4996</th>
+      <td>108.0</td>
+      <td>62.333333</td>
+      <td>143.846153</td>
+      <td>0.0</td>
+      <td>11</td>
+      <td>-0.025000</td>
+    </tr>
+    <tr>
+      <th>4997</th>
+      <td>106.0</td>
+      <td>258.500000</td>
+      <td>923.214286</td>
+      <td>0.0</td>
+      <td>7</td>
+      <td>0.402531</td>
+    </tr>
+    <tr>
+      <th>4998</th>
+      <td>1.0</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>4999</th>
+      <td>1.0</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+<p>5000 rows × 6 columns</p>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-4a3dbc6d-f747-4682-9c9c-a22ecb99cae1')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-4a3dbc6d-f747-4682-9c9c-a22ecb99cae1 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-4a3dbc6d-f747-4682-9c9c-a22ecb99cae1');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1902
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lightgbm</span> <span class="k">import</span> <span class="n">LGBMRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">GradientBoostingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegression</span>
+
+<span class="c1">#mu0 = GradientBoostingClassifier(max_depth=2)</span>
+<span class="c1">#mu1 = GradientBoostingClassifier(max_depth=2)</span>
+
+<span class="c1">#mu0 = LogisticRegression()</span>
+<span class="c1">#mu1 = LogisticRegression()</span>
+
+<span class="c1">#mu0 = LGBMRegressor(max_depth=3)</span>
+<span class="c1">#mu1 = LGBMRegressor(max_depth=3)</span>
+
+<span class="n">mu0</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">userinfo_index</span><span class="p">],</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span> <span class="p">)</span>
+<span class="n">mu1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">userinfo_index</span><span class="p">],</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;iv_input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span> <span class="p">)</span>
+
+
+<span class="c1"># estimate the HTE by T-learner</span>
+<span class="n">HTE_T_learner</span> <span class="o">=</span> <span class="n">mu1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span> <span class="o">-</span> <span class="n">mu0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">HTE_T_learner</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2.56653165, 0.40760015, 0.57383026, ..., 1.55370395, 2.56653165,
+       2.56653165])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">sum</span><span class="p">(</span><span class="n">HTE_T_learner</span><span class="p">)</span><span class="o">/</span><span class="mi">5000</span>
+<span class="c1"># Averaged Treatment Effect</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.4298809412995734
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#  concern 1: S-learner failed to learn HTE since the scale of iv_input is way smaller than other state variables</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./5_Case_Study\MIMIC3"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../../4_Causal_Policy_Learning/Scenario5/OnlineRL.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Online RL</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../MovieLens/Case_Study_2.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">MovieLens</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Causal Decision Making Team<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
