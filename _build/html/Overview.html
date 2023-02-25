@@ -934,10 +934,10 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#a-name-case1-a-scenario-2-off-policy-evaluation-under-mdp">
+    <a class="reference internal nav-link" href="#a-name-case1-a-scenario-2-markovian-state-transition">
      <a name="Case1">
      </a>
-     Scenario 2: Off-Policy Evaluation under MDP
+     Scenario 2: Markovian State Transition
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -945,13 +945,6 @@ title="Print to PDF"
      <a name="Case1">
      </a>
      Scenario 3: Panel Data
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#a-name-case1-a-scenario-4-online-treatment-effect-evaluation">
-     <a name="Case1">
-     </a>
-     Scenario 4: Online Treatment Effect Evaluation
     </a>
    </li>
   </ul>
@@ -1098,10 +1091,10 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#a-name-case1-a-scenario-2-off-policy-evaluation-under-mdp">
+    <a class="reference internal nav-link" href="#a-name-case1-a-scenario-2-markovian-state-transition">
      <a name="Case1">
      </a>
-     Scenario 2: Off-Policy Evaluation under MDP
+     Scenario 2: Markovian State Transition
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -1109,13 +1102,6 @@ title="Print to PDF"
      <a name="Case1">
      </a>
      Scenario 3: Panel Data
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#a-name-case1-a-scenario-4-online-treatment-effect-evaluation">
-     <a name="Case1">
-     </a>
-     Scenario 4: Online Treatment Effect Evaluation
     </a>
    </li>
   </ul>
@@ -1234,7 +1220,7 @@ title="Print to PDF"
 <a class="reference internal image-reference" href="_images/Workflow_CausalDM.png"><img alt="_images/Workflow_CausalDM.png" src="_images/Workflow_CausalDM.png" style="width: 800px;" /></a>
 <p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Workflow of the Causal Decision Making.</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
 </div>
-<p>The Fig 1 depicts the overall structure of this book, which is comprised of three primary components: <strong>Causal Structure Learning</strong>, <strong>Causal Policy Learning</strong>, and <strong>Causal Effect Learning</strong>. Specifically, in the chapter <a class="reference external" href="#SL"><strong>Causal Structure Learning (CSL)</strong></a>, we present state-of-the-art techniques for learning the skeleton of causal relationships among input variables. When a causal structure is known, the second chapter of <a class="reference external" href="#ML"><strong>Causal Effect Learning (CEL)</strong></a> introduces approaches making causal inference. Finally, the <a class="reference external" href="#PL"><strong>Causal Policy Learning (CPL)</strong></a> chapter introduces diverse policy learners to learn optimal policies and evaluate various policies of interest.</p>
+<p>The Fig 1 depicts the overall structure of this book, which is comprised of three primary components: <strong>Causal Structure Learning</strong>, <strong>Causal Policy Learning</strong>, and <strong>Causal Effect Learning</strong>. Specifically, in the chapter <a class="reference external" href="#SL"><strong>Causal Structure Learning (CSL)</strong></a>, we present state-of-the-art techniques for learning the skeleton of causal relationships among input variables. When a causal structure is known, the second chapter <a class="reference external" href="#ML"><strong>Causal Effect Learning (CEL)</strong></a> introduces approaches for treatment effect identification, estimation and inference. Finally, the <a class="reference external" href="#PL"><strong>Causal Policy Learning (CPL)</strong></a> chapter introduces diverse policy learners to learn optimal policies and evaluate various policies of interest.</p>
 <p>Following is a brief summary of the contents of each chapter.</p>
 </div>
 <div class="section" id="a-name-sl-a-causal-structure-learning-csl">
@@ -1284,14 +1270,25 @@ title="Print to PDF"
 <div class="section" id="a-name-ml-a-causal-effect-learning-cel">
 <h2><a name="ML"></a> Causal Effect Learning (CEL)<a class="headerlink" href="#a-name-ml-a-causal-effect-learning-cel" title="Permalink to this headline">#</a></h2>
 <hr class="docutils" />
+<p>Causal effect learning, as we’ve mentioned at the beginning, aims to infer on the effect of a specific treatment in the context of causal inference. According to the data structure, we mainly divide the problem settings of CEL into three categories: independent states, Markovian state transition, and non-Markovian state transition.</p>
+<p><img alt="CEL-structure.png" src="_images/CEL-structure.png" /></p>
+<ol class="simple">
+<li><p><strong>Independent states</strong>, or scenario 1, denotes the single-stage setup where the full data can be summarized as a number of state-action-reward triplet with size <span class="math notranslate nohighlight">\(n\)</span>, i.e. <span class="math notranslate nohighlight">\((S_i,A_i,R_i)_{1\leq i\leq n}\)</span>. Due to the simplicity of data structure, there are quite a few methods proposed to handle the estimation of both average treatment effect and heterogeneous treatment effect, ranging from basic learners to deep-learning related approaches.</p></li>
+<li><p><strong>Markovian state transition</strong>, or scenario 2, denotes the case where the data contains <span class="math notranslate nohighlight">\(T\)</span> stages, i.e.  <span class="math notranslate nohighlight">\((S_{i,t},A_{i,t},R_{i,t})_{1\leq i\leq n,0\leq t\leq T}\)</span>, and the transition of stages follows a Markov decision process.</p></li>
+<li><p><strong>Non-Markovian state transition</strong>, or scenario 3, denotes other miscellaneous cases where the data have a relatively complex data structure, while the transition of stages doesn’t follow the Markov assumption. In this section, we will mainly discuss some representative methods to deal with panel data.</p></li>
+</ol>
 <div class="section" id="a-name-case1-a-scenario-1-i-i-d">
 <h3><a name="Case1"></a> Scenario 1: I.I.D<a class="headerlink" href="#a-name-case1-a-scenario-1-i-i-d" title="Permalink to this headline">#</a></h3>
 <p>In Scenario 1, we consider the standard case where all observations are i.i.d.. The full data of interest is <span class="math notranslate nohighlight">\((S_i,A_i,R_i)\)</span> where <span class="math notranslate nohighlight">\(i\in\{1,\dots,N\}\)</span>.</p>
 <a class="reference internal image-reference" href="_images/CEL-IID.png"><img alt="Scenario1" class="align-center" src="_images/CEL-IID.png" style="width: 400px;" /></a>
 </div>
-<div class="section" id="a-name-case1-a-scenario-2-off-policy-evaluation-under-mdp">
-<h3><a name="Case1"></a> Scenario 2: Off-Policy Evaluation under MDP<a class="headerlink" href="#a-name-case1-a-scenario-2-off-policy-evaluation-under-mdp" title="Permalink to this headline">#</a></h3>
-<p>[Same as Causal Policy Learning – offline + evaluation part. Shall we move some contents here?]</p>
+<div class="section" id="a-name-case1-a-scenario-2-markovian-state-transition">
+<h3><a name="Case1"></a> Scenario 2: Markovian State Transition<a class="headerlink" href="#a-name-case1-a-scenario-2-markovian-state-transition" title="Permalink to this headline">#</a></h3>
+<p>In scenario 2, the data we observed can be denoted as <span class="math notranslate nohighlight">\((S_{i,t},A_{i,t},R_{i,t})_{1\leq i\leq n,0\leq t\leq T}\)</span>, where <span class="math notranslate nohighlight">\(n\)</span> is the number of trajectories, and <span class="math notranslate nohighlight">\(T\)</span> is the number of stages. This data structure is widely named as Markov decision processes (MDPs).</p>
+<p>In causal effect learning, we focus on estimating the difference of the effect between a specific target policy (or treatment) and control at all stages. Due to the long-stage or even infinite-horizon structure of the data, most of the existing approaches paid attention to evaluating the expected reward of any given policy (treatment), and then do subtraction to obtain the effect of treatment versus control.</p>
+<p>In observational data analysis, the data we obtained does not come from the target policy (or treatment) we wish to evaluate, resulting in the shift of data distribution. This problem is widely known as offline policy evaluation (OPE) under MDPs. The figure below depicts several groups of methods to address this problem.</p>
+<a class="reference internal image-reference" href="_images/CEL-Markovian.png"><img alt="Scenario2" class="align-center" src="_images/CEL-Markovian.png" style="width: 200px;" /></a>
+<p>Since this problem can be regarded as a special case of causal policy learning, we leave the detailed introduction of this part to scenario 2 of chapter 3 (Causal Policy Learning).</p>
 </div>
 <div class="section" id="a-name-case1-a-scenario-3-panel-data">
 <h3><a name="Case1"></a> Scenario 3: Panel Data<a class="headerlink" href="#a-name-case1-a-scenario-3-panel-data" title="Permalink to this headline">#</a></h3>
@@ -1316,9 +1313,6 @@ R_{1,T} &amp; \cdots &amp; R_{m,T} &amp; R_{m+1,T} &amp; \cdots &amp; R_{m+n,T} 
 <p>The current literature in dealing with panel data can be roughly divided into two categories: Difference-in-difference and synthetic control.</p>
 <a class="reference internal image-reference" href="_images/CEL-PanelData.png"><img alt="Scenario3" class="align-center" src="_images/CEL-PanelData.png" style="width: 400px;" /></a>
 <p>In general, DiD methods are applied in cases where we have a substantial number of units that are exposed to the policy, and researchers are willing to make a “parallel trends” assumption which implies that we can adequately control for selection effects by accounting for additive unit-specific and time-specific fixed effects. In contrast, synthetic control (SC) methods, introduced in a setting with only a single (or small number) of units exposed, seek to compensate for the lack of parallel trends by re-weighting units to match their pre-exposure trends. [2]</p>
-</div>
-<div class="section" id="a-name-case1-a-scenario-4-online-treatment-effect-evaluation">
-<h3><a name="Case1"></a> Scenario 4: Online Treatment Effect Evaluation<a class="headerlink" href="#a-name-case1-a-scenario-4-online-treatment-effect-evaluation" title="Permalink to this headline">#</a></h3>
 </div>
 </div>
 <div class="section" id="a-name-pl-a-causal-policy-learning-cpl">
