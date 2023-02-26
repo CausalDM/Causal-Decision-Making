@@ -37,7 +37,7 @@ from lightgbm import LGBMRegressor;
 from sklearn.linear_model import LinearRegression
 
 
-# In[2]:
+# In[ ]:
 
 
 # Get data
@@ -48,14 +48,14 @@ data_CEL_selected.pop(data_CEL_selected.columns[0])
 data_CEL_selected
 
 
-# In[3]:
+# In[ ]:
 
 
 userinfo_index = np.array([0,1,2,4])
 SandA = data_CEL_selected.iloc[:, np.array([0,1,2,3,4])]
 
 
-# In[4]:
+# In[ ]:
 
 
 # Step 1: Fit two models under treatment and control separately, same as T-learner
@@ -73,7 +73,7 @@ mu0.fit(S_T0, R_T0)
 mu1.fit(S_T1, R_T1)
 
 
-# In[5]:
+# In[ ]:
 
 
 # Step 2: impute the potential outcomes that are unobserved in original data
@@ -85,7 +85,7 @@ Delta0 = mu1.predict(S_T0) - R_T0
 Delta1 = R_T1 - mu0.predict(S_T1) 
 
 
-# In[6]:
+# In[ ]:
 
 
 # Step 3: Fit tau_1(s) and tau_0(s)
@@ -97,7 +97,7 @@ tau0.fit(S_T0, Delta0)
 tau1.fit(S_T1, Delta1)
 
 
-# In[7]:
+# In[ ]:
 
 
 # Step 4: fit the propensity score model $\hat{g}(s)$ and obtain the final HTE estimator by taking weighted average of tau0 and tau1
@@ -110,8 +110,7 @@ HTE_X_learner = g.predict_proba(data_CEL_selected.iloc[:,userinfo_index])[:,0]*t
 
 
 
-
-# In[8]:
+# In[ ]:
 
 
 print("X-learner:  ",HTE_X_learner[0:8])

@@ -21,7 +21,7 @@
 # \end{equation}
 
 # **FQI.**
-# Similar to FQE **[CROSS REFERENCE]**, the fitted-Q iteration (FQI) [1] algorithm is also popular due to its simple form and good numerical performance. 
+# Similar to [FQE](section:FQE), the fitted-Q iteration (FQI) {cite:p}`ernst2005tree` algorithm is also popular due to its simple form and good numerical performance. 
 # It is mainly motivated by the fact that, the optimal value function $Q^*$ is the unique solution to the Bellman optimality equation (2). 
 # Besides, the right-hand side of (2) is a contraction mapping. 
 # Therefore, we can consider a fixed-point method: 
@@ -57,4 +57,7 @@ os.chdir('../CausalDM')
 
 
 # ## References
-# [1] Ernst, D., Geurts, P., and Wehenkel, L. Tree-based batch mode reinforcement learning. Journal of Machine Learn- ing Research, 6(Apr):503–556, 2005.
+# 
+# ```{bibliography}
+# :filter: docname in docnames
+# ```

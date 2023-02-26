@@ -153,11 +153,6 @@ const thebe_selector_output = ".output, .cell_output"
    Causal Inference Preliminary
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../1_Preliminary/Heterogenous%20Treatement%20Effect.html">
-   Heterogenous Treatment Effect
-  </a>
- </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -722,12 +717,12 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../../5_Case_Study/Case_Study_1.html">
-   MIMIC III
+  <a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3-Demo.html">
+   Mimic3 Demo
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../5_Case_Study/Case_Study_2.html">
+  <a class="reference internal" href="../../5_Case_Study/MovieLens/Case_Study_2.html">
    MovieLens
   </a>
  </li>
@@ -1008,8 +1003,8 @@ title="Print to PDF"
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="deeply-debiased-off-policy-evaluation">
 <h1>Deeply-Debiased Off-Policy Evaluation<a class="headerlink" href="#deeply-debiased-off-policy-evaluation" title="Permalink to this headline">#</a></h1>
-<p>The doubly robust utilizes the importance weighting method to reduce the bias of the direct methods. However, in the complicated RL problems, it is still challenging to satisfy the required rate conditions to yield valid inference. In this part, we introduce a deeply-debiasing procedure to provide valid inference under minimal conditions.
-We present the method in the infinite-horizon setting, under the stationarity assumption introduced in <strong>CROSS-REFER</strong>, and extensions to other RL setups are straightforward.</p>
+<p>The doubly robust utilizes the importance weighting method to reduce the bias of the direct methods. However, in the complicated RL problems, it is still challenging to satisfy the required rate conditions to yield valid inference. In this part, we introduce a deeply-debiasing procedure <span id="id1">[<a class="reference internal" href="#id4" title="Chengchun Shi, Runzhe Wan, Victor Chernozhukov, and Rui Song. Deeply-debiased off-policy interval estimation. In International Conference on Machine Learning, 9580–9591. PMLR, 2021.">SWCS21</a>]</span> to provide valid inference under minimal conditions.
+We present the method in the stationary and infinite-horizon setting, and extensions to other RL setups are straightforward.</p>
 <p><em><strong>Advantages</strong></em>:</p>
 <ul class="simple">
 <li><p>Theoretically valid with dependent data</p></li>
@@ -1021,12 +1016,12 @@ We present the method in the infinite-horizon setting, under the stationarity as
 <p>The validity of the asymptotic distribution of the doubly robust estimator such as DRL and its Wald-type CI requires the two nuisance function estimators, <span class="math notranslate nohighlight">\(\widehat{Q}\)</span> and <span class="math notranslate nohighlight">\(\widehat{\omega}\)</span>, to both converge at a rate faster than <span class="math notranslate nohighlight">\((nT)^{-1/4}\)</span>.
 When this assumption is violated, the resulting CI cannot achieve the nominal coverage.
 These requirements are likely to be violated in complicated RL tasks, given the dimensionality and the complexity of modeling the Q-function and the design function.
-See [1] for illustrative examples.</p>
+See <span id="id2">Shi <em>et al.</em> [<a class="reference internal" href="#id4" title="Chengchun Shi, Runzhe Wan, Victor Chernozhukov, and Rui Song. Deeply-debiased off-policy interval estimation. In International Conference on Machine Learning, 9580–9591. PMLR, 2021.">SWCS21</a>]</span> for illustrative examples.</p>
 <p>The limitation of DRL motivates us to consider constructing a valid CI under weaker and practically more feasible conditions.
 To achieve this goal, we first take a deeper look at DRL. First recall that <span class="math notranslate nohighlight">\(\widehat{\eta}_{\tiny{\textrm{DRL}}}= (nT)^{-1}
 \sum_{i=1}^n\sum_{t=0}^{T-1} \psi_{i,t}\)</span>, where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-53d53ef3-7fac-4c01-b386-967ceb9abb14">
-<span class="eqno">(70)<a class="headerlink" href="#equation-53d53ef3-7fac-4c01-b386-967ceb9abb14" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{new_DRL_term}
+<div class="amsmath math notranslate nohighlight" id="equation-d5de5c28-d87c-4e7c-91e9-362be286c6f1">
+<span class="eqno">(70)<a class="headerlink" href="#equation-d5de5c28-d87c-4e7c-91e9-362be286c6f1" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{new_DRL_term}
 \begin{split}
 	\psi_{i,t}
 	\equiv
@@ -1049,17 +1044,17 @@ Specifically, by replacing <span class="math notranslate nohighlight">\(\mathbb{
 <p>where <span class="math notranslate nohighlight">\(p_t^{\pi}(a,s|a_0,s_0)\)</span> denotes the probability of <span class="math notranslate nohighlight">\((A_t,S_t)=(a,s)\)</span> following policy <span class="math notranslate nohighlight">\(\pi\)</span> conditional on the event that <span class="math notranslate nohighlight">\(\{A_0=a_0, S_0=s_0\}\)</span>. By definition, the numerator corresponds to the discounted conditional visitation probability following <span class="math notranslate nohighlight">\(\pi\)</span> given that the initial state-action pair equals <span class="math notranslate nohighlight">\((s_0,a_0)\)</span>.</p>
 <p><strong>Debias the Q-function.</strong>
 By replacing <span class="math notranslate nohighlight">\(\widehat{\omega}\)</span> in (1) with some estimated conditional density ratio <span class="math notranslate nohighlight">\(\widehat{\tau}\)</span>, we obtain the following estimation function for any <span class="math notranslate nohighlight">\(Q\)</span>-function estimate <span class="math notranslate nohighlight">\(\tilde{Q}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b20ad2b5-c4fa-480c-96f5-f3c593425f16">
-<span class="eqno">(71)<a class="headerlink" href="#equation-b20ad2b5-c4fa-480c-96f5-f3c593425f16" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:debiasterm}
+<div class="amsmath math notranslate nohighlight" id="equation-fa7145c6-81f4-4c36-a3e0-ac0e312e9a58">
+<span class="eqno">(71)<a class="headerlink" href="#equation-fa7145c6-81f4-4c36-a3e0-ac0e312e9a58" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:debiasterm}
 \begin{split}
 \mathcal{D}^{(i,t)}\tilde{Q}(a,s) =
-\tilde{Q}(a,s)+ 
-\frac{1}{1-\gamma}\widehat{\tau}(A_{i,t},S_{i,t},a,s)
-\times
+\tilde{Q}(a,s)
+&amp; + \frac{1}{1-\gamma}\widehat{\tau}(A_{i,t},S_{i,t},a,s)\\
+&amp;\times
 \{R_{i,t} +\gamma
 \mathbb{E}_{a' \sim \pi(\cdot|S_{i,t+1})}
 \tilde{Q}(a',S_{i,t+1})- \tilde{Q}(A_{i,t},S_{i,t})\}. 
-\end{split}	
+\end{split}
 \end{eqnarray}\]</div>
 <p>Here, we refer to <span class="math notranslate nohighlight">\(\mathcal{D}^{(i,t)}\)</span> as the <em>individual debiasing operator</em>, since it debiases any <span class="math notranslate nohighlight">\(\tilde{Q}\)</span> based on an individual data tuple <span class="math notranslate nohighlight">\((S_{i,t},A_{i,t},R_{i,t},S_{i,t+1})\)</span>.
 Similarly, the augmentation term here is to offer protection against potential model misspecification of the Q-function, and as such,
@@ -1068,13 +1063,18 @@ A debiased version of the Q-estimator is given by averaging <span class="math no
 We can prove the bias of <span class="math notranslate nohighlight">\(\widehat{Q}^{(2)}\)</span> will decay at a faster rate than the initial Q-estimator <span class="math notranslate nohighlight">\(\widehat{Q}\)</span>.</p>
 <p><strong>The two-step debias iteration.</strong>
 Similar with DRL, we can construct an estimating function <span class="math notranslate nohighlight">\(\psi_{i,t}^{(2)}\)</span> for any <span class="math notranslate nohighlight">\((i,t)\)</span> by replacing <span class="math notranslate nohighlight">\(\widehat{Q}\)</span> in (1) with <span class="math notranslate nohighlight">\(\widehat{Q}^{(2)}\)</span>.
-This yields our second-order estimator
-$<span class="math notranslate nohighlight">\(\widehat{\eta}^{(2)}_{\tiny{\textrm{TR}}}=(nT)^{-1} \sum_{i,t} \psi_{i,t}^{(2)}.\)</span><span class="math notranslate nohighlight">\( 
-We can establish that the bias of \)</span>\widehat{\eta}^{(2)}<em>{\tiny{\textrm{TR}}}<span class="math notranslate nohighlight">\( decays at a  faster rate than the DRL estimator. 
-Moreover, based on the structure of this estimator, we can establish that \)</span>\widehat{\eta}^{(2)}</em>{\tiny{\textrm{TR}}}<span class="math notranslate nohighlight">\( converges to the true value when one model for \)</span>Q^{\pi}<span class="math notranslate nohighlight">\(, \)</span>\omega^{\pi}<span class="math notranslate nohighlight">\( or \)</span>\tau^{\pi}<span class="math notranslate nohighlight">\( is correctly specified. As such, it is *triply-robust*. 
-Finally, let \)</span>\widehat{\sigma}^{(2)} = \Big[(nT-1)^{-1} \sum_{i,t} (\psi_{i,t}^{(2)}-\widehat{\eta}_{\textrm{TR}}^{(2)})^2\Big]^{1/2}<span class="math notranslate nohighlight">\(, an asymptotic \)</span>(1 - \alpha)$-CI is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-25b03863-b13d-4ca7-b417-141518011a38">
-<span class="eqno">(72)<a class="headerlink" href="#equation-25b03863-b13d-4ca7-b417-141518011a38" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:CI_TR}
+This yields our second-order estimator</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ee92d29c-ff82-42ab-b084-57737e540dd7">
+<span class="eqno">(72)<a class="headerlink" href="#equation-ee92d29c-ff82-42ab-b084-57737e540dd7" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+\begin{split}
+\widehat{\eta}^{(2)}_{\tiny{\textrm{TR}}}=(nT)^{-1} \sum_{i,t} \psi_{i,t}^{(2)}.
+\end{split}
+\end{eqnarray}\]</div>
+<p>We can establish that the bias of <span class="math notranslate nohighlight">\(\widehat{\eta}^{(2)}_{\tiny{\textrm{TR}}}\)</span> decays at a  faster rate than the DRL estimator.
+Moreover, based on the structure of this estimator, we can establish that <span class="math notranslate nohighlight">\(\widehat{\eta}^{(2)}_{\tiny{\textrm{TR}}}\)</span> converges to the true value when one model for <span class="math notranslate nohighlight">\(Q^{\pi}\)</span>, <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span> or <span class="math notranslate nohighlight">\(\tau^{\pi}\)</span> is correctly specified. As such, it is <em>triply-robust</em>.
+Finally, let <span class="math notranslate nohighlight">\(\widehat{\sigma}^{(2)} = \Big[(nT-1)^{-1} \sum_{i,t} (\psi_{i,t}^{(2)}-\widehat{\eta}_{\textrm{TR}}^{(2)})^2\Big]^{1/2}\)</span>, an asymptotic <span class="math notranslate nohighlight">\((1 - \alpha)\)</span>-CI is given by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-fe5e5be8-be70-4a9a-a1c3-8aaa8cca5953">
+<span class="eqno">(73)<a class="headerlink" href="#equation-fe5e5be8-be70-4a9a-a1c3-8aaa8cca5953" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:CI_TR}
     [\widehat{\eta}_{\textrm{TR}}^{(2)} - z_{\alpha/2} (nT)^{-1/2}	\widehat{\sigma}^{(2)} \; , \; \widehat{\eta}_{\textrm{TR}}^{(2)} +z_{\alpha/2} (nT)^{-1/2}	\widehat{\sigma}^{(2)}], 
 \end{equation}\]</div>
 <p>and roughly speaking, its validity only requires the nuisanses to converge at a rate faster than <span class="math notranslate nohighlight">\((nT)^{-1/6}\)</span>.</p>
@@ -1089,7 +1089,7 @@ The resulting value estimator <span class="math notranslate nohighlight">\(\wide
 By similar arguments, we can establish that the bias of the Q-estimator and that of the resulting value decrease as the order <span class="math notranslate nohighlight">\(m\)</span> increases.
 This yields the flexibility and robustness of our estimator as it allows the nuisance function estimator to converge at an arbitrary rate, with large enough <span class="math notranslate nohighlight">\(m\)</span>.
 The efficiency of this method follows from the fact that the estimator can achieve the semiparametric efficiency bound.</p>
-<img src="d2ope.png" width="700">
+<a class="reference internal image-reference" href="../../_images/d2ope.png"><img alt="d2ope" class="align-center" src="../../_images/d2ope.png" style="width: 500px;" /></a>
 </div>
 <div class="section" id="demo-todo">
 <h2>Demo [TODO]<a class="headerlink" href="#demo-todo" title="Permalink to this headline">#</a></h2>
@@ -1108,13 +1108,12 @@ The efficiency of this method follows from the fact that the estimator can achie
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">d7635db18706</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 7&gt;</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
 <span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> 
 
-<span class="ne">FileNotFoundError</span>: [WinError 2] The system cannot find the file specified: &#39;../CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;../CausalDM&#39;
 </pre></div>
 </div>
 </div>
@@ -1122,15 +1121,19 @@ The efficiency of this method follows from the fact that the estimator can achie
 </div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
-<ol class="simple">
-<li><p>Shi C, Wan R, Chernozhukov V, et al. Deeply-debiased off-policy interval estimation[C]//International Conference on Machine Learning. PMLR, 2021: 9580-9591.</p></li>
-</ol>
+<div class="docutils container" id="id3">
+<dl class="citation">
+<dt class="label" id="id4"><span class="brackets">SWCS21</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id2">2</a>,<a href="#id19">3</a>)</span></dt>
+<dd><p>Chengchun Shi, Runzhe Wan, Victor Chernozhukov, and Rui Song. Deeply-debiased off-policy interval estimation. In <em>International Conference on Machine Learning</em>, 9580–9591. PMLR, 2021.</p>
+</dd>
+</dl>
+</div>
 </div>
 <div class="section" id="note">
 <h2>Note<a class="headerlink" href="#note" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p>DRL is designed by following the standard approach in semiparametric theory, via first deriving the first-order efficient influence function of <span class="math notranslate nohighlight">\(\eta^{\pi}\)</span> and then constructing the corresponding first-order U-statistic. Our proposal is motivated by the recent breakthroughs on higher-order U-statistics. Specifically, a higher-order U-statistic can be obtained by deriving the higher-order influence functions of <span class="math notranslate nohighlight">\(\eta^{\pi}\)</span>, and for a large class of problems, the estimator yields the same asymptotic distribution with the first-order U-statistic under milder conditions. When <span class="math notranslate nohighlight">\(T = 1\)</span>, our proposal shares similar spirits to the works on minimax optimal estimation for average treatment effects.</p></li>
-<li><p><span class="math notranslate nohighlight">\(\tau^{\pi}\)</span> can be learned from the observed data by solving a minimax problem. See [1] for more details.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\tau^{\pi}\)</span> can be learned from the observed data by solving a minimax problem. See <span id="id19">Shi <em>et al.</em> [<a class="reference internal" href="#id4" title="Chengchun Shi, Runzhe Wan, Victor Chernozhukov, and Rui Song. Deeply-debiased off-policy interval estimation. In International Conference on Machine Learning, 9580–9591. PMLR, 2021.">SWCS21</a>]</span> for more details.</p></li>
 <li><p>Although the proposed estimator is as efficient as DRL in the asymptotic sense, in  finite sample, the variance of our estimator will always be larger than DRL. This is due to the fact that, our estimator, as a higher-order U-statistic, can be decomposed into the sum of some asymptotically uncorrelated terms as <span class="math notranslate nohighlight">\(\eta^{\pi}+\sum_{j=1}^m \widehat{\eta}_j\)</span>,  according to the Hoeffding decomposition. Here, the DRL estimator is asymptotically equivalent to <span class="math notranslate nohighlight">\(\eta^{\pi}+\widehat{\eta}_1\)</span> and <span class="math notranslate nohighlight">\(\widehat{\eta}_j\)</span> corresponds to a <span class="math notranslate nohighlight">\(j\)</span>th order degenerate U-statistic for any <span class="math notranslate nohighlight">\(j\ge 2\)</span>. Therefore, the proposed estimator has additional higher order terms. This fact can be regarded as a bias-variance tradeoff.</p></li>
 </ul>
 </div>
@@ -1149,7 +1152,7 @@ The efficiency of this method follows from the fact that the estimator can achie
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./4_Causal_Policy_Learning\Scenario2"
+            path: "./4_Causal_Policy_Learning/Scenario2"
         },
         predefinedOutput: true
     }

@@ -46,6 +46,7 @@ os.environ["OMP_NUM_THREADS"] = "1"
 # In[2]:
 
 
+
 mimic3_data = pd.read_csv("C:/Users/Public/Causal-Decision-Making/5_Case_Study/MIMIC3/subset_mimic3_sepsis_data.csv")
 mimic3_data.head(6)
 
@@ -56,7 +57,7 @@ mimic3_data.head(6)
 
 
 
-# In[3]:
+# In[ ]:
 
 
 ##### Import Packages 
@@ -105,6 +106,7 @@ est_mt = notears_linear(np.array(sample_demo), lambda1=0, loss_type='l2',w_thres
 # In[ ]:
 
 
+
 plot_mt(est_mt, labels_name=selected, file_name='demo_res_mt')
 
 
@@ -126,7 +128,6 @@ est_mt[5,3] # iv_input -> died_within_48h_of_out_time
 plot_net(est_mt, labels_name=selected, file_name='demo_res_net')
 
 
-
 # In[ ]:
 
 
@@ -134,6 +135,7 @@ plot_net(est_mt, labels_name=selected, file_name='demo_res_net')
 
 
 # In[ ]:
+
 
 
 sum(mimic3_data['cumulated_balance'])/len(mimic3_data)

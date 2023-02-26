@@ -153,11 +153,6 @@ const thebe_selector_output = ".output, .cell_output"
    Causal Inference Preliminary
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../../../1_Preliminary/Heterogenous%20Treatement%20Effect.html">
-   Heterogenous Treatment Effect
-  </a>
- </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -722,12 +717,12 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../../../../5_Case_Study/Case_Study_1.html">
-   MIMIC III
+  <a class="reference internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3-Demo.html">
+   Mimic3 Demo
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../../../5_Case_Study/Case_Study_2.html">
+  <a class="reference internal" href="../../../../5_Case_Study/MovieLens/Case_Study_2.html">
    MovieLens
   </a>
  </li>
@@ -1013,20 +1008,20 @@ title="Print to PDF"
 <h2>Problem Setting<a class="headerlink" href="#problem-setting" title="Permalink to this headline">#</a></h2>
 <p><strong>Standard Offering:</strong> Suppose that, at each round t, we need to recommend at most <span class="math notranslate nohighlight">\(K\)</span> items. In assortment optimization, the agent needs to offer a subset (assortment) <span class="math notranslate nohighlight">\(A_t \in \mathcal{A} = \{A\subseteq[N]:|A|\leq K\}\)</span>, and the customer will then choose either one of them or no-purchase which is denoted as item <span class="math notranslate nohighlight">\(0\)</span>. Let <span class="math notranslate nohighlight">\(\boldsymbol{Y}_t(a)=(Y_{0,t}(a),\cdots,Y_{N,t}(a))^{T}\)</span> be an indicator vector of length <span class="math notranslate nohighlight">\(N+1\)</span>, where <span class="math notranslate nohighlight">\(Y_{i,t}(a)\)</span> equals to <span class="math notranslate nohighlight">\(1\)</span> if the item <span class="math notranslate nohighlight">\(i\)</span> would be chosen if the action <span class="math notranslate nohighlight">\(a\)</span> is offered. Let <span class="math notranslate nohighlight">\(\boldsymbol{\eta} = (\eta_0, \eta_1, \dots,\eta_{N})^{T}\)</span>, where <span class="math notranslate nohighlight">\(\eta_k\)</span> is the revenue of the item <span class="math notranslate nohighlight">\(k\)</span>.  Conventionally, <span class="math notranslate nohighlight">\(\eta_0 = 0\)</span>. The potential revenue that would be collected, if action <span class="math notranslate nohighlight">\(a\)</span> is offered in round <span class="math notranslate nohighlight">\(t\)</span>, is then <span class="math notranslate nohighlight">\(R_t(a) = \sum_{i\in a} Y_{i,t}(a) \eta_{i}\)</span>. In an MNL bandit, each item <span class="math notranslate nohighlight">\(i\)</span> has an utility factor <span class="math notranslate nohighlight">\(v_i\)</span>, and
 the choice behaviour is characterized by a multinomial distribution</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0c452c7e-c302-4945-903f-8316e15f17cb">
-<span class="eqno">(115)<a class="headerlink" href="#equation-0c452c7e-c302-4945-903f-8316e15f17cb" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{MNLdist}
+<div class="amsmath math notranslate nohighlight" id="equation-1deeede8-c07e-4c99-8337-cc085bcf9604">
+<span class="eqno">(116)<a class="headerlink" href="#equation-1deeede8-c07e-4c99-8337-cc085bcf9604" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{MNLdist}
     \boldsymbol{Y}_t(a) \sim Multinomial(1, \frac{v_i \mathcal{I}(i \in \{0\}\cup a)}{1 + \sum_{j \in a} v_i}),
 \end{equation}\]</div>
 <p>with the convention that <span class="math notranslate nohighlight">\(v_0 = 1\)</span>. Note that <span class="math notranslate nohighlight">\(v_{i}\)</span> will be a determined via a deterministic function of the item-specific parameter <span class="math notranslate nohighlight">\(\theta_{i}\)</span>.</p>
 <p><strong>Epoch-type Offering:</strong> Alternatively, since the direct inference under the above MNL model is intractable, an epoch-based algorithmic structure is introduced [4,5,7] for computational efficiency. Specifically, for each epoch <span class="math notranslate nohighlight">\(l\)</span>, we keep offering the same assortment <span class="math notranslate nohighlight">\(A^l\)</span> until the no-purchase appears. Let <span class="math notranslate nohighlight">\(\theta_i = (v_i+1)^{-1}\)</span>. Denote the potential number of purchases for the item <span class="math notranslate nohighlight">\(i \in a\)</span> in each epoch as <span class="math notranslate nohighlight">\(Y_{i}^l(a)\)</span>, if the slate <span class="math notranslate nohighlight">\(a\)</span> is recommended. Under this setup, it is easy to show that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e2bac60c-d70a-40c7-a069-729c279d9668">
-<span class="eqno">(116)<a class="headerlink" href="#equation-e2bac60c-d70a-40c7-a069-729c279d9668" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4cbb40ff-a4e6-49cc-a1b4-23fe1d9c09d6">
+<span class="eqno">(117)<a class="headerlink" href="#equation-4cbb40ff-a4e6-49cc-a1b4-23fe1d9c09d6" title="Permalink to this equation">#</a></span>\[\begin{equation}
     Y_{i}^l(a) \sim Geometric(\theta_i), \forall i \in a,
 \end{equation}\]</div>
 <p>and then the corresponding reward of epoch <span class="math notranslate nohighlight">\(l\)</span> is <span class="math notranslate nohighlight">\(R^l(a) = \sum_{i\in a}Y_{i}^l(a)\eta_{i}\)</span> [4].</p>
 <p>No matter what offering type is employed, for each decision round <span class="math notranslate nohighlight">\(t\)</span>, when <span class="math notranslate nohighlight">\(v_i\)</span>’s are known, the optimal assortment <span class="math notranslate nohighlight">\(A_{t}\)</span> can be determined efficiently through linear programming [4], such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3a002828-06f3-46e8-bd73-94452e6111a6">
-<span class="eqno">(117)<a class="headerlink" href="#equation-3a002828-06f3-46e8-bd73-94452e6111a6" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c7f48f57-9387-4e2c-afa6-827b75fc8fd7">
+<span class="eqno">(118)<a class="headerlink" href="#equation-c7f48f57-9387-4e2c-afa6-827b75fc8fd7" title="Permalink to this equation">#</a></span>\[\begin{equation}
     A_{t} = arg max_{a \in \mathcal{A}} E(R_t(a) \mid\boldsymbol{v})=argmax_{a \in \mathcal{A}} \frac{\sum_{i\in a}\eta_{i}v_{i}}{1+\sum_{j\in a} v_{j}}.
 \end{equation}\]</div>
 </div>
@@ -1090,7 +1085,7 @@ the choice behaviour is characterized by a multinomial distribution</p>
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./4_Causal_Policy_Learning\Scenario4\Structured_Bandits\MNL"
+            path: "./4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL"
         },
         predefinedOutput: true
     }

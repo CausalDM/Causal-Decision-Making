@@ -29,7 +29,7 @@ from lightgbm import LGBMRegressor;
 from sklearn.linear_model import LinearRegression
 
 
-# In[2]:
+# In[ ]:
 
 
 # Get data
@@ -40,14 +40,14 @@ data_CEL_selected.pop(data_CEL_selected.columns[0])
 data_CEL_selected
 
 
-# In[3]:
+# In[ ]:
 
 
 userinfo_index = np.array([0,1,2,4])
 SandA = data_CEL_selected.iloc[:, np.array([0,1,2,3,4])]
 
 
-# In[4]:
+# In[ ]:
 
 
 mu0 = LGBMRegressor(max_depth=3)
@@ -63,7 +63,7 @@ HTE_T_learner = mu1.predict(data_CEL_selected.iloc[:,userinfo_index]) - mu0.pred
 
 # Now let's take a glance at the performance of T-learner by comparing it with the true value for the first 8 subjects:
 
-# In[5]:
+# In[ ]:
 
 
 print("T-learner:  ",HTE_T_learner[0:8])

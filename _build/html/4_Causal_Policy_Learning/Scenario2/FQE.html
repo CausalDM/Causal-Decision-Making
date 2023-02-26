@@ -153,11 +153,6 @@ const thebe_selector_output = ".output, .cell_output"
    Causal Inference Preliminary
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../1_Preliminary/Heterogenous%20Treatement%20Effect.html">
-   Heterogenous Treatment Effect
-  </a>
- </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -722,12 +717,12 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../../5_Case_Study/Case_Study_1.html">
-   MIMIC III
+  <a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3-Demo.html">
+   Mimic3 Demo
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../5_Case_Study/Case_Study_2.html">
+  <a class="reference internal" href="../../5_Case_Study/MovieLens/Case_Study_2.html">
    MovieLens
   </a>
  </li>
@@ -997,13 +992,13 @@ title="Print to PDF"
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="fitted-q-evaluation">
-<h1>Fitted-Q Evaluation<a class="headerlink" href="#fitted-q-evaluation" title="Permalink to this headline">#</a></h1>
+<span id="section-fqe"></span><h1>Fitted-Q Evaluation<a class="headerlink" href="#fitted-q-evaluation" title="Permalink to this headline">#</a></h1>
 <p>The most straightforward approach for OPE is the direct method (DM).
 As suggested by the name,
 methods belonging to this category will first directly impose a model for either the environment or the Q-function, and then learn the model by regarding the task as a regression (or classification) problem, and finally calculate the value of the target policy via a plug-in estimator according to the definition of <span class="math notranslate nohighlight">\(\eta^\pi\)</span>
 The Q-function based approach and the environment-based approach are also called as model-free and  model-based, respectively.</p>
-<p>Among the many model-free DM estimators, we will focus on the most classic one, the fitted-Q evaluation (FQE) [1].
-It is observed to perform consistently well in a large-scale empirical study [2].</p>
+<p>Among the many model-free DM estimators, we will focus on the most classic one, the fitted-Q evaluation (FQE) <span id="id1">[<a class="reference internal" href="#id9" title="Hoang M Le, Cameron Voloshin, and Yisong Yue. Batch policy learning under constraints. arXiv preprint arXiv:1903.08738, 2019.">LVY19</a>]</span>.
+It is observed to perform consistently well in a large-scale empirical study <span id="id2">[<a class="reference internal" href="#id10" title="Cameron Voloshin, Hoang M Le, Nan Jiang, and Yisong Yue. Empirical study of off-policy policy evaluation for reinforcement learning. arXiv preprint arXiv:1911.06854, 2019.">VLJY19</a>]</span>.</p>
 <p><em><strong>Advantages</strong></em>:</p>
 <ol class="simple">
 <li><p>Conceptually simple and easy to implement</p></li>
@@ -1018,16 +1013,16 @@ It is observed to perform consistently well in a large-scale empirical study [2]
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p><strong>Q-function.</strong>
 The Q-function-based approach aims to direct learn the state-action value function (referred to as the Q-function)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0d0260cc-ea98-4907-88d8-e5056cdbe2e2">
-<span class="eqno">(58)<a class="headerlink" href="#equation-0d0260cc-ea98-4907-88d8-e5056cdbe2e2" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-957d0a88-2cad-4fef-a59e-a26d35597019">
+<span class="eqno">(58)<a class="headerlink" href="#equation-957d0a88-2cad-4fef-a59e-a26d35597019" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 Q^\pi(a,s)&amp;= \mathbb{E}^{\pi} (\sum_{t=0}^{+\infty} \gamma^t R_{t}|A_{0}=a,S_{0}=s)   
 \end{eqnarray}\]</div>
 <p>of the policy <span class="math notranslate nohighlight">\(\pi\)</span> that we aim to evaluate.</p>
 <p>The final estimator can then be constructed by plugging <span class="math notranslate nohighlight">\(\hat{Q}^{\pi}\)</span> in the definition <span class="math notranslate nohighlight">\(\eta^{\pi} = \mathbb{E}_{s \sim \mathbb{G}, a \sim \pi(\cdot|s)} Q^{\pi}(a, s)\)</span>.</p>
 <p><strong>Bellman equations.</strong>
 The Q-learning-type evaluation is commonly based on the Bellman equation for the Q-function of a given policy <span class="math notranslate nohighlight">\(\pi\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-969f3eff-a357-4934-9cb8-1b7d893302d1">
-<span class="eqno">(59)<a class="headerlink" href="#equation-969f3eff-a357-4934-9cb8-1b7d893302d1" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
+<div class="amsmath math notranslate nohighlight" id="equation-97553793-edaf-4720-8a9d-3a14b142e0c9">
+<span class="eqno">(59)<a class="headerlink" href="#equation-97553793-edaf-4720-8a9d-3a14b142e0c9" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
     Q^\pi(a, s) = \mathbb{E}^\pi \Big(R_t + \gamma Q^\pi(A_{t + 1}, S_{t+1})  | A_t = a, S_t = s \Big).  \;\;\;\;\; \text{(1)} 
 \end{equation}\]</div>
 <p><strong>FQE.</strong>
@@ -1036,8 +1031,8 @@ Besides, the right-hand side of (1) is a contraction mapping.
 Therefore, we can consider a fixed-point method:
 with an initial estimate <span class="math notranslate nohighlight">\(\widehat{Q}^{0}\)</span>,
 FQE iteratively solves the following optimization problem,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c229987a-5442-4507-92fc-06a28b739cf9">
-<span class="eqno">(60)<a class="headerlink" href="#equation-c229987a-5442-4507-92fc-06a28b739cf9" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-57c9634d-49e7-46cf-8222-628b05b0d14f">
+<span class="eqno">(60)<a class="headerlink" href="#equation-57c9634d-49e7-46cf-8222-628b05b0d14f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 	\widehat{Q}^{{\ell}}=\arg \min_{Q} 
 	\sum_{\substack{i \le n}}\sum_{t&lt;T}
 	\Big\{
@@ -1065,12 +1060,12 @@ The final estimator is denoted as <span class="math notranslate nohighlight">\(\
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">74</span><span class="n">c57ea9d893</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 7&gt;</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
 <span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
 
-<span class="ne">FileNotFoundError</span>: [WinError 2] The system cannot find the file specified: &#39;../CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;../CausalDM&#39;
 </pre></div>
 </div>
 </div>
@@ -1078,8 +1073,16 @@ The final estimator is denoted as <span class="math notranslate nohighlight">\(\
 </div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
-<p>[1] Le, H. M., Voloshin, C., and Yue, Y. Batch policy learning under constraints. arXiv preprint arXiv:1903.08738, 2019.</p>
-<p>[2] Voloshin C, Le H M, Jiang N, et al. Empirical study of off-policy policy evaluation for reinforcement learning[J]. arXiv preprint arXiv:1911.06854, 2019.</p>
+<div class="docutils container" id="id3">
+<dl class="citation">
+<dt class="label" id="id9"><span class="brackets"><a class="fn-backref" href="#id1">LVY19</a></span></dt>
+<dd><p>Hoang M Le, Cameron Voloshin, and Yisong Yue. Batch policy learning under constraints. <em>arXiv preprint arXiv:1903.08738</em>, 2019.</p>
+</dd>
+<dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id2">VLJY19</a></span></dt>
+<dd><p>Cameron Voloshin, Hoang M Le, Nan Jiang, and Yisong Yue. Empirical study of off-policy policy evaluation for reinforcement learning. <em>arXiv preprint arXiv:1911.06854</em>, 2019.</p>
+</dd>
+</dl>
+</div>
 </div>
 </div>
 
@@ -1096,7 +1099,7 @@ The final estimator is denoted as <span class="math notranslate nohighlight">\(\
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./4_Causal_Policy_Learning\Scenario2"
+            path: "./4_Causal_Policy_Learning/Scenario2"
         },
         predefinedOutput: true
     }

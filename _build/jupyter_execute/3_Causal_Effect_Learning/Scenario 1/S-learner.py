@@ -36,7 +36,7 @@ from sklearn.linear_model import LinearRegression
 
 # ### Mimic3 Data
 
-# In[2]:
+# In[ ]:
 
 
 # Get data
@@ -47,14 +47,14 @@ data_CEL_selected.pop(data_CEL_selected.columns[0])
 data_CEL_selected
 
 
-# In[3]:
+# In[ ]:
 
 
 userinfo_index = np.array([0,1,2,4])
 SandA = data_CEL_selected.iloc[:, np.array([0,1,2,3,4])]
 
 
-# In[4]:
+# In[ ]:
 
 
 # S-learner
@@ -64,7 +64,7 @@ S_learner = LGBMRegressor(max_depth=5)
 S_learner.fit(SandA, data_CEL_selected['reward'])
 
 
-# In[5]:
+# In[ ]:
 
 
 SandA_all1 = SandA.copy()
@@ -75,19 +75,19 @@ SandA_all0.iloc[:,3]=np.zeros(n)
 HTE_S_learner = S_learner.predict(SandA_all1) - S_learner.predict(SandA_all0)
 
 
-# In[6]:
+# In[ ]:
 
 
 S_learner.predict(np.array([100,200,1000,1,5]).reshape(1, -1))
 
 
-# In[7]:
+# In[ ]:
 
 
 S_learner.predict(np.array([100,200,1000,0,5]).reshape(1, -1))
 
 
-# In[8]:
+# In[ ]:
 
 
 S_learner.predict(np.array([0,0,1000,0,5]).reshape(1, -1))
@@ -95,7 +95,7 @@ S_learner.predict(np.array([0,0,1000,0,5]).reshape(1, -1))
 
 # Let's focus on the estimated HTEs for the first 8 patients:
 
-# In[9]:
+# In[ ]:
 
 
 print("S-learner:  ",HTE_S_learner[0:8])

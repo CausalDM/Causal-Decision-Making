@@ -18,9 +18,10 @@
 # 1. Short horizon
 # 2. Sufficient policy match between the behaviour policy and the target policy. 
 # 
-# ## Main Idea
 # 
-# IS estimates the value by reweighting the observed rewards with importance ratios between the target and behavior policy [1]. For simplicity, we assume the behaviour policy $b$ is known. 
+# (section:IPW_RL_main_idea)=
+# ## Main Idea
+# IS estimates the value by reweighting the observed rewards with importance ratios between the target and behavior policy {cite:p}`precup2000eligibility`. For simplicity, we assume the behaviour policy $b$ is known. 
 # 
 # To begin with, for every trajectory index $i$ and any $t \in \{0, 1, \dots, T - 1\}$, we define the $t$-step cumulative **importance ratio** between the target policy $\pi$ and the behaviour policy $b$ as 
 # \begin{align*}
@@ -28,24 +29,27 @@
 # \end{align*}
 # Since the transition and reward generation probabilities are shared  between both policies, this ratio is equal to the probability ratio of observing the $i$th trajectory until time point $t$. 
 # 
-# The standard **(trajectory-wise) IS** estimator [2] regards each trajectory (and the corresponding observed cumulative reward, $\sum_{t=0}^{T-1} \gamma^t R_{i,t}$) as one realization, and it estimates $\eta^{\pi}$ by 
+# The standard **(trajectory-wise) IS** estimator {cite:p}`thomas2015safe`
+#  regards each trajectory (and the corresponding observed cumulative reward, $\sum_{t=0}^{T-1} \gamma^t R_{i,t}$) as one realization, and it estimates $\eta^{\pi}$ by 
 # \begin{align}\label{eqn:IS}
 #     \hat{\eta}^{\pi}_{IS} = \frac{1}{n} \sum_{i=1}^n \rho^i_T (\sum_{t=0}^{T-1} \gamma^t R_{i,t}). 
 # \end{align}
 # 
-# In contrast, the **step-wise IS** [2]  focuses on reweighting each immediate reward $R_{i,t}$ and typically yields a lower variance than the trajectory-wise IS. It is defined as 
+# In contrast, the **step-wise IS** {cite:p}`thomas2015safe`
+#   focuses on reweighting each immediate reward $R_{i,t}$ and typically yields a lower variance than the trajectory-wise IS. It is defined as 
 # \begin{align}\label{eqn:stepIS}
 #     \hat{\eta}^{\pi}_{StepIS} = \frac{1}{n} \sum_{i=1}^n \Big[ \sum_{t=0}^{T-1} \rho^i_t  \gamma^t R_{i,t} \Big]. 
 # \end{align}
 # 
-# In addition to these two IS-type estimators, their **self-normalized variants** are also commonly considered [3]. 
+# In addition to these two IS-type estimators, their **self-normalized variants** are also commonly considered {cite:p}`jiang2016doubly`. 
 # Specifically, we can define the normalization factor $\bar{\rho}_t = N^{-1} \sum_{i=1}^N \rho^i_t$, and replace the $\rho^i_t$ term by $\rho^i_t / \bar{\rho}_t$. 
 # The resulting estimators are biased but consistent, and they generally yield lower variance than their counterparts. 
 # This comparison reflects the bias-variance trade-off. 
 
 # ## Breaking the curse of horizon with stationary distribution
 # 
-# Traditional IS methods (and related DR methods) have exponential variance with the number of steps and hence will soon become unstable when the trajectory is long.  To avoid this issue,  [4] made an important step forward by proposing to utilize the stationary distributions of the Markov process to marginalize the importance ratio. We need to assume the stationarity assumption (SA), that the state process $\{S_{i,t}\}_{t \ge 0}$ is strictly stationary. 
+# Traditional IS methods (and related DR methods) have exponential variance with the number of steps and hence will soon become unstable when the trajectory is long.  To avoid this issue,  {cite:t}`liu2018breaking`
+#  made an important step forward by proposing to utilize the stationary distributions of the Markov process to marginalize the importance ratio. We need to assume the stationarity assumption (SA), that the state process $\{S_{i,t}\}_{t \ge 0}$ is strictly stationary. 
 # 
 # 
 # Let $p_b(s)$ and  $p_b(s, a)$ denote the stationary density function of the state and the state-action pair under the policy $b$, respectively.
@@ -74,15 +78,11 @@ os.chdir('..')
 os.chdir('../CausalDM')
 
 
-
 # ## References
-# [1] Precup D. Eligibility traces for off-policy policy evaluation[J]. Computer Science Department Faculty Publication Series, 2000: 80.
 # 
-# [2] Thomas P S. Safe reinforcement learning[J]. 2015.
-# 
-# [3] Jiang N, Li L. Doubly robust off-policy value evaluation for reinforcement learning[C]//International Conference on Machine Learning. PMLR, 2016: 652-661.
-# 
-# [4] Liu Q, Li L, Tang Z, et al. Breaking the curse of horizon: Infinite-horizon off-policy estimation[J]. Advances in Neural Information Processing Systems, 2018, 31.
+# ```{bibliography}
+# :filter: docname in docnames
+# ```
 
 # ## Note
 # 1. When the behaviour policy is unknown, we can estimate it from data by regarding the task as a classification problem and using methods such as logistic regression. 

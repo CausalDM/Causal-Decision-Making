@@ -148,12 +148,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../../../../1_Preliminary/Causal%20Inference%20Preliminary.html">
-   Average Treatment Effect
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../../../1_Preliminary/Heterogenous%20Treatement%20Effect.html">
-   Heterogenous Treatment Effect
+   Causal Inference Preliminary
   </a>
  </li>
 </ul>
@@ -192,7 +187,9 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../../../3_Causal_Effect_Learning/Scenario%201/Single%20Stage.html">
-   Single Stage
+   <strong>
+    Single Stage
+   </strong>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -718,12 +715,12 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../../../../5_Case_Study/Case_Study_1.html">
-   MIMIC III
+  <a class="reference internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3-Demo.html">
+   Mimic3 Demo
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../../../5_Case_Study/Case_Study_2.html">
+  <a class="reference internal" href="../../../../5_Case_Study/MovieLens/Case_Study_2.html">
    MovieLens
   </a>
  </li>
@@ -1017,8 +1014,8 @@ title="Print to PDF"
 <div class="section" id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>As the name suggested, the UCB algorithm estimates the upper confidence bound <span class="math notranslate nohighlight">\(U_{i}^{t}\)</span> of the mean rewards based on the observations and then choose the action has the highest estimates. The class of UCB-based algorithms is firstly introduced by Auer et al. [2]. Generally, at each round <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(U_{i}^{t}\)</span> is calculated as the sum of the estimated reward (exploitation) and the estimated confidence radius (exploration) of item <span class="math notranslate nohighlight">\(i\)</span> based on <span class="math notranslate nohighlight">\(\mathcal{H}_{t}\)</span>. Then, <span class="math notranslate nohighlight">\(A_{t}\)</span> is selected as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6b09f6b5-bcab-4139-b2f6-8ecd49cf1a3a">
-<span class="eqno">()<a class="headerlink" href="#equation-6b09f6b5-bcab-4139-b2f6-8ecd49cf1a3a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1007ecae-8d75-46a5-9d84-920c8838778e">
+<span class="eqno">()<a class="headerlink" href="#equation-1007ecae-8d75-46a5-9d84-920c8838778e" title="Permalink to this equation">#</a></span>\[\begin{equation}
     A_t = argmax_{a \in \mathcal{A}} E(R_t \mid a,\{ U_{i}^{t}\}_{i=1}^{N}).
 \end{equation}\]</div>
 <p>Doing so, either the item with a large average reward or the item with limited exploration will be selected.</p>
@@ -1026,13 +1023,13 @@ title="Print to PDF"
 <div class="section" id="algorithms-details">
 <h2>Algorithms Details<a class="headerlink" href="#algorithms-details" title="Permalink to this headline">#</a></h2>
 <p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. The UCB1 algorithm start with initializing the estimated upper confidence bound <span class="math notranslate nohighlight">\(U_a^{0}\)</span> and the count of being pulled <span class="math notranslate nohighlight">\(C_a^{0}\)</span> for each action <span class="math notranslate nohighlight">\(a\)</span> as 0. At each round <span class="math notranslate nohighlight">\(t\)</span>, we greedily select an action <span class="math notranslate nohighlight">\(A_t\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a2bd866e-c1c8-4b16-9563-35b60c7fb585">
-<span class="eqno">()<a class="headerlink" href="#equation-a2bd866e-c1c8-4b16-9563-35b60c7fb585" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b168c7f7-6ead-4902-9a53-e43fe4c3fcff">
+<span class="eqno">()<a class="headerlink" href="#equation-b168c7f7-6ead-4902-9a53-e43fe4c3fcff" title="Permalink to this equation">#</a></span>\[\begin{align}
 A_t = arg max_{a\in \mathcal{A}} U_{a}^{t}.
 \end{align}\]</div>
 <p>After observing the rewards corresponding to the selected action <span class="math notranslate nohighlight">\(A_t\)</span>, we first update the total number of being pulled for <span class="math notranslate nohighlight">\(A_t\)</span> accordingly. Then, we estimate the upper confidence bound for each action <span class="math notranslate nohighlight">\(a\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b2913d79-593b-493b-8d83-38607c8fd164">
-<span class="eqno">()<a class="headerlink" href="#equation-b2913d79-593b-493b-8d83-38607c8fd164" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-89636fdb-b131-45ac-8385-748f52979959">
+<span class="eqno">()<a class="headerlink" href="#equation-89636fdb-b131-45ac-8385-748f52979959" title="Permalink to this equation">#</a></span>\[\begin{align}
 U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} 
 \end{align}\]</div>
 </div>
@@ -1043,8 +1040,8 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 <li><p>For t = <span class="math notranslate nohighlight">\(0, 1,\cdots, T\)</span>:</p>
 <p>2.1. select action <span class="math notranslate nohighlight">\(A_t\)</span> as the arm with the maximum <span class="math notranslate nohighlight">\(U_a^t\)</span></p>
 <p>2.2. Received the reward R, and update <span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(U\)</span> with</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fa35a809-508a-4086-b9ec-c25f29e5abb0">
-<span class="eqno">()<a class="headerlink" href="#equation-fa35a809-508a-4086-b9ec-c25f29e5abb0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8c306a0f-9eca-407f-a63f-92ba143faa6d">
+<span class="eqno">()<a class="headerlink" href="#equation-8c306a0f-9eca-407f-a63f-92ba143faa6d" title="Permalink to this equation">#</a></span>\[\begin{align}
     C_{A_{t}}^{t+1} &amp;= C_{A_{t}}^{t} + 1 \\
     U_{A_{t}}^{t+1} &amp;= \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} 
     \end{align}\]</div>
@@ -1068,21 +1065,20 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">e48b8638d1cf</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 6&gt;</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">os</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="c1"># code used to import the learner</span>
 
-<span class="ne">FileNotFoundError</span>: [WinError 3] The system cannot find the path specified: &#39;/nas/longleaf/home/lge/CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;/nas/longleaf/home/lge/CausalDM&#39;
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Single</span> <span class="k">import</span> <span class="n">UCB1</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Single</span> <span class="k">import</span> <span class="n">Env</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Single</span> <span class="kn">import</span> <span class="n">UCB1</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Single</span> <span class="kn">import</span> <span class="n">Env</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </pre></div>
 </div>
@@ -1148,7 +1144,7 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./4_Causal_Policy_Learning\Scenario4\_old_docs(to delete)\Single"
+            path: "./4_Causal_Policy_Learning/Scenario4/_old_docs(to delete)/Single"
         },
         predefinedOutput: true
     }

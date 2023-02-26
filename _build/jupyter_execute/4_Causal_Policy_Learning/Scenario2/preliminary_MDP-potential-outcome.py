@@ -3,12 +3,12 @@
 
 # # Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes
 # In this section, we introduce the formulation of the Markov Decision Process and a few related concepts which will be used repeatedly in this chapter. 
-# We will proceed under the potential outcome framework, which provides a unique causal perspectiy, is different from the conventional notations [2], and is largely based on [3]. 
+# We will proceed under the potential outcome framework, which provides a unique causal perspectiy, is different from the conventional notations {cite:p}`sutton2018reinforcement`, and is largely based on {cite:t}`shi2020reinforcement`. 
 # Some of the assumptions to be discussed (such as the sequential randomization assumption) are imposed implicitly in the RL literature. 
 # By writting these assumptions out, we aim to provide a more formal theoretical ground as well as to connect RL to the causal inference literautre. 
 
 # ### Markov Decision Process under a Potential Outcome Framework 
-# As the underlying data generation model for RL, we consider an infinite-horizon discounted Markov Decision Process (MDP) [1]. 
+# As the underlying data generation model for RL, we consider an infinite-horizon discounted Markov Decision Process (MDP) {cite:p}`puterman2014markov`. 
 # For any $t\ge 0$, let $\bar{a}_t=(a_0,a_1,\cdots,a_t)^\top\in \mathcal{A}^{t+1}$ denote a treatment history vector up to time $t$. Let $\mathbb{S} \subset \mathbb{R}^d$ denote the support of state variables and $S_0$ denote the initial state variable. 
 # For any $(\bar{a}_{t-1},\bar{a}_{t})$, let $S_{t}^*(\bar{a}_{t-1})$ and $Y_t^*(\bar{a}_t)$ be the counterfactual state and counterfactual outcome, respectively,  that would occur at time $t$ had the agent followed the treatment history $\bar{a}_{t}$. 
 # The set of potential outcomes up to time $t$ is given by
@@ -24,7 +24,7 @@
 # \begin{eqnarray*}
 # 	V^{\pi}(s)=\sum_{t\ge 0} \gamma^t \mathbb{E} \{Y_t^*(\pi)|S_0=s\},
 # \end{eqnarray*}
-# where $0<\gamma<1$ is a discount factor that reflects the trade-off between immediate and future outcomes. The value function measures the discounted cumulative outcome that the agent would receive had they followed $\pi$. Note that our definition of the value function is slightly different from those in the existing literature [2]. Specifically, $V(\pi;s)$ is defined through potential outcomes rather than the observed data. 
+# where $0<\gamma<1$ is a discount factor that reflects the trade-off between immediate and future outcomes. The value function measures the discounted cumulative outcome that the agent would receive had they followed $\pi$. Note that our definition of the value function is slightly different from those in the existing literature {cite:p}`sutton2018reinforcement`. Specifically, $V(\pi;s)$ is defined through potential outcomes rather than the observed data. 
 # 
 # Similarly, we define the Q function by
 # \begin{eqnarray*}
@@ -44,7 +44,7 @@
 # 
 # They assume (i) the process is statioanry, and (ii) the state variables shall be chosen to include those that serve as important mediators between past treatments and current outcomes. 
 # These two conditions are central to the empirical validity of most RL algorithms. 
-# Specifically, under these two conditions, one can show that there exists an optimal time-homogenous stationary policy whose value is no worse than any history-dependent policy [1]. 
+# Specifically, under these two conditions, one can show that there exists an optimal time-homogenous stationary policy whose value is no worse than any history-dependent policy {cite:p}`puterman2014markov`. 
 
 # ## Off-policy Evaluation and Optimization
 # 
@@ -88,10 +88,8 @@
 # As such, $\mathcal{P}$ corresponds to the transition function that defines the next state distribution conditional on the current state-action pair and $r$ corresponds to the conditional expectation of the immediate reward as a function of the state-action pair. 
 # In this chapter, we may use both the potential outcomes and the observed variables interchangeably. 
 
-# ## Reference
+# ## References
 # 
-# [1] Puterman M L. Markov decision processes: discrete stochastic dynamic programming[M]. John Wiley & Sons, 2014.
-# 
-# [2] Sutton R S, Barto A G. Reinforcement learning: An introduction[M]. MIT press, 2018.
-# 
-# [3] Shi C, Wang X, Luo S, et al. A Reinforcement Learning Framework for Time-Dependent Causal Effects Evaluation in A/B Testing[J]. arXiv preprint arXiv:2002.01711, 2020.
+# ```{bibliography}
+# :filter: docname in docnames
+# ```

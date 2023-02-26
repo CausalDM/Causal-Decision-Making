@@ -148,12 +148,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Causal%20Inference%20Preliminary.html">
-   Average Treatment Effect
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Heterogenous%20Treatement%20Effect.html">
-   Heterogenous Treatment Effect
+   Causal Inference Preliminary
   </a>
  </li>
 </ul>
@@ -192,7 +187,9 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/Single%20Stage.html">
-   Single Stage
+   <strong>
+    Single Stage
+   </strong>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -718,12 +715,12 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../5_Case_Study/Case_Study_1.html">
-   MIMIC III
+  <a class="reference internal" href="../5_Case_Study/MIMIC3/MIMIC3-Demo.html">
+   Mimic3 Demo
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../5_Case_Study/Case_Study_2.html">
+  <a class="reference internal" href="../5_Case_Study/MovieLens/Case_Study_2.html">
    MovieLens
   </a>
  </li>
@@ -1064,24 +1061,24 @@ title="Print to PDF"
 <ul class="simple">
 <li><p>SUTVA (stable unit treatment value assumption)</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-6e627608-6c2a-44bf-bd92-f16af2e0f39e">
-<span class="eqno">()<a class="headerlink" href="#equation-6e627608-6c2a-44bf-bd92-f16af2e0f39e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-660b1db0-48e5-4105-9451-2d922f2604c3">
+<span class="eqno">()<a class="headerlink" href="#equation-660b1db0-48e5-4105-9451-2d922f2604c3" title="Permalink to this equation">#</a></span>\[\begin{align}
 Y_i = Y_i^*(1) T_i + Y_i^*(0) (1-T_i), i = 1, \cdots, n.
 \end{align}\]</div>
 <p>That is, the actual response that is observed for the <span class="math notranslate nohighlight">\(i\)</span>-th individual in our sample, <span class="math notranslate nohighlight">\(Y_i\)</span>, who received treatment <span class="math notranslate nohighlight">\(T_i\)</span>, is the same as the potential outcome for that assigned treatment regardless of the experimental conditions used to assign treatment. This assumption also indicates that there are not any interference between subjects in the population, that is, the observed response for any individual is not affected by the responses of other individuals</p>
 <ul class="simple">
 <li><p>No Unmeasured Confounders (Strong Ignorability)</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-6fc7be6f-eac5-4872-bfd4-43e498cd29fa">
-<span class="eqno">()<a class="headerlink" href="#equation-6fc7be6f-eac5-4872-bfd4-43e498cd29fa" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6410a929-c463-4c1b-8865-8d781458ea33">
+<span class="eqno">()<a class="headerlink" href="#equation-6410a929-c463-4c1b-8865-8d781458ea33" title="Permalink to this equation">#</a></span>\[\begin{align}
 \{Y^*(0), Y^*(1)\} \perp\!\!\!\perp T|X
 \end{align}\]</div>
 <p>We cannot use the data in an observational study to either confirm or refute this assumption. However, if we believe that <span class="math notranslate nohighlight">\(X\)</span> contained all the relevant information about the treatment assignment, then it will be reasonable to make the above assumption.</p>
 <ul class="simple">
 <li><p>Positivity Assumption</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-bda8f619-3fab-4dbe-b268-0abade2bf799">
-<span class="eqno">()<a class="headerlink" href="#equation-bda8f619-3fab-4dbe-b268-0abade2bf799" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-63e83278-058a-4502-b9d3-741ec3974c0b">
+<span class="eqno">()<a class="headerlink" href="#equation-63e83278-058a-4502-b9d3-741ec3974c0b" title="Permalink to this equation">#</a></span>\[\begin{align}
 0 &lt; P(T=1|X=x) &lt; 1
 \end{align}\]</div>
 <p>This assumption ensures that for any given individual in treatment group <span class="math notranslate nohighlight">\(1\)</span>, we are able to find a similar individual in treatment group <span class="math notranslate nohighlight">\(0\)</span>, and vice versa.</p>
@@ -1093,52 +1090,52 @@ There are two general approaches to deriving estimators for the average causal t
 <div class="section" id="outcome-regression-models">
 <h3>Outcome Regression Models<a class="headerlink" href="#outcome-regression-models" title="Permalink to this headline">#</a></h3>
 <p>The use of outcome regression modeling to estimate the average causal treatment effect from observational data under the assumption of no unmeasured confouners and SUTVA comes from the following consideration:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ae7ec547-4006-4e7f-b499-da0ff9d4072f">
-<span class="eqno">()<a class="headerlink" href="#equation-ae7ec547-4006-4e7f-b499-da0ff9d4072f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c9d6ac17-c8d5-45d1-93db-7cab6c57ebdd">
+<span class="eqno">()<a class="headerlink" href="#equation-c9d6ac17-c8d5-45d1-93db-7cab6c57ebdd" title="Permalink to this equation">#</a></span>\[\begin{align}
 E[Y^*(1)] &amp;= E_x [E\{Y^*(1)|X\}] \\
 &amp;= E_x[E\{Y^*(1)|T=1, X\}] \quad \text{No Unmeasured Confounders}\\
 &amp;= E_x[E\{Y|T=1, X\}] \quad \text{SUTVA}
 \end{align}\]</div>
 <p>Similarly, we can show that <span class="math notranslate nohighlight">\(E[Y^*(0)] = E_x[E\{Y|T=0, X\}].\)</span>
 Hence, the average causal treatment effect</p>
-<div class="amsmath math notranslate nohighlight" id="equation-23a69b90-9632-4ae8-a49b-4b550b82abc3">
-<span class="eqno">()<a class="headerlink" href="#equation-23a69b90-9632-4ae8-a49b-4b550b82abc3" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-669b8ef6-d049-44fe-8f20-a74086a05f4d">
+<span class="eqno">()<a class="headerlink" href="#equation-669b8ef6-d049-44fe-8f20-a74086a05f4d" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{ATE} = E_x[E\{Y|T=1, X\}] - E_x[E\{Y|T=0, X\}]
 \end{align}\]</div>
 <p>We can posit a model for <span class="math notranslate nohighlight">\(E[Y|T, X] = \mu(X, T;\gamma)\)</span>, and estimate the parameter <span class="math notranslate nohighlight">\(\gamma\)</span> via MLE or least square estimation. Then,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f399d21e-0bbc-4219-9b13-199d95ed9c26">
-<span class="eqno">()<a class="headerlink" href="#equation-f399d21e-0bbc-4219-9b13-199d95ed9c26" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6b1f070c-7c19-47a7-9dc8-9b26c9f0b73b">
+<span class="eqno">()<a class="headerlink" href="#equation-6b1f070c-7c19-47a7-9dc8-9b26c9f0b73b" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{\text{ATE}} = n^{-1}\sum_{i=1}^n \{\mu(X_i, 1;\hat{\gamma}) - \mu(X_i, 0; \hat{\gamma})\}
 \end{align}\]</div>
 </div>
 <div class="section" id="propensity-score">
 <h3>Propensity Score<a class="headerlink" href="#propensity-score" title="Permalink to this headline">#</a></h3>
 <p>Another class of estimators for the average causal treatment effect uses propensity score, defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-78d93b20-b9cd-4600-9b29-cb6a105c30cc">
-<span class="eqno">()<a class="headerlink" href="#equation-78d93b20-b9cd-4600-9b29-cb6a105c30cc" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-63f438ea-d93d-41a6-8617-0286aed9c25b">
+<span class="eqno">()<a class="headerlink" href="#equation-63f438ea-d93d-41a6-8617-0286aed9c25b" title="Permalink to this equation">#</a></span>\[\begin{align}
 \pi(X) = P(T=1|X)
 \end{align}\]</div>
 <p>in the case where there are two treatments. It refers to the propensity of getting one of the treatments as a function of the covariates. One of the attractive features of the propensity score, that makes it useful for causal inference follows from the fact that given the <code class="docutils literal notranslate"><span class="pre">SUTVA</span></code> and <code class="docutils literal notranslate"><span class="pre">strong</span> <span class="pre">ignorability</span></code> assumptions, then</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5a806f44-3dcc-4b95-bda3-290b96eaf2ca">
-<span class="eqno">()<a class="headerlink" href="#equation-5a806f44-3dcc-4b95-bda3-290b96eaf2ca" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-af7d4f23-5424-40ca-bfa6-beca2e7eb74f">
+<span class="eqno">()<a class="headerlink" href="#equation-af7d4f23-5424-40ca-bfa6-beca2e7eb74f" title="Permalink to this equation">#</a></span>\[\begin{align}
 \{Y^*(1), Y^*(0)\} \perp\!\!\!\perp T|\pi(X)
 \end{align}\]</div>
 <p>It may be difficult to build an outcome regression model for <span class="math notranslate nohighlight">\(E[Y|T, X]\)</span> if <span class="math notranslate nohighlight">\(X\)</span> is high dimensional, however, based on the above result, we can simply build models for <span class="math notranslate nohighlight">\(E[Y|T, \pi(X)]\)</span>.</p>
 <div class="section" id="stratification">
 <h4>Stratification<a class="headerlink" href="#stratification" title="Permalink to this headline">#</a></h4>
 <p>Rubin suggested the following to estimate ATE. Stratify the observations into groups based on the value of the estimated propensity scores <span class="math notranslate nohighlight">\(\hat{\pi}(X_i), i=1, \cdots, n\)</span>. That is, choose cutoff values,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aa977859-f08a-4ec5-a538-727736cb6b4d">
-<span class="eqno">()<a class="headerlink" href="#equation-aa977859-f08a-4ec5-a538-727736cb6b4d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-774f302e-17df-402e-94bc-dd1c78bba0c0">
+<span class="eqno">()<a class="headerlink" href="#equation-774f302e-17df-402e-94bc-dd1c78bba0c0" title="Permalink to this equation">#</a></span>\[\begin{align}
 0 = C_0 &lt; C_1 &lt; \cdots &lt; C_K = 1,
 \end{align}\]</div>
 <p>then individual <span class="math notranslate nohighlight">\(i\)</span> belongs to group <span class="math notranslate nohighlight">\(k\)</span> if</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ce25e1cd-3170-42a0-9830-5a62b20d1a27">
-<span class="eqno">()<a class="headerlink" href="#equation-ce25e1cd-3170-42a0-9830-5a62b20d1a27" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-64ed8bae-34a8-4489-931b-82e97681f26d">
+<span class="eqno">()<a class="headerlink" href="#equation-64ed8bae-34a8-4489-931b-82e97681f26d" title="Permalink to this equation">#</a></span>\[\begin{align}
 C_{k-1} &lt; \hat{\pi}(X_i) \le C_k, k=1, \cdots, K,
 \end{align}\]</div>
 <p>then</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e739a370-c07a-4e8d-9708-d02d4907b44f">
-<span class="eqno">()<a class="headerlink" href="#equation-e739a370-c07a-4e8d-9708-d02d4907b44f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7ec19181-fab7-4062-a7f2-e3737301bcd9">
+<span class="eqno">()<a class="headerlink" href="#equation-7ec19181-fab7-4062-a7f2-e3737301bcd9" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{ATE} = \sum_{k=1}^K (\bar{Y}_{1k} - \bar{Y}_{0k}) n_k /n
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\hat{Y}_{1k}, \hat{Y}_{0k}\)</span> are the sample average responses among individuals in the <span class="math notranslate nohighlight">\(k-\)</span>th group receiving treatments <span class="math notranslate nohighlight">\(1\)</span> and <span class="math notranslate nohighlight">\(0\)</span> respectively, and <span class="math notranslate nohighlight">\(n_k\)</span> is the number of individuals from both treatments in the <span class="math notranslate nohighlight">\(k-\)</span>th group.</p>
@@ -1147,18 +1144,18 @@ C_{k-1} &lt; \hat{\pi}(X_i) \le C_k, k=1, \cdots, K,
 <h4>Inverse Propensity Score Weighting<a class="headerlink" href="#inverse-propensity-score-weighting" title="Permalink to this headline">#</a></h4>
 <p>Another class of estimators with a more theoretical justification coming from semiparametric theory uses the inverse propensity score estimator and augmented inverse propensity score estimator for the average causal treatment effect.</p>
 <p>The motivation of IPW is as follows. Since the propensity (probability) of receiving treatment <span class="math notranslate nohighlight">\(1\)</span> is <span class="math notranslate nohighlight">\(\pi(X)\)</span> for an individual with baseline covariates <span class="math notranslate nohighlight">\(X\)</span>, then every individual with covariates <span class="math notranslate nohighlight">\(X_i\)</span> that was observed to receive treatment 1 in our sample is weighted by <span class="math notranslate nohighlight">\(1/\pi(X_i)\)</span> so that their response not only represent themselves but also other individuals who did not receive treatment 1. More formally, we will show that <span class="math notranslate nohighlight">\(\frac{TY}{\pi(X)}\)</span> is an unbiased estimator of <span class="math notranslate nohighlight">\(E[Y^*(1)]\)</span>. This follows that, given the <code class="docutils literal notranslate"><span class="pre">positivity</span></code> assumption,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5a1668b0-c8a1-4036-8766-e06bd9104d4b">
-<span class="eqno">()<a class="headerlink" href="#equation-5a1668b0-c8a1-4036-8766-e06bd9104d4b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5da16902-d16b-4e85-81d2-1f44483f1a03">
+<span class="eqno">()<a class="headerlink" href="#equation-5da16902-d16b-4e85-81d2-1f44483f1a03" title="Permalink to this equation">#</a></span>\[\begin{align}
 E\left[\frac{TY}{\pi(X)}\right] = E\left[\frac{TY^*(1)}{\pi(X)}\right] = E\left[E\left\{\frac{TY^*(1)}{\pi(X)}|X\right\}\right] = E\left[E\left\{\frac{T}{\pi(X)}|X\right\}Y^*(1)\right] = E[Y^*(1)].
 \end{align}\]</div>
 <p>Similarly, we have</p>
-<div class="amsmath math notranslate nohighlight" id="equation-47f7a4a6-52d1-426c-b503-cd5af5400221">
-<span class="eqno">()<a class="headerlink" href="#equation-47f7a4a6-52d1-426c-b503-cd5af5400221" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d3d418a7-5616-498f-8ffc-226dfe2945bd">
+<span class="eqno">()<a class="headerlink" href="#equation-d3d418a7-5616-498f-8ffc-226dfe2945bd" title="Permalink to this equation">#</a></span>\[\begin{align}
 E[Y^*(0)] = E\left[\frac{(1-T)Y}{1-\pi(X)} \right],
 \end{align}\]</div>
 <p>Consequently, then another unbiased estimator for the average causal treatment effect would be</p>
-<div class="amsmath math notranslate nohighlight" id="equation-11ff52eb-0a10-4534-b25d-cab7b8dcdaaa">
-<span class="eqno">()<a class="headerlink" href="#equation-11ff52eb-0a10-4534-b25d-cab7b8dcdaaa" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-095d88cb-a780-4732-a616-da19ffe37a5c">
+<span class="eqno">()<a class="headerlink" href="#equation-095d88cb-a780-4732-a616-da19ffe37a5c" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{\text{ATE}} = n^{-1}\sum_{i=1}^n \left\{\frac{T_iY_i}{\pi(X_i)}  - \frac{(1-T_i)Y_i}{1-\pi(X_i)}  \right\}
 \end{align}\]</div>
 </div>
@@ -1166,8 +1163,8 @@ E[Y^*(0)] = E\left[\frac{(1-T)Y}{1-\pi(X)} \right],
 <div class="section" id="doubly-robust-estimators">
 <h3>Doubly Robust Estimators<a class="headerlink" href="#doubly-robust-estimators" title="Permalink to this headline">#</a></h3>
 <p>We are able to combine outcome regression estimator and the propensity score weighted estimator to obtain another so-called doubly robust estimator, as follows</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4d160728-e668-47ce-a493-6f0ddd7557b3">
-<span class="eqno">()<a class="headerlink" href="#equation-4d160728-e668-47ce-a493-6f0ddd7557b3" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3b4d319e-fc41-4afe-b272-a01f6a92b6c7">
+<span class="eqno">()<a class="headerlink" href="#equation-3b4d319e-fc41-4afe-b272-a01f6a92b6c7" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{\text{ATE}} = n^{-1}\sum_{i=1}^n \left\{\mu(X_i,1;\hat{\gamma})+\frac{T_i(Y_i - \mu(X_i,1;\hat{\gamma}))}{\hat{\pi}(X_i)} - \mu(X_i,0;\hat{\gamma}) - \frac{(1-T_i)(Y_i-\mu(X_i,0;\hat{\gamma}))}{1-\hat{\pi}(X_i)} \right\}
 \end{align}\]</div>
 </div>

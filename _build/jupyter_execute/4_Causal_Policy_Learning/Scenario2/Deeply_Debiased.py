@@ -3,8 +3,8 @@
 
 # # Deeply-Debiased Off-Policy Evaluation
 # 
-# The doubly robust utilizes the importance weighting method to reduce the bias of the direct methods. However, in the complicated RL problems, it is still challenging to satisfy the required rate conditions to yield valid inference. In this part, we introduce a deeply-debiasing procedure to provide valid inference under minimal conditions. 
-# We present the method in the infinite-horizon setting, under the stationarity assumption introduced in **CROSS-REFER**, and extensions to other RL setups are straightforward. 
+# The doubly robust utilizes the importance weighting method to reduce the bias of the direct methods. However, in the complicated RL problems, it is still challenging to satisfy the required rate conditions to yield valid inference. In this part, we introduce a deeply-debiasing procedure {cite:p}`shi2021deeply` to provide valid inference under minimal conditions. 
+# We present the method in the stationary and infinite-horizon setting, and extensions to other RL setups are straightforward. 
 
 # 
 # ***Advantages***:
@@ -18,7 +18,7 @@
 # The validity of the asymptotic distribution of the doubly robust estimator such as DRL and its Wald-type CI requires the two nuisance function estimators, $\widehat{Q}$ and $\widehat{\omega}$, to both converge at a rate faster than $(nT)^{-1/4}$. 
 # When this assumption is violated, the resulting CI cannot achieve the nominal coverage. 
 # These requirements are likely to be violated in complicated RL tasks, given the dimensionality and the complexity of modeling the Q-function and the design function. 
-# See [1] for illustrative examples.
+# See {cite:t}`shi2021deeply` for illustrative examples.
 # 
 # 
 # The limitation of DRL motivates us to consider constructing a valid CI under weaker and practically more feasible conditions. 
@@ -51,13 +51,13 @@
 # \begin{eqnarray}\label{eqn:debiasterm}
 # \begin{split}
 # \mathcal{D}^{(i,t)}\tilde{Q}(a,s) =
-# \tilde{Q}(a,s)+ 
-# \frac{1}{1-\gamma}\widehat{\tau}(A_{i,t},S_{i,t},a,s)
-# \times
+# \tilde{Q}(a,s)
+# & + \frac{1}{1-\gamma}\widehat{\tau}(A_{i,t},S_{i,t},a,s)\\
+# &\times
 # \{R_{i,t} +\gamma
 # \mathbb{E}_{a' \sim \pi(\cdot|S_{i,t+1})}
 # \tilde{Q}(a',S_{i,t+1})- \tilde{Q}(A_{i,t},S_{i,t})\}. 
-# \end{split}	
+# \end{split}
 # \end{eqnarray}
 # Here, we refer to $\mathcal{D}^{(i,t)}$ as the *individual debiasing operator*, since it debiases any $\tilde{Q}$ based on an individual data tuple $(S_{i,t},A_{i,t},R_{i,t},S_{i,t+1})$. 
 # Similarly, the augmentation term here is to offer protection against potential model misspecification of the Q-function, and as such, 
@@ -68,7 +68,14 @@
 # **The two-step debias iteration.**
 # Similar with DRL, we can construct an estimating function $\psi_{i,t}^{(2)}$ for any $(i,t)$ by replacing $\widehat{Q}$ in (1) with $\widehat{Q}^{(2)}$. 
 # This yields our second-order estimator 
-# $$\widehat{\eta}^{(2)}_{\tiny{\textrm{TR}}}=(nT)^{-1} \sum_{i,t} \psi_{i,t}^{(2)}.$$ 
+# 
+# \begin{eqnarray}
+# \begin{split}
+# \widehat{\eta}^{(2)}_{\tiny{\textrm{TR}}}=(nT)^{-1} \sum_{i,t} \psi_{i,t}^{(2)}.
+# \end{split}
+# \end{eqnarray}
+# 
+# 
 # We can establish that the bias of $\widehat{\eta}^{(2)}_{\tiny{\textrm{TR}}}$ decays at a  faster rate than the DRL estimator. 
 # Moreover, based on the structure of this estimator, we can establish that $\widehat{\eta}^{(2)}_{\tiny{\textrm{TR}}}$ converges to the true value when one model for $Q^{\pi}$, $\omega^{\pi}$ or $\tau^{\pi}$ is correctly specified. As such, it is *triply-robust*. 
 # Finally, let $\widehat{\sigma}^{(2)} = \Big[(nT-1)^{-1} \sum_{i,t} (\psi_{i,t}^{(2)}-\widehat{\eta}_{\textrm{TR}}^{(2)})^2\Big]^{1/2}$, an asymptotic $(1 - \alpha)$-CI is given by
@@ -90,7 +97,13 @@
 # 
 # 
 # 
-# <img src="d2ope.png" width="700">
+# 
+# 
+# ```{image} d2ope.png
+# :alt: d2ope
+# :width: 500px
+# :align: center
+# ```
 # 
 
 # ## Demo [TODO]
@@ -107,11 +120,13 @@ os.chdir('..')
 os.chdir('../CausalDM')
 
 
-
 # ## References
-# 1. Shi C, Wan R, Chernozhukov V, et al. Deeply-debiased off-policy interval estimation[C]//International Conference on Machine Learning. PMLR, 2021: 9580-9591.
+# 
+# ```{bibliography}
+# :filter: docname in docnames
+# ```
 
 # ## Note
 # * DRL is designed by following the standard approach in semiparametric theory, via first deriving the first-order efficient influence function of $\eta^{\pi}$ and then constructing the corresponding first-order U-statistic. Our proposal is motivated by the recent breakthroughs on higher-order U-statistics. Specifically, a higher-order U-statistic can be obtained by deriving the higher-order influence functions of $\eta^{\pi}$, and for a large class of problems, the estimator yields the same asymptotic distribution with the first-order U-statistic under milder conditions. When $T = 1$, our proposal shares similar spirits to the works on minimax optimal estimation for average treatment effects. 
-# * $\tau^{\pi}$ can be learned from the observed data by solving a minimax problem. See [1] for more details. 
+# * $\tau^{\pi}$ can be learned from the observed data by solving a minimax problem. See {cite:t}`shi2021deeply` for more details. 
 # * Although the proposed estimator is as efficient as DRL in the asymptotic sense, in  finite sample, the variance of our estimator will always be larger than DRL. This is due to the fact that, our estimator, as a higher-order U-statistic, can be decomposed into the sum of some asymptotically uncorrelated terms as $\eta^{\pi}+\sum_{j=1}^m \widehat{\eta}_j$,  according to the Hoeffding decomposition. Here, the DRL estimator is asymptotically equivalent to $\eta^{\pi}+\widehat{\eta}_1$ and $\widehat{\eta}_j$ corresponds to a $j$th order degenerate U-statistic for any $j\ge 2$. Therefore, the proposed estimator has additional higher order terms. This fact can be regarded as a bias-variance tradeoff. 

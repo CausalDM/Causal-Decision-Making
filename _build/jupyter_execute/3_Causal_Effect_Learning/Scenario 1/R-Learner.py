@@ -71,7 +71,6 @@ data_behavior = get_data_simulation(n, seed, policy="behavior")
 HTE_true = get_data_simulation(n, seed, policy="1")['R']-get_data_simulation(n, seed, policy="0")['R']
 
 
-
 # In[ ]:
 
 

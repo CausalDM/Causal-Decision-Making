@@ -153,11 +153,6 @@ const thebe_selector_output = ".output, .cell_output"
    Causal Inference Preliminary
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../1_Preliminary/Heterogenous%20Treatement%20Effect.html">
-   Heterogenous Treatment Effect
-  </a>
- </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -722,12 +717,12 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../../5_Case_Study/Case_Study_1.html">
-   MIMIC III
+  <a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3-Demo.html">
+   Mimic3 Demo
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../5_Case_Study/Case_Study_2.html">
+  <a class="reference internal" href="../../5_Case_Study/MovieLens/Case_Study_2.html">
    MovieLens
   </a>
  </li>
@@ -1002,27 +997,27 @@ title="Print to PDF"
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p><strong>Q-function.</strong>
 The Q-function-based approach aims to direct learn the state-action value function (referred to as the Q-function)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-44e10cbb-7eed-45ec-8c5f-4040092eef11">
-<span class="eqno">(73)<a class="headerlink" href="#equation-44e10cbb-7eed-45ec-8c5f-4040092eef11" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-c96cc1d7-222f-45b4-b19e-cd78b44ddd22">
+<span class="eqno">(74)<a class="headerlink" href="#equation-c96cc1d7-222f-45b4-b19e-cd78b44ddd22" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 Q^\pi(a,s)&amp;= \mathbb{E}^{\pi} (\sum_{t=0}^{+\infty} \gamma^t R_{t}|A_{0}=a,S_{0}=s)   
 \end{eqnarray}\]</div>
 <p>of either the policy <span class="math notranslate nohighlight">\(\pi\)</span> that we aim to evaluate or the optimal policy <span class="math notranslate nohighlight">\(\pi = \pi^*\)</span>.</p>
 <p><strong>Bellman optimality equations.</strong>
 The Q-learning-type policy learning is commonly based on the Bellman optimality equation, which characterizes the optimal policy <span class="math notranslate nohighlight">\(\pi^*\)</span> and is commonly used in policy optimization.
 Specifically, <span class="math notranslate nohighlight">\(Q^*\)</span> is the unique solution of</p>
-<div class="amsmath math notranslate nohighlight" id="equation-83d16643-72f2-4deb-91ba-5fdddd268bb0">
-<span class="eqno">(74)<a class="headerlink" href="#equation-83d16643-72f2-4deb-91ba-5fdddd268bb0" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-07904d2d-a410-407b-a45f-4566bf85d7ac">
+<span class="eqno">(75)<a class="headerlink" href="#equation-07904d2d-a410-407b-a45f-4566bf85d7ac" title="Permalink to this equation">#</a></span>\[\begin{equation}
     Q(a, s) = \mathbb{E} \Big(R_t + \gamma \arg \max_{a'} Q(a, S_{t+1})  | A_t = a, S_t = s \Big).  \;\;\;\;\; \text{(2)} 
 \end{equation}\]</div>
 <p><strong>FQI.</strong>
-Similar to FQE <strong>[CROSS REFERENCE]</strong>, the fitted-Q iteration (FQI) [1] algorithm is also popular due to its simple form and good numerical performance.
+Similar to <a class="reference internal" href="FQE.html#section-fqe"><span class="std std-ref">FQE</span></a>, the fitted-Q iteration (FQI) <span id="id1">[<a class="reference internal" href="#id17" title="Damien Ernst, Pierre Geurts, and Louis Wehenkel. Tree-based batch mode reinforcement learning. Journal of Machine Learning Research, 2005.">EGW05</a>]</span> algorithm is also popular due to its simple form and good numerical performance.
 It is mainly motivated by the fact that, the optimal value function <span class="math notranslate nohighlight">\(Q^*\)</span> is the unique solution to the Bellman optimality equation (2).
 Besides, the right-hand side of (2) is a contraction mapping.
 Therefore, we can consider a fixed-point method:
 with an initial estimate <span class="math notranslate nohighlight">\(\widehat{Q}^{0}\)</span>,
 FQI iteratively solves the following optimization problem,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-84f630ac-721a-489b-981a-177c8ced9345">
-<span class="eqno">(75)<a class="headerlink" href="#equation-84f630ac-721a-489b-981a-177c8ced9345" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-5882257c-5308-44d6-9327-8af5877614c2">
+<span class="eqno">(76)<a class="headerlink" href="#equation-5882257c-5308-44d6-9327-8af5877614c2" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 	\widehat{Q}^{{\ell}}=\arg \min_{Q} 
 	\sum_{\substack{i \le n}}\sum_{t&lt;T}
 	\Big\{
@@ -1050,12 +1045,12 @@ The final estimate is denoted as <span class="math notranslate nohighlight">\(\w
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">74</span><span class="n">c57ea9d893</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 7&gt;</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
 <span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
 
-<span class="ne">FileNotFoundError</span>: [WinError 2] The system cannot find the file specified: &#39;../CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;../CausalDM&#39;
 </pre></div>
 </div>
 </div>
@@ -1063,7 +1058,13 @@ The final estimate is denoted as <span class="math notranslate nohighlight">\(\w
 </div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
-<p>[1] Ernst, D., Geurts, P., and Wehenkel, L. Tree-based batch mode reinforcement learning. Journal of Machine Learn- ing Research, 6(Apr):503–556, 2005.</p>
+<div class="docutils container" id="id2">
+<dl class="citation">
+<dt class="label" id="id17"><span class="brackets"><a class="fn-backref" href="#id1">EGW05</a></span></dt>
+<dd><p>Damien Ernst, Pierre Geurts, and Louis Wehenkel. Tree-based batch mode reinforcement learning. <em>Journal of Machine Learning Research</em>, 2005.</p>
+</dd>
+</dl>
+</div>
 </div>
 </div>
 
@@ -1080,7 +1081,7 @@ The final estimate is denoted as <span class="math notranslate nohighlight">\(\w
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./4_Causal_Policy_Learning\Scenario2"
+            path: "./4_Causal_Policy_Learning/Scenario2"
         },
         predefinedOutput: true
     }

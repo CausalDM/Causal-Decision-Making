@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# (section:FQE)=
 # # Fitted-Q Evaluation
 # 
 # The most straightforward approach for OPE is the direct method (DM). 
@@ -8,8 +9,8 @@
 # methods belonging to this category will first directly impose a model for either the environment or the Q-function, and then learn the model by regarding the task as a regression (or classification) problem, and finally calculate the value of the target policy via a plug-in estimator according to the definition of $\eta^\pi$
 # The Q-function based approach and the environment-based approach are also called as model-free and  model-based, respectively. 
 # 
-# Among the many model-free DM estimators, we will focus on the most classic one, the fitted-Q evaluation (FQE) [1]. 
-# It is observed to perform consistently well in a large-scale empirical study [2]. 
+# Among the many model-free DM estimators, we will focus on the most classic one, the fitted-Q evaluation (FQE) {cite:p}`le2019batch`. 
+# It is observed to perform consistently well in a large-scale empirical study {cite:p}`voloshin2019empirical`. 
 # 
 # ***Advantages***:
 # 
@@ -78,6 +79,7 @@ os.chdir('../CausalDM')
 
 
 # ## References
-# [1] Le, H. M., Voloshin, C., and Yue, Y. Batch policy learning under constraints. arXiv preprint arXiv:1903.08738, 2019.
 # 
-# [2] Voloshin C, Le H M, Jiang N, et al. Empirical study of off-policy policy evaluation for reinforcement learning[J]. arXiv preprint arXiv:1911.06854, 2019.
+# ```{bibliography}
+# :filter: docname in docnames
+# ```

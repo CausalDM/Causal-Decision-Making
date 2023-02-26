@@ -31,7 +31,7 @@ from sklearn.linear_model import LinearRegression
 #from causaldm.data import mimic3_sepsis_data
 
 
-# In[2]:
+# In[ ]:
 
 
 # Get data
@@ -40,7 +40,7 @@ mimic3_data = pd.read_csv("C:/Users/Public/CausalDM/causaldm/data/mimic3_sepsis_
 mimic3_data
 
 
-# In[3]:
+# In[ ]:
 
 
 selected = ['Glucose','paO2','PaO2_FiO2',  'iv_input', 'SOFA','reward']
@@ -49,7 +49,7 @@ mimic3_data_selected = mimic3_data[:n][selected]
 mimic3_data_selected
 
 
-# In[4]:
+# In[ ]:
 
 
 userinfo_index = np.array([0,1,2,4]) # record all the indices of patients' information

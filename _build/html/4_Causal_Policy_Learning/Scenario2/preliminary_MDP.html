@@ -148,12 +148,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../../1_Preliminary/Causal%20Inference%20Preliminary.html">
-   Average Treatment Effect
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../1_Preliminary/Heterogenous%20Treatement%20Effect.html">
-   Heterogenous Treatment Effect
+   Causal Inference Preliminary
   </a>
  </li>
 </ul>
@@ -192,7 +187,9 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/Single%20Stage.html">
-   Single Stage
+   <strong>
+    Single Stage
+   </strong>
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -718,12 +715,12 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../../5_Case_Study/Case_Study_1.html">
-   MIMIC III
+  <a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3-Demo.html">
+   Mimic3 Demo
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../5_Case_Study/Case_Study_2.html">
+  <a class="reference internal" href="../../5_Case_Study/MovieLens/Case_Study_2.html">
    MovieLens
   </a>
  </li>
@@ -1023,8 +1020,8 @@ At each time point <span class="math notranslate nohighlight">\(t \ge 0\)</span>
 <div class="section" id="value-functions">
 <h2>Value functions<a class="headerlink" href="#value-functions" title="Permalink to this headline">#</a></h2>
 <p>The state value function (referred to as the V-function) and state-action value function (referred to as the Q-function) for a policy <span class="math notranslate nohighlight">\(\pi\)</span> are given as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-951911c4-e904-498b-b130-3d3551569f06">
-<span class="eqno">()<a class="headerlink" href="#equation-951911c4-e904-498b-b130-3d3551569f06" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c0228cda-b0a2-4b63-a383-3eea60270538">
+<span class="eqno">()<a class="headerlink" href="#equation-c0228cda-b0a2-4b63-a383-3eea60270538" title="Permalink to this equation">#</a></span>\[\begin{align}
 	V^\pi(s)&amp;=\mathbb{E}^{\pi} (\sum_{t=0}^{+\infty} \gamma^t R_{t}|S_{0}=s),\\
 	Q^\pi(a,s)&amp;= \mathbb{E}^{\pi} (\sum_{t=0}^{+\infty} \gamma^t R_{t}|A_{0}=a,S_{0}=s) \label{eqn:Q},
 \end{align}\]</div>
@@ -1042,16 +1039,16 @@ The optimal policy is defined as <span class="math notranslate nohighlight">\(\p
 <p>where the last equality follows from the stationarity of the MDP.
 Motivated by this fact,
 the Bellman equation for the Q-function is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-71a91cf1-ef03-468a-b7da-8fbf53e36826">
-<span class="eqno">()<a class="headerlink" href="#equation-71a91cf1-ef03-468a-b7da-8fbf53e36826" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
+<div class="amsmath math notranslate nohighlight" id="equation-1952ac1a-7f30-47da-b279-77d6668f6dfc">
+<span class="eqno">()<a class="headerlink" href="#equation-1952ac1a-7f30-47da-b279-77d6668f6dfc" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
     Q(a, s) = \mathbb{E}^\pi \Big(R_t + \gamma Q(A_{t + 1}, S_{t+1})  | A_t = a, S_t = s \Big), 
 \end{equation}\]</div>
 <p>for which <span class="math notranslate nohighlight">\(Q^\pi\)</span> is the unique solution [2].
 The Bellman equation relates different components of the MDP via a recursive form and is the foundation for lots of RL algorithms.</p>
 <p>Similarly, we have the Bellman optimality equation, which characterizes the optimal policy <span class="math notranslate nohighlight">\(\pi^*\)</span> and is commonly used in policy optimization.
 Specifically, its value function <span class="math notranslate nohighlight">\(Q^*\)</span> is the unique solution of</p>
-<div class="amsmath math notranslate nohighlight" id="equation-be60a7af-6f25-4a64-afcb-90ab3dcd00a9">
-<span class="eqno">()<a class="headerlink" href="#equation-be60a7af-6f25-4a64-afcb-90ab3dcd00a9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-076d65d9-09ad-46ee-9b6f-69800d324334">
+<span class="eqno">()<a class="headerlink" href="#equation-076d65d9-09ad-46ee-9b6f-69800d324334" title="Permalink to this equation">#</a></span>\[\begin{equation}
     Q(a, s) = \mathbb{E} \Big(R_t + \gamma \arg \max_{a'} Q(a, S_{t+1})  | A_t = a, S_t = s \Big).  \;\;\;\;\; \text{(2)} 
 \end{equation}\]</div>
 </div>
@@ -1060,8 +1057,8 @@ Specifically, its value function <span class="math notranslate nohighlight">\(Q^
 <p>In the off-policy setting, the observed data consists of <span class="math notranslate nohighlight">\(n\)</span> i.i.d. trajectories <span class="math notranslate nohighlight">\(\{(S_{i,t},A_{i,t},R_{i,t},S_{i,t+1})\}_{0\le t&lt;T_i,1\le i\le n}\)</span>, where <span class="math notranslate nohighlight">\(T_i\)</span> denotes the length of the <span class="math notranslate nohighlight">\(i\)</span>th trajectory. Without loss of generality, we assume <span class="math notranslate nohighlight">\(T_1=\cdots=T_n=T\)</span> and the immediate rewards are uniformly bounded.
 The dataset is collected by following a stationary policy <span class="math notranslate nohighlight">\(b\)</span>, known as the <em>behavior policy</em>.</p>
 <p><strong>Off-Policy Evaluation(OPE).</strong> The goal of OPE is to estimate the value of a given <em>target policy</em> <span class="math notranslate nohighlight">\(\pi\)</span> with respect to the initial state distribution <span class="math notranslate nohighlight">\(\mathbb{G}\)</span>, defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5335eb69-aca8-494e-b335-cf17dfe568fd">
-<span class="eqno">()<a class="headerlink" href="#equation-5335eb69-aca8-494e-b335-cf17dfe568fd" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:def_value}
+<div class="amsmath math notranslate nohighlight" id="equation-b5aa6a88-0855-4c07-9daa-ba20bd0ea789">
+<span class="eqno">()<a class="headerlink" href="#equation-b5aa6a88-0855-4c07-9daa-ba20bd0ea789" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:def_value}
 	\eta^{\pi} =  \mathbb{E}_{s \sim \mathbb{G}} V^{\pi}(s). 
 \end{eqnarray}\]</div>
 <p>By definition, we directly have <span class="math notranslate nohighlight">\(\eta^{\pi} = \mathbb{E}_{s \sim \mathbb{G}, a \sim \pi(\cdot|s)} Q^{\pi}(a, s)\)</span>.</p>
@@ -1089,7 +1086,7 @@ We refer to an interval <span class="math notranslate nohighlight">\([\hat{\eta}
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./4_Causal_Policy_Learning\Scenario2"
+            path: "./4_Causal_Policy_Learning/Scenario2"
         },
         predefinedOutput: true
     }

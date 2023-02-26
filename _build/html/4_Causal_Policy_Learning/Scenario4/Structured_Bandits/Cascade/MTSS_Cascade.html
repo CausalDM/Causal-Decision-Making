@@ -153,11 +153,6 @@ const thebe_selector_output = ".output, .cell_output"
    Causal Inference Preliminary
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../../../1_Preliminary/Heterogenous%20Treatement%20Effect.html">
-   Heterogenous Treatment Effect
-  </a>
- </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -722,12 +717,12 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../../../../5_Case_Study/Case_Study_1.html">
-   MIMIC III
+  <a class="reference internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3-Demo.html">
+   Mimic3 Demo
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../../../5_Case_Study/Case_Study_2.html">
+  <a class="reference internal" href="../../../../5_Case_Study/MovieLens/Case_Study_2.html">
    MovieLens
   </a>
  </li>
@@ -1084,8 +1079,8 @@ title="Print to PDF"
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>MTSS_Cascade is an example of the general Thompson Sampling(TS)-based framework, MTSS [1], to deal with online learning to rank problems.</p>
 <p><strong>Review of MTSS:</strong> MTSS[1] is a meta-learning framework designed for large-scale structured bandit problems [2]. Mainly, it is a TS-based algorithm that learns the information-sharing structure while minimizing the cumulative regrets. Adapting the TS framework to a problem-specific Bayesian hierarchical model, MTSS simultaneously enables information sharing among items via their features and models the inter-item heterogeneity. Specifically, it assumes that the item-specific parameter <span class="math notranslate nohighlight">\(\theta_i = E[W_t(i)]\)</span> is sampled from a distribution <span class="math notranslate nohighlight">\(g(\theta_i|\boldsymbol{s}_i, \boldsymbol{\gamma})\)</span> instead of being entirely determined by <span class="math notranslate nohighlight">\(\boldsymbol{s}_i\)</span> via a deterministic function. Here, <span class="math notranslate nohighlight">\(g\)</span> is a model parameterized by an <strong>unknown</strong> vector <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>. The following is the general feature-based hierarchical model MTSS considered.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-647e9bb3-123e-4aa2-8866-ac07fdc5d9f3">
-<span class="eqno">(109)<a class="headerlink" href="#equation-647e9bb3-123e-4aa2-8866-ac07fdc5d9f3" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:general_hierachical}
+<div class="amsmath math notranslate nohighlight" id="equation-f7c966ff-933c-4f41-b545-99c7f11dbb15">
+<span class="eqno">(110)<a class="headerlink" href="#equation-f7c966ff-933c-4f41-b545-99c7f11dbb15" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:general_hierachical}
   \begin{alignedat}{2}
 &amp;\text{(Prior)} \quad
 \quad\quad\quad\quad\quad\quad\quad\quad\quad
@@ -1101,8 +1096,8 @@ title="Print to PDF"
 <p>where <span class="math notranslate nohighlight">\(Q(\boldsymbol{\gamma})\)</span> is the prior distribution for <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>.
 Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class of practical problems, <strong>scalable</strong> to large systems, and <strong>robust</strong> to the specification of the generalization model.</p>
 <p><strong>Review of MTSS_Cascade:</strong> To characterize the relationship between items using their features, one example choice of <span class="math notranslate nohighlight">\(g\)</span> is the popular Beta-Bernoulli logistic model [1,2], where <span class="math notranslate nohighlight">\(\theta_i {\sim} Beta(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma}), \phi)\)</span> for some known parameter <span class="math notranslate nohighlight">\(\phi\)</span>. We adopt the mean-precision parameterization of the Beta distribution, with <span class="math notranslate nohighlight">\(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})\)</span> being the mean and <span class="math notranslate nohighlight">\(\phi\)</span> being the precision parameter. Specifically, the full model is as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cc378cfb-3d65-4b47-87ba-08a340919976">
-<span class="eqno">(110)<a class="headerlink" href="#equation-cc378cfb-3d65-4b47-87ba-08a340919976" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:model_cascading}
+<div class="amsmath math notranslate nohighlight" id="equation-20115fd4-a343-4aa5-af0e-0d52a37bce26">
+<span class="eqno">(111)<a class="headerlink" href="#equation-20115fd4-a343-4aa5-af0e-0d52a37bce26" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:model_cascading}
     \begin{split}
     \theta_i &amp; \sim Beta(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma}), \phi), \forall i \in [N]\\
     W_{k, t}(a) &amp;\sim Bernoulli(\theta_{a^k}), \forall k \in [K], \\
@@ -1143,12 +1138,12 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">a4f395ec17bc</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 3&gt;</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">os</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:\GitHub\CausalDM&#39;</span><span class="p">)</span>
 
-<span class="ne">FileNotFoundError</span>: [WinError 3] The system cannot find the path specified: &#39;D:\\GitHub\\CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;D:\\GitHub\\CausalDM&#39;
 </pre></div>
 </div>
 </div>
@@ -1158,7 +1153,7 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Structured_Bandits.Cascade</span> <span class="k">import</span> <span class="n">MTSS_Cascade</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Structured_Bandits.Cascade</span> <span class="kn">import</span> <span class="n">MTSS_Cascade</span>
 </pre></div>
 </div>
 </div>
@@ -1169,7 +1164,7 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
 <p>Here, we imitate an environment based on the Yelp dataset. The number of items recommended at each round, <span class="math notranslate nohighlight">\(K\)</span>, is specified as <span class="math notranslate nohighlight">\(3\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Structured_Bandits.Cascade</span> <span class="k">import</span> <span class="n">_env_realCascade</span> <span class="k">as</span> <span class="n">_env</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Structured_Bandits.Cascade</span> <span class="kn">import</span> <span class="n">_env_realCascade</span> <span class="k">as</span> <span class="n">_env</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">_env</span><span class="o">.</span><span class="n">Cascading_env</span><span class="p">(</span><span class="n">K</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1258,7 +1253,7 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./4_Causal_Policy_Learning\Scenario4\Structured_Bandits\Cascade"
+            path: "./4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade"
         },
         predefinedOutput: true
     }
