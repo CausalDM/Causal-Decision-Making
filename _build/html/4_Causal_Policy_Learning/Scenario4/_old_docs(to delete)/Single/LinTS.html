@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>LinTS &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -20,7 +21,7 @@
     href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.css" />
@@ -36,7 +37,7 @@
     <script src="../../../../_static/doctools.js"></script>
     <script src="../../../../_static/clipboard.min.js"></script>
     <script src="../../../../_static/copybutton.js"></script>
-    <script src="../../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -1009,27 +1010,27 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="lints">
+  <section class="tex2jax_ignore mathjax_ignore" id="lints">
 <h1>LinTS<a class="headerlink" href="#lints" title="Permalink to this headline">#</a></h1>
-<div class="section" id="main-idea">
+<section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>(Need to rewrite)Thompson Sampling, also known as posterior sampling, solves the exploration-exploitation dilemma by selecting an action according to its posterior distribution [8].  At each round <span class="math notranslate nohighlight">\(t\)</span>, the agent sample the rewards from the corresponding posterior distributions and then select the action with the highest sampled reward greedily. It has been shown that, when the true reward distribution is known, a TS algorithm with the true reward distribution as the prior is nearly optimal [9]. However, such a distribution is always unknown in practice. Therefore, one of the major objectives of TS-based algorithms is to find an informative prior to guide the exploration.</p>
-</div>
-<div class="section" id="algorithms-details">
+</section>
+<section id="algorithms-details">
 <h2>Algorithms Details<a class="headerlink" href="#algorithms-details" title="Permalink to this headline">#</a></h2>
 <p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. Noticing that feature information are commonly avialable, the LinTS algorithm consdiers modeling the mean reward with items’ features. As an example, considering the Gaussian reward, we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9697cd97-4477-41a8-8f70-2fac26bf368e">
-<span class="eqno">()<a class="headerlink" href="#equation-9697cd97-4477-41a8-8f70-2fac26bf368e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2637daeb-65b0-4fe2-8ffb-0d34e826eb93">
+<span class="eqno">()<a class="headerlink" href="#equation-2637daeb-65b0-4fe2-8ffb-0d34e826eb93" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta_{i} = \boldsymbol{x}_i^T \boldsymbol{\gamma}.
 \end{align}\]</div>
 <p>As for the Bernoulli reward, we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e7b52c1d-4b1d-4c74-91f6-dc285a1fac41">
-<span class="eqno">()<a class="headerlink" href="#equation-e7b52c1d-4b1d-4c74-91f6-dc285a1fac41" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-dd86e360-2c3e-4ea8-97e1-e3ee02180673">
+<span class="eqno">()<a class="headerlink" href="#equation-dd86e360-2c3e-4ea8-97e1-e3ee02180673" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta_{i} = logistic(\boldsymbol{x}_i^T \boldsymbol{\gamma})
 \end{align}\]</div>
 <p>Similar as the standard TS algorithm, the LinTS algorithm starts with specifying a prior distribution of the parameter <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>, and a variance of the reward, based on the domian knowledge. At each round <span class="math notranslate nohighlight">\(t\)</span>, the agent will samples a vector of <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\gamma}}^{t}\)</span> from thecorresponding posterior distribution, and the mean reward <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\theta}}^{t}\)</span> is then calculated accordingly. The action <span class="math notranslate nohighlight">\(a\)</span> with the greatest <span class="math notranslate nohighlight">\(\tilde{\theta}_{a}^{t}\)</span> is then selected. Finally, the posterior distribution would be updated after receiving the feedback at the end of each round. Note that the posterior updating step differs for different pairs of prior distribution of the mean reward and reward distribution. Note that code can be easily modified to different specifications of the prior/reward distribution.</p>
-</div>
-<div class="section" id="key-steps">
+</section>
+<section id="key-steps">
 <h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p>Specifying a prior distirbution of <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>, and the variance of the reward distribution.</p></li>
@@ -1042,8 +1043,8 @@ title="Print to PDF"
 </ul>
 </li>
 </ol>
-</div>
-<div class="section" id="demo-code">
+</section>
+<section id="demo-code">
 <h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1065,7 +1066,7 @@ title="Print to PDF"
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM&#39;</span><span class="p">)</span>
 
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;/nas/longleaf/home/lge/CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [WinError 3] 系统找不到指定的路径。: &#39;/nas/longleaf/home/lge/CausalDM&#39;
 </pre></div>
 </div>
 </div>
@@ -1158,13 +1159,13 @@ title="Print to PDF"
 </div>
 </div>
 <p><strong>Interpretation:</strong> A sentence to include the analysis result: the estimated optimal regime is…</p>
-</div>
-<div class="section" id="references">
+</section>
+<section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <p>[1] Agrawal, S., &amp; Goyal, N. (2013, May). Thompson sampling for contextual bandits with linear payoffs. In International conference on machine learning (pp. 127-135). PMLR.</p>
 <p>[2] Kveton, B., Zaheer, M., Szepesvari, C., Li, L., Ghavamzadeh, M., &amp; Boutilier, C. (2020, June). Randomized exploration in generalized linear bandits. In International Conference on Artificial Intelligence and Statistics (pp. 2066-2076). PMLR.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1179,7 +1180,7 @@ title="Print to PDF"
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./4_Causal_Policy_Learning/Scenario4/_old_docs(to delete)/Single"
+            path: "./4_Causal_Policy_Learning\Scenario4\_old_docs(to delete)\Single"
         },
         predefinedOutput: true
     }

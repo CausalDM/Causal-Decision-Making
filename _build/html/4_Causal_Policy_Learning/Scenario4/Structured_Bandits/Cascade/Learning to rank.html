@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Online Learning to Rank (Cascading Bandit) &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -20,7 +21,7 @@
     href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.css" />
@@ -36,7 +37,7 @@
     <script src="../../../../_static/doctools.js"></script>
     <script src="../../../../_static/clipboard.min.js"></script>
     <script src="../../../../_static/copybutton.js"></script>
-    <script src="../../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -1001,16 +1002,16 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="online-learning-to-rank-cascading-bandit">
+  <section class="tex2jax_ignore mathjax_ignore" id="online-learning-to-rank-cascading-bandit">
 <h1>Online Learning to Rank (Cascading Bandit)<a class="headerlink" href="#online-learning-to-rank-cascading-bandit" title="Permalink to this headline">#</a></h1>
 <p>Online learning to rank is a popular problem, where we are interested in users’ behavior toward an ordered list of items and aim to maximize the click-through rate. For example, considering the motivating example <strong>Recommender Systems</strong>, suppose that there are a great amount of restaurants available to be recommended, Cascading Bandit algorithms aims to find and recommend the optimal ordered list of restaurants whenever a user visits, with the ultimate objective of optimizing the overall user satisfication, which is quantified as the click-through rate. This tutorial focuses on one of the popular choice models in learning to rank–Cascading model [1].</p>
-<div class="section" id="problem-setting">
+<section id="problem-setting">
 <h2>Problem Setting<a class="headerlink" href="#problem-setting" title="Permalink to this headline">#</a></h2>
 <p>Suppose that, at each round t, we need to recommend an ordered list of <span class="math notranslate nohighlight">\(K\)</span> items. In cascading bandits, <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> contains all the subsets of <span class="math notranslate nohighlight">\([N]\)</span> with length <span class="math notranslate nohighlight">\(K\)</span>, <span class="math notranslate nohighlight">\(A_t = (a_t^1, \dots, a_t^K) \in \mathcal{A}\)</span> is a sorted list of items being displayed with any element <span class="math notranslate nohighlight">\(a_t^k \in [N]\)</span>, <span class="math notranslate nohighlight">\(\boldsymbol{Y}_t(a)\)</span> is a vector indicating the potential outcome that will be observed if slate <span class="math notranslate nohighlight">\(a\)</span> is recommended, with the <span class="math notranslate nohighlight">\(i\)</span>th entry equal to <span class="math notranslate nohighlight">\(1\)</span> when the <span class="math notranslate nohighlight">\(i\)</span>th displayed item will be clicked, and <span class="math notranslate nohighlight">\(R_t(a)\)</span> is the corresponding potential reward would be received, with <span class="math notranslate nohighlight">\(f_r[\boldsymbol{Y}_t(a)] \equiv \sum_{k \in [K]} Y_{k,t}(a)  \in \{0,1\}\)</span>, where <span class="math notranslate nohighlight">\(Y_{k,t}(a)\)</span> is the <span class="math notranslate nohighlight">\(k\)</span>th entry of <span class="math notranslate nohighlight">\(\boldsymbol{Y}_t(a)\)</span>.</p>
 <p>At each round <span class="math notranslate nohighlight">\(t\)</span>, the user will examine the <span class="math notranslate nohighlight">\(K\)</span> displayed items from top to bottom and stop to click one item once she is attracted (or leave if none of them is attractive). Similar to the definition of the potential reward <span class="math notranslate nohighlight">\(R_t(a)\)</span>. denote <span class="math notranslate nohighlight">\(I_t(a)\)</span> the index of the potential chosen item if it exists, and otherwise, let <span class="math notranslate nohighlight">\(I_t(a) = K\)</span>. To formally define the model <span class="math notranslate nohighlight">\(f\)</span>, it is useful to introduce a latent binary variable <span class="math notranslate nohighlight">\(E_{k,t}(a)\)</span> to indicate if the <span class="math notranslate nohighlight">\(k\)</span>th displayed item will be examined by the <span class="math notranslate nohighlight">\(t\)</span>th user, and a latent variable <span class="math notranslate nohighlight">\(W_{k,t}(a)\)</span> to indicate if the <span class="math notranslate nohighlight">\(k\)</span>th displayed item is attractive to the <span class="math notranslate nohighlight">\(t\)</span>th user. Therefore, the value of <span class="math notranslate nohighlight">\(W_{k,t}(a)\)</span> is only visible when <span class="math notranslate nohighlight">\(k \le I_t(a)\)</span>. Let <span class="math notranslate nohighlight">\(\theta_i\)</span> be the attractiveness of the item <span class="math notranslate nohighlight">\(i\)</span>. The key probabilistic assumption is that <span class="math notranslate nohighlight">\(W_{k, t}(a) \sim Bernoulli(\theta_{a^k}), \forall k \in [K]\)</span>.</p>
 <p>Mathmatically,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-343070fa-fcfd-4c1d-a9db-e5a33801ebfe">
-<span class="eqno">(107)<a class="headerlink" href="#equation-343070fa-fcfd-4c1d-a9db-e5a33801ebfe" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:model_cascading}
+<div class="amsmath math notranslate nohighlight" id="equation-0c22a9cb-37af-4a3b-99c6-48517783ead2">
+<span class="eqno">(107)<a class="headerlink" href="#equation-0c22a9cb-37af-4a3b-99c6-48517783ead2" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:model_cascading}
     \begin{split}
     W_{k, t}(a) &amp;\sim Bernoulli(\theta_{a^k}), \forall k \in [K], \\
     Y_{k,t}(a) &amp;= W_{k,t}(a) E_{k,t}(a), \forall k \in [K],\\
@@ -1020,8 +1021,8 @@ title="Print to PDF"
 \end{equation}\]</div>
 <p>with <span class="math notranslate nohighlight">\(E_{1,t}(a) \equiv 1\)</span>.</p>
 <p>When <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> is known, the optimal action can be shown as any permutation of the top <span class="math notranslate nohighlight">\(K\)</span> items with the highest attractiveness factors.</p>
-</div>
-<div class="section" id="supported-algorithms">
+</section>
+<section id="supported-algorithms">
 <h2>Supported Algorithms<a class="headerlink" href="#supported-algorithms" title="Permalink to this headline">#</a></h2>
 <table class="colwidths-auto table">
 <thead>
@@ -1049,22 +1050,22 @@ title="Print to PDF"
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="real-data">
+</section>
+<section id="real-data">
 <h2>Real Data<a class="headerlink" href="#real-data" title="Permalink to this headline">#</a></h2>
 <p>Add description of Yelp data.</p>
-</div>
-<div class="section" id="reference">
+</section>
+<section id="reference">
 <h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">#</a></h2>
 <p>[1] Chuklin, A., Markov, I., and Rijke, M. d. Click models for web search. Synthesis lectures on information concepts, retrieval, and services, 7(3):1–115, 2015.</p>
 <p>[2] Wan, R., Ge, L., &amp; Song, R. (2022). Towards Scalable and Robust Structured Bandits: A Meta-Learning Framework. arXiv preprint arXiv:2202.13227.</p>
 <p>[3] Kveton, B., Szepesvari, C., Wen, Z., &amp; Ashkan, A. (2015, June). Cascading bandits: Learning to rank in the cascade model. In International Conference on Machine Learning (pp. 767-776). PMLR.</p>
 <p>[4] Cheung, W. C., Tan, V., &amp; Zhong, Z. (2019, April). A Thompson sampling algorithm for cascading bandits. In The 22nd International Conference on Artificial Intelligence and Statistics (pp. 438-447). PMLR.</p>
 <p>[5] Zong, S., Ni, H., Sung, K., Ke, N. R., Wen, Z., &amp; Kveton, B. (2016). Cascading bandits for large-scale recommendation problems. arXiv preprint arXiv:1603.05359.</p>
-</div>
+</section>
 <div class="toctree-wrapper compound">
 </div>
-</div>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1079,7 +1080,7 @@ title="Print to PDF"
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade"
+            path: "./4_Causal_Policy_Learning\Scenario4\Structured_Bandits\Cascade"
         },
         predefinedOutput: true
     }

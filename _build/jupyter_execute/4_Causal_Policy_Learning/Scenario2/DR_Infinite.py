@@ -117,8 +117,7 @@ os.chdir('../CausalDM')
 # ```
 
 # ## Note
-# 1. 
-# One critical question is how to estimate the nuisance function $\omega^{\pi}$. 
+# 1. One critical question is how to estimate the nuisance function $\omega^{\pi}$. 
 # The following observation forms the basis: $\omega^{\pi}$ is the only function that satisfies the equation $\mathbb{E} L(\omega^{\pi},f)=0$ for any function $f$, where $L(\omega^{\pi},f)$ equals 
 # \begin{eqnarray}\label{eqn_omega}
 # \begin{split}

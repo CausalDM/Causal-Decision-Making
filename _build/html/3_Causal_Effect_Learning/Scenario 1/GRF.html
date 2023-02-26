@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>7. Generalized Random Forest &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -20,7 +21,7 @@
     href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
@@ -36,7 +37,7 @@
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -985,28 +986,28 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="section" id="generalized-random-forest">
+  <section id="generalized-random-forest">
 <h1><strong>7. Generalized Random Forest</strong><a class="headerlink" href="#generalized-random-forest" title="Permalink to this headline">#</a></h1>
 <p>Developed by Susan Athey, Julie Tibshirani and Stefan Wager, Generalized Random Forest [8] aims to give the solution to a set of local moment equations:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d8cfea42-ef4f-45c1-a73a-d4909f8c0f07">
-<span class="eqno">(34)<a class="headerlink" href="#equation-d8cfea42-ef4f-45c1-a73a-d4909f8c0f07" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1cc3088d-6b22-4fcb-949a-f1d0355e4262">
+<span class="eqno">(34)<a class="headerlink" href="#equation-1cc3088d-6b22-4fcb-949a-f1d0355e4262" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \mathbb{E}\big[\psi_{\tau(s),\nu(s)}(O_i)\big| S_i=s\big]=0,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\tau(s)\)</span> is the parameter we care about and <span class="math notranslate nohighlight">\(\nu(s)\)</span> is an optional nuisance parameter. In the problem of Heterogeneous Treatment Effect Evaluation, our parameter of interest <span class="math notranslate nohighlight">\(\tau(s)=\xi\cdot \beta(s)\)</span> is identified by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-370f6b88-15cc-46c7-b95d-127aa48f3614">
-<span class="eqno">(35)<a class="headerlink" href="#equation-370f6b88-15cc-46c7-b95d-127aa48f3614" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-89ccb542-9884-4aa8-a9c9-f5be09f80acb">
+<span class="eqno">(35)<a class="headerlink" href="#equation-89ccb542-9884-4aa8-a9c9-f5be09f80acb" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \psi_{\beta(s),\nu(s)}(R_i,A_i)=(R_i-\beta(s)\cdot A_i-c(s))(1 \quad A_i^T)^T.
 \end{equation}\]</div>
 <p>The induced estimator <span class="math notranslate nohighlight">\(\hat{\tau}(s)\)</span> for <span class="math notranslate nohighlight">\(\tau(s)\)</span> can thus be solved by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-23e653e1-5ee9-4e52-bbcf-83ff6a7b88fd">
-<span class="eqno">(36)<a class="headerlink" href="#equation-23e653e1-5ee9-4e52-bbcf-83ff6a7b88fd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-572eb6c3-4969-4a47-a0c5-a09ce5cfa6ee">
+<span class="eqno">(36)<a class="headerlink" href="#equation-572eb6c3-4969-4a47-a0c5-a09ce5cfa6ee" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \hat{\tau}(s)=\xi^T\left(\sum_{i=1}^n \alpha_i(s)\big(A_i-\bar{A}_\alpha\big)^{\otimes 2}\right)^{-1}\sum_{i=1}^n \alpha_i(s)\big(A_i-\bar{A}_\alpha\big)\big(R_i-\bar{R}_\alpha\big),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\bar{A}_\alpha=\sum \alpha_i(s)A_i\)</span> and <span class="math notranslate nohighlight">\(\bar{R}_\alpha=\sum \alpha_i(s)R_i\)</span>, and we write <span class="math notranslate nohighlight">\(v^{\otimes 2}=vv^T\)</span>.</p>
 <p>Notice that this formula is just a weighted version of R-learner introduced above. However, instead of using ordinary kernel weighting functions that are prone to a strong curse of dimensionality, GRF uses an adaptive weighting function <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span> derived from a forest designed to express heterogeneity in the specified quantity of interest.</p>
 <p>To be more specific, in order to obtain <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span>, GRF first grows a set of <span class="math notranslate nohighlight">\(B\)</span> trees indexed by <span class="math notranslate nohighlight">\(1,\dots,B\)</span>. Then for each such tree, define <span class="math notranslate nohighlight">\(L_b(s)\)</span> as the set of training samples falling in the same ``leaf” as x. The weights <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span> then capture the frequency with which the <span class="math notranslate nohighlight">\(i\)</span>-th training example falls into the same leaf as <span class="math notranslate nohighlight">\(s\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2efaadc7-d113-4e6f-af26-020a44d5b792">
-<span class="eqno">(37)<a class="headerlink" href="#equation-2efaadc7-d113-4e6f-af26-020a44d5b792" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0632af3f-0953-4c6e-89c5-9c6ce538e819">
+<span class="eqno">(37)<a class="headerlink" href="#equation-0632af3f-0953-4c6e-89c5-9c6ce538e819" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \alpha_{bi}(s)=\frac{\boldsymbol{1}\big(\{S_i\in L_b(s)\}\big)}{\big|L_b(s)\big|},\quad \alpha_i(s)=\frac{1}{B}\sum_{b=1}^B \alpha_{bi}(s).
 \end{equation}\]</div>
 <p>To sum up, GRF aims to leverage the splitting result of a series of trees to decide the ``localized” weight for HTE estimation at each point <span class="math notranslate nohighlight">\(x_0\)</span>. Compared with kernel functions, we may expect tree-based weights to be more flexible and better performed in real settings.</p>
@@ -1018,33 +1019,30 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: scikit-uplift in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (0.5.1)
-Requirement already satisfied: matplotlib in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (from scikit-uplift) (3.5.1)
-Requirement already satisfied: numpy&gt;=1.16 in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (from scikit-uplift) (1.21.5)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: tqdm in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (from scikit-uplift) (4.64.0)
-Requirement already satisfied: scikit-learn&gt;=0.21.0 in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (from scikit-uplift) (1.0.2)
-Requirement already satisfied: pandas in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (from scikit-uplift) (1.4.2)
-Requirement already satisfied: requests in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (from scikit-uplift) (2.27.1)
-Requirement already satisfied: joblib&gt;=0.11 in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (1.1.0)
-Requirement already satisfied: scipy&gt;=1.1.0 in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (1.7.3)
-Requirement already satisfied: threadpoolctl&gt;=2.0.0 in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (2.2.0)
-Requirement already satisfied: pillow&gt;=6.2.0 in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (from matplotlib-&gt;scikit-uplift) (9.0.1)
-Requirement already satisfied: pyparsing&gt;=2.2.1 in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (from matplotlib-&gt;scikit-uplift) (3.0.4)
-Requirement already satisfied: kiwisolver&gt;=1.0.1 in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (from matplotlib-&gt;scikit-uplift) (1.3.2)
-Requirement already satisfied: packaging&gt;=20.0 in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (from matplotlib-&gt;scikit-uplift) (21.3)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: cycler&gt;=0.10 in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (from matplotlib-&gt;scikit-uplift) (0.11.0)
-Requirement already satisfied: fonttools&gt;=4.22.0 in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (from matplotlib-&gt;scikit-uplift) (4.25.0)
-Requirement already satisfied: python-dateutil&gt;=2.7 in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (from matplotlib-&gt;scikit-uplift) (2.8.2)
-Requirement already satisfied: six&gt;=1.5 in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (from python-dateutil&gt;=2.7-&gt;matplotlib-&gt;scikit-uplift) (1.16.0)
-Requirement already satisfied: pytz&gt;=2020.1 in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (from pandas-&gt;scikit-uplift) (2021.3)
-Requirement already satisfied: certifi&gt;=2017.4.17 in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (from requests-&gt;scikit-uplift) (2021.10.8)
-Requirement already satisfied: idna&lt;4,&gt;=2.5 in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (from requests-&gt;scikit-uplift) (3.3)
-Requirement already satisfied: urllib3&lt;1.27,&gt;=1.21.1 in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (from requests-&gt;scikit-uplift) (1.26.9)
-Requirement already satisfied: charset-normalizer~=2.0.0 in /Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages (from requests-&gt;scikit-uplift) (2.0.4)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: scikit-uplift in d:\anaconda3\lib\site-packages (0.4.1)
+Requirement already satisfied: tqdm in d:\anaconda3\lib\site-packages (from scikit-uplift) (4.64.0)
+Requirement already satisfied: numpy&gt;=1.16 in d:\anaconda3\lib\site-packages (from scikit-uplift) (1.21.5)
+Requirement already satisfied: scikit-learn&gt;=0.21.0 in d:\anaconda3\lib\site-packages (from scikit-uplift) (1.0.2)
+Requirement already satisfied: matplotlib in d:\anaconda3\lib\site-packages (from scikit-uplift) (3.5.1)
+Requirement already satisfied: requests in d:\anaconda3\lib\site-packages (from scikit-uplift) (2.27.1)
+Requirement already satisfied: pandas in d:\anaconda3\lib\site-packages (from scikit-uplift) (1.4.2)
+Requirement already satisfied: threadpoolctl&gt;=2.0.0 in d:\anaconda3\lib\site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (2.2.0)
+Requirement already satisfied: scipy&gt;=1.1.0 in d:\anaconda3\lib\site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (1.7.3)
+Requirement already satisfied: joblib&gt;=0.11 in d:\anaconda3\lib\site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (1.1.0)
+Requirement already satisfied: pyparsing&gt;=2.2.1 in d:\anaconda3\lib\site-packages (from matplotlib-&gt;scikit-uplift) (3.0.4)
+Requirement already satisfied: packaging&gt;=20.0 in d:\anaconda3\lib\site-packages (from matplotlib-&gt;scikit-uplift) (21.3)
+Requirement already satisfied: python-dateutil&gt;=2.7 in d:\anaconda3\lib\site-packages (from matplotlib-&gt;scikit-uplift) (2.8.2)
+Requirement already satisfied: cycler&gt;=0.10 in d:\anaconda3\lib\site-packages (from matplotlib-&gt;scikit-uplift) (0.11.0)
+Requirement already satisfied: kiwisolver&gt;=1.0.1 in d:\anaconda3\lib\site-packages (from matplotlib-&gt;scikit-uplift) (1.3.2)
+Requirement already satisfied: fonttools&gt;=4.22.0 in d:\anaconda3\lib\site-packages (from matplotlib-&gt;scikit-uplift) (4.25.0)
+Requirement already satisfied: pillow&gt;=6.2.0 in d:\anaconda3\lib\site-packages (from matplotlib-&gt;scikit-uplift) (9.0.1)
+Requirement already satisfied: six&gt;=1.5 in d:\anaconda3\lib\site-packages (from python-dateutil&gt;=2.7-&gt;matplotlib-&gt;scikit-uplift) (1.16.0)
+Requirement already satisfied: pytz&gt;=2020.1 in d:\anaconda3\lib\site-packages (from pandas-&gt;scikit-uplift) (2021.3)
+Requirement already satisfied: certifi&gt;=2017.4.17 in d:\anaconda3\lib\site-packages (from requests-&gt;scikit-uplift) (2022.9.24)
+Requirement already satisfied: charset-normalizer~=2.0.0 in d:\anaconda3\lib\site-packages (from requests-&gt;scikit-uplift) (2.0.4)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in d:\anaconda3\lib\site-packages (from requests-&gt;scikit-uplift) (3.3)
+Requirement already satisfied: urllib3&lt;1.27,&gt;=1.21.1 in d:\anaconda3\lib\site-packages (from requests-&gt;scikit-uplift) (1.26.9)
+Requirement already satisfied: colorama in d:\anaconda3\lib\site-packages (from tqdm-&gt;scikit-uplift) (0.4.4)
 </pre></div>
 </div>
 </div>
@@ -1186,13 +1184,13 @@ true value:                  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="references">
+</section>
+<section id="references">
 <h1>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h1>
 <ol class="simple">
 <li><p>Susan Athey, Julie Tibshirani, and Stefan Wager. Generalized random forests. The Annals of Statistics, 47(2):1148–1178, 2019.</p></li>
 </ol>
-</div>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1207,7 +1205,7 @@ true value:                  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./3_Causal_Effect_Learning/Scenario 1"
+            path: "./3_Causal_Effect_Learning\Scenario 1"
         },
         predefinedOutput: true
     }
