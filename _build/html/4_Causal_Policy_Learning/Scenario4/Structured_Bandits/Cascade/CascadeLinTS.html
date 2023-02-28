@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>CascadeLinTS &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -20,7 +21,7 @@
     href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.css" />
@@ -36,7 +37,7 @@
     <script src="../../../../_static/doctools.js"></script>
     <script src="../../../../_static/clipboard.min.js"></script>
     <script src="../../../../_static/copybutton.js"></script>
-    <script src="../../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -1072,33 +1073,33 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="cascadelints">
+  <section class="tex2jax_ignore mathjax_ignore" id="cascadelints">
 <h1>CascadeLinTS<a class="headerlink" href="#cascadelints" title="Permalink to this headline">#</a></h1>
-<div class="section" id="overview">
+<section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p><strong>Advantage</strong>: It is scalable when the features are used. It outperforms algorithms based on other frameworks, such as UCB, in practice.</p></li>
 <li><p><strong>Disadvantage</strong>: It is susceptible to model misspecification.</p></li>
 <li><p><strong>Application Situation</strong>: Useful when presenting a ranked list of items, with only one selected at each interaction. The outcome is binary.</p></li>
 </ul>
-</div>
-<div class="section" id="main-idea">
+</section>
+<section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>Motivated by observations in most real-world applications, which have a large number of candidate items, Zong et al. (2016) proposed using feature information that is widely available to improve learning efficiency. Utilizing the feature information of each item <span class="math notranslate nohighlight">\(i\)</span>, <strong>CascadeLinTS</strong> [1] characterize <span class="math notranslate nohighlight">\(\theta_{i}=E[W_t(i)]\)</span> by assuming that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-156fb4f2-bc3d-4e1d-af2c-c8f80e32c2a5">
-<span class="eqno">(108)<a class="headerlink" href="#equation-156fb4f2-bc3d-4e1d-af2c-c8f80e32c2a5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a5177c70-a82c-4f1a-a5c8-9506c1e28f45">
+<span class="eqno">(108)<a class="headerlink" href="#equation-a5177c70-a82c-4f1a-a5c8-9506c1e28f45" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \theta_{i} = logistic(\boldsymbol{s}_{i,t}^T \boldsymbol{\gamma}),
 \end{equation}\]</div>
 <p>Similar to the Thompson Sampling algorithm with generalized linear bandits [2], we approximate the posterior distribution of <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span> by its Laplace approximation. Specifically, we approximate the posterior of <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span> as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-25cb4fb9-f525-4b6f-be41-56876b6499db">
-<span class="eqno">(109)<a class="headerlink" href="#equation-25cb4fb9-f525-4b6f-be41-56876b6499db" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4f89659e-5a62-4d9e-a70d-2d834f7ab65a">
+<span class="eqno">(109)<a class="headerlink" href="#equation-4f89659e-5a62-4d9e-a70d-2d834f7ab65a" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \begin{split}
     \tilde{\boldsymbol{\gamma}}^{t} &amp;\sim \mathcal{N}\Big(\hat{\boldsymbol{\gamma}}_{t}, \alpha^2 \boldsymbol{H}_{t}^{-1}\Big),\\
     \boldsymbol{H}_{t} &amp;= \sum_{t}\mu^{'}(\boldsymbol{S}_{t}^{T}\hat{\boldsymbol{\gamma}}^{t})\boldsymbol{S}_{t}\boldsymbol{S}_{t}^{T},
     \end{split}
 \end{equation}\]</div>
-</div>
-<div class="section" id="key-steps">
+</section>
+<section id="key-steps">
 <h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">#</a></h2>
 <p>For round <span class="math notranslate nohighlight">\(t = 1,2,\cdots\)</span>:</p>
 <ol class="simple">
@@ -1109,8 +1110,8 @@ title="Print to PDF"
 <li><p>Receive reward <span class="math notranslate nohighlight">\(R_{t}\)</span>.</p></li>
 </ol>
 <p>*Notations can be found in either the inroduction of the chapter “Structured Bandits” or the introduction of the cascading Bandit problems.</p>
-</div>
-<div class="section" id="demo-code">
+</section>
+<section id="demo-code">
 <h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1120,20 +1121,8 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">a4f395ec17bc</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">os</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:\GitHub\CausalDM&#39;</span><span class="p">)</span>
-
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;D:\\GitHub\\CausalDM&#39;
-</pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="import-the-learner">
+<section id="import-the-learner">
 <h3>Import the learner.<a class="headerlink" href="#import-the-learner" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1142,9 +1131,14 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
+</pre></div>
 </div>
 </div>
-<div class="section" id="generate-the-environment">
+</div>
+</section>
+<section id="generate-the-environment">
 <h3>Generate the Environment<a class="headerlink" href="#generate-the-environment" title="Permalink to this headline">#</a></h3>
 <p>Here, we imitate an environment based on the Yelp dataset. The number of items recommended at each round, <span class="math notranslate nohighlight">\(K\)</span>, is specified as <span class="math notranslate nohighlight">\(3\)</span>.</p>
 <div class="cell docutils container">
@@ -1155,8 +1149,8 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="specify-hyperparameters">
+</section>
+<section id="specify-hyperparameters">
 <h3>Specify Hyperparameters<a class="headerlink" href="#specify-hyperparameters" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>K: number of itmes to be recommended at each round</p></li>
@@ -1180,8 +1174,8 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="recommendation-and-interaction">
+</section>
+<section id="recommendation-and-interaction">
 <h3>Recommendation and Interaction<a class="headerlink" href="#recommendation-and-interaction" title="Permalink to this headline">#</a></h3>
 <p>We fisrt observe the feature information <span class="math notranslate nohighlight">\(X\)</span> by
 <code> X = env.Phi </code>. (Note: if an intercept is considered, the X should include a column of ones). Starting from t = 0, for each step t, there are three steps:</p>
@@ -1205,20 +1199,23 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([1301, 2087, 1123]), array([0., 0., 0.]), array([1., 1., 1.]), 0.0)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([1301, 2087, 1123], dtype=int64),
+ array([0., 0., 0.]),
+ array([1., 1., 1.]),
+ 0.0)
 </pre></div>
 </div>
 </div>
 </div>
 <p><strong>Interpretation</strong>: For step 0, the agent decides to display three top restaurants, the first of which is restaurant 1301, the second is restaurant 2087, and the third is restaurant 1123. Unfortunately, the customer does not show any interest in any of the recommended restaurants. As a result, the agent receives a zero reward at round <span class="math notranslate nohighlight">\(0\)</span>.</p>
-</div>
-</div>
-<div class="section" id="references">
+</section>
+</section>
+<section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <p>[1] Zong, S., Ni, H., Sung, K., Ke, N. R., Wen, Z., &amp; Kveton, B. (2016). Cascading bandits for large-scale recommendation problems. arXiv preprint arXiv:1603.05359.</p>
 <p>[2] Kveton, B., Zaheer, M., Szepesvari, C., Li, L., Ghavamzadeh, M., &amp; Boutilier, C. (2020, June). Randomized exploration in generalized linear bandits. In International Conference on Artificial Intelligence and Statistics (pp. 2066-2076). PMLR.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1232,8 +1229,8 @@ title="Print to PDF"
             mode: "python"
         },
         kernelOptions: {
-            name: "python3",
-            path: "./4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade"
+            kernelName: "python3",
+            path: "./4_Causal_Policy_Learning\Scenario4\Structured_Bandits\Cascade"
         },
         predefinedOutput: true
     }

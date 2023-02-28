@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Deep Jump Learner for Continuous Actions &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -20,7 +21,7 @@
     href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
@@ -36,7 +37,7 @@
     <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -1066,7 +1067,7 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="deep-jump-learner-for-continuous-actions">
+  <section class="tex2jax_ignore mathjax_ignore" id="deep-jump-learner-for-continuous-actions">
 <h1>Deep Jump Learner for Continuous Actions<a class="headerlink" href="#deep-jump-learner-for-continuous-actions" title="Permalink to this headline">#</a></h1>
 <p>Despite the popularity of developing methods for policy optimization and evaluation with discrete treatments, less attention has been paid to continuous action domains such as personalized dose-finding and dynamic pricing. We review the classical solutions for continous domains and detail the <strong>deep jump learner</strong> for continuous actions.</p>
 <p><em><strong>Application situations</strong></em>:</p>
@@ -1089,54 +1090,54 @@ title="Print to PDF"
 </ul>
 </li>
 </ol>
-<div class="section" id="main-idea">
+<section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
-<div class="section" id="overview">
+<section id="overview">
 <h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h3>
 <p>To handle <strong>continuous treatment settings</strong>, we detail the jump interval-learning to develop an individualized interval-valued decision rule (I2DR) that maximizes the expected outcome. Unlike individualized decision rules (IDRs) that recommend a single treatment, the newly proposed I2DR yields an interval of treatment options for each individual, making it more flexible to implement in practice. On the other hand, for off-policy evaluation, we review the deep jump learning, of which the key ingredient lies in adaptively discretizing the treatment space using deep discretization, by leveraging deep learning and multi-scale change point detection. This allows us to apply existing off-policy evaluation methods in discrete treatments to handle continuous treatments, and overcome the limitations of kernel-based methods in the literature and handle both <strong>continuous/discontinuous value function</strong>.</p>
-</div>
-<div class="section" id="difficulties-in-continuous-actions">
+</section>
+<section id="difficulties-in-continuous-actions">
 <h3>Difficulties in Continuous Actions<a class="headerlink" href="#difficulties-in-continuous-actions" title="Permalink to this headline">#</a></h3>
 <p>Let the observed offline datasets as <span class="math notranslate nohighlight">\(\{(X_i,A_i,Y_i)\}_{1\le i\le n}\)</span> and <span class="math notranslate nohighlight">\(n\)</span> as the total sample size. A decision rule or policy <span class="math notranslate nohighlight">\(d: \mathcal{X} \to \mathcal{A}\)</span>. We use <span class="math notranslate nohighlight">\(b\)</span> to denote the propensity score and <span class="math notranslate nohighlight">\(p(\bullet|x)\)</span> denotes the probability density function of <span class="math notranslate nohighlight">\(A\)</span> given <span class="math notranslate nohighlight">\(X=x\)</span>. Define the <span class="math notranslate nohighlight">\(Q\)</span>-function as <span class="math notranslate nohighlight">\(Q(x, a) = E(Y|X=x,A=a).\)</span> The doubly robust (DR) estimator of value <span class="math notranslate nohighlight">\(V(d) = E [Q\{X, d(X)\}]\)</span> for discrete treatments is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a0f797d0-5662-4f40-ae36-9a34a452efd7">
-<span class="eqno">(51)<a class="headerlink" href="#equation-a0f797d0-5662-4f40-ae36-9a34a452efd7" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:DR}
+<div class="amsmath math notranslate nohighlight" id="equation-145fd12f-0a7b-49b1-b24e-087c38daa183">
+<span class="eqno">(51)<a class="headerlink" href="#equation-145fd12f-0a7b-49b1-b24e-087c38daa183" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:DR}
 \frac{1}{n}\sum_{i=1}^n \psi(O_i,d,\widehat{Q},\widehat{p})=\frac{1}{n}\sum_{i=1}^n \left[\widehat{Q}\{X_i,d(X_i)\}+\frac{\mathbb{I}\{A_i=d(X_i)\}}{\widehat{p}(A_i|X_i)}\{Y_i-\widehat{Q}(X_i,A_i)\}\right],
 \end{eqnarray}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathbb{I}(\bullet)\)</span> denotes the indicator function, <span class="math notranslate nohighlight">\(\widehat{Q}\)</span> and <span class="math notranslate nohighlight">\(\widehat{p}(a|x)\)</span> denote some estimators for the conditional mean function <span class="math notranslate nohighlight">\(Q\)</span> and the propensity score <span class="math notranslate nohighlight">\(b\)</span>, respectively. In continuous treatment domains, the indicator function <span class="math notranslate nohighlight">\(\mathbb{I}\{A_i=d(X_i)\}\)</span> equals zero almost surely. Consequently, naively applying the DR method yields a plug-in estimator <span class="math notranslate nohighlight">\(\sum_{i=1}^n \widehat{Q}\{X_i,d(X_i)\}/n\)</span>. To address this concern, the kernel-based methods proposed to replace the indicator function with a kernel function <span class="math notranslate nohighlight">\(K[\{A_i-d(X_i)\}/h]\)</span>, i.e.,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-097d3330-56f8-4513-a34b-d1227ba58f20">
-<span class="eqno">(52)<a class="headerlink" href="#equation-097d3330-56f8-4513-a34b-d1227ba58f20" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:kernel}
+<div class="amsmath math notranslate nohighlight" id="equation-2f483d8a-5eb5-42a4-95a7-60a645af182c">
+<span class="eqno">(52)<a class="headerlink" href="#equation-2f483d8a-5eb5-42a4-95a7-60a645af182c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:kernel}
 	\frac{1}{n}\sum_{i=1}^n \psi_h(O_i,d,\widehat{Q},\widehat{p})=\frac{1}{n}\sum_{i=1}^n \left[\widehat{Q}\{X_i,d(X_i)\}+\frac{K\{{A_i-d(X_i)\over h}\}}{\widehat{p}(A_i|X_i)}\{Y_i-\widehat{Q}(X_i,A_i)\}\right].
 \end{eqnarray}\]</div>
 <p>Here, the bandwidth <span class="math notranslate nohighlight">\(h\)</span> represents a trade-off. The variance of the resulting value estimator decays with <span class="math notranslate nohighlight">\(h\)</span>. Yet, its bias increases with <span class="math notranslate nohighlight">\(h\)</span>. This method requires the expected second derivative of the function <span class="math notranslate nohighlight">\(Q(x,a)\)</span> exists, and thus <span class="math notranslate nohighlight">\(Q(x,a)\)</span> needs to be a <strong>smooth</strong> function of <span class="math notranslate nohighlight">\(a\)</span>.</p>
-</div>
-<div class="section" id="details-of-deep-jump-learner">
+</section>
+<section id="details-of-deep-jump-learner">
 <h3>Details of Deep Jump Learner<a class="headerlink" href="#details-of-deep-jump-learner" title="Permalink to this headline">#</a></h3>
 <p>To overcome these difficulties, the deep jump learner proposes to adaptively discretizing the treatment space. We define <span class="math notranslate nohighlight">\(\mathcal{B}(m)\)</span> as the set of discretizations <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> such that each interval <span class="math notranslate nohighlight">\(\mathcal{I}\in \mathcal{D}\)</span> corresponds to a union of some of the <span class="math notranslate nohighlight">\(m\)</span> initial intervals.  Each discretization <span class="math notranslate nohighlight">\(\mathcal{D}\in \mathcal{B}(m)\)</span> is associated with a set of functions <span class="math notranslate nohighlight">\(\{q_{\mathcal{I}}\}_{\mathcal{I}\in \mathcal{D}}\)</span>. We model these <span class="math notranslate nohighlight">\(q_{\mathcal{I}}\)</span> using deep neural networks (DNNs), to capture the complex dependence between the outcome and features.  Thus, <span class="math notranslate nohighlight">\(\widehat{\mathcal{D}}\)</span> can be estimated by solving</p>
-<div class="amsmath math notranslate nohighlight" id="equation-40f5d02e-890c-4ad2-a4a4-cd41c957a8c7">
-<span class="eqno">(53)<a class="headerlink" href="#equation-40f5d02e-890c-4ad2-a4a4-cd41c957a8c7" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:optimize}
+<div class="amsmath math notranslate nohighlight" id="equation-f9260dba-2e92-4c3b-9e27-a27a13126039">
+<span class="eqno">(53)<a class="headerlink" href="#equation-f9260dba-2e92-4c3b-9e27-a27a13126039" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:optimize}
  \left(\widehat{\mathcal{D}},\{\widehat{q}_{\mathcal{I}}:\mathcal{I}\in \widehat{\mathcal{D}} \}\right)=argmin_{\left(\substack{\mathcal{D}\in \mathcal{B}(m),\\ \{q_{\mathcal{I}}\in \mathcal{Q}_{\mathcal{I}}: \mathcal{I}\in \mathcal{D} \} }\right)}\left(\sum_{\mathcal{I}\in \mathcal{D}} \left[ {1\over n} \sum_{i=1}^{n} \mathbb{I}(A_i\in \mathcal{I})  \big\{Y_i - q_{\mathcal{I}}(X_i) \big\}^2\right]+\gamma_n |\mathcal{D}| \right),
 \end{eqnarray}\]</div>
 <p>for some regularization parameter <span class="math notranslate nohighlight">\(\gamma_n\)</span> and some function class of DNNs <span class="math notranslate nohighlight">\(\mathcal{Q}_{\mathcal{I}}\)</span>.</p>
 <p><em><strong>Policy Optimization</strong></em>:</p>
 <p>Given <span class="math notranslate nohighlight">\(\widehat{\mathcal{D}}\)</span> and <span class="math notranslate nohighlight">\(\{\widehat{q}_{\mathcal{I}}:\mathcal{I}\in \widehat{\mathcal{D}} \}\)</span>, to maximize the expected outcome of interest, our proposed I2DR is then given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-59cc2e62-0510-4e28-b7d1-0a70bf221d11">
-<span class="eqno">(54)<a class="headerlink" href="#equation-59cc2e62-0510-4e28-b7d1-0a70bf221d11" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{I2DR}
+<div class="amsmath math notranslate nohighlight" id="equation-51fbf0b9-dc1e-438a-b9fd-bc2498af75ca">
+<span class="eqno">(54)<a class="headerlink" href="#equation-51fbf0b9-dc1e-438a-b9fd-bc2498af75ca" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{I2DR}
 	\widehat{d}(x)=argmax_{\mathcal{I}\in \widehat{\mathcal{D}}}  \widehat{q}_{\mathcal{I}}(x),\,\,\,\,\,\,\,\,\forall x\in \mathbb{X}.
 \end{eqnarray}\]</div>
 <p>When the argmax in the above equation is not unique, <span class="math notranslate nohighlight">\(\widehat{d}(\cdot)\)</span> outputs the interval that contains the smallest treatment.</p>
 <p><em><strong>Policy Evaluation</strong></em>:</p>
 <p>Given <span class="math notranslate nohighlight">\(\widehat{\mathcal{D}}\)</span> and <span class="math notranslate nohighlight">\(\{\widehat{q}_{\mathcal{I}}:\mathcal{I}\in \widehat{\mathcal{D}} \}\)</span>, we apply the DR estimator to derive the value estimate for any target policy of interest <span class="math notranslate nohighlight">\(d\)</span>, i.e.,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-98b8e3f4-b077-4ac9-af16-68e3988cab1f">
-<span class="eqno">(55)<a class="headerlink" href="#equation-98b8e3f4-b077-4ac9-af16-68e3988cab1f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{value_djqe}
+<div class="amsmath math notranslate nohighlight" id="equation-396b1823-0966-4522-87e1-109797627822">
+<span class="eqno">(55)<a class="headerlink" href="#equation-396b1823-0966-4522-87e1-109797627822" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{value_djqe}
 	\widehat{V}^{DR}(d)={1\over n} \sum_{\mathcal{I}\in \widehat{\mathcal{D}}}  \sum_{i=1}^{n} \left( \mathbb{I}\{d(X_i)\in \mathcal{I}\}  \left[  {\mathbb{I}(A_i\in \mathcal{I})\over  \widehat{p}_\mathcal{I}(X_i)}\big\{Y_i - \widehat{q}_\mathcal{I}(X_i) \big\} + \widehat{q}_\mathcal{I}(X_i) \right]\right),
 \end{eqnarray}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\widehat{p}_{\mathcal{I}}(x)\)</span> is some estimator of the generalized propensity score function <span class="math notranslate nohighlight">\(p(A\in \mathcal{I}|X=x)\)</span>.</p>
-</div>
-</div>
-<div class="section" id="demo-code">
+</section>
+</section>
+<section id="demo-code">
 <h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
 <p>In the following, we exhibit how to apply the learner on real data to do policy learning and policy evaluation, respectively.</p>
-<div class="section" id="policy-learning">
+<section id="policy-learning">
 <h3>1. Policy Learning<a class="headerlink" href="#policy-learning" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1160,12 +1161,14 @@ title="Print to PDF"
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">dd662ef88bbf</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 5&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># To find the optimal I2DR by the deep jump learner on the Real Data </span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="c1"># of Warfarin Dosing (20 features)</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> 
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># code used to import the learner</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># code used to import the learner  </span>
 <span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">DJL_opt</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> 
 <span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="c1"># real data generator</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">data_gen</span> <span class="o">=</span> <span class="n">data_generator</span><span class="o">.</span><span class="n">RealDataGenerator</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;real_envir.pickle&#39;</span><span class="p">)</span> 
 
 <span class="ne">ModuleNotFoundError</span>: No module named &#39;DJL_opt&#39;
 </pre></div>
@@ -1187,8 +1190,8 @@ title="Print to PDF"
 </div>
 </div>
 <p><strong>Interpretation:</strong> The estimated optimal regime (I2DR) for 0th patient is [0.333, 1.0].</p>
-</div>
-<div class="section" id="policy-evaluation">
+</section>
+<section id="policy-evaluation">
 <h3>2. Policy Evaluation<a class="headerlink" href="#policy-evaluation" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1228,16 +1231,16 @@ title="Print to PDF"
 </div>
 </div>
 <p><strong>Interpretation:</strong> The analysis result: the estimated value of the calibrated optimal policy under sample size <span class="math notranslate nohighlight">\(n=100\)</span> and <span class="math notranslate nohighlight">\(p=20\)</span> features is -0.1.</p>
-</div>
-</div>
-<div class="section" id="references">
+</section>
+</section>
+<section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <p>[1] Cai, H., Shi, C., Song, R., &amp; Lu, W. (2021). Deep jump learning for off-policy evaluation in continuous treatment settings. Advances in Neural Information Processing Systems, 34.</p>
 <p>[2] Cai, H., Shi, C., Song, R., &amp; Lu, W. (2021). Jump Interval-Learning for Individualized Decision Making. arXiv preprint arXiv:2111.08885.</p>
 <p>[3] Zhu, L., Lu, W., Kosorok, M. R., &amp; Song, R. (2020, August). Kernel assisted learning for personalized dose finding. In Proceedings of the 26th ACM SIGKDD International Conference on Knowledge Discovery &amp; Data Mining (pp. 56-65).</p>
 <p>[4] Kallus, N., &amp; Zhou, A. (2018, March). Policy evaluation and optimization with continuous treatments. In International conference on artificial intelligence and statistics (pp. 1243-1251). PMLR.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1251,8 +1254,8 @@ title="Print to PDF"
             mode: "python"
         },
         kernelOptions: {
-            name: "python3",
-            path: "./4_Causal_Policy_Learning/Scenario1/Continuous"
+            kernelName: "python3",
+            path: "./4_Causal_Policy_Learning\Scenario1\Continuous"
         },
         predefinedOutput: true
     }

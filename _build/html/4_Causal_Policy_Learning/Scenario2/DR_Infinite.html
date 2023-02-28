@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Doubly Robust Estimator for Policy Evaluation (Infinite Horizon) &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -20,7 +21,7 @@
     href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
@@ -36,7 +37,7 @@
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -1028,7 +1029,7 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="doubly-robust-estimator-for-policy-evaluation-infinite-horizon">
+  <section class="tex2jax_ignore mathjax_ignore" id="doubly-robust-estimator-for-policy-evaluation-infinite-horizon">
 <h1>Doubly Robust Estimator for Policy Evaluation (Infinite Horizon)<a class="headerlink" href="#doubly-robust-estimator-for-policy-evaluation-infinite-horizon" title="Permalink to this headline">#</a></h1>
 <p>The third category, the doubly robust (DR) approach, combines DM and IS to achieve low variance and bias. The DR technique has also been widely studied in statistics.</p>
 <p><em><strong>Advantages</strong></em>:</p>
@@ -1043,13 +1044,13 @@ title="Print to PDF"
 <li><p>Policy match is sufficient</p></li>
 <li><p>The Q-function model might exist significant bias.</p></li>
 </ol>
-<div class="section" id="main-idea">
+<section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>In OPE, a DR estimator first requires a Q-function estimator, denoted as <span class="math notranslate nohighlight">\(\widehat{Q}\)</span>, which can be learned by various methods in the literature, such as <a class="reference internal" href="FQE.html#section-fqe"><span class="std std-ref">FQE</span></a>.
 Denote the corresponding plug-in V-function estimator as <span class="math notranslate nohighlight">\(\widehat{V}\)</span>.
 These estimators will then be integrated with importance ratios in a form typically motivated by the Bellman equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bf1036c0-f8b7-4a65-8cd2-be304a2e552c">
-<span class="eqno">(64)<a class="headerlink" href="#equation-bf1036c0-f8b7-4a65-8cd2-be304a2e552c" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
+<div class="amsmath math notranslate nohighlight" id="equation-36c8f97d-242a-420c-9679-654cdde27d57">
+<span class="eqno">(64)<a class="headerlink" href="#equation-36c8f97d-242a-420c-9679-654cdde27d57" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
     Q^\pi(a, s) = \mathbb{E}^\pi \Big(R_t + \gamma Q^\pi(A_{t + 1}, S_{t+1})  | A_t = a, S_t = s \Big).  \;\;\;\;\; \text{(1)} 
 \end{equation}\]</div>
 <p>For example, based on the <a class="reference internal" href="IPW_Infinite.html#section-ipw-rl-main-idea"><span class="std std-ref">step-wise IS</span></a>, <span id="id2">Thomas and Brunskill [<a class="reference internal" href="#id17" title="Philip Thomas and Emma Brunskill. Data-efficient off-policy policy evaluation for reinforcement learning. In International Conference on Machine Learning, 2139–2148. 2016.">TB16</a>]</span> proposes to construct the estimator as</p>
@@ -1074,23 +1075,23 @@ For <span class="math notranslate nohighlight">\(t = T - 1, \dots, 0\)</span>, w
 <p>The final value estimator is then defined as <span class="math notranslate nohighlight">\(\widehat{V}_{DR}^0\)</span>.</p>
 <p>The name, doubly robust, reflects the fact that the DR estimators are typically consistent as long as one of the two components is consistent, and hence the estimator is doubly robust to model mis-specifications.
 Besides, a DR estimator typically has lower (or comparable) bias and variance than its components, in the asymptotic sense. However, similar with the standard IS methods, standard DR estimators also rely on per-step importance ratios  and hence will suffer from huge variance when the horizon is long.</p>
-</div>
-<div class="section" id="double-reinforcement-learning-with-stationary-distribution">
+</section>
+<section id="double-reinforcement-learning-with-stationary-distribution">
 <h2>Double Reinforcement Learning with Stationary Distribution<a class="headerlink" href="#double-reinforcement-learning-with-stationary-distribution" title="Permalink to this headline">#</a></h2>
 <p>To avoid the curse of horizon, a few extensions of the stationary distribution-based approach have been proposed in the literature.
 For example, <span id="id5">Tang <em>et al.</em> [<a class="reference internal" href="#id18" title="Ziyang Tang, Yihao Feng, Lihong Li, Dengyong Zhou, and Qiang Liu. Doubly robust bias reduction in infinite horizon off-policy estimation. In International Conference on Learning Representations. 2019.">TFL+19</a>]</span> designs a DR version, and <span id="id6">Uehara <em>et al.</em> [<a class="reference internal" href="#id19" title="Masatoshi Uehara, Jiawei Huang, and Nan Jiang. Minimax weight and q-function learning for off-policy evaluation. arXiv preprint arXiv:1910.12809, 2019.">UHJ19</a>]</span> proposes to learn a single nuisance function <span class="math notranslate nohighlight">\(\widetilde{\xi}^{\pi}(s,a) \equiv \widetilde{\omega}^{\pi}(s) [\pi(a|s) / b(a|s)]\)</span> instead of learning <span class="math notranslate nohighlight">\(\widetilde{\omega}^{\pi}(s)\)</span> and <span class="math notranslate nohighlight">\(b\)</span> separately.</p>
 <p>In particular, following this line of research, <span id="id7">Kallus and Uehara [<a class="reference internal" href="#id20" title="Nathan Kallus and Masatoshi Uehara. Efficiently breaking the curse of horizon in off-policy evaluation with double reinforcement learning. arXiv preprint arXiv:1909.05850, 2019.">KU19</a>]</span> recently proposes a state-of-the-art method named double reinforcement learning (DRL) that achieves the semiparametric efficiency bound for OPE. DRL is a doubly robust-type method.</p>
 <p>To begin with, we first define the marginalized density ratio under the target policy <span class="math notranslate nohighlight">\(\pi\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-353a1b23-8e07-451f-8596-e27f1b9e4664">
-<span class="eqno">(65)<a class="headerlink" href="#equation-353a1b23-8e07-451f-8596-e27f1b9e4664" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:omega}
+<div class="amsmath math notranslate nohighlight" id="equation-1802fbc6-5d4d-4de4-a5a5-509aca010d26">
+<span class="eqno">(65)<a class="headerlink" href="#equation-1802fbc6-5d4d-4de4-a5a5-509aca010d26" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:omega}
 	\omega^{\pi}(a,s)=\frac{(1-\gamma)\sum_{t=0}^{+\infty} \gamma^{t} p_t^{\pi}(a,s)}{p_b(a, s)}, 
 \end{eqnarray}\]</div>
 <p>where <span class="math notranslate nohighlight">\(p_t^{\pi}(a, s)\)</span> denotes the probability of <span class="math notranslate nohighlight">\(\{S_t = s, A_t = a\}\)</span> following policy <span class="math notranslate nohighlight">\(\pi\)</span> with  <span class="math notranslate nohighlight">\(S_{0}\sim \mathbb{G}\)</span>.
 Recall that <span class="math notranslate nohighlight">\(p_b(s, a)\)</span> is the stationary density function of the state-action pair under the policy <span class="math notranslate nohighlight">\(b\)</span>.</p>
 <p>Let <span class="math notranslate nohighlight">\(\widehat{Q}\)</span> and <span class="math notranslate nohighlight">\(\widehat{\omega}\)</span> be some estimates of  <span class="math notranslate nohighlight">\(Q^{\pi}\)</span> and <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span>,  respectively.
 DRL first constructs the following estimator for every <span class="math notranslate nohighlight">\((i,t)\)</span> in a doubly robust manner:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ff5ed789-14e1-47bc-a806-fc2e078cbb5d">
-<span class="eqno">(66)<a class="headerlink" href="#equation-ff5ed789-14e1-47bc-a806-fc2e078cbb5d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{term}
+<div class="amsmath math notranslate nohighlight" id="equation-e69275cf-8b70-41ec-a07c-369dbf0c742a">
+<span class="eqno">(66)<a class="headerlink" href="#equation-e69275cf-8b70-41ec-a07c-369dbf0c742a" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{term}
 \begin{split}
 	\psi_{i,t}
 	\equiv
@@ -1110,8 +1111,8 @@ DRL first constructs the following estimator for every <span class="math notrans
 <p>One can show that
 <span class="math notranslate nohighlight">\(\widehat{\eta}_{\tiny{\textrm{DRL}}}\)</span> is consistent when either <span class="math notranslate nohighlight">\(\widehat{Q}\)</span> or <span class="math notranslate nohighlight">\(\widehat{\omega}\)</span> is consistent, and hence is doubly robust.
 In addition, under mild conditions, we can prove that <span class="math notranslate nohighlight">\(\sqrt{nT} (\widehat{\eta}_{\tiny{\textrm{DRL}}} - \eta^{\pi})\)</span> converges weakly to a normal distribution with mean zero and variance <span class="math notranslate nohighlight">\(\sigma^2\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9f288b7d-99dd-448e-a200-f17f80b31453">
-<span class="eqno">(67)<a class="headerlink" href="#equation-9f288b7d-99dd-448e-a200-f17f80b31453" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{lower_bound}
+<div class="amsmath math notranslate nohighlight" id="equation-1e112b88-7ad2-4c98-a385-fe2dfd41f836">
+<span class="eqno">(67)<a class="headerlink" href="#equation-1e112b88-7ad2-4c98-a385-fe2dfd41f836" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{lower_bound}
     \sigma^2 = 
     \frac{1}{(1-\gamma)^2}\mathbb{E} \left[ 
     \omega^{\pi}(A, S) \{R + \gamma V^{\pi}(S') -  Q^{\pi}(A,S)\}
@@ -1120,8 +1121,8 @@ In addition, under mild conditions, we can prove that <span class="math notransl
 <p>where the expectation is over tuples following
 the stationary distribution of the process <span class="math notranslate nohighlight">\(\{(S_t,A_t,R_t,S_{t+1})\}_{t\ge 0}\)</span>, generated by <span class="math notranslate nohighlight">\(b\)</span>. Moreover, this asymptotic variance is proven to be the semiparametric efficiency bound for  infinite-horizon OPE <span id="id8">Kallus and Uehara [<a class="reference internal" href="#id20" title="Nathan Kallus and Masatoshi Uehara. Efficiently breaking the curse of horizon in off-policy evaluation with double reinforcement learning. arXiv preprint arXiv:1909.05850, 2019.">KU19</a>]</span>.
 Roughly speaking, this implies the algorithm is statistically most efficient.</p>
-</div>
-<div class="section" id="demo-todo">
+</section>
+<section id="demo-todo">
 <h2>Demo [TODO]<a class="headerlink" href="#demo-todo" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1138,18 +1139,18 @@ Roughly speaking, this implies the algorithm is statistically most efficient.</p
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">74</span><span class="n">c57ea9d893</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 7&gt;</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
 <span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
 
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;../CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [WinError 2] 系统找不到指定的文件。: &#39;../CausalDM&#39;
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="references">
+</section>
+<section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <div class="docutils container" id="id9">
 <dl class="citation">
@@ -1173,15 +1174,15 @@ Roughly speaking, this implies the algorithm is statistically most efficient.</p
 </dd>
 </dl>
 </div>
-</div>
-<div class="section" id="note">
+</section>
+<section id="note">
 <h2>Note<a class="headerlink" href="#note" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p>One critical question is how to estimate the nuisance function <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span>.
 The following observation forms the basis: <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span> is the only function that satisfies the equation <span class="math notranslate nohighlight">\(\mathbb{E} L(\omega^{\pi},f)=0\)</span> for any function <span class="math notranslate nohighlight">\(f\)</span>, where <span class="math notranslate nohighlight">\(L(\omega^{\pi},f)\)</span> equals</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-643cfbc0-316e-428b-9fd2-5c7dfd387aa9">
-<span class="eqno">(68)<a class="headerlink" href="#equation-643cfbc0-316e-428b-9fd2-5c7dfd387aa9" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn_omega}
+<div class="amsmath math notranslate nohighlight" id="equation-b44e85e5-95f5-44d6-873e-a72cc613ebd1">
+<span class="eqno">(68)<a class="headerlink" href="#equation-b44e85e5-95f5-44d6-873e-a72cc613ebd1" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn_omega}
 \begin{split}
 	\Big[\mathbb{E}_{a \sim \pi(\cdot|S_{t+1})} \{\omega^{\pi}(A_{t},S_{t})
 	(\gamma f(a, S_{t+1})- f(A_{t},S_{t}) ) \}
@@ -1189,8 +1190,8 @@ The following observation forms the basis: <span class="math notranslate nohighl
 \end{split}
 \end{eqnarray}\]</div>
 <p>As such, <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span> can be learned by solving the following mini-max problem,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-00fd94cf-a67b-4832-bcd7-147f1ed2713b">
-<span class="eqno">(69)<a class="headerlink" href="#equation-00fd94cf-a67b-4832-bcd7-147f1ed2713b" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:solveL}
+<div class="amsmath math notranslate nohighlight" id="equation-7107bb86-9224-4e85-b174-4401c655ba7d">
+<span class="eqno">(69)<a class="headerlink" href="#equation-7107bb86-9224-4e85-b174-4401c655ba7d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:solveL}
 \arg \min_{\omega\in \Omega} \sup_{f\in \mathcal{F}} \{\mathbb{E} L(\omega, f)\}^2, 
 \end{eqnarray}\]</div>
 <p>for some function classes <span class="math notranslate nohighlight">\(\Omega\)</span> and <span class="math notranslate nohighlight">\(\mathcal{F}\)</span>.
@@ -1198,8 +1199,8 @@ To simplify the calculation, we can choose <span class="math notranslate nohighl
 This yields a closed-form expression for <span class="math notranslate nohighlight">\(\sup_{f\in \mathcal{F}} \{\mathbb{E} L(\omega,f)\}^2\)</span>, for any <span class="math notranslate nohighlight">\(\omega\)</span>. Consequently, <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span> can be learned by solving the outer minimization via optimization methods such as stochastic gradient descent,
 with the expectation approximated by the sample mean.
 <span class="math notranslate nohighlight">\(\widetilde{\omega}^{\pi}(s)\)</span> can be learned in a similar manner.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1213,8 +1214,8 @@ with the expectation approximated by the sample mean.
             mode: "python"
         },
         kernelOptions: {
-            name: "python3",
-            path: "./4_Causal_Policy_Learning/Scenario2"
+            kernelName: "python3",
+            path: "./4_Causal_Policy_Learning\Scenario2"
         },
         predefinedOutput: true
     }

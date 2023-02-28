@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Preliminaries of Causal Graphs &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -20,7 +21,7 @@
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -36,7 +37,7 @@
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -1042,20 +1043,20 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="preliminaries-of-causal-graphs">
+  <section class="tex2jax_ignore mathjax_ignore" id="preliminaries-of-causal-graphs">
 <h1>Preliminaries of Causal Graphs<a class="headerlink" href="#preliminaries-of-causal-graphs" title="Permalink to this headline">#</a></h1>
 <p>Most existing methodologies for average / heterogeneous treatment effects and personalized decision making rely on a known causal structure. This enables us to locate the right variables to control (e.g., confounders), to intervene (e.g., treatments), and to optimize (e.g., rewards). However, such a convenience is violated in many emerging real applications with unknown causal reasoning. Causal discovery thus attracts more and more attention recently to infer causal structure from data and disentangle the complex relationship among variables.</p>
-<div class="section" id="general-causal-graph-terminology">
+<section id="general-causal-graph-terminology">
 <h2>General Causal Graph Terminology<a class="headerlink" href="#general-causal-graph-terminology" title="Permalink to this headline">#</a></h2>
 <p>Consider a graph <span class="math notranslate nohighlight">\(\mathcal{G} =(\mathbf{Z},\mathbf{E})\)</span> with a node set <span class="math notranslate nohighlight">\(\mathbf{Z}\)</span> and an edge set <span class="math notranslate nohighlight">\(\mathbf{E}\)</span>. A node <span class="math notranslate nohighlight">\(Z_i\)</span> is said to be a parent of <span class="math notranslate nohighlight">\(Z_j\)</span> if there is a directed edge from <span class="math notranslate nohighlight">\(Z_i\)</span> to <span class="math notranslate nohighlight">\(Z_j\)</span>. Let the set of all parents of node <span class="math notranslate nohighlight">\(Z_j\)</span> in <span class="math notranslate nohighlight">\(\mathcal{G}\)</span> as <span class="math notranslate nohighlight">\(PA_{Z_j} (\mathcal{G})\)</span>. A directed graph that does not contain directed cycles is called a directed acyclic graph (DAG). Suppose a DAG <span class="math notranslate nohighlight">\(\mathcal{G}=(\mathbf{Z},\mathbf{E})\)</span> that characterizes the causal relationship among <span class="math notranslate nohighlight">\(|\mathbf{Z}|=d\)</span> nodes, where <span class="math notranslate nohighlight">\(\mathbf{Z}=[Z_1,Z_2,\cdots,Z_d]^\top \)</span> represents a random vector and an edge <span class="math notranslate nohighlight">\(Z_i\rightarrow Z_j\)</span> means that <span class="math notranslate nohighlight">\(Z_i\)</span> is a direct cause of <span class="math notranslate nohighlight">\(Z_j\)</span>.</p>
-</div>
-<div class="section" id="toy-example-1-causal-graph-for-heterogeneous-treatment-effect-and-personalized-decision-making">
+</section>
+<section id="toy-example-1-causal-graph-for-heterogeneous-treatment-effect-and-personalized-decision-making">
 <h2>Toy Example 1:  Causal Graph for Heterogeneous Treatment Effect and Personalized Decision Making<a class="headerlink" href="#toy-example-1-causal-graph-for-heterogeneous-treatment-effect-and-personalized-decision-making" title="Permalink to this headline">#</a></h2>
 <p>In this example, the feature <span class="math notranslate nohighlight">\(S\)</span> determines the treatment assignment <span class="math notranslate nohighlight">\(A\)</span> (i.e., <span class="math notranslate nohighlight">\(S\rightarrow A\)</span>) and the outcome <span class="math notranslate nohighlight">\(R\)</span> (i.e., <span class="math notranslate nohighlight">\(S\rightarrow R\)</span>), and the treatment assignment <span class="math notranslate nohighlight">\(A\)</span> further influences the outcome <span class="math notranslate nohighlight">\(R\)</span> (i.e., <span class="math notranslate nohighlight">\(A\rightarrow R\)</span>).</p>
 <a class="reference internal image-reference" href="../_images/xay.png"><img alt="name" class="align-center" src="../_images/xay.png" style="width: 300px;" /></a>
 <p>Based on this causal graph, to optimize the outcome of interest, the doctor should assign the right treatment according to different features. Thus, the methods for personalized decision making focus on modeling the conditional mean outcome and the propensity score.</p>
-</div>
-<div class="section" id="toy-example-2-causal-graph-for-causal-mediation-analysis">
+</section>
+<section id="toy-example-2-causal-graph-for-causal-mediation-analysis">
 <h2>Toy Example 2:  Causal Graph for Causal Mediation Analysis<a class="headerlink" href="#toy-example-2-causal-graph-for-causal-mediation-analysis" title="Permalink to this headline">#</a></h2>
 <p>Causal mediation analysis (CMA) is a method to dissect total effect of a treatment into direct and indirect effect. The direct effect is how the treatment directly affects the outcome, and the indirect effect is transmitted via mediator <span class="math notranslate nohighlight">\(M\)</span> to the outcome.</p>
 <a class="reference internal image-reference" href="../_images/amy.png"><img alt="name" class="align-center" src="../_images/amy.png" style="width: 300px;" /></a>
@@ -1069,21 +1070,21 @@ IE &amp;= E\{R|do(A=a, \mathbf{M}=\mathbf{m}^{(a+1)})\}-E\{R|do(A=a)\},
 \end{split}
 \end{equation*}\]</div>
 <p>where <span class="math notranslate nohighlight">\(do(A=a)\)</span> is a mathematical operator to simulate physical interventions that hold <span class="math notranslate nohighlight">\(A\)</span> constant as <span class="math notranslate nohighlight">\(a\)</span> while keeping the rest of the model unchanged, which corresponds to remove edges into <span class="math notranslate nohighlight">\(A\)</span> and replace <span class="math notranslate nohighlight">\(A\)</span> by the constant <span class="math notranslate nohighlight">\(a\)</span> in <span class="math notranslate nohighlight">\(\mathcal{G}\)</span>. Here, <span class="math notranslate nohighlight">\(\mathbf{m}^{(a)}\)</span> is the value of <span class="math notranslate nohighlight">\(\mathbf{M}\)</span> if setting <span class="math notranslate nohighlight">\(do(A=a)\)</span>, and <span class="math notranslate nohighlight">\(\mathbf{m}^{(a+1)}\)</span> is the value of <span class="math notranslate nohighlight">\(\mathbf{M}\)</span> if setting <span class="math notranslate nohighlight">\(do(A=a+1)\)</span>. Refer to Pearl et al. (2009) for more details of `do-operator’.</p>
-<div class="section" id="remarks">
+<section id="remarks">
 <h3>Remarks<a class="headerlink" href="#remarks" title="Permalink to this headline">#</a></h3>
 <ol class="simple">
 <li><p>Connection to Average Treatment Effect: When there is no mediator, i.e., only <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> in the system, there is no indirect effect. Then the defined total effect (<span class="math notranslate nohighlight">\(TE\)</span>) reduced to the average treatment effect (ATE): <span class="math notranslate nohighlight">\(\text{ATE} = E[R^*(1) - R^*(0)] = E[ R|do(A=1)] -  E[ R|do(A=0)] = TE = DE\)</span>.</p></li>
 <li><p>Connection to Conditional Average Treatment Effect: When there is no mediator but with additional modifiers <span class="math notranslate nohighlight">\(S\)</span> in the system, we have the conditional average treatment effect (CATE), i.e., <span class="math notranslate nohighlight">\(\text{CATE} = E[R^*(1) - R^*(0)|S] = E[ R|do(A=1),S] -  E[ R|do(A=0),S] = DE(S) = TE(S)\)</span>.</p></li>
 </ol>
-</div>
-</div>
-<div class="section" id="toy-example-3-causal-graph-for-mediated-personalized-decision-making">
+</section>
+</section>
+<section id="toy-example-3-causal-graph-for-mediated-personalized-decision-making">
 <h2>Toy Example 3:  Causal Graph for Mediated Personalized Decision Making<a class="headerlink" href="#toy-example-3-causal-graph-for-mediated-personalized-decision-making" title="Permalink to this headline">#</a></h2>
 <p>In this example, the feature <span class="math notranslate nohighlight">\(S\)</span> determines the treatment assignment <span class="math notranslate nohighlight">\(A\)</span> (i.e., <span class="math notranslate nohighlight">\(S\rightarrow A\)</span>), the mediators <span class="math notranslate nohighlight">\(M\)</span> (i.e., <span class="math notranslate nohighlight">\(S\rightarrow M\)</span>), and the outcome <span class="math notranslate nohighlight">\(R\)</span> (i.e., <span class="math notranslate nohighlight">\(S\rightarrow R\)</span>), and the treatment assignment <span class="math notranslate nohighlight">\(A\)</span> further influences the mediators <span class="math notranslate nohighlight">\(M\)</span> (i.e., <span class="math notranslate nohighlight">\(A\rightarrow M\)</span>) and the outcome <span class="math notranslate nohighlight">\(R\)</span> (i.e., <span class="math notranslate nohighlight">\(A\rightarrow R\)</span>). In addition, the mediators <span class="math notranslate nohighlight">\(M\)</span> also affects the outcome <span class="math notranslate nohighlight">\(R\)</span> (i.e., <span class="math notranslate nohighlight">\(M\rightarrow R\)</span>).</p>
 <a class="reference internal image-reference" href="../_images/mxay.png"><img alt="name" class="align-center" src="../_images/mxay.png" style="width: 300px;" /></a>
 <p>Based on this causal graph, to optimize the outcome of interest, the doctor should assign the right treatment through useful mediators according to different features.</p>
-</div>
-<div class="section" id="references">
+</section>
+<section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <p>[1] Judea Pearl et al. Causal inference in statistics: An overview. Statistics surveys, 3:96–146, 2009.</p>
 <p>[2] Pater Spirtes, Clark Glymour, Richard Scheines, Stuart Kauffman, Valerio Aimale, and Frank Wimberly. Constructing bayesian network models of gene expression networks from microarray data. 2000.</p>
@@ -1098,8 +1099,8 @@ IE &amp;= E\{R|do(A=a, \mathbf{M}=\mathbf{m}^{(a+1)})\}-E\{R|do(A=a)\},
 arXiv preprint arXiv:1904.10098, 2019.</p>
 <p>[11] Shengyu Zhu and Zhitang Chen. Causal discovery with reinforcement learning. arXiv preprint arXiv:1906.04477, 2019.</p>
 <p>[12] Cai, Hengrui, Rui Song, and Wenbin Lu. “ANOCE: Analysis of Causal Effects with Multiple Mediators via Constrained Structural Learning.” International Conference on Learning Representations. 2020.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1113,7 +1114,7 @@ arXiv preprint arXiv:1904.10098, 2019.</p>
             mode: "python"
         },
         kernelOptions: {
-            name: "python3",
+            kernelName: "python3",
             path: "./2_Causal_Structure_Learning"
         },
         predefinedOutput: true

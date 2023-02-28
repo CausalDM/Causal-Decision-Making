@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Single-Item Recommendation &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -20,7 +21,7 @@
     href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
@@ -36,7 +37,7 @@
     <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -1118,20 +1119,20 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="single-item-recommendation">
+  <section class="tex2jax_ignore mathjax_ignore" id="single-item-recommendation">
 <h1>Single-Item Recommendation<a class="headerlink" href="#single-item-recommendation" title="Permalink to this headline">#</a></h1>
 <p>The bandit problems have received increasing attention recently and have been widely applied to areas such as clinical trials [1], finance [2], and recommendation systems [3], among others. The most classical version of it is the multi-armed bandit (MAB) [4], where an agent will sequentially select an item (arm) from a few and then receive a random reward for the item selected. Since the reward distributions are unknown in most real applications, the central task of a MAB algorithm is to learn the distributions from feedback received and find the optimal item to maximize the cumulative rewards or, equivalently, to minimize the cumulative regret. This chapter focuses on the MAB problems by illustrating a group of classical algorithms to tackle the well-known exploration-exploitation trade-off.</p>
-<div class="section" id="problem-setting">
+<section id="problem-setting">
 <h2>Problem Setting<a class="headerlink" href="#problem-setting" title="Permalink to this headline">#</a></h2>
 <p>Let <span class="math notranslate nohighlight">\(T\)</span> be the total number of rounds, and <span class="math notranslate nohighlight">\(K\)</span> be the number of arms (actions to be selected). The agent would choose one arm at each round <span class="math notranslate nohighlight">\(t = 1, \dots, T\)</span>. Then the agent will receive the corresponding stochastic reward <span class="math notranslate nohighlight">\(R_t\)</span> from the environment. Denote the expected reward for each arm <span class="math notranslate nohighlight">\(i\)</span> as <span class="math notranslate nohighlight">\(r_{i}\)</span>. Since, in most real applications, such a reward distribution is always unknown, the agent needs to learn the reward distribution from feedback received. Overall, the objective is to find a bandit algorithm to maximize the cumulative Reward <span class="math notranslate nohighlight">\(\sum_{t=1}^{T}R_{t}\)</span>.</p>
 <p>MAB has been extensively studied and widely applied to different areas, including healthcare, recommender system, and finance, to name a few. See [4] for a detailed review of MAB and [5] for a survey of practical applications. Among them, the ultimate goal of a learning algorithm is always to strike a good balance between exploration (try an unfamiliar action to learn more information) and exploitation (take the action that has the highest estimated reward so far) so as to maximize the cumulative reward. In the following, we will briefly illustrate three popular and classical categories of algorithms to handle the exploration-exploitation trade-off: i) <span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy, ii) Upper Confidence Bound (UCB), and iii) Thompson Sampling (TS).</p>
-</div>
-<div class="section" id="claasical-methods">
+</section>
+<section id="claasical-methods">
 <h2>Claasical Methods<a class="headerlink" href="#claasical-methods" title="Permalink to this headline">#</a></h2>
-<div class="section" id="epsilon-greedy">
+<section id="epsilon-greedy">
 <h3><span class="math notranslate nohighlight">\(\epsilon\)</span>-Greedy<a class="headerlink" href="#epsilon-greedy" title="Permalink to this headline">#</a></h3>
 <p>An intuitive algorithm to incorporate the exploration and exploitation is <span class="math notranslate nohighlight">\(\epsilon\)</span>-Greedy, which is simple and widely used [6]. Specifically, at each round <span class="math notranslate nohighlight">\(t\)</span>, we will select a random action with probability <span class="math notranslate nohighlight">\(\epsilon\)</span>, and select an action with the highest estimated mean reward based on the history so far with probability <span class="math notranslate nohighlight">\(1-\epsilon\)</span>. Here the parameter <span class="math notranslate nohighlight">\(\epsilon\)</span> is pre-specified. A more adaptive variant is <span class="math notranslate nohighlight">\(\epsilon_{t}\)</span>-greedy, where the probability of taking a random action is defined as a decreasing function of <span class="math notranslate nohighlight">\(t\)</span>. Auer et al. [7] showed that <span class="math notranslate nohighlight">\(\epsilon_{t}\)</span>-greedy performs well in practice with <span class="math notranslate nohighlight">\(\epsilon_{t}\)</span> decreases to 0 at a rate of <span class="math notranslate nohighlight">\(\frac{1}{t}\)</span>.</p>
-<div class="section" id="supported-algorithms">
+<section id="supported-algorithms">
 <h4>Supported Algorithms<a class="headerlink" href="#supported-algorithms" title="Permalink to this headline">#</a></h4>
 <table class="colwidths-auto table">
 <thead>
@@ -1149,12 +1150,12 @@ title="Print to PDF"
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="section" id="thompson-sampling">
+</section>
+</section>
+<section id="thompson-sampling">
 <h3>Thompson Sampling<a class="headerlink" href="#thompson-sampling" title="Permalink to this headline">#</a></h3>
 <p>Thompson Sampling, also known as posterior sampling, solves the exploration-exploitation dilemma by selecting an action according to its posterior distribution [8].  At each round <span class="math notranslate nohighlight">\(t\)</span>, the agent sample the rewards from the corresponding posterior distributions and then select the action with the highest sampled reward greedily. It has been shown that, when the true reward distribution is known, a TS algorithm with the true reward distribution as the prior is nearly optimal [9]. However, such a distribution is always unknown in practice. Therefore, one of the major objectives of TS-based algorithms is to find an informative prior to guide the exploration.</p>
-<div class="section" id="id1">
+<section id="id1">
 <h4>Supported Algorithms<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h4>
 <table class="colwidths-auto table">
 <thead>
@@ -1182,16 +1183,16 @@ title="Print to PDF"
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="section" id="upper-confidence-bounds">
+</section>
+</section>
+<section id="upper-confidence-bounds">
 <h3>Upper Confidence Bounds<a class="headerlink" href="#upper-confidence-bounds" title="Permalink to this headline">#</a></h3>
 <p>As the name suggested, the UCB algorithm estimates the upper confidence bound <span class="math notranslate nohighlight">\(U_{i}^{t}\)</span> of the mean rewards based on the observations and then choose the action has the highest estimates. The class of UCB-based algorithms is firstly introduced by Auer et al. [7]. Generally, at each round <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(U_{i}^{t}\)</span> is calculated as the sum of the estimated reward (exploitation) and the estimated confidence radius (exploration) of item <span class="math notranslate nohighlight">\(i\)</span> based on <span class="math notranslate nohighlight">\(\mathcal{H}_{t}\)</span>. Then, <span class="math notranslate nohighlight">\(A_{t}\)</span> is selected as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aca008ba-e096-453b-9322-afbcabcf5480">
-<span class="eqno">()<a class="headerlink" href="#equation-aca008ba-e096-453b-9322-afbcabcf5480" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-60245c66-35bc-4470-939e-64a38b7790f5">
+<span class="eqno">()<a class="headerlink" href="#equation-60245c66-35bc-4470-939e-64a38b7790f5" title="Permalink to this equation">#</a></span>\[\begin{equation}
     A_t = argmax_{a \in \mathcal{A}} E(R_t \mid a,\{ U_{i}^{t}\}_{i=1}^{N}).
 \end{equation}\]</div>
-<div class="section" id="id2">
+<section id="id2">
 <h4>Supported Algorithms<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h4>
 <table class="colwidths-auto table">
 <thead>
@@ -1219,10 +1220,10 @@ title="Print to PDF"
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-</div>
-<div class="section" id="real-data">
+</section>
+</section>
+</section>
+<section id="real-data">
 <h2>Real Data<a class="headerlink" href="#real-data" title="Permalink to this headline">#</a></h2>
 <p><strong>1. MovieLens</strong></p>
 <p>Movie Lens is a website that helps users find the movies they like and where they will rate the recommended movies. <a class="reference external" href="https://grouplens.org/datasets/movielens/1m/">MovieLens 1M dataset</a> is a dataset including the observations collected in an online movie recommendation experiment and is widely used to generate data for online bandit simulation studies. The goal of the simulation studies below is to learn the reward distribution of different movie genres and hence to recommend the optimal movie genres to the users to optimize the cumulative user satisfaction. In other words, every time a user visits the website, the agent will recommend a movie genre (<span class="math notranslate nohighlight">\(A_t\)</span>) to the user, and then the user will give a rating (<span class="math notranslate nohighlight">\(R_t\)</span>) to the genre recommended. We assume that users’ satisfaction is fully reflected through the ratings. Therefore, the ultimate goal of the bandit algorithms is to optimize the cumulative ratings received by finding and recommending the optimal movie genre that will receive the highest rating. In this chapter, we mainly focus on the top 5 Genres, including</p>
@@ -1249,16 +1250,16 @@ title="Print to PDF"
 <li><p><strong>Bernoulli Bandit</strong>: <span class="math notranslate nohighlight">\(R_t\)</span> is a binary variable, =1 if the rating is higher than 3.</p></li>
 </ul>
 <p>In the following, we evaluated the empirical performance of the supported algorithms on the MovieLens dataset under either the Gaussian bandit or Bernoulli bandit settings.</p>
-</div>
-<div class="section" id="simulation-1-gaussian-bandit">
+</section>
+<section id="simulation-1-gaussian-bandit">
 <h2>Simulation 1: Gaussian Bandit<a class="headerlink" href="#simulation-1-gaussian-bandit" title="Permalink to this headline">#</a></h2>
 <p>We repeat the experiment over <strong>100</strong> random seeds, with <span class="math notranslate nohighlight">\(T = 100\)</span>.</p>
-</div>
-<div class="section" id="simulation-1-bernoulli-bandit">
+</section>
+<section id="simulation-1-bernoulli-bandit">
 <h2>Simulation 1: Bernoulli Bandit<a class="headerlink" href="#simulation-1-bernoulli-bandit" title="Permalink to this headline">#</a></h2>
 <p>We repeat the experiment over <strong>100</strong> random seeds, with <span class="math notranslate nohighlight">\(T = 100\)</span>.</p>
-</div>
-<div class="section" id="reference">
+</section>
+<section id="reference">
 <h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">#</a></h2>
 <p>[1] Durand, A., Achilleos, C., Iacovides, D., Strati, K., Mitsis, G. D., and Pineau, J. (2018). Contextual bandits for adapting treatment in a mouse model of de novo carcinogenesis. In Machine learning for healthcare conference, pages 67–82. PMLR.</p>
 <p>[2] Shen, W., Wang, J., Jiang, Y.-G., and Zha, H. (2015). Portfolio choices with orthogonal bandit learning. In Twenty-fourth international joint conference on artificial intelligence.</p>
@@ -1273,8 +1274,8 @@ title="Print to PDF"
 <p>[11] Li, L., Lu, Y., and Zhou, D. (2017). Provably optimal algorithms for generalized linear contextual bandits. In International Conference on Machine Learning, pages 2071–2080. PMLR.</p>
 <p>[12] Kveton, B., Zaheer, M., Szepesvari, C., Li, L., Ghavamzadeh, M., and Boutilier, C. (2020). Randomized exploration in generalized linear bandits. In International Conference on Artificial Intelligence and Statistics, pages 2066–2076. PMLR.</p>
 <p>[13] Agrawal, S. and Goyal, N. (2013). Thompson sampling for contextual bandits with linear payoffs. In International conference on machine learning, pages 127–135. PMLR.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1288,8 +1289,8 @@ title="Print to PDF"
             mode: "python"
         },
         kernelOptions: {
-            name: "python3",
-            path: "./4_Causal_Policy_Learning/Scenario4/_old_docs(to delete)"
+            kernelName: "python3",
+            path: "./4_Causal_Policy_Learning\Scenario4\_old_docs(to delete)"
         },
         predefinedOutput: true
     }

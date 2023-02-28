@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Online Combinatorial Optimization (Combinatorial Semi-Bandit) &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -20,7 +21,7 @@
     href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.css" />
@@ -36,7 +37,7 @@
     <script src="../../../../_static/doctools.js"></script>
     <script src="../../../../_static/clipboard.min.js"></script>
     <script src="../../../../_static/copybutton.js"></script>
-    <script src="../../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -1018,14 +1019,14 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="online-combinatorial-optimization-combinatorial-semi-bandit">
+  <section class="tex2jax_ignore mathjax_ignore" id="online-combinatorial-optimization-combinatorial-semi-bandit">
 <h1>Online Combinatorial Optimization (Combinatorial Semi-Bandit)<a class="headerlink" href="#online-combinatorial-optimization-combinatorial-semi-bandit" title="Permalink to this headline">#</a></h1>
 <p>Online combinatorial optimization has a wide range of applications [1], including maximum weighted matching, ad allocation, and news page optimization, to name a few.  It is also common that all chosen items will generate a separate observation, known as the semi-bandit problem [2]. Taking the motivating example of <strong>Online Ad</strong>, suppose we need to decide which group of target customers to show the advertisement to. Combinatorial semi-bandit algorithms aim to find and recommend the optimal group of potential customers to advertisers, with the ultimate goal of optimizing the overall number of customers attracted by the advertisement. This tutorial will concentrate on typical application scenarios such as online Ad.</p>
-<div class="section" id="problem-setting">
+<section id="problem-setting">
 <h2>Problem Setting<a class="headerlink" href="#problem-setting" title="Permalink to this headline">#</a></h2>
 <p>Suppose that, at each round t, we need to recommend at most <span class="math notranslate nohighlight">\(K\)</span> items. Formally, the feasible set <span class="math notranslate nohighlight">\(\mathcal{A} \subseteq \{A \subseteq [N] : |A|\leq K\}\)</span> consists of subsets that satisfy the size constraint as well as other application-specific constraints. The agent will sequentially choose a subset <span class="math notranslate nohighlight">\(A_t\)</span> from <span class="math notranslate nohighlight">\(\mathcal{A}\)</span>, and then receive a separate reward <span class="math notranslate nohighlight">\(Y_{i, t}\)</span> for each chosen item <span class="math notranslate nohighlight">\(i \in A_t\)</span>, with the overall reward defined as <span class="math notranslate nohighlight">\(R_t = \sum_{i \in A_t} Y_{i,t}\)</span>. Let <span class="math notranslate nohighlight">\(Y_{i, t}(a)\)</span> denote the potential outcome of item <span class="math notranslate nohighlight">\(i \in a\)</span> if a slate of items <span class="math notranslate nohighlight">\(a\)</span> is played at round <span class="math notranslate nohighlight">\(t\)</span>. Similarly, <span class="math notranslate nohighlight">\(R_t(a)\)</span> denotes the reward that would be received if the slate <span class="math notranslate nohighlight">\(a\)</span> is palyed. Mathematically, for each round <span class="math notranslate nohighlight">\(t\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c85306a0-207e-43f5-8e14-d474dc627f04">
-<span class="eqno">(112)<a class="headerlink" href="#equation-c85306a0-207e-43f5-8e14-d474dc627f04" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6a642977-d5bb-4bb3-89ca-2809fe9b6c54">
+<span class="eqno">(112)<a class="headerlink" href="#equation-6a642977-d5bb-4bb3-89ca-2809fe9b6c54" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \begin{split}
      Y_{i,t}(a) &amp;\sim \mathcal{P}(\theta_{i}), \forall i \in a,\\
     R_t(a) &amp;= \sum_{i \in a} Y_{i,t}(a), 
@@ -1033,8 +1034,8 @@ title="Print to PDF"
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathcal{P}\)</span> can be different distributions, such as <span class="math notranslate nohighlight">\(Bernoulli(\theta_i)\)</span> for binary outcomes, <span class="math notranslate nohighlight">\(\mathcal{N}(\theta_i, \sigma_2^2)\)</span> for normally distributed outcomes, etc.</p>
 <p>When the mean reward of each item is known, the optimal action can be obtained from a combinatorial optimization problem, depending on the applications.</p>
-</div>
-<div class="section" id="supported-algorithms">
+</section>
+<section id="supported-algorithms">
 <h2>Supported Algorithms<a class="headerlink" href="#supported-algorithms" title="Permalink to this headline">#</a></h2>
 <table class="colwidths-auto table">
 <thead>
@@ -1062,22 +1063,22 @@ title="Print to PDF"
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="real-data">
+</section>
+<section id="real-data">
 <h2>Real Data<a class="headerlink" href="#real-data" title="Permalink to this headline">#</a></h2>
 <p>Add a description of the Adult dataset</p>
-</div>
-<div class="section" id="reference">
+</section>
+<section id="reference">
 <h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">#</a></h2>
 <p>[1] Sankararaman, K. A. (2016). Semi-bandit feedback: A survey of results.</p>
 <p>[2] Chen, W., Wang, Y., and Yuan, Y. (2013). Combinatorial multi-armed bandit: General framework and applications. In International conference on machine learning, pages 151–159. PMLR.</p>
 <p>[3] Wan, R., Ge, L., &amp; Song, R. (2022). Towards Scalable and Robust Structured Bandits: A Meta-Learning Framework. arXiv preprint arXiv:2202.13227.</p>
 <p>[4] Wang, S., &amp; Chen, W. (2018, July). Thompson sampling for combinatorial semi-bandits. In International Conference on Machine Learning (pp. 5114-5122). PMLR.</p>
 <p>[5] Wen, Z., Kveton, B., &amp; Ashkan, A. (2015, June). Efficient learning in large-scale combinatorial semi-bandits. In International Conference on Machine Learning (pp. 1113-1122). PMLR.</p>
-</div>
+</section>
 <div class="toctree-wrapper compound">
 </div>
-</div>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1091,8 +1092,8 @@ title="Print to PDF"
             mode: "python"
         },
         kernelOptions: {
-            name: "python3",
-            path: "./4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi"
+            kernelName: "python3",
+            path: "./4_Causal_Policy_Learning\Scenario4\Structured_Bandits\Combinatorial-Semi"
         },
         predefinedOutput: true
     }

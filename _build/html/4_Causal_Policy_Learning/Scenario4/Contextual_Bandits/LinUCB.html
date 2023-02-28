@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>LinUCB &#8212; Causal Decision Making</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -20,7 +21,7 @@
     href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
@@ -36,7 +37,7 @@
     <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -1082,39 +1083,39 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="linucb">
+  <section class="tex2jax_ignore mathjax_ignore" id="linucb">
 <h1>LinUCB<a class="headerlink" href="#linucb" title="Permalink to this headline">#</a></h1>
-<div class="section" id="overview">
+<section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p><strong>Advantage</strong>: It is more scalable and efficient than <strong>UCB</strong> by utilizing features.</p></li>
 <li><p><strong>Disadvantage</strong>:</p></li>
 <li><p><strong>Application Situation</strong>: discrete action space, Gaussian reward space</p></li>
 </ul>
-</div>
-<div class="section" id="main-idea">
+</section>
+<section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. <strong>LinUCB</strong>[1] uses feature information to guide exploration by assuming a linear model between the expected potential reward and the features. Specifcially, for the Gaussain bandits, we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1c288779-4f15-4190-991c-3774c2cb5d28">
-<span class="eqno">(93)<a class="headerlink" href="#equation-1c288779-4f15-4190-991c-3774c2cb5d28" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-069c0457-b07d-444b-ba05-6a40b66b4568">
+<span class="eqno">(93)<a class="headerlink" href="#equation-069c0457-b07d-444b-ba05-6a40b66b4568" title="Permalink to this equation">#</a></span>\[\begin{align}
 E(R_{t}(a)) = \theta_a = \boldsymbol{s}_a^T \boldsymbol{\gamma}.
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-6878592b-93de-4ca4-a363-53cbd42f39ac">
-<span class="eqno">(94)<a class="headerlink" href="#equation-6878592b-93de-4ca4-a363-53cbd42f39ac" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ca3e6e0c-e9f7-4eed-bd18-e2d8785138bd">
+<span class="eqno">(94)<a class="headerlink" href="#equation-ca3e6e0c-e9f7-4eed-bd18-e2d8785138bd" title="Permalink to this equation">#</a></span>\[\begin{align}
 U_a^t = \boldsymbol{s}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{s}_a^T V^{-1}  \boldsymbol{s}_a},
 \end{align}\]</div>
 <p>As for the Bernoulli bandits, we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-068a7e08-cb83-4d24-bf0c-61b261f3414c">
-<span class="eqno">(95)<a class="headerlink" href="#equation-068a7e08-cb83-4d24-bf0c-61b261f3414c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ff0bbadc-0711-4604-8731-07b1e7dd13e8">
+<span class="eqno">(95)<a class="headerlink" href="#equation-ff0bbadc-0711-4604-8731-07b1e7dd13e8" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta_{a} = logistic(\boldsymbol{s}_a^T \boldsymbol{\gamma}),
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-a93c9fae-a417-412c-bfec-e2e40722e35a">
-<span class="eqno">(96)<a class="headerlink" href="#equation-a93c9fae-a417-412c-bfec-e2e40722e35a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c7608c2a-13d8-49aa-ba47-11fd9d93e6fb">
+<span class="eqno">(96)<a class="headerlink" href="#equation-c7608c2a-13d8-49aa-ba47-11fd9d93e6fb" title="Permalink to this equation">#</a></span>\[\begin{align}
 U_a^t = \boldsymbol{s}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{s}_a^T V^{-1}  \boldsymbol{s}_a},
 \end{align}\]</div>
 <p>Finally, using the estimated upper confidence bounds, <span class="math notranslate nohighlight">\(A_t = \arg \max_{a \in \mathcal{A}} U_a^t\)</span> would be selected.</p>
-</div>
-<div class="section" id="key-steps">
+</section>
+<section id="key-steps">
 <h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p>Initializing <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\gamma}}=\boldsymbol{0}\)</span> and <span class="math notranslate nohighlight">\(V = I\)</span>, and specifying <span class="math notranslate nohighlight">\(\alpha\)</span>;</p></li>
@@ -1126,8 +1127,8 @@ U_a^t = \boldsymbol{s}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{s
 </ul>
 </li>
 </ol>
-</div>
-<div class="section" id="demo-code">
+</section>
+<section id="demo-code">
 <h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1137,20 +1138,8 @@ U_a^t = \boldsymbol{s}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{s
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">a4f395ec17bc</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">os</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:\GitHub\CausalDM&#39;</span><span class="p">)</span>
-
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;D:\\GitHub\\CausalDM&#39;
-</pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="import-the-learner">
+<section id="import-the-learner">
 <h3>Import the learner.<a class="headerlink" href="#import-the-learner" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1159,9 +1148,14 @@ U_a^t = \boldsymbol{s}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{s
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
+</pre></div>
 </div>
 </div>
-<div class="section" id="generate-the-environment">
+</div>
+</section>
+<section id="generate-the-environment">
 <h3>Generate the Environment<a class="headerlink" href="#generate-the-environment" title="Permalink to this headline">#</a></h3>
 <p>Here, we imitate an environment based on the MovieLens data.</p>
 <div class="cell docutils container">
@@ -1172,8 +1166,8 @@ U_a^t = \boldsymbol{s}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{s
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="specify-hyperparameters">
+</section>
+<section id="specify-hyperparameters">
 <h3>Specify Hyperparameters<a class="headerlink" href="#specify-hyperparameters" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>K: number of arms</p></li>
@@ -1184,18 +1178,18 @@ U_a^t = \boldsymbol{s}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{s
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alpha</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">.1</span>
 <span class="n">K</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">K</span>
 <span class="n">p</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">p</span>
 <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span>
 <span class="n">exploration_T</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">LinUCB_Gaussian_agent</span> <span class="o">=</span> <span class="n">LinUCB</span><span class="o">.</span><span class="n">LinUCB_Gaussian</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="n">K</span> <span class="o">=</span> <span class="n">K</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">,</span> <span class="n">exploration_T</span> <span class="o">=</span> <span class="n">exploration_T</span><span class="p">)</span>
+<span class="n">LinUCB_Gaussian_agent</span> <span class="o">=</span> <span class="n">LinUCB</span><span class="o">.</span><span class="n">LinUCB_Gaussian</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">K</span> <span class="o">=</span> <span class="n">K</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">,</span> <span class="n">exploration_T</span> <span class="o">=</span> <span class="n">exploration_T</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="recommendation-and-interaction">
+</section>
+<section id="recommendation-and-interaction">
 <h3>Recommendation and Interaction<a class="headerlink" href="#recommendation-and-interaction" title="Permalink to this headline">#</a></h3>
 <p>Starting from t = 0, for each step t, there are three steps:</p>
 <ol class="simple">
@@ -1220,14 +1214,14 @@ U_a^t = \boldsymbol{s}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{s
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0, 4, 4.0, (25.0, 1.0, &#39;college/grad student&#39;))
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0, 4, 4.0, (25.0, 1.0, &#39;occupation_academic/educator&#39;))
 </pre></div>
 </div>
 </div>
 </div>
 <p><strong>Interpretation</strong>: For step 0, the TS agent encounter a male user who is a 25-year-old college/grad student. Given the information, the agent recommend a Sci-Fi (arm 4), and receive a rate of 4 from the user.</p>
-</div>
-<div class="section" id="demo-code-for-bernoulli-bandit">
+</section>
+<section id="demo-code-for-bernoulli-bandit">
 <h3>Demo Code for Bernoulli Bandit<a class="headerlink" href="#demo-code-for-bernoulli-bandit" title="Permalink to this headline">#</a></h3>
 <p>The steps are similar to those previously performed with a Gaussian Bandit.</p>
 <div class="cell docutils container">
@@ -1251,19 +1245,19 @@ U_a^t = \boldsymbol{s}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{s
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0, 3, 0, (25.0, 1.0, &#39;college/grad student&#39;))
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0, 3, 0, (25.0, 1.0, &#39;occupation_academic/educator&#39;))
 </pre></div>
 </div>
 </div>
 </div>
 <p><strong>Interpretation</strong>: For step 0, the TS agent encounter a male user who is a 25-year-old college/grad student. Given the information, the agent recommend a Thriller (arm 3), and receive a rate of 0 from the user.</p>
-</div>
-</div>
-<div class="section" id="references">
+</section>
+</section>
+<section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <p>[1] Chu, W., Li, L., Reyzin, L., &amp; Schapire, R. (2011, June). Contextual bandits with linear payoff functions. In Proceedings of the Fourteenth International Conference on Artificial Intelligence and Statistics (pp. 208-214). JMLR Workshop and Conference Proceedings.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1277,8 +1271,8 @@ U_a^t = \boldsymbol{s}_a^T \hat{\boldsymbol{\gamma}} + \alpha\sqrt{\boldsymbol{s
             mode: "python"
         },
         kernelOptions: {
-            name: "python3",
-            path: "./4_Causal_Policy_Learning/Scenario4/Contextual_Bandits"
+            kernelName: "python3",
+            path: "./4_Causal_Policy_Learning\Scenario4\Contextual_Bandits"
         },
         predefinedOutput: true
     }
