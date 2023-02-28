@@ -67,7 +67,7 @@ env = _env.Single_Contextual_Env(seed = 0, Binary = False)
 # - prior_theta_cov: Covaraince matrix of the prior distribution of the coefficients
 # - seed: random seed
 
-# In[4]:
+# In[7]:
 
 
 K = env.K
@@ -94,7 +94,7 @@ LinTS_Gaussian_agent = LinTS.LinTS_Gaussian(sigma = sigma, prior_theta_u = prior
 # 4. Update the posterior distribution
 # <code> LinTS_Gaussian_agent.receive_reward(t,A,R,X) </code>
 
-# In[5]:
+# In[8]:
 
 
 t = 0
@@ -110,7 +110,7 @@ t,A,R,feature_info
 # ### Demo Code for Bernoulli Bandit
 # The steps are similar to those previously performed with a Gaussian Bandit. Note that, when specifying the prior distribution of the expected reward, the mean-precision form of the Beta distribution is used here, i.e., Beta($\mu$, $\phi$), where $\mu$ is the mean reward of each arm and $\phi$ is the precision of the Beta distribution. 
 
-# In[6]:
+# In[10]:
 
 
 env = _env.Single_Contextual_Env(seed = 0, Binary = True)
