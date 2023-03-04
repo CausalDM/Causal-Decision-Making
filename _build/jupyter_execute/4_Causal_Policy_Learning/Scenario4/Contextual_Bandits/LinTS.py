@@ -40,7 +40,7 @@ os.chdir('D:\GitHub\CausalDM')
 
 # ### Import the learner.
 
-# In[2]:
+# In[ ]:
 
 
 import numpy as np
@@ -51,7 +51,7 @@ from causaldm.learners.Online.CMAB import LinTS
 # 
 # Here, we imitate an environment based on the MovieLens data.
 
-# In[3]:
+# In[ ]:
 
 
 from causaldm.learners.Online.CMAB import _env_realCMAB as _env
@@ -67,7 +67,7 @@ env = _env.Single_Contextual_Env(seed = 0, Binary = False)
 # - prior_theta_cov: Covaraince matrix of the prior distribution of the coefficients
 # - seed: random seed
 
-# In[4]:
+# In[ ]:
 
 
 K = env.K
@@ -94,7 +94,7 @@ LinTS_Gaussian_agent = LinTS.LinTS_Gaussian(sigma = sigma, prior_theta_u = prior
 # 4. Update the posterior distribution
 # <code> LinTS_Gaussian_agent.receive_reward(t,A,R,X) </code>
 
-# In[5]:
+# In[ ]:
 
 
 t = 0

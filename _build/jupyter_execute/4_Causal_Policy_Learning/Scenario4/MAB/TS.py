@@ -48,7 +48,7 @@ os.chdir('D:\GitHub\CausalDM')
 
 # ### Import the learner.
 
-# In[2]:
+# In[3]:
 
 
 import numpy as np
@@ -59,7 +59,7 @@ from causaldm.learners.Online.MAB import TS
 # 
 # Here, we imitate an environment based on the MovieLens data.
 
-# In[3]:
+# In[4]:
 
 
 from causaldm.learners.Online.MAB import _env_realMAB as _env
@@ -74,7 +74,7 @@ env = _env.Single_Gaussian_Env(seed = 42)
 # - u_prior_cov: Covaraince matrix of the prior distribution of the mean reward
 # - seed: random seed
 
-# In[4]:
+# In[7]:
 
 
 Reward_Type = "Gaussian"
@@ -98,7 +98,7 @@ TS_Gaussian_agent = TS.TS(Reward_Type = Reward_Type, sigma = sigma,
 # 3. Update the posterior distribution
 # <code> TS_Gaussian_agent.receive_reward(t,A,R) </code>
 
-# In[5]:
+# In[8]:
 
 
 t = 0
@@ -113,7 +113,7 @@ t, A, R
 # ### Demo Code for Bernoulli Bandit
 # The steps are similar to those previously performed with a Gaussian Bandit. Note that, when specifying the prior distribution of the expected reward, the mean-precision form of the Beta distribution is used here, i.e., Beta($\mu$, $\phi$), where $\mu$ is the mean reward of each arm and $\phi$ is the precision of the Beta distribution. 
 
-# In[6]:
+# In[13]:
 
 
 env = _env.Single_Bernoulli_Env(seed=42)

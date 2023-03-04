@@ -1,38 +1,68 @@
 Traceback (most recent call last):
-  File "D:\anaconda3\lib\site-packages\jupyter_cache\executors\utils.py", line 51, in single_nb_execution
+  File "/Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
     executenb(
-  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 1204, in execute
+  File "/Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 1204, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
-  File "D:\anaconda3\lib\site-packages\nbclient\util.py", line 84, in wrapped
+  File "/Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages/nbclient/util.py", line 84, in wrapped
     return just_run(coro(*args, **kwargs))
-  File "D:\anaconda3\lib\site-packages\nbclient\util.py", line 62, in just_run
+  File "/Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages/nbclient/util.py", line 62, in just_run
     return loop.run_until_complete(coro)
-  File "D:\anaconda3\lib\asyncio\base_events.py", line 647, in run_until_complete
+  File "/Users/wrunzhe/opt/anaconda3/lib/python3.9/asyncio/base_events.py", line 647, in run_until_complete
     return future.result()
-  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 663, in async_execute
+  File "/Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 663, in async_execute
     await self.async_execute_cell(
-  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 965, in async_execute_cell
+  File "/Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 965, in async_execute_cell
     await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 862, in _check_raise_for_error
+  File "/Users/wrunzhe/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-with open('mimic3_multi_stages.pickle', 'wb') as handle:
-    pickle.dump(mimic_final, handle)
-    
-mimic_final.to_csv (r'mimic3_multi_stages.csv', index = False, header=True)
+%load_ext autoreload
+%autoreload 2
 
-mimic_final.head(6)
+##### Import Packages 
+from utils import *
+from notear import *
+  
+from numpy.random import randn
+from random import seed as rseed
+from numpy.random import seed as npseed
+
+import numpy as np
+import pandas as pd
+import os
+import pickle
+import random
+import math
+import time 
+
+from datetime import datetime
+
+import matplotlib.pyplot as plt
+
+from multiprocessing import Pool
+ 
+from tqdm import tqdm
+from functools import partial 
+
+os.environ["OMP_NUM_THREADS"] = "1"
 ------------------
 
-[1;31m---------------------------------------------------------------------------[0m
-[1;31mNameError[0m                                 Traceback (most recent call last)
-Input [1;32mIn [4][0m, in [0;36m<cell line: 1>[1;34m()[0m
-[0;32m      1[0m [38;5;28;01mwith[39;00m [38;5;28mopen[39m([38;5;124m'[39m[38;5;124mmimic3_multi_stages.pickle[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mwb[39m[38;5;124m'[39m) [38;5;28;01mas[39;00m handle:
-[1;32m----> 2[0m     pickle[38;5;241m.[39mdump([43mmimic_final[49m, handle)
-[0;32m      4[0m mimic_final[38;5;241m.[39mto_csv ([38;5;124mr[39m[38;5;124m'[39m[38;5;124mmimic3_multi_stages.csv[39m[38;5;124m'[39m, index [38;5;241m=[39m [38;5;28;01mFalse[39;00m, header[38;5;241m=[39m[38;5;28;01mTrue[39;00m)
-[0;32m      6[0m mimic_final[38;5;241m.[39mhead([38;5;241m6[39m)
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Input [0;32mIn [1][0m, in [0;36m<cell line: 5>[0;34m()[0m
+[1;32m      2[0m get_ipython()[38;5;241m.[39mrun_line_magic([38;5;124m'[39m[38;5;124mautoreload[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124m2[39m[38;5;124m'[39m)
+[1;32m      4[0m [38;5;66;03m##### Import Packages [39;00m
+[0;32m----> 5[0m [38;5;28;01mfrom[39;00m [38;5;21;01mutils[39;00m [38;5;28;01mimport[39;00m [38;5;241m*[39m
+[1;32m      6[0m [38;5;28;01mfrom[39;00m [38;5;21;01mnotear[39;00m [38;5;28;01mimport[39;00m [38;5;241m*[39m
+[1;32m      8[0m [38;5;28;01mfrom[39;00m [38;5;21;01mnumpy[39;00m[38;5;21;01m.[39;00m[38;5;21;01mrandom[39;00m [38;5;28;01mimport[39;00m randn
 
-[1;31mNameError[0m: name 'mimic_final' is not defined
-NameError: name 'mimic_final' is not defined
+File [0;32m~/Documents/GitHub/Causal-Decision-Making/5_Case_Study/MIMIC3/utils.py:2[0m, in [0;36m<module>[0;34m[0m
+[1;32m      1[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
+[0;32m----> 2[0m [38;5;28;01mimport[39;00m [38;5;21;01mtorch[39;00m
+[1;32m      3[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtorch[39;00m[38;5;21;01m.[39;00m[38;5;21;01mutils[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdata[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdataset[39;00m [38;5;28;01mimport[39;00m TensorDataset
+[1;32m      4[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtorch[39;00m[38;5;21;01m.[39;00m[38;5;21;01mutils[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdata[39;00m [38;5;28;01mimport[39;00m DataLoader
+
+[0;31mModuleNotFoundError[0m: No module named 'torch'
+ModuleNotFoundError: No module named 'torch'
 

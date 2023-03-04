@@ -52,13 +52,13 @@ from functools import partial
 os.environ["OMP_NUM_THREADS"] = "1"
 
 
-# In[2]:
+# In[36]:
 
 
 mimic3 = pd.read_csv("subset_rl_data_final_cont.csv")
 
 
-# In[3]:
+# In[37]:
 
 
 mimic3_base = mimic3[['icustayid', 'Glucose','paO2','PaO2_FiO2',
@@ -69,7 +69,7 @@ mimic3_base.columns = ['icustayid', 'Glucose','paO2','PaO2_FiO2',
 mimic3_base.head(6)
 
 
-# In[4]:
+# In[38]:
 
 
 with open('mimic3_multi_stages.pickle', 'wb') as handle:
