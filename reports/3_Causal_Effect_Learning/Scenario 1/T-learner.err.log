@@ -17,22 +17,29 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# import related packages
-import numpy as np
-import pandas as pd
-from matplotlib import pyplot as plt;
-from lightgbm import LGBMRegressor;
-from sklearn.linear_model import LinearRegression
+mu0 = GradientBoostingRegressor(max_depth=3)
+mu1 = GradientBoostingRegressor(max_depth=3)
+
+mu0.fit(MovieLens_CEL.iloc[np.where(MovieLens_CEL['Drama']==0)[0],userinfo_index],MovieLens_CEL.iloc[np.where(MovieLens_CEL['Drama']==0)[0],2] )
+mu1.fit(MovieLens_CEL.iloc[np.where(MovieLens_CEL['Drama']==1)[0],userinfo_index],MovieLens_CEL.iloc[np.where(MovieLens_CEL['Drama']==1)[0],2] )
+
+
+# estimate the HTE by T-learner
+HTE_TLet's focus on the estimated HTEs for three randomly chosen users:
+
+print("S-learner:  ",HTE_S_learner[np.array([0,1000,5000])])
+
+ATE_S_learner = np.sum(HTE_S_learner)/n
+print("Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by",round(ATE_S_learner,4), "out of 5 points.")
+
+**Conclusion:** As we can see from the estimated ATE by S-learner, people are more inclined to give higher ratings to drama than science fictions. _learner = mu1.predict(MovieLens_CEL.iloc[:,userinfo_index]) - mu0.predict(MovieLens_CEL.iloc[:,userinfo_index])
+
 ------------------
 
-[0;31m---------------------------------------------------------------------------[0m
-[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-[0;32m/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_21104/2327889422.py[0m in [0;36m<module>[0;34m[0m
-[1;32m      3[0m [0;32mimport[0m [0mpandas[0m [0;32mas[0m [0mpd[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      4[0m [0;32mfrom[0m [0mmatplotlib[0m [0;32mimport[0m [0mpyplot[0m [0;32mas[0m [0mplt[0m[0;34m;[0m[0;34m[0m[0;34m[0m[0m
-[0;32m----> 5[0;31m [0;32mfrom[0m [0mlightgbm[0m [0;32mimport[0m [0mLGBMRegressor[0m[0;34m;[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      6[0m [0;32mfrom[0m [0msklearn[0m[0;34m.[0m[0mlinear_model[0m [0;32mimport[0m [0mLinearRegression[0m[0;34m[0m[0;34m[0m[0m
+[0;36m  File [0;32m"/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_46805/1153805520.py"[0;36m, line [0;32m9[0m
+[0;31m    HTE_TLet's focus on the estimated HTEs for three randomly chosen users:[0m
+[0m                                                                           ^[0m
+[0;31mSyntaxError[0m[0;31m:[0m EOL while scanning string literal
 
-[0;31mModuleNotFoundError[0m: No module named 'lightgbm'
-ModuleNotFoundError: No module named 'lightgbm'
+SyntaxError: EOL while scanning string literal (1153805520.py, line 9)
 
