@@ -1078,8 +1078,8 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#mimic3-data">
-   Mimic3 Data
+  <a class="reference internal nav-link" href="#movielens-data">
+   MovieLens Data
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
@@ -1117,81 +1117,26 @@ title="Print to PDF"
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span><span class="p">;</span>
-<span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span><span class="p">;</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">OSError</span><span class="g g-Whitespace">                                   </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_42872</span><span class="o">/</span><span class="mf">2327889422.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span><span class="p">;</span>
-<span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span><span class="p">;</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-
-<span class="o">~/</span><span class="n">opt</span><span class="o">/</span><span class="n">anaconda3</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.9</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">lightgbm</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> 
-<span class="ne">----&gt; </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">.basic</span> <span class="kn">import</span> <span class="n">Booster</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">register_logger</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="kn">from</span> <span class="nn">.callback</span> <span class="kn">import</span> <span class="n">early_stopping</span><span class="p">,</span> <span class="n">log_evaluation</span><span class="p">,</span> <span class="n">print_evaluation</span><span class="p">,</span> <span class="n">record_evaluation</span><span class="p">,</span> <span class="n">reset_parameter</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">from</span> <span class="nn">.engine</span> <span class="kn">import</span> <span class="n">CVBooster</span><span class="p">,</span> <span class="n">cv</span><span class="p">,</span> <span class="n">train</span>
-
-<span class="o">~/</span><span class="n">opt</span><span class="o">/</span><span class="n">anaconda3</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.9</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">lightgbm</span><span class="o">/</span><span class="n">basic</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">    </span><span class="mi">108</span> 
-<span class="g g-Whitespace">    </span><span class="mi">109</span> 
-<span class="ne">--&gt; </span><span class="mi">110</span> <span class="n">_LIB</span> <span class="o">=</span> <span class="n">_load_lib</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">111</span> 
-<span class="g g-Whitespace">    </span><span class="mi">112</span> 
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/lightgbm/basic.py</span> in <span class="ni">_load_lib</span><span class="nt">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">99</span>     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lib_path</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">100</span>         <span class="k">return</span> <span class="kc">None</span>
-<span class="ne">--&gt; </span><span class="mi">101</span>     <span class="n">lib</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">cdll</span><span class="o">.</span><span class="n">LoadLibrary</span><span class="p">(</span><span class="n">lib_path</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="g g-Whitespace">    </span><span class="mi">102</span>     <span class="n">lib</span><span class="o">.</span><span class="n">LGBM_GetLastError</span><span class="o">.</span><span class="n">restype</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_char_p</span>
-<span class="g g-Whitespace">    </span><span class="mi">103</span>     <span class="n">callback</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">CFUNCTYPE</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">)</span>
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/ctypes/__init__.py</span> in <span class="ni">LoadLibrary</span><span class="nt">(self, name)</span>
-<span class="g g-Whitespace">    </span><span class="mi">458</span> 
-<span class="g g-Whitespace">    </span><span class="mi">459</span>     <span class="k">def</span> <span class="nf">LoadLibrary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">460</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dlltype</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">461</span> 
-<span class="g g-Whitespace">    </span><span class="mi">462</span>     <span class="n">__class_getitem__</span> <span class="o">=</span> <span class="nb">classmethod</span><span class="p">(</span><span class="n">_types</span><span class="o">.</span><span class="n">GenericAlias</span><span class="p">)</span>
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/ctypes/__init__.py</span> in <span class="ni">__init__</span><span class="nt">(self, name, mode, handle, use_errno, use_last_error, winmode)</span>
-<span class="g g-Whitespace">    </span><span class="mi">380</span> 
-<span class="g g-Whitespace">    </span><span class="mi">381</span>         <span class="k">if</span> <span class="n">handle</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">382</span>             <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span> <span class="o">=</span> <span class="n">_dlopen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">383</span>         <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">384</span>             <span class="bp">self</span><span class="o">.</span><span class="n">_handle</span> <span class="o">=</span> <span class="n">handle</span>
-
-<span class="ne">OSError</span>: dlopen(/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/lightgbm/lib_lightgbm.so, 0x0006): Library not loaded: &#39;/usr/local/opt/libomp/lib/libomp.dylib&#39;
-  <span class="n">Referenced</span> <span class="n">from</span><span class="p">:</span> <span class="s1">&#39;/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/lightgbm/lib_lightgbm.so&#39;</span>
-  <span class="n">Reason</span><span class="p">:</span> <span class="n">tried</span><span class="p">:</span> <span class="s1">&#39;/usr/local/opt/libomp/lib/libomp.dylib&#39;</span> <span class="p">(</span><span class="n">no</span> <span class="n">such</span> <span class="n">file</span><span class="p">),</span> <span class="s1">&#39;/usr/local/lib/libomp.dylib&#39;</span> <span class="p">(</span><span class="n">no</span> <span class="n">such</span> <span class="n">file</span><span class="p">),</span> <span class="s1">&#39;/usr/lib/libomp.dylib&#39;</span> <span class="p">(</span><span class="n">no</span> <span class="n">such</span> <span class="n">file</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="mimic3-data">
-<h1>Mimic3 Data<a class="headerlink" href="#mimic3-data" title="Permalink to this heading">#</a></h1>
+<section id="movielens-data">
+<h1>MovieLens Data<a class="headerlink" href="#movielens-data" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get data</span>
-<span class="n">n</span> <span class="o">=</span> <span class="mi">5000</span>
-<span class="n">selected</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Glucose&#39;</span><span class="p">,</span><span class="s1">&#39;paO2&#39;</span><span class="p">,</span><span class="s1">&#39;PaO2_FiO2&#39;</span><span class="p">,</span>  <span class="s1">&#39;iv_input&#39;</span><span class="p">,</span> <span class="s1">&#39;SOFA&#39;</span><span class="p">,</span><span class="s1">&#39;reward&#39;</span><span class="p">]</span>
-<span class="n">data_CEL_selected</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;C:/Users/Public/CausalDM/causaldm/data/mimic3_CEL_selected.csv&quot;</span><span class="p">)</span>
-<span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="n">data_CEL_selected</span>
+<span class="n">MovieLens_CEL</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;/Users/alinaxu/Documents/CDM/CausalDM/causaldm/data/MovieLens_CEL.csv&quot;</span><span class="p">)</span>
+<span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">MovieLens_CEL</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html">
-  <div id="df-237c42ca-e6f0-4bf2-be70-4bfdc89b541b">
-    <div class="colab-df-container">
-      <div>
+<div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -1209,59 +1154,89 @@ title="Print to PDF"
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Glucose</th>
-      <th>paO2</th>
-      <th>PaO2_FiO2</th>
-      <th>iv_input</th>
-      <th>SOFA</th>
-      <th>reward</th>
+      <th>user_id</th>
+      <th>movie_id</th>
+      <th>rating</th>
+      <th>age</th>
+      <th>Drama</th>
+      <th>gender_M</th>
+      <th>occupation_academic/educator</th>
+      <th>occupation_college/grad student</th>
+      <th>occupation_executive/managerial</th>
+      <th>occupation_other</th>
+      <th>occupation_technician/engineer</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
+      <td>48.0</td>
+      <td>1193.0</td>
+      <td>4.0</td>
+      <td>25.0</td>
       <td>1.0</td>
-      <td>1.000000</td>
-      <td>1.000000</td>
       <td>1.0</td>
-      <td>1</td>
-      <td>1.000000</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>122.0</td>
-      <td>59.444444</td>
-      <td>198.148148</td>
+      <td>48.0</td>
+      <td>919.0</td>
+      <td>4.0</td>
+      <td>25.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
       <td>0.0</td>
-      <td>12</td>
-      <td>0.383136</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>125.0</td>
-      <td>192.000000</td>
-      <td>690.647482</td>
+      <td>48.0</td>
+      <td>527.0</td>
+      <td>5.0</td>
+      <td>25.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
       <td>0.0</td>
-      <td>4</td>
-      <td>0.976040</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
     </tr>
     <tr>
       <th>3</th>
+      <td>48.0</td>
+      <td>1721.0</td>
+      <td>4.0</td>
+      <td>25.0</td>
       <td>1.0</td>
-      <td>1.000000</td>
-      <td>1.000000</td>
       <td>1.0</td>
-      <td>1</td>
-      <td>1.000000</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
     </tr>
     <tr>
       <th>4</th>
+      <td>48.0</td>
+      <td>150.0</td>
+      <td>4.0</td>
+      <td>25.0</td>
       <td>1.0</td>
-      <td>1.000000</td>
-      <td>1.000000</td>
       <td>1.0</td>
-      <td>1</td>
-      <td>1.000000</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1271,137 +1246,92 @@ title="Print to PDF"
       <td>...</td>
       <td>...</td>
       <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
-      <th>4995</th>
-      <td>1.0</td>
-      <td>1.000000</td>
-      <td>1.000000</td>
-      <td>1.0</td>
-      <td>1</td>
-      <td>1.000000</td>
-    </tr>
-    <tr>
-      <th>4996</th>
-      <td>108.0</td>
-      <td>62.333333</td>
-      <td>143.846153</td>
+      <th>65637</th>
+      <td>5878.0</td>
+      <td>3300.0</td>
+      <td>2.0</td>
+      <td>25.0</td>
       <td>0.0</td>
-      <td>11</td>
-      <td>-0.025000</td>
-    </tr>
-    <tr>
-      <th>4997</th>
-      <td>106.0</td>
-      <td>258.500000</td>
-      <td>923.214286</td>
       <td>0.0</td>
-      <td>7</td>
-      <td>0.402531</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
     </tr>
     <tr>
-      <th>4998</th>
+      <th>65638</th>
+      <td>5878.0</td>
+      <td>1391.0</td>
       <td>1.0</td>
-      <td>1.000000</td>
-      <td>1.000000</td>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>1.0</td>
-      <td>1</td>
-      <td>1.000000</td>
+      <td>0.0</td>
     </tr>
     <tr>
-      <th>4999</th>
+      <th>65639</th>
+      <td>5878.0</td>
+      <td>185.0</td>
+      <td>4.0</td>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>1.0</td>
-      <td>1.000000</td>
-      <td>1.000000</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>65640</th>
+      <td>5878.0</td>
+      <td>2232.0</td>
       <td>1.0</td>
-      <td>1</td>
-      <td>1.000000</td>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>65641</th>
+      <td>5878.0</td>
+      <td>426.0</td>
+      <td>3.0</td>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
     </tr>
   </tbody>
 </table>
-<p>5000 rows × 6 columns</p>
-</div>
-      <button class="colab-df-convert" onclick="convertToInteractive('df-237c42ca-e6f0-4bf2-be70-4bfdc89b541b')"
-              title="Convert this dataframe to an interactive table."
-              style="display:none;">
-        
-  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
-       width="24px">
-    <path d="M0 0h24v24H0V0z" fill="none"/>
-    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
-  </svg>
-      </button>
-      
-  <style>
-    .colab-df-container {
-      display:flex;
-      flex-wrap:wrap;
-      gap: 12px;
-    }
-
-    .colab-df-convert {
-      background-color: #E8F0FE;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      display: none;
-      fill: #1967D2;
-      height: 32px;
-      padding: 0 0 0 0;
-      width: 32px;
-    }
-
-    .colab-df-convert:hover {
-      background-color: #E2EBFA;
-      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
-      fill: #174EA6;
-    }
-
-    [theme=dark] .colab-df-convert {
-      background-color: #3B4455;
-      fill: #D2E3FC;
-    }
-
-    [theme=dark] .colab-df-convert:hover {
-      background-color: #434B5C;
-      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
-      fill: #FFFFFF;
-    }
-  </style>
-
-      <script>
-        const buttonEl =
-          document.querySelector('#df-237c42ca-e6f0-4bf2-be70-4bfdc89b541b button.colab-df-convert');
-        buttonEl.style.display =
-          google.colab.kernel.accessAllowed ? 'block' : 'none';
-
-        async function convertToInteractive(key) {
-          const element = document.querySelector('#df-237c42ca-e6f0-4bf2-be70-4bfdc89b541b');
-          const dataTable =
-            await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                     [key], {});
-          if (!dataTable) return;
-
-          const docLinkHtml = 'Like what you see? Visit the ' +
-            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-            + ' to learn more about interactive tables.';
-          element.innerHTML = '';
-          dataTable['output_type'] = 'display_data';
-          await google.colab.output.renderOutput(dataTable, element);
-          const docLink = document.createElement('div');
-          docLink.innerHTML = docLinkHtml;
-          element.appendChild(docLink);
-        }
-      </script>
-    </div>
-  </div>
-  </div></div>
+<p>65642 rows × 11 columns</p>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">userinfo_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
-<span class="n">SandA</span> <span class="o">=</span> <span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="p">)</span>
+<span class="n">userinfo_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">SandA</span> <span class="o">=</span> <span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">])]</span>
 </pre></div>
 </div>
 </div>
@@ -1409,15 +1339,15 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># S-learner</span>
-<span class="n">S_learner</span> <span class="o">=</span> <span class="n">LGBMRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">S_learner</span> <span class="o">=</span> <span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 <span class="c1">#S_learner = LinearRegression()</span>
 <span class="c1">#SandA = np.hstack((S.to_numpy(),A.to_numpy().reshape(-1,1)))</span>
-<span class="n">S_learner</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">SandA</span><span class="p">,</span> <span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;reward&#39;</span><span class="p">])</span>
+<span class="n">S_learner</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">SandA</span><span class="p">,</span> <span class="n">MovieLens_CEL</span><span class="p">[</span><span class="s1">&#39;rating&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LGBMRegressor(max_depth=5)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GradientBoostingRegressor(max_depth=5)
 </pre></div>
 </div>
 </div>
@@ -1426,64 +1356,41 @@ title="Print to PDF"
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SandA_all1</span> <span class="o">=</span> <span class="n">SandA</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">SandA_all0</span> <span class="o">=</span> <span class="n">SandA</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">SandA_all1</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-<span class="n">SandA_all0</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">SandA_all1</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">4</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">SandA_all0</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">4</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 
 <span class="n">HTE_S_learner</span> <span class="o">=</span> <span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">SandA_all1</span><span class="p">)</span> <span class="o">-</span> <span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">SandA_all0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Let’s focus on the estimated HTEs for three randomly chosen users:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;S-learner:  &quot;</span><span class="p">,</span><span class="n">HTE_S_learner</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">5000</span><span class="p">])])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.15234589])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.15234589])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>S-learner:   [-0.13686218  0.52931381 -0.10371584]
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ATE_S_learner</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">HTE_S_learner</span><span class="p">)</span><span class="o">/</span><span class="n">n</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by&quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">ATE_S_learner</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="s2">&quot;out of 5 points.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.01825633])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by 0.1474 out of 5 points.
 </pre></div>
 </div>
 </div>
 </div>
-<p>Let’s focus on the estimated HTEs for the first 8 patients:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;S-learner:  &quot;</span><span class="p">,</span><span class="n">HTE_S_learner</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>S-learner:   [0. 0. 0. 0. 0. 0. 0. 0.]
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Conclusion:</strong> Due to the difference of scales across state variables, S-learner failed to detect the heterogeneous treatment effect in this mimic3 dataset. Although it is the easiest approach to implement, the over-simplicity tends to cover some information that can be better explored with some advanced approaches.</p>
+<p><strong>Conclusion:</strong> As we can see from the estimated ATE by S-learner, people are more inclined to give higher ratings to drama than science fictions.</p>
 </section>
 <section id="references">
 <h1>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h1>
@@ -1558,8 +1465,8 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#mimic3-data">
-   Mimic3 Data
+  <a class="reference internal nav-link" href="#movielens-data">
+   MovieLens Data
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
