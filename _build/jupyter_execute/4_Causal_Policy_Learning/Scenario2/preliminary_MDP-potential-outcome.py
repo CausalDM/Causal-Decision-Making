@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# (section:OPE_OPO_preliminary)=
 # # Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes
 # In this section, we introduce the formulation of the Markov Decision Process and a few related concepts which will be used repeatedly in this chapter. 
 # We will proceed under the potential outcome framework, which provides a unique causal perspectiy, is different from the conventional notations {cite:p}`sutton2018reinforcement`, and is largely based on {cite:t}`shi2020reinforcement`. 

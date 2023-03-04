@@ -4,6 +4,11 @@
 # (section:online_RL)=
 # # Ooline Policy Learning and Evaluation in Markovian Environments 
 # 
+# This chapter focuses on the online policy learning and evaluation problem in an Markov Decision Process (MDP), which is the most well-known and typically default setup of Reinforcement Learning (RL). 
+# From the causal perspective, the data dependency structure is 
+# 
+# 
+# 
 # [](section:OPE_OPO_preliminary)
 # 
 # In this section, we introduce the formulation of the Markov Decision Process and a few related concepts which will be used repeatedly in this chapter. 

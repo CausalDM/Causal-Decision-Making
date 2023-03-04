@@ -30,78 +30,66 @@
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt;
-from lightgbm import LGBMRegressor;
+from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.linear_model import LinearRegression
 
 
-# ### Mimic3 Data
+# ### MovieLens Data
 
-# In[ ]:
+# In[2]:
 
 
 # Get data
-n = 5000
-selected = ['Glucose','paO2','PaO2_FiO2',  'iv_input', 'SOFA','reward']
-data_CEL_selected = pd.read_csv("C:/Users/Public/CausalDM/causaldm/data/mimic3_CEL_selected.csv")
-data_CEL_selected.pop(data_CEL_selected.columns[0])
-data_CEL_selected
+MovieLens_CEL = pd.read_csv("/Users/alinaxu/Documents/CDM/CausalDM/causaldm/data/MovieLens_CEL.csv")
+MovieLens_CEL.pop(MovieLens_CEL.columns[0])
+MovieLens_CEL
 
 
-# In[ ]:
+# In[10]:
 
 
-userinfo_index = np.array([0,1,2,4])
-SandA = data_CEL_selected.iloc[:, np.array([0,1,2,3,4])]
+n = len(MovieLens_CEL)
+userinfo_index = np.array([3,5,6,7,8,9,10])
+SandA = MovieLens_CEL.iloc[:, np.array([3,4,5,6,7,8,9,10])]
 
 
-# In[ ]:
+# In[11]:
 
 
 # S-learner
-S_learner = LGBMRegressor(max_depth=5)
+S_learner = GradientBoostingRegressor(max_depth=5)
 #S_learner = LinearRegression()
 #SandA = np.hstack((S.to_numpy(),A.to_numpy().reshape(-1,1)))
-S_learner.fit(SandA, data_CEL_selected['reward'])
+S_learner.fit(SandA, MovieLens_CEL['rating'])
 
 
-# In[ ]:
+# In[12]:
 
 
 SandA_all1 = SandA.copy()
 SandA_all0 = SandA.copy()
-SandA_all1.iloc[:,3]=np.ones(n)
-SandA_all0.iloc[:,3]=np.zeros(n)
+SandA_all1.iloc[:,4]=np.ones(n)
+SandA_all0.iloc[:,4]=np.zeros(n)
 
 HTE_S_learner = S_learner.predict(SandA_all1) - S_learner.predict(SandA_all0)
 
 
-# In[ ]:
+# Let's focus on the estimated HTEs for three randomly chosen users:
+
+# In[22]:
 
 
-S_learner.predict(np.array([100,200,1000,1,5]).reshape(1, -1))
+print("S-learner:  ",HTE_S_learner[np.array([0,1000,5000])])
 
 
-# In[ ]:
+# In[20]:
 
 
-S_learner.predict(np.array([100,200,1000,0,5]).reshape(1, -1))
+ATE_S_learner = np.sum(HTE_S_learner)/n
+print("Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by",round(ATE_S_learner,4), "out of 5 points.")
 
 
-# In[ ]:
-
-
-S_learner.predict(np.array([0,0,1000,0,5]).reshape(1, -1))
-
-
-# Let's focus on the estimated HTEs for the first 8 patients:
-
-# In[ ]:
-
-
-print("S-learner:  ",HTE_S_learner[0:8])
-
-
-# **Conclusion:** Due to the difference of scales across state variables, S-learner failed to detect the heterogeneous treatment effect in this mimic3 dataset. Although it is the easiest approach to implement, the over-simplicity tends to cover some information that can be better explored with some advanced approaches.
+# **Conclusion:** As we can see from the estimated ATE by S-learner, people are more inclined to give higher ratings to drama than science fictions. 
 
 # ## References
 # 1. Kunzel, S. R., Sekhon, J. S., Bickel, P. J., and Yu, B. (2019). Metalearners for estimating heterogeneous treatment effects using machine learning. Proceedings of the national academy of sciences 116, 4156–4165.

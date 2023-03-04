@@ -16,8 +16,6 @@
 # 
 # 
 
-# ### Mimic3 Data
-
 # In[1]:
 
 
@@ -25,53 +23,66 @@
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt;
-from lightgbm import LGBMRegressor;
+from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.linear_model import LinearRegression
 
 
-# In[ ]:
+# ### MovieLens Data
+
+# In[2]:
 
 
 # Get data
-n = 5000
-selected = ['Glucose','paO2','PaO2_FiO2',  'iv_input', 'SOFA','reward']
-data_CEL_selected = pd.read_csv("C:/Users/Public/CausalDM/causaldm/data/mimic3_CEL_selected.csv")
-data_CEL_selected.pop(data_CEL_selected.columns[0])
-data_CEL_selected
+MovieLens_CEL = pd.read_csv("/Users/alinaxu/Documents/CDM/CausalDM/causaldm/data/MovieLens_CEL.csv")
+MovieLens_CEL.pop(MovieLens_CEL.columns[0])
+MovieLens_CEL
 
 
-# In[ ]:
+# In[3]:
 
 
-userinfo_index = np.array([0,1,2,4])
-SandA = data_CEL_selected.iloc[:, np.array([0,1,2,3,4])]
+n = len(MovieLens_CEL)
+userinfo_index = np.array([3,5,6,7,8,9,10])
+SandA = MovieLens_CEL.iloc[:, np.array([3,4,5,6,7,8,9,10])]
 
 
-# In[ ]:
+# In[6]:
 
 
-mu0 = LGBMRegressor(max_depth=3)
-mu1 = LGBMRegressor(max_depth=3)
+mu0 = GradientBoostingRegressor(max_depth=3)
+mu1 = GradientBoostingRegressor(max_depth=3)
 
-mu0.fit(data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==0)[0],userinfo_index],data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==0)[0],5] )
-mu1.fit(data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==1)[0],userinfo_index],data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==1)[0],5] )
+mu0.fit(MovieLens_CEL.iloc[np.where(MovieLens_CEL['Drama']==0)[0],userinfo_index],MovieLens_CEL.iloc[np.where(MovieLens_CEL['Drama']==0)[0],2] )
+mu1.fit(MovieLens_CEL.iloc[np.where(MovieLens_CEL['Drama']==1)[0],userinfo_index],MovieLens_CEL.iloc[np.where(MovieLens_CEL['Drama']==1)[0],2] )
 
 
 # estimate the HTE by T-learner
-HTE_T_learner = mu1.predict(data_CEL_selected.iloc[:,userinfo_index]) - mu0.predict(data_CEL_selected.iloc[:,userinfo_index])
+HTE_TLet's focus on the estimated HTEs for three randomly chosen users:
+
+print("S-learner:  ",HTE_S_learner[np.array([0,1000,5000])])
+
+ATE_S_learner = np.sum(HTE_S_learner)/n
+print("Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by",round(ATE_S_learner,4), "out of 5 points.")
+
+**Conclusion:** As we can see from the estimated ATE by S-learner, people are more inclined to give higher ratings to drama than science fictions. _learner = mu1.predict(MovieLens_CEL.iloc[:,userinfo_index]) - mu0.predict(MovieLens_CEL.iloc[:,userinfo_index])
 
 
-# Now let's take a glance at the performance of T-learner by comparing it with the true value for the first 8 subjects:
+# Let's focus on the estimated HTEs for three randomly chosen users:
 
-# In[ ]:
-
-
-print("T-learner:  ",HTE_T_learner[0:8])
+# In[12]:
 
 
-# This is quite good! T-learner captures the overall trend of the treatment effect w.r.t. the heterogeneity of different subjects.
+print("T-learner:  ",HTE_T_learner[np.array([0,1000,5000])])
 
-# **Conclusion:** In Mimic3 data, HTE can be successfully estimated by T-learner. In some cases when the treatment effect is relatively complex, it's likely to yield better performance by fitting two models separately. 
+
+# In[13]:
+
+
+ATE_T_learner = np.sum(HTE_T_learner)/n
+print("Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by",round(ATE_T_learner,4), "out of 5 points.")
+
+
+# **Conclusion:** Same as the estimation result provided by S-learner, people are more inclined to give higher ratings to drama than science fictions. The expected causal effect estiamted by T-learner is larger than S-learner. In some cases when the treatment effect is relatively complex, it's likely to yield better performance by fitting two models separately. 
 # 
 # However, in an extreme case when both $\mu_0(s)$ and $\mu_1(s)$ are nonlinear complicated function of state $s$ while their difference is just a constant, T-learner will overfit each model very easily, yielding a nonlinear treatment effect estimator. In this case, other estimators are often preferred.
 
