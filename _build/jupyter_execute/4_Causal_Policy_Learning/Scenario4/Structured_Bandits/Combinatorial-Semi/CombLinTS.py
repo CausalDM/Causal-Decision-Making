@@ -13,7 +13,7 @@
 # \begin{equation}
 # \theta_{i} = \boldsymbol{s}_{i,t}^{T}\boldsymbol{\gamma}.
 # \end{equation}
-# At each round $t$, **CombLinTS** samples $\tilde{\boldsymbol{\gamma}}_{t}$ from the updated posterior distribution $N(\hat{\boldsymbol{\gamma}}_{t},\hat{\Sigma}_{t})$ and get the $\tilde{\theta}_{i}^{t}$ as $\boldsymbol{s}_{i,t}^{T}\tilde{\boldsymbol{\gamma}}_{t}$, where $\hat{\boldsymbol{\gamma}}_{t}$ and $\hat{\Sigma}_{t}$ are updated by the Kalman Filtering algorithm[1]. Note that when the outcome distribution $\mathcal{P}$ is Gaussian, the updated posterior distribution is the exact posterior distribution of $\boldsymbol{\gamma}$ as **CombLinTS** assumes a Gaussian Prior. 
+# At each round $t$, **CombLinTS** samples $\tilde{\boldsymbol{\gamma}}_{t}$ from the updated posterior distribution $N(\hat{\boldsymbol{\gamma}}_{t},\hat{\boldsymbol{\Sigma}}_{t})$ and get the $\tilde{\theta}_{i}^{t}$ as $\boldsymbol{s}_{i,t}^{T}\tilde{\boldsymbol{\gamma}}_{t}$, where $\hat{\boldsymbol{\gamma}}_{t}$ and $\hat{\boldsymbol{\Sigma}}_{t}$ are updated by the Kalman Filtering algorithm[1]. Note that when the outcome distribution $\mathcal{P}$ is Gaussian, the updated posterior distribution is the exact posterior distribution of $\boldsymbol{\gamma}$ as **CombLinTS** assumes a Gaussian Prior. 
 # 
 # It's also important to note that, if necessary, the posterior updating step can be simply changed to accommodate various prior/reward distribution specifications. Further, for simplicity, we consider the most basic size constraint such that the action space includes all the possible subsets with size $K$. Therefore, the optimization process to find the optimal subset $A_{t}$ is equal to selecting a list of $K$ items with the highest attractiveness factors. Of course, users are welcome to modify the **optimization** function to satisfy more complex constraints.
 # 
@@ -82,24 +82,24 @@ LinTS_agent = CombLinTS.LinTS_Semi(sigma = sigma, prior_gamma_mu = prior_gamma_m
 
 
 # ### Recommendation and Interaction
-# We fisrt observe the feature information $X$ by
-# <code> X = env.Phi </code>. (Note: if an intercept is considered, the X should include a column of ones).
+# We fisrt observe the feature information $\boldsymbol{S}$ by
+# <code> S = env.Phi </code>. (Note: if an intercept is considered, the X should include a column of ones).
 # Starting from t = 0, for each step t, there are three steps:
 # 1. Recommend an action (a set of ordered restaturants)
-# <code> A = LinTS_agent.take_action(X) </code>
+# <code> A = LinTS_agent.take_action(S) </code>
 # 2. Get the reward of each item recommended from the environment
 # <code> R, _, tot_R = env.get_reward(A, t) </code>
 # 3. Update the posterior distribution
-# <code> LinTS_agent.receive_reward(t, A, R, X) </code>
+# <code> LinTS_agent.receive_reward(t, A, R, S) </code>
 
 # In[5]:
 
 
-X = env.Phi
+S = env.Phi
 t = 0
-A = LinTS_agent.take_action(X)
+A = LinTS_agent.take_action(S)
 R, _, tot_R = env.get_reward(A, t)
-LinTS_agent.receive_reward(t, A, R, X)
+LinTS_agent.receive_reward(t, A, R, S)
 t, A, R, tot_R
 
 

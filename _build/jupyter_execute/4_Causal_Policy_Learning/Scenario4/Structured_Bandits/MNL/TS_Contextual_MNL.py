@@ -65,7 +65,7 @@ env = _env.MNL_env(seed = 0)
 # ### Specify Hyperparameters
 # - K: number of itmes to be recommended at each round
 # - L: total number of candidate items
-# - Xs: feature informations (Note: if an intercept is considered, the X should include a column of ones)
+# - Xs: feature informations $\boldsymbol{S}$ (Note: if an intercept is considered, the $\boldsymbol{S}$ should include a column of ones)
 # - gamma_prior_mean: the mean of the prior distribution of $\boldsymbol{\gamma}$
 # - gamma_prior_cov: the coveraince matrix of the prior distribution of $\boldsymbol{\gamma}$ 
 # - r: revenue of items

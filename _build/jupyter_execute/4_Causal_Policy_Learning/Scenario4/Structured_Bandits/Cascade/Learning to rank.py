@@ -16,7 +16,7 @@
 #     \begin{split}
 #     W_{k, t}(a) &\sim Bernoulli(\theta_{a^k}), \forall k \in [K], \\
 #     Y_{k,t}(a) &= W_{k,t}(a) E_{k,t}(a), \forall k \in [K],\\
-#     E_{k,t}(a) &= [1-Y_{k-1}(a)] E_{k-1,t}(a), \forall k \in [K],\\
+#     E_{k,t}(a) &= \{1-Y_{k-1,t}(a)\} E_{k-1,t}(a), \forall k \in [K],\\
 #     R_t(a) &= \sum_{k \in [K]} Y_{k,t}(a), 
 #     \end{split}
 # \end{equation} 

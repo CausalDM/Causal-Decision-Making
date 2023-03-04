@@ -24,6 +24,14 @@
 get_ipython().run_line_magic('load_ext', 'autoreload')
 get_ipython().run_line_magic('autoreload', '2')
 
+##### Import Packages 
+from utils import *
+from notear import *
+  
+from numpy.random import randn
+from random import seed as rseed
+from numpy.random import seed as npseed
+
 import numpy as np
 import pandas as pd
 import os
@@ -33,6 +41,7 @@ import math
 import time 
 
 from datetime import datetime
+
 import matplotlib.pyplot as plt
 
 from multiprocessing import Pool
@@ -46,111 +55,84 @@ os.environ["OMP_NUM_THREADS"] = "1"
 # In[2]:
 
 
+mimic3 = pd.read_csv("subset_rl_data_final_cont.csv")
 
-mimic3_data = pd.read_csv("C:/Users/Public/Causal-Decision-Making/5_Case_Study/MIMIC3/subset_mimic3_sepsis_data.csv")
+
+# In[3]:
+
+
+mimic3_base = mimic3[['icustayid', 'Glucose','paO2','PaO2_FiO2',
+                           'iv_input', 'SOFA','died_within_48h_of_out_time']].copy()
+mimic3_base['died_within_48h_of_out_time'] = - 2 * np.array(mimic3_base['died_within_48h_of_out_time']) + 1
+mimic3_base.columns = ['icustayid', 'Glucose','paO2','PaO2_FiO2',
+                           'IV Input', 'SOFA','Died within 48H']
+mimic3_base.head(6)
+
+
+# In[4]:
+
+
+with open('mimic3_multi_stages.pickle', 'wb') as handle:
+    pickle.dump(mimic_final, handle)
+    
+mimic_final.to_csv (r'mimic3_multi_stages.csv', index = False, header=True)
+
+mimic_final.head(6)
+
+
+# In[39]:
+
+
+# ----------- Set lag data
+lag_k = 1
+    
+#     new_sofa = list(np.array(mimic_final['SOFA'][lag_k:]) - np.array(mimic_final['SOFA'][:-lag_k]))
+
+new_sofa = np.array(mimic_final['SOFA'][:-lag_k])
+mimic3_sample = mimic_final.iloc[lag_k:]
+mimic3_sample['SOFA'] = new_sofa
+mimic3_data = mimic3_sample.groupby('icustayid').mean().reset_index() 
+
+#     mimic3_data = mimic3_sample 
+
+
+# In[40]:
+
+
+with open('mimic3_single_stage.pickle', 'wb') as handle:
+    pickle.dump(mimic3_data, handle)
+    
+mimic3_data.to_csv (r'mimic3_single_stage.csv', index = False, header=True)
+
+
 mimic3_data.head(6)
 
 
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-##### Import Packages 
-from causaldm.learners.Causal_Discovery_Learning.utils import *
-from causaldm.learners.Case_Study.MIMIC3 import *
-from numpy.random import randn
-from random import seed as rseed
-from numpy.random import seed as npseed
-
-
-# In[ ]:
-
-
-mimic3_data.columns
-
-
-# In[ ]:
+# In[17]:
 
 
 # ----------- Estimated DAG based on NOTEARS
-#from obspy.imaging.beachball import plot_mt
-mimic3_data_final = mimic3_data
-# selected = ['gender',  
-#        're_admission', 'died_within_48h_of_out_time', 
-#        'Weight_kg', 'GCS',  'SpO2',
-#        'Temp_C', 'FiO2_1',  'Chloride', 'Glucose', 'BUN', 'WBC_count', 'paO2', 'paCO2', 
-#             'PaO2_FiO2',
-#        'median_dose_vaso', 'max_dose_vaso', 'SOFA', 'SIRS',
-#        'vaso_input', 'iv_input', 'reward']
-# selected = ['gender',   
-#        'Weight_kg', 'GCS', # 'SpO2', 'FiO2_1',  'Chloride', 'paO2', 'paCO2',  'PaO2_FiO2',
-#        #'median_dose_vaso', 'max_dose_vaso',  
-#             'cumulated_balance', 
-#        'vaso_input', 'iv_input', 'SOFA']
 
-selected = ['Glucose','paO2','PaO2_FiO2',  'iv_input', 'SOFA','died_within_48h_of_out_time']
+selected = ['Glucose','paO2','PaO2_FiO2', 'IV Input', 'SOFA','Died within 48H']
 
-sample_demo = mimic3_data_final[:5000][selected]
+sample_demo = mimic3_data[selected]
 est_mt = notears_linear(np.array(sample_demo), lambda1=0, loss_type='l2',w_threshold=0.1)
 
 # ----------- Plot Associated Matrix for the Estimated DAG based on NOTEARS
 
-# calculate_effect(est_mt)
-
-
-# In[ ]:
-
-
-
 plot_mt(est_mt, labels_name=selected, file_name='demo_res_mt')
 
 
-# In[ ]:
-
-
-est_mt[3,4] # SOFA -> iv_input 
-
-
-# In[ ]:
-
-
-est_mt[5,3] # iv_input -> died_within_48h_of_out_time
-
-
-# In[ ]:
+# In[18]:
 
 
 plot_net(est_mt, labels_name=selected, file_name='demo_res_net')
 
 
-# In[ ]:
+# In[19]:
 
 
-
-
-
-# In[ ]:
-
-
-
-sum(mimic3_data['cumulated_balance'])/len(mimic3_data)
-
-
-# In[ ]:
-
-
-sum(mimic3_data['output_total'])/len(mimic3_data)
-
-
-# In[ ]:
-
-
-sum(mimic3_data['input_total'])/len(mimic3_data)
+calculate_effect(est_mt)
 
 
 # In[ ]:
@@ -161,58 +143,63 @@ sum(mimic3_data['input_total'])/len(mimic3_data)
 
 # ## Causal Effect Learning
 
-# In[ ]:
-
-
-# in_input is the treatment, SOFA is the mediator, and the died_within_48hour is the outcome. 
-# All the rest nodes can be viewed as the confounders.
-
-
-# In[ ]:
+# In[24]:
 
 
 mimic3_data.columns
 
 
-# In[ ]:
+# In[41]:
 
 
-selected = ['Glucose','paO2','PaO2_FiO2',  'iv_input', 'SOFA','died_within_48h_of_out_time']
-
-sample_demo = mimic3_data[selected]
+mimic3_data.head(6)
 
 
-# In[ ]:
+# In[49]:
 
 
-userinfo_index = np.array([0,1,2,4])
-# outcome: died_within_48h_of_out_time (binary)
+plt.hist(mimic3_data['IV Input'])
+
+
+# In[53]:
+
+
+len(np.where(mimic3_data['IV Input']>1.5)[0])
+
+
+# In[54]:
+
+
+userinfo_index = np.array([1,2,3,5])
+# outcome: Died within 48H (binary)
 # treatment: iv_input (binary)
 # others: covariates
 
 
-# In[ ]:
+# In[56]:
 
 
-sample_demo.iloc[np.where(sample_demo['iv_input']!=0)[0],3]=1 # change the discrete action to binary
-data_CEL_selected = sample_demo.copy()
+data_CEL_selected = mimic3_data.copy()
+data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']<=1.5)[0],4]=0 # change the discrete action to binary
+data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']>1.5)[0],4]=1 # change the discrete action to binary
+
 data_CEL_selected.head(6)
 
 
-# In[ ]:
+# In[59]:
 
 
-print(sum(data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==0)[0],5]==0))
-print(sum(data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==0)[0],5]==1))
-print(sum(data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==1)[0],5]==0))
-print(sum(data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==1)[0],5]==1))
+print(sum(data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==0)[0],6]==-1))
+print(sum(data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==0)[0],6]==1))
+print(sum(data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==1)[0],6]==-1))
+print(sum(data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==1)[0],6]==1))
 # 58 patients in total
 
 
-# In[ ]:
+# In[68]:
 
 
-from lightgbm import LGBMRegressor
+#from lightgbm import LGBMRegressor
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
 
@@ -222,87 +209,54 @@ from sklearn.linear_model import LogisticRegression
 mu0 = LogisticRegression()
 mu1 = LogisticRegression()
 
-mu0.fit(data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==0)[0],userinfo_index],data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==0)[0],5] )
-mu1.fit(data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==1)[0],userinfo_index],data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==1)[0],5] )
+mu0.fit(data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==0)[0],userinfo_index],data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==0)[0],6] )
+mu1.fit(data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==1)[0],userinfo_index],data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==1)[0],6] )
 
 
 # estimate the HTE by T-learner
 HTE_T_learner = (mu1.predict_proba(data_CEL_selected.iloc[:,userinfo_index]) - mu0.predict_proba(data_CEL_selected.iloc[:,userinfo_index]))[:,1]
 
 
-# In[ ]:
+# In[69]:
 
 
 HTE_T_learner
 
 
-# In[ ]:
+# In[70]:
 
 
 mu1.predict(data_CEL_selected.iloc[:,userinfo_index])
 
 
-# In[ ]:
+# In[71]:
 
 
 mu0.predict(data_CEL_selected.iloc[:,userinfo_index])
 
 
-# In[ ]:
+# In[74]:
 
 
-np.where(mu1.predict(data_CEL_selected.iloc[:,userinfo_index])-mu0.predict(data_CEL_selected.iloc[:,userinfo_index])==1)[0]
+np.where(mu1.predict(data_CEL_selected.iloc[:,userinfo_index])-mu0.predict(data_CEL_selected.iloc[:,userinfo_index])==-2)[0]
 
 
-# In[ ]:
+# In[73]:
 
 
 sum(HTE_T_learner)/len(data_CEL_selected)
 
 
-# **Conclusion**: iv-input is expected to improve the death-within-48-hours rate by 13.18%.
+# **Conclusion**: iv-input is expected to improve the death-within-48-hours rate by 19.74%.
 
 # ### exclude SOFA from the covariates list
 
-# In[ ]:
+# In[75]:
 
 
-selected = ['Glucose','paO2','PaO2_FiO2',  'iv_input','died_within_48h_of_out_time']
+userinfo_index = np.array([1,2,3])
 
-sample_demo = mimic3_data[selected]
-
-
-# In[ ]:
-
-
-userinfo_index = np.array([0,1,2])
-# outcome: died_within_48h_of_out_time (binary)
-# treatment: iv_input (binary)
-# others: covariates
-
-
-# In[ ]:
-
-
-sample_demo.iloc[np.where(sample_demo['iv_input']!=0)[0],3]=1 # change the discrete action to binary
-data_CEL_selected = sample_demo.copy()
-data_CEL_selected.head(6)
-
-
-# In[ ]:
-
-
-print(sum(data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==0)[0],4]==0))
-print(sum(data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==0)[0],4]==1))
-print(sum(data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==1)[0],4]==0))
-print(sum(data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==1)[0],4]==1))
-# 58 patients in total
-
-
-# In[ ]:
-
-
-from lightgbm import LGBMRegressor
+#from lightgbm import LGBMRegressor
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
 
@@ -312,45 +266,45 @@ from sklearn.linear_model import LogisticRegression
 mu0 = LogisticRegression()
 mu1 = LogisticRegression()
 
-mu0.fit(data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==0)[0],userinfo_index],data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==0)[0],4] )
-mu1.fit(data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==1)[0],userinfo_index],data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==1)[0],4] )
+mu0.fit(data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==0)[0],userinfo_index],data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==0)[0],6] )
+mu1.fit(data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==1)[0],userinfo_index],data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==1)[0],6] )
 
 
 # estimate the HTE by T-learner
 HTE_T_learner = (mu1.predict_proba(data_CEL_selected.iloc[:,userinfo_index]) - mu0.predict_proba(data_CEL_selected.iloc[:,userinfo_index]))[:,1]
 
 
-# In[ ]:
+# In[76]:
 
 
 HTE_T_learner
 
 
-# In[ ]:
+# In[77]:
 
 
 mu1.predict(data_CEL_selected.iloc[:,userinfo_index])
 
 
-# In[ ]:
+# In[78]:
 
 
 mu0.predict(data_CEL_selected.iloc[:,userinfo_index])
 
 
-# In[ ]:
+# In[79]:
 
 
-np.where(mu1.predict(data_CEL_selected.iloc[:,userinfo_index])-mu0.predict(data_CEL_selected.iloc[:,userinfo_index])==1)[0]
+np.where(mu1.predict(data_CEL_selected.iloc[:,userinfo_index])-mu0.predict(data_CEL_selected.iloc[:,userinfo_index])==-2)[0]
 
 
-# In[ ]:
+# In[80]:
 
 
 sum(HTE_T_learner)/len(data_CEL_selected)
 
 
-# **Conclusion**: iv-input is expected to improve the death-within-48-hours rate by 13.18%.
+# **Conclusion**: iv-input is expected to improve the death-within-48-hours rate by 20.40%.
 
 # In[ ]:
 
@@ -360,44 +314,20 @@ sum(HTE_T_learner)/len(data_CEL_selected)
 
 # ### Regard SOFA as outcome variable
 
-# In[ ]:
+# In[82]:
 
 
-selected = ['Glucose','paO2','PaO2_FiO2',  'iv_input', 'SOFA']
-
-sample_demo = mimic3_data[selected]
-
-
-# In[ ]:
-
-
-userinfo_index = np.array([0,1,2])
+userinfo_index = np.array([1,2,3])
 # outcome: SOFA score (treated as continuous). The smaller, the better
 # treatment: iv_input (binary)
 # others: covariates
-
-
-# In[ ]:
-
-
-sample_demo.iloc[np.where(sample_demo['iv_input']!=0)[0],3]=1 # change the discrete action to binary
-data_CEL_selected = sample_demo.copy()
 data_CEL_selected.head(6)
 
 
-# In[ ]:
+# In[84]:
 
 
-print(sum(data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==0)[0],4]))
-print(sum(data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==1)[0],4]))
-# 58 patients in total
-# the trend looks great: iv_input helps to decrease the overall SOFA score of patients
-
-
-# In[ ]:
-
-
-from lightgbm import LGBMRegressor
+#from lightgbm import LGBMRegressor
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.linear_model import LinearRegression
@@ -408,133 +338,42 @@ from sklearn.linear_model import LinearRegression
 mu0 = LinearRegression()
 mu1 = LinearRegression()
 
-mu0.fit(data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==0)[0],userinfo_index],data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==0)[0],4] )
-mu1.fit(data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==1)[0],userinfo_index],data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==1)[0],4] )
+mu0.fit(data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==0)[0],userinfo_index],data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==0)[0],5] )
+mu1.fit(data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==1)[0],userinfo_index],data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==1)[0],5] )
 
 
 # estimate the HTE by T-learner
 HTE_T_learner = (mu1.predict(data_CEL_selected.iloc[:,userinfo_index]) - mu0.predict(data_CEL_selected.iloc[:,userinfo_index]))
 
 
-# In[ ]:
+# In[85]:
 
 
 mu1.predict(data_CEL_selected.iloc[:,userinfo_index])
 
 
-# In[ ]:
+# In[86]:
 
 
 mu0.predict(data_CEL_selected.iloc[:,userinfo_index])
 
 
-# In[ ]:
+# In[87]:
 
 
 HTE_T_learner
 
 
-# In[ ]:
+# In[88]:
 
 
 sum(HTE_T_learner)/len(data_CEL_selected)
 
 
-# **Conclusion**: iv-input is expected to decrease the SOFA score by 0.958.
+# **Conclusion**: IV Input is expected to increase the SOFA score by 0.086.
 
 # In[ ]:
 
 
 
-
-
-# ### 2023.02.11 change to another outcome variable
-
-# In[ ]:
-
-
-# set the reward variable as the original one in the data
-mimic3_data
-
-
-# In[ ]:
-
-
-selected = ['Glucose','paO2','PaO2_FiO2',  'iv_input', 'SOFA','reward']
-
-smaple_demo = mimic3_data_final[:5000][selected]
-
-
-# In[ ]:
-
-
-userinfo_index = np.array([0,1,2,4])
-smaple_demo
-# outcome: died_within_48h_of_out_time (binary)
-# treatment: iv_input (binary)
-# others: covariates
-
-
-# In[ ]:
-
-
-len(np.where(smaple_demo['iv_input']==0)[0])
-
-
-# In[ ]:
-
-
-data_CEL_selected = smaple_demo
-data_CEL_selected.iloc[np.where(smaple_demo['iv_input']!=0)[0],:] = 1
-# change the discrete action to binary
-data_CEL_selected
-
-
-# In[ ]:
-
-
-len(np.where(data_CEL_selected['iv_input']==1)[0])
-
-
-# In[ ]:
-
-
-from lightgbm import LGBMRegressor
-from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.linear_model import LogisticRegression
-
-#mu0 = GradientBoostingClassifier(max_depth=2)
-#mu1 = GradientBoostingClassifier(max_depth=2)
-
-#mu0 = LogisticRegression()
-#mu1 = LogisticRegression()
-
-#mu0 = LGBMRegressor(max_depth=3)
-#mu1 = LGBMRegressor(max_depth=3)
-
-mu0.fit(data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==0)[0],userinfo_index],data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==0)[0],5] )
-mu1.fit(data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==1)[0],userinfo_index],data_CEL_selected.iloc[np.where(data_CEL_selected['iv_input']==1)[0],5] )
-
-
-# estimate the HTE by T-learner
-HTE_T_learner = mu1.predict(data_CEL_selected.iloc[:,userinfo_index]) - mu0.predict(data_CEL_selected.iloc[:,userinfo_index])
-
-
-# In[ ]:
-
-
-HTE_T_learner
-
-
-# In[ ]:
-
-
-sum(HTE_T_learner)/5000
-# Averaged Treatment Effect
-
-
-# In[ ]:
-
-
-#  concern 1: S-learner failed to learn HTE since the scale of iv_input is way smaller than other state variables
 

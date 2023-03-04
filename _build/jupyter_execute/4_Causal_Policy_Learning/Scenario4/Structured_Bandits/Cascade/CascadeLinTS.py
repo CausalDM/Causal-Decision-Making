@@ -13,15 +13,15 @@
 # Motivated by observations in most real-world applications, which have a large number of candidate items, Zong et al. (2016) proposed using feature information that is widely available to improve learning efficiency. Utilizing the feature information of each item $i$, **CascadeLinTS** [1] characterize $\theta_{i}=E[W_t(i)]$ by assuming that
 # \begin{equation}
 # \theta_{i} = logistic(\boldsymbol{s}_{i,t}^T \boldsymbol{\gamma}),
-# \end{equation}where $logistic(s) \equiv 1 / (1 + exp^{-1}(s))$. 
+# \end{equation}where $logistic(c) \equiv 1 / (1 + exp^{-1}(c))$. 
 # 
 # Similar to the Thompson Sampling algorithm with generalized linear bandits [2], we approximate the posterior distribution of $\boldsymbol{\gamma}$ by its Laplace approximation. Specifically, we approximate the posterior of $\boldsymbol{\gamma}$ as:
 # \begin{equation}
 #     \begin{split}
 #     \tilde{\boldsymbol{\gamma}}^{t} &\sim \mathcal{N}\Big(\hat{\boldsymbol{\gamma}}_{t}, \alpha^2 \boldsymbol{H}_{t}^{-1}\Big),\\
-#     \boldsymbol{H}_{t} &= \sum_{t}\mu^{'}(\boldsymbol{S}_{t}^{T}\hat{\boldsymbol{\gamma}}^{t})\boldsymbol{S}_{t}\boldsymbol{S}_{t}^{T},
+#     \boldsymbol{H}_{t} &= \sum_{t}\mu'(\boldsymbol{S}_{t}^{T}\hat{\boldsymbol{\gamma}}^{t})\boldsymbol{S}_{t}\boldsymbol{S}_{t}^{T},
 #     \end{split}
-# \end{equation} where $\alpha$ is a pre-specified constant to control the degree of exploration, and $\mu^{'}(\cdot)$ is the derivative of the mean function. It should be noted that the posterior updating step differs for different pairs of the prior distribution of $\boldsymbol{\gamma}$ and the reward distribution, and the code can be easily modified to different prior/reward distribution specifications if necessary.
+# \end{equation} where $\alpha$ is a pre-specified constant to control the degree of exploration, and $\mu'(\cdot)$ is the derivative of the mean function. It should be noted that the posterior updating step differs for different pairs of the prior distribution of $\boldsymbol{\gamma}$ and the reward distribution, and the code can be easily modified to different prior/reward distribution specifications if necessary.
 # 
 # 
 # ## Key Steps
@@ -86,23 +86,23 @@ LinTS_agent = CascadeLinTS.CascadeLinTS(K = K, L = L, p = p, alpha = alpha,
 
 
 # ### Recommendation and Interaction
-# We fisrt observe the feature information $X$ by
-# <code> X = env.Phi </code>. (Note: if an intercept is considered, the X should include a column of ones). Starting from t = 0, for each step t, there are three steps:
+# We fisrt observe the feature information $\boldsymbol{S}$ by
+# <code> S = env.Phi </code>. (Note: if an intercept is considered, the S should include a column of ones). Starting from t = 0, for each step t, there are three steps:
 # 1. Recommend an action (a set of ordered restaturants)
-# <code> A = LinTS_agent.take_action(X) </code>
+# <code> A = LinTS_agent.take_action(S) </code>
 # 2. Get the reward from the environment (i.e., $W$, $E$, and $R$)
 # <code> W,E,R = env.get_reward(A) </code>
 # 3. Update the posterior distribution
-# <code> LinTS_agent.receive_reward(A,W,E,t,X) </code>
+# <code> LinTS_agent.receive_reward(A,W,E,t,S) </code>
 
 # In[5]:
 
 
 t = 0
-X = env.Phi
-A = LinTS_agent.take_action(X)
+S = env.Phi
+A = LinTS_agent.take_action(S)
 W,E,R = env.get_reward(A)
-LinTS_agent.receive_reward(A,W,E,t,X)
+LinTS_agent.receive_reward(A,W,E,t,S)
 A, W, E, R
 
 

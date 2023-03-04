@@ -1,7 +1,7 @@
-# Single Stage (DTR)
+# Single Stage
 
 ## Problem Setting
-Suppose we have a dataset containing observations from $N$ individuals. For each individual $i$, we have $\{\mathbf{S}_{i},A_{i},R_{i}\}$, $i=1,\cdots,N$. $\mathbf{S}_{i}$ includes the feature information, $A_{i}$ is the action taken, and $R_{i}$ is the observed reward received. Further, let $R_i(a)$ denote the potential reward that would be observed if individual $i$ was treated with action $a$.
+Suppose we have a dataset containing observations from $N$ individuals. For each individual $i$, we have $\{\boldsymbol{S}_{i},A_{i},R_{i}\}$, $i=1,\cdots,N$. $\boldsymbol{S}_{i}$ includes the feature information, $A_{i}$ is the action taken, and $R_{i}$ is the observed reward received.
 
 ## Real Data
 **1. Fetch_hillstrom**

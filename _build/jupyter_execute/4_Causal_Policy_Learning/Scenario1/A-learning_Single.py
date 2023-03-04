@@ -9,42 +9,42 @@
 # Note that, we assume the action space is either **binary** (i.e., 0,1) or **multinomial** (i.e., 0,1,2,3,4, where 0 stands for the control group by convention), and the outcome of interest R is **continuous** and **non-negative**, where the larger the $R$ the better. 
 # 
 # ## Algorithm Details
-# Suppose there are $m$ number of options, and the action space $\mathcal{A}=\{0,1,\dots,m-1\}$. Contrast-based A-learning, as the name suggested, aims to learn and estimate the constrast function, $C_{j}(X)$ for each treatment $j=1,2,\cdots, m-1$. Furthermore, we also need to posit a model for the conditional expected potential outcome for the control option (treatment $0$), $Q(S,0)$, and the propensity function $\omega(S,A)$, if the true values are not specified. Detailed definitions are provided in the following.
+# Suppose there are $m$ number of options, and the action space $\mathcal{A}=\{0,1,\dots,m-1\}$. Contrast-based A-learning, as the name suggested, aims to learn and estimate the constrast function, $C_{j}(\boldsymbol{S})$ for each treatment $j=1,2,\cdots, m-1$. Furthermore, we also need to posit a model for the conditional expected potential outcome for the control option (treatment $0$), $Q(\boldsymbol{S},0)$, and the propensity function $\omega(\boldsymbol{S},A)$, if the true values are not specified. Detailed definitions are provided in the following.
 # *   Q-function:
 #     \begin{align}
-#     Q(s,a)=E[R(a)|S=s],
+#     Q(\boldsymbol{s},a)=E[R(a)|\boldsymbol{S}=\boldsymbol{s}],
 #     \end{align}
-#     Alternatively, with the contrast function $C_j(S)$ which will be defined later,
+#     Alternatively, with the contrast function $C_j(\boldsymbol{S})$ which will be defined later,
 #     \begin{align}
-#     Q(s,j) = Q(s,0) + C_{j}(s),\quad j=0,\dots,m-1.
+#     Q(\boldsymbol{s},j) = Q(\boldsymbol{s},0) + C_{j}(\boldsymbol{s}),\quad j=0,\dots,m-1.
 #     \end{align}
 # *   Contrast functions (optimal blip to zero functions)
 #     \begin{align}
-#     C_{j}(s)=Q(s,j)-Q(s,0),\quad j=0,\dots,m-1,
+#     C_{j}(\boldsymbol{s})=Q(\boldsymbol{s},j)-Q(\boldsymbol{s},0),\quad j=0,\dots,m-1,
 #     \end{align}
-#     where $C_{0}(s) = 0$.
+#     where $C_{0}(\boldsymbol{s}) = 0$.
 # *   Propensity score
 #     \begin{align}
-#     \omega(s,a)=P(A=a|S=s)
+#     \omega(\boldsymbol{s},a)=P(A=a|\boldsymbol{S}=\boldsymbol{s})
 #     \end{align}
 # *   Optimal regime
 #     \begin{align}
-#     d^{opt}(s)=\arg\max_{j\in\mathcal{A}}C_{j}(S)
+#     d^{opt}(\boldsymbol{s})=\arg\max_{j\in\mathcal{A}}C_{j}(\boldsymbol{s})
 #     \end{align}
-# Positting models, $C_{j}(s,\psi_{j})$,$Q(s,0,\phi)$,and $\omega(s,a,\gamma)$, A-learning aims to estimate $\psi_{j}$, $\phi$, and $\gamma$ by g-estimation. With the $\hat{\psi}_{j}$ in hand, the optimal decision $d^{opt}(s)$ can be directly derived.
+# Positting models, $C_{j}(\boldsymbol{s},\boldsymbol{\psi}_{j})$,$Q(\boldsymbol{s},0,\boldsymbol{\phi})$,and $\omega(\boldsymbol{s},a,\boldsymbol{\gamma})$, A-learning aims to estimate $\boldsymbol{\psi}_{j}$, $\boldsymbol{\phi}$, and $\boldsymbol{\gamma}$ by g-estimation. With the $\hat{\boldsymbol{\psi}}_{j}$ in hand, the optimal decision $d^{opt}(\boldsymbol{s})$ can be directly derived.
 # 
 # 
 # ## Key Steps
 # **Policy Learning:**
-# 1. Fitted a model $\omega(s,a,\gamma)$, which can be solved directly by existing approaches (i.e., logistic regression, .etc),
-# 2. Substituting the $\hat{\gamma}$, we estimate the $\hat{\psi}_{j}$ and $\gamma$ by solving the euqations in Appendix A.1 jointly.      
-# 3. For each individual find the optimal action $d^{opt}(s_{i})$ such that $d^{opt}(s_{i}) = \arg\max_{j\in\mathcal{A}}C_{j}(h,\hat{\psi_{j}})$.
+# 1. Fitted a model $\omega(\boldsymbol{s},a,\boldsymbol{\gamma})$, which can be solved directly by existing approaches (i.e., logistic regression, .etc),
+# 2. Substituting the $\hat{\boldsymbol{\gamma}}$, we estimate the $\hat{\boldsymbol{\psi}}_{j}$ and $\hat{\boldsymbol{\gamma}}$ by solving the euqations in Appendix A.1 jointly.      
+# 3. For each individual find the optimal action $d^{opt}(\boldsymbol{s}_{i})$ such that $d^{opt}(\boldsymbol{s}_{i}) = \arg\max_{j\in\mathcal{A}}C_{j}(h,\hat{\boldsymbol{\psi}_{j}})$.
 #     
 # **Policy Evaluation:**    
-# 1. Fitted the functions $\omega(s,a,\gamma)$， $\hat{Q}(s,0,\hat{\beta})$, and $\hat{C}_{j}(s,\hat{\psi}_{j})$, based on the sampled dataset
-# 2. Estimated the value of a given regime $d$ using the estimated functions, such that, $\hat{R}_{i} = \hat{Q}(s_{i},0,\hat{\beta})+I\{d(s_{i})=j\}\hat{C}_{j}(s_i,\hat{\psi}_{j})$, and the estimated value is the average of $\hat{R}_{i}$.
+# 1. Fitted the functions $\omega(\boldsymbol{s},a,\boldsymbol{\gamma})$， $\hat{Q}(\boldsymbol{s},0,\hat{\boldsymbol{\beta}})$, and $\hat{C}_{j}(\boldsymbol{s},\hat{\boldsymbol{\psi}}_{j})$, based on the sampled dataset
+# 2. Estimated the value of a given regime $d$ using the estimated functions, such that, $\hat{R}_{i} = \hat{Q}(\boldsymbol{s}_{i},0,\hat{\boldsymbol{\beta}})+I\{d(\boldsymbol{s}_{i})=j\}\hat{C}_{j}(\boldsymbol{s}_i,\hat{\boldsymbol{\psi}}_{j})$, and the estimated value is the average of $\hat{R}_{i}$.
 # 
-# **Note** we also provide an option for bootstrapping. Particularly, for a given policy, we utilze the boostrap resampling to get the estimated value of the regime and the corresponding estimated standard error. Basically, for each round of bootstrap, we resample a dataset of the same size as the original dataset with replacement, fitted the $Q(s,0)$ function and contrast functions based on the sampled dataset, and estimated the value of a given regime using the estimated $Q(s,0)$ function and contrast functions function. 
+# **Note** we also provide an option for bootstrapping. Particularly, for a given policy, we utilze the boostrap resampling to get the estimated value of the regime and the corresponding estimated standard error. Basically, for each round of bootstrap, we resample a dataset of the same size as the original dataset with replacement, fitted the $Q(\boldsymbol{s},0)$ function and contrast functions based on the sampled dataset, and estimated the value of a given regime using the estimated $Q(\boldsymbol{s},0)$ function and contrast functions function. 
 # 
 # ## Demo Code
 # In the following, we exhibit how to apply the learner on real data to do policy learning and policy evaluation, respectively.
@@ -87,11 +87,11 @@ model_info = [{'X_prop': [0,1,2], #[0,1,2] here stands for the intercept, recenc
 
 # By specifing the model_info, we assume  the following models:
 # \begin{align}
-# Q(s,0,\phi) &= \phi_{00}+\phi_{01}*recency+\phi_{02}*history,\\
-# C_{1}(s,\psi_{0}) &= 0\\
-# C_{1}(s,\psi_{1}) &= \psi_{10}+\psi_{11}*recency+\psi_{12}*history,\\
-# C_{2}(s,\psi_{2}) &= \psi_{20}+\psi_{21}*recency+\psi_{22}*history,\\
-# \omega(s,a=j,\gamma) &= \frac{exp(\gamma_{j0}+\gamma_{j1}*recency+\gamma_{j2}*history)}{\sum_{j=0}^{2}exp(\gamma_{j0}+\gamma_{j1}*recency+\gamma_{j2}*history)},\\
+# Q(\boldsymbol{s},0,\boldsymbol{\phi}) &= \phi_{00}+\phi_{01}*recency+\phi_{02}*history,\\
+# C_{1}(\boldsymbol{s},\boldsymbol{\psi}_{0}) &= 0\\
+# C_{1}(\boldsymbol{s},\boldsymbol{\psi}_{1}) &= \psi_{10}+\psi_{11}*recency+\psi_{12}*history,\\
+# C_{2}(\boldsymbol{s},\boldsymbol{\psi}_{2}) &= \psi_{20}+\psi_{21}*recency+\psi_{22}*history,\\
+# \omega(\boldsymbol{s},a=j,\boldsymbol{\gamma}) &= \frac{exp(\gamma_{j0}+\gamma_{j1}*recency+\gamma_{j2}*history)}{\sum_{j=0}^{2}exp(\gamma_{j0}+\gamma_{j1}*recency+\gamma_{j2}*history)},\\
 # \end{align}
 # where $\gamma_{00}=\gamma_{01}=\gamma_{02}=0$.
 
@@ -118,9 +118,9 @@ print("opt value:",V_hat)
 
 # **Interpretation:** the fitted contrast models are 
 # \begin{align}
-# C_{0}(s,\psi_{0}) &= 0\\
-# C_{1}(s,\psi_{1}) &= 23.39-4.03*recency+.005*history,\\
-# C_{2}(s,\psi_{2}) &= 21.03-4.71*recency-.003*history,\\
+# C_{0}(\boldsymbol{s},\boldsymbol{\psi}_{0}) &= 0\\
+# C_{1}(\boldsymbol{s},\boldsymbol{\psi}_{1}) &= 23.39-4.03*recency+.005*history,\\
+# C_{2}(\boldsymbol{s},\boldsymbol{\psi}_{2}) &= 21.03-4.71*recency-.003*history,\\
 # \end{align}
 # Therefore, the estimated optimal regime is:
 # 1. We would recommend $A=0$ (No E-mail) if $23.39-4.03*recency+.005*history<0$ and $21.03-4.71*recency-.003*history<0$
@@ -191,8 +191,8 @@ print('Value_hat:',value_avg,'Value_std:',value_std)
 # ## A.1
 # $$
 # \begin{aligned}
-# &\sum_{i=1}^n \frac{\partial C_{j}(S_{i};\psi_{j})}{\partial \psi_{j}}\{\mathbb{I}\{A_{i}=j\}-\omega(S_{i},j;\hat{\gamma})\}\times \Big\{R_i-\sum_{j'=1}^{m-1} \mathbb{I}\{A_{i}=j'\}C_{j'}(S_{i;\psi_{j'}})-Q(S_{i},0;\phi)\Big\}=0\\
-# &\sum_{i=1}^n \frac{\partial Q(S_{i},0;\phi)}{\partial \phi}\Big\{R_i-\sum_{j'=1}^{m-1} \mathbb{I}\{A_{i}=j'\}C_{j'}(S_{i};\psi_{j'}) Q(S_{i},0;\phi)\Big\}=0
+# &\sum_{i=1}^n \frac{\partial C_{j}(\boldsymbol{S}_{i};\boldsymbol{\psi}_{j})}{\partial \boldsymbol{\psi}_{j}}\{\mathbb{I}\{A_{i}=j\}-\omega(\boldsymbol{S}_{i},j;\hat{\boldsymbol{\gamma}})\}\times \Big\{R_i-\sum_{j'=1}^{m-1} \mathbb{I}\{A_{i}=j'\}C_{j'}(\boldsymbol{S}_{i;\boldsymbol{\psi}_{j'}})-Q(\boldsymbol{S}_{i},0;\boldsymbol{\phi})\Big\}=0\\
+# &\sum_{i=1}^n \frac{\partial Q(\boldsymbol{S}_{i},0;\boldsymbol{\phi})}{\partial \boldsymbol{\phi}}\Big\{R_i-\sum_{j'=1}^{m-1} \mathbb{I}\{A_{i}=j'\}C_{j'}(\boldsymbol{S}_{i};\boldsymbol{\psi}_{j'}) Q(\boldsymbol{S}_{i},0;\boldsymbol{\phi})\Big\}=0
 # \end{aligned}
 # $$
 

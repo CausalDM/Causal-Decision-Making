@@ -19,7 +19,7 @@
 # &\text{(Intra-task)} \quad
 # \;    R_{j,t}(a) = Y_{j,t}(a) &&= \mu_{j,a} + \epsilon_{j,t}, 
 #       \end{alignedat}
-# \end{equation} where $\boldsymbol{\delta}_{j} \stackrel{i.i.d.}{\sim} \mathcal{N}(\boldsymbol{0}, \boldsymbol{\Sigma})$, and $\epsilon_{j,t} \stackrel{i.i.d.}{\sim} \mathcal{N}(\boldsymbol{0}, \sigma^{2})$. For simplicity, we assume a Normal prior, which resulted in a Normal posterior with explicit form. Note that, if we replace the inter-task layer to a deterministic model (i.e., $g(\boldsymbol{\mu}_j | \boldsymbol{x}_j, \boldsymbol{\gamma})=\boldsymbol{s}_j^{T}\boldsymbol{\gamma}$), **MTTS** is reduced to an algorithm similar to **AdaTS** with linear bandits and Gaussian rewards discussed in Section 3.2 [2]. In contrast to **MTSS**, the **AdaTS** fail to address the issue of heterogeneous tasks.
+# \end{equation} where $\boldsymbol{\delta}_{j} \stackrel{i.i.d.}{\sim} \mathcal{N}(\boldsymbol{0}, \boldsymbol{\Sigma})$, and $\epsilon_{j,t} \stackrel{i.i.d.}{\sim} \mathcal{N}(0, \sigma^{2})$. For simplicity, we assume a Normal prior, which resulted in a Normal posterior with explicit form. Note that, if we replace the inter-task layer to a deterministic model (i.e., $g(\boldsymbol{\mu}_j | \boldsymbol{s}_j, \boldsymbol{\gamma})=\boldsymbol{s}_j^{T}\boldsymbol{\gamma}$), **MTTS** is reduced to an algorithm similar to **AdaTS** with linear bandits and Gaussian rewards discussed in Section 3.2 [2]. In contrast to **MTSS**, the **AdaTS** fail to address the issue of heterogeneous tasks.
 # 
 # Similarly, considering the Bernoulli bandit, it assumes that
 # \begin{equation}\label{eqn:hierachical_model}
@@ -32,7 +32,7 @@
 # \;    R_{j,t}(a) = Y_{j,t}(a) &&\sim  \text{Bernoulli} \big( \mu_{j, a} \big), 
 #       \end{alignedat}
 # \end{equation}
-# where  $logistic(s) \equiv 1 / (1 + exp^{-1}(s))$, $\psi$ is a known parameter, and  $\text{Beta}(\mu, \psi)$ denotes a Beta distribution with mean $\mu$ and precision $\psi$. Still, we assume a Normal prior of $\boldsymbol{\gamma}$. As there is no explicit form of the corresponding posterior, we update the posterior distribution by **Pymc3**.
+# where  $logistic(c) \equiv 1 / (1 + exp^{-1}(c))$, $\psi$ is a known parameter, and  $\text{Beta}(\mu, \psi)$ denotes a Beta distribution with mean $\mu$ and precision $\psi$. Still, we assume a Normal prior of $\boldsymbol{\gamma}$. As there is no explicit form of the corresponding posterior, we update the posterior distribution by **Pymc3**.
 # 
 # Under the TS framework, at each round $t$ with task $j$, the agent will sample a $\tilde{\boldsymbol{\mu}}_{j}$ from its posterior distribution updated according to the hierarchical model, then the action $a$ with the maximum sampled $\tilde{\mu}_{j,a}$ will be pulled. Mathmetically,
 # \begin{equation}
@@ -87,7 +87,7 @@ env = _env.MultiTask_Env(seed = 0, Binary = False)
 # - `T`: number of total steps per task
 # - `theta_prior_mean`: mean of the meta prior distribution
 # - `theta_prior_cov`: covariance matrix of the meta prior distribution
-# - `delta_cov`: covariance of $\delta_j$
+# - `delta_cov`: covariance of $\boldsymbol{\delta}_j$
 # - `Xs`: Baseline information for all Tasks, (N,K,p) matrix
 # - `approximate_solution`: if `True`, we implement the Algorithm 2 in [1]. Specifically, if order = 'episodic', the meta-posterior distribution is updated once a task is finished; if order = 'concurrent, the meta-posterior distribution is updated once the agent finishes interacting with all tasks at each step $t$.
 # - `update_freq`: if `approximate_solution = False`, then the meta-posterior is updated every `update_freq` steps

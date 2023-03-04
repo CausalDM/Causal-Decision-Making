@@ -14,7 +14,7 @@
 # ## Key Steps
 # 1. Specifying a prior distirbution of each $\theta_i$, i.e., Beta(1,1).
 # 2. For t = $0, 1,\cdots, T$:
-#     - sample a $\tilde{\theta}^{t}$ from the posterior distribution of $\theta$ or prior distribution if in round $0$
+#     - sample a $\tilde{\boldsymbol{\theta}}^{t}$ from the posterior distribution of $\boldsymbol{\theta}$ or prior distribution if in round $0$
 #     - select top $K$ items with the greatest $\tilde{\theta}_{a}$, i.e. $A_t = arg max_{a \in \mathcal{A}} E(R_t(a) \mid \tilde{\boldsymbol{\theta}}^{t})$
 #     - receive the rewad $R_t$, and update the posterior distirbution accordingly.
 #     

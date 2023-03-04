@@ -90,7 +90,7 @@ env = _env.CombSemi_env(T = 500, seed = 0)
 # - sigma_2: $\sigma_2$
 # - prior_gamma_mean: mean of the Gaussian prior of the $\boldsymbol{\gamma}$
 # - prior_gamma_cov: the covariance matrix of the Gaussian prior of $\boldsymbol{\gamma}$
-# - Xs: feature informations (Note: if an intercept is considered, the X should include a column of ones)
+# - Xs: feature informations $\boldsymbol{S}$ (Note: if an intercept is considered, the $\boldsymbol{S}$ should include a column of ones)
 # - update_freq: frequency to update the posterior distribution of $\boldsymbol{\gamma}$ (i.e., update every update_freq steps)
 # - seed: random seed
 
@@ -114,24 +114,24 @@ MTSS_agent = MTSS_Comb.MTSS_Semi(sigma_1 = sigma_1, sigma_2 = sigma_2, L=L, T = 
 
 
 # ### Recommendation and Interaction
-# We fisrt observe the feature information $X$ by
-# <code> X = env.Phi </code>. (Note: if an intercept is considered, the X should include a column of ones).
+# We fisrt observe the feature information $\boldsymbol{S}$ by
+# <code> S = env.Phi </code>. (Note: if an intercept is considered, the S should include a column of ones).
 # Starting from t = 0, for each step t, there are three steps:
 # 1. Recommend an action (a set of ordered restaturants)
-# <code> A = MTSS_agent.take_action(X) </code>
+# <code> A = MTSS_agent.take_action(S) </code>
 # 2. Get the reward of each item recommended from the environment
 # <code> R, _, tot_R = env.get_reward(A, t) </code>
 # 3. Update the posterior distribution
-# <code> MTSS_agent.receive_reward(t, A, R, X) </code>
+# <code> MTSS_agent.receive_reward(t, A, R, S) </code>
 
 # In[5]:
 
 
-X = env.Phi
+S = env.Phi
 t = 0
-A = MTSS_agent.take_action(X)
+A = MTSS_agent.take_action(S)
 R, _, tot_R = env.get_reward(A, t)
-MTSS_agent.receive_reward(t, A, R, X)
+MTSS_agent.receive_reward(t, A, R, S)
 t, A, R, tot_R
 
 

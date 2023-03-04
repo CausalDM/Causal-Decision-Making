@@ -34,7 +34,7 @@
 #     \theta_i & \sim Beta(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma}), \phi), \forall i \in [N]\\
 #     W_{k, t}(a) &\sim Bernoulli(\theta_{a^k}), \forall k \in [K], \\
 #     Y_{k,t}(a) &= W_{k,t}(a) E_{k,t}(a), \forall k \in [K],\\
-#     E_{k,t}(a) &= [1-Y_{k-1}(a)] E_{k-1,t}(a), \forall k \in [K],\\
+#     E_{k,t}(a) &= \{1-Y_{k-1,t}(a)\} E_{k-1,t}(a), \forall k \in [K],\\
 #     R_t(a) &= \sum_{k \in [K]} Y_{k,t}(a), 
 #     \end{split}
 # \end{equation} with $E_{1,t}(a) \equiv 1$.   
@@ -89,7 +89,7 @@ env = _env.Cascading_env(K = 3, seed = 0)
 # - K: number of itmes to be recommended at each round
 # - L: total number of candidate items
 # - phi_beta: precision of the Beta distribution (i.e., $\phi$)
-# - Xs: feature informations (Note: if an intercept is considered, the X should include a column of ones)
+# - Xs: feature informations $\boldsymbol{S}$ (Note: if an intercept is considered, the $\boldsymbol{S}$ should include a column of ones)
 # - gamma_prior_mean: the mean of the prior distribution of $\boldsymbol{\gamma}$
 # - gamma_prior_cov: the coveraince matrix of the prior distribution of $\boldsymbol{\gamma}$ 
 # - n_init: determine the number of samples that pymc3 will draw when updating the posterior
@@ -101,13 +101,13 @@ env = _env.Cascading_env(K = 3, seed = 0)
 
 phi_beta = 1/4
 K = env.K
-X = env.Phi
+S = env.Phi
 gamma_prior_mean = np.zeros(env.p)
 gamma_prior_cov = np.identity(env.p)
 update_freq = 10
 n_init = 1000
 seed = 0
-MTSS_agent = MTSS_Cascade.MTSS_Cascade(phi_beta = phi_beta, K = K, Xs = X, 
+MTSS_agent = MTSS_Cascade.MTSS_Cascade(phi_beta = phi_beta, K = K, Xs = S, 
                                        gamma_prior_mean = gamma_prior_mean, gamma_prior_cov = gamma_prior_cov,
                                        update_freq = update_freq, n_init = n_init, seed = seed)
 
@@ -116,19 +116,19 @@ MTSS_agent = MTSS_Cascade.MTSS_Cascade(phi_beta = phi_beta, K = K, Xs = X,
 # 
 # Starting from t = 0, for each step t, there are four steps:
 # 1. Recommend an action (a set of ordered restaturants)
-# <code> A = MTSS_agent.take_action(X) </code>
+# <code> A = MTSS_agent.take_action(S) </code>
 # 3. Get the reward from the environment (i.e., $W$, $E$, and $R$)
 # <code> W,E,R = env.get_reward(A) </code>
 # 4. Update the posterior distribution
-# <code> MTSS_agent.receive_reward(A,W,E,t,X) </code>
+# <code> MTSS_agent.receive_reward(A,W,E,t,S) </code>
 
 # In[5]:
 
 
 t = 0
-A = MTSS_agent.take_action(X)
+A = MTSS_agent.take_action(S)
 W, E, R = env.get_reward(A)
-MTSS_agent.receive_reward(A, W, E, t, X)
+MTSS_agent.receive_reward(A, W, E, t, S)
 A, W, E, R
 
 

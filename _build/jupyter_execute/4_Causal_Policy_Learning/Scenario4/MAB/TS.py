@@ -13,7 +13,7 @@
 # Thompson Sampling (TS), also known as posterior sampling, solves the exploration-exploitation dilemma by selecting an action according to its posterior distribution [1].  At each round $t$, the agent sample the rewards from the corresponding posterior distributions of the expectation of the potential reward (i.e., $E[R_t(a)]$) and then select the action with the highest sampled reward greedily. It has been shown that, when the true reward distribution is known, a TS algorithm with the true reward distribution as the prior is nearly optimal [2]. However, such a distribution is always unknown in practice. Therefore, one of the major objectives of TS-based algorithms is to find an informative prior to guide the exploration. Note that the algorithm here supports bandit problem with either binary reward or continuous reward.
 # 
 # ## Algorithms Details
-# Supposed there are $K$ options, and the action space is $\mathcal{A} = \{0,1,\cdots, K-1\}$. The TS algorithm starts with specifying a prior distribution of the potential reward, based on the domian knowledge. At each round $t$, the agent will samples a vector of $\theta^{t}$ from the posterior distribution of the potential rewards. The action $a$ with the greatest $\theta_{a}^{t}$ is then selected. Finally, the posterior distribution would be updated after receiving the realized reward at the end of each round. Note that the posterior updating step differs for different pairs of prior distribution of the mean reward and reward distribution. Here, we consider two classical examples of the TS algorithm, including
+# Supposed there are $K$ options, and the action space is $\mathcal{A} = \{0,1,\cdots, K-1\}$. The TS algorithm starts with specifying a prior distribution of the potential reward, based on the domian knowledge. At each round $t$, the agent will samples a vector of $\boldsymbol{\theta}^{t}$ from the posterior distribution of the potential rewards. The action $a$ with the greatest $\theta_{a}^{t}$ is then selected. Finally, the posterior distribution would be updated after receiving the realized reward at the end of each round. Note that the posterior updating step differs for different pairs of prior distribution of the mean reward and reward distribution. Here, we consider two classical examples of the TS algorithm, including
 # 
 # - Gaussian Bandits
 # \begin{aligned}
@@ -32,7 +32,7 @@
 # 
 # 1. Specifying a prior distirbution of $E[R_0(a)]$, $a \in \mathcal{A}$, and the variance of the reward distribution.
 # 2. For t = $0, 1,\cdots, T$:
-#     - sample a $\theta^{t}$ from the posterior distribution of $E[R_t(a)]$ or prior distribution if in round $0$
+#     - sample a $\boldsymbol{\theta}^{t}$ from the posterior distribution of $E[R_t(a)]$ or prior distribution if in round $0$
 #     - select action $A_t$ which has the greatest $\theta^{t}_{a}$, i.e. $A_t = \arg\max_{a \in \mathcal{A}} \theta_{a}^{t}$
 #     - receive the rewad $R_t$, and update the posterior distirbution accordingly.
 

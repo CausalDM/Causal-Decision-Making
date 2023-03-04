@@ -16,7 +16,7 @@
 # As for the Bernoulli reward, we assume that 
 # \begin{align}
 # R_t(i) \sim Bernoulli(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})).
-# \end{align}where $logistic(s) \equiv 1 / (1 + exp^{-1}(s))$.
+# \end{align}where $logistic(c) \equiv 1 / (1 + exp^{-1}(c))$.
 # Similar as the standard TS algorithm, the LinTS algorithm starts with specifying a prior distribution of the parameter $\boldsymbol{\gamma}$, and a variance of the reward, based on the domian knowledge. At each round $t$, the agent will samples a vector of $\tilde{\boldsymbol{\gamma}}^{t}$ from thecorresponding posterior distribution, and the mean reward $\tilde{\boldsymbol{\theta}}^{t}$ is then calculated accordingly. The action $a$ with the greatest $\tilde{\theta}_{a}^{t}$ is then selected. Finally, the posterior distribution would be updated after receiving the feedback at the end of each round. It should be noted that the posterior updating step differs for different pairs of the prior distribution of expected potential reward and reward distribution, and the code can be easily modified to different prior/reward distribution specifications if necessary.
 # 
 # ## Key Steps
@@ -98,7 +98,7 @@ LinTS_Gaussian_agent = LinTS.LinTS_Gaussian(sigma = sigma, prior_theta_u = prior
 
 
 t = 0
-X, feature_info = env.get_Phi(t)
+X, feature_info, _ = env.get_Phi(t)
 A = LinTS_Gaussian_agent.take_action(X)
 R = env.get_reward(t,A)
 LinTS_Gaussian_agent.receive_reward(t,A,R,X)
@@ -110,7 +110,7 @@ t,A,R,feature_info
 # ### Demo Code for Bernoulli Bandit
 # The steps are similar to those previously performed with a Gaussian Bandit. Note that, when specifying the prior distribution of the expected reward, the mean-precision form of the Beta distribution is used here, i.e., Beta($\mu$, $\phi$), where $\mu$ is the mean reward of each arm and $\phi$ is the precision of the Beta distribution. 
 
-# In[6]:
+# In[ ]:
 
 
 env = _env.Single_Contextual_Env(seed = 0, Binary = True)
@@ -122,7 +122,7 @@ retrain_freq = 1 #frequency to train the GLM model
 
 LinTS_GLM_agent = LinTS.LinTS_GLM(K = K, p = p , alpha = alpha, retrain_freq = retrain_freq)
 t = 0
-X, feature_info = env.get_Phi(t)
+X, feature_info, _ = env.get_Phi(t)
 A = LinTS_GLM_agent.take_action(X)
 R = env.get_reward(t,A)
 LinTS_GLM_agent.receive_reward(t,A,R,X)

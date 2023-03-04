@@ -12,23 +12,23 @@
 # ## Algorithm Details
 # For multistage cases, we apply a backward iterative approach, which means that we start from the final decision point T and work our way backward to the initial decision point. At the final step $T$, it is again a standard regression modeling problem that is the same as what we did for the single decision point case. Particularly, we posit a model $Q_{T}(h_{T},a_{T})$ for the expectation of potential outcome $R(\bar{a}_T)$, and then the optimal policy at step $T$ is derived as $\text{arg max}_{\pi_{T}}Q_{T}(h_{T},\pi_{T}(h_{T}))$. For the decision point $T-1$ till the decision point $1$, a new term is introduced, which is the pseudo-outcome $\tilde{R}_{t}$.
 #     \begin{align}
-#     \tilde{R}_{t} = \text{max}_{\pi_{t}}\hat{Q}_{t}(h_{t},\pi_{t}(h_{t}),\hat{\beta}_{t})
+#     \tilde{R}_{t} = \text{max}_{\pi_{t}}\hat{Q}_{t}(h_{t},\pi_{t}(h_{t}),\hat{\boldsymbol{\beta}}_{t})
 #     \end{align}
-#     By doing so, the pseudo-outcome taking the **delayed effect** into account to help explore the optimal policy. Then, for each decision point $t<T$, with the $\tilde{R}_{t+1}$ calculated, we repeat the regression modeling step for $\tilde{R}_{t+1}$. After obtaining the fitted model $\hat{Q}_{t}(h_{t},a_{t},\hat{\beta}_{t})$, the optimal policy is obtained as $\arg \max_{\pi_{t}}Q_{t}(h_{t},\pi_{t}(h_{t}))$.
+#     By doing so, the pseudo-outcome taking the **delayed effect** into account to help explore the optimal policy. Then, for each decision point $t<T$, with the $\tilde{R}_{t+1}$ calculated, we repeat the regression modeling step for $\tilde{R}_{t+1}$. After obtaining the fitted model $\hat{Q}_{t}(h_{t},a_{t},\hat{\boldsymbol{\beta}}_{t})$, the optimal policy is obtained as $\arg \max_{\pi_{t}}Q_{t}(h_{t},\pi_{t}(h_{t}))$.
 # 
 # 
 # ## Key Steps
 # **Policy Learning:**
-# 1. At the final decision point $t=T$, fitted a model $Q_{T}(h_{T},a_{T},\beta_{T})$;
-# 2. For each individual $i$, calculated the pseudo-outcome $\tilde{R}_{Ti}=\text{max}_{\pi}\hat{Q}_{T}(h_{Ti},\pi(h_{Ti}),\hat{\beta}_{T})$, and the optimal action $d^{opt}_{T}(s_{i})=\text{arg max}_{a}\hat{Q}_{T}(h_{Ti},a,\hat{\beta}_{T})$;
+# 1. At the final decision point $t=T$, fitted a model $Q_{T}(h_{T},a_{T},\boldsymbol{\beta}_{T})$;
+# 2. For each individual $i$, calculated the pseudo-outcome $\tilde{R}_{Ti}=\text{max}_{\pi}\hat{Q}_{T}(h_{Ti},\pi(h_{Ti}),\hat{\boldsymbol{\beta}}_{T})$, and the optimal action $d^{opt}_{T}(\boldsymbol{s}_{i})=\text{arg max}_{a}\hat{Q}_{T}(h_{Ti},a,\hat{\boldsymbol{\beta}}_{T})$;
 # 3. For decision point $t = T-1,\cdots, 1$,
-#     1. fitted a model $\hat{Q}_{t}(h_{t},a_{t},\hat{\beta}_{t})$ for the pseudo-outcome $\tilde{R}_{t+1}$
-#     2. For each individual $i$, calculated the pseudo-outcome $\tilde{R}_{ti}=\text{max}_{\pi}\hat{Q}_{t}(h_{ti},\pi(h_{ti}),\hat{\beta}_{t})$, and the optimal action $d^{opt}_{t}(s_{i})=\text{arg max}_{a}\hat{Q}_{t}(h_{ti},a,\hat{\beta}_{t})$;
+#     1. fitted a model $\hat{Q}_{t}(h_{t},a_{t},\hat{\boldsymbol{\beta}}_{t})$ for the pseudo-outcome $\tilde{R}_{t+1}$
+#     2. For each individual $i$, calculated the pseudo-outcome $\tilde{R}_{ti}=\text{max}_{\pi}\hat{Q}_{t}(h_{ti},\pi(h_{ti}),\hat{\boldsymbol{\beta}}_{t})$, and the optimal action $d^{opt}_{t}(\boldsymbol{s}_{i})=\text{arg max}_{a}\hat{Q}_{t}(h_{ti},a,\hat{\boldsymbol{\beta}}_{t})$;
 #     
 # **Policy Evaluation:**    
 # We use the backward iteration as what we did in policy learning. However, here for each round, the pseudo outcome is not the maximum of Q values. Instead, the pseudo outcome at decision point t is defined as below:
 # \begin{align}
-# \tilde{R}_{ti} = \hat{Q}_{t}(h_{ti},d_{t}(h_{ti}),\hat{\beta}_{t}),
+# \tilde{R}_{ti} = \hat{Q}_{t}(h_{ti},d_{t}(h_{ti}),\hat{\boldsymbol{\beta}}_{t}),
 # \end{align} where $d$ is the fixed regime that we want to evaluate.
 # The estimated value of the policy is then the average of $\tilde{R}_{1i}$.
 # 
@@ -157,3 +157,9 @@ print('Value_hat:',value_avg,'Value_std:',value_std)
 # 2. Song, R., Wang, W., Zeng, D., & Kosorok, M. R. (2015). Penalized q-learning for dynamic treatment regimens. Statistica Sinica, 25(3), 901.
 
 # !! Already tested for accuracy using the data provided in DTR book
+
+# In[ ]:
+
+
+
+

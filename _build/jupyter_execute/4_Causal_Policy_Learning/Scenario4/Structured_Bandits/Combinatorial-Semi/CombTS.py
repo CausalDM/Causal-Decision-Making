@@ -16,8 +16,8 @@
 # ## Key Steps
 # 1. Specifying a prior distirbution of each $\theta_i$, i.e., Normal(0,1).
 # 2. For t = $0, 1,\cdots, T$:
-#     - sample a $\tilde{\theta}^{t}$ from the posterior distribution of $\theta$ or prior distribution if in round $0$
-#     - take action $A_t$ such that $A_t = arg max_{a \in \mathcal{A}} E(R_t(a) \mid \tilde{\boldsymbol{\theta}})$ solving by appropriate combinatorial optimization algorithms
+#     - sample a $\tilde{\boldsymbol{\theta}}^{t}$ from the posterior distribution of $\boldsymbol{\theta}$ or prior distribution if in round $0$
+#     - take action $A_t$ such that $A_t = arg max_{a \in \mathcal{A}} E(R_t(a) \mid \tilde{\boldsymbol{\theta}}^{t})$ solving by appropriate combinatorial optimization algorithms
 #     - receive the rewad $R_t$, and update the posterior distirbution accordingly.
 # 
 # *Notations can be found in either the inroduction of the chapter "Structured Bandits" or the introduction of the combinatorial Semi-Bandit problems.

@@ -9,7 +9,7 @@
 # Note that, we assume the action space is either **binary** (i.e., 0,1) or **multinomial** (i.e., 0,1,2,3,4, where 0 stands for the control group by convention), and the outcome of interest R is **continuous** and **non-negative**, where the larger the $R$ the better. 
 # 
 # ## Algorithm Details
-# Suppose there are $m_t$ number of options at decision point $t$, and the corresponding action space $\mathcal{A}_t=\{0,1,\dots,m_t-1\}$. At each decision point $t$, contrast-based A-learning aims to learn and estimate the constrast function, $C_{tj}(h_{t}), j=1,2,\dots,m_t-1$. Here, $h_{t}=\{S_{1i},A_{1i},\cdots,S_{ti}\})$ includes all the information observed till step t. Furthermore, we also need to posit a model for the conditional expected outcome for the control option (treatment $0$), $Q_t(h_t,0)$, and the propensity function $\omega(h_{t},a_{t})$. Detailed definitions are provided in the following:
+# Suppose there are $m_t$ number of options at decision point $t$, and the corresponding action space $\mathcal{A}_t=\{0,1,\dots,m_t-1\}$. At each decision point $t$, contrast-based A-learning aims to learn and estimate the constrast function, $C_{tj}(h_{t}), j=1,2,\dots,m_t-1$. Here, $h_{t}=\{\boldsymbol{S}_{1i},A_{1i},\cdots,\boldsymbol{S}_{ti}\})$ includes all the information observed till step t. Furthermore, we also need to posit a model for the conditional expected outcome for the control option (treatment $0$), $Q_t(h_t,0)$, and the propensity function $\omega(h_{t},a_{t})$. Detailed definitions are provided in the following:
 # *   Q-function:
 #     For the final step $T$, 
 #     \begin{align}
@@ -44,32 +44,32 @@
 # 
 # A backward approach was proposed to find the optimized treatment regime at each decision point. 
 # 
-# At Decision $T$, similar as what we did previously with single decision point, we estimate the $\psi_{Tj}$, $\phi_T$ and $\gamma_T$ by solving the eqautions in A.1 jointly, and the optimal decision at time $T$ is calculated accordingly. 
+# At Decision $T$, similar as what we did previously with single decision point, we estimate the $\boldsymbol{\psi}_{Tj}$, $\boldsymbol{\phi}_T$ and $\boldsymbol{\gamma}_T$ by solving the eqautions in A.1 jointly, and the optimal decision at time $T$ is calculated accordingly. 
 # 
 # Then, at Decision $t=T-1,\dots,1$, we use similar trick as decision $T$, except for changing $R$ in the estimating eqautions to some pseudo outcome $\tilde{R}_{t+1,i}$, such that:
 # \begin{align}
-# \tilde{R}_{ti}=\tilde{R}_{t+1,i}+\max_{j=0,\dots,m_t-1}C_{tj}(h_{ti},\hat{\psi}_{tj})-\sum_{j=1}^{m_k-1}\mathbb{I}\{A_{ti}=j\}C_{tj}(h_{ti},\hat{\psi}_{tj}),
+# \tilde{R}_{ti}=\tilde{R}_{t+1,i}+\max_{j=0,\dots,m_t-1}C_{tj}(h_{ti},\hat{\boldsymbol{\psi}}_{tj})-\sum_{j=1}^{m_k-1}\mathbb{I}\{A_{ti}=j\}C_{tj}(h_{ti},\hat{\boldsymbol{\psi}}_{tj}),
 # \end{align}
 # where $\tilde{R}_{T+1,i} = R_{i}$.
 #     
-# Estimating $\psi_{tj}$, $\phi_t$ and $\gamma_t$ iteratively for $t=T-1,\cdots,1$, we calculated the optimal decision at time $t$, $d^{opt}_{t}(h_{ti})$ as
+# Estimating $\boldsymbol{\psi}_{tj}$, $\boldsymbol{\phi}_t$ and $\boldsymbol{\gamma}_t$ iteratively for $t=T-1,\cdots,1$, we calculated the optimal decision at time $t$, $d^{opt}_{t}(h_{ti})$ as
 # \begin{align}
-# d^{opt}_{t}(h_{ti})=\arg\max_{j=0,\dots,m_t-1} C_{tj}(h_{ti};\hat{\psi}_{tj}).
+# d^{opt}_{t}(h_{ti})=\arg\max_{j=0,\dots,m_t-1} C_{tj}(h_{ti};\hat{\boldsymbol{\psi}}_{tj}).
 # \end{align}
 # 
 # 
 # ## Key Steps
 # **Policy Learning:**
-# 1. At the final decision point $t=T$, fitted a model $\omega_{T}(h_{T},a,\hat{\gamma}_{T})$, and estimating $\psi_{Tj}$, $\phi_{T}$ by solving the equations in A.2 jointly;
+# 1. At the final decision point $t=T$, fitted a model $\omega_{T}(h_{T},a,\hat{\boldsymbol{\gamma}}_{T})$, and estimating $\boldsymbol{\psi}_{Tj}$, $\boldsymbol{\phi}_{T}$ by solving the equations in A.2 jointly;
 # 2. For each individual $i$, calculated the pseudo-outcome $\tilde{R}_{Ti}$, and the optimal action $a_{Ti}$;
 # 3. For decision point $t = T-1,\cdots, 1$,
-#     1. fitted a model $\omega_{t}(h_{t},a,\hat{\gamma}_{t})$, and estimating $\psi_{tj}$, $\phi_{t}$ by solving the equations in A.2 jointly with the pseudo-outcome $\tilde{R}_{t+1}$
+#     1. fitted a model $\omega_{t}(h_{t},a,\hat{\boldsymbol{\gamma}}_{t})$, and estimating $\boldsymbol{\psi}_{tj}$, $\boldsymbol{\phi}_{t}$ by solving the equations in A.2 jointly with the pseudo-outcome $\tilde{R}_{t+1}$
 #     2. For each individual $i$, calculated the pseudo-outcome $\tilde{R}_{ti}$, and the optimal action $d_t^{opt}(h_ti)$;
 # 
 # **Policy Evaluation:**    
 # We use the backward iteration as what we did in policy learning. However, here for each round, the pseudo outcome is not the maximum of Q values. Instead, the pseudo outcome at decision point t is defined as below:
 # \begin{align}
-# \tilde{R}_{ti}=\tilde{R}_{t+1,i}+C_{tj*}(h_{ti},\hat{\psi}_{tj*})-\sum_{j=1}^{m_k-1}\mathbb{I}\{A_{ti}=j\}C_{tj}(h_{ti},\hat{\psi}_{tj}),
+# \tilde{R}_{ti}=\tilde{R}_{t+1,i}+C_{tj*}(h_{ti},\hat{\boldsymbol{\psi}}_{tj*})-\sum_{j=1}^{m_k-1}\mathbb{I}\{A_{ti}=j\}C_{tj}(h_{ti},\hat{\boldsymbol{\psi}}_{tj}),
 # \end{align}
 # where $j*=d(H_{ti})$, and $d$ is the fixed regime that we want to evaluate.
 # The estimated value of the policy is then the average of $\tilde{R}_{1}$.
@@ -206,18 +206,18 @@ print('Value_hat:',value_avg,'Value_std:',value_std)
 # ## A.1
 # $$
 # \begin{aligned}
-# &\sum_{i=1}^n \left[\frac{\partial C_{Tj}(H_{Ti};\psi_{Tj})}{\partial \psi_{Tj}}\{\mathbb{I}\{A_{Ti}=j\}-\omega_T(H_{Ti},j;\gamma_T)\}\times \Big\{R_i-\sum_{j'=1}^{m_T-1} \mathbb{I}\{A_{Ti}=j'\}C_{Tj'}(H_{Ti};\psi_{Tj'})-Q_T(H_{Ti},0;\phi_{T})\Big\}\right]=0\\
-# &\sum_{i=1}^n \left[\frac{\partial Q_T(H_{Ti},0;\phi_T)}{\partial \phi_T}\Big\{R_i-\sum_{j'=1}^{m_T-1} \mathbb{I}\{A_{Ti}=j'\}C_{Tj'}(H_{Ti};\psi_{Tj'})-Q_T(H_{Ti},0;\phi_T)\Big\}\right]=0\\
-# &\sum_{i=1}^n \left[\frac{\partial \omega_T(H_{Ti},j;\gamma_T)}{\partial \gamma_T}\Big\{R_i-\sum_{j'=1}^{m_T-1} \mathbb{I}\{A_{Ti}=j'\}C_{Tj'}(H_{Ti};\psi_{Tj'})-Q_T(H_{Ti},0;\phi_T)\Big\}\right]=0
+# &\sum_{i=1}^n \left[\frac{\partial C_{Tj}(H_{Ti};\boldsymbol{\psi}_{Tj})}{\partial \psi_{Tj}}\{\mathbb{I}\{A_{Ti}=j\}-\omega_T(H_{Ti},j;\boldsymbol{\gamma}_T)\}\times \Big\{R_i-\sum_{j'=1}^{m_T-1} \mathbb{I}\{A_{Ti}=j'\}C_{Tj'}(H_{Ti};\boldsymbol{\psi}_{Tj'})-Q_T(H_{Ti},0;\boldsymbol{\phi}_{T})\Big\}\right]=0\\
+# &\sum_{i=1}^n \left[\frac{\partial Q_T(H_{Ti},0;\boldsymbol{\phi}_T)}{\partial \boldsymbol{\phi}_T}\Big\{R_i-\sum_{j'=1}^{m_T-1} \mathbb{I}\{A_{Ti}=j'\}C_{Tj'}(H_{Ti};\boldsymbol{\psi}_{Tj'})-Q_T(H_{Ti},0;\boldsymbol{\phi}_T)\Big\}\right]=0\\
+# &\sum_{i=1}^n \left[\frac{\partial \omega_T(H_{Ti},j;\boldsymbol{\gamma}_T)}{\partial \boldsymbol{\gamma}_T}\Big\{R_i-\sum_{j'=1}^{m_T-1} \mathbb{I}\{A_{Ti}=j'\}C_{Tj'}(H_{Ti};\boldsymbol{\psi}_{Tj'})-Q_T(H_{Ti},0;\boldsymbol{\phi}_T)\Big\}\right]=0
 # \end{aligned}
 # $$
 # 
 # ## A.2
 # $$
 # \begin{aligned}
-# &\sum_{i=1}^n \left[\frac{\partial C_{tj}(H_{ti};\psi_{tj})}{\partial \psi_{tj}}\{\mathbb{I}\{A_{ti}=j\}-\omega_T(H_{ti},j;\gamma_t)\}\times \Big\{\tilde{R}_{t+1,i}-\sum_{j'=1}^{m_t-1} \mathbb{I}\{A_{ti}=j'\}C_{tj'}(H_{ti};\psi_{tj'})-Q_t(H_{ti},0;\phi_{t})\Big\}\right]=0\\
-# &\sum_{i=1}^n \left[\frac{\partial Q_t(H_{ti},0;\phi_t)}{\partial \phi_t}\Big\{\tilde{R}_{t+1,i}-\sum_{j'=1}^{m_t-1} \mathbb{I}\{A_{ti}=j'\}C_{tj'}(H_{ti};\psi_{tj'})-Q_t(H_{ti},0;\phi_t)\Big\}\right]=0\\
-# &\sum_{i=1}^n \left[\frac{\partial \omega_t(H_{ti},j;\gamma_t)}{\partial \gamma_t}\Big\{\tilde{R}_{t+1,i}-\sum_{j'=1}^{m_t-1} \mathbb{I}\{A_{ti}=j'\}C_{tj'}(H_{ti};\psi_{tj'})-Q_t(H_{ti},0;\phi_t)\Big\}\right]=0
+# &\sum_{i=1}^n \left[\frac{\partial C_{tj}(H_{ti};\boldsymbol{\psi}_{tj})}{\partial \boldsymbol{\psi}_{tj}}\{\mathbb{I}\{A_{ti}=j\}-\omega_T(H_{ti},j;\boldsymbol{\gamma}_t)\}\times \Big\{\tilde{R}_{t+1,i}-\sum_{j'=1}^{m_t-1} \mathbb{I}\{A_{ti}=j'\}C_{tj'}(H_{ti};\boldsymbol{\psi}_{tj'})-Q_t(H_{ti},0;\boldsymbol{\phi}_{t})\Big\}\right]=0\\
+# &\sum_{i=1}^n \left[\frac{\partial Q_t(H_{ti},0;\boldsymbol{\phi}_t)}{\partial \boldsymbol{\phi}_t}\Big\{\tilde{R}_{t+1,i}-\sum_{j'=1}^{m_t-1} \mathbb{I}\{A_{ti}=j'\}C_{tj'}(H_{ti};\boldsymbol{\psi}_{tj'})-Q_t(H_{ti},0;\boldsymbol{\phi}_t)\Big\}\right]=0\\
+# &\sum_{i=1}^n \left[\frac{\partial \omega_t(H_{ti},j;\boldsymbol{\gamma}_t)}{\partial \boldsymbol{\gamma}_t}\Big\{\tilde{R}_{t+1,i}-\sum_{j'=1}^{m_t-1} \mathbb{I}\{A_{ti}=j'\}C_{tj'}(H_{ti};\boldsymbol{\psi}_{tj'})-Q_t(H_{ti},0;\boldsymbol{\phi}_t)\Big\}\right]=0
 # \end{aligned}
 # $$
 # 

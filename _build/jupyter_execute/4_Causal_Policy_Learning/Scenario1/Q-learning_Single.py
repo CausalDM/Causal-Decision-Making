@@ -12,22 +12,22 @@
 # 
 # 
 # ## Algorithm Details
-# Q-learning with a single decision point is mainly a regression modeling problem, as the major component is to find the relationship between the expectation of potential reward $R(a)$ and $\{s,a\}$. Let's first define a Q-function, such that
+# Q-learning with a single decision point is mainly a regression modeling problem, as the major component is to find the relationship between the expectation of potential reward $R(a)$ and $\{\boldsymbol{s},a\}$. Let's first define a Q-function, such that
 # \begin{align}
-#     Q(s,a) = E(R(a)|S=s).
+#     Q(\boldsymbol{s},a) = E(R(a)|\boldsymbol{S}=\boldsymbol{s}).
 # \end{align} Then, to find the optimal policy is equivalent to solve
 # \begin{align}
-#     \text{arg max}_{\pi}Q(s_{i},\pi(s_{i})).
+#     \text{arg max}_{\pi}Q(\boldsymbol{s}_{i},\pi(\boldsymbol{s}_{i})).
 # \end{align} 
 # 
 # ## Key Steps
 # **Policy Learning:**
-# 1. Fitted a model $\hat{Q}(s,a,\hat{\beta})$, which can be solved directly by existing approaches (i.e., OLS, .etc),
-# 2. For each individual find the optimal action $d^{opt}(s_{i})$ such that $d^{opt}(s_{i}) = \text{arg max}_{a}\hat{Q}(s_{i},a,\hat{\beta})$.
+# 1. Fitted a model $\hat{Q}(\boldsymbol{s},a,\hat{\boldsymbol{\beta}})$, which can be solved directly by existing approaches (i.e., OLS, .etc),
+# 2. For each individual find the optimal action $d^{opt}(\boldsymbol{s}_{i})$ such that $d^{opt}(\boldsymbol{s}_{i}) = \text{arg max}_{a}\hat{Q}(\boldsymbol{s}_{i},a,\hat{\boldsymbol{\beta}})$.
 # 
 # **Policy Evaluation:**    
-# 1. Fitted the Q function $\hat{Q}(s,a,\hat{\beta})$, based on the sampled dataset
-# 2. Estimated the value of a given regime $d$ (i.e., $V(d)$) using the estimated Q function, such that, $\hat{E}(R_{i}[d(s_{i})]) = \hat{Q}(s_{i},d(s_{i}),\hat{\beta})$, and $\hat{V}(d) = \frac{1}{N}\sum_{i=1}^{N}\hat{E}(R_{i}[d(s_{i})])$.
+# 1. Fitted the Q function $\hat{Q}(\boldsymbol{s},a,\hat{\boldsymbol{\beta}})$, based on the sampled dataset
+# 2. Estimated the value of a given regime $d$ (i.e., $V(d)$) using the estimated Q function, such that, $\hat{E}(R_{i}[d(\boldsymbol{s}_{i})]) = \hat{Q}(\boldsymbol{s}_{i},d(\boldsymbol{s}_{i}),\hat{\boldsymbol{\beta}})$, and $\hat{V}(d) = \frac{1}{N}\sum_{i=1}^{N}\hat{E}(R_{i}[d(\boldsymbol{s}_{i})])$.
 # 
 # **Note** we also provide an option for bootstrapping. Particularly, for a given policy, we utilize bootstrap resampling to get the estimated value of the regime and the corresponding estimated standard error. For each round of bootstrapping, we first resample a dataset of the same size as the original dataset, then fit the Q function based on the sampled dataset, and finally estimate the value of a given regime based on the estimated Q function. 
 # 
@@ -64,7 +64,7 @@ model_info = [{"model": "Y~C(A)*(recency+history)", #default is add an intercept
 
 # By specifing the model_info, we assume a regression model that:
 # \begin{align}
-# Q(s,a,\beta) &= \beta_{00}+\beta_{01}*recency+\beta_{02}*history\\
+# Q(\boldsymbol{s},a,\boldsymbol{\beta}) &= \beta_{00}+\beta_{01}*recency+\beta_{02}*history\\
 # &+I(a=1)*\{\beta_{10}+\beta_{11}*recency+\beta_{12}*history\} \\
 # &+I(a=2)*\{\beta_{20}+\beta_{21}*recency+\beta_{22}*history\} 
 # \end{align}
@@ -92,7 +92,7 @@ print("opt value:",V_hat)
 
 # **Interpretation:** the fitted model is 
 # \begin{align}
-# Q(s,a,\beta) &= 94.20+4.53*recency+0.0005*history\\
+# Q(\boldsymbol{s},a,\boldsymbol{\beta}) &= 94.20+4.53*recency+0.0005*history\\
 # &+I(a=1)*\{23.24-4.15*recency+0.0076*history\} \\
 # &+I(a=2)*\{20.61-4.84*recency+0.0004history\}. 
 # \end{align}
