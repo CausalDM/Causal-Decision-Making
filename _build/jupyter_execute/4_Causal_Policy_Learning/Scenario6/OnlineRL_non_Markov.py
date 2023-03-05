@@ -4,30 +4,27 @@
 # # Ooline Policy Learning in Non-Markovian Environments 
 # 
 # An important extension of the [Markov assumption-based RL](section:online_RL) is to the non-Markovian environment. 
-# 
-# 
-# The extension is valuable when either (i) the system dynamic depends on multiple or infinite lagged time points and hence it is infeasible to summarize historical information in a fixed-dimensional vector (the DTR problem that we studied in Paradigm 2). 
+# We provide a brief introduction in this chapter. 
 # 
 # ## Model
 # 
-# No that assumption. 
-# 
-# for DTR
-# 
+# Recall the model we introduce in [online RL with MDP](section:online_RL). 
+# In comparison, we essentially cannot assume the MA and CMIA conditions any longer, and hence need to use all historical information in decision making. 
+# We make the comparison in {numref}`POMDP_comparison`. 
 # 
 # ```{image} POMDP_comparison.png
+# :name: POMDP_comparison
 # :alt: d2ope
 # :width: 800px
 # :align: center
 # ```
 # 
-# No unmeasured confounder issue. 
-# 
-# shi2022off
-# 
-# for POMDP
+# The extension is valuable when either (i) the system dynamic depends on multiple or infinite lagged time points and hence it is infeasible to summarize historical information in a fixed-dimensional vector (the DTR problem that we studied in Paradigm 2), or when (ii) the underlying model is an MDP yet the state is not observable, which corresponds to the well-known Partially observable Markov decision process (POMDP). 
+# Note that the model of POMDP is actually slightly different, which we summarize in {numref}`POMDP`. 
+# Fortunately, unlike in the offline setting {cite:p}`shi2022off`, in the online setup, even with unobservable variables, there would be no causal bias, since the action selection does not depend on unmeasured variables. 
 # 
 # ```{image} POMDP.png
+# :name: POMDP
 # :alt: d2ope
 # :width: 500px
 # :align: center
