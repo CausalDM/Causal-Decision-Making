@@ -152,31 +152,22 @@ As the figure illustrated, observations in Paradigm 1 are i.i.d. sampled. For ea
 ### <a name="Case2"></a> Paradigm 2: Fixed Policy with Markovian State Transition
 The Paradigm 2 is well-known as Markov Decision Process (MDP), whose main characteristic is the Markovian state transition. In particular, while $A_t$ is only affected by $S_t$, both $R_t$ and $S_{t+1}$ would be affected by $(S_t,A_t)$. Given $S_{t}, A_t$, a standard assumption of MDP problems is that $R_t$ and $S_{t+1}$ are independent of previous observations. A list of related learning methods will be introduced, with a map in [Appendix B](#MDP).
 
-<<<<<<< Updated upstream
 ### <a name="Case3"></a> Paradigm 3: Fixed Policy with Non-Markovian State Transition
-When a history-independent policy is applied, the Paradigm 3 takes all the possible causal relationships into account and is well-known as the multiple-stage DTR problem [1]. In this book, we introduce two classical learning methods, including Q-learning and A-learning (See a map in [Appendix C](#MultiDTR))
+When a history-independent policy is applied, the Paradigm 3 takes all the possible causal relationships into account and is well-known as the multiple-stage DTR problem [1]. 
+In this book, we introduce two classical learning methods, including Q-learning and A-learning (See a map in [Appendix C](#MultiDTR)). 
+
 
 ### <a name="Case4"></a> Paradigm 4: Adaptive Policy with Independent States
 The Paradigm 4 setting is widely examined in the online decision making literature, especially the bandits, where the treatment policy is time-adaptive. Specifically, $H_{t-1}$ includes all the previous observations up to time $t-1$ (include observations at time $t-1$) and is used to update the action policy at time $t$, and therefore affect the action $A_t$. While $S_t$ is i.i.d sampled from the correponding distribution, $R_t$ is influenced by both $A_t$ and $S_t$. Finally, the new observation $(S_t,A_t,R_t)$, in conjunction with all previous observations, would then be formulated as $H_{t+1}$ and affect $A_{t+1}$ only. A structure that lacks contextual information $S_t$ is also very common. In this book, a list of bandits algorithms would be introduced, with a detailed map in [Appendix D](#Bandits).
 
+
 ### <a name="Case5"></a> Paradigm 5: Adaptive Policy with Markovian State Transition
-Building upon the MDP structure, when an adaptive policy is applied, the Paradigm 5 clearly depicts the data-generating process, in which  $S_t$ follows the Markovian state transition and $A_t$ would be affected by all previous observations $H_{t-1}$.
-=======
-### <a name="Case3"></a> Scenario 3: Fixed Policy with Non-Markovian State Transition
-When a history-independent policy is applied, the Scenario 3 takes all the possible causal relationships into account and is well-known as the multiple-stage DTR problem [1]. 
-In this book, we introduce two classical learning methods, including Q-learning and A-learning (See a map in [Appendix C](#MultiDTR))
-
-### <a name="Case4"></a> Scenario 4: Adaptive Policy with Independent States
-The Scenario 4 setting is widely examined in the online decision making literature, where the data collection policy is adaptive to the data it has seen. Specifically, $H_{t-1}$ includes all the previous observations up to time $t-1$ (include observations at time $t-1$) and is used to update the action policy at time $t$, and therefore affect the action $A_t$. While $S_t$ is i.i.d sampled from the correponding distribution, $R_t$ is influenced by both $A_t$ and $S_t$. Finally, the new observation $(S_t,A_t,R_t)$, in conjunction with all previous observations, would then be formulated as $H_{t+1}$ and affect $A_{t+1}$ only. A structure that lacks contextual information $S_t$ is also very common. In this book, a list of bandits algorithms would be introduced, with a detailed map in [Appendix D](#Bandits).
-
-### <a name="Case5"></a> Scenario 5: Adaptive Policy with Markovian State Transition
 Building upon the MDP structure, when an adaptive policy is applied, the Scenario 5 clearly depicts the data-generating process, in which  $S_t$ follows the Markovian state transition and $A_t$ would be affected by all previous observations $H_{t-1}$. 
 This corresponds to the typical online RL setup. 
 
->>>>>>> Stashed changes
 
 ### <a name="Case6"></a> Paradigm 6: Adaptive Policy with Non-Markovian State Transition
-
+We can further relax the Markovian assumption required in Paradigm 5 to allow Non-Markovian State Transition, which includes the DTR bandits and Partially Observable Markov Decision Processes (POMDP) problems. 
 
 
 **Extensions.** Along the y-axis, we can further consider the case where the data collection policy depends on some unobservable variables, which correspond to the *confounded* problems. 
