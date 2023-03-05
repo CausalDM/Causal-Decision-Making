@@ -193,8 +193,8 @@ const thebe_selector_output = ".output, .cell_output"
   </ul>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../2_Causal_Structure_Learning/Causal%20Mediation%20Analysis%20with%20Causal%20Discovery.html">
-   Causal Mediation Analysis with Causal Discovery
+  <a class="reference internal" href="../../2_Causal_Structure_Learning/Causal%20Mediation%20Analysis.html">
+   Causal Mediation Analysis
   </a>
  </li>
 </ul>
@@ -1167,26 +1167,6 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 5&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;autoreload&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1">##### Import Packages </span>
-<span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">notear</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">randn</span>
-
-<span class="n">File</span> <span class="o">~/</span><span class="n">Documents</span><span class="o">/</span><span class="n">GitHub</span><span class="o">/</span><span class="n">Causal</span><span class="o">-</span><span class="n">Decision</span><span class="o">-</span><span class="n">Making</span><span class="o">/</span><span class="mi">5</span><span class="n">_Case_Study</span><span class="o">/</span><span class="n">MIMIC3</span><span class="o">/</span><span class="n">utils</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">torch</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">torch.utils.data.dataset</span> <span class="kn">import</span> <span class="n">TensorDataset</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;torch&#39;
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1198,15 +1178,23 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mimic3_base</span> <span class="o">=</span> <span class="n">mimic3</span><span class="p">[[</span><span class="s1">&#39;icustayid&#39;</span><span class="p">,</span> <span class="s1">&#39;Glucose&#39;</span><span class="p">,</span><span class="s1">&#39;paO2&#39;</span><span class="p">,</span><span class="s1">&#39;PaO2_FiO2&#39;</span><span class="p">,</span>
-                           <span class="s1">&#39;iv_input&#39;</span><span class="p">,</span> <span class="s1">&#39;SOFA&#39;</span><span class="p">,</span><span class="s1">&#39;died_within_48h_of_out_time&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                           <span class="s1">&#39;iv_input&#39;</span><span class="p">,</span> <span class="s1">&#39;SOFA&#39;</span><span class="p">,</span><span class="s1">&#39;died_within_48h_of_out_time&#39;</span><span class="p">]]</span>
 <span class="n">mimic3_base</span><span class="p">[</span><span class="s1">&#39;died_within_48h_of_out_time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mimic3_base</span><span class="p">[</span><span class="s1">&#39;died_within_48h_of_out_time&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span>
 <span class="n">mimic3_base</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;icustayid&#39;</span><span class="p">,</span> <span class="s1">&#39;Glucose&#39;</span><span class="p">,</span><span class="s1">&#39;paO2&#39;</span><span class="p">,</span><span class="s1">&#39;PaO2_FiO2&#39;</span><span class="p">,</span>
-                           <span class="s1">&#39;IV Input&#39;</span><span class="p">,</span> <span class="s1">&#39;SOFA&#39;</span><span class="p">,</span><span class="s1">&#39;Died within 48H&#39;</span><span class="p">]</span>
+                           <span class="s1">&#39;IV Input&#39;</span><span class="p">,</span> <span class="s1">&#39;SOFA&#39;</span><span class="p">,</span><span class="s1">&#39;Died within 48H&#39;</span><span class="p">]</span> 
 <span class="n">mimic3_base</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ipython-input-3-5d8a6c07f888&gt;:3: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  mimic3_base[&#39;died_within_48h_of_out_time&#39;] = - 2 * np.array(mimic3_base[&#39;died_within_48h_of_out_time&#39;]) + 1
+</pre></div>
+</div>
 <div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1301,7 +1289,42 @@ title="Print to PDF"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mimic_final</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;mimic3_multi_stages.csv&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mimic3_base</span><span class="p">[</span><span class="s1">&#39;SOFA&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([ 59., 120., 172., 140., 110.,  69.,  37.,  20.,  16.,  10.]),
+ array([ 0. ,  1.9,  3.8,  5.7,  7.6,  9.5, 11.4, 13.3, 15.2, 17.1, 19. ]),
+ &lt;a list of 10 Patch objects&gt;)
+</pre></div>
+</div>
+<img alt="../../_images/MIMIC3-Demo_5_1.png" src="../../_images/MIMIC3-Demo_5_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mimic_final</span> <span class="o">=</span> <span class="n">mimic3_base</span><span class="p">[</span><span class="n">mimic3_base</span><span class="p">[</span><span class="s1">&#39;SOFA&#39;</span><span class="p">]</span><span class="o">&lt;=</span><span class="mi">12</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mimic_final</span><span class="p">[</span><span class="s1">&#39;SOFA&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([ 59.,  44.,  76.,  97.,  75., 140.,  66.,  44.,  47.,  44.]),
+ array([ 0. ,  1.2,  2.4,  3.6,  4.8,  6. ,  7.2,  8.4,  9.6, 10.8, 12. ]),
+ &lt;a list of 10 Patch objects&gt;)
+</pre></div>
+</div>
+<img alt="../../_images/MIMIC3-Demo_6_1.png" src="../../_images/MIMIC3-Demo_6_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;mimic3_multi_stages.pickle&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">mimic_final</span><span class="p">,</span> <span class="n">handle</span><span class="p">)</span>
+    
+<span class="n">mimic_final</span><span class="o">.</span><span class="n">to_csv</span> <span class="p">(</span><span class="sa">r</span><span class="s1">&#39;mimic3_multi_stages.csv&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
 <span class="n">mimic_final</span>
 </pre></div>
 </div>
@@ -1396,7 +1419,7 @@ title="Print to PDF"
       <td>...</td>
     </tr>
     <tr>
-      <th>687</th>
+      <th>748</th>
       <td>98685</td>
       <td>120.142857</td>
       <td>71.000000</td>
@@ -1406,7 +1429,7 @@ title="Print to PDF"
       <td>-1</td>
     </tr>
     <tr>
-      <th>688</th>
+      <th>749</th>
       <td>98685</td>
       <td>168.200000</td>
       <td>71.000000</td>
@@ -1416,7 +1439,7 @@ title="Print to PDF"
       <td>-1</td>
     </tr>
     <tr>
-      <th>689</th>
+      <th>750</th>
       <td>98685</td>
       <td>182.000000</td>
       <td>73.500000</td>
@@ -1426,7 +1449,7 @@ title="Print to PDF"
       <td>-1</td>
     </tr>
     <tr>
-      <th>690</th>
+      <th>751</th>
       <td>98685</td>
       <td>190.545455</td>
       <td>79.818182</td>
@@ -1436,7 +1459,7 @@ title="Print to PDF"
       <td>-1</td>
     </tr>
     <tr>
-      <th>691</th>
+      <th>752</th>
       <td>98685</td>
       <td>190.000000</td>
       <td>118.000000</td>
@@ -1461,13 +1484,12 @@ title="Print to PDF"
 <span class="n">mimic3_sample</span> <span class="o">=</span> <span class="n">mimic_final</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">lag_k</span><span class="p">:]</span>
 <span class="n">mimic3_sample</span><span class="p">[</span><span class="s1">&#39;SOFA&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_sofa</span>
 <span class="n">mimic3_data</span> <span class="o">=</span> <span class="n">mimic3_sample</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;icustayid&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span> 
-
-<span class="c1">#     mimic3_data = mimic3_sample </span>
+ 
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_54338/3793710715.py:8: SettingWithCopyWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ipython-input-7-e93df542f49a&gt;:8: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
@@ -1483,8 +1505,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
     <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">mimic3_data</span><span class="p">,</span> <span class="n">handle</span><span class="p">)</span>
     
 <span class="n">mimic3_data</span><span class="o">.</span><span class="n">to_csv</span> <span class="p">(</span><span class="sa">r</span><span class="s1">&#39;mimic3_single_stage.csv&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-
+ 
 <span class="n">mimic3_data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1586,19 +1607,23 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ----------- Estimated DAG based on NOTEARS</span>
 
+<span class="n">mimic3_data_final</span> <span class="o">=</span> <span class="n">mimic3_data</span>  
+
 <span class="n">selected</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Glucose&#39;</span><span class="p">,</span><span class="s1">&#39;paO2&#39;</span><span class="p">,</span><span class="s1">&#39;PaO2_FiO2&#39;</span><span class="p">,</span> <span class="s1">&#39;IV Input&#39;</span><span class="p">,</span> <span class="s1">&#39;SOFA&#39;</span><span class="p">,</span><span class="s1">&#39;Died within 48H&#39;</span><span class="p">]</span>
 
-<span class="n">sample_demo</span> <span class="o">=</span> <span class="n">mimic3_data</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
-<span class="n">est_mt</span> <span class="o">=</span> <span class="n">notears_linear</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sample_demo</span><span class="p">),</span> <span class="n">lambda1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">loss_type</span><span class="o">=</span><span class="s1">&#39;l2&#39;</span><span class="p">,</span><span class="n">w_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">smaple_demo</span> <span class="o">=</span> <span class="n">mimic3_data_final</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+<span class="n">est_mt</span> <span class="o">=</span> <span class="n">notears_linear</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">smaple_demo</span><span class="p">),</span> <span class="n">lambda1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">loss_type</span><span class="o">=</span><span class="s1">&#39;l2&#39;</span><span class="p">,</span><span class="n">w_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 
 <span class="c1"># ----------- Plot Associated Matrix for the Estimated DAG based on NOTEARS</span>
 
 <span class="n">plot_mt</span><span class="p">(</span><span class="n">est_mt</span><span class="p">,</span> <span class="n">labels_name</span><span class="o">=</span><span class="n">selected</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;demo_res_mt&#39;</span><span class="p">)</span>
+
+<span class="c1"># calculate_effect(est_mt)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/MIMIC3-Demo_8_0.png" src="../../_images/MIMIC3-Demo_8_0.png" />
+<img alt="../../_images/MIMIC3-Demo_10_0.png" src="../../_images/MIMIC3-Demo_10_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1608,7 +1633,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/MIMIC3-Demo_9_0.png" src="../../_images/MIMIC3-Demo_9_0.png" />
+<img alt="../../_images/MIMIC3-Demo_11_0.png" src="../../_images/MIMIC3-Demo_11_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1618,14 +1643,14 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The total effect (FSTE): [-0.16987542 -2.32715368 36.11635062 -0.45405461 -0.65679782]
-The natural direct effect (FSDE): [ 0.49989362 -2.14637368 33.31075237 -0.45405461 -0.7047716 ]
-The natural indirect effect (FSIE): [-0.66976904 -0.18078     2.80559825  0.          0.04797378]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The total effect (FSTE): [ 0.26183144 -2.71875093 37.396548   -0.63730898 -0.74222853]
+The natural direct effect (FSDE): [ 0.48215189 -1.72563451 33.28301451 -0.51880885 -0.74222853]
+The natural indirect effect (FSIE): [-0.22032045 -0.99311642  4.1135335  -0.11850013  0.        ]
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([-0.16987542, -2.32715368, 36.11635062, -0.45405461, -0.65679782]),
- array([ 0.49989362, -2.14637368, 33.31075237, -0.45405461, -0.7047716 ]),
- array([-0.66976904, -0.18078   ,  2.80559825,  0.        ,  0.04797378]))
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([ 0.26183144, -2.71875093, 37.396548  , -0.63730898, -0.74222853]),
+ array([ 0.48215189, -1.72563451, 33.28301451, -0.51880885, -0.74222853]),
+ array([-0.22032045, -0.99311642,  4.1135335 , -0.11850013,  0.        ]))
 </pre></div>
 </div>
 </div>
@@ -1758,10 +1783,10 @@ The natural indirect effect (FSIE): [-0.66976904 -0.18078     2.80559825  0.    
  array([0.        , 0.35384615, 0.70769231, 1.06153846, 1.41538462,
         1.76923077, 2.12307692, 2.47692308, 2.83076923, 3.18461538,
         3.53846154]),
- &lt;BarContainer object of 10 artists&gt;)
+ &lt;a list of 10 Patch objects&gt;)
 </pre></div>
 </div>
-<img alt="../../_images/MIMIC3-Demo_15_1.png" src="../../_images/MIMIC3-Demo_15_1.png" />
+<img alt="../../_images/MIMIC3-Demo_17_1.png" src="../../_images/MIMIC3-Demo_17_1.png" />
 </div>
 </div>
 <p>As we can see from the histogram above, there is a small gap when the average IV Input is around <span class="math notranslate nohighlight">\(1.5\)</span>. This gap naturally split the data into two treatment groups: “High-IV-Input” group and “Low-IV-Input” group. We are interested in whether the highe level fluid intake treatment is able to decrease the SOFA score and the death rate of patients within 48 hours of administration.</p>
@@ -1960,7 +1985,7 @@ The natural indirect effect (FSIE): [-0.66976904 -0.18078     2.80559825  0.    
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.20399937380855312
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.20399937380851768
 </pre></div>
 </div>
 </div>
@@ -2127,7 +2152,7 @@ The natural indirect effect (FSIE): [-0.66976904 -0.18078     2.80559825  0.    
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.08642818615808646
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.086428186158087
 </pre></div>
 </div>
 </div>
@@ -2148,7 +2173,7 @@ The natural indirect effect (FSIE): [-0.66976904 -0.18078     2.80559825  0.    
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./5_Case_Study/MIMIC3"
         },
         predefinedOutput: true

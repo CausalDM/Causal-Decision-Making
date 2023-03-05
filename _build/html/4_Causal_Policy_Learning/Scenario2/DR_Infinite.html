@@ -193,8 +193,8 @@ const thebe_selector_output = ".output, .cell_output"
   </ul>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../2_Causal_Structure_Learning/Causal%20Mediation%20Analysis%20with%20Causal%20Discovery.html">
-   Causal Mediation Analysis with Causal Discovery
+  <a class="reference internal" href="../../2_Causal_Structure_Learning/Causal%20Mediation%20Analysis.html">
+   Causal Mediation Analysis
   </a>
  </li>
 </ul>
@@ -1133,8 +1133,8 @@ title="Print to PDF"
 <p>In OPE, a DR estimator first requires a Q-function estimator, denoted as <span class="math notranslate nohighlight">\(\widehat{Q}\)</span>, which can be learned by various methods in the literature, such as <a class="reference internal" href="FQE.html#section-fqe"><span class="std std-ref">FQE</span></a>.
 Denote the corresponding plug-in V-function estimator as <span class="math notranslate nohighlight">\(\widehat{V}\)</span>.
 These estimators will then be integrated with importance ratios in a form typically motivated by the Bellman equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-761fc1c9-d27d-41b6-aacd-2483d80dfd9e">
-<span class="eqno">(64)<a class="headerlink" href="#equation-761fc1c9-d27d-41b6-aacd-2483d80dfd9e" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
+<div class="amsmath math notranslate nohighlight" id="equation-f43659ee-18de-4cd5-b061-ee9dfc7ed3fc">
+<span class="eqno">(64)<a class="headerlink" href="#equation-f43659ee-18de-4cd5-b061-ee9dfc7ed3fc" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
     Q^\pi(a, s) = \mathbb{E}^\pi \Big(R_t + \gamma Q^\pi(A_{t + 1}, S_{t+1})  | A_t = a, S_t = s \Big).  \;\;\;\;\; \text{(1)} 
 \end{equation}\]</div>
 <p>For example, based on the <a class="reference internal" href="IPW_Infinite.html#section-ipw-rl-main-idea"><span class="std std-ref">step-wise IS</span></a>, <span id="id2">Thomas and Brunskill [<a class="reference internal" href="#id17" title="Philip Thomas and Emma Brunskill. Data-efficient off-policy policy evaluation for reinforcement learning. In International Conference on Machine Learning, 2139–2148. 2016.">TB16</a>]</span> proposes to construct the estimator as</p>
@@ -1166,16 +1166,16 @@ Besides, a DR estimator typically has lower (or comparable) bias and variance th
 For example, <span id="id5">Tang <em>et al.</em> [<a class="reference internal" href="#id18" title="Ziyang Tang, Yihao Feng, Lihong Li, Dengyong Zhou, and Qiang Liu. Doubly robust bias reduction in infinite horizon off-policy estimation. In International Conference on Learning Representations. 2019.">TFL+19</a>]</span> designs a DR version, and <span id="id6">Uehara <em>et al.</em> [<a class="reference internal" href="#id19" title="Masatoshi Uehara, Jiawei Huang, and Nan Jiang. Minimax weight and q-function learning for off-policy evaluation. arXiv preprint arXiv:1910.12809, 2019.">UHJ19</a>]</span> proposes to learn a single nuisance function <span class="math notranslate nohighlight">\(\widetilde{\xi}^{\pi}(s,a) \equiv \widetilde{\omega}^{\pi}(s) [\pi(a|s) / b(a|s)]\)</span> instead of learning <span class="math notranslate nohighlight">\(\widetilde{\omega}^{\pi}(s)\)</span> and <span class="math notranslate nohighlight">\(b\)</span> separately.</p>
 <p>In particular, following this line of research, <span id="id7">Kallus and Uehara [<a class="reference internal" href="#id20" title="Nathan Kallus and Masatoshi Uehara. Efficiently breaking the curse of horizon in off-policy evaluation with double reinforcement learning. arXiv preprint arXiv:1909.05850, 2019.">KU19</a>]</span> recently proposes a state-of-the-art method named double reinforcement learning (DRL) that achieves the semiparametric efficiency bound for OPE. DRL is a doubly robust-type method.</p>
 <p>To begin with, we first define the marginalized density ratio under the target policy <span class="math notranslate nohighlight">\(\pi\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3e518dc9-2494-49ee-bbab-25afa5aee88f">
-<span class="eqno">(65)<a class="headerlink" href="#equation-3e518dc9-2494-49ee-bbab-25afa5aee88f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:omega}
+<div class="amsmath math notranslate nohighlight" id="equation-eca2999c-4e55-4f41-b2a8-4167e0b0f15b">
+<span class="eqno">(65)<a class="headerlink" href="#equation-eca2999c-4e55-4f41-b2a8-4167e0b0f15b" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:omega}
 	\omega^{\pi}(a,s)=\frac{(1-\gamma)\sum_{t=0}^{+\infty} \gamma^{t} p_t^{\pi}(a,s)}{p_b(a, s)}, 
 \end{eqnarray}\]</div>
 <p>where <span class="math notranslate nohighlight">\(p_t^{\pi}(a, s)\)</span> denotes the probability of <span class="math notranslate nohighlight">\(\{S_t = s, A_t = a\}\)</span> following policy <span class="math notranslate nohighlight">\(\pi\)</span> with  <span class="math notranslate nohighlight">\(S_{0}\sim \mathbb{G}\)</span>.
 Recall that <span class="math notranslate nohighlight">\(p_b(s, a)\)</span> is the stationary density function of the state-action pair under the policy <span class="math notranslate nohighlight">\(b\)</span>.</p>
 <p>Let <span class="math notranslate nohighlight">\(\widehat{Q}\)</span> and <span class="math notranslate nohighlight">\(\widehat{\omega}\)</span> be some estimates of  <span class="math notranslate nohighlight">\(Q^{\pi}\)</span> and <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span>,  respectively.
 DRL first constructs the following estimator for every <span class="math notranslate nohighlight">\((i,t)\)</span> in a doubly robust manner:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-41d49e42-2578-4b31-8f4b-0e8f2b8ea4c0">
-<span class="eqno">(66)<a class="headerlink" href="#equation-41d49e42-2578-4b31-8f4b-0e8f2b8ea4c0" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{term}
+<div class="amsmath math notranslate nohighlight" id="equation-a23f23b7-00b5-469c-8979-f15a8569c315">
+<span class="eqno">(66)<a class="headerlink" href="#equation-a23f23b7-00b5-469c-8979-f15a8569c315" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{term}
 \begin{split}
 	\psi_{i,t}
 	\equiv
@@ -1195,8 +1195,8 @@ DRL first constructs the following estimator for every <span class="math notrans
 <p>One can show that
 <span class="math notranslate nohighlight">\(\widehat{\eta}_{\tiny{\textrm{DRL}}}\)</span> is consistent when either <span class="math notranslate nohighlight">\(\widehat{Q}\)</span> or <span class="math notranslate nohighlight">\(\widehat{\omega}\)</span> is consistent, and hence is doubly robust.
 In addition, under mild conditions, we can prove that <span class="math notranslate nohighlight">\(\sqrt{nT} (\widehat{\eta}_{\tiny{\textrm{DRL}}} - \eta^{\pi})\)</span> converges weakly to a normal distribution with mean zero and variance <span class="math notranslate nohighlight">\(\sigma^2\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1c26a0a8-f202-4e24-a9a3-9901de4a76b8">
-<span class="eqno">(67)<a class="headerlink" href="#equation-1c26a0a8-f202-4e24-a9a3-9901de4a76b8" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{lower_bound}
+<div class="amsmath math notranslate nohighlight" id="equation-1a7912cb-ca63-4e48-9cd8-40e2c56e3390">
+<span class="eqno">(67)<a class="headerlink" href="#equation-1a7912cb-ca63-4e48-9cd8-40e2c56e3390" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{lower_bound}
     \sigma^2 = 
     \frac{1}{(1-\gamma)^2}\mathbb{E} \left[ 
     \omega^{\pi}(A, S) \{R + \gamma V^{\pi}(S') -  Q^{\pi}(A,S)\}
@@ -1223,7 +1223,7 @@ Roughly speaking, this implies the algorithm is statistically most efficient.</p
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 7&gt;</span><span class="nt">()</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">74</span><span class="n">c57ea9d893</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
 <span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
@@ -1265,8 +1265,8 @@ Roughly speaking, this implies the algorithm is statistically most efficient.</p
 <li><p>One critical question is how to estimate the nuisance function <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span>.
 The following observation forms the basis: <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span> is the only function that satisfies the equation <span class="math notranslate nohighlight">\(\mathbb{E} L(\omega^{\pi},f)=0\)</span> for any function <span class="math notranslate nohighlight">\(f\)</span>, where <span class="math notranslate nohighlight">\(L(\omega^{\pi},f)\)</span> equals</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-9df61f4b-8f22-494f-a9c7-bf347987d9a7">
-<span class="eqno">(68)<a class="headerlink" href="#equation-9df61f4b-8f22-494f-a9c7-bf347987d9a7" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn_omega}
+<div class="amsmath math notranslate nohighlight" id="equation-1f06ef9a-e539-487b-a841-b8319fd54638">
+<span class="eqno">(68)<a class="headerlink" href="#equation-1f06ef9a-e539-487b-a841-b8319fd54638" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn_omega}
 \begin{split}
 	\Big[\mathbb{E}_{a \sim \pi(\cdot|S_{t+1})} \{\omega^{\pi}(A_{t},S_{t})
 	(\gamma f(a, S_{t+1})- f(A_{t},S_{t}) ) \}
@@ -1274,8 +1274,8 @@ The following observation forms the basis: <span class="math notranslate nohighl
 \end{split}
 \end{eqnarray}\]</div>
 <p>As such, <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span> can be learned by solving the following mini-max problem,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c286d570-6d25-4ccc-a593-09806076c573">
-<span class="eqno">(69)<a class="headerlink" href="#equation-c286d570-6d25-4ccc-a593-09806076c573" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:solveL}
+<div class="amsmath math notranslate nohighlight" id="equation-560acf09-f71e-4a94-90d0-fb7626413efd">
+<span class="eqno">(69)<a class="headerlink" href="#equation-560acf09-f71e-4a94-90d0-fb7626413efd" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:solveL}
 \arg \min_{\omega\in \Omega} \sup_{f\in \mathcal{F}} \{\mathbb{E} L(\omega, f)\}^2, 
 \end{eqnarray}\]</div>
 <p>for some function classes <span class="math notranslate nohighlight">\(\Omega\)</span> and <span class="math notranslate nohighlight">\(\mathcal{F}\)</span>.
@@ -1298,7 +1298,7 @@ with the expectation approximated by the sample mean.
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./4_Causal_Policy_Learning/Scenario2"
         },
         predefinedOutput: true
