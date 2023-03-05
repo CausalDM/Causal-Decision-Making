@@ -352,6 +352,20 @@ const thebe_selector_output = ".output, .cell_output"
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3_DTR.html">
+                        CPL: 3-Stage DTR
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3_MediationAnalysis.html">
+                        Multi-Stage Mediation Analysis
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../../../5_Case_Study/MovieLens/Case_Study_2.html">
                         MovieLens
                       </a>
@@ -646,6 +660,20 @@ const thebe_selector_output = ".output, .cell_output"
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3_DTR.html">
+                        CPL: 3-Stage DTR
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3_MediationAnalysis.html">
+                        Multi-Stage Mediation Analysis
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../../../5_Case_Study/MovieLens/Case_Study_2.html">
                         MovieLens
                       </a>
@@ -904,6 +932,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3-Demo.html">Mimic3 Demo</a></li>
 
 
+<li class="toctree-l1"><a class="reference internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3_DTR.html">CPL: 3-Stage DTR</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3_MediationAnalysis.html">Multi-Stage Mediation Analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../5_Case_Study/MovieLens/Case_Study_2.html">MovieLens</a></li>
 </ul>
 
@@ -1107,8 +1139,8 @@ title="Print to PDF"
 <section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this heading">#</a></h2>
 <p>As the name suggested, the UCB algorithm estimates the upper confidence bound <span class="math notranslate nohighlight">\(U_{i}^{t}\)</span> of the mean rewards based on the observations and then choose the action has the highest estimates. The class of UCB-based algorithms is firstly introduced by Auer et al. [2]. Generally, at each round <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(U_{i}^{t}\)</span> is calculated as the sum of the estimated reward (exploitation) and the estimated confidence radius (exploration) of item <span class="math notranslate nohighlight">\(i\)</span> based on <span class="math notranslate nohighlight">\(\mathcal{H}_{t}\)</span>. Then, <span class="math notranslate nohighlight">\(A_{t}\)</span> is selected as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4413f1d5-f0c9-423a-b952-8092c900fbd2">
-<span class="eqno">()<a class="headerlink" href="#equation-4413f1d5-f0c9-423a-b952-8092c900fbd2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5a2b4869-be54-43b6-b1be-73c8d083f6f1">
+<span class="eqno">()<a class="headerlink" href="#equation-5a2b4869-be54-43b6-b1be-73c8d083f6f1" title="Permalink to this equation">#</a></span>\[\begin{equation}
     A_t = argmax_{a \in \mathcal{A}} E(R_t \mid a,\{ U_{i}^{t}\}_{i=1}^{N}).
 \end{equation}\]</div>
 <p>Doing so, either the item with a large average reward or the item with limited exploration will be selected.</p>
@@ -1116,13 +1148,13 @@ title="Print to PDF"
 <section id="algorithms-details">
 <h2>Algorithms Details<a class="headerlink" href="#algorithms-details" title="Permalink to this heading">#</a></h2>
 <p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. The UCB1 algorithm start with initializing the estimated upper confidence bound <span class="math notranslate nohighlight">\(U_a^{0}\)</span> and the count of being pulled <span class="math notranslate nohighlight">\(C_a^{0}\)</span> for each action <span class="math notranslate nohighlight">\(a\)</span> as 0. At each round <span class="math notranslate nohighlight">\(t\)</span>, we greedily select an action <span class="math notranslate nohighlight">\(A_t\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-af2cea4c-10f1-40cb-8fe1-c76db83e05bc">
-<span class="eqno">()<a class="headerlink" href="#equation-af2cea4c-10f1-40cb-8fe1-c76db83e05bc" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-65427d73-b95b-4e18-a7a8-25e02445dfed">
+<span class="eqno">()<a class="headerlink" href="#equation-65427d73-b95b-4e18-a7a8-25e02445dfed" title="Permalink to this equation">#</a></span>\[\begin{align}
 A_t = arg max_{a\in \mathcal{A}} U_{a}^{t}.
 \end{align}\]</div>
 <p>After observing the rewards corresponding to the selected action <span class="math notranslate nohighlight">\(A_t\)</span>, we first update the total number of being pulled for <span class="math notranslate nohighlight">\(A_t\)</span> accordingly. Then, we estimate the upper confidence bound for each action <span class="math notranslate nohighlight">\(a\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-24388967-e0f2-47f3-89a3-18fa7bf31435">
-<span class="eqno">()<a class="headerlink" href="#equation-24388967-e0f2-47f3-89a3-18fa7bf31435" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-36747b36-1bba-41ae-933e-5ff6551c0971">
+<span class="eqno">()<a class="headerlink" href="#equation-36747b36-1bba-41ae-933e-5ff6551c0971" title="Permalink to this equation">#</a></span>\[\begin{align}
 U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} 
 \end{align}\]</div>
 </section>
@@ -1133,8 +1165,8 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 <li><p>For t = <span class="math notranslate nohighlight">\(0, 1,\cdots, T\)</span>:</p>
 <p>2.1. select action <span class="math notranslate nohighlight">\(A_t\)</span> as the arm with the maximum <span class="math notranslate nohighlight">\(U_a^t\)</span></p>
 <p>2.2. Received the reward R, and update <span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(U\)</span> with</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fe96aa66-b0be-4296-b765-6c2ae239fb9d">
-<span class="eqno">()<a class="headerlink" href="#equation-fe96aa66-b0be-4296-b765-6c2ae239fb9d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-88e70034-fff8-472d-aca1-e2b8869aede4">
+<span class="eqno">()<a class="headerlink" href="#equation-88e70034-fff8-472d-aca1-e2b8869aede4" title="Permalink to this equation">#</a></span>\[\begin{align}
     C_{A_{t}}^{t+1} &amp;= C_{A_{t}}^{t} + 1 \\
     U_{A_{t}}^{t+1} &amp;= \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} 
     \end{align}\]</div>
@@ -1158,7 +1190,7 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_43240</span><span class="o">/</span><span class="mf">3636065689.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_55061</span><span class="o">/</span><span class="mf">3636065689.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">os</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM&#39;</span><span class="p">)</span>

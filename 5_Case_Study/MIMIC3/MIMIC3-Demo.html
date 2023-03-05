@@ -58,10 +58,12 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '5_Case_Study/MIMIC3/MIMIC3-Demo';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="MovieLens" href="../MovieLens/Case_Study_2.html" />
+    <link rel="next" title="CPL: 3-Stage DTR" href="MIMIC3_DTR.html" />
     <link rel="prev" title="Ooline Policy Learning in Non-Markov Environments" href="../../4_Causal_Policy_Learning/Scenario6/OnlineRL_non_Markov.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="docsearch:language" content="en">
@@ -347,6 +349,20 @@ const thebe_selector_output = ".output, .cell_output"
                     <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="#">
                         Mimic3 Demo
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="MIMIC3_DTR.html">
+                        CPL: 3-Stage DTR
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="MIMIC3_MediationAnalysis.html">
+                        Multi-Stage Mediation Analysis
                       </a>
                     </li>
                 
@@ -646,6 +662,20 @@ const thebe_selector_output = ".output, .cell_output"
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="MIMIC3_DTR.html">
+                        CPL: 3-Stage DTR
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="MIMIC3_MediationAnalysis.html">
+                        Multi-Stage Mediation Analysis
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../MovieLens/Case_Study_2.html">
                         MovieLens
                       </a>
@@ -904,6 +934,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Mimic3 Demo</a></li>
 
 
+<li class="toctree-l1"><a class="reference internal" href="MIMIC3_DTR.html">CPL: 3-Stage DTR</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="MIMIC3_MediationAnalysis.html">Multi-Stage Mediation Analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../MovieLens/Case_Study_2.html">MovieLens</a></li>
 </ul>
 
@@ -1084,13 +1118,13 @@ title="Print to PDF"
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exclude-sofa-from-the-covariates-list">
-     exclude SOFA from the covariates list
+    <a class="reference internal nav-link" href="#regard-died-within-48h-as-the-outcome-variable">
+     Regard ‘Died_Within_48H’ as the outcome variable
     </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#regard-sofa-as-outcome-variable">
-     Regard SOFA as outcome variable
+    <a class="reference internal nav-link" href="#regard-sofa-as-the-outcome-variable">
+     Regard ‘SOFA’ as the outcome variable
     </a>
    </li>
   </ul>
@@ -1268,29 +1302,154 @@ title="Print to PDF"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;mimic3_multi_stages.pickle&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
-    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">mimic_final</span><span class="p">,</span> <span class="n">handle</span><span class="p">)</span>
-    
-<span class="n">mimic_final</span><span class="o">.</span><span class="n">to_csv</span> <span class="p">(</span><span class="sa">r</span><span class="s1">&#39;mimic3_multi_stages.csv&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="n">mimic_final</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mimic_final</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;mimic3_multi_stages.csv&quot;</span><span class="p">)</span>
+<span class="n">mimic_final</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_43260</span><span class="o">/</span><span class="mf">758319251.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;mimic3_multi_stages.pickle&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
-<span class="ne">----&gt; </span><span class="mi">2</span>     <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">mimic_final</span><span class="p">,</span> <span class="n">handle</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> 
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">mimic_final</span><span class="o">.</span><span class="n">to_csv</span> <span class="p">(</span><span class="sa">r</span><span class="s1">&#39;mimic3_multi_stages.csv&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> 
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-<span class="ne">NameError</span>: name &#39;mimic_final&#39; is not defined
-</pre></div>
-</div>
-</div>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>icustayid</th>
+      <th>Glucose</th>
+      <th>paO2</th>
+      <th>PaO2_FiO2</th>
+      <th>IV Input</th>
+      <th>SOFA</th>
+      <th>Died within 48H</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1006</td>
+      <td>91.000000</td>
+      <td>103.000000</td>
+      <td>206.000000</td>
+      <td>0.0</td>
+      <td>8</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1006</td>
+      <td>91.000000</td>
+      <td>103.000000</td>
+      <td>206.000000</td>
+      <td>0.0</td>
+      <td>8</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1006</td>
+      <td>175.000000</td>
+      <td>96.000000</td>
+      <td>100.173913</td>
+      <td>3.0</td>
+      <td>3</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1006</td>
+      <td>175.000000</td>
+      <td>96.000000</td>
+      <td>96.000000</td>
+      <td>3.0</td>
+      <td>10</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1006</td>
+      <td>175.000000</td>
+      <td>96.000000</td>
+      <td>96.000000</td>
+      <td>4.0</td>
+      <td>9</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>687</th>
+      <td>98685</td>
+      <td>120.142857</td>
+      <td>71.000000</td>
+      <td>142.000000</td>
+      <td>3.0</td>
+      <td>9</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>688</th>
+      <td>98685</td>
+      <td>168.200000</td>
+      <td>71.000000</td>
+      <td>142.000000</td>
+      <td>2.0</td>
+      <td>7</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>689</th>
+      <td>98685</td>
+      <td>182.000000</td>
+      <td>73.500000</td>
+      <td>105.000000</td>
+      <td>4.0</td>
+      <td>11</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>690</th>
+      <td>98685</td>
+      <td>190.545455</td>
+      <td>79.818182</td>
+      <td>133.030303</td>
+      <td>1.0</td>
+      <td>6</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>691</th>
+      <td>98685</td>
+      <td>190.000000</td>
+      <td>118.000000</td>
+      <td>196.666667</td>
+      <td>4.0</td>
+      <td>6</td>
+      <td>-1</td>
+    </tr>
+  </tbody>
+</table>
+<p>692 rows × 7 columns</p>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1309,7 +1468,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_28731/3793710715.py:8: SettingWithCopyWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_55081/3793710715.py:8: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
@@ -1440,7 +1599,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/600dac614380604411089088f76daedb6e1037a92fae12e7d4510913ed74c0ce.png" src="../../_images/600dac614380604411089088f76daedb6e1037a92fae12e7d4510913ed74c0ce.png" />
+<img alt="../../_images/6fc63d84d122cc5a54be157be05f093477c107c2beedac717fec1cc80ad9c996.png" src="../../_images/6fc63d84d122cc5a54be157be05f093477c107c2beedac717fec1cc80ad9c996.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1460,14 +1619,14 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The total effect (FSTE): [-0.5769399  -1.5085273  38.58722237 -0.46061915 -0.75731054]
-The natural direct effect (FSDE): [ 0.48898334 -1.59767349 33.30945388 -0.46061915 -0.69109301]
-The natural indirect effect (FSIE): [-1.06592324  0.08914619  5.27776849  0.         -0.06621753]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The total effect (FSTE): [-0.16987542 -2.32715368 36.11635062 -0.45405461 -0.65679782]
+The natural direct effect (FSDE): [ 0.49989362 -2.14637368 33.31075237 -0.45405461 -0.7047716 ]
+The natural indirect effect (FSIE): [-0.66976904 -0.18078     2.80559825  0.          0.04797378]
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([-0.5769399 , -1.5085273 , 38.58722237, -0.46061915, -0.75731054]),
- array([ 0.48898334, -1.59767349, 33.30945388, -0.46061915, -0.69109301]),
- array([-1.06592324,  0.08914619,  5.27776849,  0.        , -0.06621753]))
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([-0.16987542, -2.32715368, 36.11635062, -0.45405461, -0.65679782]),
+ array([ 0.49989362, -2.14637368, 33.31075237, -0.45405461, -0.7047716 ]),
+ array([-0.66976904, -0.18078   ,  2.80559825,  0.        ,  0.04797378]))
 </pre></div>
 </div>
 </div>
@@ -1588,6 +1747,7 @@ The natural indirect effect (FSIE): [-1.06592324  0.08914619  5.27776849  0.    
 </table>
 </div></div></div>
 </div>
+<p>According to the amount of fluid administraition throughout the entire treatment period, we plot the average IV input for each patient as below:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mimic3_data</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">])</span>
@@ -1605,28 +1765,8 @@ The natural indirect effect (FSIE): [-1.06592324  0.08914619  5.27776849  0.    
 <img alt="../../_images/994a29ea2d3652cb4e81cb898c868635d58068230e24fb2c97f9394f72fb62cd.png" src="../../_images/994a29ea2d3652cb4e81cb898c868635d58068230e24fb2c97f9394f72fb62cd.png" />
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mimic3_data</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">1.5</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>32
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">userinfo_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
-<span class="c1"># outcome: Died within 48H (binary)</span>
-<span class="c1"># treatment: iv_input (binary)</span>
-<span class="c1"># others: covariates</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>As we can see from the histogram above, there is a small gap when the average IV Input is around <span class="math notranslate nohighlight">\(1.5\)</span>. This gap naturally split the data into two treatment groups: “High-IV-Input” group and “Low-IV-Input” group. We are interested in whether the highe level fluid intake treatment is able to decrease the SOFA score and the death rate of patients within 48 hours of administration.</p>
+<p>Motivated by this problem, we set the “High-IV-Input” group as the treatment group with <span class="math notranslate nohighlight">\(A=1\)</span>, and set the “Low-IV-Input” group as the control group with <span class="math notranslate nohighlight">\(A=0\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_CEL_selected</span> <span class="o">=</span> <span class="n">mimic3_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -1732,19 +1872,25 @@ The natural indirect effect (FSIE): [-1.06592324  0.08914619  5.27776849  0.    
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">6</span><span class="p">]</span><span class="o">==-</span><span class="mi">1</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">6</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">6</span><span class="p">]</span><span class="o">==-</span><span class="mi">1</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">6</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">))</span>
-<span class="c1"># 58 patients in total</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span> <span class="s2">&quot;The number of patients in treatment group is &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mimic3_data</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">1.5</span><span class="p">)[</span><span class="mi">0</span><span class="p">]),</span> <span class="s2">&quot;;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;The number of patients in control group is &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mimic3_data</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">&lt;=</span><span class="mf">1.5</span><span class="p">)[</span><span class="mi">0</span><span class="p">]),</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1
-24
-8
-24
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The number of patients in treatment group is  32 ;
+ The number of patients in control group is  25 .
+</pre></div>
+</div>
+</div>
+</div>
+<section id="regard-died-within-48h-as-the-outcome-variable">
+<h2>Regard ‘Died_Within_48H’ as the outcome variable<a class="headerlink" href="#regard-died-within-48h-as-the-outcome-variable" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">userinfo_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="c1"># outcome: Died within 48H (binary)</span>
+<span class="c1"># treatment: IV Input (binary)</span>
+<span class="c1"># Glucose, paO2, PaO2_FiO2: covariates</span>
 </pre></div>
 </div>
 </div>
@@ -1752,115 +1898,6 @@ The natural indirect effect (FSIE): [-1.06592324  0.08914619  5.27776849  0.    
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#from lightgbm import LGBMRegressor</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
-
-<span class="c1">#mu0 = GradientBoostingClassifier(max_depth=2)</span>
-<span class="c1">#mu1 = GradientBoostingClassifier(max_depth=2)</span>
-
-<span class="n">mu0</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
-<span class="n">mu1</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
-
-<span class="n">mu0</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">userinfo_index</span><span class="p">],</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">6</span><span class="p">]</span> <span class="p">)</span>
-<span class="n">mu1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">userinfo_index</span><span class="p">],</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">6</span><span class="p">]</span> <span class="p">)</span>
-
-
-<span class="c1"># estimate the HTE by T-learner</span>
-<span class="n">HTE_T_learner</span> <span class="o">=</span> <span class="p">(</span><span class="n">mu1</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span> <span class="o">-</span> <span class="n">mu0</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">]))[:,</span><span class="mi">1</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">HTE_T_learner</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-6.12968636e-01, -2.19898149e-02, -2.24396566e-01, -1.43603356e-03,
-       -2.31089138e-02, -4.21971678e-03, -1.06065978e-01, -1.82908445e-01,
-       -1.29373902e-02, -1.57378496e-03, -3.80665075e-01, -7.19204846e-02,
-       -5.87878672e-04, -1.64194759e-02, -3.74329403e-02, -2.99208870e-01,
-       -4.05536722e-01, -3.93997356e-01, -1.37658583e-01, -6.30516698e-02,
-       -4.69053614e-02, -5.25454412e-02, -8.90354918e-02, -1.84492112e-01,
-        6.74707375e-01, -3.99243862e-01, -3.32124499e-01, -1.76639796e-01,
-       -3.81722590e-01, -3.36737950e-01, -7.48175640e-01, -7.16482878e-02,
-       -5.83113927e-01, -2.46330508e-01, -6.02204099e-04, -8.14829020e-03,
-       -1.10124807e-02, -3.05696535e-02, -2.95670546e-01, -1.12886177e-01,
-       -8.77514502e-03, -1.98200718e-01, -1.50224457e-01, -1.93376762e-02,
-       -3.25920083e-01, -8.61056677e-01, -2.69004260e-01, -1.71707357e-02,
-       -6.38961340e-01, -2.80770800e-02, -1.64875651e-01, -2.62006664e-01,
-       -3.24956862e-01, -1.45699450e-01, -1.50326753e-02, -7.76415804e-01,
-       -6.13658304e-01])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,
-        1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,
-        1.,  1.,  1.,  1., -1.,  1., -1.,  1.,  1.,  1.,  1.,  1.,  1.,
-        1.,  1.,  1.,  1.,  1.,  1., -1.,  1.,  1., -1.,  1.,  1.,  1.,
-        1.,  1.,  1., -1., -1.])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,
-        1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1., -1.,  1.,
-        1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,
-        1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,
-        1.,  1.,  1.,  1.,  1.])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mu1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span><span class="o">-</span><span class="n">mu0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span><span class="o">==-</span><span class="mi">2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0, 30, 32, 45, 48, 55, 56])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">sum</span><span class="p">(</span><span class="n">HTE_T_learner</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.19737465540314486
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Conclusion</strong>: iv-input is expected to improve the death-within-48-hours rate by 19.74%.</p>
-<section id="exclude-sofa-from-the-covariates-list">
-<h2>exclude SOFA from the covariates list<a class="headerlink" href="#exclude-sofa-from-the-covariates-list" title="Permalink to this heading">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">userinfo_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
-
-<span class="c1">#from lightgbm import LGBMRegressor</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingClassifier</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 
@@ -1903,38 +1940,7 @@ The natural indirect effect (FSIE): [-1.06592324  0.08914619  5.27776849  0.    
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,
-        1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,
-        1.,  1.,  1.,  1.,  1.,  1., -1.,  1.,  1.,  1.,  1.,  1.,  1.,
-        1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1., -1.,  1.,  1.,  1.,
-       -1.,  1.,  1., -1.,  1.])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,
-        1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1., -1.,  1.,
-        1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,
-        1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,
-        1.,  1.,  1.,  1.,  1.])
-</pre></div>
-</div>
-</div>
-</div>
+<p>As we can see from the estimated treatment effect of each patient, a higher volumn of fluid intake is inclined to cause negative impact on patients’ health status. This may seem counterintuitive to us, which may indicates some selection bias within this small dataset. Despite so, this result also remind us to pay attention to the potentially unnecessary fluid intake that may increase the death rate of patients.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mu1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span><span class="o">-</span><span class="n">mu0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span><span class="o">==-</span><span class="mi">2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -1947,6 +1953,7 @@ The natural indirect effect (FSIE): [-1.06592324  0.08914619  5.27776849  0.    
 </div>
 </div>
 </div>
+<p>Patient # {0, 32, 48, 52, 55} might be the sufferer of the over intake of fluid.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">sum</span><span class="p">(</span><span class="n">HTE_T_learner</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">)</span>
@@ -1954,21 +1961,21 @@ The natural indirect effect (FSIE): [-1.06592324  0.08914619  5.27776849  0.    
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.20399937380848096
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.20399937380855312
 </pre></div>
 </div>
 </div>
 </div>
-<p><strong>Conclusion</strong>: iv-input is expected to improve the death-within-48-hours rate by 20.40%.</p>
+<p>Overall, IV Input is expected to increase the death-within-48-hours rate of all patients by 20.40%.</p>
 </section>
-<section id="regard-sofa-as-outcome-variable">
-<h2>Regard SOFA as outcome variable<a class="headerlink" href="#regard-sofa-as-outcome-variable" title="Permalink to this heading">#</a></h2>
+<section id="regard-sofa-as-the-outcome-variable">
+<h2>Regard ‘SOFA’ as the outcome variable<a class="headerlink" href="#regard-sofa-as-the-outcome-variable" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">userinfo_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
 <span class="c1"># outcome: SOFA score (treated as continuous). The smaller, the better</span>
 <span class="c1"># treatment: iv_input (binary)</span>
-<span class="c1"># others: covariates</span>
+<span class="c1"># Glucose, paO2, PaO2_FiO2: covariates</span>
 <span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2066,6 +2073,7 @@ The natural indirect effect (FSIE): [-1.06592324  0.08914619  5.27776849  0.    
 </table>
 </div></div></div>
 </div>
+<p>Similarly, we estimate the causal effect of fluid administration on the average SOFA score of patients to see if higher IV input is able to decrease the SOFA score.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#from lightgbm import LGBMRegressor</span>
@@ -2085,52 +2093,6 @@ The natural indirect effect (FSIE): [-1.06592324  0.08914619  5.27776849  0.    
 
 <span class="c1"># estimate the HTE by T-learner</span>
 <span class="n">HTE_T_learner</span> <span class="o">=</span> <span class="p">(</span><span class="n">mu1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span> <span class="o">-</span> <span class="n">mu0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">]))</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([6.20534783, 5.60799131, 6.03101525, 5.30487613, 5.73901719,
-       5.50869865, 5.93409258, 6.06268418, 5.62814712, 5.33088885,
-       6.06805273, 5.85343431, 5.3891968 , 5.77059072, 5.85723926,
-       5.90852121, 6.16255577, 5.73226175, 6.0713091 , 5.61008793,
-       5.84837405, 5.73072933, 5.96310458, 5.69542996, 6.06679508,
-       5.80242966, 5.75052079, 5.89086905, 6.0049731 , 6.05624172,
-       6.05820508, 5.80224073, 6.08963454, 6.0349788 , 5.01483998,
-       5.63905221, 5.74432509, 5.78090422, 5.99109928, 5.95093155,
-       5.67313649, 6.06334448, 6.05130982, 5.86413964, 5.79011822,
-       6.13613724, 6.05677335, 5.77466503, 5.82624963, 5.71759965,
-       5.87293765, 5.95941413, 5.81655015, 6.00536321, 5.70841914,
-       6.24891247, 6.12551622])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span> <span class="n">mu0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([6.6953789 , 5.10741154, 5.82186952, 4.6414173 , 5.97879022,
-       4.42927105, 6.27864757, 7.42377512, 4.42966655, 4.75082494,
-       7.1816504 , 9.08880529, 5.57819536, 5.1209202 , 5.22000112,
-       5.85809935, 6.42621801, 5.72353439, 6.40045611, 5.09534446,
-       5.43170283, 5.18914595, 5.24989338, 4.43053592, 7.14426689,
-       5.28013788, 5.13285216, 5.31529729, 5.05722861, 5.50437684,
-       6.35486627, 5.44263627, 5.88826623, 5.26089302, 3.8225689 ,
-       5.52442018, 8.10365132, 6.07635828, 7.85447013, 4.99921777,
-       5.06040788, 6.05859007, 5.99065991, 6.50620091, 5.03579105,
-       5.93077781, 5.68668211, 5.42035374, 5.03808058, 6.48700577,
-       5.19118358, 5.2131336 , 4.70773032, 5.83005235, 5.77993266,
-       8.07031865, 6.13590299])
 </pre></div>
 </div>
 </div>
@@ -2158,6 +2120,7 @@ The natural indirect effect (FSIE): [-1.06592324  0.08914619  5.27776849  0.    
 </div>
 </div>
 </div>
+<p>Although for some patients, higher volumn of fluid intake is able to decrease their overall SOFA score, most of the rest of the patients suffered some bad effects from it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">sum</span><span class="p">(</span><span class="n">HTE_T_learner</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">)</span>
@@ -2165,7 +2128,7 @@ The natural indirect effect (FSIE): [-1.06592324  0.08914619  5.27776849  0.    
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.08642818615808806
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.08642818615808646
 </pre></div>
 </div>
 </div>
@@ -2209,10 +2172,10 @@ The natural indirect effect (FSIE): [-1.06592324  0.08914619  5.27776849  0.    
           <p class="prev-next-title">Ooline Policy Learning in Non-Markov Environments</p>
       </div>
   </a>
-  <a class='right-next' id="next-link" href="../MovieLens/Case_Study_2.html" title="next page">
+  <a class='right-next' id="next-link" href="MIMIC3_DTR.html" title="next page">
   <div class="prev-next-info">
       <p class="prev-next-subtitle">next</p>
-      <p class="prev-next-title">MovieLens</p>
+      <p class="prev-next-title">CPL: 3-Stage DTR</p>
   </div>
   <i class="fa-solid fa-angle-right"></i>
   </a>
@@ -2248,13 +2211,13 @@ The natural indirect effect (FSIE): [-1.06592324  0.08914619  5.27776849  0.    
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exclude-sofa-from-the-covariates-list">
-     exclude SOFA from the covariates list
+    <a class="reference internal nav-link" href="#regard-died-within-48h-as-the-outcome-variable">
+     Regard ‘Died_Within_48H’ as the outcome variable
     </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#regard-sofa-as-outcome-variable">
-     Regard SOFA as outcome variable
+    <a class="reference internal nav-link" href="#regard-sofa-as-the-outcome-variable">
+     Regard ‘SOFA’ as the outcome variable
     </a>
    </li>
   </ul>

@@ -17,20 +17,65 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# A demo with code on how to use the package
-from causaldm.learners import ALearning
-from causaldm.test import shared_simulation
 import numpy as np
+import pandas as pd
+dataMDP = pd.read_csv("dataMDP_feasible.txt", sep=',')
+R = np.array(dataMDP['Y'])
+S = np.hstack([np.ones((len(R),1)),np.array(dataMDP[['CD4_0','CD4_6','CD4_12']])])
+A = np.array(dataMDP[['A1','A2','A3']])
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-[0;32m/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_43049/3431659105.py[0m in [0;36m<module>[0;34m[0m
-[1;32m      1[0m [0;31m# A demo with code on how to use the package[0m[0;34m[0m[0;34m[0m[0m
-[0;32m----> 2[0;31m [0;32mfrom[0m [0mcausaldm[0m[0;34m.[0m[0mlearners[0m [0;32mimport[0m [0mALearning[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      3[0m [0;32mfrom[0m [0mcausaldm[0m[0;34m.[0m[0mtest[0m [0;32mimport[0m [0mshared_simulation[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      4[0m [0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
+[0;31mFileNotFoundError[0m                         Traceback (most recent call last)
+[0;32m/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_54882/3951783812.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      1[0m [0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      2[0m [0;32mimport[0m [0mpandas[0m [0;32mas[0m [0mpd[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 3[0;31m [0mdataMDP[0m [0;34m=[0m [0mpd[0m[0;34m.[0m[0mread_csv[0m[0;34m([0m[0;34m"dataMDP_feasible.txt"[0m[0;34m,[0m [0msep[0m[0;34m=[0m[0;34m','[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      4[0m [0mR[0m [0;34m=[0m [0mnp[0m[0;34m.[0m[0marray[0m[0;34m([0m[0mdataMDP[0m[0;34m[[0m[0;34m'Y'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      5[0m [0mS[0m [0;34m=[0m [0mnp[0m[0;34m.[0m[0mhstack[0m[0;34m([0m[0;34m[[0m[0mnp[0m[0;34m.[0m[0mones[0m[0;34m([0m[0;34m([0m[0mlen[0m[0;34m([0m[0mR[0m[0;34m)[0m[0;34m,[0m[0;36m1[0m[0;34m)[0m[0;34m)[0m[0;34m,[0m[0mnp[0m[0;34m.[0m[0marray[0m[0;34m([0m[0mdataMDP[0m[0;34m[[0m[0;34m[[0m[0;34m'CD4_0'[0m[0;34m,[0m[0;34m'CD4_6'[0m[0;34m,[0m[0;34m'CD4_12'[0m[0;34m][0m[0;34m][0m[0;34m)[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 
-[0;31mModuleNotFoundError[0m: No module named 'causaldm'
-ModuleNotFoundError: No module named 'causaldm'
+[0;32m~/opt/anaconda3/lib/python3.9/site-packages/pandas/util/_decorators.py[0m in [0;36mwrapper[0;34m(*args, **kwargs)[0m
+[1;32m    309[0m                     [0mstacklevel[0m[0;34m=[0m[0mstacklevel[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    310[0m                 )
+[0;32m--> 311[0;31m             [0;32mreturn[0m [0mfunc[0m[0;34m([0m[0;34m*[0m[0margs[0m[0;34m,[0m [0;34m**[0m[0mkwargs[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    312[0m [0;34m[0m[0m
+[1;32m    313[0m         [0;32mreturn[0m [0mwrapper[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/opt/anaconda3/lib/python3.9/site-packages/pandas/io/parsers/readers.py[0m in [0;36mread_csv[0;34m(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, squeeze, prefix, mangle_dupe_cols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, error_bad_lines, warn_bad_lines, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options)[0m
+[1;32m    676[0m     [0mkwds[0m[0;34m.[0m[0mupdate[0m[0;34m([0m[0mkwds_defaults[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    677[0m [0;34m[0m[0m
+[0;32m--> 678[0;31m     [0;32mreturn[0m [0m_read[0m[0;34m([0m[0mfilepath_or_buffer[0m[0;34m,[0m [0mkwds[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    679[0m [0;34m[0m[0m
+[1;32m    680[0m [0;34m[0m[0m
+
+[0;32m~/opt/anaconda3/lib/python3.9/site-packages/pandas/io/parsers/readers.py[0m in [0;36m_read[0;34m(filepath_or_buffer, kwds)[0m
+[1;32m    573[0m [0;34m[0m[0m
+[1;32m    574[0m     [0;31m# Create the parser.[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 575[0;31m     [0mparser[0m [0;34m=[0m [0mTextFileReader[0m[0;34m([0m[0mfilepath_or_buffer[0m[0;34m,[0m [0;34m**[0m[0mkwds[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    576[0m [0;34m[0m[0m
+[1;32m    577[0m     [0;32mif[0m [0mchunksize[0m [0;32mor[0m [0miterator[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/opt/anaconda3/lib/python3.9/site-packages/pandas/io/parsers/readers.py[0m in [0;36m__init__[0;34m(self, f, engine, **kwds)[0m
+[1;32m    930[0m [0;34m[0m[0m
+[1;32m    931[0m         [0mself[0m[0;34m.[0m[0mhandles[0m[0;34m:[0m [0mIOHandles[0m [0;34m|[0m [0;32mNone[0m [0;34m=[0m [0;32mNone[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 932[0;31m         [0mself[0m[0;34m.[0m[0m_engine[0m [0;34m=[0m [0mself[0m[0;34m.[0m[0m_make_engine[0m[0;34m([0m[0mf[0m[0;34m,[0m [0mself[0m[0;34m.[0m[0mengine[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    933[0m [0;34m[0m[0m
+[1;32m    934[0m     [0;32mdef[0m [0mclose[0m[0;34m([0m[0mself[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/opt/anaconda3/lib/python3.9/site-packages/pandas/io/parsers/readers.py[0m in [0;36m_make_engine[0;34m(self, f, engine)[0m
+[1;32m   1214[0m             [0;31m# "Union[str, PathLike[str], ReadCsvBuffer[bytes], ReadCsvBuffer[str]]"[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   1215[0m             [0;31m# , "str", "bool", "Any", "Any", "Any", "Any", "Any"[0m[0;34m[0m[0;34m[0m[0m
+[0;32m-> 1216[0;31m             self.handles = get_handle(  # type: ignore[call-overload]
+[0m[1;32m   1217[0m                 [0mf[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   1218[0m                 [0mmode[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/opt/anaconda3/lib/python3.9/site-packages/pandas/io/common.py[0m in [0;36mget_handle[0;34m(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)[0m
+[1;32m    784[0m         [0;32mif[0m [0mioargs[0m[0;34m.[0m[0mencoding[0m [0;32mand[0m [0;34m"b"[0m [0;32mnot[0m [0;32min[0m [0mioargs[0m[0;34m.[0m[0mmode[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    785[0m             [0;31m# Encoding[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 786[0;31m             handle = open(
+[0m[1;32m    787[0m                 [0mhandle[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    788[0m                 [0mioargs[0m[0;34m.[0m[0mmode[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mFileNotFoundError[0m: [Errno 2] No such file or directory: 'dataMDP_feasible.txt'
+FileNotFoundError: [Errno 2] No such file or directory: 'dataMDP_feasible.txt'
 

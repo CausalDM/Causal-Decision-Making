@@ -354,6 +354,20 @@ const thebe_selector_output = ".output, .cell_output"
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3_DTR.html">
+                        CPL: 3-Stage DTR
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3_MediationAnalysis.html">
+                        Multi-Stage Mediation Analysis
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../../../5_Case_Study/MovieLens/Case_Study_2.html">
                         MovieLens
                       </a>
@@ -648,6 +662,20 @@ const thebe_selector_output = ".output, .cell_output"
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3_DTR.html">
+                        CPL: 3-Stage DTR
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3_MediationAnalysis.html">
+                        Multi-Stage Mediation Analysis
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../../../5_Case_Study/MovieLens/Case_Study_2.html">
                         MovieLens
                       </a>
@@ -906,6 +934,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3-Demo.html">Mimic3 Demo</a></li>
 
 
+<li class="toctree-l1"><a class="reference internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3_DTR.html">CPL: 3-Stage DTR</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3_MediationAnalysis.html">Multi-Stage Mediation Analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../5_Case_Study/MovieLens/Case_Study_2.html">MovieLens</a></li>
 </ul>
 
@@ -1106,20 +1138,20 @@ title="Print to PDF"
 <h2>Problem Setting<a class="headerlink" href="#problem-setting" title="Permalink to this heading">#</a></h2>
 <p><strong>Standard Offering:</strong> Suppose that, at each round t, we need to recommend at most <span class="math notranslate nohighlight">\(K\)</span> items. In assortment optimization, the agent needs to offer a subset (assortment) <span class="math notranslate nohighlight">\(A_t \in \mathcal{A} = \{A\subseteq[N]:|A|\leq K\}\)</span>, and the customer will then choose either one of them or no-purchase which is denoted as item <span class="math notranslate nohighlight">\(0\)</span>. Let <span class="math notranslate nohighlight">\(\boldsymbol{Y}_t(a)=(Y_{0,t}(a),\cdots,Y_{N,t}(a))^{T}\)</span> be an indicator vector of length <span class="math notranslate nohighlight">\(N+1\)</span>, where <span class="math notranslate nohighlight">\(Y_{i,t}(a)\)</span> equals to <span class="math notranslate nohighlight">\(1\)</span> if the item <span class="math notranslate nohighlight">\(i\)</span> would be chosen if the action <span class="math notranslate nohighlight">\(a\)</span> is offered. Let <span class="math notranslate nohighlight">\(\boldsymbol{\eta} = (\eta_0, \eta_1, \dots,\eta_{N})^{T}\)</span>, where <span class="math notranslate nohighlight">\(\eta_k\)</span> is the revenue of the item <span class="math notranslate nohighlight">\(k\)</span>.  Conventionally, <span class="math notranslate nohighlight">\(\eta_0 = 0\)</span>. The potential revenue that would be collected, if action <span class="math notranslate nohighlight">\(a\)</span> is offered in round <span class="math notranslate nohighlight">\(t\)</span>, is then <span class="math notranslate nohighlight">\(R_t(a) = \sum_{i\in a} Y_{i,t}(a) \eta_{i}\)</span>. In an MNL bandit, each item <span class="math notranslate nohighlight">\(i\)</span> has an utility factor <span class="math notranslate nohighlight">\(v_i\)</span>, and
 the choice behaviour is characterized by a multinomial distribution</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d62b2f1b-8ef7-4ebd-a61b-4546361a91bf">
-<span class="eqno">(116)<a class="headerlink" href="#equation-d62b2f1b-8ef7-4ebd-a61b-4546361a91bf" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{MNLdist}
+<div class="amsmath math notranslate nohighlight" id="equation-67185ead-f7de-44cd-810a-d2bc81be2281">
+<span class="eqno">(116)<a class="headerlink" href="#equation-67185ead-f7de-44cd-810a-d2bc81be2281" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{MNLdist}
     \boldsymbol{Y}_t(a) \sim Multinomial(1, \frac{v_i \mathcal{I}(i \in \{0\}\cup a)}{1 + \sum_{j \in a} v_i}),
 \end{equation}\]</div>
 <p>with the convention that <span class="math notranslate nohighlight">\(v_0 = 1\)</span>. Note that <span class="math notranslate nohighlight">\(v_{i}\)</span> will be a determined via a deterministic function of the item-specific parameter <span class="math notranslate nohighlight">\(\theta_{i}\)</span>.</p>
 <p><strong>Epoch-type Offering:</strong> Alternatively, since the direct inference under the above MNL model is intractable, an epoch-based algorithmic structure is introduced [4,5,7] for computational efficiency. Specifically, for each epoch <span class="math notranslate nohighlight">\(l\)</span>, we keep offering the same assortment <span class="math notranslate nohighlight">\(A^l\)</span> until the no-purchase appears. Let <span class="math notranslate nohighlight">\(\theta_i = (v_i+1)^{-1}\)</span>. Denote the potential number of purchases for the item <span class="math notranslate nohighlight">\(i \in a\)</span> in each epoch as <span class="math notranslate nohighlight">\(Y_{i}^l(a)\)</span>, if the slate <span class="math notranslate nohighlight">\(a\)</span> is recommended. Under this setup, it is easy to show that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2de3b569-06a9-4b14-87e6-9d9a5ad4dcdb">
-<span class="eqno">(117)<a class="headerlink" href="#equation-2de3b569-06a9-4b14-87e6-9d9a5ad4dcdb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ea0da057-cda3-4006-bc23-d7468b867071">
+<span class="eqno">(117)<a class="headerlink" href="#equation-ea0da057-cda3-4006-bc23-d7468b867071" title="Permalink to this equation">#</a></span>\[\begin{equation}
     Y_{i}^l(a) \sim Geometric(\theta_i), \forall i \in a,
 \end{equation}\]</div>
 <p>and then the corresponding reward of epoch <span class="math notranslate nohighlight">\(l\)</span> is <span class="math notranslate nohighlight">\(R^l(a) = \sum_{i\in a}Y_{i}^l(a)\eta_{i}\)</span> [4].</p>
 <p>No matter what offering type is employed, for each decision round <span class="math notranslate nohighlight">\(t\)</span>, when <span class="math notranslate nohighlight">\(v_i\)</span>’s are known, the optimal assortment <span class="math notranslate nohighlight">\(A_{t}\)</span> can be determined efficiently through linear programming [4], such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a065c8eb-ba45-4ea7-a96c-4dfe0473e203">
-<span class="eqno">(118)<a class="headerlink" href="#equation-a065c8eb-ba45-4ea7-a96c-4dfe0473e203" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9af12dc6-6c7b-416a-961a-ed492ac6a016">
+<span class="eqno">(118)<a class="headerlink" href="#equation-9af12dc6-6c7b-416a-961a-ed492ac6a016" title="Permalink to this equation">#</a></span>\[\begin{equation}
     A_{t} = arg max_{a \in \mathcal{A}} E(R_t(a) \mid\boldsymbol{v})=argmax_{a \in \mathcal{A}} \frac{\sum_{i\in a}\eta_{i}v_{i}}{1+\sum_{j\in a} v_{j}}.
 \end{equation}\]</div>
 </section>

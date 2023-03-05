@@ -354,6 +354,20 @@ const thebe_selector_output = ".output, .cell_output"
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../5_Case_Study/MIMIC3/MIMIC3_DTR.html">
+                        CPL: 3-Stage DTR
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../5_Case_Study/MIMIC3/MIMIC3_MediationAnalysis.html">
+                        Multi-Stage Mediation Analysis
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../5_Case_Study/MovieLens/Case_Study_2.html">
                         MovieLens
                       </a>
@@ -648,6 +662,20 @@ const thebe_selector_output = ".output, .cell_output"
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../5_Case_Study/MIMIC3/MIMIC3_DTR.html">
+                        CPL: 3-Stage DTR
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../5_Case_Study/MIMIC3/MIMIC3_MediationAnalysis.html">
+                        Multi-Stage Mediation Analysis
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../5_Case_Study/MovieLens/Case_Study_2.html">
                         MovieLens
                       </a>
@@ -906,6 +934,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3-Demo.html">Mimic3 Demo</a></li>
 
 
+<li class="toctree-l1"><a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3_DTR.html">CPL: 3-Stage DTR</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3_MediationAnalysis.html">Multi-Stage Mediation Analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../5_Case_Study/MovieLens/Case_Study_2.html">MovieLens</a></li>
 </ul>
 
@@ -1094,8 +1126,8 @@ title="Print to PDF"
   <section id="r-learner">
 <h1><strong>4. R learner</strong><a class="headerlink" href="#r-learner" title="Permalink to this heading">#</a></h1>
 <p>The idea of classical R-learner came from Robinson 1988 [3] and was formalized by Nie and Wager in 2020 [2]. The main idea of R learner starts from the partially linear model setup, in which we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b21464fc-b086-41ea-8a4e-eb1a56129e3a">
-<span class="eqno">(27)<a class="headerlink" href="#equation-b21464fc-b086-41ea-8a4e-eb1a56129e3a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9b376952-6165-4758-862d-575ab44961cc">
+<span class="eqno">(27)<a class="headerlink" href="#equation-9b376952-6165-4758-862d-575ab44961cc" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{aligned}
     R&amp;=A\tau(S)+g_0(S)+U,\\
     A&amp;=m_0(S)+V,
@@ -1103,21 +1135,21 @@ title="Print to PDF"
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(V\)</span> satisfies <span class="math notranslate nohighlight">\(\mathbb{E}[U|D,X]=0\)</span>, <span class="math notranslate nohighlight">\(\mathbb{E}[V|X]=0\)</span>.</p>
 <p>After several manipulations, it’s easy to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7f39c1f4-81dd-421f-93ca-168fe4c05d4f">
-<span class="eqno">(28)<a class="headerlink" href="#equation-7f39c1f4-81dd-421f-93ca-168fe4c05d4f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1623c20f-2bd6-4752-9ad7-e5f5080bf41f">
+<span class="eqno">(28)<a class="headerlink" href="#equation-1623c20f-2bd6-4752-9ad7-e5f5080bf41f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	R-\mathbb{E}[R|S]=\tau(S)\cdot(A-\mathbb{E}[A|S])+\epsilon.
 \end{equation}\]</div>
 <p>Define <span class="math notranslate nohighlight">\(m_0(X)=\mathbb{E}[A|S]\)</span> and <span class="math notranslate nohighlight">\(l_0(X)=\mathbb{E}[R|S]\)</span>. A natural way to estimate <span class="math notranslate nohighlight">\(\tau(X)\)</span> is given below, which is also the main idea of R-learner:</p>
 <p><strong>Step 1</strong>: Regress <span class="math notranslate nohighlight">\(R\)</span> on <span class="math notranslate nohighlight">\(S\)</span> to obtain model <span class="math notranslate nohighlight">\(\hat{\eta}(S)=\hat{\mathbb{E}}[R|S]\)</span>; and regress <span class="math notranslate nohighlight">\(A\)</span> on <span class="math notranslate nohighlight">\(S\)</span> to obtain model <span class="math notranslate nohighlight">\(\hat{m}(S)=\hat{\mathbb{E}}[A|S]\)</span>.</p>
 <p><strong>Step 2</strong>: Regress outcome residual <span class="math notranslate nohighlight">\(R-\hat{l}(S)\)</span> on propensity score residual <span class="math notranslate nohighlight">\(A-\hat{m}(S)\)</span>.</p>
 <p>That is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3c747fcc-29f4-479c-878c-e4083eded3be">
-<span class="eqno">(29)<a class="headerlink" href="#equation-3c747fcc-29f4-479c-878c-e4083eded3be" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b172acb5-7a9f-46f9-8563-5be9ec4e1808">
+<span class="eqno">(29)<a class="headerlink" href="#equation-b172acb5-7a9f-46f9-8563-5be9ec4e1808" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	\hat{\tau}(S)=\arg\min_{\tau}\left\{\mathbb{E}_n\left[\left(\{R_i-\hat{\eta}(S_i)\}-\{A_i-\hat{m}(S_i)\}\cdot\tau(S_i)\right)^2\right]\right\}	
 \end{equation}\]</div>
 <p>The easiest way to do so is to specify <span class="math notranslate nohighlight">\(\hat{\tau}(S)\)</span> to the linear function class. In this case, <span class="math notranslate nohighlight">\(\tau(S)=S\beta\)</span>, and the problem becomes to estimate <span class="math notranslate nohighlight">\(\beta\)</span> by solving the following linear regression:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8aa07695-ffc3-42dc-b598-7632e6ffdb34">
-<span class="eqno">(30)<a class="headerlink" href="#equation-8aa07695-ffc3-42dc-b598-7632e6ffdb34" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d47fcc1a-d9a9-43bf-8bc9-ee00bf53033b">
+<span class="eqno">(30)<a class="headerlink" href="#equation-d47fcc1a-d9a9-43bf-8bc9-ee00bf53033b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	\hat{\beta}=\arg\min_{\beta}\left\{\mathbb{E}_n\left[\left(\{R_i-\hat{\eta}(S_i)\}-\{A_i-\hat{m}(S_i)\} S_i\cdot \beta\right)^2\right]\right\}.
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -1129,27 +1161,27 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: scikit-uplift in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (0.5.1)
-Requirement already satisfied: requests in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from scikit-uplift) (2.28.1)
-Requirement already satisfied: tqdm in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from scikit-uplift) (4.64.1)
 Requirement already satisfied: matplotlib in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from scikit-uplift) (3.5.2)
 Requirement already satisfied: scikit-learn&gt;=0.21.0 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from scikit-uplift) (1.0.2)
+Requirement already satisfied: requests in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from scikit-uplift) (2.28.1)
+Requirement already satisfied: tqdm in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from scikit-uplift) (4.64.1)
 Requirement already satisfied: pandas in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from scikit-uplift) (1.4.4)
 Requirement already satisfied: numpy&gt;=1.16 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from scikit-uplift) (1.21.5)
 Requirement already satisfied: joblib&gt;=0.11 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (1.1.0)
-Requirement already satisfied: scipy&gt;=1.1.0 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (1.9.1)
 Requirement already satisfied: threadpoolctl&gt;=2.0.0 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (2.2.0)
-Requirement already satisfied: pyparsing&gt;=2.2.1 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from matplotlib-&gt;scikit-uplift) (3.0.9)
-Requirement already satisfied: kiwisolver&gt;=1.0.1 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from matplotlib-&gt;scikit-uplift) (1.4.2)
-Requirement already satisfied: packaging&gt;=20.0 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from matplotlib-&gt;scikit-uplift) (21.3)
-Requirement already satisfied: pillow&gt;=6.2.0 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from matplotlib-&gt;scikit-uplift) (9.2.0)
-Requirement already satisfied: cycler&gt;=0.10 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from matplotlib-&gt;scikit-uplift) (0.11.0)
-Requirement already satisfied: fonttools&gt;=4.22.0 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from matplotlib-&gt;scikit-uplift) (4.25.0)
+Requirement already satisfied: scipy&gt;=1.1.0 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from scikit-learn&gt;=0.21.0-&gt;scikit-uplift) (1.7.3)
 Requirement already satisfied: python-dateutil&gt;=2.7 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from matplotlib-&gt;scikit-uplift) (2.8.2)
+Requirement already satisfied: pillow&gt;=6.2.0 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from matplotlib-&gt;scikit-uplift) (9.2.0)
+Requirement already satisfied: pyparsing&gt;=2.2.1 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from matplotlib-&gt;scikit-uplift) (3.0.9)
+Requirement already satisfied: packaging&gt;=20.0 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from matplotlib-&gt;scikit-uplift) (21.3)
+Requirement already satisfied: fonttools&gt;=4.22.0 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from matplotlib-&gt;scikit-uplift) (4.25.0)
+Requirement already satisfied: kiwisolver&gt;=1.0.1 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from matplotlib-&gt;scikit-uplift) (1.4.2)
+Requirement already satisfied: cycler&gt;=0.10 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from matplotlib-&gt;scikit-uplift) (0.11.0)
 Requirement already satisfied: pytz&gt;=2020.1 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from pandas-&gt;scikit-uplift) (2022.1)
-Requirement already satisfied: idna&lt;4,&gt;=2.5 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from requests-&gt;scikit-uplift) (3.3)
-Requirement already satisfied: certifi&gt;=2017.4.17 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from requests-&gt;scikit-uplift) (2022.9.24)
 Requirement already satisfied: urllib3&lt;1.27,&gt;=1.21.1 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from requests-&gt;scikit-uplift) (1.26.11)
 Requirement already satisfied: charset-normalizer&lt;3,&gt;=2 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from requests-&gt;scikit-uplift) (2.0.4)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from requests-&gt;scikit-uplift) (3.3)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from requests-&gt;scikit-uplift) (2022.9.24)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: six&gt;=1.5 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from python-dateutil&gt;=2.7-&gt;matplotlib-&gt;scikit-uplift) (1.16.0)
@@ -1172,7 +1204,7 @@ Requirement already satisfied: charset-normalizer&lt;3,&gt;=2 in /Users/alinaxu/
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">OSError</span><span class="g g-Whitespace">                                   </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_42854</span><span class="o">/</span><span class="mf">1454775972.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_54674</span><span class="o">/</span><span class="mf">1454775972.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># import related packages</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 <span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span>

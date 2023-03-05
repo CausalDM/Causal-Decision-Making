@@ -354,6 +354,20 @@ const thebe_selector_output = ".output, .cell_output"
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../5_Case_Study/MIMIC3/MIMIC3_DTR.html">
+                        CPL: 3-Stage DTR
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../5_Case_Study/MIMIC3/MIMIC3_MediationAnalysis.html">
+                        Multi-Stage Mediation Analysis
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../5_Case_Study/MovieLens/Case_Study_2.html">
                         MovieLens
                       </a>
@@ -648,6 +662,20 @@ const thebe_selector_output = ".output, .cell_output"
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../5_Case_Study/MIMIC3/MIMIC3_DTR.html">
+                        CPL: 3-Stage DTR
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../5_Case_Study/MIMIC3/MIMIC3_MediationAnalysis.html">
+                        Multi-Stage Mediation Analysis
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../5_Case_Study/MovieLens/Case_Study_2.html">
                         MovieLens
                       </a>
@@ -906,6 +934,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3-Demo.html">Mimic3 Demo</a></li>
 
 
+<li class="toctree-l1"><a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3_DTR.html">CPL: 3-Stage DTR</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3_MediationAnalysis.html">Multi-Stage Mediation Analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../5_Case_Study/MovieLens/Case_Study_2.html">MovieLens</a></li>
 </ul>
 
@@ -1130,14 +1162,14 @@ IS has been widely used in statistics, and the idea can be extended to OPE after
 <p>Since the transition and reward generation probabilities are shared  between both policies, this ratio is equal to the probability ratio of observing the <span class="math notranslate nohighlight">\(i\)</span>th trajectory until time point <span class="math notranslate nohighlight">\(t\)</span>.</p>
 <p>The standard <strong>(trajectory-wise) IS</strong> estimator <span id="id2">[<a class="reference internal" href="#id9" title="Philip S Thomas. Safe reinforcement learning. Doctoral Dissertations at University of Massachusetts Amherst, 2015.">Tho15</a>]</span>
 regards each trajectory (and the corresponding observed cumulative reward, <span class="math notranslate nohighlight">\(\sum_{t=0}^{T-1} \gamma^t R_{i,t}\)</span>) as one realization, and it estimates <span class="math notranslate nohighlight">\(\eta^{\pi}\)</span> by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-54f30a90-224b-4200-8139-ed63ff8f3d7f">
-<span class="eqno">(61)<a class="headerlink" href="#equation-54f30a90-224b-4200-8139-ed63ff8f3d7f" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:IS}
+<div class="amsmath math notranslate nohighlight" id="equation-aee792ad-69d6-44e9-8f70-c5d9ab2fd08c">
+<span class="eqno">(61)<a class="headerlink" href="#equation-aee792ad-69d6-44e9-8f70-c5d9ab2fd08c" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:IS}
     \hat{\eta}^{\pi}_{IS} = \frac{1}{n} \sum_{i=1}^n \rho^i_T (\sum_{t=0}^{T-1} \gamma^t R_{i,t}). 
 \end{align}\]</div>
 <p>In contrast, the <strong>step-wise IS</strong> <span id="id3">[<a class="reference internal" href="#id9" title="Philip S Thomas. Safe reinforcement learning. Doctoral Dissertations at University of Massachusetts Amherst, 2015.">Tho15</a>]</span>
 focuses on reweighting each immediate reward <span class="math notranslate nohighlight">\(R_{i,t}\)</span> and typically yields a lower variance than the trajectory-wise IS. It is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-151743fd-9250-47a3-9530-5e13c5189ef0">
-<span class="eqno">(62)<a class="headerlink" href="#equation-151743fd-9250-47a3-9530-5e13c5189ef0" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:stepIS}
+<div class="amsmath math notranslate nohighlight" id="equation-3cf04e33-1e02-4554-ae6f-a7e7b0d1da7e">
+<span class="eqno">(62)<a class="headerlink" href="#equation-3cf04e33-1e02-4554-ae6f-a7e7b0d1da7e" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:stepIS}
     \hat{\eta}^{\pi}_{StepIS} = \frac{1}{n} \sum_{i=1}^n \Big[ \sum_{t=0}^{T-1} \rho^i_t  \gamma^t R_{i,t} \Big]. 
 \end{align}\]</div>
 <p>In addition to these two IS-type estimators, their <strong>self-normalized variants</strong> are also commonly considered <span id="id4">[<a class="reference internal" href="#id10" title="Nan Jiang and Lihong Li. Doubly robust off-policy value evaluation for reinforcement learning. In International Conference on Machine Learning, 652–661. PMLR, 2016.">JL16</a>]</span>.
@@ -1154,8 +1186,8 @@ The key observation is that, under the stationary assumption and when the data i
 We introduce the average visitation distribution under a policy <span class="math notranslate nohighlight">\(\pi\)</span> as <span class="math notranslate nohighlight">\(d^{\pi}(s)= (1 - \gamma)^{-1} \sum_{t=0}^{+\infty} \gamma^{t} p_t^{\pi}(s)\)</span>, where <span class="math notranslate nohighlight">\(p_t^{\pi}(s)\)</span> denotes the probability of <span class="math notranslate nohighlight">\(\{S_t = s\}\)</span> following policy <span class="math notranslate nohighlight">\(\pi\)</span> with  <span class="math notranslate nohighlight">\(S_{0}\sim \mathbb{G}\)</span>.
 Define <span class="math notranslate nohighlight">\(\widetilde{\omega}^{\pi}(s) = d^{\pi}(s) / d^{b}(s)\)</span>.
 Therefore, <span class="math notranslate nohighlight">\(\widetilde{\omega}^{\pi}(s)\)</span> can be understood as a marginalized version of the importance ratio. With a similar change-of-measure trick as in IS, we can obtain the relationship that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0e6ca966-6ca7-497d-bab0-92751f50d056">
-<span class="eqno">(63)<a class="headerlink" href="#equation-0e6ca966-6ca7-497d-bab0-92751f50d056" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:breaking}
+<div class="amsmath math notranslate nohighlight" id="equation-f36a7992-1404-4b5c-bf3b-c5e65edf785f">
+<span class="eqno">(63)<a class="headerlink" href="#equation-f36a7992-1404-4b5c-bf3b-c5e65edf785f" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:breaking}
     \eta^{\pi} =  \mathbb{E}_{(s,a) \sim p_b(s, a), r \sim \mathcal{R}(\cdot; s, a)} \widetilde{\omega}^{\pi}(s) \frac{\pi(a|s)}{b(a|s)} r. 
 \end{equation}\]</div>
 <p>According to this relationship, we can construct an estimator by replacing the nuisance functions  with their estimates and then approximating the expectation by its empirical mean over <span class="math notranslate nohighlight">\(\{(S_{i,t},A_{i,t},R_{i,t},S_{i,t+1})\}\)</span>.
@@ -1179,7 +1211,7 @@ The optimization is similar to a relevant task that we will discuss in the next 
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_43019</span><span class="o">/</span><span class="mf">3779975037.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_54852</span><span class="o">/</span><span class="mf">3779975037.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
 <span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
