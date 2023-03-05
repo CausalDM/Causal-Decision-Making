@@ -191,8 +191,8 @@ const thebe_selector_output = ".output, .cell_output"
   </ul>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../2_Causal_Structure_Learning/Causal%20Mediation%20Analysis%20with%20Causal%20Discovery.html">
-   Causal Mediation Analysis with Causal Discovery
+  <a class="reference internal" href="../../2_Causal_Structure_Learning/Causal%20Mediation%20Analysis.html">
+   Causal Mediation Analysis
   </a>
  </li>
 </ul>
@@ -1122,25 +1122,25 @@ title="Print to PDF"
 <div class="section" id="generalized-random-forest">
 <h2><strong>7. Generalized Random Forest</strong><a class="headerlink" href="#generalized-random-forest" title="Permalink to this headline">#</a></h2>
 <p>Developed by Susan Athey, Julie Tibshirani and Stefan Wager, Generalized Random Forest [8] aims to give the solution to a set of local moment equations:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c67c4a55-c9be-48db-a54d-81bc5a0c0213">
-<span class="eqno">()<a class="headerlink" href="#equation-c67c4a55-c9be-48db-a54d-81bc5a0c0213" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4a2c3d1c-d297-448f-9555-114672d72763">
+<span class="eqno">()<a class="headerlink" href="#equation-4a2c3d1c-d297-448f-9555-114672d72763" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \mathbb{E}\big[\psi_{\tau(s),\nu(s)}(O_i)\big| S_i=s\big]=0,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\tau(s)\)</span> is the parameter we care about and <span class="math notranslate nohighlight">\(\nu(s)\)</span> is an optional nuisance parameter. In the problem of Heterogeneous Treatment Effect Evaluation, our parameter of interest <span class="math notranslate nohighlight">\(\tau(s)=\xi\cdot \beta(s)\)</span> is identified by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a0f6501b-92da-4842-96e7-b31043dc5818">
-<span class="eqno">()<a class="headerlink" href="#equation-a0f6501b-92da-4842-96e7-b31043dc5818" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-455e20b6-3b17-4754-a82e-3f84440b9b76">
+<span class="eqno">()<a class="headerlink" href="#equation-455e20b6-3b17-4754-a82e-3f84440b9b76" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \psi_{\beta(s),\nu(s)}(R_i,A_i)=(R_i-\beta(s)\cdot A_i-c(s))(1 \quad A_i^T)^T.
 \end{equation}\]</div>
 <p>The induced estimator <span class="math notranslate nohighlight">\(\hat{\tau}(s)\)</span> for <span class="math notranslate nohighlight">\(\tau(s)\)</span> can thus be solved by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f5a1e9dd-bd82-4701-a5eb-9b02cc5592b5">
-<span class="eqno">()<a class="headerlink" href="#equation-f5a1e9dd-bd82-4701-a5eb-9b02cc5592b5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-172967ca-1425-4df9-b625-6ddd5dd00a65">
+<span class="eqno">()<a class="headerlink" href="#equation-172967ca-1425-4df9-b625-6ddd5dd00a65" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \hat{\tau}(s)=\xi^T\left(\sum_{i=1}^n \alpha_i(s)\big(A_i-\bar{A}_\alpha\big)^{\otimes 2}\right)^{-1}\sum_{i=1}^n \alpha_i(s)\big(A_i-\bar{A}_\alpha\big)\big(R_i-\bar{R}_\alpha\big),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\bar{A}_\alpha=\sum \alpha_i(s)A_i\)</span> and <span class="math notranslate nohighlight">\(\bar{R}_\alpha=\sum \alpha_i(s)R_i\)</span>, and we write <span class="math notranslate nohighlight">\(v^{\otimes 2}=vv^T\)</span>.</p>
 <p>Notice that this formula is just a weighted version of R-learner introduced above. However, instead of using ordinary kernel weighting functions that are prone to a strong curse of dimensionality, GRF uses an adaptive weighting function <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span> derived from a forest designed to express heterogeneity in the specified quantity of interest.</p>
 <p>To be more specific, in order to obtain <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span>, GRF first grows a set of <span class="math notranslate nohighlight">\(B\)</span> trees indexed by <span class="math notranslate nohighlight">\(1,\dots,B\)</span>. Then for each such tree, define <span class="math notranslate nohighlight">\(L_b(s)\)</span> as the set of training samples falling in the same ``leaf” as x. The weights <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span> then capture the frequency with which the <span class="math notranslate nohighlight">\(i\)</span>-th training example falls into the same leaf as <span class="math notranslate nohighlight">\(s\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2b5b3b01-7713-48f4-88d5-d6d8868c363f">
-<span class="eqno">()<a class="headerlink" href="#equation-2b5b3b01-7713-48f4-88d5-d6d8868c363f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-936c77c1-eed4-4ad7-a285-44b197285912">
+<span class="eqno">()<a class="headerlink" href="#equation-936c77c1-eed4-4ad7-a285-44b197285912" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \alpha_{bi}(s)=\frac{\boldsymbol{1}\big(\{S_i\in L_b(s)\}\big)}{\big|L_b(s)\big|},\quad \alpha_i(s)=\frac{1}{B}\sum_{b=1}^B \alpha_{bi}(s).
 \end{equation}\]</div>
 <p>To sum up, GRF aims to leverage the splitting result of a series of trees to decide the ``localized” weight for HTE estimation at each point <span class="math notranslate nohighlight">\(x_0\)</span>. Compared with kernel functions, we may expect tree-based weights to be more flexible and better performed in real settings.</p>
@@ -1157,9 +1157,9 @@ title="Print to PDF"
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 5&gt;</span><span class="nt">()</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">fc935b318549</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span> 
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 <span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="ne">ModuleNotFoundError</span>: No module named &#39;causaldm&#39;
@@ -1242,7 +1242,7 @@ Successfully installed econml-0.14.0 shap-0.40.0 slicer-0.0.7 sparse-0.13.0
 <span class="kn">from</span> <span class="nn">econml.dml</span> <span class="kn">import</span> <span class="n">CausalForestDML</span>
 <span class="n">est</span> <span class="o">=</span> <span class="n">CausalForest</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;het&#39;</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">min_samples_leaf</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                     <span class="n">min_var_fraction_leaf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">min_var_leaf_on_val</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                    <span class="n">min_impurity_decrease</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">max_samples</span><span class="o">=</span><span class="mf">0.45</span><span class="p">,</span> <span class="n">min_balancedness_tol</span><span class="o">=</span><span class="mf">.45</span><span class="p">,</span>
+                    <span class="n">min_impurity_decrease</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">max_samples</span><span class="o">=</span><span class="mf">0.45</span><span class="p">,</span> <span class="n">min_balancedness_tol</span><span class="o">=.</span><span class="mi">45</span><span class="p">,</span>
                     <span class="n">warm_start</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inference</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fit_intercept</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">subforest_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
                     <span class="n">honest</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1235</span><span class="p">)</span>
 
@@ -1309,7 +1309,7 @@ true value:                  [ 1.2961 -0.4475  0.731   0.2863  0.4471 -0.1839 -3
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./3_Causal_Effect_Learning/Scenario 1"
         },
         predefinedOutput: true
