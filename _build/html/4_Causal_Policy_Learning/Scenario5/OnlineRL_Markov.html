@@ -1048,6 +1048,23 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#policy-optimization">
    Policy Optimization
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#policy-gradient">
+     Policy gradient
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#value-based-approximate-dp">
+     Value-based (Approximate DP)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#actor-critic">
+     Actor Critic
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
@@ -1087,6 +1104,23 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#policy-optimization">
    Policy Optimization
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#policy-gradient">
+     Policy gradient
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#value-based-approximate-dp">
+     Value-based (Approximate DP)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#actor-critic">
+     Actor Critic
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
@@ -1108,7 +1142,7 @@ title="Print to PDF"
 <p>This chapter focuses on the online policy learning and evaluation problem in an Markov Decision Process (MDP), which is the most well-known and typically default setup of Reinforcement Learning (RL).
 From the causal perspective, the data dependency structure is the same with that in <a class="reference internal" href="../Scenario2/preliminary_MDP-potential-outcome.html#section-ope-opo-preliminary"><span class="std std-ref">offline RL</span></a>, with the major difference in that the data collection policy is now data-dependent and the objective is sometimes shifted from finding the optimal policy to maximizing the cumulative rewards.
 As this is a vast area with a huge literature, we do not aim to repeat the disucssions hear. Instead, we will focus on connecting online RL to the other parts of this paper.
-We refer interested readers to <span id="id1">Sutton and Barto [<a class="reference internal" href="#id15" title="Richard S Sutton and Andrew G Barto. Reinforcement learning: An introduction. MIT press, 2018.">SB18</a>]</span> for more materials.</p>
+We refer interested readers to <span id="id1">Sutton and Barto [<a class="reference internal" href="#id27" title="Richard S Sutton and Andrew G Barto. Reinforcement learning: An introduction. MIT press, 2018.">SB18</a>]</span> for more materials.</p>
 <div class="section" id="model">
 <h2>Model<a class="headerlink" href="#model" title="Permalink to this headline">#</a></h2>
 <p>We first recap the infinite-horizon discounted MDP model that we introduced in <a class="reference internal" href="../Scenario2/preliminary_MDP-potential-outcome.html#section-ope-opo-preliminary"><span class="std std-ref">offline RL</span></a>.
@@ -1134,24 +1168,152 @@ The set of potential outcomes up to time <span class="math notranslate nohighlig
 </div>
 <div class="section" id="policy-evaluation">
 <h2>Policy Evaluation<a class="headerlink" href="#policy-evaluation" title="Permalink to this headline">#</a></h2>
-<ol class="simple">
-<li><p>MC</p></li>
-<li><p>TD</p></li>
-<li><p>SAVE</p></li>
-</ol>
+<p>To either purely evaluate a policy or improve over it, we need to understand its performance (ideally at every state-action tuple), which corresponds to the policy value function estimation and evaluation problem.
+We introduce two main appraoches in the section.</p>
+<p><strong>Monte Carlo (MC).</strong> In an online environment, the most straightforward approach is to just sample trajectories and use the average observed cumulative reward from sub-trajectories that satisfy our conditions as the estimator.
+Due to the sampling nature, this approach is typically referred to as Monte Carlo <span id="id2">[<a class="reference internal" href="#id39" title="Satinder P Singh and Richard S Sutton. Reinforcement learning with replacing eligibility traces. Machine learning, 22(1-3):123–158, 1996.">SS96</a>]</span>.
+For example, to estimate the value <span class="math notranslate nohighlight">\(V^{\pi}(s)\)</span> for a given state <span class="math notranslate nohighlight">\(s\)</span>, we can sample <span class="math notranslate nohighlight">\(N\)</span> trajectories following <span class="math notranslate nohighlight">\(\pi\)</span>, then find time points where we visit state <span class="math notranslate nohighlight">\(s\)</span>, and finally use the returns from then on to construct an average as our value estimate.</p>
+<p><strong>Temporal-Difference (TD) Learning.</strong>
+One limitation of MC is that one has to wait until the end of a trajectory to collect a data point, which makes it less online and incremental.
+An alternative is to leverage the Bellman equation and the dynamic optimization structure, as we have utilized in <a class="reference internal" href="../Scenario2/FQE.html#section-fqe"><span class="std std-ref">Paradigm 2</span></a>.
+The is known as the Temporal-Difference (TD) Learning <span id="id3">[<a class="reference internal" href="#id38" title="Richard S Sutton. Learning to predict by the methods of temporal differences. Machine learning, 3:9–44, 1988.">Sut88</a>]</span>.
+The name is from the fact that it involves the estimate at time point <span class="math notranslate nohighlight">\(t\)</span> and $t+1).
+We first recall the Bellman equation:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-f1bd67a2-1a39-4ce3-8319-02d4b440a08a">
+<span class="eqno">(129)<a class="headerlink" href="#equation-f1bd67a2-1a39-4ce3-8319-02d4b440a08a" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
+    Q^\pi(a, s) = \mathbb{E}^\pi \Big(R_t + \gamma Q^\pi(A_{t + 1}, S_{t+1})  | A_t = a, S_t = s \Big). 
+\end{equation}\]</div>
+<p>Therefore, suppose we currently have an Q-function estimate <span class="math notranslate nohighlight">\(\hat{Q}^{\pi}\)</span>.
+Then, after collecting a trasition tuple <span class="math notranslate nohighlight">\((s, a, r, s')\)</span>, we can then update the estimate of <span class="math notranslate nohighlight">\(\hat{Q}^{\pi}(s, a)\)</span> as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-c22dc095-6c3a-4b90-972c-1138f997e290">
+<span class="eqno">(130)<a class="headerlink" href="#equation-c22dc095-6c3a-4b90-972c-1138f997e290" title="Permalink to this equation">#</a></span>\[\begin{equation}
+    \hat{Q}^\pi(a, s) + \alpha \Big[r + \gamma \hat{Q}^\pi(\pi(s'), s')  - \hat{Q}^\pi(a, s) \Big], 
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is a learning rate.</p>
+<p><strong>Statistical inference.</strong> As discussed in [Paradigm 4](section:Direct Online Policy Evaluator), statistical inference with adaptively collected data is challenging.
+To address that issue, <span id="id4">Shi <em>et al.</em> [<a class="reference internal" href="#id33" title="Chengchun Shi, Sheng Zhang, Wenbin Lu, and Rui Song. Statistical inference of the value function for reinforcement learning in infinite horizon settings. arXiv preprint arXiv:2001.04515, 2020.">SZLS20</a>]</span> leverages a carefully designed data splitting schema to provide valid asymptotic distribution (and hence the confidence interval).</p>
 </div>
 <div class="section" id="policy-optimization">
 <h2>Policy Optimization<a class="headerlink" href="#policy-optimization" title="Permalink to this headline">#</a></h2>
-<ol class="simple">
-<li><p>DQN</p></li>
-</ol>
+<p>The online policy optimization problem with MDP is the most well-known RL problem.
+There are three major approaches: policy-based (policy gradient), value-based (approximate DP), and actor critic.
+We will focus on illustrate their main idea and connection to other topics in the book.</p>
+<div class="section" id="policy-gradient">
+<h3>Policy gradient<a class="headerlink" href="#policy-gradient" title="Permalink to this headline">#</a></h3>
+<p>The policy-based algorithms (e.g., REINFORCE <span id="id5"></span>, TRPO <span id="id6">Schulman <em>et al.</em> [<a class="reference internal" href="#id42" title="John Schulman, Sergey Levine, Pieter Abbeel, Michael Jordan, and Philipp Moritz. Trust region policy optimization. In International conference on machine learning, 1889–1897. PMLR, 2015.">SLA+15</a>]</span>, PPO <span id="id7">Schulman <em>et al.</em> [<a class="reference internal" href="#id43" title="John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov. Proximal policy optimization algorithms. arXiv preprint arXiv:1707.06347, 2017.">SWD+17</a>]</span>) directly learn a policy function <span class="math notranslate nohighlight">\(\pi\)</span> by applying gradient descent to optimize its value.
+In its simplist form, the value estimation is obtained via MC, i.e., sampling trajectories following a policy.
+However, the gradient descient is not straightforward, as it requires the value estimation of any policies around the current one to compute the gradient, which is not feasible.
+Fortunately, we have the following <em>policy gradient theorem</em>.</p>
+<div class="amsmath math notranslate nohighlight" id="equation-9e411c45-a85f-4d4e-a8f4-08a969cbd9c9">
+<span class="eqno">(131)<a class="headerlink" href="#equation-9e411c45-a85f-4d4e-a8f4-08a969cbd9c9" title="Permalink to this equation">#</a></span>\[\begin{align}
+\bigtriangledown_{\theta}\, J(\theta)
+&amp;= 
+\mathbb{E}_{\tau \sim \pi(\cdot;\theta)}
+\big\{
+G(\tau) \times
+\big[
+\sum_{t=0}^T 
+\bigtriangledown_{\theta}\, 
+\log \pi(A_t| S_t; \theta)
+\big]
+\big\}, 
+\label{eqn:REINFORCE}
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\tau\)</span> represents a trajectory and <span class="math notranslate nohighlight">\(\theta\)</span> parameterizes the policy.</p>
+</div>
+<div class="section" id="value-based-approximate-dp">
+<h3>Value-based (Approximate DP)<a class="headerlink" href="#value-based-approximate-dp" title="Permalink to this headline">#</a></h3>
+<p>The second appraoch is closely related to the Q-function-based appraoch discussed in Paradigm 1 and 2, and in particular, the <a class="reference internal" href="../Scenario2/FQI.html#section-fqi"><span class="std std-ref">FQI</span></a> algorithm.</p>
+<p>Recall the Bellman optimality equations: <span class="math notranslate nohighlight">\(Q^*\)</span> is the unique solution of</p>
+<div class="amsmath math notranslate nohighlight" id="equation-8df2ee51-1307-4755-a37b-bb55c0c0f1d0">
+<span class="eqno">(132)<a class="headerlink" href="#equation-8df2ee51-1307-4755-a37b-bb55c0c0f1d0" title="Permalink to this equation">#</a></span>\[\begin{equation}
+    Q(a, s) = \mathbb{E} \Big(R_t + \gamma \arg \max_{a'} Q(a, S_{t+1})  | A_t = a, S_t = s \Big).  \;\;\;\;\; \text{(1)}. 
+\end{equation}\]</div>
+<p>Since the right-hand side of (1) is a contraction mapping on <span class="math notranslate nohighlight">\(Q\)</span> and its fixed point is <span class="math notranslate nohighlight">\(Q^*\)</span>, we can iteratively solve the following problem to update the estimation of <span class="math notranslate nohighlight">\(Q^*\)</span>:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-bd68f0ca-725b-413a-bc88-57fd96933410">
+<span class="eqno">(133)<a class="headerlink" href="#equation-bd68f0ca-725b-413a-bc88-57fd96933410" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+	\widehat{Q}^{{\ell}}=\arg \min_{Q} 
+	\sum_{(s,a,r,s') \sim D}
+	\Big\{
+	\gamma \max_{a'} \widehat{Q}^{\ell-1}(a', s') 
+    +r- Q(a, s)
+\Big\}^2.  \;\;\;\;\; \text{(2)}. 
+\end{eqnarray}\]</div>
+<p>One major difference lies in how the optimization above is done.
+In the offline setting (e.g., <a class="reference internal" href="../Scenario2/FQI.html#section-fqi"><span class="std std-ref">FQI</span></a>), <span class="math notranslate nohighlight">\(D\)</span> is the fixed batch dataset and the optimization is solved fully.
+In the original online Q-learning <span id="id8">[]</span> algorithm, we only run one gradient descent step in the optimization.
+There are many variants to improve this idea in different practical ways.
+Besides, a unique feature of the online setting is the ability to collect new data (i.e., exploration), and how to efficiently explore is another new problem compared with the offline setup.
+For example, DQN <span id="id9">[<a class="reference internal" href="#id40" title="Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A Rusu, Joel Veness, Marc G Bellemare, Alex Graves, Martin Riedmiller, Andreas K Fidjeland, Georg Ostrovski, and others. Human-level control through deep reinforcement learning. Nature, 518(7540):529–533, 2015.">MKS+15</a>]</span> maintains a replay buffer and apply epsilon-greedy for exploration, and Double DQN <span id="id10">[<a class="reference internal" href="#id41" title="Hado Van Hasselt, Arthur Guez, and David Silver. Deep reinforcement learning with double q-learning. In Proceedings of the AAAI conference on artificial intelligence, volume 30. 2016.">VHGS16</a>]</span>) uses two different Q-estimators in the RHS of (2) to solve the over estimation issue.</p>
+</div>
+<div class="section" id="actor-critic">
+<h3>Actor Critic<a class="headerlink" href="#actor-critic" title="Permalink to this headline">#</a></h3>
+<p>One limitation of the policy gradient approach is the efficiency, since it is heavy to sample new trajectories from scratch to evaluate the current policy and hence has high variance.
+A natural idea is:
+if we have a value estimator, then it can be used for policy evaluation as well.
+Such a motivation is well grounded by the following relationship (there are more extensions):</p>
+<div class="amsmath math notranslate nohighlight" id="equation-082a53d2-76c1-4295-8745-bb2494795bf8">
+<span class="eqno">(134)<a class="headerlink" href="#equation-082a53d2-76c1-4295-8745-bb2494795bf8" title="Permalink to this equation">#</a></span>\[\begin{align}
+\bigtriangledown_{\theta}\, J(\theta)
+&amp;= 
+\mathbb{E}_{\tau \sim \pi(\cdot;\theta)}
+\big\{
+G(\tau) \times
+\big[
+\sum_{t=0}^T 
+\bigtriangledown_{\theta}\, 
+\log \pi(A_t| S_t; \theta)
+\big]
+\big\}\\
+&amp;= 
+\mathbb{E}_{\tau \sim \pi(\cdot;\theta)}
+\big\{
+\sum_{t=0}^T 
+Q_t^{\theta}(S_t, A_t)
+\bigtriangledown_{\theta}\,
+\log \pi(A_t| S_t; \theta)
+% Q_0^{\theta}(s,a) \bigtriangledown_{\theta}\, \pi_\theta(s)
+\big\}. 
+\end{align}\]</div>
+<p>Therefore, an actor-critic maintains both a policy function estimator (the actor) to select actions, and an value function estimator (the critic) that evaluates the current policy and guides the direction to apply gradient descent.
+It hences combines the idea of the first two approaches in this section to improve effiicency.
+From the other direction, it shares similar ideas with the direct policy search appraoch that we disucssed in Paradigm 1.
+Popular actor-critic algorithms include A2C <span id="id11">Mnih <em>et al.</em> [<a class="reference internal" href="#id44" title="Volodymyr Mnih, Adria Puigdomenech Badia, Mehdi Mirza, Alex Graves, Timothy Lillicrap, Tim Harley, David Silver, and Koray Kavukcuoglu. Asynchronous methods for deep reinforcement learning. In International conference on machine learning, 1928–1937. PMLR, 2016.">MBM+16</a>]</span>, SAC <span id="id12">Haarnoja <em>et al.</em> [<a class="reference internal" href="#id45" title="Tuomas Haarnoja, Aurick Zhou, Pieter Abbeel, and Sergey Levine. Soft actor-critic: off-policy maximum entropy deep reinforcement learning with a stochastic actor. In International conference on machine learning, 1861–1870. PMLR, 2018.">HZAL18</a>]</span>, A3C <span id="id13">Mnih <em>et al.</em> [<a class="reference internal" href="#id44" title="Volodymyr Mnih, Adria Puigdomenech Badia, Mehdi Mirza, Alex Graves, Timothy Lillicrap, Tim Harley, David Silver, and Koray Kavukcuoglu. Asynchronous methods for deep reinforcement learning. In International conference on machine learning, 1928–1937. PMLR, 2016.">MBM+16</a>]</span>)</p>
+</div>
 </div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
-<div class="docutils container" id="id2">
+<div class="docutils container" id="id14">
 <dl class="citation">
-<dt class="label" id="id15"><span class="brackets"><a class="fn-backref" href="#id1">SB18</a></span></dt>
+<dt class="label" id="id45"><span class="brackets"><a class="fn-backref" href="#id12">HZAL18</a></span></dt>
+<dd><p>Tuomas Haarnoja, Aurick Zhou, Pieter Abbeel, and Sergey Levine. Soft actor-critic: off-policy maximum entropy deep reinforcement learning with a stochastic actor. In <em>International conference on machine learning</em>, 1861–1870. PMLR, 2018.</p>
+</dd>
+<dt class="label" id="id44"><span class="brackets">MBM+16</span><span class="fn-backref">(<a href="#id11">1</a>,<a href="#id13">2</a>)</span></dt>
+<dd><p>Volodymyr Mnih, Adria Puigdomenech Badia, Mehdi Mirza, Alex Graves, Timothy Lillicrap, Tim Harley, David Silver, and Koray Kavukcuoglu. Asynchronous methods for deep reinforcement learning. In <em>International conference on machine learning</em>, 1928–1937. PMLR, 2016.</p>
+</dd>
+<dt class="label" id="id40"><span class="brackets"><a class="fn-backref" href="#id9">MKS+15</a></span></dt>
+<dd><p>Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A Rusu, Joel Veness, Marc G Bellemare, Alex Graves, Martin Riedmiller, Andreas K Fidjeland, Georg Ostrovski, and others. Human-level control through deep reinforcement learning. <em>Nature</em>, 518(7540):529–533, 2015.</p>
+</dd>
+<dt class="label" id="id42"><span class="brackets"><a class="fn-backref" href="#id6">SLA+15</a></span></dt>
+<dd><p>John Schulman, Sergey Levine, Pieter Abbeel, Michael Jordan, and Philipp Moritz. Trust region policy optimization. In <em>International conference on machine learning</em>, 1889–1897. PMLR, 2015.</p>
+</dd>
+<dt class="label" id="id43"><span class="brackets"><a class="fn-backref" href="#id7">SWD+17</a></span></dt>
+<dd><p>John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov. Proximal policy optimization algorithms. <em>arXiv preprint arXiv:1707.06347</em>, 2017.</p>
+</dd>
+<dt class="label" id="id33"><span class="brackets"><a class="fn-backref" href="#id4">SZLS20</a></span></dt>
+<dd><p>Chengchun Shi, Sheng Zhang, Wenbin Lu, and Rui Song. Statistical inference of the value function for reinforcement learning in infinite horizon settings. <em>arXiv preprint arXiv:2001.04515</em>, 2020.</p>
+</dd>
+<dt class="label" id="id39"><span class="brackets"><a class="fn-backref" href="#id2">SS96</a></span></dt>
+<dd><p>Satinder P Singh and Richard S Sutton. Reinforcement learning with replacing eligibility traces. <em>Machine learning</em>, 22(1-3):123–158, 1996.</p>
+</dd>
+<dt class="label" id="id38"><span class="brackets"><a class="fn-backref" href="#id3">Sut88</a></span></dt>
+<dd><p>Richard S Sutton. Learning to predict by the methods of temporal differences. <em>Machine learning</em>, 3:9–44, 1988.</p>
+</dd>
+<dt class="label" id="id27"><span class="brackets"><a class="fn-backref" href="#id1">SB18</a></span></dt>
 <dd><p>Richard S Sutton and Andrew G Barto. <em>Reinforcement learning: An introduction</em>. MIT press, 2018.</p>
+</dd>
+<dt class="label" id="id41"><span class="brackets"><a class="fn-backref" href="#id10">VHGS16</a></span></dt>
+<dd><p>Hado Van Hasselt, Arthur Guez, and David Silver. Deep reinforcement learning with double q-learning. In <em>Proceedings of the AAAI conference on artificial intelligence</em>, volume 30. 2016.</p>
 </dd>
 </dl>
 </div>

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# (section:Direct Online Policy Evaluator)=
 # # Direct Online Policy Evaluator
 # 
 # Evaluating the performance of an ongoing policy plays a vital role in many areas such as medicine and economics, to provide crucial instruction on the early-stop of the online experiment and timely feedback from the environment. Policy evaluation in online learning thus attracts increasing attention by inferring the mean outcome
