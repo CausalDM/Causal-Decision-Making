@@ -1,56 +1,47 @@
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Causal Inference 101 &#8212; Causal Decision Making</title>
-  
-  
-  
-  <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
-  </script>
-  
+    
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
-<link href="../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
-  
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
-  
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
@@ -60,688 +51,59 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '1_Preliminary/(old) Causal Inference 101';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="docsearch:language" content="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
   </head>
-  
-  
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
 
-  
-  
-  <a class="skip-link" href="#main-content">Skip to main content</a>
-
-  
-  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
-  <label class="overlay overlay-primary" for="__primary"></label>
-
-  
-  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
-  <label class="overlay overlay-secondary" for="__secondary"></label>
-
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
-      
-<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
-  <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-    </div>
-  </div>
-
-  
-  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
-  <label class="sidebar-toggle primary-toggle" for="__primary">
-      <span class="fa-solid fa-bars"></span>
-  </label>
-  <div id="navbar-start">
     
+    <div class="container-fluid" id="banner"></div>
+
     
-  
 
-
-<a class="navbar-brand logo" href="../Overview.html">
-
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image">
-    <img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image">
-  
-  
-</a>
-    
-  </div>
-
-  
-  <div class="col-lg-9 navbar-header-items">
-    <div id="navbar-center" class="mr-auto">
-      
-      <div class="navbar-center-item">
-        <nav class="navbar-nav">
-    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
-        Site Navigation
-    </p>
-    <ul id="navbar-main-elements" class="navbar-nav">
-        
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../0_Motivating_Examples/CSL.html">
-                        Causal Structure Learning (CSL)
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../0_Motivating_Examples/CEL.html">
-                        Causal Effect Learning (CEL)
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../0_Motivating_Examples/CPL.html">
-                        Causal Policy Learning (CPL)
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="Causal%20Inference%20Preliminary.html">
-                        Causal Inference Preliminary
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../2_Causal_Structure_Learning/Preliminaries%20of%20Causal%20Graphs.html">
-                        Preliminaries of Causal Graphs
-                      </a>
-                    </li>
-                
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../2_Causal_Structure_Learning/Causal%20Discovery.html">
-                        Causal Discovery
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../2_Causal_Structure_Learning/Causal%20Mediation%20Analysis%20with%20Causal%20Discovery.html">
-                        Causal Mediation Analysis with Causal Discovery
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../3_Causal_Effect_Learning/Scenario%201/Single%20Stage.html">
-                        Single Stage
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../3_Causal_Effect_Learning/Scenario%202/underMDP.html">
-                        Markov Decision Processes
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../3_Causal_Effect_Learning/Scenario%203/Panel%20Data.html">
-                        Panel Data
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario1/Single%20Stage.html">
-                        Single Stage
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario1/Discrete.html">
-                        Discrete Action Space
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario1/Continuous.html">
-                        Continuous Action Space
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario1/PlanToDo.html">
-                        Plan To Do
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario2/preliminary_MDP-potential-outcome.html">
-                        Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario2/Evaluation.html">
-                        Policy Evaluation
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario2/Optimization.html">
-                        Policy Optimization
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario3/Multi%20Stage.html">
-                        Multiple Stages (DTR)
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario3/Q-learning_Multiple.html">
-                        Q-Learning (Multiple Stages)
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario3/A-learning_Multiple.html">
-                        A-Learning (Multiple Stages)
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario3/MediatedQ-learning_Multiple.html">
-                        MediatedQ-Learning (Multiple Stages)
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/Bandits.html">
-                        Overview: Bandits ALgorithm
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/MAB/MAB.html">
-                        Multi-Armed Bandits (MAB)
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/Contextual_Bandits.html">
-                        Contextual Bandits
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/Meta_Bandits.html">
-                        Meta Bandits
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Structured_Bandit.html">
-                        Structured Bandit (Slate Recommendation)
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/OnlineEval/Online%20Policy%20Evaluation.html">
-                        Online Policy Evaluation
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario5/OnlineRL_Markov.html">
-                        Ooline Policy Learning and Evaluation in Markovian Environments
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario6/OnlineRL_non_Markov.html">
-                        Ooline Policy Learning in Non-Markov Environments
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../5_Case_Study/MIMIC3/MIMIC3-Demo.html">
-                        Mimic3 Demo
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../5_Case_Study/MIMIC3/MIMIC3_DTR.html">
-                        CPL: 3-Stage DTR
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../5_Case_Study/MIMIC3/MIMIC3_MediationAnalysis.html">
-                        Multi-Stage Mediation Analysis
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../5_Case_Study/MovieLens/Case_Study_2.html">
-                        MovieLens
-                      </a>
-                    </li>
-                
-                </div>
-            </div>
-            
-    </ul>
-</nav>
-      </div>
-      
-    </div>
-
-    <div id="navbar-end">
-      
-        <div class="navbar-end-item navbar-persistent--container">
+    <div class="container-xl">
+      <div class="row">
           
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
-  <i class="fa-solid fa-magnifying-glass"></i>
-</button>
-        </div>
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
       
-      
-      <div class="navbar-end-item">
-        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
-</button>
-      </div>
-      
-      <div class="navbar-end-item">
-        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
-      </ul>
-      </div>
-      
-    </div>
-  </div>
-
-
-  
-  
-    <div class="navbar-persistent--mobile">
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
-  <i class="fa-solid fa-magnifying-glass"></i>
-</button>
-    </div>
-  
-
-  
-  <label class="sidebar-toggle secondary-toggle" for="__secondary">
-      <span class="fa-solid fa-outdent"></span>
-  </label>
-  
-
-</div>
-  </nav>
-  
-
-  <div class="bd-container">
-    <div class="bd-container__inner bd-page-width">
-      
-      <div class="bd-sidebar-primary bd-sidebar">
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
         
-  
-  <div class="sidebar-header-items sidebar-primary__section">
-    
-    
-      <div class="sidebar-header-items__center">
       
-      <div class="navbar-center-item">
-        <nav class="navbar-nav">
-    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
-        Site Navigation
-    </p>
-    <ul id="navbar-main-elements" class="navbar-nav">
-        
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../0_Motivating_Examples/CSL.html">
-                        Causal Structure Learning (CSL)
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../0_Motivating_Examples/CEL.html">
-                        Causal Effect Learning (CEL)
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../0_Motivating_Examples/CPL.html">
-                        Causal Policy Learning (CPL)
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="Causal%20Inference%20Preliminary.html">
-                        Causal Inference Preliminary
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../2_Causal_Structure_Learning/Preliminaries%20of%20Causal%20Graphs.html">
-                        Preliminaries of Causal Graphs
-                      </a>
-                    </li>
-                
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    More
-                </button>
-                <div class="dropdown-menu">
-                    
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../2_Causal_Structure_Learning/Causal%20Discovery.html">
-                        Causal Discovery
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../2_Causal_Structure_Learning/Causal%20Mediation%20Analysis%20with%20Causal%20Discovery.html">
-                        Causal Mediation Analysis with Causal Discovery
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../3_Causal_Effect_Learning/Scenario%201/Single%20Stage.html">
-                        Single Stage
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../3_Causal_Effect_Learning/Scenario%202/underMDP.html">
-                        Markov Decision Processes
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../3_Causal_Effect_Learning/Scenario%203/Panel%20Data.html">
-                        Panel Data
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario1/Single%20Stage.html">
-                        Single Stage
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario1/Discrete.html">
-                        Discrete Action Space
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario1/Continuous.html">
-                        Continuous Action Space
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario1/PlanToDo.html">
-                        Plan To Do
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario2/preliminary_MDP-potential-outcome.html">
-                        Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario2/Evaluation.html">
-                        Policy Evaluation
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario2/Optimization.html">
-                        Policy Optimization
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario3/Multi%20Stage.html">
-                        Multiple Stages (DTR)
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario3/Q-learning_Multiple.html">
-                        Q-Learning (Multiple Stages)
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario3/A-learning_Multiple.html">
-                        A-Learning (Multiple Stages)
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario3/MediatedQ-learning_Multiple.html">
-                        MediatedQ-Learning (Multiple Stages)
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/Bandits.html">
-                        Overview: Bandits ALgorithm
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/MAB/MAB.html">
-                        Multi-Armed Bandits (MAB)
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/Contextual_Bandits.html">
-                        Contextual Bandits
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/Meta_Bandits.html">
-                        Meta Bandits
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Structured_Bandit.html">
-                        Structured Bandit (Slate Recommendation)
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/OnlineEval/Online%20Policy%20Evaluation.html">
-                        Online Policy Evaluation
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario5/OnlineRL_Markov.html">
-                        Ooline Policy Learning and Evaluation in Markovian Environments
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario6/OnlineRL_non_Markov.html">
-                        Ooline Policy Learning in Non-Markov Environments
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../5_Case_Study/MIMIC3/MIMIC3-Demo.html">
-                        Mimic3 Demo
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../5_Case_Study/MIMIC3/MIMIC3_DTR.html">
-                        CPL: 3-Stage DTR
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../5_Case_Study/MIMIC3/MIMIC3_MediationAnalysis.html">
-                        Multi-Stage Mediation Analysis
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../5_Case_Study/MovieLens/Case_Study_2.html">
-                        MovieLens
-                      </a>
-                    </li>
-                
-                </div>
-            </div>
-            
-    </ul>
-</nav>
-      </div>
       
-      </div>
-    
-
-    
-    
-    <div class="sidebar-header-items__end">
+      <img src="../_static/logo.png" class="logo" alt="logo">
       
-      <div class="navbar-end-item">
-        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
-</button>
-      </div>
       
-      <div class="navbar-end-item">
-        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
-      </ul>
-      </div>
+      <h1 class="site-logo" id="site-title">Causal Decision Making</h1>
       
-    </div>
-    
-  </div>
-
-  
-  <div class="sidebar-start-items sidebar-primary__section">
-    <div class="sidebar-start-items__item">
-  
-
-
-<a class="navbar-brand logo" href="../Overview.html">
-
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image">
-    <img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image">
-  
-  
-</a>
-    </div>
-    <div class="sidebar-start-items__item">
-<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
-  <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-    </div>
-    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item navbar-nav active">
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
@@ -750,356 +112,926 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Motivating Examples</span></p>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Motivating Examples
+ </span>
+</p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../0_Motivating_Examples/CSL.html"><em>Causal Structure Learning (CSL)</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../0_Motivating_Examples/CEL.html"><em>Causal Effect Learning (CEL)</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../0_Motivating_Examples/CPL.html"><em>Causal Policy Learning (CPL)</em></a></li>
-
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_Motivating_Examples/CSL.html">
+   <em>
+    Causal Structure Learning (CSL)
+   </em>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_Motivating_Examples/CEL.html">
+   <em>
+    Causal Effect Learning (CEL)
+   </em>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_Motivating_Examples/CPL.html">
+   <em>
+    Causal Policy Learning (CPL)
+   </em>
+  </a>
+ </li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminary</span></p>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Preliminary
+ </span>
+</p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Causal%20Inference%20Preliminary.html">Causal Inference Preliminary</a></li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Causal%20Inference%20Preliminary.html">
+   Causal Inference Preliminary
+  </a>
+ </li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Structure Learning (CSL)</span></p>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Structure Learning (CSL)
+ </span>
+</p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../2_Causal_Structure_Learning/Preliminaries%20of%20Causal%20Graphs.html">Preliminaries of Causal Graphs</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../2_Causal_Structure_Learning/Causal%20Discovery.html">Causal Discovery</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../2_Causal_Structure_Learning/Testing-based%20Learner.html">Testing-based Learner</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../2_Causal_Structure_Learning/Functional-based%20Learner.html">Functional-based Learner</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../2_Causal_Structure_Learning/Score-based%20Learner.html">Score-based Learner</a></li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2_Causal_Structure_Learning/Preliminaries%20of%20Causal%20Graphs.html">
+   Preliminaries of Causal Graphs
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../2_Causal_Structure_Learning/Causal%20Discovery.html">
+   Causal Discovery
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_Causal_Structure_Learning/Testing-based%20Learner.html">
+     Testing-based Learner
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_Causal_Structure_Learning/Functional-based%20Learner.html">
+     Functional-based Learner
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_Causal_Structure_Learning/Score-based%20Learner.html">
+     Score-based Learner
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2_Causal_Structure_Learning/Causal%20Mediation%20Analysis.html">
+   Causal Mediation Analysis
+  </a>
+ </li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../2_Causal_Structure_Learning/Causal%20Mediation%20Analysis%20with%20Causal%20Discovery.html">Causal Mediation Analysis with Causal Discovery</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Effect Learning (CEL)</span></p>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Effect Learning (CEL)
+ </span>
+</p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/Single%20Stage.html"><strong>Single Stage</strong></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/ATE.html">ATE Estimation</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/HTE.html">HTE Estimation</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/S-learner.html"><strong>1. S-learner</strong></a></li>
-
-
-<li class="toctree-l3"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/T-learner.html"><strong>2. T-learner</strong></a></li>
-
-
-<li class="toctree-l3"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/X-learner.html"><strong>3. X-learner</strong></a></li>
-
-
-<li class="toctree-l3"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/R-Learner.html"><strong>4. R learner</strong></a></li>
-
-<li class="toctree-l3"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/DR-Learner.html"><strong>5. DR-learner</strong></a></li>
-
-<li class="toctree-l3"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/Lp-R-Learner.html"><strong>6. Lp-R-learner</strong></a></li>
-
-<li class="toctree-l3"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/GRF.html"><strong>7. Generalized Random Forest</strong></a></li>
-
-<li class="toctree-l3"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/Dragonnet.html"><strong>8. Dragon Net</strong></a></li>
-
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/Single%20Stage.html">
+   <strong>
+    Single Stage
+   </strong>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/ATE.html">
+     ATE Estimation
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/HTE.html">
+     HTE Estimation
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/S-learner.html">
+       <strong>
+        1. S-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/T-learner.html">
+       <strong>
+        2. T-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/X-learner.html">
+       <strong>
+        3. X-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/R-Learner.html">
+       <strong>
+        4. R learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/DR-Learner.html">
+       <strong>
+        5. DR-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/Lp-R-Learner.html">
+       <strong>
+        6. Lp-R-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/GRF.html">
+       <strong>
+        7. Generalized Random Forest
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/Dragonnet.html">
+       <strong>
+        8. Dragon Net
+       </strong>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%202/underMDP.html">
+   Markov Decision Processes
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/Panel%20Data.html">
+   Panel Data
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/ATE.html">
+     ATE
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/Synthetic%20Control.html">
+       <strong>
+        Synthetic Control
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/Synthetic%20Learner.html">
+       <strong>
+        Synthetic Learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/Synthetic%20DiD.html">
+       <strong>
+        Synthetic DiD
+       </strong>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/HTE.html">
+     HTE
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/DiD.html">
+       <strong>
+        Difference in Difference
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/R-DiD.html">
+       <strong>
+        R-DiD
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/Synthetic%20X-Learner.html">
+       <strong>
+        Synthetic X-Learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/H1SL_H2SL.html">
+       <strong>
+        H1SL and H2SL
+       </strong>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
 </ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%202/underMDP.html">Markov Decision Processes</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/Panel%20Data.html">Panel Data</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/ATE.html">ATE</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/Synthetic%20Control.html"><strong>Synthetic Control</strong></a></li>
-
-<li class="toctree-l3"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/Synthetic%20Learner.html"><strong>Synthetic Learner</strong></a></li>
-
-<li class="toctree-l3"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/Synthetic%20DiD.html"><strong>Synthetic DiD</strong></a></li>
-
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/HTE.html">HTE</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/DiD.html"><strong>Difference in Difference</strong></a></li>
-
-<li class="toctree-l3"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/R-DiD.html"><strong>R-DiD</strong></a></li>
-
-<li class="toctree-l3"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/Synthetic%20X-Learner.html"><strong>Synthetic X-Learner</strong></a></li>
-
-<li class="toctree-l3"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/H1SL_H2SL.html"><strong>H1SL and H2SL</strong></a></li>
-
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 1</span></p>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Paradigm 1
+ </span>
+</p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Single%20Stage.html">Single Stage</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Discrete.html">Discrete Action Space</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Q-learning_Single.html">Q-Learning (Single Stage)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/A-learning_Single.html">A-Learning (Single Stage)</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Classification.html">Reduction to Classification Problems</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Classification/O-Learning.html">Outcome Weighted Learning</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Classification/E-learning.html">Entropy learning</a></li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Single%20Stage.html">
+   Single Stage
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Discrete.html">
+   Discrete Action Space
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Q-learning_Single.html">
+     Q-Learning (Single Stage)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/A-learning_Single.html">
+     A-Learning (Single Stage)
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Classification.html">
+     Reduction to Classification Problems
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+    <label for="toctree-checkbox-8">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Classification/O-Learning.html">
+       Outcome Weighted Learning
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Classification/E-learning.html">
+       Entropy learning
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Quantile/QuantileOTR_test.html">
+     <strong>
+      Quantile Optimal Treatment Regime
+     </strong>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Continuous.html">
+   Continuous Action Space
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Continuous/Deep%20Jump%20Learner.html">
+     Deep Jump Learner for Continuous Actions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Continuous/Kernel-Based%20Learner.html">
+     Kernel-Based Learner
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Continuous/Outcome%20Learning.html">
+     Outcome Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/PlanToDo.html">
+   Plan To Do
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="simple">
+  </ul>
+ </li>
 </ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Quantile/QuantileOTR_test.html"><strong>Quantile Optimal Treatment Regime</strong></a></li>
-
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Continuous.html">Continuous Action Space</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Continuous/Deep%20Jump%20Learner.html">Deep Jump Learner for Continuous Actions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Continuous/Kernel-Based%20Learner.html">Kernel-Based Learner</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Continuous/Outcome%20Learning.html">Outcome Learning</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/PlanToDo.html">Plan To Do</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul class="simple">
-</ul>
-</li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 2</span></p>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Paradigm 2
+ </span>
+</p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/preliminary_MDP-potential-outcome.html">Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/Evaluation.html">Policy Evaluation</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/FQE.html">Fitted-Q Evaluation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/IPW_Infinite.html">Importance Sampling for Policy Evaluation (Infinite Horizon)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/DR_Infinite.html">Doubly Robust Estimator for Policy Evaluation (Infinite Horizon)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/Deeply_Debiased.html">Deeply-Debiased Off-Policy Evaluation</a></li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/preliminary_MDP-potential-outcome.html">
+   Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/Evaluation.html">
+   Policy Evaluation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/FQE.html">
+     Fitted-Q Evaluation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/IPW_Infinite.html">
+     Importance Sampling for Policy Evaluation (Infinite Horizon)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/DR_Infinite.html">
+     Doubly Robust Estimator for Policy Evaluation (Infinite Horizon)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/Deeply_Debiased.html">
+     Deeply-Debiased Off-Policy Evaluation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/Optimization.html">
+   Policy Optimization
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+  <label for="toctree-checkbox-12">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/FQI.html">
+     Fitted-Q Iteration
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/Optimization.html">Policy Optimization</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/FQI.html">Fitted-Q Iteration</a></li>
-</ul>
-</li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 3</span></p>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Paradigm 3
+ </span>
+</p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario3/Multi%20Stage.html">Multiple Stages (DTR)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario3/Q-learning_Multiple.html">Q-Learning (Multiple Stages)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario3/A-learning_Multiple.html">A-Learning (Multiple Stages)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario3/MediatedQ-learning_Multiple.html">MediatedQ-Learning (Multiple Stages)</a></li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario3/Multi%20Stage.html">
+   Multiple Stages (DTR)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario3/Q-learning_Multiple.html">
+   Q-Learning (Multiple Stages)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario3/A-learning_Multiple.html">
+   A-Learning (Multiple Stages)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario3/MediatedQ-learning_Multiple.html">
+   MediatedQ-Learning (Multiple Stages)
+  </a>
+ </li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 4</span></p>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Paradigm 4
+ </span>
+</p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Bandits.html">Overview: Bandits ALgorithm</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/MAB/MAB.html">Multi-Armed Bandits (MAB)</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/MAB/Epsilon_Greedy.html"><span class="math notranslate nohighlight">\(\epsilon\)</span>-Greedy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/MAB/UCB.html">UCB</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/MAB/TS.html">TS</a></li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Bandits.html">
+   Overview: Bandits ALgorithm
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/MAB/MAB.html">
+   Multi-Armed Bandits (MAB)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+  <label for="toctree-checkbox-13">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/MAB/Epsilon_Greedy.html">
+     <span class="math notranslate nohighlight">
+      \(\epsilon\)
+     </span>
+     -Greedy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/MAB/UCB.html">
+     UCB
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/MAB/TS.html">
+     TS
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/Contextual_Bandits.html">
+   Contextual Bandits
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+  <label for="toctree-checkbox-14">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/LinUCB.html">
+     LinUCB
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/LinTS.html">
+     LinTS
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/Meta_Bandits.html">
+   Meta Bandits
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+  <label for="toctree-checkbox-15">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/Meta_TS.html">
+     Meta Thompson Sampling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/MTTS.html">
+     Multi-Task Thompson Sampling (MTTS)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Structured_Bandit.html">
+   Structured Bandit (Slate Recommendation)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+  <label for="toctree-checkbox-16">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/Learning%20to%20rank.html">
+     Online Learning to Rank (Cascading Bandit)
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/TS_Cascade.html">
+       TS_Cascade
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/CascadeLinTS.html">
+       CascadeLinTS
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/MTSS_Cascade.html">
+       MTSS_Cascade
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/Combinatorial%20Optimization.html">
+     Online Combinatorial Optimization (Combinatorial Semi-Bandit)
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/CombTS.html">
+       CombTS
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/CombLinTS.html">
+       CombLinTS
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/MTSS_Comb.html">
+       MTSS_Comb
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/Assortment%20Optimization.html">
+     Dynamic Assortment Optimization (Multinomial Logit Bandit)
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/TS_MNL_Beta.html">
+       TS_MNL
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/TS_Contextual_MNL.html">
+       TS_Contextual_MNL
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/MTSS_MNL.html">
+       MTSS_MNL
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/OnlineEval/Online%20Policy%20Evaluation.html">
+   Online Policy Evaluation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+  <label for="toctree-checkbox-20">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/OnlineEval/Direct%20Online%20Policy%20Evaluator.html">
+     Direct Online Policy Evaluator
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/OnlineEval/Inverse%20Probability%20Weighted%20Online%20Policy%20Evaluator.html">
+     Inverse Probability Weighted Online Policy Evaluator
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/OnlineEval/Doubly%20Robust%20Online%20Policy%20Evaluator.html">
+     Doubly Robust Online Policy Evaluator
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/Contextual_Bandits.html">Contextual Bandits</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/LinUCB.html">LinUCB</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/LinTS.html">LinTS</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/Meta_Bandits.html">Meta Bandits</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/Meta_TS.html">Meta Thompson Sampling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/MTTS.html">Multi-Task Thompson Sampling (MTTS)</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Structured_Bandit.html">Structured Bandit (Slate Recommendation)</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/Learning%20to%20rank.html">Online Learning to Rank (Cascading Bandit)</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/TS_Cascade.html">TS_Cascade</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/CascadeLinTS.html">CascadeLinTS</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/MTSS_Cascade.html">MTSS_Cascade</a></li>
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/Combinatorial%20Optimization.html">Online Combinatorial Optimization (Combinatorial Semi-Bandit)</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-18"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/CombTS.html">CombTS</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/CombLinTS.html">CombLinTS</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/MTSS_Comb.html">MTSS_Comb</a></li>
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/Assortment%20Optimization.html">Dynamic Assortment Optimization (Multinomial Logit Bandit)</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-19"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/TS_MNL_Beta.html">TS_MNL</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/TS_Contextual_MNL.html">TS_Contextual_MNL</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/MTSS_MNL.html">MTSS_MNL</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/OnlineEval/Online%20Policy%20Evaluation.html">Online Policy Evaluation</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-20"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/OnlineEval/Direct%20Online%20Policy%20Evaluator.html">Direct Online Policy Evaluator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/OnlineEval/Inverse%20Probability%20Weighted%20Online%20Policy%20Evaluator.html">Inverse Probability Weighted Online Policy Evaluator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/OnlineEval/Doubly%20Robust%20Online%20Policy%20Evaluator.html">Doubly Robust Online Policy Evaluator</a></li>
-</ul>
-</li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 5</span></p>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Paradigm 5
+ </span>
+</p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario5/OnlineRL_Markov.html">Ooline Policy Learning and Evaluation in Markovian Environments</a></li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario5/OnlineRL_Markov.html">
+   Ooline Policy Learning and Evaluation in Markovian Environments
+  </a>
+ </li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 6</span></p>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Paradigm 6
+ </span>
+</p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario6/OnlineRL_non_Markov.html">Ooline Policy Learning in Non-Markov Environments</a></li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../4_Causal_Policy_Learning/Scenario6/OnlineRL_non_Markov.html">
+   Ooline Policy Learning in Non-Markovian Environments
+  </a>
+ </li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Case Studies</span></p>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Case Studies
+ </span>
+</p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../5_Case_Study/MIMIC3/MIMIC3-Demo.html">Mimic3 Demo</a></li>
-
-
-<li class="toctree-l1"><a class="reference internal" href="../5_Case_Study/MIMIC3/MIMIC3_DTR.html">CPL: 3-Stage DTR</a></li>
-
-
-<li class="toctree-l1"><a class="reference internal" href="../5_Case_Study/MIMIC3/MIMIC3_MediationAnalysis.html">Multi-Stage Mediation Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../5_Case_Study/MovieLens/Case_Study_2.html">MovieLens</a></li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5_Case_Study/MIMIC3/MIMIC3-Demo.html">
+   Mimic3 Demo
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5_Case_Study/MIMIC3/MIMIC3_DTR.html">
+   CPL: 3-Stage DTR
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5_Case_Study/MIMIC3/MIMIC3_MediationAnalysis.html">
+   Multi-Stage Mediation Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5_Case_Study/MovieLens/Case_Study_2.html">
+   MovieLens
+  </a>
+ </li>
 </ul>
 
     </div>
-</nav>
-    </div>
-  </div>
-  
-
-  
-  <div class="sidebar-end-items sidebar-primary__section">
-    <div class="sidebar-end-items__item">
-    </div>
-  </div>
-
-  
-  <div id="rtd-footer-container"></div>
-
-      </div>
-      <main id="main-content" class="bd-main">
-        
-        
-
-<div class="sbt-scroll-pixel-helper"></div>
-
-        <div class="bd-content">
-          <div class="bd-article-container">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <div class="bd-header-article">
-                
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
 
 
 
 <div class="col py-1 d-flex header-article-main">
     <div class="header-article__left">
-        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
-            <span class="fa-solid fa-bars"></span>
-        </label>
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
     </div>
     <div class="header-article__right">
-
-
-<div class="dropdown dropdown-launch-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
-    <i class="fas fa-rocket"></i>
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
   </button>
-  <ul class="dropdown-menu">
-  </ul>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/1_Preliminary/(old) Causal Inference 101.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
 </div>
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm"
+  class="headerbtn"
   data-toggle="tooltip"
 data-placement="bottom"
 title="Fullscreen mode"
 >
   
 
-<span class="btn__icon-container">
+<span class="headerbtn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
 </button>
 
-
-
-<div class="dropdown dropdown-repository-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
-    <i class="fab fa-github"></i>
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
   </button>
-  <ul class="dropdown-menu">
-      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
-   class="btn btn-sm dropdown-item"
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book"
+   class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
 title="Source repository"
 >
   
 
-<span class="btn__icon-container">
+<span class="headerbtn__icon-container">
   <i class="fab fa-github"></i>
   </span>
-<span class="btn__text-container">repository</span>
+<span class="headerbtn__text-container">repository</span>
 </a>
-</a>
+
+      </li>
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F1_Preliminary/(old) Causal Inference 101.html&body=Your%20issue%20content%20here." target="_blank"
-   class="btn btn-sm dropdown-item"
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F1_Preliminary/(old) Causal Inference 101.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
 title="Open an issue"
 >
   
 
-<span class="btn__icon-container">
+<span class="headerbtn__icon-container">
   <i class="fas fa-lightbulb"></i>
   </span>
-<span class="btn__text-container">open issue</span>
+<span class="headerbtn__text-container">open issue</span>
 </a>
-</a>
+
+      </li>
       
-  </ul>
+    </ul>
+  </div>
 </div>
 
-
-
-<div class="dropdown dropdown-download-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
-    <i class="fas fa-download"></i>
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
   </button>
-  <ul class="dropdown-menu">
-      <li><a href="../_sources/1_Preliminary/(old) Causal Inference 101.ipynb" target="_blank"
-   class="btn btn-sm dropdown-item"
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/1_Preliminary/(old) Causal Inference 101.ipynb"
+   class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
 title="Download source file"
 >
   
 
-<span class="btn__icon-container">
+<span class="headerbtn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="headerbtn__text-container">.ipynb</span>
 </a>
-</a>
+
+      </li>
       
       <li>
+        
 <button onclick="printPdf(this)"
-  class="btn btn-sm dropdown-item"
+  class="headerbtn"
   data-toggle="tooltip"
 data-placement="left"
 title="Print to PDF"
 >
   
 
-<span class="btn__icon-container">
+<span class="headerbtn__icon-container">
   <i class="fas fa-file-pdf"></i>
   </span>
-<span class="btn__text-container">.pdf</span>
+<span class="headerbtn__text-container">.pdf</span>
 </button>
-</a>
+
+      </li>
       
-  </ul>
+    </ul>
+  </div>
 </div>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
-            <span class="fa-solid fa-list"></span>
-        </label>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
     </div>
 </div>
-            </div>
-            
-            
 
-<div id="jb-print-docs-body" class="onlyprint">
-    <h1>Causal Inference 101</h1>
-    <!-- Table of contents -->
-    <div id="print-main-content">
-        <div id="jb-print-toc">
-            
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#potential-outcome">
    Potential Outcome
@@ -1146,136 +1078,200 @@ title="Print to PDF"
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Causal Inference 101</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#potential-outcome">
+   Potential Outcome
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#assumptions">
+   Assumptions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#average-causal-effect">
+   Average Causal Effect
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#outcome-regression-models">
+     Outcome Regression Models
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#propensity-score">
+     Propensity Score
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#stratification">
+       Stratification
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#inverse-propensity-score-weighting">
+       Inverse Propensity Score Weighting
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#doubly-robust-estimators">
+     Doubly Robust Estimators
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
 
-            <article class="bd-article" role="main">
-              
-  <section id="causal-inference-101">
-<h1>Causal Inference 101<a class="headerlink" href="#causal-inference-101" title="Permalink to this heading">#</a></h1>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <div class="section" id="causal-inference-101">
+<h1>Causal Inference 101<a class="headerlink" href="#causal-inference-101" title="Permalink to this headline">#</a></h1>
 <p>Classical statistical inference considers associational relationships of different variables in a population of interest. However, in scientific research, we are often interested in causal relationships. Does action <span class="math notranslate nohighlight">\(T\)</span> cause <span class="math notranslate nohighlight">\(Y\)</span>. In this section, we will focus on establishing and estimating causal relationships between actions or interventions and subsequent response, under the potential outcome framework advocated by Neyman, Rubin, Robins and others.</p>
 <p>We denote the treatment (intervention, action) by the variable <span class="math notranslate nohighlight">\(T\)</span>, which can be a vector of discrete, continuous random variables. For simplicity, we consider the simplest case where <span class="math notranslate nohighlight">\(T\)</span> is a binary indicator, i.e. <span class="math notranslate nohighlight">\(T \in \{0, 1\}\)</span> to denote two different interventions, say, for example, ad intervention versus no ad intervention for acquiring new users for new app. We will denote by <span class="math notranslate nohighlight">\(Y\)</span> the response of interest, say, convert (download the new app) or not. The ad of the new app may be randomly assigned to a sample of users in a randomized controlled experiment, or the users may be intervened by the ad according to baseline features in an observational study. The data that are available can be summarized as <span class="math notranslate nohighlight">\(Z_i = (X_i, T_i, Y_i), i=1, \cdots, n\)</span>, where for the <span class="math notranslate nohighlight">\(i-\)</span> th sample, <span class="math notranslate nohighlight">\(X_i\)</span> denotes the covariates that have been collected on the individual prior to the intervention, <span class="math notranslate nohighlight">\(T_i\)</span> is the treatment received, <span class="math notranslate nohighlight">\(Y_i\)</span> denotes the response. We are interested in establishing a causal relationship between <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>.</p>
-<section id="potential-outcome">
-<h2>Potential Outcome<a class="headerlink" href="#potential-outcome" title="Permalink to this heading">#</a></h2>
+<div class="section" id="potential-outcome">
+<h2>Potential Outcome<a class="headerlink" href="#potential-outcome" title="Permalink to this headline">#</a></h2>
 <p>Under the potential outcome framework, we will assume, for each treatment, that there exists a potential outcome <span class="math notranslate nohighlight">\(Y^*(t)\)</span> which will represent the response of a randomly chosen individual in our population if they are given treatment <span class="math notranslate nohighlight">\(T=t\)</span>. Hence, when there are two treatments, <span class="math notranslate nohighlight">\(Y^*(0)\)</span> and <span class="math notranslate nohighlight">\(Y^*(1)\)</span> will represent the responses of a randomly chosen individual from the population if they are given treatment <span class="math notranslate nohighlight">\(T=0\)</span> and <span class="math notranslate nohighlight">\(T=1\)</span>, respectively. <span class="math notranslate nohighlight">\(Y^*(0)\)</span> and <span class="math notranslate nohighlight">\(Y^*(1)\)</span> are sometimes referred to as counterfactual random variables because, in reality, they both cannot be observed and correspond to a hypothetical value if contrary to the fact the individual actually received a treatment different than the one considered. Using the notion of potential outcomes, we can define the causal treatment effect at the individual level by <span class="math notranslate nohighlight">\(\{Y^*(1) - Y^*(0)\}\)</span>. Because only one of <span class="math notranslate nohighlight">\(Y^*(0)\)</span> and <span class="math notranslate nohighlight">\(Y^*(1)\)</span> can be observed for any one individual, it is not possible to measure or estimate the subject-specific causal treatment effect.</p>
-</section>
-<section id="assumptions">
-<h2>Assumptions<a class="headerlink" href="#assumptions" title="Permalink to this heading">#</a></h2>
+</div>
+<div class="section" id="assumptions">
+<h2>Assumptions<a class="headerlink" href="#assumptions" title="Permalink to this headline">#</a></h2>
 <p>We now consider the necessary assumptions that allow us to deduce the distribution of <span class="math notranslate nohighlight">\(Y*(0)\)</span> and <span class="math notranslate nohighlight">\(Y^*(1)\)</span> from the distribution of <span class="math notranslate nohighlight">\((X, T, Y)\)</span>.</p>
 <ul class="simple">
 <li><p>SUTVA (stable unit treatment value assumption)</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-cb061529-45f3-4b21-a920-ad58209bd7e3">
-<span class="eqno">()<a class="headerlink" href="#equation-cb061529-45f3-4b21-a920-ad58209bd7e3" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fc94da4c-a3bf-450b-99a3-304ec130b319">
+<span class="eqno">()<a class="headerlink" href="#equation-fc94da4c-a3bf-450b-99a3-304ec130b319" title="Permalink to this equation">#</a></span>\[\begin{align}
 Y_i = Y_i^*(1) T_i + Y_i^*(0) (1-T_i), i = 1, \cdots, n.
 \end{align}\]</div>
 <p>That is, the actual response that is observed for the <span class="math notranslate nohighlight">\(i\)</span>-th individual in our sample, <span class="math notranslate nohighlight">\(Y_i\)</span>, who received treatment <span class="math notranslate nohighlight">\(T_i\)</span>, is the same as the potential outcome for that assigned treatment regardless of the experimental conditions used to assign treatment. This assumption also indicates that there are not any interference between subjects in the population, that is, the observed response for any individual is not affected by the responses of other individuals</p>
 <ul class="simple">
 <li><p>No Unmeasured Confounders (Strong Ignorability)</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-e965635a-864b-4f29-98a4-163315bfccb0">
-<span class="eqno">()<a class="headerlink" href="#equation-e965635a-864b-4f29-98a4-163315bfccb0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c727541a-f878-490f-86cf-33747a41bac8">
+<span class="eqno">()<a class="headerlink" href="#equation-c727541a-f878-490f-86cf-33747a41bac8" title="Permalink to this equation">#</a></span>\[\begin{align}
 \{Y^*(0), Y^*(1)\} \perp\!\!\!\perp T|X
 \end{align}\]</div>
 <p>We cannot use the data in an observational study to either confirm or refute this assumption. However, if we believe that <span class="math notranslate nohighlight">\(X\)</span> contained all the relevant information about the treatment assignment, then it will be reasonable to make the above assumption.</p>
 <ul class="simple">
 <li><p>Positivity Assumption</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-48e38a7b-4c9b-4e65-a728-aa8eda37d1f6">
-<span class="eqno">()<a class="headerlink" href="#equation-48e38a7b-4c9b-4e65-a728-aa8eda37d1f6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e4491c80-a300-464a-a804-2e3c9b4f6b96">
+<span class="eqno">()<a class="headerlink" href="#equation-e4491c80-a300-464a-a804-2e3c9b4f6b96" title="Permalink to this equation">#</a></span>\[\begin{align}
 0 &lt; P(T=1|X=x) &lt; 1
 \end{align}\]</div>
 <p>This assumption ensures that for any given individual in treatment group <span class="math notranslate nohighlight">\(1\)</span>, we are able to find a similar individual in treatment group <span class="math notranslate nohighlight">\(0\)</span>, and vice versa.</p>
-</section>
-<section id="average-causal-effect">
-<h2>Average Causal Effect<a class="headerlink" href="#average-causal-effect" title="Permalink to this heading">#</a></h2>
+</div>
+<div class="section" id="average-causal-effect">
+<h2>Average Causal Effect<a class="headerlink" href="#average-causal-effect" title="Permalink to this headline">#</a></h2>
 <p><span class="math notranslate nohighlight">\(\text{ATE} = E[Y^*(1) - Y^*(0)]\)</span>
 There are two general approaches to deriving estimators for the average causal treatment effect from observational data: outcome regression modeling and the use of propensity score.</p>
-<section id="outcome-regression-models">
-<h3>Outcome Regression Models<a class="headerlink" href="#outcome-regression-models" title="Permalink to this heading">#</a></h3>
+<div class="section" id="outcome-regression-models">
+<h3>Outcome Regression Models<a class="headerlink" href="#outcome-regression-models" title="Permalink to this headline">#</a></h3>
 <p>The use of outcome regression modeling to estimate the average causal treatment effect from observational data under the assumption of no unmeasured confouners and SUTVA comes from the following consideration:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6faa9056-f0d6-4f66-8312-d2f0535f5d9d">
-<span class="eqno">()<a class="headerlink" href="#equation-6faa9056-f0d6-4f66-8312-d2f0535f5d9d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-09d3adfa-4f11-4c37-9d12-08ef89fa88f6">
+<span class="eqno">()<a class="headerlink" href="#equation-09d3adfa-4f11-4c37-9d12-08ef89fa88f6" title="Permalink to this equation">#</a></span>\[\begin{align}
 E[Y^*(1)] &amp;= E_x [E\{Y^*(1)|X\}] \\
 &amp;= E_x[E\{Y^*(1)|T=1, X\}] \quad \text{No Unmeasured Confounders}\\
 &amp;= E_x[E\{Y|T=1, X\}] \quad \text{SUTVA}
 \end{align}\]</div>
 <p>Similarly, we can show that <span class="math notranslate nohighlight">\(E[Y^*(0)] = E_x[E\{Y|T=0, X\}].\)</span>
 Hence, the average causal treatment effect</p>
-<div class="amsmath math notranslate nohighlight" id="equation-11371f74-8276-4306-b2f3-4c890973fcc5">
-<span class="eqno">()<a class="headerlink" href="#equation-11371f74-8276-4306-b2f3-4c890973fcc5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1308104d-9394-4428-b4fe-81b226ad70a8">
+<span class="eqno">()<a class="headerlink" href="#equation-1308104d-9394-4428-b4fe-81b226ad70a8" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{ATE} = E_x[E\{Y|T=1, X\}] - E_x[E\{Y|T=0, X\}]
 \end{align}\]</div>
 <p>We can posit a model for <span class="math notranslate nohighlight">\(E[Y|T, X] = \mu(X, T;\gamma)\)</span>, and estimate the parameter <span class="math notranslate nohighlight">\(\gamma\)</span> via MLE or least square estimation. Then,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-49ccb5a4-42c9-4549-83d4-8b80c02b8642">
-<span class="eqno">()<a class="headerlink" href="#equation-49ccb5a4-42c9-4549-83d4-8b80c02b8642" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-055b08f0-7d16-4913-b3a5-d3337817126b">
+<span class="eqno">()<a class="headerlink" href="#equation-055b08f0-7d16-4913-b3a5-d3337817126b" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{\text{ATE}} = n^{-1}\sum_{i=1}^n \{\mu(X_i, 1;\hat{\gamma}) - \mu(X_i, 0; \hat{\gamma})\}
 \end{align}\]</div>
-</section>
-<section id="propensity-score">
-<h3>Propensity Score<a class="headerlink" href="#propensity-score" title="Permalink to this heading">#</a></h3>
+</div>
+<div class="section" id="propensity-score">
+<h3>Propensity Score<a class="headerlink" href="#propensity-score" title="Permalink to this headline">#</a></h3>
 <p>Another class of estimators for the average causal treatment effect uses propensity score, defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-45c3753e-092b-4be2-b118-9f2c5a45c45c">
-<span class="eqno">()<a class="headerlink" href="#equation-45c3753e-092b-4be2-b118-9f2c5a45c45c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3e96c915-e1d8-4a94-829a-ae0d34efbf51">
+<span class="eqno">()<a class="headerlink" href="#equation-3e96c915-e1d8-4a94-829a-ae0d34efbf51" title="Permalink to this equation">#</a></span>\[\begin{align}
 \pi(X) = P(T=1|X)
 \end{align}\]</div>
 <p>in the case where there are two treatments. It refers to the propensity of getting one of the treatments as a function of the covariates. One of the attractive features of the propensity score, that makes it useful for causal inference follows from the fact that given the <code class="docutils literal notranslate"><span class="pre">SUTVA</span></code> and <code class="docutils literal notranslate"><span class="pre">strong</span> <span class="pre">ignorability</span></code> assumptions, then</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d2096be3-981f-4673-a357-be9ce6c7281c">
-<span class="eqno">()<a class="headerlink" href="#equation-d2096be3-981f-4673-a357-be9ce6c7281c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d7a10c24-f406-4e2b-9df3-d4c498b13a32">
+<span class="eqno">()<a class="headerlink" href="#equation-d7a10c24-f406-4e2b-9df3-d4c498b13a32" title="Permalink to this equation">#</a></span>\[\begin{align}
 \{Y^*(1), Y^*(0)\} \perp\!\!\!\perp T|\pi(X)
 \end{align}\]</div>
 <p>It may be difficult to build an outcome regression model for <span class="math notranslate nohighlight">\(E[Y|T, X]\)</span> if <span class="math notranslate nohighlight">\(X\)</span> is high dimensional, however, based on the above result, we can simply build models for <span class="math notranslate nohighlight">\(E[Y|T, \pi(X)]\)</span>.</p>
-<section id="stratification">
-<h4>Stratification<a class="headerlink" href="#stratification" title="Permalink to this heading">#</a></h4>
+<div class="section" id="stratification">
+<h4>Stratification<a class="headerlink" href="#stratification" title="Permalink to this headline">#</a></h4>
 <p>Rubin suggested the following to estimate ATE. Stratify the observations into groups based on the value of the estimated propensity scores <span class="math notranslate nohighlight">\(\hat{\pi}(X_i), i=1, \cdots, n\)</span>. That is, choose cutoff values,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-67fb43a3-68eb-4c21-a0b9-87d1ee30c5c7">
-<span class="eqno">()<a class="headerlink" href="#equation-67fb43a3-68eb-4c21-a0b9-87d1ee30c5c7" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-85ac8e12-285c-4a89-a0ac-c95e39b01e50">
+<span class="eqno">()<a class="headerlink" href="#equation-85ac8e12-285c-4a89-a0ac-c95e39b01e50" title="Permalink to this equation">#</a></span>\[\begin{align}
 0 = C_0 &lt; C_1 &lt; \cdots &lt; C_K = 1,
 \end{align}\]</div>
 <p>then individual <span class="math notranslate nohighlight">\(i\)</span> belongs to group <span class="math notranslate nohighlight">\(k\)</span> if</p>
-<div class="amsmath math notranslate nohighlight" id="equation-651e4d95-c340-438b-bf99-2a4b748b7ab4">
-<span class="eqno">()<a class="headerlink" href="#equation-651e4d95-c340-438b-bf99-2a4b748b7ab4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9fbaa654-f7eb-4685-ba2b-fde5e750180e">
+<span class="eqno">()<a class="headerlink" href="#equation-9fbaa654-f7eb-4685-ba2b-fde5e750180e" title="Permalink to this equation">#</a></span>\[\begin{align}
 C_{k-1} &lt; \hat{\pi}(X_i) \le C_k, k=1, \cdots, K,
 \end{align}\]</div>
 <p>then</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1134c726-0072-46eb-a51a-47afedcb53d4">
-<span class="eqno">()<a class="headerlink" href="#equation-1134c726-0072-46eb-a51a-47afedcb53d4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-cdd4d117-782f-428c-b11f-0e82ce3c716e">
+<span class="eqno">()<a class="headerlink" href="#equation-cdd4d117-782f-428c-b11f-0e82ce3c716e" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{ATE} = \sum_{k=1}^K (\bar{Y}_{1k} - \bar{Y}_{0k}) n_k /n
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\hat{Y}_{1k}, \hat{Y}_{0k}\)</span> are the sample average responses among individuals in the <span class="math notranslate nohighlight">\(k-\)</span>th group receiving treatments <span class="math notranslate nohighlight">\(1\)</span> and <span class="math notranslate nohighlight">\(0\)</span> respectively, and <span class="math notranslate nohighlight">\(n_k\)</span> is the number of individuals from both treatments in the <span class="math notranslate nohighlight">\(k-\)</span>th group.</p>
-</section>
-<section id="inverse-propensity-score-weighting">
-<h4>Inverse Propensity Score Weighting<a class="headerlink" href="#inverse-propensity-score-weighting" title="Permalink to this heading">#</a></h4>
+</div>
+<div class="section" id="inverse-propensity-score-weighting">
+<h4>Inverse Propensity Score Weighting<a class="headerlink" href="#inverse-propensity-score-weighting" title="Permalink to this headline">#</a></h4>
 <p>Another class of estimators with a more theoretical justification coming from semiparametric theory uses the inverse propensity score estimator and augmented inverse propensity score estimator for the average causal treatment effect.</p>
 <p>The motivation of IPW is as follows. Since the propensity (probability) of receiving treatment <span class="math notranslate nohighlight">\(1\)</span> is <span class="math notranslate nohighlight">\(\pi(X)\)</span> for an individual with baseline covariates <span class="math notranslate nohighlight">\(X\)</span>, then every individual with covariates <span class="math notranslate nohighlight">\(X_i\)</span> that was observed to receive treatment 1 in our sample is weighted by <span class="math notranslate nohighlight">\(1/\pi(X_i)\)</span> so that their response not only represent themselves but also other individuals who did not receive treatment 1. More formally, we will show that <span class="math notranslate nohighlight">\(\frac{TY}{\pi(X)}\)</span> is an unbiased estimator of <span class="math notranslate nohighlight">\(E[Y^*(1)]\)</span>. This follows that, given the <code class="docutils literal notranslate"><span class="pre">positivity</span></code> assumption,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-367d27f9-dce1-4163-ac6c-1475b66bf6fd">
-<span class="eqno">()<a class="headerlink" href="#equation-367d27f9-dce1-4163-ac6c-1475b66bf6fd" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a6ac8fc0-1f1d-4783-b993-c9bd8a0c0e5d">
+<span class="eqno">()<a class="headerlink" href="#equation-a6ac8fc0-1f1d-4783-b993-c9bd8a0c0e5d" title="Permalink to this equation">#</a></span>\[\begin{align}
 E\left[\frac{TY}{\pi(X)}\right] = E\left[\frac{TY^*(1)}{\pi(X)}\right] = E\left[E\left\{\frac{TY^*(1)}{\pi(X)}|X\right\}\right] = E\left[E\left\{\frac{T}{\pi(X)}|X\right\}Y^*(1)\right] = E[Y^*(1)].
 \end{align}\]</div>
 <p>Similarly, we have</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b8015a7f-894b-4152-ac07-8951799bf293">
-<span class="eqno">()<a class="headerlink" href="#equation-b8015a7f-894b-4152-ac07-8951799bf293" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ec97ddf6-57a1-49e0-ad99-c91a25b07e55">
+<span class="eqno">()<a class="headerlink" href="#equation-ec97ddf6-57a1-49e0-ad99-c91a25b07e55" title="Permalink to this equation">#</a></span>\[\begin{align}
 E[Y^*(0)] = E\left[\frac{(1-T)Y}{1-\pi(X)} \right],
 \end{align}\]</div>
 <p>Consequently, then another unbiased estimator for the average causal treatment effect would be</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6fc74a1f-452c-4256-884a-3e5b31564ea6">
-<span class="eqno">()<a class="headerlink" href="#equation-6fc74a1f-452c-4256-884a-3e5b31564ea6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e6207f53-c63c-4ec7-b046-c3adfc9db187">
+<span class="eqno">()<a class="headerlink" href="#equation-e6207f53-c63c-4ec7-b046-c3adfc9db187" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{\text{ATE}} = n^{-1}\sum_{i=1}^n \left\{\frac{T_iY_i}{\pi(X_i)}  - \frac{(1-T_i)Y_i}{1-\pi(X_i)}  \right\}
 \end{align}\]</div>
-</section>
-</section>
-<section id="doubly-robust-estimators">
-<h3>Doubly Robust Estimators<a class="headerlink" href="#doubly-robust-estimators" title="Permalink to this heading">#</a></h3>
+</div>
+</div>
+<div class="section" id="doubly-robust-estimators">
+<h3>Doubly Robust Estimators<a class="headerlink" href="#doubly-robust-estimators" title="Permalink to this headline">#</a></h3>
 <p>We are able to combine outcome regression estimator and the propensity score weighted estimator to obtain another so-called doubly robust estimator, as follows</p>
-<div class="amsmath math notranslate nohighlight" id="equation-30fc1918-12d7-4962-9c3b-e9af45cea40b">
-<span class="eqno">()<a class="headerlink" href="#equation-30fc1918-12d7-4962-9c3b-e9af45cea40b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-680d28d0-d3e1-4efe-87c1-16dcff2a5bed">
+<span class="eqno">()<a class="headerlink" href="#equation-680d28d0-d3e1-4efe-87c1-16dcff2a5bed" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{\text{ATE}} = n^{-1}\sum_{i=1}^n \left\{\mu(X_i,1;\hat{\gamma})+\frac{T_i(Y_i - \mu(X_i,1;\hat{\gamma}))}{\hat{\pi}(X_i)} - \mu(X_i,0;\hat{\gamma}) - \frac{(1-T_i)(Y_i-\mu(X_i,0;\hat{\gamma}))}{1-\hat{\pi}(X_i)} \right\}
 \end{align}\]</div>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -1289,7 +1285,7 @@ E[Y^*(0)] = E\left[\frac{(1-T)Y}{1-\pi(X)} \right],
             mode: "python"
         },
         kernelOptions: {
-            name: "python3",
+            kernelName: "python3",
             path: "./1_Preliminary"
         },
         predefinedOutput: true
@@ -1297,130 +1293,36 @@ E[Y^*(0)] = E\left[\frac{(1-T)Y}{1-\pi(X)} \right],
     </script>
     <script>kernelName = 'python3'</script>
 
-            </article>
-            
-
-            
-            
-            <footer class="bd-footer-article">
-                <!-- Previous / next buttons -->
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
 <div class='prev-next-area'>
 </div>
             </footer>
-            
-          </div>
-          
-          
-          
-            <div class="bd-sidebar-secondary bd-toc">
-              
-<div class="toc-item">
-  
-<div class="tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-</div>
-<nav id="bd-toc-nav" class="page-toc">
-    <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#potential-outcome">
-   Potential Outcome
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#assumptions">
-   Assumptions
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#average-causal-effect">
-   Average Causal Effect
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#outcome-regression-models">
-     Outcome Regression Models
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#propensity-score">
-     Propensity Score
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#stratification">
-       Stratification
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#inverse-propensity-score-weighting">
-       Inverse Propensity Score Weighting
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#doubly-robust-estimators">
-     Doubly Robust Estimators
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-</nav>
-</div>
-
-            </div>
-          
-          
         </div>
-        <footer class="bd-footer-content">
-          <div class="bd-footer-content__inner">
-            
-<div class="bd-footer-content__inner container">
-  
-  <div class="footer-item">
-    
-<p class="component-author">
-By Causal Decision Making Team
-</p>
-
-  </div>
-  
-  <div class="footer-item">
-    
-<p class="copyright">
-
-    &copy; Copyright 2022.<br>
-
-</p>
-
-  </div>
-  
-  <div class="footer-item">
-    <p class="last-updated">
-Last updated on None.<br>
-</p>
-  </div>
-  
-  <div class="footer-item">
-    
-  </div>
-  
-</div>
-          </div>
-        </footer>
-        
-
-      </main>
     </div>
-  </div>
-
+    <div class="footer-content row">
+        <footer class="col footer"><p>
   
+    By Causal Decision Making Team<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
     
+</div>
+
+
+      </div>
+    </div>
+  
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>
