@@ -1136,25 +1136,25 @@ title="Print to PDF"
   <section id="generalized-random-forest">
 <h1><strong>7. Generalized Random Forest</strong><a class="headerlink" href="#generalized-random-forest" title="Permalink to this heading">#</a></h1>
 <p>Developed by Susan Athey, Julie Tibshirani and Stefan Wager, Generalized Random Forest [8] aims to give the solution to a set of local moment equations:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0a392c78-0c9c-480b-abf8-c31f70dc685d">
-<span class="eqno">(34)<a class="headerlink" href="#equation-0a392c78-0c9c-480b-abf8-c31f70dc685d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-06575f96-8bdb-42ec-ac73-a3adb68fbeac">
+<span class="eqno">(34)<a class="headerlink" href="#equation-06575f96-8bdb-42ec-ac73-a3adb68fbeac" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \mathbb{E}\big[\psi_{\tau(s),\nu(s)}(O_i)\big| S_i=s\big]=0,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\tau(s)\)</span> is the parameter we care about and <span class="math notranslate nohighlight">\(\nu(s)\)</span> is an optional nuisance parameter. In the problem of Heterogeneous Treatment Effect Evaluation, our parameter of interest <span class="math notranslate nohighlight">\(\tau(s)=\xi\cdot \beta(s)\)</span> is identified by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-35a4cc71-5944-4898-9f16-bf625bd3212d">
-<span class="eqno">(35)<a class="headerlink" href="#equation-35a4cc71-5944-4898-9f16-bf625bd3212d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-71965f0a-15cf-4e1c-8bde-d832636183fa">
+<span class="eqno">(35)<a class="headerlink" href="#equation-71965f0a-15cf-4e1c-8bde-d832636183fa" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \psi_{\beta(s),\nu(s)}(R_i,A_i)=(R_i-\beta(s)\cdot A_i-c(s))(1 \quad A_i^T)^T.
 \end{equation}\]</div>
 <p>The induced estimator <span class="math notranslate nohighlight">\(\hat{\tau}(s)\)</span> for <span class="math notranslate nohighlight">\(\tau(s)\)</span> can thus be solved by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c87ee78b-a0fb-40dc-9223-0c72db57fe25">
-<span class="eqno">(36)<a class="headerlink" href="#equation-c87ee78b-a0fb-40dc-9223-0c72db57fe25" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-652bd0bf-7539-4ab0-ae5b-66dcff3892de">
+<span class="eqno">(36)<a class="headerlink" href="#equation-652bd0bf-7539-4ab0-ae5b-66dcff3892de" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \hat{\tau}(s)=\xi^T\left(\sum_{i=1}^n \alpha_i(s)\big(A_i-\bar{A}_\alpha\big)^{\otimes 2}\right)^{-1}\sum_{i=1}^n \alpha_i(s)\big(A_i-\bar{A}_\alpha\big)\big(R_i-\bar{R}_\alpha\big),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\bar{A}_\alpha=\sum \alpha_i(s)A_i\)</span> and <span class="math notranslate nohighlight">\(\bar{R}_\alpha=\sum \alpha_i(s)R_i\)</span>, and we write <span class="math notranslate nohighlight">\(v^{\otimes 2}=vv^T\)</span>.</p>
 <p>Notice that this formula is just a weighted version of R-learner introduced above. However, instead of using ordinary kernel weighting functions that are prone to a strong curse of dimensionality, GRF uses an adaptive weighting function <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span> derived from a forest designed to express heterogeneity in the specified quantity of interest.</p>
 <p>To be more specific, in order to obtain <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span>, GRF first grows a set of <span class="math notranslate nohighlight">\(B\)</span> trees indexed by <span class="math notranslate nohighlight">\(1,\dots,B\)</span>. Then for each such tree, define <span class="math notranslate nohighlight">\(L_b(s)\)</span> as the set of training samples falling in the same ``leaf” as x. The weights <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span> then capture the frequency with which the <span class="math notranslate nohighlight">\(i\)</span>-th training example falls into the same leaf as <span class="math notranslate nohighlight">\(s\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4b552e37-5fc4-4d0f-bcd3-8697d08c0f28">
-<span class="eqno">(37)<a class="headerlink" href="#equation-4b552e37-5fc4-4d0f-bcd3-8697d08c0f28" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-732489a6-f26d-480c-876b-ab7a8fc18883">
+<span class="eqno">(37)<a class="headerlink" href="#equation-732489a6-f26d-480c-876b-ab7a8fc18883" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \alpha_{bi}(s)=\frac{\boldsymbol{1}\big(\{S_i\in L_b(s)\}\big)}{\big|L_b(s)\big|},\quad \alpha_i(s)=\frac{1}{B}\sum_{b=1}^B \alpha_{bi}(s).
 \end{equation}\]</div>
 <p>To sum up, GRF aims to leverage the splitting result of a series of trees to decide the ``localized” weight for HTE estimation at each point <span class="math notranslate nohighlight">\(x_0\)</span>. Compared with kernel functions, we may expect tree-based weights to be more flexible and better performed in real settings.</p>
@@ -1403,29 +1403,31 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: econml in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (0.14.0)
-Requirement already satisfied: joblib&gt;=0.13.0 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from econml) (1.1.0)
-Requirement already satisfied: numpy in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from econml) (1.21.5)
-Requirement already satisfied: scikit-learn&lt;1.2,&gt;0.22.0 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from econml) (1.0.2)
-Requirement already satisfied: scipy&gt;1.4.0 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from econml) (1.7.3)
-Requirement already satisfied: statsmodels&gt;=0.10 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from econml) (0.13.2)
-Requirement already satisfied: pandas in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from econml) (1.4.4)
-Requirement already satisfied: shap&lt;0.41.0,&gt;=0.38.1 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from econml) (0.40.0)
-Requirement already satisfied: lightgbm in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from econml) (3.3.5)
-Requirement already satisfied: sparse in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from econml) (0.14.0)
-Requirement already satisfied: threadpoolctl&gt;=2.0.0 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from scikit-learn&lt;1.2,&gt;0.22.0-&gt;econml) (2.2.0)
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: slicer==0.0.7 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from shap&lt;0.41.0,&gt;=0.38.1-&gt;econml) (0.0.7)
-Requirement already satisfied: numba in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from shap&lt;0.41.0,&gt;=0.38.1-&gt;econml) (0.55.1)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: numpy in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from econml) (1.21.5)
+Requirement already satisfied: scipy&gt;1.4.0 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from econml) (1.7.3)
+Requirement already satisfied: lightgbm in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from econml) (3.3.5)
+Requirement already satisfied: joblib&gt;=0.13.0 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from econml) (1.1.0)
+Requirement already satisfied: scikit-learn&lt;1.2,&gt;0.22.0 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from econml) (1.0.2)
+Requirement already satisfied: pandas in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from econml) (1.4.4)
+Requirement already satisfied: statsmodels&gt;=0.10 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from econml) (0.13.2)
+Requirement already satisfied: sparse in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from econml) (0.14.0)
+Requirement already satisfied: shap&lt;0.41.0,&gt;=0.38.1 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from econml) (0.40.0)
+Requirement already satisfied: threadpoolctl&gt;=2.0.0 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from scikit-learn&lt;1.2,&gt;0.22.0-&gt;econml) (2.2.0)
 Requirement already satisfied: tqdm&gt;4.25.0 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from shap&lt;0.41.0,&gt;=0.38.1-&gt;econml) (4.64.1)
 Requirement already satisfied: cloudpickle in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from shap&lt;0.41.0,&gt;=0.38.1-&gt;econml) (2.0.0)
+Requirement already satisfied: slicer==0.0.7 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from shap&lt;0.41.0,&gt;=0.38.1-&gt;econml) (0.0.7)
+Requirement already satisfied: numba in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from shap&lt;0.41.0,&gt;=0.38.1-&gt;econml) (0.55.1)
 Requirement already satisfied: packaging&gt;20.9 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from shap&lt;0.41.0,&gt;=0.38.1-&gt;econml) (21.3)
 Requirement already satisfied: patsy&gt;=0.5.2 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from statsmodels&gt;=0.10-&gt;econml) (0.5.2)
-Requirement already satisfied: python-dateutil&gt;=2.8.1 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from pandas-&gt;econml) (2.8.2)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: python-dateutil&gt;=2.8.1 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from pandas-&gt;econml) (2.8.2)
 Requirement already satisfied: pytz&gt;=2020.1 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from pandas-&gt;econml) (2022.1)
 Requirement already satisfied: wheel in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from lightgbm-&gt;econml) (0.35.1)
-Requirement already satisfied: setuptools in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from numba-&gt;shap&lt;0.41.0,&gt;=0.38.1-&gt;econml) (63.4.1)
 Requirement already satisfied: llvmlite&lt;0.39,&gt;=0.38.0rc1 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from numba-&gt;shap&lt;0.41.0,&gt;=0.38.1-&gt;econml) (0.38.0)
+Requirement already satisfied: setuptools in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from numba-&gt;shap&lt;0.41.0,&gt;=0.38.1-&gt;econml) (63.4.1)
 Requirement already satisfied: pyparsing!=3.0.5,&gt;=2.0.2 in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from packaging&gt;20.9-&gt;shap&lt;0.41.0,&gt;=0.38.1-&gt;econml) (3.0.9)
 Requirement already satisfied: six in /Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages (from patsy&gt;=0.5.2-&gt;statsmodels&gt;=0.10-&gt;econml) (1.16.0)
 </pre></div>
