@@ -132,8 +132,8 @@ The current literature in dealing with panel data can be roughly divided into tw
 ```
 
 
-
-In general, DiD methods are applied in cases where we have a substantial number of units that are exposed to the policy, and researchers are willing to make a “parallel trends” assumption which implies that we can adequately control for selection effects by accounting for additive unit-specific and time-specific fixed effects. In contrast, synthetic control (SC) methods, introduced in a setting with only a single (or small number) of units exposed, seek to compensate for the lack of parallel trends by re-weighting units to match their pre-exposure trends. [2]
+In general, DiD methods are often applied in cases where the number of treated units and control units are comparable. The entire methodology is based on a key assumption, which is well known as "common trend" (CT) or "bias stability" (BS) assumption. This assumption guarantees that the expected changes in the potential outcome over time are unrelated to belonging to treatment or control group. In contrast, Synthetic Control (SC) methods require fewer assumptions, believing that a weighted average of control units can
+provide a good approximation for the counterfactual outcome of the treated unit as if it has been under control.
 
 
 
@@ -250,6 +250,3 @@ We can further relax the Markovian assumption required in Paradigm 5 to allow No
 
 ## Reference
 [1] Tsiatis, A. A., Davidian, M., Holloway, S. T., & Laber, E. B. (2019). Dynamic treatment regimes: Statistical methods for precision medicine. Chapman and Hall/CRC.
-
-[2] Dmitry Arkhangelsky, Susan Athey, David A Hirshberg, Guido W Imbens, and Stefan Wager. Synthetic
-difference in differences. Technical report, National Bureau of Economic Research, 2019.
