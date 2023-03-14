@@ -186,7 +186,7 @@ def plot_mt(mt, labels_name=None, file_name=None, figsize=6):
     d = mt.shape[0]
     fig = plt.figure(figsize=(figsize,figsize))
     ax = fig.add_subplot(111)
-    cax = ax.matshow(mt, cmap = 'RdBu', vmin = -1, vmax = 1)
+    cax = ax.matshow(mt, cmap = 'RdBu', vmin = -0.5, vmax = 0.5)
     fig.colorbar(cax)
     
     xaxis = np.arange(d)
@@ -230,4 +230,51 @@ def plot_net(mt, labels_name=None, file_name=None):
     if labels_name != None:
         plt.savefig(file_name + '.pdf') # save as pdf
     plt.show() # display  
+    
+    
+#========================================
+# Refit Causal Model
+#========================================        
+def refit(causal_feature, est_mt, labels):
+    '''Plot the matrix B'''
+
+    # Identification Constraint
+
+    topo_list = np.array(labels)[list(nx.topological_sort(nx.DiGraph(est_mt)))].tolist()
+    topo_list.reverse()
+    topo_list.remove('Died within 48H') 
+    topo_list.append('Died within 48H')          
+
+    mt = np.zeros((len(labels),len(labels)))
+    mt_sd = np.zeros((len(labels),len(labels)))
+    for var_name in topo_list:
+        if topo_list.index(var_name) > 0:
+            
+            ANC_list = topo_list[:topo_list.index(var_name)]
+            
+            Xmat = causal_feature[ANC_list]
+            yval = causal_feature[var_name]
+
+            dimp = np.shape(Xmat)[1] + 1  # plus one because LinearRegression adds an intercept term
+
+            X_with_intercept = np.zeros((len(yval), dimp))
+            X_with_intercept[:, 0] = 1
+            X_with_intercept[:, 1:dimp] = Xmat
+
+            beta = ((np.linalg.inv(X_with_intercept.T @ X_with_intercept + 1 * np.eye(dimp))).dot(X_with_intercept.T)).dot(yval)
+
+            y_hat = X_with_intercept.dot(beta) #lreg.predict(Xmat)
+            residuals = yval - y_hat
+            residual_sum_of_squares = residuals.T @ residuals    
+
+            sigma_squared_hat = residual_sum_of_squares / (len(yval) - dimp)
+            var_beta_hat = np.linalg.inv(X_with_intercept.T @ X_with_intercept + 1 * np.eye(dimp)) * sigma_squared_hat
+            sd_ = np.sqrt(np.diag(var_beta_hat)[1:])
+
+            coef_ = beta[1:]#np.array(lreg.coef_)
+
+            for i in range(len(ANC_list)):
+                mt[labels.index(var_name),labels.index(ANC_list[i])] = coef_[i]
+                mt_sd[labels.index(var_name),labels.index(ANC_list[i])] = sd_[i]    
+    return mt, mt_sd    
     
