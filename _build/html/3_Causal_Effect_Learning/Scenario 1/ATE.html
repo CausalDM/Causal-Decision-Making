@@ -354,6 +354,13 @@ const thebe_selector_output = ".output, .cell_output"
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../5_Case_Study/MIMIC3/MIMIC3-Demo-Ver2.html">
+                        Mimic3 Demo-Ver2
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../5_Case_Study/MIMIC3/MIMIC3_DTR.html">
                         CPL: 3-Stage DTR
                       </a>
@@ -662,6 +669,13 @@ const thebe_selector_output = ".output, .cell_output"
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../5_Case_Study/MIMIC3/MIMIC3-Demo-Ver2.html">
+                        Mimic3 Demo-Ver2
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../5_Case_Study/MIMIC3/MIMIC3_DTR.html">
                         CPL: 3-Stage DTR
                       </a>
@@ -939,6 +953,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3-Demo.html">Mimic3 Demo</a></li>
 
 
+<li class="toctree-l1"><a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3-Demo-Ver2.html">Mimic3 Demo-Ver2</a></li>
+
+
 <li class="toctree-l1"><a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3_DTR.html">CPL: 3-Stage DTR</a></li>
 
 
@@ -1156,8 +1173,8 @@ title="Print to PDF"
   <section class="tex2jax_ignore mathjax_ignore" id="ate-estimation">
 <h1>ATE Estimation<a class="headerlink" href="#ate-estimation" title="Permalink to this heading">#</a></h1>
 <p>Average treatment effect (ATE), is a measure used to compare treatments (or interventions) in randomized experiments, evaluation of policy interventions, and medical trials. As we’ve introduced in the preliminary section, it aims to estimate the difference of some reward function in between treatment and control. Under the potential outcome’s framework, or the notation of do-operator in RL-based literature, our main purpose lies in estimating and inferring on</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e4748dde-691b-4c4e-8ec4-4f8deb8ccc87">
-<span class="eqno">(14)<a class="headerlink" href="#equation-e4748dde-691b-4c4e-8ec4-4f8deb8ccc87" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-54304a40-4173-4ce5-8f43-9213aaea1ea9">
+<span class="eqno">(14)<a class="headerlink" href="#equation-54304a40-4173-4ce5-8f43-9213aaea1ea9" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \text{ATE} = E[R^*(1) - R^*(0)] = E[ R|do(A=1)] -  E[ R|do(A=0)].
 \end{equation}\]</div>
 <section id="assumptions">
@@ -1166,24 +1183,24 @@ title="Print to PDF"
 <ul class="simple">
 <li><p><strong>SUTVA (Stable Unit Treatment Value Assumption, or Consistency Assumption)</strong></p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-a9807ecd-fbd1-4a48-8231-7e839b56fc20">
-<span class="eqno">(15)<a class="headerlink" href="#equation-a9807ecd-fbd1-4a48-8231-7e839b56fc20" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f1b5097a-47f5-4a81-b59a-75fb2103b719">
+<span class="eqno">(15)<a class="headerlink" href="#equation-f1b5097a-47f5-4a81-b59a-75fb2103b719" title="Permalink to this equation">#</a></span>\[\begin{align}
 R_i = R_i^*(1) A_i + R_i^*(0) (1-A_i), i = 1, \cdots, n.
 \end{align}\]</div>
 <p>That is, the actual response that is observed for the <span class="math notranslate nohighlight">\(i\)</span>-th individual in our sample, <span class="math notranslate nohighlight">\(R_i\)</span>, who received treatment <span class="math notranslate nohighlight">\(A_i\)</span>, is the same as the potential outcome for that assigned treatment regardless of the experimental conditions used to assign treatment. This assumption also indicates that there is no interference between subjects in the population, that is, the observed response for any individual is not affected by the responses of other individuals.</p>
 <ul class="simple">
 <li><p><strong>NUC (No Unmeasured Confounders Assumption, or Strong Ignorability)</strong></p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-fde7a2ea-87b0-4825-85ad-c4ec6becc76e">
-<span class="eqno">(16)<a class="headerlink" href="#equation-fde7a2ea-87b0-4825-85ad-c4ec6becc76e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b4173368-d181-4793-a1b0-4ba6ceefddeb">
+<span class="eqno">(16)<a class="headerlink" href="#equation-b4173368-d181-4793-a1b0-4ba6ceefddeb" title="Permalink to this equation">#</a></span>\[\begin{align}
 \{R^*(0), R^*(1)\} \perp\!\!\!\perp A|S
 \end{align}\]</div>
 <p>We cannot use the data in an observational study to either confirm or refute this assumption. However, if we believe that <span class="math notranslate nohighlight">\(X\)</span> contained all the relevant information about the treatment assignment, then it will be reasonable to make the above assumption.</p>
 <ul class="simple">
 <li><p><strong>Positivity Assumption</strong></p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-2d6e0bff-fe15-411d-b530-de4577e3523e">
-<span class="eqno">(17)<a class="headerlink" href="#equation-2d6e0bff-fe15-411d-b530-de4577e3523e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-efa9b9da-0fc3-4478-86ca-839feec48fe2">
+<span class="eqno">(17)<a class="headerlink" href="#equation-efa9b9da-0fc3-4478-86ca-839feec48fe2" title="Permalink to this equation">#</a></span>\[\begin{align}
 0 &lt; P(A=1|S=s) &lt; 1
 \end{align}\]</div>
 <p>This assumption ensures that for any given individual in treatment group <span class="math notranslate nohighlight">\(1\)</span>, we are able to find a similar individual in treatment group <span class="math notranslate nohighlight">\(0\)</span>, and vice versa.</p>
@@ -1192,8 +1209,8 @@ R_i = R_i^*(1) A_i + R_i^*(0) (1-A_i), i = 1, \cdots, n.
 <section id="identification">
 <h2>Identification<a class="headerlink" href="#identification" title="Permalink to this heading">#</a></h2>
 <p>Based on the three assumptions above, we can re-write ATE as a function of the observed data. The details are shown below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9f4f8a1a-ad7d-40c9-9e86-4d21ea40de47">
-<span class="eqno">(18)<a class="headerlink" href="#equation-9f4f8a1a-ad7d-40c9-9e86-4d21ea40de47" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-dbe96a50-04d0-4e5e-8424-a474d9860938">
+<span class="eqno">(18)<a class="headerlink" href="#equation-dbe96a50-04d0-4e5e-8424-a474d9860938" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 E[Y^*(1)] &amp;= E_x [E\{Y^*(1)|X\}] \\
 &amp;= E_x[E\{Y^*(1)|T=1, X\}] \quad \text{(NUC)}\\
@@ -1201,8 +1218,8 @@ E[Y^*(1)] &amp;= E_x [E\{Y^*(1)|X\}] \\
 \end{aligned}
 \end{equation}\]</div>
 <p>Similarly, we can show that <span class="math notranslate nohighlight">\(E[Y^*(0)] = E_x[E\{Y|T=0, X\}].\)</span> Hence, the average causal treatment effect can be written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bf5fc3eb-95eb-4cb2-bfb4-455cb7431e2d">
-<span class="eqno">(19)<a class="headerlink" href="#equation-bf5fc3eb-95eb-4cb2-bfb4-455cb7431e2d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0bf79664-e2e4-4015-bfca-811d21fc9612">
+<span class="eqno">(19)<a class="headerlink" href="#equation-0bf79664-e2e4-4015-bfca-811d21fc9612" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \text{ATE} = E_x[E\{Y|T=1, X\}] - E_x[E\{Y|T=0, X\}],
 \end{aligned}
@@ -1216,70 +1233,352 @@ E[Y^*(1)] &amp;= E_x [E\{Y^*(1)|X\}] \\
 <h3>1. Direct Method<a class="headerlink" href="#direct-method" title="Permalink to this heading">#</a></h3>
 <p>The first approach to estimate the average treatment effect is through direct model fitting based on the identification result, which is also known as the outcome regression model.</p>
 <p>Specifically, we can posit a model for <span class="math notranslate nohighlight">\(E[R|A, S] = \mu(S, A;\gamma)\)</span>, and estimate the parameter <span class="math notranslate nohighlight">\(\gamma\)</span> via least square or any other machine learning-based tools for model fitting. Then, The DM estimator of ATE is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2e2062ae-58b4-4ab8-ab47-0ca3ef6a86f1">
-<span class="eqno">(20)<a class="headerlink" href="#equation-2e2062ae-58b4-4ab8-ab47-0ca3ef6a86f1" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8a83dabb-bec5-41e7-9379-13a55db7a4bd">
+<span class="eqno">(20)<a class="headerlink" href="#equation-8a83dabb-bec5-41e7-9379-13a55db7a4bd" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
-\widehat{\text{ATE}}_{\text{DM}} = \frac{1}{n}\sum_{i=1}^n \{\mu(X_i, 1;\hat{\gamma}) - \mu(X_i, 0; \hat{\gamma})\}
+\widehat{\text{ATE}}_{\text{DM}} = \frac{1}{n}\sum_{i=1}^n \{\mu(S_i, 1;\hat{\gamma}) - \mu(S_i, 0; \hat{\gamma})\}
 \end{aligned}
 \end{equation}\]</div>
+<p>This specific estimation procedure, as will be detailed in later sections, is the same as implementing S-learner and averaging over all heterogeneous treatment effects to obtain the ATE. If we fit the regression models separately for <span class="math notranslate nohighlight">\(A=1\)</span> and <span class="math notranslate nohighlight">\(A=0\)</span>, the resulting HTE estimation method becomes T-learner. We will elaborate them in the next section.</p>
+<p>Next, we implement direct method on the MovieLens dataset to provide users with a detailed ATE estimation procedure.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import data</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import related packages</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span><span class="p">;</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+
+<span class="c1"># Get the MovieLens data</span>
+<span class="n">MovieLens_CEL</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;/Users/alinaxu/Documents/CDM/CausalDM/causaldm/data/MovieLens_CEL.csv&quot;</span><span class="p">)</span>
+<span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">MovieLens_CEL</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>user_id</th>
+      <th>movie_id</th>
+      <th>rating</th>
+      <th>age</th>
+      <th>Drama</th>
+      <th>gender_M</th>
+      <th>occupation_academic/educator</th>
+      <th>occupation_college/grad student</th>
+      <th>occupation_executive/managerial</th>
+      <th>occupation_other</th>
+      <th>occupation_technician/engineer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>48.0</td>
+      <td>1193.0</td>
+      <td>4.0</td>
+      <td>25.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>48.0</td>
+      <td>919.0</td>
+      <td>4.0</td>
+      <td>25.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>48.0</td>
+      <td>527.0</td>
+      <td>5.0</td>
+      <td>25.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>48.0</td>
+      <td>1721.0</td>
+      <td>4.0</td>
+      <td>25.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>48.0</td>
+      <td>150.0</td>
+      <td>4.0</td>
+      <td>25.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>65637</th>
+      <td>5878.0</td>
+      <td>3300.0</td>
+      <td>2.0</td>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>65638</th>
+      <td>5878.0</td>
+      <td>1391.0</td>
+      <td>1.0</td>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>65639</th>
+      <td>5878.0</td>
+      <td>185.0</td>
+      <td>4.0</td>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>65640</th>
+      <td>5878.0</td>
+      <td>2232.0</td>
+      <td>1.0</td>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>65641</th>
+      <td>5878.0</td>
+      <td>426.0</td>
+      <td>3.0</td>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>65642 rows × 11 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="p">)</span>
+<span class="n">userinfo_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">SandA</span> <span class="o">=</span> <span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">])]</span>
 </pre></div>
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># S-learner</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">S_learner</span> <span class="o">=</span> <span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">S_learner</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">SandA</span><span class="p">,</span> <span class="n">MovieLens_CEL</span><span class="p">[</span><span class="s1">&#39;rating&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GradientBoostingRegressor(max_depth=5)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SandA_all1</span> <span class="o">=</span> <span class="n">SandA</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">SandA_all0</span> <span class="o">=</span> <span class="n">SandA</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">SandA_all1</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">4</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">SandA_all0</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">4</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="n">ATE_DM</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">SandA_all1</span><span class="p">)</span> <span class="o">-</span> <span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">SandA_all0</span><span class="p">))</span><span class="o">/</span><span class="n">n</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ATE_DM</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.14529621186817238
+</pre></div>
+</div>
+</div>
+</div>
+<p>That is, people are more inclined to give higher ratings to drama than science fictions. The expected rating difference given by direct method is 0.145.</p>
 </section>
 <section id="importance-sampling-estimator">
 <h3>2. Importance Sampling Estimator<a class="headerlink" href="#importance-sampling-estimator" title="Permalink to this heading">#</a></h3>
 <p>The second type of estimators is called importance sampling (IS) estimator, or inverse propensity score (IPW) and augmented inverse propensity score (AIPW) in causal inference literature.</p>
 <p>Before we proceed, let’s define the propensity score as below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1d69875e-3a5f-4036-a0d9-bfb824e12113">
-<span class="eqno">(21)<a class="headerlink" href="#equation-1d69875e-3a5f-4036-a0d9-bfb824e12113" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-79f70868-82ea-4190-9f81-818f94ad9418">
+<span class="eqno">(21)<a class="headerlink" href="#equation-79f70868-82ea-4190-9f81-818f94ad9418" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \pi(S) = P(A=1|S).
 \end{aligned}
 \end{equation}\]</div>
 <p>In the case where there are only two treatments, it refers to the propensity of getting one of the treatments as a function of the covariates. One of the attractive features of the propensity score is that given the <code class="docutils literal notranslate"><span class="pre">SUTVA</span></code> and <code class="docutils literal notranslate"><span class="pre">strong</span> <span class="pre">ignorability</span></code> assumptions, we have</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ab3eb0d0-e187-4f54-88b6-f1961b03336e">
-<span class="eqno">(22)<a class="headerlink" href="#equation-ab3eb0d0-e187-4f54-88b6-f1961b03336e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-94c62fba-acd8-47ed-8566-f5775687f0df">
+<span class="eqno">(22)<a class="headerlink" href="#equation-94c62fba-acd8-47ed-8566-f5775687f0df" title="Permalink to this equation">#</a></span>\[\begin{align}
 \{R^*(1), R^*(0)\} \perp\!\!\!\perp A|\pi(S)
 \end{align}\]</div>
 <p>In some cases when it is difficult to fit an outcome regression model for <span class="math notranslate nohighlight">\(E[R|A, S]\)</span> and <span class="math notranslate nohighlight">\(S\)</span> may be high dimensional, we can alternatively fit models for <span class="math notranslate nohighlight">\(E[R|A, \pi(S)]\)</span> based on the result above.</p>
 <p>The motivation of IPW is as follows. Since the propensity (probability) of receiving treatment <span class="math notranslate nohighlight">\(1\)</span> is <span class="math notranslate nohighlight">\(\pi(S)\)</span> for an individual with baseline covariates <span class="math notranslate nohighlight">\(S\)</span>, then every individual with covariates <span class="math notranslate nohighlight">\(X_i\)</span> that was observed to receive treatment 1 in our sample is weighted by <span class="math notranslate nohighlight">\(1/\pi(S_i)\)</span> so that their response not only represent themselves but also other individuals who did not receive treatment 1. More formally, we will show that <span class="math notranslate nohighlight">\(\frac{AR}{\pi(S)}\)</span> is an unbiased estimator of <span class="math notranslate nohighlight">\(E[R^*(1)]\)</span>. This follows that, given the <code class="docutils literal notranslate"><span class="pre">positivity</span></code> assumption,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9a30169f-e893-4f0e-9294-448efc5b9865">
-<span class="eqno">(23)<a class="headerlink" href="#equation-9a30169f-e893-4f0e-9294-448efc5b9865" title="Permalink to this equation">#</a></span>\[\begin{equation} 
+<div class="amsmath math notranslate nohighlight" id="equation-6ea7b199-aace-4eff-9c3d-d6a59f421bf2">
+<span class="eqno">(23)<a class="headerlink" href="#equation-6ea7b199-aace-4eff-9c3d-d6a59f421bf2" title="Permalink to this equation">#</a></span>\[\begin{equation} 
 \begin{aligned}
 E\left[\frac{AR}{\pi(S)}\right] = E\left[\frac{AR^*(1)}{\pi(S)}\right] = E\left[E\bigg\{\frac{AR^*(1)}{\pi(S)}\Big|S\bigg\}\right] = E\left[E\bigg\{\frac{A}{\pi(S)}\Big| S\bigg\}R^*(1)\right] = E[R^*(1)].
 \end{aligned}
 \end{equation}\]</div>
 <p>Similarly, by flipping the role of treatment (<span class="math notranslate nohighlight">\(A=1\)</span>) and control (<span class="math notranslate nohighlight">\(A=0\)</span>), we have</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d4d03ccb-4a55-48eb-a724-8adb335dec2b">
-<span class="eqno">(24)<a class="headerlink" href="#equation-d4d03ccb-4a55-48eb-a724-8adb335dec2b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-704691b6-0717-43e4-ba62-8da8e65b8fce">
+<span class="eqno">(24)<a class="headerlink" href="#equation-704691b6-0717-43e4-ba62-8da8e65b8fce" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 E[R^*(0)] = E\left[\frac{(1-A)R}{1-\pi(S)} \right].
 \end{aligned}
 \end{equation}\]</div>
 <p>Consequently, the IS (or IPW) estimator for the estimation of ATE is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b71ce721-eda9-4b0b-a1bb-9910355271d7">
-<span class="eqno">(25)<a class="headerlink" href="#equation-b71ce721-eda9-4b0b-a1bb-9910355271d7" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-debda02c-4b9d-48bc-9253-690a6bf98a0a">
+<span class="eqno">(25)<a class="headerlink" href="#equation-debda02c-4b9d-48bc-9253-690a6bf98a0a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
-\widehat{\text{ATE}}_{\text{IS}} =\frac{1}{n}\sum_{i=1}^n \left\{\frac{T_iY_i}{\pi(X_i)}  - \frac{(1-T_i)Y_i}{1-\pi(X_i)}  \right\}.
+\widehat{\text{ATE}}_{\text{IS}} =\frac{1}{n}\sum_{i=1}^n \left\{\frac{A_iR_i}{\hat\pi(S_i)}  - \frac{(1-A_i)R_i}{1-\hat\pi(S_i)}  \right\}.
 \end{aligned}
 \end{equation}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import data</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># propensity score model fitting</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+
+<span class="n">ps_model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="n">ps_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">userinfo_index</span><span class="p">],</span>  <span class="n">MovieLens_CEL</span><span class="p">[</span><span class="s1">&#39;Drama&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LogisticRegression()
 </pre></div>
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pi_S</span> <span class="o">=</span> <span class="n">ps_model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">userinfo_index</span><span class="p">])</span>
+<span class="n">ATE_IS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">MovieLens_CEL</span><span class="p">[</span><span class="s1">&#39;Drama&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">pi_S</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">MovieLens_CEL</span><span class="p">[</span><span class="s1">&#39;Drama&#39;</span><span class="p">])</span><span class="o">/</span><span class="n">pi_S</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="n">MovieLens_CEL</span><span class="p">[</span><span class="s1">&#39;rating&#39;</span><span class="p">])</span><span class="o">/</span><span class="n">n</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ATE_IS</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3556423779577757
+</pre></div>
+</div>
+</div>
+</div>
+<p>People watching <code class="docutils literal notranslate"><span class="pre">Drama</span></code> is expected to give ratings 0.356 point higher than watching <code class="docutils literal notranslate"><span class="pre">Sci-Fi</span></code>.</p>
 </section>
 <section id="doubly-robust-estimator">
 <h3>3. Doubly Robust Estimator<a class="headerlink" href="#doubly-robust-estimator" title="Permalink to this heading">#</a></h3>
 <p>The third type of estimator is the doubly robust estimator. Basically, DR combines DM and IS estimators, which is more robust to model misspecifications.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ecc0d1b8-77d4-46b4-90f4-1f6e7d7d786b">
-<span class="eqno">(26)<a class="headerlink" href="#equation-ecc0d1b8-77d4-46b4-90f4-1f6e7d7d786b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-fcf58337-fb4b-4bd1-9bb7-61cd2f88906d">
+<span class="eqno">(26)<a class="headerlink" href="#equation-fcf58337-fb4b-4bd1-9bb7-61cd2f88906d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \widehat{\text{ATE}}_{\text{DR}} = \frac{1}{n}\sum_{i=1}^n \left\{\mu(S_i,1;\hat{\gamma})- \mu(S_i,0;\hat{\gamma})+\frac{A_i(R_i - \mu(S_i,1;\hat{\gamma}))}{\hat{\pi}(S_i)}  - \frac{(1-A_i)(R_i-\mu(S_i,0;\hat{\gamma}))}{1-\hat{\pi}(S_i)} \right\}.
 \end{aligned}
@@ -1288,11 +1587,31 @@ E[R^*(0)] = E\left[\frac{(1-A)R}{1-\pi(S)} \right].
 <p>Under some mild entropy conditions or sample splitting, DR estimator is also a semi-parametrically efficient estimator when the convergence rate of both <span class="math notranslate nohighlight">\(\hat{\mu}\)</span> and <span class="math notranslate nohighlight">\(\hat{\pi}\)</span> are at least <span class="math notranslate nohighlight">\(o(n^{-1/4})\)</span>. Details can be found in Chernozhukov et al. 2018 [2].</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import data</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="p">[</span><span class="s1">&#39;Drama&#39;</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="p">[</span><span class="s1">&#39;rating&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">SandA_all1</span><span class="p">))</span><span class="o">/</span><span class="n">pi_S</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">MovieLens_CEL</span><span class="p">[</span><span class="s1">&#39;Drama&#39;</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="p">[</span><span class="s1">&#39;rating&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">SandA_all0</span><span class="p">))</span><span class="o">/</span><span class="n">pi_S</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">n</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.15559049518872164
 </pre></div>
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># combine the DM estimator and IS estimator</span>
+<span class="n">ATE_DR</span> <span class="o">=</span> <span class="n">ATE_DM</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="p">[</span><span class="s1">&#39;Drama&#39;</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="p">[</span><span class="s1">&#39;rating&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">SandA_all1</span><span class="p">))</span><span class="o">/</span><span class="n">pi_S</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">MovieLens_CEL</span><span class="p">[</span><span class="s1">&#39;Drama&#39;</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="p">[</span><span class="s1">&#39;rating&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">SandA_all0</span><span class="p">))</span><span class="o">/</span><span class="n">pi_S</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">n</span>
+<span class="n">ATE_DR</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.010294283320549269
+</pre></div>
+</div>
+</div>
+</div>
+<p>After correcting the bias by doubly robust procedure, the expected rating of <code class="docutils literal notranslate"><span class="pre">Drama</span></code> is even slightly lower than that of <code class="docutils literal notranslate"><span class="pre">Sci-Fi</span></code>.</p>
 </section>
 </section>
 <section id="references">
