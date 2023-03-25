@@ -36,73 +36,76 @@
 # In[1]:
 
 
-import sys
-get_ipython().system('{sys.executable} -m pip install scikit-uplift')
-
-
-# In[2]:
-
-
 # import related packages
-from matplotlib import pyplot as plt
-from lightgbm import LGBMRegressor
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt;
+from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import LogisticRegression 
-from causaldm._util_causaldm import *
 from causaldm.learners.Causal_Effect_Learning.Single_Stage.Rlearner import Rlearner
 
 
-# In[ ]:
+# ### MovieLens Data
 
-
-n = 10**3  # sample size in observed data
-n0 = 10**5 # the number of samples used to estimate the true reward distribution by MC
-seed=223
-
-
-# In[ ]:
+# In[6]:
 
 
 # Get data
-data_behavior = get_data_simulation(n, seed, policy="behavior")
-#data_target = get_data_simulation(n0, seed, policy="target")
-
-# The true expected heterogeneous treatment effect
-HTE_true = get_data_simulation(n, seed, policy="1")['R']-get_data_simulation(n, seed, policy="0")['R']
+MovieLens_CEL = pd.read_csv("/Users/alinaxu/Documents/CDM/CausalDM/causaldm/data/MovieLens_CEL.csv")
+MovieLens_CEL.pop(MovieLens_CEL.columns[0])
+MovieLens_CEL
 
 
-# In[ ]:
+# In[9]:
+
+
+n = len(MovieLens_CEL)
+userinfo_index = np.array([3,5,6,7,8,9,10])
+SandA = MovieLens_CEL.iloc[:, np.array([3,4,5,6,7,8,9,10])]
+
+
+# In[33]:
+
+
+MovieLens_CEL.columns[userinfo_index]
+
+
+# In[40]:
 
 
 # R-learner for HTE estimation
-outcome = 'R'
-treatment = 'A'
-controls = ['S1','S2']
+np.random.seed(1)
+outcome = 'rating'
+treatment = 'Drama'
+controls = ['age', 'gender_M', 'occupation_academic/educator',
+       'occupation_college/grad student', 'occupation_executive/managerial',
+       'occupation_other', 'occupation_technician/engineer']
 n_folds = 5
-y_model = LGBMRegressor(max_depth=2)
+y_model = GradientBoostingRegressor(max_depth=2)
 ps_model = LogisticRegression()
-Rlearner_model = LGBMRegressor(max_depth=2)
+Rlearner_model = GradientBoostingRegressor(max_depth=2)
 
-HTE_R_learner = Rlearner(data_behavior, outcome, treatment, controls, n_folds, y_model, ps_model, Rlearner_model)
+HTE_R_learner = Rlearner(MovieLens_CEL, outcome, treatment, controls, n_folds, y_model, ps_model, Rlearner_model)
 HTE_R_learner = HTE_R_learner.to_numpy()
 
 
-# In[ ]:
+# Let's focus on the estimated HTEs for three randomly chosen users:
+
+# In[41]:
 
 
-print("R-learner:  ",HTE_R_learner[0:8])
-print("true value: ",HTE_true[0:8].to_numpy())
+print("R-learner:  ",HTE_R_learner[np.array([0,1000,5000])])
 
 
-# In[ ]:
+# In[42]:
 
 
-Bias_R_learner = np.sum(HTE_R_learner-HTE_true)/n
-Variance_R_learner = np.sum((HTE_R_learner-HTE_true)**2)/n
-print("The overall estimation bias of R-learner is :     ", Bias_R_learner, ", \n", "The overall estimation variance of R-learner is :",Variance_R_learner,". \n")
+ATE_R_learner = np.sum(HTE_R_learner)/n
+print("Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by",round(ATE_R_learner,4), "out of 5 points.")
 
 
-# **Conclusion:** It's amazing to see that the bias of R-learner is significantly smaller than all other approaches.
+# **Conclusion:** Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by 0.0755 out of 5 points.
 
 # ## References
 # 
@@ -110,10 +113,9 @@ print("The overall estimation bias of R-learner is :     ", Bias_R_learner, ", \
 # 
 # 3. Peter M Robinson. Root-n-consistent semiparametric regression. Econometrica: Journal of the Econometric Society, pages 931–954, 1988.
 # 
-# 4. Edward H Kennedy. Optimal doubly robust estimation of heterogeneous causal effects. arXiv preprint arXiv:2004.14497, 2020
-# 
-# 5. M. J. van der Laan. Statistical inference for variable importance. The International Journal of Biostatistics, 2(1), 2006.
-# 
-# 6. S. Lee, R. Okui, and Y.-J. Whang. Doubly robust uniform confidence band for the conditional average treatment effect function. Journal of Applied Econometrics, 32(7):1207–1225, 2017.
-# 
-# 7. D. J. Foster and V. Syrgkanis. Orthogonal statistical learning. arXiv preprint arXiv:1901.09036, 2019.
+
+# In[ ]:
+
+
+
+

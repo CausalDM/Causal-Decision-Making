@@ -143,7 +143,7 @@ i,t,A,R,feature_info
 # ### Demo Code for Bernoulli Bandit
 # The steps are similar to those previously performed with a Gaussian Bandit. Note that, when specifying the prior distribution of the expected reward, the mean-precision form of the Beta distribution is used here, i.e., Beta($\mu$, $\phi$), where $\mu$ is the mean reward of each arm and $\phi$ is the precision of the Beta distribution. By default, Algorithm 2 in [1] is applied to save computational time updating meta-posteriors. If `update_freq` is specified, then the meta-posterior will be updated every `update_freq` rounds of interactions.
 
-# In[8]:
+# In[6]:
 
 
 from causaldm.learners.Online.Meta_Bandits import MTTS_Binary

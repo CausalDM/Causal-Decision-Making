@@ -31,46 +31,52 @@
 # In[1]:
 
 
-import sys
-get_ipython().system('{sys.executable} -m pip install scikit-uplift')
+# import related packages
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt;
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LogisticRegression 
+from causaldm.learners.Causal_Effect_Learning.Single_Stage.LpRlearner import LpRlearner
 
+
+# ### MovieLens Data
 
 # In[2]:
+
+
+# Get data
+MovieLens_CEL = pd.read_csv("/Users/alinaxu/Documents/CDM/CausalDM/causaldm/data/MovieLens_CEL.csv")
+MovieLens_CEL.pop(MovieLens_CEL.columns[0])
+MovieLens_CEL
+
+
+# In[3]:
+
+
+n = len(MovieLens_CEL)
+userinfo_index = np.array([3,5,6,7,8,9,10])
+SandA = MovieLens_CEL.iloc[:, np.array([3,4,5,6,7,8,9,10])]
+
+
+# In[4]:
 
 
 # import related packages
 from causaldm._util_causaldm import *
 
 
-# In[ ]:
-
-
-n = 10**3  # sample size in observed data
-n0 = 10**5 # the number of samples used to estimate the true reward distribution by MC
-seed=223
-
-
-# In[ ]:
-
-
-# Get data
-data_behavior = get_data_simulation(n, seed, policy="behavior")
-#data_target = get_data_simulation(n0, seed, policy="target")
-
-# The true expected heterogeneous treatment effect
-HTE_true = get_data_simulation(n, seed, policy="1")['R']-get_data_simulation(n, seed, policy="0")['R']
-
-
 # The generalized random forest (GRF) approach has been implemented in package *grf* for R and C++, and *econml* in python. Here we implement the package of *econml* for a simple illustration.
 
-# In[ ]:
+# In[5]:
 
 
 # import the package for Causal Random Forest
 get_ipython().system(' pip install econml')
 
 
-# In[ ]:
+# In[7]:
 
 
 # A demo code of Causal Random Forest
@@ -83,34 +89,28 @@ est = CausalForest(criterion='het', n_estimators=400, min_samples_leaf=5, max_de
                     honest=True, verbose=0, n_jobs=-1, random_state=1235)
 
 
-est.fit(data_behavior.iloc[:,0:2], data_behavior['A'], data_behavior['R'])
+est.fit(MovieLens_CEL.iloc[:,userinfo_index], MovieLens_CEL['Drama'], MovieLens_CEL['rating'])
 
-HTE_GRF = est.predict(data_behavior.iloc[:,0:2], interval=False, alpha=0.05)
+HTE_GRF = est.predict(MovieLens_CEL.iloc[:,userinfo_index], interval=False, alpha=0.05)
 HTE_GRF = HTE_GRF.flatten()
 
 
-# In[ ]:
+# Let's focus on the estimated HTEs for three randomly chosen users:
+
+# In[8]:
 
 
-print("Generalized Random Forest:  ",HTE_GRF[0:8])
-print("true value:                 ",HTE_true[0:8].to_numpy())
+print("Generalized Random Forest:  ",HTE_GRF[np.array([0,300,900])])
 
 
-# Causal Forest performs just okay in this example.
-
-# In[ ]:
+# In[9]:
 
 
-Bias_GRF = np.sum(HTE_GRF-HTE_true)/n
-Variance_GRF = np.sum((HTE_GRF-HTE_true)**2)/n
-print("The overall estimation bias of Generalized Random Forest is :     ", Bias_GRF, ", \n", "The overall estimation variance of Generalized Random Forest is :",Variance_GRF ,". \n")
+ATE_GRF = np.sum(HTE_GRF)/n
+print("Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by",round(ATE_GRF,4), "out of 5 points.")
 
 
-# In[ ]:
-
-
-
-
+# **Conclusion:** Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by 0.358 out of 5 points.
 
 # ## References
 # 

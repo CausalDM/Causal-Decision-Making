@@ -57,22 +57,72 @@
 # 
 # 
 
-# ### 1. Direct Method
+# ### 1. Direct Method 
 # 
 # The first approach to estimate the average treatment effect is through direct model fitting based on the identification result, which is also known as the outcome regression model. 
 # 
 # Specifically, we can posit a model for $E[R|A, S] = \mu(S, A;\gamma)$, and estimate the parameter $\gamma$ via least square or any other machine learning-based tools for model fitting. Then, The DM estimator of ATE is given by
 # \begin{equation}
 # \begin{aligned}
-# \widehat{\text{ATE}}_{\text{DM}} = \frac{1}{n}\sum_{i=1}^n \{\mu(X_i, 1;\hat{\gamma}) - \mu(X_i, 0; \hat{\gamma})\}
+# \widehat{\text{ATE}}_{\text{DM}} = \frac{1}{n}\sum_{i=1}^n \{\mu(S_i, 1;\hat{\gamma}) - \mu(S_i, 0; \hat{\gamma})\}
 # \end{aligned}
 # \end{equation}
+# 
+# This specific estimation procedure, as will be detailed in later sections, is the same as implementing S-learner and averaging over all heterogeneous treatment effects to obtain the ATE. If we fit the regression models separately for $A=1$ and $A=0$, the resulting HTE estimation method becomes T-learner. We will elaborate them in the next section.
+# 
+# Next, we implement direct method on the MovieLens dataset to provide users with a detailed ATE estimation procedure.
 
 # In[1]:
 
 
-# import data
+# import related packages
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt;
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.linear_model import LinearRegression
 
+# Get the MovieLens data
+MovieLens_CEL = pd.read_csv("/Users/alinaxu/Documents/CDM/CausalDM/causaldm/data/MovieLens_CEL.csv")
+MovieLens_CEL.pop(MovieLens_CEL.columns[0])
+MovieLens_CEL
+
+
+# In[14]:
+
+
+n = len(MovieLens_CEL)
+userinfo_index = np.array([3,5,6,7,8,9,10])
+SandA = MovieLens_CEL.iloc[:, np.array([3,4,5,6,7,8,9,10])]
+
+
+# In[21]:
+
+
+# S-learner
+np.random.seed(0)
+S_learner = GradientBoostingRegressor(max_depth=5)
+S_learner.fit(SandA, MovieLens_CEL['rating'])
+
+
+# In[22]:
+
+
+SandA_all1 = SandA.copy()
+SandA_all0 = SandA.copy()
+SandA_all1.iloc[:,4]=np.ones(n)
+SandA_all0.iloc[:,4]=np.zeros(n)
+
+ATE_DM = np.sum(S_learner.predict(SandA_all1) - S_learner.predict(SandA_all0))/n
+
+
+# In[23]:
+
+
+ATE_DM
+
+
+#  That is, people are more inclined to give higher ratings to drama than science fictions. The expected rating difference given by direct method is 0.145.
 
 # ### 2. Importance Sampling Estimator
 # The second type of estimators is called importance sampling (IS) estimator, or inverse propensity score (IPW) and augmented inverse propensity score (AIPW) in causal inference literature.
@@ -105,16 +155,35 @@
 # Consequently, the IS (or IPW) estimator for the estimation of ATE is given by
 # \begin{equation}
 # \begin{aligned}
-# \widehat{\text{ATE}}_{\text{IS}} =\frac{1}{n}\sum_{i=1}^n \left\{\frac{T_iY_i}{\pi(X_i)}  - \frac{(1-T_i)Y_i}{1-\pi(X_i)}  \right\}.
+# \widehat{\text{ATE}}_{\text{IS}} =\frac{1}{n}\sum_{i=1}^n \left\{\frac{A_iR_i}{\hat\pi(S_i)}  - \frac{(1-A_i)R_i}{1-\hat\pi(S_i)}  \right\}.
 # \end{aligned}
 # \end{equation}
 # 
 
-# In[2]:
+# In[39]:
 
 
-# import data
+# propensity score model fitting
+from sklearn.linear_model import LogisticRegression
 
+ps_model = LogisticRegression()
+ps_model.fit(MovieLens_CEL.iloc[:, userinfo_index],  MovieLens_CEL['Drama'])
+
+
+# In[37]:
+
+
+pi_S = ps_model.predict_proba(MovieLens_CEL.iloc[:, userinfo_index])
+ATE_IS = np.sum((MovieLens_CEL['Drama']/pi_S[:,1] - (1-MovieLens_CEL['Drama'])/pi_S[:,0])*MovieLens_CEL['rating'])/n
+
+
+# In[38]:
+
+
+ATE_IS
+
+
+# People watching `Drama` is expected to give ratings 0.356 point higher than watching `Sci-Fi`.
 
 # ### 3. Doubly Robust Estimator
 # The third type of estimator is the doubly robust estimator. Basically, DR combines DM and IS estimators, which is more robust to model misspecifications. 
@@ -127,18 +196,22 @@
 # 
 # Under some mild entropy conditions or sample splitting, DR estimator is also a semi-parametrically efficient estimator when the convergence rate of both $\hat{\mu}$ and $\hat{\pi}$ are at least $o(n^{-1/4})$. Details can be found in Chernozhukov et al. 2018 [2].
 
-# In[3]:
+# In[42]:
 
 
-# import data
+np.sum(MovieLens_CEL['Drama']*(MovieLens_CEL['rating']-S_learner.predict(SandA_all1))/pi_S[:,1] - (1-MovieLens_CEL['Drama'])*(MovieLens_CEL['rating']-S_learner.predict(SandA_all0))/pi_S[:,0])/n
 
+
+# In[45]:
+
+
+# combine the DM estimator and IS estimator
+ATE_DR = ATE_DM + np.sum(MovieLens_CEL['Drama']*(MovieLens_CEL['rating']-S_learner.predict(SandA_all1))/pi_S[:,1] - (1-MovieLens_CEL['Drama'])*(MovieLens_CEL['rating']-S_learner.predict(SandA_all0))/pi_S[:,0])/n
+ATE_DR
+
+
+# After correcting the bias by doubly robust procedure, the expected rating of `Drama` is even slightly lower than that of `Sci-Fi`.
 
 # ## References
 # 1. Zhang, B., A. A. Tsiatis, E. B. Laber, and M. Davidian (2013). Robust estimation of optimal dynamic treatment regimes for sequential treatment decisions. Biometrika 100 (3), 681–694.
 # 2. Chernozhukov, V., D. Chetverikov, M. Demirer, E. Duflo, C. Hansen, W. Newey, and J. Robins (2018). Double/debiased machine learning for treatment and structural parameters.
-
-# In[ ]:
-
-
-
-

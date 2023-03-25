@@ -45,7 +45,7 @@ MovieLens_CEL.pop(MovieLens_CEL.columns[0])
 MovieLens_CEL
 
 
-# In[10]:
+# In[3]:
 
 
 n = len(MovieLens_CEL)
@@ -53,17 +53,18 @@ userinfo_index = np.array([3,5,6,7,8,9,10])
 SandA = MovieLens_CEL.iloc[:, np.array([3,4,5,6,7,8,9,10])]
 
 
-# In[11]:
+# In[8]:
 
 
 # S-learner
+np.random.seed(0)
 S_learner = GradientBoostingRegressor(max_depth=5)
 #S_learner = LinearRegression()
 #SandA = np.hstack((S.to_numpy(),A.to_numpy().reshape(-1,1)))
 S_learner.fit(SandA, MovieLens_CEL['rating'])
 
 
-# In[12]:
+# In[9]:
 
 
 SandA_all1 = SandA.copy()
@@ -76,13 +77,13 @@ HTE_S_learner = S_learner.predict(SandA_all1) - S_learner.predict(SandA_all0)
 
 # Let's focus on the estimated HTEs for three randomly chosen users:
 
-# In[22]:
+# In[10]:
 
 
 print("S-learner:  ",HTE_S_learner[np.array([0,1000,5000])])
 
 
-# In[20]:
+# In[11]:
 
 
 ATE_S_learner = np.sum(HTE_S_learner)/n

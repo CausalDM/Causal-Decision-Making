@@ -61,10 +61,10 @@ mimic3 = pd.read_csv("subset_rl_data_final_cont.csv")
 # In[3]:
 
 
-mimic3_base = mimic3[['icustayid', 'Glucose','paO2','PaO2_FiO2',
+mimic3_base = mimic3[['icustayid', 'Glucose', 'paO2', 'PaO2_FiO2',
                            'iv_input', 'SOFA','died_within_48h_of_out_time']]
 mimic3_base['died_within_48h_of_out_time'] = - 2 * np.array(mimic3_base['died_within_48h_of_out_time']) + 1
-mimic3_base.columns = ['icustayid', 'Glucose','paO2','PaO2_FiO2',
+mimic3_base.columns = ['icustayid', 'Glucose', 'PaO2', 'PaO2_FiO2',
                            'IV Input', 'SOFA','Died within 48H'] 
 mimic3_base.head(6)
 
@@ -103,7 +103,7 @@ lag_k = 1
 
 new_sofa = np.array(mimic_final['SOFA'][:-lag_k])
 mimic3_sample = mimic_final.iloc[lag_k:]
-mimic3_sample['SOFA'] = new_sofa
+mimic3_sample['SOFA'] = new_sofa 
 mimic3_data = mimic3_sample.groupby('icustayid').mean().reset_index() 
  
 
@@ -119,35 +119,37 @@ mimic3_data.to_csv (r'mimic3_single_stage.csv', index = False, header=True)
 mimic3_data.head(6)
 
 
-# In[9]:
+# In[10]:
 
 
-# ----------- Estimated DAG based on NOTEARS
+# ----------- Estimated DAG based on NOTEARS 
 
 mimic3_data_final = mimic3_data  
 
-selected = ['Glucose','paO2','PaO2_FiO2', 'IV Input', 'SOFA','Died within 48H']
+selected = ['Glucose', 'PaO2', 'PaO2_FiO2', 'IV Input', 'SOFA', 'Died within 48H']
 
 smaple_demo = mimic3_data_final[selected]
 est_mt = notears_linear(np.array(smaple_demo), lambda1=0, loss_type='l2',w_threshold=0.1)
+ 
+# ----------- Refit Associated Matrix under LSEM 
 
-# ----------- Plot Associated Matrix for the Estimated DAG based on NOTEARS
-
-plot_mt(est_mt, labels_name=selected, file_name='demo_res_mt')
-
-# calculate_effect(est_mt)
+est_mt, _ = refit(smaple_demo, est_mt, selected) 
 
 
-# In[10]:
+# In[12]:
 
+
+# ----------- Plot Associated Estimated DAG based on NOTEARS 
 
 plot_net(est_mt, labels_name=selected, file_name='demo_res_net')
 
 
-# In[11]:
+# In[13]:
 
 
-calculate_effect(est_mt)
+topo_list = np.array(selected)[list(nx.topological_sort(nx.DiGraph(est_mt)))].tolist()
+topo_list.reverse()
+print('Topological order from top to buttom:\n', topo_list)
 
 
 # ## Causal Effect Learning

@@ -122,7 +122,7 @@ MTSS_agent = MTSS_Cascade.MTSS_Cascade(phi_beta = phi_beta, K = K, Xs = S,
 # 4. Update the posterior distribution
 # <code> MTSS_agent.receive_reward(A,W,E,t,S) </code>
 
-# In[1]:
+# In[5]:
 
 
 t = 0

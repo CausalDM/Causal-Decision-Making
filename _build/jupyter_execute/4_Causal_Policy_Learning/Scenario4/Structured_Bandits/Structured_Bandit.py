@@ -39,7 +39,7 @@
 # ## Reference
 # [1] Russo, D., Van Roy, B., Kazerouni, A., Osband, I., and Wen, Z. (2017). A tutorial on thompson sampling. arXiv preprint arXiv:1707.02038.
 # 
-# [2] Luce, R. D. (2012). Individual choice behavior: A theoretical analysis. Courier Corporation.
+# [2] Agrawal, S., Avadhanula, V., Goyal, V., & Zeevi, A. (2017, June). Thompson sampling for the mnl-bandit. In Conference on learning theory (pp. 76-78). PMLR.
 # 
 # [3] Kveton, B., Szepesvari, C., Wen, Z., and Ashkan, A. (2015a). Cascading bandits: Learning to rank in the cascade model. In International Conference on Machine Learning, pages 767–776. PMLR.
 # 
