@@ -58,6 +58,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '3_Causal_Effect_Learning/Scenario 2/underMDP';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -1057,6 +1059,20 @@ title="Print to PDF"
               
   <section class="tex2jax_ignore mathjax_ignore" id="markov-decision-processes">
 <h1>Markov Decision Processes<a class="headerlink" href="#markov-decision-processes" title="Permalink to this heading">#</a></h1>
+<p>In this section, we move to the case where the data is no long single stage. In some real cases, researchers may encounter the longitudinal data with long horizons or even infinite horizons. For example, in clinical trial, the doctor will periodically check the health status of patients to provide them with personalized treatment at each time they visit. Under this scenario, the problem becomes: ``What’s the causal effect of taking a target treatment at each stage versus the control?”.</p>
+<p>Due to the complexity of data structure in multiple horizons, a substantial amount of work was developed based on the Markov assumption between state transitions, which makes the problem easier to deal with. This problem is often known as the causal effect estimation under Markov Decision Processes (MDPs). Specifically, MDP requires two types of conditional independence assumptions to hold:</p>
+<p><strong>(MA) Markov assumption</strong>:  there exists a Markov transition kernel <span class="math notranslate nohighlight">\(\mathcal{P}\)</span> such that  for any <span class="math notranslate nohighlight">\(t\ge 0\)</span>, <span class="math notranslate nohighlight">\(\bar{a}_{t}\in \{0,1\}^{t+1}\)</span> and <span class="math notranslate nohighlight">\(\mathcal{S}\subseteq \mathbb{R}^d\)</span>, we have
+<span class="math notranslate nohighlight">\(\mathbb{P}\{S_{t+1}^*(\bar{a}_{t})\in \mathcal{S}|W_t^*(\bar{a}_t)\}=\mathcal{P}(\mathcal{S};a_t,S_t^*(\bar{a}_{t-1})).\)</span></p>
+<p><strong>(CMIA) Conditional mean independence assumption</strong>: there exists a function <span class="math notranslate nohighlight">\(r\)</span> such that  for any <span class="math notranslate nohighlight">\(t\ge 0, \bar{a}_{t}\in \{0,1\}^{t+1}\)</span>, we have
+<span class="math notranslate nohighlight">\(\mathbb{E} \{Y_t^*(\bar{a}_t)|S_t^*(\bar{a}_{t-1}),W_{t-1}^*(\bar{a}_{t-1})\}=r(a_t,S_t^*(\bar{a}_{t-1}))\)</span>.</p>
+<p>[TO BE ADDED]</p>
+<p>First: make the connection with off-policy evaluation in CPL-Paradigm2. Clearly point out the relationship between CEL and CPL.</p>
+<p>Then: talk about the methodologies in:</p>
+<ol class="arabic simple">
+<li><p>Basic setting when all three assumptions <code class="docutils literal notranslate"><span class="pre">SUTVA</span></code>, <code class="docutils literal notranslate"><span class="pre">No</span> <span class="pre">Unmeasured</span> <span class="pre">Confounders</span></code> and <code class="docutils literal notranslate"><span class="pre">Positivity</span></code> are hold; What kind of work are involved;</p></li>
+<li><p>Some extensions of MDP, such as high order MDP and POMDP;</p></li>
+<li><p>Violation of the big three assumptions: interference, unmeasured confounders, and the violation of positivity assumptions. Related work will be cited to give a general picture of what have been done in literature.</p></li>
+</ol>
 </section>
 
     <script type="text/x-thebe-config">
