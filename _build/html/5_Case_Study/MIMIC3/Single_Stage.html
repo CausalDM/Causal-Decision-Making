@@ -1113,9 +1113,11 @@ title="Print to PDF"
 <p>In this notebook, we conducted analysis on the MIMIC III data with a single stage. We first analyzed the mediation effect and then evaluate the policy of interest and calculated the optimal policy. As informed by the causal structure learning, here we consider Glucose and PaO2_FiO2 as confounders/states, IV_Input as the action, SOFA as the mediator.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:/Github/CausalDM&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="n">single_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;mimic3_single_stage.csv&#39;</span><span class="p">)</span>
+<span class="n">single_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./causaldm/MIMIC3/mimic3_single_stage.csv&#39;</span><span class="p">)</span>
 <span class="n">single_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">single_data</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">&lt;=</span><span class="mf">1.5</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span> <span class="c1"># change the discrete action to binary</span>
 <span class="n">single_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">single_data</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">1.5</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span> <span class="c1"># change the discrete action to binary</span>
 <span class="n">single_data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
@@ -1123,97 +1125,19 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_87985</span><span class="o">/</span><span class="mf">2964169404.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">os</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:/Github/CausalDM&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">single_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./causaldm/MIMIC3/mimic3_single_stage.csv&#39;</span><span class="p">)</span>
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>icustayid</th>
-      <th>Glucose</th>
-      <th>PaO2_FiO2</th>
-      <th>IV Input</th>
-      <th>SOFA</th>
-      <th>Died within 48H</th>
-      <th>SOFA Post</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1006</td>
-      <td>152.000000</td>
-      <td>137.081590</td>
-      <td>1.0</td>
-      <td>8.400000</td>
-      <td>-1.0</td>
-      <td>7.600000</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1204</td>
-      <td>138.794872</td>
-      <td>430.668956</td>
-      <td>0.0</td>
-      <td>5.692308</td>
-      <td>1.0</td>
-      <td>6.153846</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>4132</td>
-      <td>129.364286</td>
-      <td>252.883864</td>
-      <td>1.0</td>
-      <td>4.800000</td>
-      <td>-1.0</td>
-      <td>4.600000</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>4201</td>
-      <td>145.580087</td>
-      <td>539.065657</td>
-      <td>0.0</td>
-      <td>5.636364</td>
-      <td>1.0</td>
-      <td>5.818182</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>5170</td>
-      <td>174.525000</td>
-      <td>394.616727</td>
-      <td>1.0</td>
-      <td>3.625000</td>
-      <td>1.0</td>
-      <td>4.125000</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>6504</td>
-      <td>106.081169</td>
-      <td>423.030303</td>
-      <td>0.0</td>
-      <td>6.000000</td>
-      <td>1.0</td>
-      <td>5.090909</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;D:/Github/CausalDM&#39;
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1233,25 +1157,25 @@ title="Print to PDF"
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
-<th class="head text-center"><p>DE</p></th>
-<th class="head"><p>IE</p></th>
+<th class="head text-center"><p>NDE</p></th>
+<th class="head"><p>NIE</p></th>
 <th class="head"><p>TE</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Direct Estimator</p></td>
-<td class="text-center"><p>-.3465</p></td>
-<td><p>.0097</p></td>
+<td class="text-center"><p>-.3425</p></td>
+<td><p>.0057</p></td>
 <td><p>-.3368</p></td>
 </tr>
 <tr class="row-odd"><td><p>IPW</p></td>
 <td class="text-center"><p>-.4585</p></td>
 <td><p>0</p></td>
-<td><p>-.4584</p></td>
+<td><p>-.4585</p></td>
 </tr>
 <tr class="row-even"><td><p>Robust</p></td>
-<td class="text-center"><p>-.3643</p></td>
-<td><p>-.0482</p></td>
+<td class="text-center"><p>-.3652</p></td>
+<td><p>-.0474</p></td>
 <td><p>-.4126</p></td>
 </tr>
 </tbody>
@@ -1259,26 +1183,15 @@ title="Print to PDF"
 <p>Specifically, when compared to no treatment, always giving IV input has a negative impact on the survival rate, among which the effect directly from actions to the final outcome dominates.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM/DTR/MRL&#39;</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">expit</span>
-<span class="kn">from</span> <span class="nn">evaluator_baseline</span> <span class="kn">import</span> <span class="n">evaluator</span>
-<span class="kn">from</span> <span class="nn">probLearner</span> <span class="kn">import</span> <span class="n">PMLearner</span><span class="p">,</span> <span class="n">RewardLearner</span><span class="p">,</span> <span class="n">PALearner</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Causal_Effect_Learning.Mediation_Analysis.ME_Single</span> <span class="kn">import</span> <span class="n">ME_Single</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_35415</span><span class="o">/</span><span class="mf">1751400768.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">os</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM/DTR/MRL&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">expit</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">evaluator_baseline</span> <span class="kn">import</span> <span class="n">evaluator</span>
-
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;/nas/longleaf/home/lge/CausalDM/DTR/MRL&#39;
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/nas/longleaf/rhel8/apps/anaconda/2021.11.ood/lib/python3.9/site-packages/statsmodels/tsa/base/tsa_model.py:7: FutureWarning: pandas.Int64Index is deprecated and will be removed from pandas in a future version. Use pandas.Index with the appropriate dtype instead.
+  from pandas import (to_datetime, Int64Index, DatetimeIndex, Period,
+/nas/longleaf/rhel8/apps/anaconda/2021.11.ood/lib/python3.9/site-packages/statsmodels/tsa/base/tsa_model.py:7: FutureWarning: pandas.Float64Index is deprecated and will be removed from pandas in a future version. Use pandas.Index with the appropriate dtype instead.
+  from pandas import (to_datetime, Int64Index, DatetimeIndex, Period,
 </pre></div>
 </div>
 </div>
@@ -1287,7 +1200,6 @@ title="Print to PDF"
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Control Policy</span>
 <span class="k">def</span> <span class="nf">control_policy</span><span class="p">(</span><span class="n">state</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">dim_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">get_a</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
-    <span class="c1"># fixed policy with fixed action 0</span>
     <span class="k">if</span> <span class="n">get_a</span><span class="p">:</span>
         <span class="n">action_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
@@ -1301,6 +1213,7 @@ title="Print to PDF"
                 <span class="n">action</span> <span class="o">=</span> <span class="n">action</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">NT</span><span class="p">)</span>
             <span class="n">action_value</span> <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="n">action</span>
     <span class="k">return</span> <span class="n">action_value</span>
+
 <span class="k">def</span> <span class="nf">target_policy</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dim_state</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dim_state</span><span class="p">))</span>
     <span class="n">NT</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -1323,28 +1236,69 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">problearner_parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;splitter&quot;</span><span class="p">:[</span><span class="s2">&quot;best&quot;</span><span class="p">,</span><span class="s2">&quot;random&quot;</span><span class="p">],</span> <span class="s2">&quot;max_depth&quot;</span> <span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">50</span><span class="p">)},</span>
-<span class="n">est_obj1</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">single_dataset</span><span class="p">,</span> <span class="n">PMLearner</span><span class="p">,</span> <span class="n">RewardLearner</span><span class="p">,</span> <span class="n">PALearner</span><span class="p">,</span>
+<span class="n">Direct_est</span> <span class="o">=</span> <span class="n">ME_Single</span><span class="p">(</span><span class="n">single_dataset</span><span class="p">,</span> <span class="n">r_model</span> <span class="o">=</span> <span class="s1">&#39;OLS&#39;</span><span class="p">,</span>
                      <span class="n">problearner_parameters</span> <span class="o">=</span> <span class="n">problearner_parameters</span><span class="p">,</span>
                      <span class="n">truncate</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> 
                      <span class="n">target_policy</span><span class="o">=</span><span class="n">target_policy</span><span class="p">,</span> <span class="n">control_policy</span> <span class="o">=</span> <span class="n">control_policy</span><span class="p">,</span> 
                      <span class="n">dim_state</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dim_mediator</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> 
                      <span class="n">expectation_MCMC_iter</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
-                     <span class="n">seed</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+                     <span class="n">nature_decomp</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                     <span class="n">seed</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                     <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;Direct&#39;</span><span class="p">)</span>
 
-<span class="n">est_obj1</span><span class="o">.</span><span class="n">estimate_DE_ME_SE</span><span class="p">()</span>
-<span class="n">est_value1</span> <span class="o">=</span> <span class="n">est_obj1</span><span class="o">.</span><span class="n">est_DEMESE</span>
+<span class="n">Direct_est</span><span class="o">.</span><span class="n">estimate_DE_ME</span><span class="p">()</span>
+<span class="n">Direct_est</span><span class="o">.</span><span class="n">est_DE</span><span class="p">,</span> <span class="n">Direct_est</span><span class="o">.</span><span class="n">est_ME</span><span class="p">,</span> <span class="n">Direct_est</span><span class="o">.</span><span class="n">est_TE</span><span class="p">,</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.34252946570098064, 0.005711302763402198, -0.33681816293757844)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">est_value1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">IPW_est</span> <span class="o">=</span> <span class="n">ME_Single</span><span class="p">(</span><span class="n">single_dataset</span><span class="p">,</span> <span class="n">r_model</span> <span class="o">=</span> <span class="s1">&#39;OLS&#39;</span><span class="p">,</span>
+                     <span class="n">problearner_parameters</span> <span class="o">=</span> <span class="n">problearner_parameters</span><span class="p">,</span>
+                     <span class="n">truncate</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> 
+                     <span class="n">target_policy</span><span class="o">=</span><span class="n">target_policy</span><span class="p">,</span> <span class="n">control_policy</span> <span class="o">=</span> <span class="n">control_policy</span><span class="p">,</span> 
+                     <span class="n">dim_state</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dim_mediator</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> 
+                     <span class="n">expectation_MCMC_iter</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+                     <span class="n">nature_decomp</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                     <span class="n">seed</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                     <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;IPW&#39;</span><span class="p">)</span>
+
+<span class="n">IPW_est</span><span class="o">.</span><span class="n">estimate_DE_ME</span><span class="p">()</span>
+<span class="n">IPW_est</span><span class="o">.</span><span class="n">est_DE</span><span class="p">,</span> <span class="n">IPW_est</span><span class="o">.</span><span class="n">est_ME</span><span class="p">,</span> <span class="n">IPW_est</span><span class="o">.</span><span class="n">est_TE</span><span class="p">,</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-0.3465,  0.0097, -0.4585,  0.    , -0.3643, -0.0482])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.45848128672516364, 0.0, -0.45848128672516364)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Robust_est</span> <span class="o">=</span> <span class="n">ME_Single</span><span class="p">(</span><span class="n">single_dataset</span><span class="p">,</span> <span class="n">r_model</span> <span class="o">=</span> <span class="s1">&#39;OLS&#39;</span><span class="p">,</span>
+                     <span class="n">problearner_parameters</span> <span class="o">=</span> <span class="n">problearner_parameters</span><span class="p">,</span>
+                     <span class="n">truncate</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> 
+                     <span class="n">target_policy</span><span class="o">=</span><span class="n">target_policy</span><span class="p">,</span> <span class="n">control_policy</span> <span class="o">=</span> <span class="n">control_policy</span><span class="p">,</span> 
+                     <span class="n">dim_state</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dim_mediator</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> 
+                     <span class="n">expectation_MCMC_iter</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+                     <span class="n">nature_decomp</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                     <span class="n">seed</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                     <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;Robust&#39;</span><span class="p">)</span>
+
+<span class="n">Robust_est</span><span class="o">.</span><span class="n">estimate_DE_ME</span><span class="p">()</span>
+<span class="n">Robust_est</span><span class="o">.</span><span class="n">est_DE</span><span class="p">,</span> <span class="n">Robust_est</span><span class="o">.</span><span class="n">est_ME</span><span class="p">,</span> <span class="n">Robust_est</span><span class="o">.</span><span class="n">est_TE</span><span class="p">,</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.36522141159831284, -0.0473586513222677, -0.4125800629205805)
 </pre></div>
 </div>
 </div>
@@ -1353,15 +1307,14 @@ title="Print to PDF"
 <h2>CPL: Single-Stage Policy Evaluation<a class="headerlink" href="#cpl-single-stage-policy-evaluation" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM&#39;</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">QLearning</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">QLearning</span>
 </pre></div>
 </div>
 </div>
 </div>
 <p>As an example, we use the <strong>Q-learning</strong> algorithm to evaluate policies based on the observed data, with the linear regression models defined as the following:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-20b3b314-5403-4180-84bd-53a4516422c8">
-<span class="eqno">(142)<a class="headerlink" href="#equation-20b3b314-5403-4180-84bd-53a4516422c8" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0e28bea8-66f2-4563-a9bb-c6a11cdb1f26">
+<span class="eqno">(148)<a class="headerlink" href="#equation-0e28bea8-66f2-4563-a9bb-c6a11cdb1f26" title="Permalink to this equation">#</a></span>\[\begin{align}
 Q(s,a,\boldsymbol{\beta}) = &amp;\beta_{00}+\beta_{01}*\textrm{Glucose}+\beta_{02}*\textrm{PaO2_FiO2}\\
                     &amp;I(a_1=1)*\{\beta_{10}+\beta_{11}*\textrm{Glucose}+\beta_{12}*\textrm{PaO2_FiO2}\},
 \end{align}\]</div>

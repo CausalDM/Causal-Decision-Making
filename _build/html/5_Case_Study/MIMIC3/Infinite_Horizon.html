@@ -1091,41 +1091,17 @@ title="Print to PDF"
   <section class="tex2jax_ignore mathjax_ignore" id="mimic-iii-infinite-horizon">
 <h1>MIMIC III (Infinite Horizon)<a class="headerlink" href="#mimic-iii-infinite-horizon" title="Permalink to this heading">#</a></h1>
 <p>In this notebook, we conducted analysis on the MIMIC III data with infinite horizon. We first analyzed the mediation effect and then evaluate the policy of interest and calculated the optimal policy. As informed by the causal structure learning, here we consider Glucose and PaO2_FiO2 as confounders/states, IV_Input as the action, SOFA as the mediator.</p>
-<section id="cel-mediation-analysis-with-infinite-horizon">
-<h2>CEL: Mediation Analysis with Infinite Horizon<a class="headerlink" href="#cel-mediation-analysis-with-infinite-horizon" title="Permalink to this heading">#</a></h2>
-<p>We processed the MIMIC III data similarly to literature on reinforcement learning by setting the reward of each stage prior to the final stage to 0, and the reward of the final stage to the observed value of Died within 48H. In this section, we analyze the average treatment effect (ATE) of a target policy that provides IV input all of the time compared to a control policy that provides no IV input at all. Using the multiply-robust estimator proposed in [1], we decomposed the ATE into four components, including immediate dierct effect (IDE), immediate mediator effect (IME), delayed direct effect (DDE), and delayed mediator effect (DME), and estimated each of the effect component. The estimation results are summarized in the table below.</p>
-<table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>IDE</p></th>
-<th class="head"><p>IME</p></th>
-<th class="head"><p>DDE</p></th>
-<th class="head"><p>DME</p></th>
-<th class="head"><p>ATE</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>-.1137(.0273)</p></td>
-<td><p>-.0187(.0067)</p></td>
-<td><p>-.0247(.0153)</p></td>
-<td><p>.0182(.0119)</p></td>
-<td><p>-.1390(.0297)</p></td>
-</tr>
-</tbody>
-</table>
-<p>Specifically, the ATE of the target policy is significantly negative, with an effect size of .1390. Diving deep, we find that the DME and DDE are insignificant, whereas the IDE and IME are all statistically significant. Further, taking the effect size into account, we can conclude that the majority of the average treatment effect is directly due to the actions derived from the target treatment policy, while the part of the effect that can be attributed to the mediators is negligible.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM/DTR/MRL&#39;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">expit</span>
-<span class="kn">from</span> <span class="nn">evaluator_Linear</span> <span class="kn">import</span> <span class="n">evaluator</span>
-<span class="kn">from</span> <span class="nn">probLearner</span> <span class="kn">import</span> <span class="n">PMLearner</span><span class="p">,</span> <span class="n">RewardLearner</span><span class="p">,</span> <span class="n">PALearner</span>
-<span class="kn">from</span> <span class="nn">ratioLearner</span> <span class="kn">import</span>  <span class="n">RatioLinearLearner</span> <span class="k">as</span> <span class="n">RatioLearner</span>
-<span class="kn">from</span> <span class="nn">qLearner_Linear</span> <span class="kn">import</span> <span class="n">Qlearner</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM/DTR/Mediation Analysis&#39;</span><span class="p">)</span>
-<span class="n">MRL_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;mimic3_MRL_df_V2.csv&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./causaldm/MIMIC3/mimic3_MRL_data_dict_V2.pickle&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+<span class="n">mimic3_MRL</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+<span class="n">MRL_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./causaldm/MIMIC3/mimic3_MRL_df_V2.csv&#39;</span><span class="p">)</span>
 <span class="n">MRL_df</span><span class="p">[</span><span class="n">MRL_df</span><span class="o">.</span><span class="n">icustayid</span><span class="o">==</span><span class="mi">1006</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1133,23 +1109,58 @@ title="Print to PDF"
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_35383</span><span class="o">/</span><span class="mf">1809877625.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_87965</span><span class="o">/</span><span class="mf">3787818056.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">os</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM/DTR/MRL&#39;</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">expit</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;/nas/longleaf/home/lge/CausalDM/DTR/MRL&#39;
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;/nas/longleaf/home/lge/CausalDM&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="cel-mediation-analysis-with-infinite-horizon">
+<h2>CEL: Mediation Analysis with Infinite Horizon<a class="headerlink" href="#cel-mediation-analysis-with-infinite-horizon" title="Permalink to this heading">#</a></h2>
+<p>We processed the MIMIC III data similarly to literature on reinforcement learning by setting the reward of each stage prior to the final stage to 0, and the reward of the final stage to the observed value of Died within 48H. In this section, we analyze the average treatment effect (ATE) of a target policy that provides IV input all of the time compared to a control policy that provides no IV input at all. Using the multiply-robust estimator proposed in [1], we decomposed the ATE into four components, including immediate nature dierct effect (INDE), Immediate nature mediator effect (INME), delayed nature direct effect (DNDE), and delayed nature mediator effect (NDDNME), and estimated each of the effect component. The estimation results are summarized in the table below.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>NIDE</p></th>
+<th class="head"><p>NIME</p></th>
+<th class="head"><p>NDDE</p></th>
+<th class="head"><p>NDME</p></th>
+<th class="head"><p>ATE</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>-.1453(.0341)</p></td>
+<td><p>.0046(.0018)</p></td>
+<td><p>-.0040(.0060)</p></td>
+<td><p>.0005(.0018)</p></td>
+<td><p>-.1441(.0339)</p></td>
+</tr>
+</tbody>
+</table>
+<p>Specifically, the ATE of the target policy is significantly negative, with an effect size of .1390. Diving deep, we find that the DNME and DNDE are insignificant, whereas the INDE and INME are all statistically significant. Further, taking the effect size into account, we can conclude that the majority of the average treatment effect is directly due to the actions derived from the target treatment policy, while the part of the effect that can be attributed to the mediators is negligible.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Causal_Effect_Learning.Mediation_Analysis</span> <span class="kn">import</span> <span class="n">ME_MDP</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/nas/longleaf/rhel8/apps/anaconda/2021.11.ood/lib/python3.9/site-packages/statsmodels/tsa/base/tsa_model.py:7: FutureWarning: pandas.Int64Index is deprecated and will be removed from pandas in a future version. Use pandas.Index with the appropriate dtype instead.
+  from pandas import (to_datetime, Int64Index, DatetimeIndex, Period,
+/nas/longleaf/rhel8/apps/anaconda/2021.11.ood/lib/python3.9/site-packages/statsmodels/tsa/base/tsa_model.py:7: FutureWarning: pandas.Float64Index is deprecated and will be removed from pandas in a future version. Use pandas.Index with the appropriate dtype instead.
+  from pandas import (to_datetime, Int64Index, DatetimeIndex, Period,
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;mimic3_MRL_data_dict_V2.pickle&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
-<span class="n">mimic3_MRL</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-<span class="c1"># Control Policy</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Control Policy</span>
 <span class="k">def</span> <span class="nf">control_policy</span><span class="p">(</span><span class="n">state</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">dim_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">get_a</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
     <span class="c1"># fixed policy with fixed action 0</span>
     <span class="k">if</span> <span class="n">get_a</span><span class="p">:</span>
@@ -1195,8 +1206,6 @@ title="Print to PDF"
 <span class="n">ratio_ndim</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">d</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="n">L</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">t_depend_target</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="n">t_dependent_Q</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="n">scaler</span> <span class="o">=</span> <span class="s1">&#39;Identity&#39;</span>
 </pre></div>
 </div>
@@ -1204,22 +1213,20 @@ title="Print to PDF"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">est_obj1</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">mimic3_MRL</span><span class="p">,</span> <span class="n">Qlearner</span><span class="p">,</span> <span class="n">PMLearner</span><span class="p">,</span> <span class="n">RewardLearner</span><span class="p">,</span> <span class="n">PALearner</span><span class="p">,</span> <span class="n">RatioLearner</span><span class="p">,</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Robust_est</span> <span class="o">=</span> <span class="n">ME_MDP</span><span class="o">.</span><span class="n">evaluator</span><span class="p">(</span><span class="n">mimic3_MRL</span><span class="p">,</span> <span class="n">r_model</span> <span class="o">=</span> <span class="s1">&#39;OLS&#39;</span><span class="p">,</span>
                      <span class="n">problearner_parameters</span> <span class="o">=</span> <span class="n">problearner_parameters</span><span class="p">,</span>
                      <span class="n">ratio_ndim</span> <span class="o">=</span> <span class="n">ratio_ndim</span><span class="p">,</span> <span class="n">truncate</span> <span class="o">=</span> <span class="n">truncate</span><span class="p">,</span> <span class="n">l2penalty</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">),</span>
-                     <span class="n">t_depend_target</span> <span class="o">=</span> <span class="n">t_depend_target</span><span class="p">,</span>
                      <span class="n">target_policy</span><span class="o">=</span><span class="n">target_policy</span><span class="p">,</span> <span class="n">control_policy</span> <span class="o">=</span> <span class="n">control_policy</span><span class="p">,</span> 
                      <span class="n">dim_state</span> <span class="o">=</span> <span class="n">dim_state</span><span class="p">,</span> <span class="n">dim_mediator</span> <span class="o">=</span> <span class="n">dim_mediator</span><span class="p">,</span> 
                      <span class="n">Q_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;scaler&#39;</span><span class="p">:</span> <span class="n">scaler</span><span class="p">,</span><span class="s1">&#39;product_tensor&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;beta&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="o">/</span><span class="mi">7</span><span class="p">,</span> 
                                    <span class="s1">&#39;include_intercept&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;expectation_MCMC_iter_Q3&#39;</span><span class="p">:</span> <span class="n">expectation_MCMC_iter_Q3</span><span class="p">,</span> 
                                    <span class="s1">&#39;expectation_MCMC_iter_Q_diff&#39;</span><span class="p">:</span><span class="n">expectation_MCMC_iter_Q_diff</span><span class="p">,</span> 
-                                   <span class="s1">&#39;penalty&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">),</span><span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="n">d</span><span class="p">,</span> <span class="s1">&#39;min_L&#39;</span><span class="p">:</span> <span class="n">L</span><span class="p">,</span> <span class="s2">&quot;t_dependent_Q&quot;</span><span class="p">:</span> <span class="n">t_dependent_Q</span><span class="p">},</span>
+                                   <span class="s1">&#39;penalty&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">),</span><span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="n">d</span><span class="p">,</span> <span class="s1">&#39;min_L&#39;</span><span class="p">:</span> <span class="n">L</span><span class="p">,</span> <span class="s1">&#39;t_dependent_Q&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
                      <span class="n">expectation_MCMC_iter</span> <span class="o">=</span> <span class="n">expectation_MCMC_iter</span><span class="p">,</span>
-                     <span class="n">seed</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+                     <span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">nature_decomp</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;Robust&#39;</span><span class="p">)</span>
 
-<span class="n">est_obj1</span><span class="o">.</span><span class="n">estimate_DE_ME_SE</span><span class="p">()</span>
-<span class="n">est_value1</span> <span class="o">=</span> <span class="n">est_obj1</span><span class="o">.</span><span class="n">est_DEMESE</span>
-<span class="n">se_value1</span> <span class="o">=</span> <span class="n">est_obj1</span><span class="o">.</span><span class="n">se_DEMESE</span>
+<span class="n">Robust_est</span><span class="o">.</span><span class="n">estimate_DE_ME</span><span class="p">()</span>
+<span class="n">Robust_est</span><span class="o">.</span><span class="n">est_IDE</span><span class="p">,</span> <span class="n">Robust_est</span><span class="o">.</span><span class="n">IME</span><span class="p">,</span> <span class="n">Robust_est</span><span class="o">.</span><span class="n">DDE</span><span class="p">,</span> <span class="n">Robust_est</span><span class="o">.</span><span class="n">DME</span><span class="p">,</span> <span class="n">Robust_est</span><span class="o">.</span><span class="n">TE</span>
 </pre></div>
 </div>
 </div>
@@ -1229,69 +1236,27 @@ Building 1-th basis spline (total 3 state-mediator dimemsion) which has 3 basis,
 Building 2-th basis spline (total 3 state-mediator dimemsion) which has 3 basis, in total 9 features 
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#The following are the estimations of our interest</span>
-
-<span class="c1">#1. estimation used the proposed triply robust estimator</span>
-<span class="n">IDE_MR</span><span class="p">,</span> <span class="n">IME_MR</span><span class="p">,</span> <span class="n">DDE_MR</span><span class="p">,</span> <span class="n">DME_MR</span> <span class="o">=</span> <span class="n">est_value1</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span>
-
-<span class="n">ATE</span> <span class="o">=</span> <span class="n">est_value1</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span>
-
-<span class="c1">#6. SE of each estimator</span>
-<span class="n">se_IDE_MR</span><span class="p">,</span> <span class="n">se_IME_MR</span><span class="p">,</span> <span class="n">se_DDE_MR</span><span class="p">,</span> <span class="n">se_DME_MR</span> <span class="o">=</span> <span class="n">se_value1</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span>
-
-<span class="n">se_ATE</span> <span class="o">=</span> <span class="n">se_value1</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.1452771259348552,
+ 0.004637499340581467,
+ -0.003993095022944491,
+ 0.0005317328373979431,
+ -0.14410098877982028)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">IDE_MR</span><span class="p">,</span> <span class="n">IME_MR</span><span class="p">,</span> <span class="n">DDE_MR</span><span class="p">,</span> <span class="n">DME_MR</span><span class="p">,</span> <span class="n">ATE</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Robust_est</span><span class="o">.</span><span class="n">IDE_se</span><span class="p">,</span> <span class="n">Robust_est</span><span class="o">.</span><span class="n">IME_se</span><span class="p">,</span> <span class="n">Robust_est</span><span class="o">.</span><span class="n">DDE_se</span><span class="p">,</span> <span class="n">Robust_est</span><span class="o">.</span><span class="n">DME_se</span><span class="p">,</span> <span class="n">Robust_est</span><span class="o">.</span><span class="n">TE_se</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.11369785727090427,
- -0.018734623459877756,
- -0.02474802766411448,
- 0.018187656614314426,
- -0.13899285178058207)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">se_IDE_MR</span><span class="p">,</span> <span class="n">se_IME_MR</span><span class="p">,</span> <span class="n">se_DDE_MR</span><span class="p">,</span> <span class="n">se_DME_MR</span><span class="p">,</span> <span class="n">se_ATE</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.02730353979464337,
- 0.006745477470886179,
- 0.015252674867721994,
- 0.011899325617065859,
- 0.029707778327035382)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">IDE_MR</span><span class="o">/</span><span class="n">se_IDE_MR</span><span class="p">,</span> <span class="n">IME_MR</span><span class="o">/</span><span class="n">se_IME_MR</span><span class="p">,</span> <span class="n">DDE_MR</span><span class="o">/</span><span class="n">se_DDE_MR</span><span class="p">,</span> <span class="n">DME_MR</span><span class="o">/</span><span class="n">se_DME_MR</span><span class="p">,</span> <span class="n">ATE</span><span class="o">/</span><span class="n">se_ATE</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-4.164216732557529,
- -2.7773606154252737,
- -1.6225368913151579,
- 1.528461124572465,
- -4.6786686722410495)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.03413229284322258,
+ 0.0018118276672658687,
+ 0.0059963999590195915,
+ 0.0017995551161793478,
+ 0.03387985782346984)
 </pre></div>
 </div>
 </div>
