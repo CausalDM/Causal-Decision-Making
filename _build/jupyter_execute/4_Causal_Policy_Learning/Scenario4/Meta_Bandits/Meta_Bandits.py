@@ -29,9 +29,9 @@
 # - **gender**: binary, =1 if male,
 # - **college/grad student**: binary, =1 if a college/grad student,
 # - **executive/managerial**: binary, =1 if a executive/managerial,
-# - **academic/educator**: binary, =1 if an academic/educator,
 # - **technician/engineer**: binary, =1 if a technician/engineer,
-# - **writer**: if a writer, then all the previous occupation-related variables = 0 (baseline).
+# - **other**: binary, =1 if having other occupations other than the rest of the four occupations,
+# - **academic/educator**: if an academic/educator, then all the previous occupation-related variables = 0 (baseline).
 # 
 # We preprocessed the dataset to leave users with at least 500 data points, which gives us N=175 users. Furthermore, there are two different types of the reward $R_t$:
 # 

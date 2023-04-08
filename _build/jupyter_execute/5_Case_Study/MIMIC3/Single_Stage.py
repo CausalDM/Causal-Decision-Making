@@ -8,11 +8,14 @@
 # In[1]:
 
 
+import os
+os.chdir('D:/Github/CausalDM')
 import pandas as pd
 import numpy as np
-single_data = pd.read_csv('mimic3_single_stage.csv')
-single_data.iloc[np.where(single_data['IV Input']<=1.5)[0],3]=0 # change the discrete action to binary
-single_data.iloc[np.where(single_data['IV Input']>1.5)[0],3]=1 # change the discrete action to binary
+single_data = pd.read_csv('./causaldm/MIMIC3/mimic3_single_stage.csv')
+single_data.iloc[np.where(single_data['IV Input']<1)[0],3]=0 # change the discrete action to binary
+single_data.iloc[np.where(single_data['IV Input']>=1)[0],3]=1 # change the discrete action to binary
+single_data.iloc[np.where(single_data['Died within 48H']==-1)[0],5]=0 # change the discrete action to binary
 single_data.head(6)
 
 
@@ -30,23 +33,18 @@ single_dataset = {'state':state,'action':action,'mediator':mediator,'reward':rew
 
 # Under the single-stage setting, we are interested in analyzing the treatment effect on the final outcome Died_within_48H observed at the end of the study by comparing the target treatment regime that provides IV input for all patients and the control treatment regime that does not provide any treatment. Using the direct estimator proposed in [1], IPW estimator proposed in [2], and robust estimator proposed in [3], we examine the natural direct and indirect effects of the target treatment regime based on observational data. With the code in the following blocks, the estimated effect components are summarized in the following:
 # 
-# |                  |   DE   | IE     | TE     |
+# |                  |   NDE   | NIE     | TE     |
 # |------------------|:------:|--------|--------|
-# | Direct Estimator | -.3465 |  .0097 | -.3368 |
-# | IPW              | -.4585 | 0      | -.4584 |
-# | Robust           | -.3643 | -.0482 | -.4126 |
+# | Direct Estimator | -.2133 |  .0030 | -.2104 |
+# | IPW              | -.2332 | 0      | -.2332 |
+# | Robust           | -.2276 | -.0164 | -.2440 |
 # 
 # Specifically, when compared to no treatment, always giving IV input has a negative impact on the survival rate, among which the effect directly from actions to the final outcome dominates.
 
 # In[3]:
 
 
-import os
-os.getcwd()
-os.chdir('/nas/longleaf/home/lge/CausalDM/DTR/MRL')
-from scipy.special import expit
-from evaluator_baseline import evaluator
-from probLearner import PMLearner, RewardLearner, PALearner
+from causaldm.learners.Causal_Effect_Learning.Mediation_Analysis.ME_Single import ME_Single
 
 
 # In[4]:
@@ -54,7 +52,6 @@ from probLearner import PMLearner, RewardLearner, PALearner
 
 # Control Policy
 def control_policy(state = None, dim_state=None, action=None, get_a = False):
-    # fixed policy with fixed action 0
     if get_a:
         action_value = np.array([0])
     else:
@@ -68,6 +65,7 @@ def control_policy(state = None, dim_state=None, action=None, get_a = False):
                 action = action * np.ones(NT)
             action_value = 1-action
     return action_value
+
 def target_policy(state, dim_state = 1, action=None):
     state = np.copy(state).reshape((-1, dim_state))
     NT = state.shape[0]
@@ -89,30 +87,59 @@ def target_policy(state, dim_state = 1, action=None):
 
 
 problearner_parameters = {"splitter":["best","random"], "max_depth" : range(1,50)},
-est_obj1 = evaluator(single_dataset, PMLearner, RewardLearner, PALearner,
+Direct_est = ME_Single(single_dataset, r_model = 'OLS',
                      problearner_parameters = problearner_parameters,
                      truncate = 50, 
                      target_policy=target_policy, control_policy = control_policy, 
                      dim_state = 2, dim_mediator = 1, 
                      expectation_MCMC_iter = 50,
-                     seed = 10)
+                     nature_decomp = True,
+                     seed = 10,
+                     method = 'Direct')
 
-est_obj1.estimate_DE_ME_SE()
-est_value1 = est_obj1.est_DEMESE
+Direct_est.estimate_DE_ME()
+Direct_est.est_DE, Direct_est.est_ME, Direct_est.est_TE,
 
 
-# In[18]:
+# In[6]:
 
 
-est_value1
+IPW_est = ME_Single(single_dataset, r_model = 'OLS',
+                     problearner_parameters = problearner_parameters,
+                     truncate = 50, 
+                     target_policy=target_policy, control_policy = control_policy, 
+                     dim_state = 2, dim_mediator = 1, 
+                     expectation_MCMC_iter = 50,
+                     nature_decomp = True,
+                     seed = 10,
+                     method = 'IPW')
+
+IPW_est.estimate_DE_ME()
+IPW_est.est_DE, IPW_est.est_ME, IPW_est.est_TE,
+
+
+# In[7]:
+
+
+Robust_est = ME_Single(single_dataset, r_model = 'OLS',
+                     problearner_parameters = problearner_parameters,
+                     truncate = 50, 
+                     target_policy=target_policy, control_policy = control_policy, 
+                     dim_state = 2, dim_mediator = 1, 
+                     expectation_MCMC_iter = 50,
+                     nature_decomp = True,
+                     seed = 10,
+                     method = 'Robust')
+
+Robust_est.estimate_DE_ME()
+Robust_est.est_DE, Robust_est.est_ME, Robust_est.est_TE,
 
 
 # ## CPL: Single-Stage Policy Evaluation
 
-# In[11]:
+# In[8]:
 
 
-os.chdir('/nas/longleaf/home/lge/CausalDM')
 from causaldm.learners import QLearning
 
 
@@ -122,9 +149,9 @@ from causaldm.learners import QLearning
 #                     &I(a_1=1)*\{\beta_{10}+\beta_{11}*\textrm{Glucose}+\beta_{12}*\textrm{PaO2_FiO2}\},
 # \end{align}
 # 
-# Using the code below, we evaluated two target polices (regimes). The first one is a fixed treatement regime that applies no treatment (Policy1), with an estimated value of .9050. Another is a fixed treatment regime that applies treatment all the time (Policy2), with an estimated value of .5085. Therefore, the treatment effect of Policy2 comparing to Policy1 is -.3965, implying that receiving IV input increase the mortality rate.
+# Using the code below, we evaluated two target polices (regimes). The first one is a fixed treatement regime that applies no treatment (Policy1), with an estimated value of .9999. Another is a fixed treatment regime that applies treatment all the time (Policy2), with an estimated value of .7646. Therefore, the treatment effect of Policy2 comparing to Policy1 is -.2353, implying that receiving IV input increase the mortality rate.
 
-# In[12]:
+# In[9]:
 
 
 single_data.rename(columns = {'Died within 48H':'R', 'Glucose':'S1', 'PaO2_FiO2':'S2', 'IV Input':'A'}, inplace = True)
@@ -136,7 +163,7 @@ model_info = [{"model": "R~S1+S2+A+S1*A+S2*A",
               'action_space':{'A':[0,1]}}]
 
 
-# In[13]:
+# In[10]:
 
 
 # Evaluating the policy with no treatment
@@ -148,7 +175,7 @@ QLearn.train(S, A, R, model_info, T=1, regime = regime, evaluate = True, mimic3_
 QLearn.predict_value(S)
 
 
-# In[14]:
+# In[11]:
 
 
 # Evaluating the policy that gives IV input at both stages
@@ -164,18 +191,18 @@ QLearn.predict_value(S)
 
 # Further, to find an optimal policy maximizing the expected value, we use the **Q-learning** algorithm again to do policy optimization. Using the regression model we specified above and the code in the following block, the estimated optimal policy is summarized as the following regime.
 # 
-# 1. We would recommend $A=0$ (IV_Input = 0) if $.0014*\textrm{Glucose}+.0015*\textrm{PaO2_FiO2}<1.106$
+# 1. We would recommend $A=0$ (IV_Input = 0) if $-.0004*\textrm{Glucose}+.0012*\textrm{PaO2_FiO2}<.5510$
 # 2. Else, we would recommend $A=1$ (IV_Input = 1).
 #     
 # Appling the estimated optimal regime to individuals in the observed data, we summarize the regime pattern for each patients in the following table:
 # 
 # | # patients | IV_Input | 
 # |------------|----------|
-# | 56         | 0        |
-# | 1          | 1        |
-# The estimated value of the estimated optimal policy is **.9050**.
+# | 51         | 0        |
+# | 6          | 1        |
+# The estimated value of the estimated optimal policy is **.9999**.
 
-# In[16]:
+# In[12]:
 
 
 # initialize the learner

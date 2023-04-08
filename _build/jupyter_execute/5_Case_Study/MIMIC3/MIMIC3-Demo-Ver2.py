@@ -55,71 +55,17 @@ os.environ["OMP_NUM_THREADS"] = "1"
 # In[2]:
 
 
-mimic3 = pd.read_csv("subset_rl_data_final_cont.csv")
+mimic3_data = pd.read_csv('mimic3_single_stage.csv')
+mimic3_data.iloc[np.where(mimic3_data['Died within 48H']==-1.0)[0],5]=0 # change the discrete action to binary
 
 
 # In[3]:
 
 
-mimic3_base = mimic3[['icustayid', 'Glucose', 'PaO2_FiO2',
-                           'iv_input', 'SOFA','died_within_48h_of_out_time']]
-mimic3_base['died_within_48h_of_out_time'] = - 2 * np.array(mimic3_base['died_within_48h_of_out_time']) + 1
-mimic3_base.columns = ['icustayid', 'Glucose', 'PaO2_FiO2',
-                           'IV Input', 'SOFA','Died within 48H'] 
-mimic3_base.head(6)
-
-
-# In[4]:
-
-
-plt.hist(mimic3_base['SOFA'])
-
-
-# In[5]:
-
-
-mimic_final = mimic3_base[mimic3_base['SOFA']<=12]
-plt.hist(mimic_final['SOFA'])
-
-
-# In[6]:
-
-
-with open('mimic3_multi_stages.pickle', 'wb') as handle:
-    pickle.dump(mimic_final, handle)
-    
-mimic_final.to_csv (r'mimic3_multi_stages.csv', index = False, header=True)
-
-mimic_final
-
-
-# In[7]:
-
-
-# ----------- Set lag data
-lag_k = 1
-    
-#     new_sofa = list(np.array(mimic_final['SOFA'][lag_k:]) - np.array(mimic_final['SOFA'][:-lag_k]))
-
-new_sofa = np.array(mimic_final['SOFA'][:-lag_k])
-mimic3_sample = mimic_final.iloc[lag_k:]
-mimic3_sample['SOFA Post'] = new_sofa 
-mimic3_data = mimic3_sample.groupby('icustayid').mean().reset_index() 
- 
-
-
-# In[8]:
-
-
-with open('mimic3_single_stage.pickle', 'wb') as handle:
-    pickle.dump(mimic3_data, handle)
-    
-mimic3_data.to_csv (r'mimic3_single_stage.csv', index = False, header=True)
- 
 mimic3_data.head(6)
 
 
-# In[9]:
+# In[4]:
 
 
 # ----------- Estimated DAG based on NOTEARS 
@@ -128,15 +74,15 @@ mimic3_data_final = mimic3_data
 
 selected = ['Glucose', 'PaO2_FiO2', 'IV Input', 'SOFA', 'SOFA Post', 'Died within 48H']
 
-smaple_demo = mimic3_data_final[selected]
-est_mt = notears_linear(np.array(smaple_demo), lambda1=0, loss_type='l2',w_threshold=0.1)
+sample_demo = mimic3_data_final[selected]
+est_mt = notears_linear(np.array(sample_demo), lambda1=0, loss_type='l2',w_threshold=0.1)
  
 # ----------- Refit Associated Matrix under LSEM 
 
-est_mt, _ = refit(smaple_demo, est_mt, selected) 
+est_mt, _ = refit(sample_demo, est_mt, selected) 
 
 
-# In[10]:
+# In[5]:
 
 
 # ----------- Plot Associated Estimated DAG based on NOTEARS 
@@ -144,7 +90,7 @@ est_mt, _ = refit(smaple_demo, est_mt, selected)
 plot_net(est_mt, labels_name=selected, file_name='demo_res_net')
 
 
-# In[11]:
+# In[6]:
 
 
 topo_list = np.array(selected)[list(nx.topological_sort(nx.DiGraph(est_mt)))].tolist()
@@ -154,21 +100,9 @@ print('Topological order from top to buttom:\n', topo_list)
 
 # ## Causal Effect Learning
 
-# In[12]:
-
-
-mimic3_data.columns
-
-
-# In[13]:
-
-
-mimic3_data.head(6)
-
-
 # According to the amount of fluid administraition throughout the entire treatment period, we plot the average IV input for each patient as below:
 
-# In[14]:
+# In[7]:
 
 
 plt.hist(mimic3_data['IV Input'])
@@ -178,7 +112,7 @@ plt.hist(mimic3_data['IV Input'])
 # 
 # Motivated by this problem, we set the "High-IV-Input" group as the treatment group with $A=1$, and set the "Low-IV-Input" group as the control group with $A=0$. 
 
-# In[29]:
+# In[8]:
 
 
 data_CEL_selected = mimic3_data.copy()
@@ -188,7 +122,7 @@ data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']>1.5)[0],3]=1 # cha
 data_CEL_selected.head(6)
 
 
-# In[24]:
+# In[9]:
 
 
 print( "The number of patients in treatment group is ", len(np.where(mimic3_data['IV Input']>1.5)[0]), ";\n", "The number of patients in control group is ", len(np.where(mimic3_data['IV Input']<=1.5)[0]),".")
@@ -196,7 +130,7 @@ print( "The number of patients in treatment group is ", len(np.where(mimic3_data
 
 # ### Regard 'Died_Within_48H' as the outcome variable
 
-# In[31]:
+# In[10]:
 
 
 userinfo_index = np.array([1,2])
@@ -205,16 +139,16 @@ userinfo_index = np.array([1,2])
 # Glucose, PaO2_FiO2: covariates
 
 
-# In[30]:
+# In[11]:
 
 
 print(np.sum(data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==0)[0],5] == 1))
-print(np.sum(data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==0)[0],5] == -1))
+print(np.sum(data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==0)[0],5] == 0))
 print(np.sum(data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==1)[0],5] == 1))
-print(np.sum(data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==1)[0],5] == -1))
+print(np.sum(data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==1)[0],5] == 0))
 
 
-# In[33]:
+# In[12]:
 
 
 #from lightgbm import LGBMRegressor
@@ -235,7 +169,7 @@ mu1.fit(data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==1)[0],use
 HTE_T_learner = (mu1.predict_proba(data_CEL_selected.iloc[:,userinfo_index]) - mu0.predict_proba(data_CEL_selected.iloc[:,userinfo_index]))[:,1]
 
 
-# In[34]:
+# In[13]:
 
 
 HTE_T_learner
@@ -243,15 +177,15 @@ HTE_T_learner
 
 # As we can see from the estimated treatment effect of each patient, a higher volumn of fluid intake is inclined to cause negative impact on patients' health status. This may seem counterintuitive to us, which may indicates some selection bias within this small dataset. Despite so, this result also remind us to pay attention to the potentially unnecessary fluid intake that may increase the death rate of patients.
 
-# In[46]:
+# In[14]:
 
 
-np.where(mu1.predict(data_CEL_selected.iloc[:,userinfo_index])-mu0.predict(data_CEL_selected.iloc[:,userinfo_index])==2)[0]
+np.where(mu1.predict(data_CEL_selected.iloc[:,userinfo_index])-mu0.predict(data_CEL_selected.iloc[:,userinfo_index])==1)[0]
 
 
 # Although it generally might be harmful to patients to take fluids, Patient # {0, 24} is expected to be the surviver after the fluid intake.
 
-# In[47]:
+# In[15]:
 
 
 sum(HTE_T_learner)/len(data_CEL_selected)
@@ -261,7 +195,7 @@ sum(HTE_T_learner)/len(data_CEL_selected)
 
 # ### Regard 'SOFA' as the outcome variable
 
-# In[48]:
+# In[16]:
 
 
 userinfo_index = np.array([1,2])
@@ -273,7 +207,7 @@ data_CEL_selected.head(6)
 
 # Similarly, we estimate the causal effect of fluid administration on the average SOFA score of patients to see if higher IV input is able to decrease the SOFA score.
 
-# In[49]:
+# In[17]:
 
 
 #from lightgbm import LGBMRegressor
@@ -295,7 +229,7 @@ mu1.fit(data_CEL_selected.iloc[np.where(data_CEL_selected['IV Input']==1)[0],use
 HTE_T_learner = (mu1.predict(data_CEL_selected.iloc[:,userinfo_index]) - mu0.predict(data_CEL_selected.iloc[:,userinfo_index]))
 
 
-# In[50]:
+# In[18]:
 
 
 HTE_T_learner
@@ -303,21 +237,13 @@ HTE_T_learner
 
 # Although for some patients, higher volumn of fluid intake is able to decrease their overall SOFA score, most of the rest of the patients suffered some bad effects from it.
 
-# In[51]:
+# In[19]:
 
 
 sum(HTE_T_learner)/len(data_CEL_selected)
 
 
 # **Conclusion**: IV Input is expected to increase the SOFA score by 0.446.
-
-# ### Mediation Analysis
-
-# In[52]:
-
-
-### to be added
-
 
 # In[ ]:
 

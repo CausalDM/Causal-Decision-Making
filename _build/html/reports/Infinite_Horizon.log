@@ -1,4 +1,15 @@
 Traceback (most recent call last):
+  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 730, in _async_poll_for_reply
+    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
+  File "D:\anaconda3\lib\site-packages\nbclient\util.py", line 96, in ensure_async
+    result = await obj
+  File "D:\anaconda3\lib\site-packages\jupyter_client\asynchronous\channels.py", line 48, in get_msg
+    raise Empty
+_queue.Empty
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
   File "D:\anaconda3\lib\site-packages\jupyter_cache\executors\utils.py", line 51, in single_nb_execution
     executenb(
   File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 1204, in execute
@@ -11,35 +22,18 @@ Traceback (most recent call last):
     return future.result()
   File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 663, in async_execute
     await self.async_execute_cell(
-  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 965, in async_execute_cell
-    await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 862, in _check_raise_for_error
-    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
-nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
-------------------
-import os
-os.getcwd()
-os.chdir('/nas/longleaf/home/lge/CausalDM/DTR/MRL')
-import numpy as np
-from scipy.special import expit
-from evaluator_Linear import evaluator
-from probLearner import PMLearner, RewardLearner, PALearner
-from ratioLearner import  RatioLinearLearner as RatioLearner
-from qLearner_Linear import Qlearner
-os.chdir('/nas/longleaf/home/lge/CausalDM/DTR/Mediation Analysis')
-MRL_df = pd.read_csv('mimic3_MRL_df_V2.csv')
-MRL_df[MRL_df.icustayid==1006]
-------------------
-
-[1;31m---------------------------------------------------------------------------[0m
-[1;31mFileNotFoundError[0m                         Traceback (most recent call last)
-Input [1;32mIn [1][0m, in [0;36m<cell line: 3>[1;34m()[0m
-[0;32m      1[0m [38;5;28;01mimport[39;00m [38;5;21;01mos[39;00m
-[0;32m      2[0m os[38;5;241m.[39mgetcwd()
-[1;32m----> 3[0m [43mos[49m[38;5;241;43m.[39;49m[43mchdir[49m[43m([49m[38;5;124;43m'[39;49m[38;5;124;43m/nas/longleaf/home/lge/CausalDM/DTR/MRL[39;49m[38;5;124;43m'[39;49m[43m)[49m
-[0;32m      4[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
-[0;32m      5[0m [38;5;28;01mfrom[39;00m [38;5;21;01mscipy[39;00m[38;5;21;01m.[39;00m[38;5;21;01mspecial[39;00m [38;5;28;01mimport[39;00m expit
-
-[1;31mFileNotFoundError[0m: [WinError 3] 系统找不到指定的路径。: '/nas/longleaf/home/lge/CausalDM/DTR/MRL'
-FileNotFoundError: [WinError 3] 系统找不到指定的路径。: '/nas/longleaf/home/lge/CausalDM/DTR/MRL'
+  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 949, in async_execute_cell
+    exec_reply = await self.task_poll_for_reply
+  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 754, in _async_poll_for_reply
+    await self._async_handle_timeout(timeout, cell)
+  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 801, in _async_handle_timeout
+    raise CellTimeoutError.error_from_timeout_and_cell(
+nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+["Robust_est = ME_MDP.evaluator(mimic3_MRL, r_model = 'OLS',", '                     problearner_parameters = problearner_parameters,', '                     ratio_ndim = ratio_ndim, truncate = truncate, l2penalty = 10**(-4),', '                     target_policy=target_policy, control_policy = control_policy, ', '                     dim_state = dim_state, dim_mediator = dim_mediator, ']
+...
+['                     expectation_MCMC_iter = expectation_MCMC_iter,', "                     seed = 0, nature_decomp = True, method = 'Robust')", '', 'Robust_est.estimate_DE_ME()', 'Robust_est.est_IDE, Robust_est.IME, Robust_est.DDE, Robust_est.DME, Robust_est.TE']
+-------------------
 
