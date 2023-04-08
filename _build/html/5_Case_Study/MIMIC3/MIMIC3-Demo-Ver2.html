@@ -352,6 +352,13 @@ const thebe_selector_output = ".output, .cell_output"
                       </a>
                     </li>
                 
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../MovieLens/MovieLens.html">
+                        MovieLens
+                      </a>
+                    </li>
+                
                 </div>
             </div>
             
@@ -639,6 +646,13 @@ const thebe_selector_output = ".output, .cell_output"
                       </a>
                     </li>
                 
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../MovieLens/MovieLens.html">
+                        MovieLens
+                      </a>
+                    </li>
+                
                 </div>
             </div>
             
@@ -909,6 +923,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="Infinite_Horizon.html">MIMIC III (Infinite Horizon)</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../MovieLens/MovieLens.html">MovieLens</a></li>
 </ul>
 
     </div>
@@ -1097,11 +1112,6 @@ title="Print to PDF"
      Regard ‘SOFA’ as the outcome variable
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#mediation-analysis">
-     Mediation Analysis
-    </a>
-   </li>
   </ul>
  </li>
 </ul>
@@ -1173,7 +1183,7 @@ title="Print to PDF"
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_35403</span><span class="o">/</span><span class="mf">2950252550.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_32745</span><span class="o">/</span><span class="mf">2950252550.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">mimic3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;subset_rl_data_final_cont.csv&quot;</span><span class="p">)</span>
 
 <span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/pandas/util/_decorators.py</span> in <span class="ni">wrapper</span><span class="nt">(*args, **kwargs)</span>
@@ -1682,6 +1692,14 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <h1>Causal Effect Learning<a class="headerlink" href="#causal-effect-learning" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mimic3_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;mimic3_single_stage.csv&#39;</span><span class="p">)</span>
+<span class="n">mimic3_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mimic3_data</span><span class="p">[</span><span class="s1">&#39;Died within 48H&#39;</span><span class="p">]</span><span class="o">==-</span><span class="mf">1.0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span> <span class="c1"># change the discrete action to binary</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mimic3_data</span><span class="o">.</span><span class="n">columns</span>
 </pre></div>
 </div>
@@ -1736,7 +1754,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
       <td>137.081590</td>
       <td>2.800000</td>
       <td>8.400000</td>
-      <td>-1.0</td>
+      <td>0.0</td>
       <td>7.600000</td>
     </tr>
     <tr>
@@ -1756,7 +1774,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
       <td>252.883864</td>
       <td>3.000000</td>
       <td>4.800000</td>
-      <td>-1.0</td>
+      <td>0.0</td>
       <td>4.600000</td>
     </tr>
     <tr>
@@ -1859,7 +1877,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
       <td>137.081590</td>
       <td>1.0</td>
       <td>8.400000</td>
-      <td>-1.0</td>
+      <td>0.0</td>
       <td>7.600000</td>
     </tr>
     <tr>
@@ -1879,7 +1897,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
       <td>252.883864</td>
       <td>1.0</td>
       <td>4.800000</td>
-      <td>-1.0</td>
+      <td>0.0</td>
       <td>4.600000</td>
     </tr>
     <tr>
@@ -1944,9 +1962,9 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -2007,7 +2025,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <p>As we can see from the estimated treatment effect of each patient, a higher volumn of fluid intake is inclined to cause negative impact on patients’ health status. This may seem counterintuitive to us, which may indicates some selection bias within this small dataset. Despite so, this result also remind us to pay attention to the potentially unnecessary fluid intake that may increase the death rate of patients.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mu1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span><span class="o">-</span><span class="n">mu0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span><span class="o">==</span><span class="mi">2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mu1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span><span class="o">-</span><span class="n">mu0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -2025,7 +2043,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.21392525739350676
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.21392525739350687
 </pre></div>
 </div>
 </div>
@@ -2080,7 +2098,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
       <td>137.081590</td>
       <td>1.0</td>
       <td>8.400000</td>
-      <td>-1.0</td>
+      <td>0.0</td>
       <td>7.600000</td>
     </tr>
     <tr>
@@ -2100,7 +2118,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
       <td>252.883864</td>
       <td>1.0</td>
       <td>4.800000</td>
-      <td>-1.0</td>
+      <td>0.0</td>
       <td>4.600000</td>
     </tr>
     <tr>
@@ -2192,22 +2210,12 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.4460136626503029
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.4460136626503026
 </pre></div>
 </div>
 </div>
 </div>
 <p><strong>Conclusion</strong>: IV Input is expected to increase the SOFA score by 0.446.</p>
-</section>
-<section id="mediation-analysis">
-<h2>Mediation Analysis<a class="headerlink" href="#mediation-analysis" title="Permalink to this heading">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### to be added</span>
-</pre></div>
-</div>
-</div>
-</div>
 </section>
 </section>
 
@@ -2292,11 +2300,6 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#regard-sofa-as-the-outcome-variable">
      Regard ‘SOFA’ as the outcome variable
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#mediation-analysis">
-     Mediation Analysis
     </a>
    </li>
   </ul>
