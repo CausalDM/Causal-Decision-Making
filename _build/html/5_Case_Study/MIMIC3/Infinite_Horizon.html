@@ -61,6 +61,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = '5_Case_Study/MIMIC3/Infinite_Horizon';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="MovieLens" href="../MovieLens/MovieLens.html" />
     <link rel="prev" title="MIMIC III (3-Stages)" href="Longitudinal.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="docsearch:language" content="en">
@@ -346,6 +347,13 @@ const thebe_selector_output = ".output, .cell_output"
                     <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="MIMIC3_intro.html">
                         Mimic3
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../MovieLens/MovieLens.html">
+                        MovieLens
                       </a>
                     </li>
                 
@@ -636,6 +644,13 @@ const thebe_selector_output = ".output, .cell_output"
                       </a>
                     </li>
                 
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../MovieLens/MovieLens.html">
+                        MovieLens
+                      </a>
+                    </li>
+                
                 </div>
             </div>
             
@@ -906,6 +921,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">MIMIC III (Infinite Horizon)</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../MovieLens/MovieLens.html">MovieLens</a></li>
 </ul>
 
     </div>
@@ -1094,14 +1110,18 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM&#39;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:/Github/CausalDM&#39;</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">pickle</span>
 <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./causaldm/MIMIC3/mimic3_MRL_data_dict_V2.pickle&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
 <span class="n">mimic3_MRL</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+<span class="n">mimic3_MRL</span><span class="p">[</span><span class="s1">&#39;reward&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">mimic3_MRL</span><span class="p">[</span><span class="s1">&#39;reward&#39;</span><span class="p">]]</span>
+<span class="n">mimic3_MRL</span><span class="p">[</span><span class="s1">&#39;reward&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">mimic3_MRL</span><span class="p">[</span><span class="s1">&#39;reward&#39;</span><span class="p">]]</span>
 <span class="n">MRL_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./causaldm/MIMIC3/mimic3_MRL_df_V2.csv&#39;</span><span class="p">)</span>
+<span class="n">MRL_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">MRL_df</span><span class="p">[</span><span class="s1">&#39;Died_within_48H&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">MRL_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">MRL_df</span><span class="p">[</span><span class="s1">&#39;Died_within_48H&#39;</span><span class="p">]</span><span class="o">==-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
 <span class="n">MRL_df</span><span class="p">[</span><span class="n">MRL_df</span><span class="o">.</span><span class="n">icustayid</span><span class="o">==</span><span class="mi">1006</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1109,14 +1129,14 @@ title="Print to PDF"
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_87965</span><span class="o">/</span><span class="mf">3787818056.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_31946</span><span class="o">/</span><span class="mf">1205981465.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">os</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM&#39;</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:/Github/CausalDM&#39;</span><span class="p">)</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;/nas/longleaf/home/lge/CausalDM&#39;
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;D:/Github/CausalDM&#39;
 </pre></div>
 </div>
 </div>
@@ -1126,23 +1146,23 @@ title="Print to PDF"
 <p>We processed the MIMIC III data similarly to literature on reinforcement learning by setting the reward of each stage prior to the final stage to 0, and the reward of the final stage to the observed value of Died within 48H. In this section, we analyze the average treatment effect (ATE) of a target policy that provides IV input all of the time compared to a control policy that provides no IV input at all. Using the multiply-robust estimator proposed in [1], we decomposed the ATE into four components, including immediate nature dierct effect (INDE), Immediate nature mediator effect (INME), delayed nature direct effect (DNDE), and delayed nature mediator effect (NDDNME), and estimated each of the effect component. The estimation results are summarized in the table below.</p>
 <table class="table">
 <thead>
-<tr class="row-odd"><th class="head"><p>NIDE</p></th>
-<th class="head"><p>NIME</p></th>
-<th class="head"><p>NDDE</p></th>
-<th class="head"><p>NDME</p></th>
+<tr class="row-odd"><th class="head"><p>INDE</p></th>
+<th class="head"><p>INME</p></th>
+<th class="head"><p>DNDE</p></th>
+<th class="head"><p>DNME</p></th>
 <th class="head"><p>ATE</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>-.1453(.0341)</p></td>
-<td><p>.0046(.0018)</p></td>
-<td><p>-.0040(.0060)</p></td>
-<td><p>.0005(.0018)</p></td>
-<td><p>-.1441(.0339)</p></td>
+<tr class="row-even"><td><p>-.0181(.0059)</p></td>
+<td><p>.0061(.0021)</p></td>
+<td><p>-.0049(.0028)</p></td>
+<td><p>-.0002(.0011)</p></td>
+<td><p>-.0171(.0058)</p></td>
 </tr>
 </tbody>
 </table>
-<p>Specifically, the ATE of the target policy is significantly negative, with an effect size of .1390. Diving deep, we find that the DNME and DNDE are insignificant, whereas the INDE and INME are all statistically significant. Further, taking the effect size into account, we can conclude that the majority of the average treatment effect is directly due to the actions derived from the target treatment policy, while the part of the effect that can be attributed to the mediators is negligible.</p>
+<p>Specifically, the ATE of the target policy is significantly negative, with an effect size of .0171. Diving deep, we find that the DNME and DNDE are insignificant, whereas the INDE and INME are all statistically significant. Further, taking the effect size into account, we can conclude that the majority of the average treatment effect is directly due to the actions derived from the target treatment policy, while the part of the effect that can be attributed to the mediators is negligible.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Causal_Effect_Learning.Mediation_Analysis</span> <span class="kn">import</span> <span class="n">ME_MDP</span>
@@ -1236,11 +1256,11 @@ Building 1-th basis spline (total 3 state-mediator dimemsion) which has 3 basis,
 Building 2-th basis spline (total 3 state-mediator dimemsion) which has 3 basis, in total 9 features 
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.1452771259348552,
- 0.004637499340581467,
- -0.003993095022944491,
- 0.0005317328373979431,
- -0.14410098877982028)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.018100205548084617,
+ 0.006066387157097036,
+ -0.00486632802292234,
+ -0.0001815880750934009,
+ -0.017081734489003318)
 </pre></div>
 </div>
 </div>
@@ -1252,11 +1272,11 @@ Building 2-th basis spline (total 3 state-mediator dimemsion) which has 3 basis,
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.03413229284322258,
- 0.0018118276672658687,
- 0.0059963999590195915,
- 0.0017995551161793478,
- 0.03387985782346984)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.00586890111356167,
+ 0.002110278954333155,
+ 0.002770561709397491,
+ 0.0010678186846428818,
+ 0.005821662648170317)
 </pre></div>
 </div>
 </div>
@@ -1302,6 +1322,13 @@ Building 2-th basis spline (total 3 state-mediator dimemsion) which has 3 basis,
           <p class="prev-next-subtitle">previous</p>
           <p class="prev-next-title">MIMIC III (3-Stages)</p>
       </div>
+  </a>
+  <a class='right-next' id="next-link" href="../MovieLens/MovieLens.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">MovieLens</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
   </a>
 </div>
             </footer>

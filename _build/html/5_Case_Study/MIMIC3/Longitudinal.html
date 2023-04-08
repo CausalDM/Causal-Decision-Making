@@ -352,6 +352,13 @@ const thebe_selector_output = ".output, .cell_output"
                       </a>
                     </li>
                 
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../MovieLens/MovieLens.html">
+                        MovieLens
+                      </a>
+                    </li>
+                
                 </div>
             </div>
             
@@ -639,6 +646,13 @@ const thebe_selector_output = ".output, .cell_output"
                       </a>
                     </li>
                 
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../MovieLens/MovieLens.html">
+                        MovieLens
+                      </a>
+                    </li>
+                
                 </div>
             </div>
             
@@ -909,6 +923,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="Infinite_Horizon.html">MIMIC III (Infinite Horizon)</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../MovieLens/MovieLens.html">MovieLens</a></li>
 </ul>
 
     </div>
@@ -1121,7 +1136,10 @@ title="Print to PDF"
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./causaldm/MIMIC3/mimic3_MDTR_data_dict_3stage_V2.pickle&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
 <span class="n">mimic3_MDTR</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+<span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">mediator</span><span class="p">,</span> <span class="n">reward</span> <span class="o">=</span> <span class="n">mimic3_MDTR</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+<span class="n">reward</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">reward</span><span class="p">[</span><span class="s1">&#39;Died_within_48H&#39;</span><span class="p">]</span><span class="o">==-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span> <span class="c1"># change the discrete action to binary</span>
 <span class="n">MDTR_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./causaldm/MIMIC3/mimic3_MDTR_3stage_V2.csv&#39;</span><span class="p">)</span>
+<span class="n">MDTR_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">MDTR_data</span><span class="p">[</span><span class="s1">&#39;Died_within_48H&#39;</span><span class="p">]</span><span class="o">==-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
 <span class="n">MDTR_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1129,7 +1147,7 @@ title="Print to PDF"
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_87975</span><span class="o">/</span><span class="mf">2395763461.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_31951</span><span class="o">/</span><span class="mf">1615765813.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">os</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:/Github/CausalDM&#39;</span><span class="p">)</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -1153,16 +1171,15 @@ title="Print to PDF"
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>-.426(1.390)</p></td>
-<td><p>.312(1.295)</p></td>
-<td><p>-.114(.567)</p></td>
+<tr class="row-even"><td><p>-.213(.695)</p></td>
+<td><p>.156(.647)</p></td>
+<td><p>-.057(.284)</p></td>
 </tr>
 </tbody>
 </table>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Causal_Effect_Learning.Mediation_Analysis</span> <span class="kn">import</span> <span class="n">Mediated_QLearning</span>
-<span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">mediator</span><span class="p">,</span> <span class="n">reward</span> <span class="o">=</span> <span class="n">mimic3_MDTR</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
 <span class="n">MediatedQLearn</span> <span class="o">=</span> <span class="n">Mediated_QLearning</span><span class="o">.</span><span class="n">Mediated_QLearning</span><span class="p">()</span>
 <span class="n">N</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 <span class="n">regime_control</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;IV_Input_1&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">N</span><span class="p">,</span><span class="s1">&#39;IV_Input_2&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">N</span><span class="p">,</span> <span class="s1">&#39;IV_Input_3&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">N</span><span class="p">})</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
@@ -1175,11 +1192,17 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0    0.311516
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/nas/longleaf/rhel8/apps/anaconda/2021.11.ood/lib/python3.9/site-packages/statsmodels/tsa/base/tsa_model.py:7: FutureWarning: pandas.Int64Index is deprecated and will be removed from pandas in a future version. Use pandas.Index with the appropriate dtype instead.
+  from pandas import (to_datetime, Int64Index, DatetimeIndex, Period,
+/nas/longleaf/rhel8/apps/anaconda/2021.11.ood/lib/python3.9/site-packages/statsmodels/tsa/base/tsa_model.py:7: FutureWarning: pandas.Float64Index is deprecated and will be removed from pandas in a future version. Use pandas.Index with the appropriate dtype instead.
+  from pandas import (to_datetime, Int64Index, DatetimeIndex, Period,
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0    0.155758
  dtype: float64,
- 0   -0.425676
+ 0   -0.212838
  dtype: float64,
- 0   -0.114161
+ 0   -0.05708
  dtype: float64)
 </pre></div>
 </div>
@@ -1195,7 +1218,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([1.2949]), array([1.3891]), array([0.567]))
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([0.6474]), array([0.6946]), array([0.2835]))
 </pre></div>
 </div>
 </div>
@@ -1210,8 +1233,8 @@ title="Print to PDF"
 </div>
 </div>
 <p>As an example, we use the <strong>Q-learning</strong> algorithm to evaluate policies based on the observed data, with the linear regression models defined as the following:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2582c771-ff85-4feb-9e41-294fc1aebfb8">
-<span class="eqno">(150)<a class="headerlink" href="#equation-2582c771-ff85-4feb-9e41-294fc1aebfb8" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2f36ee2f-36c2-42ee-a5f4-a8df12565d2b">
+<span class="eqno">(150)<a class="headerlink" href="#equation-2f36ee2f-36c2-42ee-a5f4-a8df12565d2b" title="Permalink to this equation">#</a></span>\[\begin{align}
 Q_1(s,a_1,\boldsymbol{\beta}) = &amp;\beta_{00}+\beta_{01}*\textrm{Glucose}_1+\beta_{02}*\textrm{PaO2_FiO2}_1\\
                     &amp;I(a_1=1)*\{\beta_{10}+\beta_{11}*\textrm{Glucose}_1+\beta_{12}*\textrm{PaO2_FiO2}_1\},\\
 Q_2(s,a_2,\boldsymbol{\mu}) = &amp;\mu_{00}+\mu_{01}*\textrm{Glucose}_1+\mu_{02}*\textrm{PaO2_FiO2}_1+\mu_{03}*\textrm{SOFA}_1+\\
@@ -1222,7 +1245,7 @@ Q_3(s,a_3,\boldsymbol{\theta}) = &amp;\theta_{00}+\theta_{01}*\textrm{Glucose}_1
                     &amp;\theta_{07}*\textrm{Glucose}_3+\theta_{08}*\textrm{PaO2_FiO2}_3+\\
                     &amp;I(a_2=1)*\{\theta_{10}+\theta_{11}*\textrm{Glucose}_3+\theta_{12}*\textrm{PaO2_FiO2}_3\}
 \end{align}\]</div>
-<p>Using the code below, we evaluated two target polices (regimes). The first one is a fixed treatement regime that applies no treatment at all stages (Policy1), with an estimated value of .7982. Another is a fixed treatment regime that applies treatment at all stages (Policy2), with an estimated value of .6492. Therefore, the treatment effect of Policy2 comparing to Policy1 is -.1490, implying that receiving IV input increase the mortality rate.</p>
+<p>Using the code below, we evaluated two target polices (regimes). The first one is a fixed treatement regime that applies no treatment at all stages (Policy1), with an estimated value of .8991. Another is a fixed treatment regime that applies treatment at all stages (Policy2), with an estimated value of .8246. Therefore, the treatment effect of Policy2 comparing to Policy1 is -.0745, implying that receiving IV input increase the mortality rate.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MDTR_data</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Died_within_48H&#39;</span><span class="p">:</span><span class="s1">&#39;R&#39;</span><span class="p">,</span>
@@ -1259,7 +1282,7 @@ Q_3(s,a_3,\boldsymbol{\theta}) = &amp;\theta_{00}+\theta_{01}*\textrm{Glucose}_1
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7981963882433065
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.899098194121663
 </pre></div>
 </div>
 </div>
@@ -1279,7 +1302,7 @@ Q_3(s,a_3,\boldsymbol{\theta}) = &amp;\theta_{00}+\theta_{01}*\textrm{Glucose}_1
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.649210729138117
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.824605364568914
 </pre></div>
 </div>
 </div>
@@ -1291,19 +1314,19 @@ Q_3(s,a_3,\boldsymbol{\theta}) = &amp;\theta_{00}+\theta_{01}*\textrm{Glucose}_1
 <ul class="simple">
 <li><p>At stage 1:</p>
 <ol class="arabic simple">
-<li><p>We would recommend <span class="math notranslate nohighlight">\(A=0\)</span> (IV_Input = 0) if <span class="math notranslate nohighlight">\(.0002*\textrm{Glucose}_1+.0012*\textrm{PaO2_FiO2}_1&gt;.1101\)</span></p></li>
+<li><p>We would recommend <span class="math notranslate nohighlight">\(A=0\)</span> (IV_Input = 0) if <span class="math notranslate nohighlight">\(.0001*\textrm{Glucose}_1+.0012*\textrm{PaO2_FiO2}_1&gt;.0551\)</span></p></li>
 <li><p>Else, we would recommend <span class="math notranslate nohighlight">\(A=1\)</span> (IV_Input = 1).</p></li>
 </ol>
 </li>
 <li><p>At stage 2:</p>
 <ol class="arabic simple">
-<li><p>We would recommend <span class="math notranslate nohighlight">\(A=0\)</span> (IV_Input = 0) if <span class="math notranslate nohighlight">\(.0005*\textrm{Glucose}_2-.00002*\textrm{PaO2_FiO2}_2+.0141*\textrm{SOFA}_1&lt;.1442\)</span></p></li>
+<li><p>We would recommend <span class="math notranslate nohighlight">\(A=0\)</span> (IV_Input = 0) if <span class="math notranslate nohighlight">\(.0002*\textrm{Glucose}_2-.00001*\textrm{PaO2_FiO2}_2+.0070*\textrm{SOFA}_1&lt;.0721\)</span></p></li>
 <li><p>Else, we would recommend <span class="math notranslate nohighlight">\(A=1\)</span> (IV_Input = 1).</p></li>
 </ol>
 </li>
 <li><p>At stage 3:</p>
 <ol class="arabic simple">
-<li><p>We would recommend <span class="math notranslate nohighlight">\(A=0\)</span> (IV_Input = 0) if <span class="math notranslate nohighlight">\(-.0009*\textrm{Glucose}_2+.0016*\textrm{PaO2_FiO2}_2-.0228*\textrm{SOFA}_2&lt;.4136\)</span></p></li>
+<li><p>We would recommend <span class="math notranslate nohighlight">\(A=0\)</span> (IV_Input = 0) if <span class="math notranslate nohighlight">\(-.0005*\textrm{Glucose}_2+.0008*\textrm{PaO2_FiO2}_2-.0114*\textrm{SOFA}_2&lt;.2068\)</span></p></li>
 <li><p>Else, we would recommend <span class="math notranslate nohighlight">\(A=1\)</span> (IV_Input = 1).</p></li>
 </ol>
 </li>
@@ -1360,7 +1383,7 @@ Q_3(s,a_3,\boldsymbol{\theta}) = &amp;\theta_{00}+\theta_{01}*\textrm{Glucose}_1
 </tr>
 </tbody>
 </table>
-<p>The estimated value of the estimated optimal policy is <strong>.9274</strong>.</p>
+<p>The estimated value of the estimated optimal policy is <strong>.9637</strong>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># initialize the learner</span>
@@ -1390,7 +1413,7 @@ Q_3(s,a_3,\boldsymbol{\theta}) = &amp;\theta_{00}+\theta_{01}*\textrm{Glucose}_1
     0   0      2
         1      2
 dtype: int64
-opt value: 0.9274371195908725
+opt value: 0.9637185597953722
 </pre></div>
 </div>
 </div>

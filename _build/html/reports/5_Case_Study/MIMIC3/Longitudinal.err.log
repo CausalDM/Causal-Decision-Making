@@ -25,13 +25,16 @@ import numpy as np
 import pandas as pd
 file = open('./causaldm/MIMIC3/mimic3_MDTR_data_dict_3stage_V2.pickle', 'rb')
 mimic3_MDTR = pickle.load(file)
+state, action, mediator, reward = mimic3_MDTR.values()
+reward.iloc[np.where(reward['Died_within_48H']==-1)[0],-1]=0 # change the discrete action to binary
 MDTR_data = pd.read_csv('./causaldm/MIMIC3/mimic3_MDTR_3stage_V2.csv')
+MDTR_data.iloc[np.where(MDTR_data['Died_within_48H']==-1)[0],-1]=0
 MDTR_data.head()
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mFileNotFoundError[0m                         Traceback (most recent call last)
-[0;32m/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_87975/2395763461.py[0m in [0;36m<module>[0;34m[0m
+[0;32m/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_31951/1615765813.py[0m in [0;36m<module>[0;34m[0m
 [1;32m      1[0m [0;32mimport[0m [0mos[0m[0;34m[0m[0;34m[0m[0m
 [0;32m----> 2[0;31m [0mos[0m[0;34m.[0m[0mchdir[0m[0;34m([0m[0;34m'D:/Github/CausalDM'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 [0m[1;32m      3[0m [0;32mimport[0m [0mpandas[0m [0;32mas[0m [0mpd[0m[0;34m[0m[0;34m[0m[0m
