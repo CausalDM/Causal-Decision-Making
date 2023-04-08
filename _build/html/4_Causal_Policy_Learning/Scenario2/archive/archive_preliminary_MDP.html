@@ -823,11 +823,6 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../../5_Case_Study/MIMIC3/MIMIC3-Demo.html">
-     Mimic3 Demo
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="../../../5_Case_Study/MIMIC3/MIMIC3-Demo-Ver2.html">
      Mimic3 Demo-Ver2
     </a>
@@ -1150,8 +1145,8 @@ At each time point <span class="math notranslate nohighlight">\(t \ge 0\)</span>
 <section id="value-functions">
 <h2>Value functions<a class="headerlink" href="#value-functions" title="Permalink to this headline">#</a></h2>
 <p>The state value function (referred to as the V-function) and state-action value function (referred to as the Q-function) for a policy <span class="math notranslate nohighlight">\(\pi\)</span> are given as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-53ffbf43-0057-4a71-bbbd-15b43e5ff5af">
-<span class="eqno">()<a class="headerlink" href="#equation-53ffbf43-0057-4a71-bbbd-15b43e5ff5af" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ceaba9ec-6da1-40a4-9c1d-dbf3b57b4f0c">
+<span class="eqno">()<a class="headerlink" href="#equation-ceaba9ec-6da1-40a4-9c1d-dbf3b57b4f0c" title="Permalink to this equation">#</a></span>\[\begin{align}
 	V^\pi(s)&amp;=\mathbb{E}^{\pi} (\sum_{t=0}^{+\infty} \gamma^t R_{t}|S_{0}=s),\\
 	Q^\pi(a,s)&amp;= \mathbb{E}^{\pi} (\sum_{t=0}^{+\infty} \gamma^t R_{t}|A_{0}=a,S_{0}=s) \label{eqn:Q},
 \end{align}\]</div>
@@ -1169,16 +1164,16 @@ The optimal policy is defined as <span class="math notranslate nohighlight">\(\p
 <p>where the last equality follows from the stationarity of the MDP.
 Motivated by this fact,
 the Bellman equation for the Q-function is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-84247d80-e303-4a2e-8f9e-f126888b4a76">
-<span class="eqno">()<a class="headerlink" href="#equation-84247d80-e303-4a2e-8f9e-f126888b4a76" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
+<div class="amsmath math notranslate nohighlight" id="equation-2a308a1d-c114-40b2-b6f4-c39cc71dace1">
+<span class="eqno">()<a class="headerlink" href="#equation-2a308a1d-c114-40b2-b6f4-c39cc71dace1" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
     Q(a, s) = \mathbb{E}^\pi \Big(R_t + \gamma Q(A_{t + 1}, S_{t+1})  | A_t = a, S_t = s \Big), 
 \end{equation}\]</div>
 <p>for which <span class="math notranslate nohighlight">\(Q^\pi\)</span> is the unique solution [2].
 The Bellman equation relates different components of the MDP via a recursive form and is the foundation for lots of RL algorithms.</p>
 <p>Similarly, we have the Bellman optimality equation, which characterizes the optimal policy <span class="math notranslate nohighlight">\(\pi^*\)</span> and is commonly used in policy optimization.
 Specifically, its value function <span class="math notranslate nohighlight">\(Q^*\)</span> is the unique solution of</p>
-<div class="amsmath math notranslate nohighlight" id="equation-08029056-0dc0-48c2-93f0-d4290b18c3d0">
-<span class="eqno">()<a class="headerlink" href="#equation-08029056-0dc0-48c2-93f0-d4290b18c3d0" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e6b9c504-995a-4f92-b8c5-d84f0aa098f7">
+<span class="eqno">()<a class="headerlink" href="#equation-e6b9c504-995a-4f92-b8c5-d84f0aa098f7" title="Permalink to this equation">#</a></span>\[\begin{equation}
     Q(a, s) = \mathbb{E} \Big(R_t + \gamma \arg \max_{a'} Q(a, S_{t+1})  | A_t = a, S_t = s \Big).  \;\;\;\;\; \text{(2)} 
 \end{equation}\]</div>
 </section>
@@ -1187,8 +1182,8 @@ Specifically, its value function <span class="math notranslate nohighlight">\(Q^
 <p>In the off-policy setting, the observed data consists of <span class="math notranslate nohighlight">\(n\)</span> i.i.d. trajectories <span class="math notranslate nohighlight">\(\{(S_{i,t},A_{i,t},R_{i,t},S_{i,t+1})\}_{0\le t&lt;T_i,1\le i\le n}\)</span>, where <span class="math notranslate nohighlight">\(T_i\)</span> denotes the length of the <span class="math notranslate nohighlight">\(i\)</span>th trajectory. Without loss of generality, we assume <span class="math notranslate nohighlight">\(T_1=\cdots=T_n=T\)</span> and the immediate rewards are uniformly bounded.
 The dataset is collected by following a stationary policy <span class="math notranslate nohighlight">\(b\)</span>, known as the <em>behavior policy</em>.</p>
 <p><strong>Off-Policy Evaluation(OPE).</strong> The goal of OPE is to estimate the value of a given <em>target policy</em> <span class="math notranslate nohighlight">\(\pi\)</span> with respect to the initial state distribution <span class="math notranslate nohighlight">\(\mathbb{G}\)</span>, defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-625ad4d5-d216-46b9-9856-d39206037cdf">
-<span class="eqno">()<a class="headerlink" href="#equation-625ad4d5-d216-46b9-9856-d39206037cdf" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:def_value}
+<div class="amsmath math notranslate nohighlight" id="equation-3c3e18f0-e4db-44c0-8929-93d2e3fa84c0">
+<span class="eqno">()<a class="headerlink" href="#equation-3c3e18f0-e4db-44c0-8929-93d2e3fa84c0" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:def_value}
 	\eta^{\pi} =  \mathbb{E}_{s \sim \mathbb{G}} V^{\pi}(s). 
 \end{eqnarray}\]</div>
 <p>By definition, we directly have <span class="math notranslate nohighlight">\(\eta^{\pi} = \mathbb{E}_{s \sim \mathbb{G}, a \sim \pi(\cdot|s)} Q^{\pi}(a, s)\)</span>.</p>

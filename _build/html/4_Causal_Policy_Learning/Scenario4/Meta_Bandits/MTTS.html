@@ -825,11 +825,6 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../../5_Case_Study/MIMIC3/MIMIC3-Demo.html">
-     Mimic3 Demo
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="../../../5_Case_Study/MIMIC3/MIMIC3-Demo-Ver2.html">
      Mimic3 Demo-Ver2
     </a>
@@ -1208,8 +1203,8 @@ title="Print to PDF"
 <section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>The <strong>MTTS</strong>[1] utilize baseline information to share information among different tasks efficiently, by constructing a Bayesian hierarchical model. Specifically, it assumes that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cebe47fc-cd76-4700-81fc-52385dafeeb1">
-<span class="eqno">(117)<a class="headerlink" href="#equation-cebe47fc-cd76-4700-81fc-52385dafeeb1" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4a8b2819-b9ad-4ebb-a8bc-04630ca8c919">
+<span class="eqno">(117)<a class="headerlink" href="#equation-4a8b2819-b9ad-4ebb-a8bc-04630ca8c919" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{alignedat}{2}
 &amp;\text{(Prior)} \quad
 \quad\quad\quad    \boldsymbol{\gamma} &amp;&amp;\sim Q(\boldsymbol{\gamma}), \\
@@ -1220,8 +1215,8 @@ title="Print to PDF"
       \end{alignedat}
 \end{equation}\]</div>
 <p>Similarly, considering the Bernoulli bandit, it assumes that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d8dec307-80cf-4a7e-85ca-ec398511c71a">
-<span class="eqno">(118)<a class="headerlink" href="#equation-d8dec307-80cf-4a7e-85ca-ec398511c71a" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:hierachical_model}
+<div class="amsmath math notranslate nohighlight" id="equation-1eeab1c6-3a25-4d16-be79-f12ea142a0c9">
+<span class="eqno">(118)<a class="headerlink" href="#equation-1eeab1c6-3a25-4d16-be79-f12ea142a0c9" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:hierachical_model}
   \begin{alignedat}{2}
 &amp;\text{(Prior)} \quad
 \quad\quad\quad    \boldsymbol{\gamma} &amp;&amp;\sim Q(\boldsymbol{\gamma}), \\
@@ -1233,8 +1228,8 @@ title="Print to PDF"
 \end{equation}\]</div>
 <p>where  <span class="math notranslate nohighlight">\(logistic(c) \equiv 1 / (1 + exp^{-1}(c))\)</span>, <span class="math notranslate nohighlight">\(\psi\)</span> is a known parameter, and  <span class="math notranslate nohighlight">\(\text{Beta}(\mu, \psi)\)</span> denotes a Beta distribution with mean <span class="math notranslate nohighlight">\(\mu\)</span> and precision <span class="math notranslate nohighlight">\(\psi\)</span>. Still, we assume a Normal prior of <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>. As there is no explicit form of the corresponding posterior, we update the posterior distribution by <strong>Pymc3</strong>.</p>
 <p>Under the TS framework, at each round <span class="math notranslate nohighlight">\(t\)</span> with task <span class="math notranslate nohighlight">\(j\)</span>, the agent will sample a <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\mu}}_{j}\)</span> from its posterior distribution updated according to the hierarchical model, then the action <span class="math notranslate nohighlight">\(a\)</span> with the maximum sampled <span class="math notranslate nohighlight">\(\tilde{\mu}_{j,a}\)</span> will be pulled. Mathmetically,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-329f06f1-712d-4dc3-bbcb-83ea55f5a5ae">
-<span class="eqno">(119)<a class="headerlink" href="#equation-329f06f1-712d-4dc3-bbcb-83ea55f5a5ae" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f310bec3-f4be-4485-8f35-d94be31510f8">
+<span class="eqno">(119)<a class="headerlink" href="#equation-f310bec3-f4be-4485-8f35-d94be31510f8" title="Permalink to this equation">#</a></span>\[\begin{equation}
     A_{j,t} = argmax_{a \in \mathcal{A}} \hat{E}(R_{j,t}(a)) = argmax_{a \in \mathcal{A}} \tilde\mu_{j,a}.
 \end{equation}\]</div>
 <p>Essentially, <strong>MTTS</strong> assumes that the mean reward <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_{j}\)</span> is sampled from model <span class="math notranslate nohighlight">\(g\)</span> parameterized by unknown parameter <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span> and conditional on task feature <span class="math notranslate nohighlight">\(\boldsymbol{s}_{j}\)</span>. Instead of assuming that <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_j\)</span> is fully determined by its features through a deterministic function, <strong>MTTS</strong> adds an item-specific noise term to account for the inter-task heterogeneity. Simultaneously modeling heterogeneity and sharing information across tasks via <span class="math notranslate nohighlight">\(g\)</span>, <strong>MTTS</strong> is able to provide an informative prior distribution to guide the exploration. Appropriately addressing the heterogeneity between tasks, the MTTS has been shown to have a superior performance in practice[1].</p>

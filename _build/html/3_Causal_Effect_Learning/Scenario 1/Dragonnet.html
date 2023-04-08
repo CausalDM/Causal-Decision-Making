@@ -825,11 +825,6 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3-Demo.html">
-     Mimic3 Demo
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3-Demo-Ver2.html">
      Mimic3 Demo-Ver2
     </a>
@@ -1162,18 +1157,18 @@ title="Print to PDF"
 <section id="part-1-dragonnet">
 <h2>Part 1: Dragonnet<a class="headerlink" href="#part-1-dragonnet" title="Permalink to this headline">#</a></h2>
 <p>Define the conditional outcome as <span class="math notranslate nohighlight">\(Q(a,s)=E[R|a,s]\)</span> amd propensity score <span class="math notranslate nohighlight">\(g(s)=P(A=1|S=s)\)</span>. Our goal is to estimate the effect of treatment <span class="math notranslate nohighlight">\(A=1\)</span> versus <span class="math notranslate nohighlight">\(A=0\)</span>, i.e.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c101fd43-8671-4679-830f-6d7ed35b3831">
-<span class="eqno">(38)<a class="headerlink" href="#equation-c101fd43-8671-4679-830f-6d7ed35b3831" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b0e560ba-4b1a-4ca2-9aba-482aa826db0e">
+<span class="eqno">(38)<a class="headerlink" href="#equation-b0e560ba-4b1a-4ca2-9aba-482aa826db0e" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \text{HTE}_{\text{Dragonnet}}(s)=E[R(1)|S=s]-E[R(0)|S=s],
 \end{equation}\]</div>
 <p>and the average treatment effect</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0e66e329-d55a-49ad-aa44-0a9715cfe1fe">
-<span class="eqno">(39)<a class="headerlink" href="#equation-0e66e329-d55a-49ad-aa44-0a9715cfe1fe" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c78185f7-da24-4b94-8f02-8f33faa223ac">
+<span class="eqno">(39)<a class="headerlink" href="#equation-c78185f7-da24-4b94-8f02-8f33faa223ac" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \text{ATE}_{\text{Dragonnet}}=E\Big[E[R(1)|S]-E[R(0)|S]\Big].
 \end{equation}\]</div>
 <p>Under certain identifiability assumptions, the HTE can be estimated by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6f2b005e-85a8-4483-8dc3-e6f8bd18b3ea">
-<span class="eqno">(40)<a class="headerlink" href="#equation-6f2b005e-85a8-4483-8dc3-e6f8bd18b3ea" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0713895c-8be0-44e8-9d81-fa1b2fe2b968">
+<span class="eqno">(40)<a class="headerlink" href="#equation-0713895c-8be0-44e8-9d81-fa1b2fe2b968" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \widehat{\text{HTE}}_{\text{Dragonnet}}(s)=\hat{E}[R|A=1,S=s]-\hat{E}[R|A=0,S=s]=\hat{Q}(1,s)-\hat{Q}(1,s).
 \end{equation}\]</div>
 <p>According to the sufficiency of propensity score (Theorem 2.1 in [8]), all of the information in <span class="math notranslate nohighlight">\(S\)</span> that is useful in estimating ATE is contained in <span class="math notranslate nohighlight">\(g(S)\)</span>. In other words, we should train <span class="math notranslate nohighlight">\(\hat{Q}(a,s)\)</span> only through the information in <span class="math notranslate nohighlight">\(g(S)\)</span>, instead of the entire <span class="math notranslate nohighlight">\(S\)</span>. To achieve so, the author proposed a novel three-headed archetecture, which is shown in Figure 1 below.</p>
@@ -1264,8 +1259,8 @@ title="Print to PDF"
 </div>
 <p>By first training the propensity score model through several layers of neural network, we are able to capture the resourceful information of <span class="math notranslate nohighlight">\(g(S)\)</span> in layer <span class="math notranslate nohighlight">\(Z\)</span>. The core idea of Dragonnet is to directly utilize the information in <span class="math notranslate nohighlight">\(Z\)</span> to fit outcome regression models for <span class="math notranslate nohighlight">\(\hat{Q}(1,s)\)</span> and <span class="math notranslate nohighlight">\(\hat{Q}(0,s)\)</span>.</p>
 <p>The objective function of Dragonnet is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-30619894-dcaf-4261-8d10-6a83d0a5fb85">
-<span class="eqno">(41)<a class="headerlink" href="#equation-30619894-dcaf-4261-8d10-6a83d0a5fb85" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-21042c80-2e68-45af-8252-6b17fb4e37a7">
+<span class="eqno">(41)<a class="headerlink" href="#equation-21042c80-2e68-45af-8252-6b17fb4e37a7" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\theta}=\arg\min_{\theta} \frac{1}{n}\sum_{i}\Big[(Q^{\text{nn}}(a_i,s_i;\theta)-R_i)^2+\alpha \text{CrossEntropy}(g^{\text{nn}}(s_i,\theta),a_i)\Big],
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\theta\)</span> is the collection of all parameters, and <span class="math notranslate nohighlight">\(\alpha\)</span> is a weighting hyperparameter.</p>
@@ -1273,22 +1268,22 @@ title="Print to PDF"
 <section id="part-2-targeted-regularization">
 <h2>Part 2. Targeted Regularization<a class="headerlink" href="#part-2-targeted-regularization" title="Permalink to this headline">#</a></h2>
 <p>In targeted regularization, the author modified the objective function to yield a better finite sample performance. Specifically, the author defined</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d518aeb2-4bd1-41fb-b12f-5d465e5b3afb">
-<span class="eqno">(42)<a class="headerlink" href="#equation-d518aeb2-4bd1-41fb-b12f-5d465e5b3afb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-82887626-e1ed-4448-b828-747a54e5ac3b">
+<span class="eqno">(42)<a class="headerlink" href="#equation-82887626-e1ed-4448-b828-747a54e5ac3b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 &amp; \tilde{Q}(a_i,s_i;\theta,\epsilon) = {Q}^{\text{nn}}(a_i,s_i;\theta)+\epsilon, \bigg[\frac{a_i}{g^{\text{nn}}(s_i;\theta)}-\frac{1-a_i}{1-g^{\text{nn}}(s_i;\theta)}\bigg]\\
 &amp; \gamma(R_i,a_i,s_i;\theta,\epsilon) = (R_i-\tilde{Q}(a_i,s_i;\theta,\epsilon))^2,
 \end{aligned}
 \end{equation}\]</div>
 <p>and then train the model by minimizing a new objective function with an extra parameter <span class="math notranslate nohighlight">\(\epsilon\)</span> as below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5e75d3c2-fc81-480f-aa93-095fe4c8d306">
-<span class="eqno">(43)<a class="headerlink" href="#equation-5e75d3c2-fc81-480f-aa93-095fe4c8d306" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-905d3a87-2e98-4076-84a4-c68aee9a3217">
+<span class="eqno">(43)<a class="headerlink" href="#equation-905d3a87-2e98-4076-84a4-c68aee9a3217" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\theta},\hat{\epsilon} = \arg\min_{\theta,\epsilon} \Big[\hat{R}(\theta,S)+\beta\frac{1}{n}\sum_{i} \gamma(R_i,a_i,s_i;\theta,\epsilon)\Big],
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\beta\)</span> is another weighting hyperparameter.</p>
 <p>The final treatment effect estimator, after targeted regularization, is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-efe613ad-5909-4519-a366-6ee57ed7a8a9">
-<span class="eqno">(44)<a class="headerlink" href="#equation-efe613ad-5909-4519-a366-6ee57ed7a8a9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f22dacc2-cc93-4660-bd52-86cfa09e037f">
+<span class="eqno">(44)<a class="headerlink" href="#equation-f22dacc2-cc93-4660-bd52-86cfa09e037f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \widehat{\text{HTE}}_{\text{Dragonnet}}(s)=\tilde{Q}(1,s;\hat\theta,\hat\epsilon)-\tilde{Q}(0,s;\hat\theta,\hat\epsilon),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\((\hat\theta,\hat\epsilon)\)</span> is the solution we obtained above.</p>

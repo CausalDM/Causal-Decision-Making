@@ -400,12 +400,6 @@ TE_male_linear
 
 
 
-# In[ ]:
-
-
-
-
-
 # ## Online Learning
 # 
 # In this section, we aim to implement the contextual TS to learn the optimal policy online. Specifically, we assume that, for each arm $i$, 
@@ -452,7 +446,7 @@ for genere in arms:
     gamma+=[model.intercept_] + list(model.coef_)
 
 
-# ## Run Informative TS
+# ### Run Informative TS
 # 
 # Here, we run an informative TS with informative prior information, including the estimated $\sigma$ and $\gamma$. Specifically, we use $\mathcal{N}(\hat{\boldsymbol{\gamma}},.05I)$ as the prior distribution of $\gamma$. In total, we ran 50 replicates, each with 5000 total steps, to get the expected performance of online learning.
 
@@ -483,7 +477,7 @@ for seed in range(S):
     cum_reward_informative.append(cum_reward_informative_t)
 
 
-# ## Run Uninformative TS
+# ### Run Uninformative TS
 # 
 # To further show the advantages of a causal effect learning step, we run an uninformative TS with uninformative prior information. Specifically, we use $\mathcal{N}(\boldsymbol{0},1000I)$ as the prior distribution of $\gamma$. In total, we ran 50 replicates, each with 5000 total steps, to get the expected performance of online learning.
 
@@ -515,7 +509,7 @@ for seed in range(S):
     cum_reward_uninformative.append(cum_reward_uninformative_t)
 
 
-# ## Results
+# ### Results
 # 
 # Comparing the results of the uninformative TS to the results of the informative TS, it is evident that the TS algorithm with an informative prior performs significantly better than the uninformative TS. Furthermore, based on the result of the last replicate of the informative TS, the mean of the final estimation of the posterior distribution of $\boldsymbol{\gamma}$ is summarized as follows (it can be retrieved by `informative_TS.u`):
 # 

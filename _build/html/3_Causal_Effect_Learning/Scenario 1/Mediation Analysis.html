@@ -825,11 +825,6 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3-Demo.html">
-     Mimic3 Demo
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3-Demo-Ver2.html">
      Mimic3 Demo-Ver2
     </a>
@@ -1198,8 +1193,8 @@ title="Print to PDF"
 <li><p>The indirect path from treatment to outcome through the mediator <span class="math notranslate nohighlight">\(M\)</span>, denoted by <span class="math notranslate nohighlight">\(A\rightarrow M\rightarrow R\)</span>.</p></li>
 </ol>
 <p>More specifically, when adjusting the action from <span class="math notranslate nohighlight">\(A=a_0\)</span> to <span class="math notranslate nohighlight">\(A=a_1\)</span>,  we define the total effect (TE), natural direct effect (DE), and the natural indirect effect (DE) as below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-61dceb8d-ba9c-429e-957b-7642c94ca766">
-<span class="eqno">(45)<a class="headerlink" href="#equation-61dceb8d-ba9c-429e-957b-7642c94ca766" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0fee041e-85de-426b-838a-56f506dace32">
+<span class="eqno">(45)<a class="headerlink" href="#equation-0fee041e-85de-426b-838a-56f506dace32" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \text{TE}&amp;= \mathbb{E}[R|do(A=a_1)]-\mathbb{E}[R|do(A=a_0)]\\
 \text{DE}&amp;= \mathbb{E}[R|do(A=a_1,M=m^{(a_0)})]-\mathbb{E}[R|do(A=a_0)]\\
@@ -1207,8 +1202,8 @@ title="Print to PDF"
 \end{aligned}
 \end{equation}\]</div>
 <p>Under the potential outcome’s structure, we define <span class="math notranslate nohighlight">\(M_a\)</span> as the potential mediator when treatment <span class="math notranslate nohighlight">\(A=a\)</span>, and define <span class="math notranslate nohighlight">\(R_{a,m}\)</span> as the potential outcome/reward one would observe under <span class="math notranslate nohighlight">\((A=a, M=m)\)</span>. In some literature, the above effects can be samely written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7c5d07ca-2623-4271-85df-44e5b4234ddf">
-<span class="eqno">(46)<a class="headerlink" href="#equation-7c5d07ca-2623-4271-85df-44e5b4234ddf" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c5103958-d109-442a-8118-75f4354cea0d">
+<span class="eqno">(46)<a class="headerlink" href="#equation-c5103958-d109-442a-8118-75f4354cea0d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \text{TE}&amp;= \mathbb{E}[R_{a_1,m_{a_1}}]-\mathbb{E}[R_{a_0,m_{a_0}}]\\
 \text{DE}&amp;= \mathbb{E}[R_{a_1,m_{a_0}}]-\mathbb{E}[R_{a,m_{a_0}}]\\
@@ -1225,8 +1220,8 @@ title="Print to PDF"
 <li><p><code class="docutils literal notranslate"><span class="pre">Positivity</span></code>: <span class="math notranslate nohighlight">\(p(m|A,X)&gt;0\)</span> for each <span class="math notranslate nohighlight">\(m\in \mathcal{M}\)</span>, and <span class="math notranslate nohighlight">\(p(a|X)&gt;0\)</span> for each <span class="math notranslate nohighlight">\(a\in \mathcal{A}\)</span>.</p></li>
 </ol>
 <p>Under the above three assumptions, Imai et al. [3] proved the identifiability of <span class="math notranslate nohighlight">\(\mathbb{E}[R_{1,M_0}]\)</span> and <span class="math notranslate nohighlight">\(\mathbb{E}[R_{a,M_a}]\)</span> in binary action space, which is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-17ba42be-8823-4e87-83c7-9c0bdaf220c2">
-<span class="eqno">(47)<a class="headerlink" href="#equation-17ba42be-8823-4e87-83c7-9c0bdaf220c2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-30f15083-b2b0-43f2-a5e8-243bb8c030a4">
+<span class="eqno">(47)<a class="headerlink" href="#equation-30f15083-b2b0-43f2-a5e8-243bb8c030a4" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \mathbb{E}[R_{1,M_0}] &amp;= \int\int \mathbb{E}[R|A=1,M=m,S=s]p(m|A=0,S=s)p(s) d\mu(m,s)\\
 \mathbb{E}[R_{a,M_a}] &amp;= \int\int \mathbb{E}[R|A=a,M=m,S=s]p(m|A=a,S=s)p(s) d\mu(m,s)
@@ -1239,8 +1234,8 @@ title="Print to PDF"
 <section id="direct-estimator">
 <h3>1. Direct Estimator<a class="headerlink" href="#direct-estimator" title="Permalink to this headline">#</a></h3>
 <p>The first estimator is the direct method, which is a plug-in estimator based on the identification result above.  Since TE, DE and IE can be written as a function of <span class="math notranslate nohighlight">\(\mathbb{E}[R_{a,m_{a'}}]\)</span>, it suffice to estimate them separately for any <span class="math notranslate nohighlight">\(a, a'\in \mathcal{A}\)</span> and construct a DM estimator as below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e1cf7c3e-c1f3-4909-8a4c-64dad1b5546b">
-<span class="eqno">(48)<a class="headerlink" href="#equation-e1cf7c3e-c1f3-4909-8a4c-64dad1b5546b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6320c53f-2eac-4086-ae8d-d486d129937f">
+<span class="eqno">(48)<a class="headerlink" href="#equation-6320c53f-2eac-4086-ae8d-d486d129937f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \widehat{\text{DE}}_{\text{DM}}&amp;= \frac{1}{N}\sum_{i,m} \bigg\{R(S_i,a_1,m)p(m|S_i,a_0)-R(S_i,a_0,m)p(m|S_i,a_0)\bigg\}\\
 \widehat{\text{IE}}_{\text{DM}}&amp;= \frac{1}{N}\sum_{i,m} \bigg\{R(S_i,a_1,m)p(m|S_i,a_1)- R(S_i,a_1,m)p(m|S_i,a_0)\bigg\}
@@ -1250,8 +1245,8 @@ title="Print to PDF"
 <section id="ipw-estimator">
 <h3>2. IPW Estimator<a class="headerlink" href="#ipw-estimator" title="Permalink to this headline">#</a></h3>
 <p>The second estimator in literature is named as the inverse probability weighting estimator, which is similar to the IPW estimator in ATE. Under the existence of mediators, the IPW estimators [2] of DE and IE are given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-27dd3ba8-30ff-4cbb-9705-6a6799e5ec96">
-<span class="eqno">(49)<a class="headerlink" href="#equation-27dd3ba8-30ff-4cbb-9705-6a6799e5ec96" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3b483073-0fa0-4ae2-a050-26ebc36da103">
+<span class="eqno">(49)<a class="headerlink" href="#equation-3b483073-0fa0-4ae2-a050-26ebc36da103" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \widehat{\text{DE}}_{\text{IPW}}&amp;= \frac{1}{N}\sum_{i=1}^N \bigg\{\frac{\mathbb{1}\{A_i=a_1\}\rho(S_i,A_i,M_i)}{p_a(A_i|S_i)}-\frac{\mathbb{1}\{A_i=a_0\}}{p_a(A_i|S_i)}\bigg\}\cdot R_i\\
 \widehat{\text{IE}}_{\text{IPW}}&amp;= \frac{1}{N}\sum_{i=1}^N \bigg\{\frac{\mathbb{1}\{A_i=a_1\}}{p_a(A_i|S_i)}-\frac{\mathbb{1}\{A_i=a_1\}\rho(S_i,A_i,M_i)}{p_a(A_i|S_i)}\bigg\}\cdot R_i
@@ -1262,8 +1257,8 @@ title="Print to PDF"
 <section id="multiple-robust-mr-estimator">
 <h3>3. Multiple Robust (MR) Estimator<a class="headerlink" href="#multiple-robust-mr-estimator" title="Permalink to this headline">#</a></h3>
 <p>The last estimator is called the multiple robust estimator, which was proposed by Tchetgen and Shpitser [5] based on the efficient influence function in semiparametric theory. The final MR estimator for DE and IE are derived as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c4ec961e-c98b-4871-aabc-1d45f6b23916">
-<span class="eqno">(50)<a class="headerlink" href="#equation-c4ec961e-c98b-4871-aabc-1d45f6b23916" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0f96aae4-b78c-4494-8b58-7da4f7fe4507">
+<span class="eqno">(50)<a class="headerlink" href="#equation-0f96aae4-b78c-4494-8b58-7da4f7fe4507" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \widehat{\text{DE}}_{\text{MR}}&amp;= \frac{1}{N}\sum_{i=1}^N \bigg[\frac{\mathbb{1}\{A_i=a_1\}}{p_a(A_i|S_i)}\rho(S_i,A_i,M_i)\big\{R_i-\mathbb{E}[R|S_i,A_i=1,M_i]\big\}\\
 &amp;+\frac{\mathbb{1}\{A_i=a_0\}}{p_a(A_i|S_i)}\big\{\mathbb{E}[R|S_i,A_i=1,M_i]-R_i-\eta(a_1,a_0,S)+\eta(a_0,a_0,S)\big\}+\eta(a_1,a_0,S)-\eta(a_0,a_0,S)\big\}\bigg]\\
