@@ -18,62 +18,22 @@ Traceback (most recent call last):
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
 # import related packages
-from matplotlib import pyplot as plt
-from lightgbm import LGBMRegressor
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt;
+from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import LogisticRegression 
-from causaldm._util_causaldm import *
 from causaldm.learners.Causal_Effect_Learning.Single_Stage.Rlearner import Rlearner
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mOSError[0m                                   Traceback (most recent call last)
-[0;32m/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_59530/1454775972.py[0m in [0;36m<module>[0;34m[0m
-[1;32m      1[0m [0;31m# import related packages[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      2[0m [0;32mfrom[0m [0mmatplotlib[0m [0;32mimport[0m [0mpyplot[0m [0;32mas[0m [0mplt[0m[0;34m[0m[0;34m[0m[0m
-[0;32m----> 3[0;31m [0;32mfrom[0m [0mlightgbm[0m [0;32mimport[0m [0mLGBMRegressor[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      4[0m [0;32mfrom[0m [0msklearn[0m[0;34m.[0m[0mlinear_model[0m [0;32mimport[0m [0mLinearRegression[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      5[0m [0;32mfrom[0m [0msklearn[0m[0;34m.[0m[0mlinear_model[0m [0;32mimport[0m [0mLogisticRegression[0m[0;34m[0m[0;34m[0m[0m
-
-[0;32m~/opt/anaconda3/lib/python3.9/site-packages/lightgbm/__init__.py[0m in [0;36m<module>[0;34m[0m
-[1;32m      6[0m [0;32mfrom[0m [0mpathlib[0m [0;32mimport[0m [0mPath[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      7[0m [0;34m[0m[0m
-[0;32m----> 8[0;31m [0;32mfrom[0m [0;34m.[0m[0mbasic[0m [0;32mimport[0m [0mBooster[0m[0;34m,[0m [0mDataset[0m[0;34m,[0m [0mSequence[0m[0;34m,[0m [0mregister_logger[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      9[0m [0;32mfrom[0m [0;34m.[0m[0mcallback[0m [0;32mimport[0m [0mearly_stopping[0m[0;34m,[0m [0mlog_evaluation[0m[0;34m,[0m [0mprint_evaluation[0m[0;34m,[0m [0mrecord_evaluation[0m[0;34m,[0m [0mreset_parameter[0m[0;34m[0m[0;34m[0m[0m
-[1;32m     10[0m [0;32mfrom[0m [0;34m.[0m[0mengine[0m [0;32mimport[0m [0mCVBooster[0m[0;34m,[0m [0mcv[0m[0;34m,[0m [0mtrain[0m[0;34m[0m[0;34m[0m[0m
-
-[0;32m~/opt/anaconda3/lib/python3.9/site-packages/lightgbm/basic.py[0m in [0;36m<module>[0;34m[0m
-[1;32m    108[0m [0;34m[0m[0m
-[1;32m    109[0m [0;34m[0m[0m
-[0;32m--> 110[0;31m [0m_LIB[0m [0;34m=[0m [0m_load_lib[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m    111[0m [0;34m[0m[0m
-[1;32m    112[0m [0;34m[0m[0m
-
-[0;32m~/opt/anaconda3/lib/python3.9/site-packages/lightgbm/basic.py[0m in [0;36m_load_lib[0;34m()[0m
-[1;32m     99[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mlib_path[0m[0;34m)[0m [0;34m==[0m [0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[1;32m    100[0m         [0;32mreturn[0m [0;32mNone[0m[0;34m[0m[0;34m[0m[0m
-[0;32m--> 101[0;31m     [0mlib[0m [0;34m=[0m [0mctypes[0m[0;34m.[0m[0mcdll[0m[0;34m.[0m[0mLoadLibrary[0m[0;34m([0m[0mlib_path[0m[0;34m[[0m[0;36m0[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m    102[0m     [0mlib[0m[0;34m.[0m[0mLGBM_GetLastError[0m[0;34m.[0m[0mrestype[0m [0;34m=[0m [0mctypes[0m[0;34m.[0m[0mc_char_p[0m[0;34m[0m[0;34m[0m[0m
-[1;32m    103[0m     [0mcallback[0m [0;34m=[0m [0mctypes[0m[0;34m.[0m[0mCFUNCTYPE[0m[0;34m([0m[0;32mNone[0m[0;34m,[0m [0mctypes[0m[0;34m.[0m[0mc_char_p[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-
-[0;32m~/opt/anaconda3/lib/python3.9/ctypes/__init__.py[0m in [0;36mLoadLibrary[0;34m(self, name)[0m
-[1;32m    458[0m [0;34m[0m[0m
-[1;32m    459[0m     [0;32mdef[0m [0mLoadLibrary[0m[0;34m([0m[0mself[0m[0;34m,[0m [0mname[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[0;32m--> 460[0;31m         [0;32mreturn[0m [0mself[0m[0;34m.[0m[0m_dlltype[0m[0;34m([0m[0mname[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m    461[0m [0;34m[0m[0m
-[1;32m    462[0m     [0m__class_getitem__[0m [0;34m=[0m [0mclassmethod[0m[0;34m([0m[0m_types[0m[0;34m.[0m[0mGenericAlias[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-
-[0;32m~/opt/anaconda3/lib/python3.9/ctypes/__init__.py[0m in [0;36m__init__[0;34m(self, name, mode, handle, use_errno, use_last_error, winmode)[0m
-[1;32m    380[0m [0;34m[0m[0m
-[1;32m    381[0m         [0;32mif[0m [0mhandle[0m [0;32mis[0m [0;32mNone[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[0;32m--> 382[0;31m             [0mself[0m[0;34m.[0m[0m_handle[0m [0;34m=[0m [0m_dlopen[0m[0;34m([0m[0mself[0m[0;34m.[0m[0m_name[0m[0;34m,[0m [0mmode[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m    383[0m         [0;32melse[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[1;32m    384[0m             [0mself[0m[0;34m.[0m[0m_handle[0m [0;34m=[0m [0mhandle[0m[0;34m[0m[0;34m[0m[0m
-
-[0;31mOSError[0m: dlopen(/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/lightgbm/lib_lightgbm.so, 0x0006): Library not loaded: '/usr/local/opt/libomp/lib/libomp.dylib'
-  Referenced from: '/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/lightgbm/lib_lightgbm.so'
-  Reason: tried: '/usr/local/opt/libomp/lib/libomp.dylib' (no such file), '/usr/local/lib/libomp.dylib' (no such file), '/usr/lib/libomp.dylib' (no such file)
-OSError: dlopen(/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/lightgbm/lib_lightgbm.so, 0x0006): Library not loaded: '/usr/local/opt/libomp/lib/libomp.dylib'
-  Referenced from: '/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/lightgbm/lib_lightgbm.so'
-  Reason: tried: '/usr/local/opt/libomp/lib/libomp.dylib' (no such file), '/usr/local/lib/libomp.dylib' (no such file), '/usr/lib/libomp.dylib' (no such file)
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+[0;32m/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_37670/1969708866.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      6[0m [0;32mfrom[0m [0msklearn[0m[0;34m.[0m[0mlinear_model[0m [0;32mimport[0m [0mLinearRegression[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      7[0m [0;32mfrom[0m [0msklearn[0m[0;34m.[0m[0mlinear_model[0m [0;32mimport[0m [0mLogisticRegression[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 8[0;31m [0;32mfrom[0m [0mcausaldm[0m[0;34m.[0m[0mlearners[0m[0;34m.[0m[0mCausal_Effect_Learning[0m[0;34m.[0m[0mSingle_Stage[0m[0;34m.[0m[0mRlearner[0m [0;32mimport[0m [0mRlearner[0m[0;34m[0m[0;34m[0m[0m
+[0m
+[0;31mModuleNotFoundError[0m: No module named 'causaldm.learners'
+ModuleNotFoundError: No module named 'causaldm.learners'
 

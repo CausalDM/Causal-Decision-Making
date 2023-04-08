@@ -1,1 +1,1 @@
-# Panel Data
+# Panel Data  -- Paradigm 3
