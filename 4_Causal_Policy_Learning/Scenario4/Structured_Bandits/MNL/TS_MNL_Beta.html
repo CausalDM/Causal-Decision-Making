@@ -290,6 +290,11 @@ const thebe_selector_output = ".output, .cell_output"
      </li>
     </ul>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../3_Causal_Effect_Learning/Scenario%201/Mediation%20Analysis.html">
+     Mediation Analysis
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1">
@@ -809,13 +814,45 @@ const thebe_selector_output = ".output, .cell_output"
  </span>
 </p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3_intro.html">
-   Mimic3 Demo
+   Mimic3
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+  <label for="toctree-checkbox-21">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3-Demo.html">
+     Mimic3 Demo
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3-Demo-Ver2.html">
+     Mimic3 Demo-Ver2
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../5_Case_Study/MIMIC3/Single_Stage.html">
+     MIMIC III (Single-Stage)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../5_Case_Study/MIMIC3/Longitudinal.html">
+     MIMIC III (3-Stages)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../5_Case_Study/MIMIC3/Infinite_Horizon.html">
+     MIMIC III (Infinite Horizon)
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../../../5_Case_Study/MovieLens/Case_Study_2.html">
+  <a class="reference internal" href="../../../../5_Case_Study/MovieLens/MovieLens.html">
    MovieLens
   </a>
  </li>
@@ -1161,14 +1198,14 @@ title="Print to PDF"
 <section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>The first TS-based algorithm is developed by [1]. Noticing that direct inference under the standard multinomila logit model is intractable due to the complex dependency of the reward distribution on action slate <span class="math notranslate nohighlight">\(a\)</span>, an epoch-based algorithmic structure is introduced and is being more popular in recent bandit literature [1,2,3]. Under the epoch-type offering framework,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1dd59151-9ac1-410c-82c5-1ce44b47ba75">
-<span class="eqno">(126)<a class="headerlink" href="#equation-1dd59151-9ac1-410c-82c5-1ce44b47ba75" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c3ba3cda-816d-42d8-9105-09b926ed054e">
+<span class="eqno">(133)<a class="headerlink" href="#equation-c3ba3cda-816d-42d8-9105-09b926ed054e" title="Permalink to this equation">#</a></span>\[\begin{align}
     Y_{i}^l(a) &amp;\sim Geometric(\theta_i), \forall i \in a,\\
     R^l(a) &amp;= \sum_{i\in a}Y_{i}^l(a)\eta_{i}.
 \end{align}\]</div>
 <p>Taking the advantage of the nice conjugate relationship between the geometric distribution and the Beta distribution, the TS-based algorithm <strong>TS_MNL</strong> [1] is tractable and computationally efficient. Assuming a Beta prior over parameters <span class="math notranslate nohighlight">\(\theta_{i}\)</span>, at each epoch <span class="math notranslate nohighlight">\(l\)</span>, <strong>TS_MNL</strong> updates the posterior distribution of <span class="math notranslate nohighlight">\(\theta_{i}\)</span> according to the property of the Beta-Geometric conjugate pair, from which we then sample a <span class="math notranslate nohighlight">\(\tilde{\theta}_{i}^{l}\)</span>, and <span class="math notranslate nohighlight">\(\tilde{v}_{i}^{l}\)</span> is calculated directly as <span class="math notranslate nohighlight">\(\tilde{v}_{i}^{l}=1/\tilde{\theta}_{i}^{l}-1\)</span>. Finally, the optimal assortment <span class="math notranslate nohighlight">\(A^{l}\)</span> is determined efficiently through linear programming [1], such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-450471fc-cebf-4e66-b4ad-7386c8a05d1f">
-<span class="eqno">(127)<a class="headerlink" href="#equation-450471fc-cebf-4e66-b4ad-7386c8a05d1f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-518e66b7-9208-4051-9ee0-c68b1c2410d4">
+<span class="eqno">(134)<a class="headerlink" href="#equation-518e66b7-9208-4051-9ee0-c68b1c2410d4" title="Permalink to this equation">#</a></span>\[\begin{equation}
     A^{l} = arg max_{a \in \mathcal{A}} E(R_t(a) \mid\tilde{\boldsymbol{v}})=argmax_{a \in \mathcal{A}} \frac{\sum_{i\in a}\eta_{i}\tilde{v}_{i}}{1+\sum_{j\in a} \tilde{v}_{j}},
 \end{equation}\]</div>
 </section>

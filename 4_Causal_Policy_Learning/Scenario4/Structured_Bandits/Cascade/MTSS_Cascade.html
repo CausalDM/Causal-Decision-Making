@@ -290,6 +290,11 @@ const thebe_selector_output = ".output, .cell_output"
      </li>
     </ul>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../3_Causal_Effect_Learning/Scenario%201/Mediation%20Analysis.html">
+     Mediation Analysis
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1">
@@ -809,13 +814,45 @@ const thebe_selector_output = ".output, .cell_output"
  </span>
 </p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3_intro.html">
-   Mimic3 Demo
+   Mimic3
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+  <label for="toctree-checkbox-21">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3-Demo.html">
+     Mimic3 Demo
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3-Demo-Ver2.html">
+     Mimic3 Demo-Ver2
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../5_Case_Study/MIMIC3/Single_Stage.html">
+     MIMIC III (Single-Stage)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../5_Case_Study/MIMIC3/Longitudinal.html">
+     MIMIC III (3-Stages)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../5_Case_Study/MIMIC3/Infinite_Horizon.html">
+     MIMIC III (Infinite Horizon)
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../../../5_Case_Study/MovieLens/Case_Study_2.html">
+  <a class="reference internal" href="../../../../5_Case_Study/MovieLens/MovieLens.html">
    MovieLens
   </a>
  </li>
@@ -1172,8 +1209,8 @@ title="Print to PDF"
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>MTSS_Cascade is an example of the general Thompson Sampling(TS)-based framework, MTSS [1], to deal with online learning to rank problems.</p>
 <p><strong>Review of MTSS:</strong> MTSS[1] is a meta-learning framework designed for large-scale structured bandit problems [2]. Mainly, it is a TS-based algorithm that learns the information-sharing structure while minimizing the cumulative regrets. Adapting the TS framework to a problem-specific Bayesian hierarchical model, MTSS simultaneously enables information sharing among items via their features and models the inter-item heterogeneity. Specifically, it assumes that the item-specific parameter <span class="math notranslate nohighlight">\(\theta_i = E[W_t(i)]\)</span> is sampled from a distribution <span class="math notranslate nohighlight">\(g(\theta_i|\boldsymbol{s}_i, \boldsymbol{\gamma})\)</span> instead of being entirely determined by <span class="math notranslate nohighlight">\(\boldsymbol{s}_i\)</span> via a deterministic function. Here, <span class="math notranslate nohighlight">\(g\)</span> is a model parameterized by an <strong>unknown</strong> vector <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>. The following is the general feature-based hierarchical model MTSS considered.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-874438fe-b449-4a29-bce4-a05269dd3829">
-<span class="eqno">(117)<a class="headerlink" href="#equation-874438fe-b449-4a29-bce4-a05269dd3829" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:general_hierachical}
+<div class="amsmath math notranslate nohighlight" id="equation-8e0252c6-9a4a-4253-a646-8f86c74a32c2">
+<span class="eqno">(124)<a class="headerlink" href="#equation-8e0252c6-9a4a-4253-a646-8f86c74a32c2" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:general_hierachical}
   \begin{alignedat}{2}
 &amp;\text{(Prior)} \quad
 \quad\quad\quad\quad\quad\quad\quad\quad\quad
@@ -1189,8 +1226,8 @@ title="Print to PDF"
 <p>where <span class="math notranslate nohighlight">\(Q(\boldsymbol{\gamma})\)</span> is the prior distribution for <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>.
 Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class of practical problems, <strong>scalable</strong> to large systems, and <strong>robust</strong> to the specification of the generalization model.</p>
 <p><strong>Review of MTSS_Cascade:</strong> To characterize the relationship between items using their features, one example choice of <span class="math notranslate nohighlight">\(g\)</span> is the popular Beta-Bernoulli logistic model [1,2], where <span class="math notranslate nohighlight">\(\theta_i {\sim} Beta(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma}), \phi)\)</span> for some known parameter <span class="math notranslate nohighlight">\(\phi\)</span>. We adopt the mean-precision parameterization of the Beta distribution, with <span class="math notranslate nohighlight">\(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})\)</span> being the mean and <span class="math notranslate nohighlight">\(\phi\)</span> being the precision parameter. Specifically, the full model is as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7849e08a-be69-45a9-9034-991271931e95">
-<span class="eqno">(118)<a class="headerlink" href="#equation-7849e08a-be69-45a9-9034-991271931e95" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:model_cascading}
+<div class="amsmath math notranslate nohighlight" id="equation-c2141865-28d6-4a81-985c-d09f65540ef3">
+<span class="eqno">(125)<a class="headerlink" href="#equation-c2141865-28d6-4a81-985c-d09f65540ef3" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:model_cascading}
     \begin{split}
     \theta_i &amp; \sim Beta(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma}), \phi), \forall i \in [N]\\
     W_{k, t}(a) &amp;\sim Bernoulli(\theta_{a^k}), \forall k \in [K], \\

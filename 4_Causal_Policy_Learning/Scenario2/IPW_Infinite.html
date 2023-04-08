@@ -290,6 +290,11 @@ const thebe_selector_output = ".output, .cell_output"
      </li>
     </ul>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/Mediation%20Analysis.html">
+     Mediation Analysis
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1">
@@ -809,13 +814,45 @@ const thebe_selector_output = ".output, .cell_output"
  </span>
 </p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3_intro.html">
-   Mimic3 Demo
+   Mimic3
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+  <label for="toctree-checkbox-21">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3-Demo.html">
+     Mimic3 Demo
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3-Demo-Ver2.html">
+     Mimic3 Demo-Ver2
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../5_Case_Study/MIMIC3/Single_Stage.html">
+     MIMIC III (Single-Stage)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../5_Case_Study/MIMIC3/Longitudinal.html">
+     MIMIC III (3-Stages)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../5_Case_Study/MIMIC3/Infinite_Horizon.html">
+     MIMIC III (Infinite Horizon)
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../5_Case_Study/MovieLens/Case_Study_2.html">
+  <a class="reference internal" href="../../5_Case_Study/MovieLens/MovieLens.html">
    MovieLens
   </a>
  </li>
@@ -1130,14 +1167,14 @@ IS has been widely used in statistics, and the idea can be extended to OPE after
 <p>Since the transition and reward generation probabilities are shared  between both policies, this ratio is equal to the probability ratio of observing the <span class="math notranslate nohighlight">\(i\)</span>th trajectory until time point <span class="math notranslate nohighlight">\(t\)</span>.</p>
 <p>The standard <strong>(trajectory-wise) IS</strong> estimator <span id="id2">[<a class="reference internal" href="#id9" title="Philip S Thomas. Safe reinforcement learning. Doctoral Dissertations at University of Massachusetts Amherst, 2015.">Tho15</a>]</span>
 regards each trajectory (and the corresponding observed cumulative reward, <span class="math notranslate nohighlight">\(\sum_{t=0}^{T-1} \gamma^t R_{i,t}\)</span>) as one realization, and it estimates <span class="math notranslate nohighlight">\(\eta^{\pi}\)</span> by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1a6b1738-f1e2-4204-81a2-3436ce9d45f0">
-<span class="eqno">(68)<a class="headerlink" href="#equation-1a6b1738-f1e2-4204-81a2-3436ce9d45f0" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:IS}
+<div class="amsmath math notranslate nohighlight" id="equation-b838b3d1-c820-429b-ad45-c9d11674776d">
+<span class="eqno">(75)<a class="headerlink" href="#equation-b838b3d1-c820-429b-ad45-c9d11674776d" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:IS}
     \hat{\eta}^{\pi}_{IS} = \frac{1}{n} \sum_{i=1}^n \rho^i_T (\sum_{t=0}^{T-1} \gamma^t R_{i,t}). 
 \end{align}\]</div>
 <p>In contrast, the <strong>step-wise IS</strong> <span id="id3">[<a class="reference internal" href="#id9" title="Philip S Thomas. Safe reinforcement learning. Doctoral Dissertations at University of Massachusetts Amherst, 2015.">Tho15</a>]</span>
 focuses on reweighting each immediate reward <span class="math notranslate nohighlight">\(R_{i,t}\)</span> and typically yields a lower variance than the trajectory-wise IS. It is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ea024763-bd31-43b9-a0a9-47f3a75b103c">
-<span class="eqno">(69)<a class="headerlink" href="#equation-ea024763-bd31-43b9-a0a9-47f3a75b103c" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:stepIS}
+<div class="amsmath math notranslate nohighlight" id="equation-ba1e20e4-144e-49d5-a56e-cdfdcca8c99b">
+<span class="eqno">(76)<a class="headerlink" href="#equation-ba1e20e4-144e-49d5-a56e-cdfdcca8c99b" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:stepIS}
     \hat{\eta}^{\pi}_{StepIS} = \frac{1}{n} \sum_{i=1}^n \Big[ \sum_{t=0}^{T-1} \rho^i_t  \gamma^t R_{i,t} \Big]. 
 \end{align}\]</div>
 <p>In addition to these two IS-type estimators, their <strong>self-normalized variants</strong> are also commonly considered <span id="id4">[<a class="reference internal" href="#id10" title="Nan Jiang and Lihong Li. Doubly robust off-policy value evaluation for reinforcement learning. In International Conference on Machine Learning, 652–661. PMLR, 2016.">JL16</a>]</span>.
@@ -1154,8 +1191,8 @@ The key observation is that, under the stationary assumption and when the data i
 We introduce the average visitation distribution under a policy <span class="math notranslate nohighlight">\(\pi\)</span> as <span class="math notranslate nohighlight">\(d^{\pi}(s)= (1 - \gamma)^{-1} \sum_{t=0}^{+\infty} \gamma^{t} p_t^{\pi}(s)\)</span>, where <span class="math notranslate nohighlight">\(p_t^{\pi}(s)\)</span> denotes the probability of <span class="math notranslate nohighlight">\(\{S_t = s\}\)</span> following policy <span class="math notranslate nohighlight">\(\pi\)</span> with  <span class="math notranslate nohighlight">\(S_{0}\sim \mathbb{G}\)</span>.
 Define <span class="math notranslate nohighlight">\(\widetilde{\omega}^{\pi}(s) = d^{\pi}(s) / d^{b}(s)\)</span>.
 Therefore, <span class="math notranslate nohighlight">\(\widetilde{\omega}^{\pi}(s)\)</span> can be understood as a marginalized version of the importance ratio. With a similar change-of-measure trick as in IS, we can obtain the relationship that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6f2207fa-15f2-45eb-8e17-f0d4f6c6521f">
-<span class="eqno">(70)<a class="headerlink" href="#equation-6f2207fa-15f2-45eb-8e17-f0d4f6c6521f" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:breaking}
+<div class="amsmath math notranslate nohighlight" id="equation-636cea93-5596-4c3e-ae21-1f548c8df107">
+<span class="eqno">(77)<a class="headerlink" href="#equation-636cea93-5596-4c3e-ae21-1f548c8df107" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:breaking}
     \eta^{\pi} =  \mathbb{E}_{(s,a) \sim p_b(s, a), r \sim \mathcal{R}(\cdot; s, a)} \widetilde{\omega}^{\pi}(s) \frac{\pi(a|s)}{b(a|s)} r. 
 \end{equation}\]</div>
 <p>According to this relationship, we can construct an estimator by replacing the nuisance functions  with their estimates and then approximating the expectation by its empirical mean over <span class="math notranslate nohighlight">\(\{(S_{i,t},A_{i,t},R_{i,t},S_{i,t+1})\}\)</span>.

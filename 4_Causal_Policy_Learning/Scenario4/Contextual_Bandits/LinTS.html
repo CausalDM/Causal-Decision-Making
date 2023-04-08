@@ -290,6 +290,11 @@ const thebe_selector_output = ".output, .cell_output"
      </li>
     </ul>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../3_Causal_Effect_Learning/Scenario%201/Mediation%20Analysis.html">
+     Mediation Analysis
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1">
@@ -809,13 +814,45 @@ const thebe_selector_output = ".output, .cell_output"
  </span>
 </p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../../5_Case_Study/MIMIC3/MIMIC3_intro.html">
-   Mimic3 Demo
+   Mimic3
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+  <label for="toctree-checkbox-21">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../5_Case_Study/MIMIC3/MIMIC3-Demo.html">
+     Mimic3 Demo
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../5_Case_Study/MIMIC3/MIMIC3-Demo-Ver2.html">
+     Mimic3 Demo-Ver2
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../5_Case_Study/MIMIC3/Single_Stage.html">
+     MIMIC III (Single-Stage)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../5_Case_Study/MIMIC3/Longitudinal.html">
+     MIMIC III (3-Stages)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../5_Case_Study/MIMIC3/Infinite_Horizon.html">
+     MIMIC III (Infinite Horizon)
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../../5_Case_Study/MovieLens/Case_Study_2.html">
+  <a class="reference internal" href="../../../5_Case_Study/MovieLens/MovieLens.html">
    MovieLens
   </a>
  </li>
@@ -1171,13 +1208,13 @@ title="Print to PDF"
 <section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. Noticing that feature information are commonly avialable, the <strong>LinTS</strong>[1,2] algorithm consdiers modeling the expectation of the potential reward <span class="math notranslate nohighlight">\(R_t(i)\)</span> with features of item <span class="math notranslate nohighlight">\(i\)</span>. As an example, considering the Gaussian reward, we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-73ac94ea-1cbe-4e8b-928b-7568ebebbc53">
-<span class="eqno">(104)<a class="headerlink" href="#equation-73ac94ea-1cbe-4e8b-928b-7568ebebbc53" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3a804ae7-8a99-426c-b683-4365acb733d4">
+<span class="eqno">(111)<a class="headerlink" href="#equation-3a804ae7-8a99-426c-b683-4365acb733d4" title="Permalink to this equation">#</a></span>\[\begin{align}
 R_t(i)\sim \mathcal{N}(\boldsymbol{s}_i^T \boldsymbol{\gamma},\sigma^2).
 \end{align}\]</div>
 <p>As for the Bernoulli reward, we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4265d739-55c2-40ff-b68f-a8f3dc44b1b4">
-<span class="eqno">(105)<a class="headerlink" href="#equation-4265d739-55c2-40ff-b68f-a8f3dc44b1b4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-760576e3-1b8c-409a-952a-ce3f651543cb">
+<span class="eqno">(112)<a class="headerlink" href="#equation-760576e3-1b8c-409a-952a-ce3f651543cb" title="Permalink to this equation">#</a></span>\[\begin{align}
 R_t(i) \sim Bernoulli(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})).
 \end{align}\]</div>
 <p>Similar as the standard TS algorithm, the LinTS algorithm starts with specifying a prior distribution of the parameter <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>, and a variance of the reward, based on the domian knowledge. At each round <span class="math notranslate nohighlight">\(t\)</span>, the agent will samples a vector of <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\gamma}}^{t}\)</span> from thecorresponding posterior distribution, and the mean reward <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\theta}}^{t}\)</span> is then calculated accordingly. The action <span class="math notranslate nohighlight">\(a\)</span> with the greatest <span class="math notranslate nohighlight">\(\tilde{\theta}_{a}^{t}\)</span> is then selected. Finally, the posterior distribution would be updated after receiving the feedback at the end of each round. It should be noted that the posterior updating step differs for different pairs of the prior distribution of expected potential reward and reward distribution, and the code can be easily modified to different prior/reward distribution specifications if necessary.</p>
@@ -1218,6 +1255,214 @@ R_t(i) \sim Bernoulli(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})).
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="nn">Input In [2],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">causaldm.learners.Online.CMAB</span> <span class="kn">import</span> <span class="n">LinTS</span>
+
+<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">GitHub</span>\<span class="n">CausalDM</span>\<span class="n">causaldm</span>\<span class="n">learners</span>\<span class="n">Online</span>\<span class="n">CMAB</span>\<span class="n">LinTS</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">.._base_online_learner</span> <span class="kn">import</span> <span class="n">BaseOnlineLearner</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">.._util_online</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">SGDClassifier</span>
+
+<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">GitHub</span>\<span class="n">CausalDM</span>\<span class="n">causaldm</span>\<span class="n">learners</span>\<span class="n">Online</span>\<span class="n">_base_online_learner</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">._util_online</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="k">class</span> <span class="nc">BaseOnlineLearner</span><span class="p">():</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="nd">@autoargs</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">GitHub</span>\<span class="n">CausalDM</span>\<span class="n">causaldm</span>\<span class="n">learners</span>\<span class="n">Online</span>\<span class="n">_util_online</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">28</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span> <span class="kn">import</span> <span class="nn">random</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span> <span class="kn">import</span> <span class="nn">copy</span>
+<span class="ne">---&gt; </span><span class="mi">28</span> <span class="kn">import</span> <span class="nn">pymc3</span> <span class="k">as</span> <span class="nn">pm</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span> <span class="kn">from</span> <span class="nn">pymc3.distributions</span> <span class="kn">import</span> <span class="n">Interpolated</span>
+<span class="g g-Whitespace">     </span><span class="mi">31</span> <span class="c1">#############################################################################</span>
+<span class="g g-Whitespace">     </span><span class="mi">32</span> <span class="c1"># Packages</span>
+
+<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pymc3</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">115</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">    </span><span class="mi">112</span> <span class="n">__set_compiler_flags</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">113</span> <span class="n">_hotfix_theano_printing</span><span class="p">()</span>
+<span class="ne">--&gt; </span><span class="mi">115</span> <span class="kn">from</span> <span class="nn">pymc3</span> <span class="kn">import</span> <span class="n">gp</span><span class="p">,</span> <span class="n">ode</span><span class="p">,</span> <span class="n">sampling</span>
+<span class="g g-Whitespace">    </span><span class="mi">116</span> <span class="kn">from</span> <span class="nn">pymc3.backends</span> <span class="kn">import</span> <span class="n">load_trace</span><span class="p">,</span> <span class="n">save_trace</span>
+<span class="g g-Whitespace">    </span><span class="mi">117</span> <span class="kn">from</span> <span class="nn">pymc3.backends.tracetab</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pymc3</span>\<span class="n">gp</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">16</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1">#   Copyright 2020 The PyMC Developers</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="c1">#</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="c1">#   Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="c1">#   See the License for the specific language governing permissions and</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="c1">#   limitations under the License.</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="kn">from</span> <span class="nn">pymc3.gp</span> <span class="kn">import</span> <span class="n">cov</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">util</span>
+<span class="ne">---&gt; </span><span class="mi">16</span> <span class="kn">from</span> <span class="nn">pymc3.gp.gp</span> <span class="kn">import</span> <span class="n">TP</span><span class="p">,</span> <span class="n">Latent</span><span class="p">,</span> <span class="n">LatentKron</span><span class="p">,</span> <span class="n">Marginal</span><span class="p">,</span> <span class="n">MarginalKron</span><span class="p">,</span> <span class="n">MarginalSparse</span>
+
+<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pymc3</span>\<span class="n">gp</span>\<span class="n">gp</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">25</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="kn">from</span> <span class="nn">theano.tensor.nlinalg</span> <span class="kn">import</span> <span class="n">eigh</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span> <span class="kn">import</span> <span class="nn">pymc3</span> <span class="k">as</span> <span class="nn">pm</span>
+<span class="ne">---&gt; </span><span class="mi">25</span> <span class="kn">from</span> <span class="nn">pymc3.distributions</span> <span class="kn">import</span> <span class="n">draw_values</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span> <span class="kn">from</span> <span class="nn">pymc3.gp.cov</span> <span class="kn">import</span> <span class="n">Constant</span><span class="p">,</span> <span class="n">Covariance</span>
+<span class="g g-Whitespace">     </span><span class="mi">27</span> <span class="kn">from</span> <span class="nn">pymc3.gp.mean</span> <span class="kn">import</span> <span class="n">Zero</span>
+
+<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pymc3</span>\<span class="n">distributions</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1">#   Copyright 2020 The PyMC Developers</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="c1">#</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="c1">#   Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="c1">#   See the License for the specific language governing permissions and</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="c1">#   limitations under the License.</span>
+<span class="ne">---&gt; </span><span class="mi">15</span> <span class="kn">from</span> <span class="nn">pymc3.distributions</span> <span class="kn">import</span> <span class="n">shape_utils</span><span class="p">,</span> <span class="n">timeseries</span><span class="p">,</span> <span class="n">transforms</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="kn">from</span> <span class="nn">pymc3.distributions.bart</span> <span class="kn">import</span> <span class="n">BART</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="kn">from</span> <span class="nn">pymc3.distributions.bound</span> <span class="kn">import</span> <span class="n">Bound</span>
+
+<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pymc3</span>\<span class="n">distributions</span>\<span class="n">timeseries</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">21</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="kn">from</span> <span class="nn">theano</span> <span class="kn">import</span> <span class="n">scan</span>
+<span class="ne">---&gt; </span><span class="mi">21</span> <span class="kn">from</span> <span class="nn">pymc3.distributions</span> <span class="kn">import</span> <span class="n">distribution</span><span class="p">,</span> <span class="n">multivariate</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span> <span class="kn">from</span> <span class="nn">pymc3.distributions.continuous</span> <span class="kn">import</span> <span class="n">Flat</span><span class="p">,</span> <span class="n">Normal</span><span class="p">,</span> <span class="n">get_tau_sigma</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span> <span class="kn">from</span> <span class="nn">pymc3.distributions.shape_utils</span> <span class="kn">import</span> <span class="n">to_tuple</span>
+
+<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pymc3</span>\<span class="n">distributions</span>\<span class="n">distribution</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">45</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">38</span> <span class="kn">from</span> <span class="nn">theano</span> <span class="kn">import</span> <span class="n">function</span>
+<span class="g g-Whitespace">     </span><span class="mi">40</span> <span class="kn">from</span> <span class="nn">pymc3.distributions.shape_utils</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">41</span>     <span class="n">broadcast_dist_samples_shape</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">42</span>     <span class="n">get_broadcastable_dist_samples</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">43</span>     <span class="n">to_tuple</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">44</span> <span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">45</span> <span class="kn">from</span> <span class="nn">pymc3.model</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">46</span>     <span class="n">ContextMeta</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">47</span>     <span class="n">FreeRV</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">48</span>     <span class="n">Model</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">49</span>     <span class="n">MultiObservedRV</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">50</span>     <span class="n">ObservedRV</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">51</span>     <span class="n">build_named_node_tree</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">52</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">53</span> <span class="kn">from</span> <span class="nn">pymc3.util</span> <span class="kn">import</span> <span class="n">get_repr_for_variable</span><span class="p">,</span> <span class="n">get_var_name</span><span class="p">,</span> <span class="n">hash_key</span>
+<span class="g g-Whitespace">     </span><span class="mi">54</span> <span class="kn">from</span> <span class="nn">pymc3.vartypes</span> <span class="kn">import</span> <span class="n">string_types</span><span class="p">,</span> <span class="n">theano_constant</span>
+
+<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pymc3</span>\<span class="n">model</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">38</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="kn">from</span> <span class="nn">theano.tensor.var</span> <span class="kn">import</span> <span class="n">TensorVariable</span>
+<span class="g g-Whitespace">     </span><span class="mi">36</span> <span class="kn">import</span> <span class="nn">pymc3</span> <span class="k">as</span> <span class="nn">pm</span>
+<span class="ne">---&gt; </span><span class="mi">38</span> <span class="kn">from</span> <span class="nn">pymc3.blocking</span> <span class="kn">import</span> <span class="n">ArrayOrdering</span><span class="p">,</span> <span class="n">DictToArrayBijection</span>
+<span class="g g-Whitespace">     </span><span class="mi">39</span> <span class="kn">from</span> <span class="nn">pymc3.exceptions</span> <span class="kn">import</span> <span class="n">ImputationWarning</span>
+<span class="g g-Whitespace">     </span><span class="mi">40</span> <span class="kn">from</span> <span class="nn">pymc3.theanof</span> <span class="kn">import</span> <span class="n">floatX</span><span class="p">,</span> <span class="n">generator</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">hessian</span><span class="p">,</span> <span class="n">inputvars</span>
+
+<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pymc3</span>\<span class="n">blocking</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">25</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="kn">import</span> <span class="nn">copy</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="ne">---&gt; </span><span class="mi">25</span> <span class="kn">from</span> <span class="nn">pymc3.util</span> <span class="kn">import</span> <span class="n">get_var_name</span>
+<span class="g g-Whitespace">     </span><span class="mi">27</span> <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ArrayOrdering&quot;</span><span class="p">,</span> <span class="s2">&quot;DictToArrayBijection&quot;</span><span class="p">,</span> <span class="s2">&quot;DictToVarBijection&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span> <span class="n">VarMap</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;VarMap&quot;</span><span class="p">,</span> <span class="s2">&quot;var, slc, shp, dtyp&quot;</span><span class="p">)</span>
+
+<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pymc3</span>\<span class="n">util</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">21</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="kn">import</span> <span class="nn">warnings</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="ne">---&gt; </span><span class="mi">21</span> <span class="kn">import</span> <span class="nn">arviz</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span> <span class="kn">import</span> <span class="nn">dill</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">arviz</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">33</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span> <span class="n">_log</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">(</span><span class="s2">&quot;arviz&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">32</span> <span class="kn">from</span> <span class="nn">.data</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="ne">---&gt; </span><span class="mi">33</span> <span class="kn">from</span> <span class="nn">.plots</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="kn">from</span> <span class="nn">.plots.backends</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">     </span><span class="mi">35</span> <span class="kn">from</span> <span class="nn">.stats</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">arviz</span>\<span class="n">plots</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="sd">&quot;&quot;&quot;Plotting functions.&quot;&quot;&quot;</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">.autocorrplot</span> <span class="kn">import</span> <span class="n">plot_autocorr</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">.bpvplot</span> <span class="kn">import</span> <span class="n">plot_bpv</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">.compareplot</span> <span class="kn">import</span> <span class="n">plot_compare</span>
+
+<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">arviz</span>\<span class="n">plots</span>\<span class="n">autocorrplot</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">..rcparams</span> <span class="kn">import</span> <span class="n">rcParams</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">_var_names</span>
+<span class="ne">----&gt; </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">.plot_utils</span> <span class="kn">import</span> <span class="n">default_grid</span><span class="p">,</span> <span class="n">filter_plotters_list</span><span class="p">,</span> <span class="n">get_plotting_function</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="k">def</span> <span class="nf">plot_autocorr</span><span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span>     <span class="n">data</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="n">var_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span>     <span class="n">show</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span> <span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span>     <span class="sd">&quot;&quot;&quot;Bar plot of the autocorrelation function for a sequence of data.</span>
+<span class="g g-Whitespace">     </span><span class="mi">27</span><span class="sd"> </span>
+<span class="g g-Whitespace">     </span><span class="mi">28</span><span class="sd">     Useful in particular for posteriors from MCMC samples which may display correlation.</span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">    </span><span class="mi">117</span><span class="sd">         &gt;&gt;&gt; az.plot_autocorr(data, var_names=[&#39;mu&#39;, &#39;tau&#39;], max_lag=200, combined=True)</span>
+<span class="g g-Whitespace">    </span><span class="mi">118</span><span class="sd">     &quot;&quot;&quot;</span>
+
+<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">arviz</span>\<span class="n">plots</span>\<span class="n">plot_utils</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">CubicSpline</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="kn">from</span> <span class="nn">..rcparams</span> <span class="kn">import</span> <span class="n">rcParams</span>
+<span class="ne">---&gt; </span><span class="mi">15</span> <span class="kn">from</span> <span class="nn">..stats.density_utils</span> <span class="kn">import</span> <span class="n">kde</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="kn">from</span> <span class="nn">..stats</span> <span class="kn">import</span> <span class="n">hdi</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="n">KwargSpec</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+
+<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">arviz</span>\<span class="n">stats</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="sd">&quot;&quot;&quot;Statistical tests and diagnostics for ArviZ.&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">.density_utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">.diagnostics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">.stats</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">.stats</span> <span class="kn">import</span> <span class="n">_calculate_ics</span>
+
+<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">arviz</span>\<span class="n">stats</span>\<span class="n">diagnostics</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">13</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">Numba</span><span class="p">,</span> <span class="n">_numba_var</span><span class="p">,</span> <span class="n">_stack</span><span class="p">,</span> <span class="n">_var_names</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="kn">from</span> <span class="nn">.density_utils</span> <span class="kn">import</span> <span class="n">histogram</span> <span class="k">as</span> <span class="n">_histogram</span>
+<span class="ne">---&gt; </span><span class="mi">13</span> <span class="kn">from</span> <span class="nn">.stats_utils</span> <span class="kn">import</span> <span class="n">_circular_standard_deviation</span><span class="p">,</span> <span class="n">_sqrt</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="kn">from</span> <span class="nn">.stats_utils</span> <span class="kn">import</span> <span class="n">autocov</span> <span class="k">as</span> <span class="n">_autocov</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="kn">from</span> <span class="nn">.stats_utils</span> <span class="kn">import</span> <span class="n">not_valid</span> <span class="k">as</span> <span class="n">_not_valid</span>
+
+<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">arviz</span>\<span class="n">stats</span>\<span class="n">stats_utils</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">538</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">    </span><span class="mi">533</span>             <span class="n">var</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats_variance_1d</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">ddof</span><span class="o">=</span><span class="n">ddof</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">534</span>         <span class="k">return</span> <span class="n">var</span>
+<span class="g g-Whitespace">    </span><span class="mi">537</span> <span class="nd">@conditional_vect</span>
+<span class="ne">--&gt; </span><span class="mi">538</span> <span class="k">def</span> <span class="nf">_sqrt</span><span class="p">(</span><span class="n">a_a</span><span class="p">,</span> <span class="n">b_b</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">539</span>     <span class="k">return</span> <span class="p">(</span><span class="n">a_a</span> <span class="o">+</span> <span class="n">b_b</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
+<span class="g g-Whitespace">    </span><span class="mi">542</span> <span class="k">def</span> <span class="nf">_circfunc</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">skipna</span><span class="p">):</span>
+
+<span class="nn">File D:\anaconda3\lib\site-packages\arviz\utils.py:309,</span> in <span class="ni">conditional_vect</span><span class="nt">(function, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">306</span>         <span class="k">return</span> <span class="n">function</span>
+<span class="g g-Whitespace">    </span><span class="mi">308</span> <span class="k">if</span> <span class="n">function</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">309</span>     <span class="k">return</span> <span class="n">wrapper</span><span class="p">(</span><span class="n">function</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">310</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">311</span>     <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="nn">File D:\anaconda3\lib\site-packages\arviz\utils.py:302,</span> in <span class="ni">conditional_vect.&lt;locals&gt;.wrapper</span><span class="nt">(function)</span>
+<span class="g g-Whitespace">    </span><span class="mi">300</span> <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">function</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">301</span>     <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">302</span>         <span class="n">numba</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;numba&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">303</span>         <span class="k">return</span> <span class="n">numba</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)(</span><span class="n">function</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">305</span>     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+
+<span class="nn">File D:\anaconda3\lib\importlib\__init__.py:127,</span> in <span class="ni">import_module</span><span class="nt">(name, package)</span>
+<span class="g g-Whitespace">    </span><span class="mi">125</span>             <span class="k">break</span>
+<span class="g g-Whitespace">    </span><span class="mi">126</span>         <span class="n">level</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="ne">--&gt; </span><span class="mi">127</span> <span class="k">return</span> <span class="n">_bootstrap</span><span class="o">.</span><span class="n">_gcd_import</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="n">level</span><span class="p">:],</span> <span class="n">package</span><span class="p">,</span> <span class="n">level</span><span class="p">)</span>
+
+<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">numba</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">42</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">38</span> <span class="kn">from</span> <span class="nn">numba.core.decorators</span> <span class="kn">import</span> <span class="p">(</span><span class="n">cfunc</span><span class="p">,</span> <span class="n">generated_jit</span><span class="p">,</span> <span class="n">jit</span><span class="p">,</span> <span class="n">njit</span><span class="p">,</span> <span class="n">stencil</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">39</span>                                    <span class="n">jit_module</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">41</span> <span class="c1"># Re-export vectorize decorators and the thread layer querying function</span>
+<span class="ne">---&gt; </span><span class="mi">42</span> <span class="kn">from</span> <span class="nn">numba.np.ufunc</span> <span class="kn">import</span> <span class="p">(</span><span class="n">vectorize</span><span class="p">,</span> <span class="n">guvectorize</span><span class="p">,</span> <span class="n">threading_layer</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">43</span>                             <span class="n">get_num_threads</span><span class="p">,</span> <span class="n">set_num_threads</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">45</span> <span class="c1"># Re-export Numpy helpers</span>
+<span class="g g-Whitespace">     </span><span class="mi">46</span> <span class="kn">from</span> <span class="nn">numba.np.numpy_support</span> <span class="kn">import</span> <span class="n">carray</span><span class="p">,</span> <span class="n">farray</span><span class="p">,</span> <span class="n">from_dtype</span>
+
+<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">numba</span>\<span class="n">np</span>\<span class="n">ufunc</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">numba.np.ufunc.decorators</span> <span class="kn">import</span> <span class="n">Vectorize</span><span class="p">,</span> <span class="n">GUVectorize</span><span class="p">,</span> <span class="n">vectorize</span><span class="p">,</span> <span class="n">guvectorize</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">numba.np.ufunc._internal</span> <span class="kn">import</span> <span class="n">PyUFunc_None</span><span class="p">,</span> <span class="n">PyUFunc_Zero</span><span class="p">,</span> <span class="n">PyUFunc_One</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">numba.np.ufunc</span> <span class="kn">import</span> <span class="n">_internal</span><span class="p">,</span> <span class="n">array_exprs</span>
+
+<span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">numba</span>\<span class="n">np</span>\<span class="n">ufunc</span>\<span class="n">decorators</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">inspect</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">numba.np.ufunc</span> <span class="kn">import</span> <span class="n">_internal</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">numba.np.ufunc.parallel</span> <span class="kn">import</span> <span class="n">ParallelUFuncBuilder</span><span class="p">,</span> <span class="n">ParallelGUFuncBuilder</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">numba.core.registry</span> <span class="kn">import</span> <span class="n">DelayedRegistry</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
@@ -1287,15 +1532,7 @@ R_t(i) \sim Bernoulli(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})).
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="nn">Input In [5],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">X</span><span class="p">,</span> <span class="n">feature_info</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get_Phi</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">A</span> <span class="o">=</span> <span class="n">LinTS_Gaussian_agent</span><span class="o">.</span><span class="n">take_action</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">R</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get_reward</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">A</span><span class="p">)</span>
-
-<span class="ne">ValueError</span>: not enough values to unpack (expected 3, got 2)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0, 0, 4.0, (25.0, 1.0, &#39;college/grad student&#39;))
 </pre></div>
 </div>
 </div>

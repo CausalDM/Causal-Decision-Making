@@ -290,6 +290,11 @@ const thebe_selector_output = ".output, .cell_output"
      </li>
     </ul>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/Mediation%20Analysis.html">
+     Mediation Analysis
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1">
@@ -809,13 +814,45 @@ const thebe_selector_output = ".output, .cell_output"
  </span>
 </p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
+ <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="MIMIC3_intro.html">
-   Mimic3 Demo
+   Mimic3
   </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+  <label for="toctree-checkbox-21">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="MIMIC3-Demo.html">
+     Mimic3 Demo
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="MIMIC3-Demo-Ver2.html">
+     Mimic3 Demo-Ver2
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     MIMIC III (Single-Stage)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Longitudinal.html">
+     MIMIC III (3-Stages)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Infinite_Horizon.html">
+     MIMIC III (Infinite Horizon)
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../MovieLens/Case_Study_2.html">
+  <a class="reference internal" href="../MovieLens/MovieLens.html">
    MovieLens
   </a>
  </li>
@@ -1113,11 +1150,14 @@ title="Print to PDF"
 <p>In this notebook, we conducted analysis on the MIMIC III data with a single stage. We first analyzed the mediation effect and then evaluate the policy of interest and calculated the optimal policy. As informed by the causal structure learning, here we consider Glucose and PaO2_FiO2 as confounders/states, IV_Input as the action, SOFA as the mediator.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:/Github/CausalDM&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="n">single_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;mimic3_single_stage.csv&#39;</span><span class="p">)</span>
-<span class="n">single_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">single_data</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">&lt;=</span><span class="mf">1.5</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span> <span class="c1"># change the discrete action to binary</span>
-<span class="n">single_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">single_data</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">1.5</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span> <span class="c1"># change the discrete action to binary</span>
+<span class="n">single_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./causaldm/MIMIC3/mimic3_single_stage.csv&#39;</span><span class="p">)</span>
+<span class="n">single_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">single_data</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span> <span class="c1"># change the discrete action to binary</span>
+<span class="n">single_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">single_data</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span> <span class="c1"># change the discrete action to binary</span>
+<span class="n">single_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">single_data</span><span class="p">[</span><span class="s1">&#39;Died within 48H&#39;</span><span class="p">]</span><span class="o">==-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span> <span class="c1"># change the discrete action to binary</span>
 <span class="n">single_data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1158,7 +1198,7 @@ title="Print to PDF"
       <td>137.081590</td>
       <td>1.0</td>
       <td>8.400000</td>
-      <td>-1.0</td>
+      <td>0.0</td>
       <td>7.600000</td>
     </tr>
     <tr>
@@ -1166,7 +1206,7 @@ title="Print to PDF"
       <td>1204</td>
       <td>138.794872</td>
       <td>430.668956</td>
-      <td>0.0</td>
+      <td>1.0</td>
       <td>5.692308</td>
       <td>1.0</td>
       <td>6.153846</td>
@@ -1178,7 +1218,7 @@ title="Print to PDF"
       <td>252.883864</td>
       <td>1.0</td>
       <td>4.800000</td>
-      <td>-1.0</td>
+      <td>0.0</td>
       <td>4.600000</td>
     </tr>
     <tr>
@@ -1186,7 +1226,7 @@ title="Print to PDF"
       <td>4201</td>
       <td>145.580087</td>
       <td>539.065657</td>
-      <td>0.0</td>
+      <td>1.0</td>
       <td>5.636364</td>
       <td>1.0</td>
       <td>5.818182</td>
@@ -1233,52 +1273,33 @@ title="Print to PDF"
 <table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
-<th class="text-align:center head"><p>DE</p></th>
-<th class="head"><p>IE</p></th>
+<th class="text-align:center head"><p>NDE</p></th>
+<th class="head"><p>NIE</p></th>
 <th class="head"><p>TE</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Direct Estimator</p></td>
-<td class="text-align:center"><p>-.3465</p></td>
-<td><p>.0097</p></td>
-<td><p>-.3368</p></td>
+<td class="text-align:center"><p>-.2133</p></td>
+<td><p>.0030</p></td>
+<td><p>-.2104</p></td>
 </tr>
 <tr class="row-odd"><td><p>IPW</p></td>
-<td class="text-align:center"><p>-.4585</p></td>
+<td class="text-align:center"><p>-.2332</p></td>
 <td><p>0</p></td>
-<td><p>-.4584</p></td>
+<td><p>-.2332</p></td>
 </tr>
 <tr class="row-even"><td><p>Robust</p></td>
-<td class="text-align:center"><p>-.3643</p></td>
-<td><p>-.0482</p></td>
-<td><p>-.4126</p></td>
+<td class="text-align:center"><p>-.2276</p></td>
+<td><p>-.0164</p></td>
+<td><p>-.2440</p></td>
 </tr>
 </tbody>
 </table>
 <p>Specifically, when compared to no treatment, always giving IV input has a negative impact on the survival rate, among which the effect directly from actions to the final outcome dominates.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM/DTR/MRL&#39;</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">expit</span>
-<span class="kn">from</span> <span class="nn">evaluator_baseline</span> <span class="kn">import</span> <span class="n">evaluator</span>
-<span class="kn">from</span> <span class="nn">probLearner</span> <span class="kn">import</span> <span class="n">PMLearner</span><span class="p">,</span> <span class="n">RewardLearner</span><span class="p">,</span> <span class="n">PALearner</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="nn">Input In [3],</span> in <span class="ni">&lt;cell line: 3&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">os</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM/DTR/MRL&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">expit</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">evaluator_baseline</span> <span class="kn">import</span> <span class="n">evaluator</span>
-
-<span class="ne">FileNotFoundError</span>: [WinError 3] 系统找不到指定的路径。: &#39;/nas/longleaf/home/lge/CausalDM/DTR/MRL&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Causal_Effect_Learning.Mediation_Analysis.ME_Single</span> <span class="kn">import</span> <span class="n">ME_Single</span>
 </pre></div>
 </div>
 </div>
@@ -1287,7 +1308,6 @@ title="Print to PDF"
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Control Policy</span>
 <span class="k">def</span> <span class="nf">control_policy</span><span class="p">(</span><span class="n">state</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">dim_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">get_a</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
-    <span class="c1"># fixed policy with fixed action 0</span>
     <span class="k">if</span> <span class="n">get_a</span><span class="p">:</span>
         <span class="n">action_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
@@ -1301,6 +1321,7 @@ title="Print to PDF"
                 <span class="n">action</span> <span class="o">=</span> <span class="n">action</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">NT</span><span class="p">)</span>
             <span class="n">action_value</span> <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="n">action</span>
     <span class="k">return</span> <span class="n">action_value</span>
+
 <span class="k">def</span> <span class="nf">target_policy</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dim_state</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dim_state</span><span class="p">))</span>
     <span class="n">NT</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -1323,28 +1344,69 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">problearner_parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;splitter&quot;</span><span class="p">:[</span><span class="s2">&quot;best&quot;</span><span class="p">,</span><span class="s2">&quot;random&quot;</span><span class="p">],</span> <span class="s2">&quot;max_depth&quot;</span> <span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">50</span><span class="p">)},</span>
-<span class="n">est_obj1</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">single_dataset</span><span class="p">,</span> <span class="n">PMLearner</span><span class="p">,</span> <span class="n">RewardLearner</span><span class="p">,</span> <span class="n">PALearner</span><span class="p">,</span>
+<span class="n">Direct_est</span> <span class="o">=</span> <span class="n">ME_Single</span><span class="p">(</span><span class="n">single_dataset</span><span class="p">,</span> <span class="n">r_model</span> <span class="o">=</span> <span class="s1">&#39;OLS&#39;</span><span class="p">,</span>
                      <span class="n">problearner_parameters</span> <span class="o">=</span> <span class="n">problearner_parameters</span><span class="p">,</span>
                      <span class="n">truncate</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> 
                      <span class="n">target_policy</span><span class="o">=</span><span class="n">target_policy</span><span class="p">,</span> <span class="n">control_policy</span> <span class="o">=</span> <span class="n">control_policy</span><span class="p">,</span> 
                      <span class="n">dim_state</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dim_mediator</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> 
                      <span class="n">expectation_MCMC_iter</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
-                     <span class="n">seed</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+                     <span class="n">nature_decomp</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                     <span class="n">seed</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                     <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;Direct&#39;</span><span class="p">)</span>
 
-<span class="n">est_obj1</span><span class="o">.</span><span class="n">estimate_DE_ME_SE</span><span class="p">()</span>
-<span class="n">est_value1</span> <span class="o">=</span> <span class="n">est_obj1</span><span class="o">.</span><span class="n">est_DEMESE</span>
+<span class="n">Direct_est</span><span class="o">.</span><span class="n">estimate_DE_ME</span><span class="p">()</span>
+<span class="n">Direct_est</span><span class="o">.</span><span class="n">est_DE</span><span class="p">,</span> <span class="n">Direct_est</span><span class="o">.</span><span class="n">est_ME</span><span class="p">,</span> <span class="n">Direct_est</span><span class="o">.</span><span class="n">est_TE</span><span class="p">,</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.21336626681098025, 0.0029629796887432652, -0.210403287122237)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">est_value1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">IPW_est</span> <span class="o">=</span> <span class="n">ME_Single</span><span class="p">(</span><span class="n">single_dataset</span><span class="p">,</span> <span class="n">r_model</span> <span class="o">=</span> <span class="s1">&#39;OLS&#39;</span><span class="p">,</span>
+                     <span class="n">problearner_parameters</span> <span class="o">=</span> <span class="n">problearner_parameters</span><span class="p">,</span>
+                     <span class="n">truncate</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> 
+                     <span class="n">target_policy</span><span class="o">=</span><span class="n">target_policy</span><span class="p">,</span> <span class="n">control_policy</span> <span class="o">=</span> <span class="n">control_policy</span><span class="p">,</span> 
+                     <span class="n">dim_state</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dim_mediator</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> 
+                     <span class="n">expectation_MCMC_iter</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+                     <span class="n">nature_decomp</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                     <span class="n">seed</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                     <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;IPW&#39;</span><span class="p">)</span>
+
+<span class="n">IPW_est</span><span class="o">.</span><span class="n">estimate_DE_ME</span><span class="p">()</span>
+<span class="n">IPW_est</span><span class="o">.</span><span class="n">est_DE</span><span class="p">,</span> <span class="n">IPW_est</span><span class="o">.</span><span class="n">est_ME</span><span class="p">,</span> <span class="n">IPW_est</span><span class="o">.</span><span class="n">est_TE</span><span class="p">,</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-0.3465,  0.0097, -0.4585,  0.    , -0.3643, -0.0482])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.23320671819000469, 0.0, -0.23320671819000469)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Robust_est</span> <span class="o">=</span> <span class="n">ME_Single</span><span class="p">(</span><span class="n">single_dataset</span><span class="p">,</span> <span class="n">r_model</span> <span class="o">=</span> <span class="s1">&#39;OLS&#39;</span><span class="p">,</span>
+                     <span class="n">problearner_parameters</span> <span class="o">=</span> <span class="n">problearner_parameters</span><span class="p">,</span>
+                     <span class="n">truncate</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> 
+                     <span class="n">target_policy</span><span class="o">=</span><span class="n">target_policy</span><span class="p">,</span> <span class="n">control_policy</span> <span class="o">=</span> <span class="n">control_policy</span><span class="p">,</span> 
+                     <span class="n">dim_state</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dim_mediator</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> 
+                     <span class="n">expectation_MCMC_iter</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+                     <span class="n">nature_decomp</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                     <span class="n">seed</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                     <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;Robust&#39;</span><span class="p">)</span>
+
+<span class="n">Robust_est</span><span class="o">.</span><span class="n">estimate_DE_ME</span><span class="p">()</span>
+<span class="n">Robust_est</span><span class="o">.</span><span class="n">est_DE</span><span class="p">,</span> <span class="n">Robust_est</span><span class="o">.</span><span class="n">est_ME</span><span class="p">,</span> <span class="n">Robust_est</span><span class="o">.</span><span class="n">est_TE</span><span class="p">,</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.22762835456807218, -0.01638548320515956, -0.24401383777323174)
 </pre></div>
 </div>
 </div>
@@ -1353,19 +1415,18 @@ title="Print to PDF"
 <h2>CPL: Single-Stage Policy Evaluation<a class="headerlink" href="#cpl-single-stage-policy-evaluation" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM&#39;</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">QLearning</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">QLearning</span>
 </pre></div>
 </div>
 </div>
 </div>
 <p>As an example, we use the <strong>Q-learning</strong> algorithm to evaluate policies based on the observed data, with the linear regression models defined as the following:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aa4df5b4-ed6f-4c4c-90b6-706135957470">
-<span class="eqno">(142)<a class="headerlink" href="#equation-aa4df5b4-ed6f-4c4c-90b6-706135957470" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5ea9051e-7889-496c-b9a5-b0f47b7dcede">
+<span class="eqno">(149)<a class="headerlink" href="#equation-5ea9051e-7889-496c-b9a5-b0f47b7dcede" title="Permalink to this equation">#</a></span>\[\begin{align}
 Q(s,a,\boldsymbol{\beta}) = &amp;\beta_{00}+\beta_{01}*\textrm{Glucose}+\beta_{02}*\textrm{PaO2_FiO2}\\
                     &amp;I(a_1=1)*\{\beta_{10}+\beta_{11}*\textrm{Glucose}+\beta_{12}*\textrm{PaO2_FiO2}\},
 \end{align}\]</div>
-<p>Using the code below, we evaluated two target polices (regimes). The first one is a fixed treatement regime that applies no treatment (Policy1), with an estimated value of .9050. Another is a fixed treatment regime that applies treatment all the time (Policy2), with an estimated value of .5085. Therefore, the treatment effect of Policy2 comparing to Policy1 is -.3965, implying that receiving IV input increase the mortality rate.</p>
+<p>Using the code below, we evaluated two target polices (regimes). The first one is a fixed treatement regime that applies no treatment (Policy1), with an estimated value of .9999. Another is a fixed treatment regime that applies treatment all the time (Policy2), with an estimated value of .7646. Therefore, the treatment effect of Policy2 comparing to Policy1 is -.2353, implying that receiving IV input increase the mortality rate.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">single_data</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Died within 48H&#39;</span><span class="p">:</span><span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;Glucose&#39;</span><span class="p">:</span><span class="s1">&#39;S1&#39;</span><span class="p">,</span> <span class="s1">&#39;PaO2_FiO2&#39;</span><span class="p">:</span><span class="s1">&#39;S2&#39;</span><span class="p">,</span> <span class="s1">&#39;IV Input&#39;</span><span class="p">:</span><span class="s1">&#39;A&#39;</span><span class="p">},</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
@@ -1392,7 +1453,7 @@ Q(s,a,\boldsymbol{\beta}) = &amp;\beta_{00}+\beta_{01}*\textrm{Glucose}+\beta_{0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9050002023104254
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9999999999999999
 </pre></div>
 </div>
 </div>
@@ -1410,7 +1471,7 @@ Q(s,a,\boldsymbol{\beta}) = &amp;\beta_{00}+\beta_{01}*\textrm{Glucose}+\beta_{0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5085214515408744
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.764561656518231
 </pre></div>
 </div>
 </div>
@@ -1420,7 +1481,7 @@ Q(s,a,\boldsymbol{\beta}) = &amp;\beta_{00}+\beta_{01}*\textrm{Glucose}+\beta_{0
 <h2>CPL: Single-Stage Policy Optimization<a class="headerlink" href="#cpl-single-stage-policy-optimization" title="Permalink to this headline">#</a></h2>
 <p>Further, to find an optimal policy maximizing the expected value, we use the <strong>Q-learning</strong> algorithm again to do policy optimization. Using the regression model we specified above and the code in the following block, the estimated optimal policy is summarized as the following regime.</p>
 <ol class="simple">
-<li><p>We would recommend <span class="math notranslate nohighlight">\(A=0\)</span> (IV_Input = 0) if <span class="math notranslate nohighlight">\(.0014*\textrm{Glucose}+.0015*\textrm{PaO2_FiO2}&lt;1.106\)</span></p></li>
+<li><p>We would recommend <span class="math notranslate nohighlight">\(A=0\)</span> (IV_Input = 0) if <span class="math notranslate nohighlight">\(-.0004*\textrm{Glucose}+.0012*\textrm{PaO2_FiO2}&lt;.5510\)</span></p></li>
 <li><p>Else, we would recommend <span class="math notranslate nohighlight">\(A=1\)</span> (IV_Input = 1).</p></li>
 </ol>
 <p>Appling the estimated optimal regime to individuals in the observed data, we summarize the regime pattern for each patients in the following table:</p>
@@ -1431,13 +1492,13 @@ Q(s,a,\boldsymbol{\beta}) = &amp;\beta_{00}+\beta_{01}*\textrm{Glucose}+\beta_{0
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>56</p></td>
+<tr class="row-even"><td><p>51</p></td>
 <td><p>0</p></td>
 </tr>
-<tr class="row-odd"><td><p>1</p></td>
+<tr class="row-odd"><td><p>6</p></td>
 <td><p>1</p></td>
 </tr>
-<tr class="row-even"><td><p>The estimated value of the estimated optimal policy is <strong>.9050</strong>.</p></td>
+<tr class="row-even"><td><p>The estimated value of the estimated optimal policy is <strong>.9999</strong>.</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -1462,10 +1523,10 @@ Q(s,a,\boldsymbol{\beta}) = &amp;\beta_{00}+\beta_{01}*\textrm{Glucose}+\beta_{0
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>opt_d: A
-0    56
-1     1
+0    51
+1     6
 dtype: int64
-opt value: 0.9050002023104254
+opt value: 0.9999999999999999
 </pre></div>
 </div>
 </div>

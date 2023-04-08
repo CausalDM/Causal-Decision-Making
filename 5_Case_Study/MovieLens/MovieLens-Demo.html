@@ -1,0 +1,4889 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Causal Effect Learning &#8212; Causal Decision Making</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Causal Decision Making</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../Overview.html">
+                    Overview
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Motivating Examples
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../0_Motivating_Examples/CSL.html">
+   <em>
+    Causal Structure Learning (CSL)
+   </em>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../0_Motivating_Examples/CEL.html">
+   <em>
+    Causal Effect Learning (CEL)
+   </em>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../0_Motivating_Examples/CPL.html">
+   <em>
+    Causal Policy Learning (CPL)
+   </em>
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Preliminary
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../1_Preliminary/Causal%20Inference%20Preliminary.html">
+   Causal Inference Preliminary
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Structure Learning (CSL)
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../2_Causal_Structure_Learning/Preliminaries%20of%20Causal%20Graphs.html">
+   Preliminaries of Causal Graphs
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../2_Causal_Structure_Learning/Causal%20Discovery.html">
+   Causal Discovery
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../2_Causal_Structure_Learning/Testing-based%20Learner.html">
+     Testing-based Learner
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../2_Causal_Structure_Learning/Functional-based%20Learner.html">
+     Functional-based Learner
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../2_Causal_Structure_Learning/Score-based%20Learner.html">
+     Score-based Learner
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../2_Causal_Structure_Learning/Causal%20Mediation%20Analysis.html">
+   Causal Mediation Analysis
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Effect Learning (CEL)
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/Single%20Stage.html">
+   <strong>
+    Single Stage
+   </strong>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/ATE.html">
+     ATE Estimation
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/HTE.html">
+     HTE Estimation
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/S-learner.html">
+       <strong>
+        1. S-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/T-learner.html">
+       <strong>
+        2. T-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/X-learner.html">
+       <strong>
+        3. X-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/R-Learner.html">
+       <strong>
+        4. R learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/DR-Learner.html">
+       <strong>
+        5. DR-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/Lp-R-Learner.html">
+       <strong>
+        6. Lp-R-learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/GRF.html">
+       <strong>
+        7. Generalized Random Forest
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/Dragonnet.html">
+       <strong>
+        8. Dragon Net
+       </strong>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/Mediation%20Analysis.html">
+     Mediation Analysis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%202/underMDP.html">
+   Markov Decision Processes
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%203/Panel%20Data.html">
+   Panel Data
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%203/ATE.html">
+     ATE
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%203/Synthetic%20Control.html">
+       <strong>
+        Synthetic Control
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%203/Synthetic%20Learner.html">
+       <strong>
+        Synthetic Learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%203/Synthetic%20DiD.html">
+       <strong>
+        Synthetic DiD
+       </strong>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%203/HTE.html">
+     HTE
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%203/DiD.html">
+       <strong>
+        Difference in Difference
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%203/R-DiD.html">
+       <strong>
+        R-DiD
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%203/Synthetic%20X-Learner.html">
+       <strong>
+        Synthetic X-Learner
+       </strong>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%203/H1SL_H2SL.html">
+       <strong>
+        H1SL and H2SL
+       </strong>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Paradigm 1
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Single%20Stage.html">
+   Single Stage
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Discrete.html">
+   Discrete Action Space
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Q-learning_Single.html">
+     Q-Learning (Single Stage)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/A-learning_Single.html">
+     A-Learning (Single Stage)
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Classification.html">
+     Reduction to Classification Problems
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+    <label for="toctree-checkbox-8">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Classification/O-Learning.html">
+       Outcome Weighted Learning
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Classification/E-learning.html">
+       Entropy learning
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Quantile/QuantileOTR_test.html">
+     <strong>
+      Quantile Optimal Treatment Regime
+     </strong>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Continuous.html">
+   Continuous Action Space
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Continuous/Deep%20Jump%20Learner.html">
+     Deep Jump Learner for Continuous Actions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Continuous/Kernel-Based%20Learner.html">
+     Kernel-Based Learner
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Continuous/Outcome%20Learning.html">
+     Outcome Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/PlanToDo.html">
+   Plan To Do
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="simple">
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Paradigm 2
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/preliminary_MDP-potential-outcome.html">
+   Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/Evaluation.html">
+   Policy Evaluation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/FQE.html">
+     Fitted-Q Evaluation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/IPW_Infinite.html">
+     Importance Sampling for Policy Evaluation (Infinite Horizon)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/DR_Infinite.html">
+     Doubly Robust Estimator for Policy Evaluation (Infinite Horizon)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/Deeply_Debiased.html">
+     Deeply-Debiased Off-Policy Evaluation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/Optimization.html">
+   Policy Optimization
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+  <label for="toctree-checkbox-12">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/FQI.html">
+     Fitted-Q Iteration
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Paradigm 3
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario3/Multi%20Stage.html">
+   Multiple Stages (DTR)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario3/Q-learning_Multiple.html">
+   Q-Learning (Multiple Stages)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario3/A-learning_Multiple.html">
+   A-Learning (Multiple Stages)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario3/MediatedQ-learning_Multiple.html">
+   MediatedQ-Learning (Multiple Stages)
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Paradigm 4
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Bandits.html">
+   Overview: Bandits ALgorithm
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/MAB/MAB.html">
+   Multi-Armed Bandits (MAB)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+  <label for="toctree-checkbox-13">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/MAB/Epsilon_Greedy.html">
+     <span class="math notranslate nohighlight">
+      \(\epsilon\)
+     </span>
+     -Greedy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/MAB/UCB.html">
+     UCB
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/MAB/TS.html">
+     TS
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/Contextual_Bandits.html">
+   Contextual Bandits
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+  <label for="toctree-checkbox-14">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/LinUCB.html">
+     LinUCB
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/LinTS.html">
+     LinTS
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/Meta_Bandits.html">
+   Meta Bandits
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+  <label for="toctree-checkbox-15">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/Meta_TS.html">
+     Meta Thompson Sampling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/MTTS.html">
+     Multi-Task Thompson Sampling (MTTS)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Structured_Bandit.html">
+   Structured Bandit (Slate Recommendation)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+  <label for="toctree-checkbox-16">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/Learning%20to%20rank.html">
+     Online Learning to Rank (Cascading Bandit)
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/TS_Cascade.html">
+       TS_Cascade
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/CascadeLinTS.html">
+       CascadeLinTS
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/MTSS_Cascade.html">
+       MTSS_Cascade
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/Combinatorial%20Optimization.html">
+     Online Combinatorial Optimization (Combinatorial Semi-Bandit)
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/CombTS.html">
+       CombTS
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/CombLinTS.html">
+       CombLinTS
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/MTSS_Comb.html">
+       MTSS_Comb
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/Assortment%20Optimization.html">
+     Dynamic Assortment Optimization (Multinomial Logit Bandit)
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/TS_MNL_Beta.html">
+       TS_MNL
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/TS_Contextual_MNL.html">
+       TS_Contextual_MNL
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/MTSS_MNL.html">
+       MTSS_MNL
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/OnlineEval/Online%20Policy%20Evaluation.html">
+   Online Policy Evaluation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+  <label for="toctree-checkbox-20">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/OnlineEval/Direct%20Online%20Policy%20Evaluator.html">
+     Direct Online Policy Evaluator
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/OnlineEval/Inverse%20Probability%20Weighted%20Online%20Policy%20Evaluator.html">
+     Inverse Probability Weighted Online Policy Evaluator
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/OnlineEval/Doubly%20Robust%20Online%20Policy%20Evaluator.html">
+     Doubly Robust Online Policy Evaluator
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Paradigm 5
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario5/OnlineRL_Markov.html">
+   Ooline Policy Learning and Evaluation in Markovian Environments
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Causal Policy Learning (CPL)--Paradigm 6
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario6/OnlineRL_non_Markov.html">
+   Ooline Policy Learning in Non-Markovian Environments
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Case Studies
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../MIMIC3/MIMIC3_intro.html">
+   Mimic3
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+  <label for="toctree-checkbox-21">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../MIMIC3/MIMIC3-Demo.html">
+     Mimic3 Demo
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../MIMIC3/MIMIC3-Demo-Ver2.html">
+     Mimic3 Demo-Ver2
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../MIMIC3/Single_Stage.html">
+     MIMIC III (Single-Stage)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../MIMIC3/Longitudinal.html">
+     MIMIC III (3-Stages)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../MIMIC3/Infinite_Horizon.html">
+     MIMIC III (Infinite Horizon)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="MovieLens.html">
+   MovieLens
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/5_Case_Study/MovieLens/MovieLens-Demo.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F5_Case_Study/MovieLens/MovieLens-Demo.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/5_Case_Study/MovieLens/MovieLens-Demo.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-entire-dataset-of-interst">
+   the entire dataset of interst
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sample-1-of-the-data-by-users">
+   sample 1% of the data by users
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#nonlinear-model-fitting">
+   nonlinear model fitting
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#analysis">
+     Analysis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#linear-model-fitting">
+   linear model fitting
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Analysis
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Causal Effect Learning</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-entire-dataset-of-interst">
+   the entire dataset of interst
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sample-1-of-the-data-by-users">
+   sample 1% of the data by users
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#nonlinear-model-fitting">
+   nonlinear model fitting
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#analysis">
+     Analysis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#linear-model-fitting">
+   linear model fitting
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Analysis
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section id="causal-effect-learning">
+<h1>Causal Effect Learning<a class="headerlink" href="#causal-effect-learning" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">causaldm.causaldm.learners.Online.CMAB._env_realCMAB</span> <span class="k">as</span> <span class="nn">env</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get_movielens</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">causaldm.causaldm.learners.Online.CMAB._env_realCMAB</span> <span class="k">as</span> <span class="nn">env</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">data</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get_movielens</span><span class="p">()</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;causaldm&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;Individual&#39;, &#39;Xs&#39;, &#39;mean_ri&#39;, &#39;standardized_Xs&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_ML</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Individual&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_ML</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([48, 53, 169, 202, 329, 331, 352, 411, 424, 524, 692, 699, 770, 839, 1010, 1019, 1051, 1068, 1120, 1137, 1181, 1203, 1242, 1244, 1246, 1264, 1266, 1274, 1285, 1317, 1340, 1383, 1422, 1447, 1470, 1579, 1639, 1671, 1676, 1741, 1748, 1780, 1880, 1912, 1920, 1926, 1941, 1943, 1980, 1988, 2010, 2015, 2063, 2073, 2092, 2105, 2181, 2453, 2507, 2544, 2793, 2820, 2857, 2909, 3029, 3067, 3272, 3280, 3285, 3336, 3389, 3391, 3410, 3462, 3483, 3507, 3539, 3589, 3618, 3626, 3648, 3650, 3681, 3705, 3778, 3808, 3824, 3884, 3934, 3942, 3999, 4016, 4048, 4064, 4089, 4169, 4186, 4305, 4344, 4425, 4482, 4510, 4578, 4682, 4802, 5074, 5107, 5220, 5317, 5367, 5387, 5394, 5433, 5504, 5511, 5614, 5627, 5636, 5643, 5682, 5759, 5763, 5795, 5812, 5831, 5880, 6016, 148, 149, 528, 678, 970, 1050, 1125, 1194, 1605, 1958, 2077, 2116, 2419, 2777, 2986, 3312, 3471, 3768, 3829, 4579, 5026, 5306, 5312, 5333, 5530, 5837, 5996, 302, 877, 1207, 1635, 1778, 2124, 3018, 3032, 3311, 3401, 3675, 4028, 4387, 4808, 5788, 1764, 2012, 3823, 4140, 4411, 5878])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_ML</span><span class="p">[</span><span class="mi">48</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;Phi&#39;, &#39;Comedy&#39;, &#39;Drama&#39;, &#39;Action&#39;, &#39;Thriller&#39;, &#39;Sci-Fi&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_ML</span><span class="p">[</span><span class="mi">48</span><span class="p">][</span><span class="s1">&#39;Comedy&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;complete&#39;:        user_id  movie_id  rating   age  Comedy  Drama  Action  Thriller  \
+ 4220        48    2355.0     4.0  25.0     1.0    0.0     0.0       0.0   
+ 14400       48    2918.0     4.0  25.0     1.0    0.0     0.0       0.0   
+ 16752       48    2791.0     4.0  25.0     1.0    0.0     0.0       0.0   
+ 20195       48    2797.0     4.0  25.0     1.0    0.0     0.0       0.0   
+ 21689       48    2321.0     3.0  25.0     1.0    0.0     0.0       0.0   
+ ...        ...       ...     ...   ...     ...    ...     ...       ...   
+ 355916    48.0     450.0     3.0  25.0     1.0    0.0     0.0       0.0   
+ 361546    48.0    2926.0     2.0  25.0     1.0    0.0     0.0       0.0   
+ 379684    48.0    3477.0     3.0  25.0     1.0    0.0     0.0       0.0   
+ 380838    48.0     360.0     2.0  25.0     1.0    0.0     0.0       0.0   
+ 380966    48.0     516.0     3.0  25.0     1.0    0.0     0.0       0.0   
+ 
+         Sci-Fi  gender_M  occupation_academic/educator  \
+ 4220       0.0       1.0                           0.0   
+ 14400      0.0       1.0                           0.0   
+ 16752      0.0       1.0                           0.0   
+ 20195      0.0       1.0                           0.0   
+ 21689      0.0       1.0                           0.0   
+ ...        ...       ...                           ...   
+ 355916     0.0       1.0                           0.0   
+ 361546     0.0       1.0                           0.0   
+ 379684     0.0       1.0                           0.0   
+ 380838     0.0       1.0                           0.0   
+ 380966     0.0       1.0                           0.0   
+ 
+         occupation_college/grad student  occupation_executive/managerial  \
+ 4220                                1.0                              0.0   
+ 14400                               1.0                              0.0   
+ 16752                               1.0                              0.0   
+ 20195                               1.0                              0.0   
+ 21689                               1.0                              0.0   
+ ...                                 ...                              ...   
+ 355916                              1.0                              0.0   
+ 361546                              1.0                              0.0   
+ 379684                              1.0                              0.0   
+ 380838                              1.0                              0.0   
+ 380966                              1.0                              0.0   
+ 
+         occupation_other  occupation_technician/engineer  
+ 4220                 0.0                             0.0  
+ 14400                0.0                             0.0  
+ 16752                0.0                             0.0  
+ 20195                0.0                             0.0  
+ 21689                0.0                             0.0  
+ ...                  ...                             ...  
+ 355916               0.0                             0.0  
+ 361546               0.0                             0.0  
+ 379684               0.0                             0.0  
+ 380838               0.0                             0.0  
+ 380966               0.0                             0.0  
+ 
+ [240 rows x 15 columns],
+ &#39;Reward&#39;: [[3.0, 2.0, 4.0, 1.0, 5.0], [126, 67, 36, 6, 5]]}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_ML</span><span class="p">[</span><span class="mi">48</span><span class="p">][</span><span class="s1">&#39;Drama&#39;</span><span class="p">][</span><span class="s1">&#39;complete&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>user_id</th>
+      <th>movie_id</th>
+      <th>rating</th>
+      <th>age</th>
+      <th>Comedy</th>
+      <th>Drama</th>
+      <th>Action</th>
+      <th>Thriller</th>
+      <th>Sci-Fi</th>
+      <th>gender_M</th>
+      <th>occupation_academic/educator</th>
+      <th>occupation_college/grad student</th>
+      <th>occupation_executive/managerial</th>
+      <th>occupation_other</th>
+      <th>occupation_technician/engineer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>14</th>
+      <td>48</td>
+      <td>1193.0</td>
+      <td>4.0</td>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>11057</th>
+      <td>48</td>
+      <td>919.0</td>
+      <td>4.0</td>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>25871</th>
+      <td>48</td>
+      <td>527.0</td>
+      <td>5.0</td>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>31166</th>
+      <td>48</td>
+      <td>1721.0</td>
+      <td>4.0</td>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>40383</th>
+      <td>48</td>
+      <td>150.0</td>
+      <td>4.0</td>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>377598</th>
+      <td>48.0</td>
+      <td>3404.0</td>
+      <td>5.0</td>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>378510</th>
+      <td>48.0</td>
+      <td>996.0</td>
+      <td>3.0</td>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>379685</th>
+      <td>48.0</td>
+      <td>3477.0</td>
+      <td>3.0</td>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>380598</th>
+      <td>48.0</td>
+      <td>280.0</td>
+      <td>3.0</td>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>380967</th>
+      <td>48.0</td>
+      <td>516.0</td>
+      <td>3.0</td>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>152 rows × 15 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">userinfo_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span><span class="p">])</span>
+<span class="n">data_ML</span><span class="p">[</span><span class="mi">48</span><span class="p">][</span><span class="s1">&#39;Drama&#39;</span><span class="p">][</span><span class="s1">&#39;complete&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">userinfo_index</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>age                                25.0
+gender_M                            1.0
+occupation_college/grad student     1.0
+occupation_executive/managerial     0.0
+occupation_other                    0.0
+occupation_technician/engineer      0.0
+Name: 14, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_ML</span><span class="p">[</span><span class="mi">48</span><span class="p">][</span><span class="s1">&#39;Drama&#39;</span><span class="p">][</span><span class="s1">&#39;Reward&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[3.0, 4.0, 2.0, 5.0], [82, 45, 15, 10]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">users_index</span> <span class="o">=</span> <span class="n">data_ML</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="n">movie_generes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Comedy&#39;</span><span class="p">,</span> <span class="s1">&#39;Drama&#39;</span><span class="p">,</span> <span class="s1">&#39;Action&#39;</span><span class="p">,</span> <span class="s1">&#39;Thriller&#39;</span><span class="p">,</span> <span class="s1">&#39;Sci-Fi&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_CEL</span> <span class="o">=</span> <span class="p">{}</span>
+ 
+<span class="c1"># initialize the final data we&#39;ll use in Causal Effect Learning</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">movie_generes</span><span class="p">:</span>
+    <span class="n">data_CEL</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>   
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="k">for</span> <span class="n">movie_genere</span> <span class="ow">in</span> <span class="n">movie_generes</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users_index</span><span class="p">:</span>
+        <span class="n">data_CEL</span><span class="p">[</span><span class="n">movie_genere</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">data_CEL</span><span class="p">[</span><span class="n">movie_genere</span><span class="p">]</span> <span class="p">,</span> <span class="n">data_ML</span><span class="p">[</span><span class="n">user</span><span class="p">][</span><span class="n">movie_genere</span><span class="p">][</span><span class="s1">&#39;complete&#39;</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">data_CEL</span><span class="p">[</span><span class="s1">&#39;Comedy&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>49563
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">data_CEL</span><span class="p">[</span><span class="s1">&#39;Drama&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>48235
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">data_CEL</span><span class="p">[</span><span class="s1">&#39;Action&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>32375
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">data_CEL</span><span class="p">[</span><span class="s1">&#39;Thriller&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>25583
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">data_CEL</span><span class="p">[</span><span class="s1">&#39;Sci-Fi&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>17407
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data_CEL</span><span class="p">[</span><span class="s1">&#39;Comedy&#39;</span><span class="p">][</span><span class="s1">&#39;user_id&#39;</span><span class="p">]))</span> <span class="c1"># the total number of users</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>175
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">users_index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([48, 53, 169, 202, 329, 331, 352, 411, 424, 524, 692, 699, 770, 839, 1010, 1019, 1051, 1068, 1120, 1137, 1181, 1203, 1242, 1244, 1246, 1264, 1266, 1274, 1285, 1317, 1340, 1383, 1422, 1447, 1470, 1579, 1639, 1671, 1676, 1741, 1748, 1780, 1880, 1912, 1920, 1926, 1941, 1943, 1980, 1988, 2010, 2015, 2063, 2073, 2092, 2105, 2181, 2453, 2507, 2544, 2793, 2820, 2857, 2909, 3029, 3067, 3272, 3280, 3285, 3336, 3389, 3391, 3410, 3462, 3483, 3507, 3539, 3589, 3618, 3626, 3648, 3650, 3681, 3705, 3778, 3808, 3824, 3884, 3934, 3942, 3999, 4016, 4048, 4064, 4089, 4169, 4186, 4305, 4344, 4425, 4482, 4510, 4578, 4682, 4802, 5074, 5107, 5220, 5317, 5367, 5387, 5394, 5433, 5504, 5511, 5614, 5627, 5636, 5643, 5682, 5759, 5763, 5795, 5812, 5831, 5880, 6016, 148, 149, 528, 678, 970, 1050, 1125, 1194, 1605, 1958, 2077, 2116, 2419, 2777, 2986, 3312, 3471, 3768, 3829, 4579, 5026, 5306, 5312, 5333, 5530, 5837, 5996, 302, 877, 1207, 1635, 1778, 2124, 3018, 3032, 3311, 3401, 3675, 4028, 4387, 4808, 5788, 1764, 2012, 3823, 4140, 4411, 5878])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_CEL</span><span class="p">[</span><span class="s1">&#39;Comedy&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>user_id</th>
+      <th>movie_id</th>
+      <th>rating</th>
+      <th>age</th>
+      <th>Comedy</th>
+      <th>Drama</th>
+      <th>Action</th>
+      <th>Thriller</th>
+      <th>Sci-Fi</th>
+      <th>gender_M</th>
+      <th>occupation_academic/educator</th>
+      <th>occupation_college/grad student</th>
+      <th>occupation_executive/managerial</th>
+      <th>occupation_other</th>
+      <th>occupation_technician/engineer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>4220</th>
+      <td>48</td>
+      <td>2355.0</td>
+      <td>4.0</td>
+      <td>25.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>14400</th>
+      <td>48</td>
+      <td>2918.0</td>
+      <td>4.0</td>
+      <td>25.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>16752</th>
+      <td>48</td>
+      <td>2791.0</td>
+      <td>4.0</td>
+      <td>25.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>20195</th>
+      <td>48</td>
+      <td>2797.0</td>
+      <td>4.0</td>
+      <td>25.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>21689</th>
+      <td>48</td>
+      <td>2321.0</td>
+      <td>3.0</td>
+      <td>25.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>393463</th>
+      <td>5878.0</td>
+      <td>3299.0</td>
+      <td>3.0</td>
+      <td>25.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>395410</th>
+      <td>5878.0</td>
+      <td>892.0</td>
+      <td>5.0</td>
+      <td>25.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>396058</th>
+      <td>5878.0</td>
+      <td>574.0</td>
+      <td>1.0</td>
+      <td>25.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>397794</th>
+      <td>5878.0</td>
+      <td>1812.0</td>
+      <td>5.0</td>
+      <td>25.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>400719</th>
+      <td>5878.0</td>
+      <td>3830.0</td>
+      <td>1.0</td>
+      <td>25.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>49563 rows × 15 columns</p>
+</div></div></div>
+</div>
+<section id="the-entire-dataset-of-interst">
+<h2>the entire dataset of interst<a class="headerlink" href="#the-entire-dataset-of-interst" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_CEL_all</span> <span class="o">=</span> <span class="n">data_CEL</span><span class="p">[</span><span class="s1">&#39;Comedy&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">movie_genere</span> <span class="ow">in</span> <span class="n">movie_generes</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">]:</span>
+    <span class="n">data_CEL_all</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">data_CEL_all</span><span class="p">,</span> <span class="n">data_CEL</span><span class="p">[</span><span class="n">movie_genere</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">data_CEL_all</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>173163
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_CEL_all</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_all</span><span class="p">[</span><span class="s1">&#39;Comedy&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">userinfo_index</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>gender_M</th>
+      <th>occupation_college/grad student</th>
+      <th>occupation_executive/managerial</th>
+      <th>occupation_other</th>
+      <th>occupation_technician/engineer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>4220</th>
+      <td>25.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>14400</th>
+      <td>25.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>16752</th>
+      <td>25.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>20195</th>
+      <td>25.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>21689</th>
+      <td>25.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>393463</th>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>395410</th>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>396058</th>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>397794</th>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>400719</th>
+      <td>25.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>49563 rows × 6 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="sample-1-of-the-data-by-users">
+<h2>sample 1% of the data by users<a class="headerlink" href="#sample-1-of-the-data-by-users" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">data_CEL</span><span class="p">[</span><span class="s1">&#39;Comedy&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>25583
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL</span><span class="p">[</span><span class="s1">&#39;Action&#39;</span><span class="p">][</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([32285, 32286, 32287, 32288, 32289, 32290, 32291, 32292, 32293,
+       32294, 32295, 32296, 32297, 32298, 32299, 32300, 32301, 32302,
+       32303, 32304, 32305, 32306, 32307, 32308, 32309, 32310, 32311,
+       32312, 32313, 32314, 32315, 32316, 32317, 32318, 32319, 32320,
+       32321, 32322, 32323, 32324, 32325, 32326, 32327, 32328, 32329,
+       32330, 32331, 32332, 32333, 32334, 32335, 32336, 32337, 32338,
+       32339, 32340, 32341, 32342, 32343, 32344, 32345, 32346, 32347,
+       32348, 32349, 32350, 32351, 32352, 32353, 32354, 32355, 32356,
+       32357, 32358, 32359, 32360, 32361, 32362, 32363, 32364, 32365,
+       32366, 32367, 32368, 32369, 32370, 32371, 32372, 32373, 32374])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="mf">10.5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>11
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]),</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_29676</span><span class="o">/</span><span class="mf">1759006568.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]),</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="nn">~/opt/anaconda3/lib/python3.9/random.py</span> in <span class="ni">sample</span><span class="nt">(self, population, k, counts)</span>
+<span class="g g-Whitespace">    </span><span class="mi">431</span>             <span class="n">population</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">432</span>         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">_Sequence</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">433</span>             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Population must be a sequence.  For dicts or sets, use sorted(d).&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">434</span>         <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">435</span>         <span class="k">if</span> <span class="n">counts</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+<span class="ne">TypeError</span>: Population must be a sequence.  For dicts or sets, use sorted(d).
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL</span><span class="p">[</span><span class="s1">&#39;Action&#39;</span><span class="p">][</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL</span><span class="p">[</span><span class="s1">&#39;Action&#39;</span><span class="p">][</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user</span><span class="p">)[</span><span class="mi">0</span><span class="p">]))))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_29676</span><span class="o">/</span><span class="mf">1974279358.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">random</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL</span><span class="p">[</span><span class="s1">&#39;Action&#39;</span><span class="p">][</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL</span><span class="p">[</span><span class="s1">&#39;Action&#39;</span><span class="p">][</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user</span><span class="p">)[</span><span class="mi">0</span><span class="p">]))))</span>
+
+<span class="nn">~/opt/anaconda3/lib/python3.9/random.py</span> in <span class="ni">sample</span><span class="nt">(self, population, k, counts)</span>
+<span class="g g-Whitespace">    </span><span class="mi">431</span>             <span class="n">population</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">432</span>         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">_Sequence</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">433</span>             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Population must be a sequence.  For dicts or sets, use sorted(d).&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">434</span>         <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">435</span>         <span class="k">if</span> <span class="n">counts</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+<span class="ne">TypeError</span>: Population must be a sequence.  For dicts or sets, use sorted(d).
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># randomly select 1% of samples from all users</span>
+<span class="n">data_CEL_sample</span> <span class="o">=</span> <span class="n">data_CEL</span><span class="p">[</span><span class="s1">&#39;Comedy&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">movie_genere</span> <span class="ow">in</span> <span class="n">movie_generes</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">]:</span>
+
+    <span class="n">data_CEL_sample</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">data_CEL_sample</span><span class="p">,</span> <span class="n">data_CEL</span><span class="p">[</span><span class="n">movie_genere</span><span class="p">]])</span>
+
+
+<span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users_index</span><span class="p">:</span>       
+    <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL</span><span class="p">[</span><span class="s1">&#39;Action&#39;</span><span class="p">][</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users_index</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>48
+53
+169
+202
+329
+331
+352
+411
+424
+524
+692
+699
+770
+839
+1010
+1019
+1051
+1068
+1120
+1137
+1181
+1203
+1242
+1244
+1246
+1264
+1266
+1274
+1285
+1317
+1340
+1383
+1422
+1447
+1470
+1579
+1639
+1671
+1676
+1741
+1748
+1780
+1880
+1912
+1920
+1926
+1941
+1943
+1980
+1988
+2010
+2015
+2063
+2073
+2092
+2105
+2181
+2453
+2507
+2544
+2793
+2820
+2857
+2909
+3029
+3067
+3272
+3280
+3285
+3336
+3389
+3391
+3410
+3462
+3483
+3507
+3539
+3589
+3618
+3626
+3648
+3650
+3681
+3705
+3778
+3808
+3824
+3884
+3934
+3942
+3999
+4016
+4048
+4064
+4089
+4169
+4186
+4305
+4344
+4425
+4482
+4510
+4578
+4682
+4802
+5074
+5107
+5220
+5317
+5367
+5387
+5394
+5433
+5504
+5511
+5614
+5627
+5636
+5643
+5682
+5759
+5763
+5795
+5812
+5831
+5880
+6016
+148
+149
+528
+678
+970
+1050
+1125
+1194
+1605
+1958
+2077
+2116
+2419
+2777
+2986
+3312
+3471
+3768
+3829
+4579
+5026
+5306
+5312
+5333
+5530
+5837
+5996
+302
+877
+1207
+1635
+1778
+2124
+3018
+3032
+3311
+3401
+3675
+4028
+4387
+4808
+5788
+1764
+2012
+3823
+4140
+4411
+5878
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="nonlinear-model-fitting">
+<h2>nonlinear model fitting<a class="headerlink" href="#nonlinear-model-fitting" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">models_CEL</span> <span class="o">=</span> <span class="p">{}</span>
+ 
+<span class="c1"># initialize the models we&#39;ll fit in Causal Effect Learning</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">movie_generes</span><span class="p">:</span>
+    <span class="n">models_CEL</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>   
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span>
+<span class="k">for</span> <span class="n">movie_genere</span> <span class="ow">in</span> <span class="n">movie_generes</span><span class="p">:</span> 
+    <span class="n">models_CEL</span><span class="p">[</span><span class="n">movie_genere</span><span class="p">]</span> <span class="o">=</span> <span class="n">LGBMRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">models_CEL</span><span class="p">[</span><span class="n">movie_genere</span><span class="p">]</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_CEL_all</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_all</span><span class="p">[</span><span class="n">movie_genere</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">userinfo_index</span><span class="p">],</span><span class="n">data_CEL_all</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_all</span><span class="p">[</span><span class="n">movie_genere</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">2</span><span class="p">]</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">models_CEL</span><span class="p">[</span><span class="s1">&#39;Comedy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_all</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_all</span><span class="p">[</span><span class="s1">&#39;Comedy&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">userinfo_index</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([3.1721, 3.1721, 3.1721, ..., 3.5565, 3.5565, 3.5565])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">min</span><span class="p">(</span><span class="n">data_CEL_all</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>16.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">max</span><span class="p">(</span><span class="n">data_CEL_all</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>56.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># record thev estimated expected reward for each movie genere, under each possible combination of state variable</span>
+<span class="n">age_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">data_CEL_all</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]),</span><span class="nb">max</span><span class="p">(</span><span class="n">data_CEL_all</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]),</span><span class="nb">int</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">data_CEL_all</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">])</span><span class="o">-</span><span class="nb">min</span><span class="p">(</span><span class="n">data_CEL_all</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">])</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">age_range</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39
+ 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span>
+
+<span class="n">gender</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">occupation_college</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">occupation_executive</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">occupation_other</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">occupation_technician</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># result contains all possible combinations.</span>
+<span class="n">combinations</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">age_range</span><span class="p">,</span><span class="n">gender</span><span class="p">,</span><span class="n">occupation_college</span><span class="p">,</span>
+                                              <span class="n">occupation_executive</span><span class="p">,</span><span class="n">occupation_other</span><span class="p">,</span><span class="n">occupation_technician</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">combinations</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">,</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span><span class="s1">&#39;occupation_college&#39;</span><span class="p">,</span> <span class="s1">&#39;occupation_executive&#39;</span><span class="p">,</span><span class="s1">&#39;occupation_other&#39;</span><span class="p">,</span><span class="s1">&#39;occupation_technician&#39;</span><span class="p">]</span>
+<span class="n">combinations</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>gender</th>
+      <th>occupation_college</th>
+      <th>occupation_executive</th>
+      <th>occupation_other</th>
+      <th>occupation_technician</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1307</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1308</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1309</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1310</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1311</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>1312 rows × 6 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">models_CEL</span><span class="p">[</span><span class="s1">&#39;Comedy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">combinations</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1312
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">movie_genere</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Sci-Fi&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">models_CEL</span><span class="p">[</span><span class="s1">&#39;Comedy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">combinations</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([3.6671, 3.3669, 3.7403, ..., 3.1545, 3.7169, 2.7921])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">1312</span><span class="p">))</span>
+<span class="n">i</span><span class="o">=</span><span class="mi">0</span>
+<span class="k">for</span> <span class="n">movie_genere</span> <span class="ow">in</span> <span class="n">movie_generes</span><span class="p">:</span>
+    <span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">models_CEL</span><span class="p">[</span><span class="n">movie_genere</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">combinations</span><span class="p">)</span>
+    <span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[3.6671 3.3669 3.7403 ... 3.1545 3.7169 2.7921]
+ [0.     0.     0.     ... 0.     0.     0.    ]
+ [0.     0.     0.     ... 0.     0.     0.    ]
+ [0.     0.     0.     ... 0.     0.     0.    ]
+ [0.     0.     0.     ... 0.     0.     0.    ]]
+[[3.6671 3.3669 3.7403 ... 3.1545 3.7169 2.7921]
+ [4.1591 3.8884 4.323  ... 3.617  4.1462 3.623 ]
+ [0.     0.     0.     ... 0.     0.     0.    ]
+ [0.     0.     0.     ... 0.     0.     0.    ]
+ [0.     0.     0.     ... 0.     0.     0.    ]]
+[[3.6671 3.3669 3.7403 ... 3.1545 3.7169 2.7921]
+ [4.1591 3.8884 4.323  ... 3.617  4.1462 3.623 ]
+ [3.621  3.6609 3.7536 ... 3.8367 3.9265 3.7139]
+ [0.     0.     0.     ... 0.     0.     0.    ]
+ [0.     0.     0.     ... 0.     0.     0.    ]]
+[[3.6671 3.3669 3.7403 ... 3.1545 3.7169 2.7921]
+ [4.1591 3.8884 4.323  ... 3.617  4.1462 3.623 ]
+ [3.621  3.6609 3.7536 ... 3.8367 3.9265 3.7139]
+ [3.8914 3.8843 3.931  ... 3.6474 4.428  3.5516]
+ [0.     0.     0.     ... 0.     0.     0.    ]]
+[[3.6671 3.3669 3.7403 ... 3.1545 3.7169 2.7921]
+ [4.1591 3.8884 4.323  ... 3.617  4.1462 3.623 ]
+ [3.621  3.6609 3.7536 ... 3.8367 3.9265 3.7139]
+ [3.8914 3.8843 3.931  ... 3.6474 4.428  3.5516]
+ [3.5793 3.4066 3.621  ... 3.0967 4.1025 2.9624]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_CEL</span> <span class="o">=</span> <span class="n">combinations</span>
+<span class="n">i</span><span class="o">=</span><span class="mi">0</span>
+<span class="k">for</span> <span class="n">movie_genere</span> <span class="ow">in</span> <span class="n">movie_generes</span><span class="p">:</span>
+  <span class="c1">#values = models_CEL[movie_genere].predict(combinations)</span>
+  <span class="n">result_CEL</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">result_CEL</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="n">movie_genere</span><span class="p">,</span> <span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">,:])</span>
+  <span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_CEL</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>gender</th>
+      <th>occupation_college</th>
+      <th>occupation_executive</th>
+      <th>occupation_other</th>
+      <th>occupation_technician</th>
+      <th>Comedy</th>
+      <th>Drama</th>
+      <th>Action</th>
+      <th>Thriller</th>
+      <th>Sci-Fi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.667108</td>
+      <td>4.159101</td>
+      <td>3.621042</td>
+      <td>3.891404</td>
+      <td>3.579256</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>3.366861</td>
+      <td>3.888376</td>
+      <td>3.660929</td>
+      <td>3.884298</td>
+      <td>3.406647</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>3.740314</td>
+      <td>4.323008</td>
+      <td>3.753576</td>
+      <td>3.930968</td>
+      <td>3.621002</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3.432508</td>
+      <td>4.036827</td>
+      <td>3.793464</td>
+      <td>3.923861</td>
+      <td>3.460696</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.654633</td>
+      <td>4.138223</td>
+      <td>3.807868</td>
+      <td>3.984900</td>
+      <td>3.545622</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1307</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2.783766</td>
+      <td>3.636899</td>
+      <td>3.261385</td>
+      <td>3.142084</td>
+      <td>2.852911</td>
+    </tr>
+    <tr>
+      <th>1308</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4.108480</td>
+      <td>4.215949</td>
+      <td>4.049312</td>
+      <td>4.523752</td>
+      <td>4.236776</td>
+    </tr>
+    <tr>
+      <th>1309</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>3.154513</td>
+      <td>3.617045</td>
+      <td>3.836742</td>
+      <td>3.647366</td>
+      <td>3.096732</td>
+    </tr>
+    <tr>
+      <th>1310</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>3.716872</td>
+      <td>4.146200</td>
+      <td>3.926512</td>
+      <td>4.428002</td>
+      <td>4.102457</td>
+    </tr>
+    <tr>
+      <th>1311</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2.792068</td>
+      <td>3.623021</td>
+      <td>3.713942</td>
+      <td>3.551617</td>
+      <td>2.962412</td>
+    </tr>
+  </tbody>
+</table>
+<p>1312 rows × 11 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_CEL</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;/Users/alinaxu/Documents/CDM/Causal-Decision-Making/5_Case_Study/MovieLens/result_CEL_nonlinear.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># read the result file</span>
+<span class="n">result_CEL_nonlinear</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;/Users/alinaxu/Documents/CDM/Causal-Decision-Making/5_Case_Study/MovieLens/result_CEL_nonlinear.csv&#39;</span><span class="p">)</span>
+<span class="n">result_CEL_nonlinear</span> <span class="o">=</span> <span class="n">result_CEL_nonlinear</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">result_CEL_nonlinear</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">result_CEL_nonlinear</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>gender</th>
+      <th>occupation_college</th>
+      <th>occupation_executive</th>
+      <th>occupation_other</th>
+      <th>occupation_technician</th>
+      <th>Comedy</th>
+      <th>Drama</th>
+      <th>Action</th>
+      <th>Thriller</th>
+      <th>Sci-Fi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.667108</td>
+      <td>4.159101</td>
+      <td>3.621042</td>
+      <td>3.891404</td>
+      <td>3.579256</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>3.366861</td>
+      <td>3.888376</td>
+      <td>3.660929</td>
+      <td>3.884298</td>
+      <td>3.406647</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>3.740314</td>
+      <td>4.323008</td>
+      <td>3.753576</td>
+      <td>3.930968</td>
+      <td>3.621002</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3.432508</td>
+      <td>4.036827</td>
+      <td>3.793464</td>
+      <td>3.923861</td>
+      <td>3.460696</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.654633</td>
+      <td>4.138223</td>
+      <td>3.807868</td>
+      <td>3.984900</td>
+      <td>3.545622</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1307</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2.783766</td>
+      <td>3.636899</td>
+      <td>3.261385</td>
+      <td>3.142084</td>
+      <td>2.852911</td>
+    </tr>
+    <tr>
+      <th>1308</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4.108480</td>
+      <td>4.215949</td>
+      <td>4.049312</td>
+      <td>4.523752</td>
+      <td>4.236776</td>
+    </tr>
+    <tr>
+      <th>1309</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>3.154513</td>
+      <td>3.617045</td>
+      <td>3.836742</td>
+      <td>3.647366</td>
+      <td>3.096732</td>
+    </tr>
+    <tr>
+      <th>1310</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>3.716872</td>
+      <td>4.146200</td>
+      <td>3.926512</td>
+      <td>4.428002</td>
+      <td>4.102457</td>
+    </tr>
+    <tr>
+      <th>1311</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2.792068</td>
+      <td>3.623021</td>
+      <td>3.713942</td>
+      <td>3.551617</td>
+      <td>2.962412</td>
+    </tr>
+  </tbody>
+</table>
+<p>1312 rows × 11 columns</p>
+</div></div></div>
+</div>
+<section id="analysis">
+<h3>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">result_CEL_nonlinear</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([   0,    1,    2,    3,    4,    5,    6,    7,    8,    9,   10,
+         11,   12,   13,   14,   15,   32,   33,   34,   35,   36,   37,
+         38,   39,   40,   41,   42,   43,   44,   45,   46,   47,   64,
+         65,   66,   67,   68,   69,   70,   71,   72,   73,   74,   75,
+         76,   77,   78,   79,   96,   97,   98,   99,  100,  101,  102,
+        103,  104,  105,  106,  107,  108,  109,  110,  111,  128,  129,
+        130,  131,  132,  133,  134,  135,  136,  137,  138,  139,  140,
+        141,  142,  143,  160,  161,  162,  163,  164,  165,  166,  167,
+        168,  169,  170,  171,  172,  173,  174,  175,  192,  193,  194,
+        195,  196,  197,  198,  199,  200,  201,  202,  203,  204,  205,
+        206,  207,  224,  225,  226,  227,  228,  229,  230,  231,  232,
+        233,  234,  235,  236,  237,  238,  239,  256,  257,  258,  259,
+        260,  261,  262,  263,  264,  265,  266,  267,  268,  269,  270,
+        271,  288,  289,  290,  291,  292,  293,  294,  295,  296,  297,
+        298,  299,  300,  301,  302,  303,  320,  321,  322,  323,  324,
+        325,  326,  327,  328,  329,  330,  331,  332,  333,  334,  335,
+        352,  353,  354,  355,  356,  357,  358,  359,  360,  361,  362,
+        363,  364,  365,  366,  367,  384,  385,  386,  387,  388,  389,
+        390,  391,  392,  393,  394,  395,  396,  397,  398,  399,  416,
+        417,  418,  419,  420,  421,  422,  423,  424,  425,  426,  427,
+        428,  429,  430,  431,  448,  449,  450,  451,  452,  453,  454,
+        455,  456,  457,  458,  459,  460,  461,  462,  463,  480,  481,
+        482,  483,  484,  485,  486,  487,  488,  489,  490,  491,  492,
+        493,  494,  495,  512,  513,  514,  515,  516,  517,  518,  519,
+        520,  521,  522,  523,  524,  525,  526,  527,  544,  545,  546,
+        547,  548,  549,  550,  551,  552,  553,  554,  555,  556,  557,
+        558,  559,  576,  577,  578,  579,  580,  581,  582,  583,  584,
+        585,  586,  587,  588,  589,  590,  591,  608,  609,  610,  611,
+        612,  613,  614,  615,  616,  617,  618,  619,  620,  621,  622,
+        623,  640,  641,  642,  643,  644,  645,  646,  647,  648,  649,
+        650,  651,  652,  653,  654,  655,  672,  673,  674,  675,  676,
+        677,  678,  679,  680,  681,  682,  683,  684,  685,  686,  687,
+        704,  705,  706,  707,  708,  709,  710,  711,  712,  713,  714,
+        715,  716,  717,  718,  719,  736,  737,  738,  739,  740,  741,
+        742,  743,  744,  745,  746,  747,  748,  749,  750,  751,  768,
+        769,  770,  771,  772,  773,  774,  775,  776,  777,  778,  779,
+        780,  781,  782,  783,  800,  801,  802,  803,  804,  805,  806,
+        807,  808,  809,  810,  811,  812,  813,  814,  815,  832,  833,
+        834,  835,  836,  837,  838,  839,  840,  841,  842,  843,  844,
+        845,  846,  847,  864,  865,  866,  867,  868,  869,  870,  871,
+        872,  873,  874,  875,  876,  877,  878,  879,  896,  897,  898,
+        899,  900,  901,  902,  903,  904,  905,  906,  907,  908,  909,
+        910,  911,  928,  929,  930,  931,  932,  933,  934,  935,  936,
+        937,  938,  939,  940,  941,  942,  943,  960,  961,  962,  963,
+        964,  965,  966,  967,  968,  969,  970,  971,  972,  973,  974,
+        975,  992,  993,  994,  995,  996,  997,  998,  999, 1000, 1001,
+       1002, 1003, 1004, 1005, 1006, 1007, 1024, 1025, 1026, 1027, 1028,
+       1029, 1030, 1031, 1032, 1033, 1034, 1035, 1036, 1037, 1038, 1039,
+       1056, 1057, 1058, 1059, 1060, 1061, 1062, 1063, 1064, 1065, 1066,
+       1067, 1068, 1069, 1070, 1071, 1088, 1089, 1090, 1091, 1092, 1093,
+       1094, 1095, 1096, 1097, 1098, 1099, 1100, 1101, 1102, 1103, 1120,
+       1121, 1122, 1123, 1124, 1125, 1126, 1127, 1128, 1129, 1130, 1131,
+       1132, 1133, 1134, 1135, 1152, 1153, 1154, 1155, 1156, 1157, 1158,
+       1159, 1160, 1161, 1162, 1163, 1164, 1165, 1166, 1167, 1184, 1185,
+       1186, 1187, 1188, 1189, 1190, 1191, 1192, 1193, 1194, 1195, 1196,
+       1197, 1198, 1199, 1216, 1217, 1218, 1219, 1220, 1221, 1222, 1223,
+       1224, 1225, 1226, 1227, 1228, 1229, 1230, 1231, 1248, 1249, 1250,
+       1251, 1252, 1253, 1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261,
+       1262, 1263, 1280, 1281, 1282, 1283, 1284, 1285, 1286, 1287, 1288,
+       1289, 1290, 1291, 1292, 1293, 1294, 1295])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_CEL_nonlinear</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">result_CEL_nonlinear</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">6</span><span class="p">:</span><span class="mi">11</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Comedy</th>
+      <th>Drama</th>
+      <th>Action</th>
+      <th>Thriller</th>
+      <th>Sci-Fi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3.667108</td>
+      <td>4.159101</td>
+      <td>3.621042</td>
+      <td>3.891404</td>
+      <td>3.579256</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3.366861</td>
+      <td>3.888376</td>
+      <td>3.660929</td>
+      <td>3.884298</td>
+      <td>3.406647</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3.740314</td>
+      <td>4.323008</td>
+      <td>3.753576</td>
+      <td>3.930968</td>
+      <td>3.621002</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3.432508</td>
+      <td>4.036827</td>
+      <td>3.793464</td>
+      <td>3.923861</td>
+      <td>3.460696</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3.654633</td>
+      <td>4.138223</td>
+      <td>3.807868</td>
+      <td>3.984900</td>
+      <td>3.545622</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1291</th>
+      <td>2.794232</td>
+      <td>3.697612</td>
+      <td>3.391132</td>
+      <td>3.328777</td>
+      <td>2.938607</td>
+    </tr>
+    <tr>
+      <th>1292</th>
+      <td>4.212522</td>
+      <td>4.417237</td>
+      <td>4.849207</td>
+      <td>4.435471</td>
+      <td>4.563120</td>
+    </tr>
+    <tr>
+      <th>1293</th>
+      <td>3.317231</td>
+      <td>3.961143</td>
+      <td>4.636637</td>
+      <td>4.194262</td>
+      <td>3.491331</td>
+    </tr>
+    <tr>
+      <th>1294</th>
+      <td>3.722974</td>
+      <td>4.234974</td>
+      <td>4.241653</td>
+      <td>3.736452</td>
+      <td>4.258903</td>
+    </tr>
+    <tr>
+      <th>1295</th>
+      <td>2.856846</td>
+      <td>3.854605</td>
+      <td>4.029084</td>
+      <td>3.495243</td>
+      <td>3.199417</td>
+    </tr>
+  </tbody>
+</table>
+<p>656 rows × 5 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># calculate the expected reward of Comedy for female</span>
+<span class="n">TE_female</span><span class="o">=</span><span class="n">result_CEL_nonlinear</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">result_CEL_nonlinear</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">6</span><span class="p">:</span><span class="mi">11</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mi">41</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">TE_female</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">TE_female</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">TE_female</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;Expected Rating&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TE_female</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Expected Rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Comedy</th>
+      <td>3.474339</td>
+    </tr>
+    <tr>
+      <th>Drama</th>
+      <td>3.830191</td>
+    </tr>
+    <tr>
+      <th>Action</th>
+      <td>3.666765</td>
+    </tr>
+    <tr>
+      <th>Thriller</th>
+      <td>3.599922</td>
+    </tr>
+    <tr>
+      <th>Sci-Fi</th>
+      <td>3.379801</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># calculate the expected reward of Comedy for female</span>
+<span class="n">TE_male</span><span class="o">=</span><span class="n">result_CEL_nonlinear</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">result_CEL_nonlinear</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">6</span><span class="p">:</span><span class="mi">11</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mi">41</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">TE_male</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">TE_male</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">TE_male</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;Expected Rating&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TE_male</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Expected Rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Comedy</th>
+      <td>3.337232</td>
+    </tr>
+    <tr>
+      <th>Drama</th>
+      <td>3.707185</td>
+    </tr>
+    <tr>
+      <th>Action</th>
+      <td>3.387759</td>
+    </tr>
+    <tr>
+      <th>Thriller</th>
+      <td>3.441026</td>
+    </tr>
+    <tr>
+      <th>Sci-Fi</th>
+      <td>3.325087</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="linear-model-fitting">
+<h2>linear model fitting<a class="headerlink" href="#linear-model-fitting" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">models_CEL_linear</span> <span class="o">=</span> <span class="p">{}</span>
+ 
+<span class="c1"># initialize the models we&#39;ll fit in Causal Effect Learning</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">movie_generes</span><span class="p">:</span>
+    <span class="n">models_CEL_linear</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>   
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="k">for</span> <span class="n">movie_genere</span> <span class="ow">in</span> <span class="n">movie_generes</span><span class="p">:</span> 
+    <span class="n">models_CEL_linear</span><span class="p">[</span><span class="n">movie_genere</span><span class="p">]</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+    <span class="n">models_CEL_linear</span><span class="p">[</span><span class="n">movie_genere</span><span class="p">]</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_CEL_all</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_all</span><span class="p">[</span><span class="n">movie_genere</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">userinfo_index</span><span class="p">],</span><span class="n">data_CEL_all</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_all</span><span class="p">[</span><span class="n">movie_genere</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">2</span><span class="p">]</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">models_CEL_linear</span><span class="p">[</span><span class="s1">&#39;Comedy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_all</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_all</span><span class="p">[</span><span class="s1">&#39;Comedy&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">userinfo_index</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([3.243 , 3.243 , 3.243 , ..., 3.4266, 3.4266, 3.4266])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># record thev estimated expected reward for each movie genere, under each possible combination of state variable</span>
+<span class="n">age_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">data_CEL_all</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]),</span><span class="nb">max</span><span class="p">(</span><span class="n">data_CEL_all</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]),</span><span class="nb">int</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">data_CEL_all</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">])</span><span class="o">-</span><span class="nb">min</span><span class="p">(</span><span class="n">data_CEL_all</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">])</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">age_range</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39
+ 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span>
+
+<span class="n">gender</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">occupation_college</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">occupation_executive</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">occupation_other</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">occupation_technician</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># result contains all possible combinations.</span>
+<span class="n">combinations</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">age_range</span><span class="p">,</span><span class="n">gender</span><span class="p">,</span><span class="n">occupation_college</span><span class="p">,</span>
+                                              <span class="n">occupation_executive</span><span class="p">,</span><span class="n">occupation_other</span><span class="p">,</span><span class="n">occupation_technician</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">combinations</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">,</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span><span class="s1">&#39;occupation_college&#39;</span><span class="p">,</span> <span class="s1">&#39;occupation_executive&#39;</span><span class="p">,</span><span class="s1">&#39;occupation_other&#39;</span><span class="p">,</span><span class="s1">&#39;occupation_technician&#39;</span><span class="p">]</span>
+<span class="n">combinations</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-b03671c7-bf53-4fc1-af42-bd0ea4d08062">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>gender</th>
+      <th>occupation_college</th>
+      <th>occupation_executive</th>
+      <th>occupation_other</th>
+      <th>occupation_technician</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1307</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1308</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1309</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1310</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1311</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>1312 rows × 6 columns</p>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-b03671c7-bf53-4fc1-af42-bd0ea4d08062')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-b03671c7-bf53-4fc1-af42-bd0ea4d08062 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-b03671c7-bf53-4fc1-af42-bd0ea4d08062');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">1312</span><span class="p">))</span>
+<span class="n">i</span><span class="o">=</span><span class="mi">0</span>
+<span class="k">for</span> <span class="n">movie_genere</span> <span class="ow">in</span> <span class="n">movie_generes</span><span class="p">:</span>
+  <span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">models_CEL_linear</span><span class="p">[</span><span class="n">movie_genere</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">combinations</span><span class="p">)</span>
+  <span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[3.4122 3.2197 3.4156 ... 3.0353 3.2311 3.0386]
+ [0.     0.     0.     ... 0.     0.     0.    ]
+ [0.     0.     0.     ... 0.     0.     0.    ]
+ [0.     0.     0.     ... 0.     0.     0.    ]
+ [0.     0.     0.     ... 0.     0.     0.    ]]
+[[3.4122 3.2197 3.4156 ... 3.0353 3.2311 3.0386]
+ [3.6734 3.5095 3.703  ... 3.2655 3.459  3.2951]
+ [0.     0.     0.     ... 0.     0.     0.    ]
+ [0.     0.     0.     ... 0.     0.     0.    ]
+ [0.     0.     0.     ... 0.     0.     0.    ]]
+[[3.4122 3.2197 3.4156 ... 3.0353 3.2311 3.0386]
+ [3.6734 3.5095 3.703  ... 3.2655 3.459  3.2951]
+ [3.2971 3.2555 3.3067 ... 3.1897 3.2409 3.1992]
+ [0.     0.     0.     ... 0.     0.     0.    ]
+ [0.     0.     0.     ... 0.     0.     0.    ]]
+[[3.4122 3.2197 3.4156 ... 3.0353 3.2311 3.0386]
+ [3.6734 3.5095 3.703  ... 3.2655 3.459  3.2951]
+ [3.2971 3.2555 3.3067 ... 3.1897 3.2409 3.1992]
+ [3.4948 3.4161 3.4481 ... 3.155  3.187  3.1083]
+ [0.     0.     0.     ... 0.     0.     0.    ]]
+[[3.4122 3.2197 3.4156 ... 3.0353 3.2311 3.0386]
+ [3.6734 3.5095 3.703  ... 3.2655 3.459  3.2951]
+ [3.2971 3.2555 3.3067 ... 3.1897 3.2409 3.1992]
+ [3.4948 3.4161 3.4481 ... 3.155  3.187  3.1083]
+ [3.2862 3.1283 3.2593 ... 2.9672 3.0982 2.9404]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_CEL_linear</span> <span class="o">=</span> <span class="n">combinations</span>
+<span class="n">i</span><span class="o">=</span><span class="mi">0</span>
+<span class="k">for</span> <span class="n">movie_genere</span> <span class="ow">in</span> <span class="n">movie_generes</span><span class="p">:</span>
+  <span class="c1">#values = models_CEL[movie_genere].predict(combinations)</span>
+  <span class="n">result_CEL_linear</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">result_CEL_linear</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="n">movie_genere</span><span class="p">,</span> <span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">,:])</span>
+  <span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_CEL_linear</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-579dea81-1561-4edf-854f-7e50707d4484">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>gender</th>
+      <th>occupation_college</th>
+      <th>occupation_executive</th>
+      <th>occupation_other</th>
+      <th>occupation_technician</th>
+      <th>Comedy</th>
+      <th>Drama</th>
+      <th>Action</th>
+      <th>Thriller</th>
+      <th>Sci-Fi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.412203</td>
+      <td>3.673359</td>
+      <td>3.297117</td>
+      <td>3.494783</td>
+      <td>3.286167</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>3.219698</td>
+      <td>3.509493</td>
+      <td>3.255487</td>
+      <td>3.416131</td>
+      <td>3.128323</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>3.415576</td>
+      <td>3.703012</td>
+      <td>3.306670</td>
+      <td>3.448094</td>
+      <td>3.259327</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3.223072</td>
+      <td>3.539146</td>
+      <td>3.265040</td>
+      <td>3.369442</td>
+      <td>3.101483</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.359126</td>
+      <td>3.665731</td>
+      <td>3.404304</td>
+      <td>3.538511</td>
+      <td>3.253674</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1307</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3.091722</td>
+      <td>3.302749</td>
+      <td>3.092034</td>
+      <td>3.064599</td>
+      <td>2.972893</td>
+    </tr>
+    <tr>
+      <th>1308</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.227776</td>
+      <td>3.429334</td>
+      <td>3.231298</td>
+      <td>3.233668</td>
+      <td>3.125085</td>
+    </tr>
+    <tr>
+      <th>1309</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>3.035271</td>
+      <td>3.265468</td>
+      <td>3.189667</td>
+      <td>3.155016</td>
+      <td>2.967241</td>
+    </tr>
+    <tr>
+      <th>1310</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>3.231149</td>
+      <td>3.458987</td>
+      <td>3.240851</td>
+      <td>3.186979</td>
+      <td>3.098245</td>
+    </tr>
+    <tr>
+      <th>1311</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3.038645</td>
+      <td>3.295121</td>
+      <td>3.199220</td>
+      <td>3.108327</td>
+      <td>2.940401</td>
+    </tr>
+  </tbody>
+</table>
+<p>1312 rows × 11 columns</p>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-579dea81-1561-4edf-854f-7e50707d4484')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-579dea81-1561-4edf-854f-7e50707d4484 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-579dea81-1561-4edf-854f-7e50707d4484');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_CEL_linear</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;drive/MyDrive/Causal-Decision-Making/Data-Demo/result_CEL_linear.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># read the result file</span>
+<span class="n">result_CEL_linear</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;drive/MyDrive/Causal-Decision-Making/Data-Demo/result_CEL_linear.csv&#39;</span><span class="p">)</span>
+<span class="n">result_CEL_linear</span> <span class="o">=</span> <span class="n">result_CEL_linear</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">result_CEL_linear</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">result_CEL_linear</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-d73bf6e1-2b41-473a-b7e2-6aa1e110f17f">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>gender</th>
+      <th>occupation_college</th>
+      <th>occupation_executive</th>
+      <th>occupation_other</th>
+      <th>occupation_technician</th>
+      <th>Comedy</th>
+      <th>Drama</th>
+      <th>Action</th>
+      <th>Thriller</th>
+      <th>Sci-Fi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.412203</td>
+      <td>3.673359</td>
+      <td>3.297117</td>
+      <td>3.494783</td>
+      <td>3.286167</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>3.219698</td>
+      <td>3.509493</td>
+      <td>3.255487</td>
+      <td>3.416131</td>
+      <td>3.128323</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>3.415576</td>
+      <td>3.703012</td>
+      <td>3.306670</td>
+      <td>3.448094</td>
+      <td>3.259327</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3.223072</td>
+      <td>3.539146</td>
+      <td>3.265040</td>
+      <td>3.369442</td>
+      <td>3.101483</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.359126</td>
+      <td>3.665731</td>
+      <td>3.404304</td>
+      <td>3.538511</td>
+      <td>3.253674</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1307</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3.091722</td>
+      <td>3.302749</td>
+      <td>3.092034</td>
+      <td>3.064599</td>
+      <td>2.972893</td>
+    </tr>
+    <tr>
+      <th>1308</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.227776</td>
+      <td>3.429334</td>
+      <td>3.231298</td>
+      <td>3.233668</td>
+      <td>3.125085</td>
+    </tr>
+    <tr>
+      <th>1309</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>3.035271</td>
+      <td>3.265468</td>
+      <td>3.189667</td>
+      <td>3.155016</td>
+      <td>2.967241</td>
+    </tr>
+    <tr>
+      <th>1310</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>3.231149</td>
+      <td>3.458987</td>
+      <td>3.240851</td>
+      <td>3.186979</td>
+      <td>3.098245</td>
+    </tr>
+    <tr>
+      <th>1311</th>
+      <td>56</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3.038645</td>
+      <td>3.295121</td>
+      <td>3.199220</td>
+      <td>3.108327</td>
+      <td>2.940401</td>
+    </tr>
+  </tbody>
+</table>
+<p>1312 rows × 11 columns</p>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-d73bf6e1-2b41-473a-b7e2-6aa1e110f17f')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-d73bf6e1-2b41-473a-b7e2-6aa1e110f17f button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-d73bf6e1-2b41-473a-b7e2-6aa1e110f17f');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div></div>
+</div>
+<section id="id1">
+<h3>Analysis<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_CEL_linear</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">result_CEL_linear</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">6</span><span class="p">:</span><span class="mi">11</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-4e7722c5-b9ca-423d-95d8-eb6dd7c76147">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Comedy</th>
+      <th>Drama</th>
+      <th>Action</th>
+      <th>Thriller</th>
+      <th>Sci-Fi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3.412203</td>
+      <td>3.673359</td>
+      <td>3.297117</td>
+      <td>3.494783</td>
+      <td>3.286167</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3.219698</td>
+      <td>3.509493</td>
+      <td>3.255487</td>
+      <td>3.416131</td>
+      <td>3.128323</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3.415576</td>
+      <td>3.703012</td>
+      <td>3.306670</td>
+      <td>3.448094</td>
+      <td>3.259327</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3.223072</td>
+      <td>3.539146</td>
+      <td>3.265040</td>
+      <td>3.369442</td>
+      <td>3.101483</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3.359126</td>
+      <td>3.665731</td>
+      <td>3.404304</td>
+      <td>3.538511</td>
+      <td>3.253674</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1291</th>
+      <td>3.205060</td>
+      <td>3.347510</td>
+      <td>3.158682</td>
+      <td>3.172299</td>
+      <td>2.983469</td>
+    </tr>
+    <tr>
+      <th>1292</th>
+      <td>3.341114</td>
+      <td>3.474094</td>
+      <td>3.297946</td>
+      <td>3.341368</td>
+      <td>3.135660</td>
+    </tr>
+    <tr>
+      <th>1293</th>
+      <td>3.148609</td>
+      <td>3.310228</td>
+      <td>3.256316</td>
+      <td>3.262715</td>
+      <td>2.977817</td>
+    </tr>
+    <tr>
+      <th>1294</th>
+      <td>3.344487</td>
+      <td>3.503747</td>
+      <td>3.307499</td>
+      <td>3.294679</td>
+      <td>3.108820</td>
+    </tr>
+    <tr>
+      <th>1295</th>
+      <td>3.151983</td>
+      <td>3.339881</td>
+      <td>3.265868</td>
+      <td>3.216027</td>
+      <td>2.950977</td>
+    </tr>
+  </tbody>
+</table>
+<p>656 rows × 5 columns</p>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-4e7722c5-b9ca-423d-95d8-eb6dd7c76147')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-4e7722c5-b9ca-423d-95d8-eb6dd7c76147 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-4e7722c5-b9ca-423d-95d8-eb6dd7c76147');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># calculate the expected reward of Comedy for female</span>
+<span class="n">TE_female_linear</span><span class="o">=</span><span class="n">result_CEL_linear</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">result_CEL_linear</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">6</span><span class="p">:</span><span class="mi">11</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mi">41</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">TE_female_linear</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">TE_female_linear</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">TE_female_linear</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;Expected Rating&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TE_female_linear</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-63ce0d4e-b96d-4b69-9f98-1b71122f844f">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Expected Rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Comedy</th>
+      <td>3.282093</td>
+    </tr>
+    <tr>
+      <th>Drama</th>
+      <td>3.506620</td>
+    </tr>
+    <tr>
+      <th>Action</th>
+      <td>3.281493</td>
+    </tr>
+    <tr>
+      <th>Thriller</th>
+      <td>3.355405</td>
+    </tr>
+    <tr>
+      <th>Sci-Fi</th>
+      <td>3.118572</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-63ce0d4e-b96d-4b69-9f98-1b71122f844f')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-63ce0d4e-b96d-4b69-9f98-1b71122f844f button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-63ce0d4e-b96d-4b69-9f98-1b71122f844f');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># calculate the expected reward of Comedy for female</span>
+<span class="n">TE_male_linear</span><span class="o">=</span><span class="n">result_CEL_linear</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">result_CEL_linear</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">6</span><span class="p">:</span><span class="mi">11</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mi">41</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">TE_male_linear</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">TE_male_linear</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">TE_male_linear</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;Expected Rating&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TE_male_linear</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-0d504a63-373b-4ef9-9d76-86aa729d169d">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Expected Rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Comedy</th>
+      <td>3.168755</td>
+    </tr>
+    <tr>
+      <th>Drama</th>
+      <td>3.461860</td>
+    </tr>
+    <tr>
+      <th>Action</th>
+      <td>3.214845</td>
+    </tr>
+    <tr>
+      <th>Thriller</th>
+      <td>3.247705</td>
+    </tr>
+    <tr>
+      <th>Sci-Fi</th>
+      <td>3.107996</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-0d504a63-373b-4ef9-9d76-86aa729d169d')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-0d504a63-373b-4ef9-9d76-86aa729d169d button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-0d504a63-373b-4ef9-9d76-86aa729d169d');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div></div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./5_Case_Study\MovieLens"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Causal Decision Making Team<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,47 @@
+Traceback (most recent call last):
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/asyncio/base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import os
+os.chdir('D:/Github/CausalDM')
+import pandas as pd
+import numpy as np
+import pandas as pd
+import pickle
+file = open('./causaldm/MIMIC3/mimic3_MRL_data_dict_V2.pickle', 'rb')
+mimic3_MRL = pickle.load(file)
+mimic3_MRL['reward'] = [1 if r == 0 else r for r in mimic3_MRL['reward']]
+mimic3_MRL['reward'] = [0 if r == -1 else r for r in mimic3_MRL['reward']]
+MRL_df = pd.read_csv('./causaldm/MIMIC3/mimic3_MRL_df_V2.csv')
+MRL_df.iloc[np.where(MRL_df['Died_within_48H']==0)[0],-1]=1
+MRL_df.iloc[np.where(MRL_df['Died_within_48H']==-1)[0],-1]=0
+MRL_df[MRL_df.icustayid==1006]
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mFileNotFoundError[0m                         Traceback (most recent call last)
+[0;32m/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_31946/1205981465.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      1[0m [0;32mimport[0m [0mos[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 2[0;31m [0mos[0m[0;34m.[0m[0mchdir[0m[0;34m([0m[0;34m'D:/Github/CausalDM'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      3[0m [0;32mimport[0m [0mpandas[0m [0;32mas[0m [0mpd[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      4[0m [0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      5[0m [0;32mimport[0m [0mpandas[0m [0;32mas[0m [0mpd[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mFileNotFoundError[0m: [Errno 2] No such file or directory: 'D:/Github/CausalDM'
+FileNotFoundError: [Errno 2] No such file or directory: 'D:/Github/CausalDM'
+
