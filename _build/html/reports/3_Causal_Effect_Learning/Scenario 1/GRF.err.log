@@ -17,29 +17,23 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# Get data
-data_behavior = get_data_simulation(n, seed, policy="behavior")
-#data_target = get_data_simulation(n0, seed, policy="target")
-
-# The true expected heterogeneous treatment effect
-HTE_true = get_data_simulation(n, seed, policy="1")['R']-get_data_simulation(n, seed, policy="0")['R']
-
-
+# import related packages
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt;
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LogisticRegression 
+from causaldm.learners.Causal_Effect_Learning.Single_Stage.LpRlearner import LpRlearner
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mUnboundLocalError[0m                         Traceback (most recent call last)
-[0;32m/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_59499/2180662469.py[0m in [0;36m<module>[0;34m[0m
-[1;32m      4[0m [0;34m[0m[0m
-[1;32m      5[0m [0;31m# The true expected heterogeneous treatment effect[0m[0;34m[0m[0;34m[0m[0m
-[0;32m----> 6[0;31m [0mHTE_true[0m [0;34m=[0m [0mget_data_simulation[0m[0;34m([0m[0mn[0m[0;34m,[0m [0mseed[0m[0;34m,[0m [0mpolicy[0m[0;34m=[0m[0;34m"1"[0m[0;34m)[0m[0;34m[[0m[0;34m'R'[0m[0;34m][0m[0;34m-[0m[0mget_data_simulation[0m[0;34m([0m[0mn[0m[0;34m,[0m [0mseed[0m[0;34m,[0m [0mpolicy[0m[0;34m=[0m[0;34m"0"[0m[0;34m)[0m[0;34m[[0m[0;34m'R'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      7[0m [0;34m[0m[0m
-
-[0;32m~/opt/anaconda3/lib/python3.9/site-packages/causaldm/_util_causaldm.py[0m in [0;36mget_data_simulation[0;34m(n0, seed, policy)[0m
-[1;32m    227[0m         [0mdata[0m[0;34m=[0m[0mpd[0m[0;34m.[0m[0mDataFrame[0m[0;34m([0m[0mdata[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[1;32m    228[0m [0;34m[0m[0m
-[0;32m--> 229[0;31m     [0;32mreturn[0m [0mdata[0m[0;34m[0m[0;34m[0m[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+[0;32m/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_37633/1061371864.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      6[0m [0;32mfrom[0m [0msklearn[0m[0;34m.[0m[0mlinear_model[0m [0;32mimport[0m [0mLinearRegression[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      7[0m [0;32mfrom[0m [0msklearn[0m[0;34m.[0m[0mlinear_model[0m [0;32mimport[0m [0mLogisticRegression[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 8[0;31m [0;32mfrom[0m [0mcausaldm[0m[0;34m.[0m[0mlearners[0m[0;34m.[0m[0mCausal_Effect_Learning[0m[0;34m.[0m[0mSingle_Stage[0m[0;34m.[0m[0mLpRlearner[0m [0;32mimport[0m [0mLpRlearner[0m[0;34m[0m[0;34m[0m[0m
 [0m
-[0;31mUnboundLocalError[0m: local variable 'data' referenced before assignment
-UnboundLocalError: local variable 'data' referenced before assignment
+[0;31mModuleNotFoundError[0m: No module named 'causaldm.learners'
+ModuleNotFoundError: No module named 'causaldm.learners'
 
