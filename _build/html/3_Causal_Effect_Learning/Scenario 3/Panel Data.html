@@ -58,6 +58,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '3_Causal_Effect_Learning/Scenario 3/Panel Data';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -1069,6 +1071,17 @@ title="Print to PDF"
               
   <section class="tex2jax_ignore mathjax_ignore" id="panel-data-paradigm-3">
 <h1>Panel Data  – Paradigm 3<a class="headerlink" href="#panel-data-paradigm-3" title="Permalink to this heading">#</a></h1>
+<p>Before we dive into the details of the methodology in this section, we would like to briefly introduce the structure of panel data and some applications in real life.</p>
+<p>Panel data is a specific type of longitudinal data that measures some quantities of individuals over time, which has a very broad application in real life. For example, the length of trees in a specific area, the annual GDP across different countries, stock prices of various firms can all be measured chronologically, thus arising different types of causal effect estimation problems in the context of causal inference.</p>
+<p><img alt="image" src="../../_images/CEL-PanelData1.png" /></p>
+<p>Suppose there are <span class="math notranslate nohighlight">\(N=m+n\)</span> units (or individuals) in total. The first <span class="math notranslate nohighlight">\(n\)</span> units are assigned to control group and the rest <span class="math notranslate nohighlight">\(m\)</span> units are assigned to treatment group. In the treated group, the units will get treated after <span class="math notranslate nohighlight">\(T_0\)</span>, while in the control group all of the units will stay untreated all the time. Our purpose in causal effect learning is to identify, estimate and infer on the effect of the treatment before and after the treated time.</p>
+<p>Define <span class="math notranslate nohighlight">\(Y_{i,t}\)</span> as the outcome of interest we observe for unit <span class="math notranslate nohighlight">\(i\)</span> at time <span class="math notranslate nohighlight">\(t\)</span>. There are several causal estimand of our interest:</p>
+<ul class="simple">
+<li><p><strong>Individual treatment effect (ITE)</strong>: <span class="math notranslate nohighlight">\(\Delta_{i,t} = Y_{i,t}(1)-Y_{i,t}(0)\)</span>, which denotes the treatement effect of unit <span class="math notranslate nohighlight">\(i\)</span> at time <span class="math notranslate nohighlight">\(t\)</span>;</p></li>
+<li><p><strong>Average treatment effect (ATE)</strong>: <span class="math notranslate nohighlight">\(\mathbb{E}[\Delta_{i,t}]=\mathbb{E}[Y_{i,t}(1)-Y_{i,t}(0)]\)</span>, where the expectation is taken w.r.t. time and units. Note that this estimand is well defined only when the ITEs follow a stationary process over time.</p></li>
+<li><p><strong>Heterogeneous treatment effect (HTE)</strong>: <span class="math notranslate nohighlight">\(\tau(s)= \mathbb{E}[\Delta_{i,t}|S_i=s]=\mathbb{E}[Y_{i,t}(1)-Y_{i,t}(0)]|S_i=s]\)</span>.</p></li>
+</ul>
+<p>In the next subsections, we will introduce several representative methods in panel data causal estimation, including Difference-in-Difference (DiD), Synthetic Control (SC), etc.</p>
 <div class="toctree-wrapper compound">
 </div>
 </section>
