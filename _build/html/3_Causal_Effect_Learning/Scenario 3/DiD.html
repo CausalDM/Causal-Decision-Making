@@ -1136,7 +1136,30 @@ title="Print to PDF"
 <h1><strong>Difference in Difference</strong><a class="headerlink" href="#difference-in-difference" title="Permalink to this heading">#</a></h1>
 <section id="background-and-definition">
 <h2>Background and Definition<a class="headerlink" href="#background-and-definition" title="Permalink to this heading">#</a></h2>
-<p>The difference-in-difference approach, or DiD, has been widely researched in economics and statistics during the past few decades. It serves as a quasi-experimental method to measure the changes of the outcome over time in panel data between the treatment and control.</p>
+<p>The difference-in-difference approach, or DiD, has been widely researched in economics and statistics during the past few decades. It serves as a quasi-experimental method to measure the changes of the outcome over time between the treatment and control groups.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="n">display</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="s2">&quot;CEL-DiD.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/d05180347a0eecf8d9e44d705072931d106b10795183f25871c6ff6ec99b50e7.png" src="../../_images/d05180347a0eecf8d9e44d705072931d106b10795183f25871c6ff6ec99b50e7.png" />
+</div>
+</div>
+<p>In the context of panel data, we define <span class="math notranslate nohighlight">\(G_i=1\)</span> if unit <span class="math notranslate nohighlight">\(i\)</span> comes from the treatment group, and <span class="math notranslate nohighlight">\(G_i=0\)</span> if it’s in control group. Similarly, define <span class="math notranslate nohighlight">\(T_i=1\)</span> if the unit is in the post-treatment period, and <span class="math notranslate nohighlight">\(T_i=0\)</span> if it’s in pre-treatment period. Therefore, the observed outcome is given by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-48958bdd-0b56-47e2-9139-2af24f99c245">
+<span class="eqno">(52)<a class="headerlink" href="#equation-48958bdd-0b56-47e2-9139-2af24f99c245" title="Permalink to this equation">#</a></span>\[\begin{equation}
+    Y_i = (1-G_iT_i)\cdot Y_i(0) + G_iT_i\cdot Y_i(1),
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(Y_i(a)\)</span> denotes the potential outcome one would observe under action <span class="math notranslate nohighlight">\(A=a\)</span>.</p>
+<p>The standard DiD method assumes the following linear model:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-b795d7c9-547c-4936-b341-e6c2ec636348">
+<span class="eqno">(53)<a class="headerlink" href="#equation-b795d7c9-547c-4936-b341-e6c2ec636348" title="Permalink to this equation">#</a></span>\[\begin{equation}
+    Y_i = \alpha + \beta \cdot T_i + \gamma \cdot G_i + \epsilon_i.
+\end{equation}\]</div>
+<p><strong>[TO BE CONTINUED]</strong></p>
 </section>
 <section id="assumptions">
 <h2>Assumptions<a class="headerlink" href="#assumptions" title="Permalink to this heading">#</a></h2>
@@ -1146,22 +1169,26 @@ title="Print to PDF"
 </section>
 <section id="estimation">
 <h2>Estimation<a class="headerlink" href="#estimation" title="Permalink to this heading">#</a></h2>
+<div class="amsmath math notranslate nohighlight" id="equation-a060917a-8726-4670-84f7-fc8a2f09e3d6">
+<span class="eqno">(54)<a class="headerlink" href="#equation-a060917a-8726-4670-84f7-fc8a2f09e3d6" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\tau(s)_{\text{DiD}} = \mathbb{E}[Y_i|S_i=s,G_i=1,T_i=1]-\mathbb{E}[Y_i|S_i=s,G_i=1,T_i=0]-\mathbb{E}[Y_i|S_i=s,G_i=0,T_i=1]+\mathbb{E}[Y_i|S_i=s,G_i=0,T_i=0]
+\end{equation}\]</div>
 </section>
 <section id="extensions">
 <h2>Extensions<a class="headerlink" href="#extensions" title="Permalink to this heading">#</a></h2>
 <p>The difference of average outcomes for the <span class="math notranslate nohighlight">\(m\)</span> treated units after and before the treatment time point is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-30b32d47-3b76-47c0-93ec-7b1c5c04c453">
-<span class="eqno">(52)<a class="headerlink" href="#equation-30b32d47-3b76-47c0-93ec-7b1c5c04c453" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-03a21857-7b88-4ae7-9b9f-c83956d0d0ae">
+<span class="eqno">(55)<a class="headerlink" href="#equation-03a21857-7b88-4ae7-9b9f-c83956d0d0ae" title="Permalink to this equation">#</a></span>\[\begin{equation}
 D_{\text{tr}} = \frac{1}{m} \sum_{i=1}^m\Big[\frac{1}{T_1}\sum_{t=T_0+1}^{T_0+T_1} Y_{i,t}-\frac{1}{T_0} \sum_{t=1}^{T_0} Y_{i,t}\Big]
 \end{equation}\]</div>
 <p>Similarly, the difference of average outcomes for the <span class="math notranslate nohighlight">\(n\)</span> control units after and before the treatment time point is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6e909035-40a4-4d7b-9717-0c898acf5c7a">
-<span class="eqno">(53)<a class="headerlink" href="#equation-6e909035-40a4-4d7b-9717-0c898acf5c7a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0c11cd54-9d6f-4ee1-ad33-19e6f027bb36">
+<span class="eqno">(56)<a class="headerlink" href="#equation-0c11cd54-9d6f-4ee1-ad33-19e6f027bb36" title="Permalink to this equation">#</a></span>\[\begin{equation}
 D_{\text{co}} = \frac{1}{n} \sum_{i=m+1}^{m+n}\Big[\frac{1}{T_1}\sum_{t=T_0+1}^{T_0+T_1} Y_{i,t}-\frac{1}{T_0}\sum_{t=1}^{T_0} Y_{i,t}\Big]
 \end{equation}\]</div>
 <p>Under the parallel trend assumption, we are able to subtract the effect that’s not caused by treatment intervention:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-59cbd012-48af-41d8-96f3-501a2e082431">
-<span class="eqno">(54)<a class="headerlink" href="#equation-59cbd012-48af-41d8-96f3-501a2e082431" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f50ba19d-55ea-48a1-878f-63a8d8ba9f9e">
+<span class="eqno">(57)<a class="headerlink" href="#equation-f50ba19d-55ea-48a1-878f-63a8d8ba9f9e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\Delta} = D_{\text{tr}} - D_{\text{co}} = \frac{1}{m} \sum_{i=1}^m\Big[\frac{1}{T_1}\sum_{t=T_0+1}^{T_0+T_1} Y_{i,t}-\frac{1}{T_0} \sum_{t=1}^{T_0} Y_{i,t}\Big] - \frac{1}{n} \sum_{i=m+1}^{m+n}\Big[\frac{1}{T_1}\sum_{t=T_0+1}^{T_0+T_1} Y_{i,t}-\frac{1}{T_0}\sum_{t=1}^{T_0} Y_{i,t}\Big].
 \end{equation}\]</div>
 </section>
