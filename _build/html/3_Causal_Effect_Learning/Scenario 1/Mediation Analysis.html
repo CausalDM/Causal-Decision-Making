@@ -1120,6 +1120,18 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#data-demo">
    Data Demo
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#aurora-data">
+     1. AURORA Data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#covid19-data">
+     2. Covid19 Data
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
@@ -1158,8 +1170,8 @@ title="Print to PDF"
 <li><p>The indirect path from treatment to outcome through the mediator <span class="math notranslate nohighlight">\(M\)</span>, denoted by <span class="math notranslate nohighlight">\(A\rightarrow M\rightarrow R\)</span>.</p></li>
 </ol>
 <p>More specifically, when adjusting the action from <span class="math notranslate nohighlight">\(A=a_0\)</span> to <span class="math notranslate nohighlight">\(A=a_1\)</span>,  we define the total effect (TE), natural direct effect (DE), and the natural indirect effect (DE) as below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a4209328-af4b-4f9f-b6ae-42ecab56269a">
-<span class="eqno">(45)<a class="headerlink" href="#equation-a4209328-af4b-4f9f-b6ae-42ecab56269a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-233c1bc2-2568-417c-9e49-3f3b6d006104">
+<span class="eqno">(45)<a class="headerlink" href="#equation-233c1bc2-2568-417c-9e49-3f3b6d006104" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \text{TE}&amp;= \mathbb{E}[R|do(A=a_1)]-\mathbb{E}[R|do(A=a_0)]\\
 \text{DE}&amp;= \mathbb{E}[R|do(A=a_1,M=m^{(a_0)})]-\mathbb{E}[R|do(A=a_0)]\\
@@ -1167,8 +1179,8 @@ title="Print to PDF"
 \end{aligned}
 \end{equation}\]</div>
 <p>Under the potential outcome’s structure, we define <span class="math notranslate nohighlight">\(M_a\)</span> as the potential mediator when treatment <span class="math notranslate nohighlight">\(A=a\)</span>, and define <span class="math notranslate nohighlight">\(R_{a,m}\)</span> as the potential outcome/reward one would observe under <span class="math notranslate nohighlight">\((A=a, M=m)\)</span>. In some literature, the above effects can be samely written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e952aa86-43b4-490a-a65d-99bd828a7636">
-<span class="eqno">(46)<a class="headerlink" href="#equation-e952aa86-43b4-490a-a65d-99bd828a7636" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-37bdd7ab-bac2-45b4-b341-820cc6f6cf48">
+<span class="eqno">(46)<a class="headerlink" href="#equation-37bdd7ab-bac2-45b4-b341-820cc6f6cf48" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \text{TE}&amp;= \mathbb{E}[R_{a_1,m_{a_1}}]-\mathbb{E}[R_{a_0,m_{a_0}}]\\
 \text{DE}&amp;= \mathbb{E}[R_{a_1,m_{a_0}}]-\mathbb{E}[R_{a,m_{a_0}}]\\
@@ -1185,8 +1197,8 @@ title="Print to PDF"
 <li><p><code class="docutils literal notranslate"><span class="pre">Positivity</span></code>: <span class="math notranslate nohighlight">\(p(m|A,X)&gt;0\)</span> for each <span class="math notranslate nohighlight">\(m\in \mathcal{M}\)</span>, and <span class="math notranslate nohighlight">\(p(a|X)&gt;0\)</span> for each <span class="math notranslate nohighlight">\(a\in \mathcal{A}\)</span>.</p></li>
 </ol>
 <p>Under the above three assumptions, Imai et al. [3] proved the identifiability of <span class="math notranslate nohighlight">\(\mathbb{E}[R_{1,M_0}]\)</span> and <span class="math notranslate nohighlight">\(\mathbb{E}[R_{a,M_a}]\)</span> in binary action space, which is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c93adc99-ea3d-4cb8-a24b-f2e80aced393">
-<span class="eqno">(47)<a class="headerlink" href="#equation-c93adc99-ea3d-4cb8-a24b-f2e80aced393" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7cc8360b-1439-42ff-aced-fd94dd8dbc1d">
+<span class="eqno">(47)<a class="headerlink" href="#equation-7cc8360b-1439-42ff-aced-fd94dd8dbc1d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \mathbb{E}[R_{1,M_0}] &amp;= \int\int \mathbb{E}[R|A=1,M=m,S=s]p(m|A=0,S=s)p(s) d\mu(m,s)\\
 \mathbb{E}[R_{a,M_a}] &amp;= \int\int \mathbb{E}[R|A=a,M=m,S=s]p(m|A=a,S=s)p(s) d\mu(m,s)
@@ -1199,8 +1211,8 @@ title="Print to PDF"
 <section id="direct-estimator">
 <h3>1. Direct Estimator<a class="headerlink" href="#direct-estimator" title="Permalink to this heading">#</a></h3>
 <p>The first estimator is the direct method, which is a plug-in estimator based on the identification result above.  Since TE, DE and IE can be written as a function of <span class="math notranslate nohighlight">\(\mathbb{E}[R_{a,m_{a'}}]\)</span>, it suffice to estimate them separately for any <span class="math notranslate nohighlight">\(a, a'\in \mathcal{A}\)</span> and construct a DM estimator as below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bc0ad4dd-b241-416f-afa2-a78543926826">
-<span class="eqno">(48)<a class="headerlink" href="#equation-bc0ad4dd-b241-416f-afa2-a78543926826" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6d5f42f3-6780-4bd1-a1bf-f81f197cf513">
+<span class="eqno">(48)<a class="headerlink" href="#equation-6d5f42f3-6780-4bd1-a1bf-f81f197cf513" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \widehat{\text{DE}}_{\text{DM}}&amp;= \frac{1}{N}\sum_{i,m} \bigg\{R(S_i,a_1,m)p(m|S_i,a_0)-R(S_i,a_0,m)p(m|S_i,a_0)\bigg\}\\
 \widehat{\text{IE}}_{\text{DM}}&amp;= \frac{1}{N}\sum_{i,m} \bigg\{R(S_i,a_1,m)p(m|S_i,a_1)- R(S_i,a_1,m)p(m|S_i,a_0)\bigg\}
@@ -1210,8 +1222,8 @@ title="Print to PDF"
 <section id="ipw-estimator">
 <h3>2. IPW Estimator<a class="headerlink" href="#ipw-estimator" title="Permalink to this heading">#</a></h3>
 <p>The second estimator in literature is named as the inverse probability weighting estimator, which is similar to the IPW estimator in ATE. Under the existence of mediators, the IPW estimators [2] of DE and IE are given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-18815562-f8df-4821-a7a9-54069a9aec2a">
-<span class="eqno">(49)<a class="headerlink" href="#equation-18815562-f8df-4821-a7a9-54069a9aec2a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-37b68607-4085-4950-998c-3ff365546444">
+<span class="eqno">(49)<a class="headerlink" href="#equation-37b68607-4085-4950-998c-3ff365546444" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \widehat{\text{DE}}_{\text{IPW}}&amp;= \frac{1}{N}\sum_{i=1}^N \bigg\{\frac{\mathbb{1}\{A_i=a_1\}\rho(S_i,A_i,M_i)}{p_a(A_i|S_i)}-\frac{\mathbb{1}\{A_i=a_0\}}{p_a(A_i|S_i)}\bigg\}\cdot R_i\\
 \widehat{\text{IE}}_{\text{IPW}}&amp;= \frac{1}{N}\sum_{i=1}^N \bigg\{\frac{\mathbb{1}\{A_i=a_1\}}{p_a(A_i|S_i)}-\frac{\mathbb{1}\{A_i=a_1\}\rho(S_i,A_i,M_i)}{p_a(A_i|S_i)}\bigg\}\cdot R_i
@@ -1222,8 +1234,8 @@ title="Print to PDF"
 <section id="multiple-robust-mr-estimator">
 <h3>3. Multiple Robust (MR) Estimator<a class="headerlink" href="#multiple-robust-mr-estimator" title="Permalink to this heading">#</a></h3>
 <p>The last estimator is called the multiple robust estimator, which was proposed by Tchetgen and Shpitser [5] based on the efficient influence function in semiparametric theory. The final MR estimator for DE and IE are derived as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-23c36d99-3ea3-420e-a9d7-49c63759c634">
-<span class="eqno">(50)<a class="headerlink" href="#equation-23c36d99-3ea3-420e-a9d7-49c63759c634" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-85357fad-64b1-48e0-b9cb-f646f5c15fc1">
+<span class="eqno">(50)<a class="headerlink" href="#equation-85357fad-64b1-48e0-b9cb-f646f5c15fc1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \widehat{\text{DE}}_{\text{MR}}&amp;= \frac{1}{N}\sum_{i=1}^N \bigg[\frac{\mathbb{1}\{A_i=a_1\}}{p_a(A_i|S_i)}\rho(S_i,A_i,M_i)\big\{R_i-\mathbb{E}[R|S_i,A_i=1,M_i]\big\}\\
 &amp;+\frac{\mathbb{1}\{A_i=a_0\}}{p_a(A_i|S_i)}\big\{\mathbb{E}[R|S_i,A_i=1,M_i]-R_i-\eta(a_1,a_0,S)+\eta(a_0,a_0,S)\big\}+\eta(a_1,a_0,S)-\eta(a_0,a_0,S)\big\}\bigg]\\
@@ -1235,29 +1247,361 @@ title="Print to PDF"
 </section>
 <section id="data-demo">
 <h2>Data Demo<a class="headerlink" href="#data-demo" title="Permalink to this heading">#</a></h2>
+<section id="aurora-data">
+<h3>1. AURORA Data<a class="headerlink" href="#aurora-data" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/Users/alinaxu/Documents/CDM/Causal-Decision-Making/3_Causal_Effect_Learning/Scenario 1&#39;</span><span class="p">)</span>
+<span class="n">AURORA_CEL</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Survey_red.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">AURORA_CEL</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;Female&#39;, &#39;Age&#39;, &#39;Non-Hispanic White&#39;, &#39;Education&#39;,
+       &#39;pre-trauma physical health&#39;, &#39;pre-trauma mental health&#39;,
+       &#39;Chronic Perception of Severity of Stress&#39;, &#39;Neuroticism&#39;,
+       &#39;Childhood trauma&#39;, &#39;pre-trauma insomnia (cont)&#39;,
+       &#39;peritraumatic distress&#39;, &#39;W2 acute stress disorder&#39;, &#39;W2 ptsd&#39;,
+       &#39;W2 Depression&#39;, &#39;3 month ptsd&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">AURORA_CEL</span><span class="p">[</span><span class="s1">&#39;pre-trauma insomnia (cont)&#39;</span><span class="p">],</span><span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([326., 274., 242., 187.,  98., 148., 109.,  48.,  50.,  12.]),
+ array([-8.55287818, -5.75287818, -2.95287818, -0.15287818,  2.64712182,
+         5.44712182,  8.24712182, 11.04712182, 13.84712182, 16.64712182,
+        19.44712182]),
+ &lt;BarContainer object of 10 artists&gt;)
+</pre></div>
+</div>
+<img alt="../../_images/e03e158190c8fd19e7540ef1fc225b4e171c682eb2fd5212551cacff012709f7.png" src="../../_images/e03e158190c8fd19e7540ef1fc225b4e171c682eb2fd5212551cacff012709f7.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import related packages</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span><span class="p">;</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+
+
+<span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">AURORA_CEL</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">state</span> <span class="o">=</span> <span class="n">AURORA_CEL</span><span class="p">[[</span><span class="s1">&#39;Female&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="s1">&#39;Non-Hispanic White&#39;</span><span class="p">,</span> <span class="s1">&#39;Education&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;pre-trauma physical health&#39;</span><span class="p">,</span> <span class="s1">&#39;pre-trauma mental health&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;Chronic Perception of Severity of Stress&#39;</span><span class="p">,</span> <span class="s1">&#39;Neuroticism&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;Childhood trauma&#39;</span><span class="p">]]</span>
+<span class="n">action</span> <span class="o">=</span> <span class="n">AURORA_CEL</span><span class="p">[</span><span class="s1">&#39;pre-trauma insomnia (cont)&#39;</span><span class="p">]</span>
+<span class="n">mediator</span> <span class="o">=</span> <span class="n">AURORA_CEL</span><span class="p">[[</span><span class="s1">&#39;peritraumatic distress&#39;</span><span class="p">,</span> <span class="s1">&#39;W2 acute stress disorder&#39;</span><span class="p">,</span> <span class="s1">&#39;W2 ptsd&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;W2 Depression&#39;</span><span class="p">]]</span>
+<span class="n">reward</span> <span class="o">=</span> <span class="n">AURORA_CEL</span><span class="p">[</span><span class="s1">&#39;3 month ptsd&#39;</span><span class="p">]</span>
+
+<span class="n">AURORA_CEL_MD</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;state&#39;</span><span class="p">:</span><span class="n">state</span><span class="p">,</span><span class="s1">&#39;action&#39;</span><span class="p">:</span><span class="n">action</span><span class="p">,</span><span class="s1">&#39;mediator&#39;</span><span class="p">:</span><span class="n">mediator</span><span class="p">,</span><span class="s1">&#39;reward&#39;</span><span class="p">:</span><span class="n">reward</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">action</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">action</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">action</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">action</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_3801/2568975421.py:1: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  action[np.where(action&gt;=0)[0]] = 1
+/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_3801/2568975421.py:2: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  action[np.where(action&lt;0)[0]] = 0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.causaldm.learners.Causal_Effect_Learning.Mediation_Analysis.ME_Single</span> <span class="kn">import</span> <span class="n">ME_Single</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Control Policy</span>
+<span class="k">def</span> <span class="nf">control_policy</span><span class="p">(</span><span class="n">state</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">dim_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">get_a</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">get_a</span><span class="p">:</span>
+        <span class="n">action_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">dim_state</span><span class="p">)</span>
+        <span class="n">NT</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">action</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">action_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">NT</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">action</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">action</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">NT</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">action</span> <span class="o">=</span> <span class="n">action</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">NT</span><span class="p">)</span>
+            <span class="n">action_value</span> <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="n">action</span>
+    <span class="k">return</span> <span class="n">action_value</span>
+
+<span class="k">def</span> <span class="nf">target_policy</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dim_state</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dim_state</span><span class="p">))</span>
+    <span class="n">NT</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">pa</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">NT</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">action</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">NT</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">pa</span> <span class="o">=</span> <span class="n">pa</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">prob_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="o">-</span><span class="n">pa</span><span class="p">,</span> <span class="n">pa</span><span class="p">])</span>
+            <span class="n">action_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">prob_arr</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;No random for matrix input&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">action</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="n">action_value</span> <span class="o">=</span> <span class="n">pa</span> <span class="o">*</span> <span class="n">action</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">pa</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">action</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">action_value</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">problearner_parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;splitter&quot;</span><span class="p">:[</span><span class="s2">&quot;best&quot;</span><span class="p">,</span><span class="s2">&quot;random&quot;</span><span class="p">],</span> <span class="s2">&quot;max_depth&quot;</span> <span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">50</span><span class="p">)},</span>
+<span class="n">Direct_est</span> <span class="o">=</span> <span class="n">ME_Single</span><span class="p">(</span><span class="n">AURORA_CEL_MD</span><span class="p">,</span> <span class="n">r_model</span> <span class="o">=</span> <span class="s1">&#39;OLS&#39;</span><span class="p">,</span>
+                     <span class="n">problearner_parameters</span> <span class="o">=</span> <span class="n">problearner_parameters</span><span class="p">,</span>
+                     <span class="n">truncate</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> 
+                     <span class="n">target_policy</span><span class="o">=</span><span class="n">target_policy</span><span class="p">,</span> <span class="n">control_policy</span> <span class="o">=</span> <span class="n">control_policy</span><span class="p">,</span> 
+                     <span class="n">dim_state</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">dim_mediator</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> 
+                     <span class="n">expectation_MCMC_iter</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+                     <span class="n">nature_decomp</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                     <span class="n">seed</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                     <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;Direct&#39;</span><span class="p">)</span>
+
+<span class="n">Direct_est</span><span class="o">.</span><span class="n">estimate_DE_ME</span><span class="p">()</span>
+<span class="n">Direct_est</span><span class="o">.</span><span class="n">est_DE</span><span class="p">,</span> <span class="n">Direct_est</span><span class="o">.</span><span class="n">est_ME</span><span class="p">,</span> <span class="n">Direct_est</span><span class="o">.</span><span class="n">est_TE</span><span class="p">,</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.5699712042262648, 1.35390067425173, 2.923871878477995)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">IPW_est</span> <span class="o">=</span> <span class="n">ME_Single</span><span class="p">(</span><span class="n">AURORA_CEL_MD</span><span class="p">,</span> <span class="n">r_model</span> <span class="o">=</span> <span class="s1">&#39;OLS&#39;</span><span class="p">,</span>
+                     <span class="n">problearner_parameters</span> <span class="o">=</span> <span class="n">problearner_parameters</span><span class="p">,</span>
+                     <span class="n">truncate</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> 
+                     <span class="n">target_policy</span><span class="o">=</span><span class="n">target_policy</span><span class="p">,</span> <span class="n">control_policy</span> <span class="o">=</span> <span class="n">control_policy</span><span class="p">,</span> 
+                     <span class="n">dim_state</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">dim_mediator</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> 
+                     <span class="n">expectation_MCMC_iter</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+                     <span class="n">nature_decomp</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                     <span class="n">seed</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                     <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;IPW&#39;</span><span class="p">)</span>
+
+<span class="n">IPW_est</span><span class="o">.</span><span class="n">estimate_DE_ME</span><span class="p">()</span>
+<span class="n">IPW_est</span><span class="o">.</span><span class="n">est_DE</span><span class="p">,</span> <span class="n">IPW_est</span><span class="o">.</span><span class="n">est_ME</span><span class="p">,</span> <span class="n">IPW_est</span><span class="o">.</span><span class="n">est_TE</span><span class="p">,</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(6.1833766092547435, 1.0830496488123182, 7.266426258067062)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Robust_est</span> <span class="o">=</span> <span class="n">ME_Single</span><span class="p">(</span><span class="n">AURORA_CEL_MD</span><span class="p">,</span> <span class="n">r_model</span> <span class="o">=</span> <span class="s1">&#39;OLS&#39;</span><span class="p">,</span>
+                     <span class="n">problearner_parameters</span> <span class="o">=</span> <span class="n">problearner_parameters</span><span class="p">,</span>
+                     <span class="n">truncate</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> 
+                     <span class="n">target_policy</span><span class="o">=</span><span class="n">target_policy</span><span class="p">,</span> <span class="n">control_policy</span> <span class="o">=</span> <span class="n">control_policy</span><span class="p">,</span> 
+                     <span class="n">dim_state</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">dim_mediator</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> 
+                     <span class="n">expectation_MCMC_iter</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+                     <span class="n">nature_decomp</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                     <span class="n">seed</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                     <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;Robust&#39;</span><span class="p">)</span>
+
+<span class="n">Robust_est</span><span class="o">.</span><span class="n">estimate_DE_ME</span><span class="p">()</span>
+<span class="n">Robust_est</span><span class="o">.</span><span class="n">est_DE</span><span class="p">,</span> <span class="n">Robust_est</span><span class="o">.</span><span class="n">est_ME</span><span class="p">,</span> <span class="n">Robust_est</span><span class="o">.</span><span class="n">est_TE</span><span class="p">,</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.082810672178048, 2.6367679712306544, 3.7195786434087026)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Robust_DE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">Robust_IE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">Robust_TE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">Robust_DE</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Robust_est</span><span class="o">.</span><span class="n">est_DE</span>
+<span class="n">Robust_IE</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Robust_est</span><span class="o">.</span><span class="n">est_ME</span>
+<span class="n">Robust_TE</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Robust_est</span><span class="o">.</span><span class="n">est_TE</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">mediator_1d</span> <span class="o">=</span> <span class="n">mediator</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">AURORA_CEL_1D</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;state&#39;</span><span class="p">:</span><span class="n">state</span><span class="p">,</span><span class="s1">&#39;action&#39;</span><span class="p">:</span><span class="n">action</span><span class="p">,</span><span class="s1">&#39;mediator&#39;</span><span class="p">:</span><span class="n">mediator_1d</span><span class="p">,</span><span class="s1">&#39;reward&#39;</span><span class="p">:</span><span class="n">reward</span><span class="p">}</span>
+    
+    <span class="n">Robust_est</span> <span class="o">=</span> <span class="n">ME_Single</span><span class="p">(</span><span class="n">AURORA_CEL_1D</span><span class="p">,</span> <span class="n">r_model</span> <span class="o">=</span> <span class="s1">&#39;OLS&#39;</span><span class="p">,</span>
+                         <span class="n">problearner_parameters</span> <span class="o">=</span> <span class="n">problearner_parameters</span><span class="p">,</span>
+                         <span class="n">truncate</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> 
+                         <span class="n">target_policy</span><span class="o">=</span><span class="n">target_policy</span><span class="p">,</span> <span class="n">control_policy</span> <span class="o">=</span> <span class="n">control_policy</span><span class="p">,</span> 
+                         <span class="n">dim_state</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">dim_mediator</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> 
+                         <span class="n">expectation_MCMC_iter</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+                         <span class="n">nature_decomp</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                         <span class="n">seed</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                         <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;Robust&#39;</span><span class="p">)</span>
+
+    <span class="n">Robust_est</span><span class="o">.</span><span class="n">estimate_DE_ME</span><span class="p">()</span>
+    <span class="n">Robust_DE</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Robust_est</span><span class="o">.</span><span class="n">est_DE</span>
+    <span class="n">Robust_IE</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Robust_est</span><span class="o">.</span><span class="n">est_ME</span>
+    <span class="n">Robust_TE</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Robust_est</span><span class="o">.</span><span class="n">est_TE</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Mediators_index</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Overall&quot;</span><span class="p">]</span>
+<span class="n">Mediators_index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mediator</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Mediators_index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Overall&#39;, array([&#39;peritraumatic distress&#39;, &#39;W2 acute stress disorder&#39;, &#39;W2 ptsd&#39;,
+       &#39;W2 Depression&#39;], dtype=object)]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Analysis of causal effects of 2020 Hubei lockdowns on reducing the COVID-19 spread in China regulated by Chinese major cities outside Hubei</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Mediators&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;Four mediators in Total&#39;</span><span class="p">,</span><span class="s1">&#39;peritraumatic distress&#39;</span><span class="p">,</span> <span class="s1">&#39;W2 acute stress disorder&#39;</span><span class="p">,</span> <span class="s1">&#39;W2 ptsd&#39;</span><span class="p">,</span><span class="s1">&#39;W2 Depression&#39;</span><span class="p">])</span>
+
+
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;DE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">Robust_DE</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;IE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">Robust_IE</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;TE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">Robust_TE</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Mediators</th>
+      <th>DE</th>
+      <th>IE</th>
+      <th>TE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Four mediators in Total</td>
+      <td>1.083</td>
+      <td>2.637</td>
+      <td>3.720</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>peritraumatic distress</td>
+      <td>3.262</td>
+      <td>0.234</td>
+      <td>3.496</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>W2 acute stress disorder</td>
+      <td>1.017</td>
+      <td>2.435</td>
+      <td>3.452</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>W2 ptsd</td>
+      <td>1.101</td>
+      <td>2.699</td>
+      <td>3.800</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>W2 Depression</td>
+      <td>2.465</td>
+      <td>0.748</td>
+      <td>3.214</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="covid19-data">
+<h3>2. Covid19 Data<a class="headerlink" href="#covid19-data" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="n">Covid19_CEL</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;/Users/alinaxu/Documents/CDM/Causal-Decision-Making/2_Causal_Structure_Learning/covid19.csv&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Covid19_CEL</span><span class="o">.</span><span class="n">columns</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;A&#39;, &#39;Shenzhen&#39;, &#39;Guangzhou&#39;, &#39;Beijing&#39;, &#39;Chengdu&#39;, &#39;Shanghai&#39;,
-       &#39;Dongguan&#39;, &#39;Suzhou&#39;, &#39;Xian&#39;, &#39;Hangzhou&#39;, &#39;Zhengzhou&#39;, &#39;Chongqing&#39;,
-       &#39;Changsha&#39;, &#39;Nanjing&#39;, &#39;Kunming&#39;, &#39;Tianjin&#39;, &#39;Hefei&#39;, &#39;Nanning&#39;,
-       &#39;Wenzhou&#39;, &#39;Nanchang&#39;, &#39;Zhoukou&#39;, &#39;Fuyang&#39;, &#39;Shangqiu&#39;, &#39;Yueyang&#39;,
-       &#39;Zhumadian&#39;, &#39;Changde&#39;, &#39;Nanyang&#39;, &#39;Yichun&#39;, &#39;Xinyang&#39;, &#39;Anqing&#39;,
-       &#39;Jiujiang&#39;, &#39;Y&#39;],
-      dtype=&#39;object&#39;)
 </pre></div>
 </div>
 </div>
@@ -2659,6 +3003,7 @@ title="Print to PDF"
 </div></div></div>
 </div>
 </section>
+</section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
@@ -2765,6 +3110,18 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#data-demo">
    Data Demo
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#aurora-data">
+     1. AURORA Data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#covid19-data">
+     2. Covid19 Data
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
