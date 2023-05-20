@@ -1125,6 +1125,13 @@ title="Print to PDF"
     <a class="reference internal nav-link" href="#aurora-data">
      1. AURORA Data
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#treatment-effect">
+       treatment effect
+      </a>
+     </li>
+    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#covid19-data">
@@ -1170,8 +1177,8 @@ title="Print to PDF"
 <li><p>The indirect path from treatment to outcome through the mediator <span class="math notranslate nohighlight">\(M\)</span>, denoted by <span class="math notranslate nohighlight">\(A\rightarrow M\rightarrow R\)</span>.</p></li>
 </ol>
 <p>More specifically, when adjusting the action from <span class="math notranslate nohighlight">\(A=a_0\)</span> to <span class="math notranslate nohighlight">\(A=a_1\)</span>,  we define the total effect (TE), natural direct effect (DE), and the natural indirect effect (DE) as below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-233c1bc2-2568-417c-9e49-3f3b6d006104">
-<span class="eqno">(45)<a class="headerlink" href="#equation-233c1bc2-2568-417c-9e49-3f3b6d006104" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8da8ebf8-d871-48bc-aba7-585e77fe5ce1">
+<span class="eqno">(45)<a class="headerlink" href="#equation-8da8ebf8-d871-48bc-aba7-585e77fe5ce1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \text{TE}&amp;= \mathbb{E}[R|do(A=a_1)]-\mathbb{E}[R|do(A=a_0)]\\
 \text{DE}&amp;= \mathbb{E}[R|do(A=a_1,M=m^{(a_0)})]-\mathbb{E}[R|do(A=a_0)]\\
@@ -1179,8 +1186,8 @@ title="Print to PDF"
 \end{aligned}
 \end{equation}\]</div>
 <p>Under the potential outcome’s structure, we define <span class="math notranslate nohighlight">\(M_a\)</span> as the potential mediator when treatment <span class="math notranslate nohighlight">\(A=a\)</span>, and define <span class="math notranslate nohighlight">\(R_{a,m}\)</span> as the potential outcome/reward one would observe under <span class="math notranslate nohighlight">\((A=a, M=m)\)</span>. In some literature, the above effects can be samely written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-37bdd7ab-bac2-45b4-b341-820cc6f6cf48">
-<span class="eqno">(46)<a class="headerlink" href="#equation-37bdd7ab-bac2-45b4-b341-820cc6f6cf48" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-33454fc6-33bd-4897-97d6-39a33a0c69de">
+<span class="eqno">(46)<a class="headerlink" href="#equation-33454fc6-33bd-4897-97d6-39a33a0c69de" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \text{TE}&amp;= \mathbb{E}[R_{a_1,m_{a_1}}]-\mathbb{E}[R_{a_0,m_{a_0}}]\\
 \text{DE}&amp;= \mathbb{E}[R_{a_1,m_{a_0}}]-\mathbb{E}[R_{a,m_{a_0}}]\\
@@ -1197,8 +1204,8 @@ title="Print to PDF"
 <li><p><code class="docutils literal notranslate"><span class="pre">Positivity</span></code>: <span class="math notranslate nohighlight">\(p(m|A,X)&gt;0\)</span> for each <span class="math notranslate nohighlight">\(m\in \mathcal{M}\)</span>, and <span class="math notranslate nohighlight">\(p(a|X)&gt;0\)</span> for each <span class="math notranslate nohighlight">\(a\in \mathcal{A}\)</span>.</p></li>
 </ol>
 <p>Under the above three assumptions, Imai et al. [3] proved the identifiability of <span class="math notranslate nohighlight">\(\mathbb{E}[R_{1,M_0}]\)</span> and <span class="math notranslate nohighlight">\(\mathbb{E}[R_{a,M_a}]\)</span> in binary action space, which is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7cc8360b-1439-42ff-aced-fd94dd8dbc1d">
-<span class="eqno">(47)<a class="headerlink" href="#equation-7cc8360b-1439-42ff-aced-fd94dd8dbc1d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-cb288b83-100e-4cea-ae82-3c515714d855">
+<span class="eqno">(47)<a class="headerlink" href="#equation-cb288b83-100e-4cea-ae82-3c515714d855" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \mathbb{E}[R_{1,M_0}] &amp;= \int\int \mathbb{E}[R|A=1,M=m,S=s]p(m|A=0,S=s)p(s) d\mu(m,s)\\
 \mathbb{E}[R_{a,M_a}] &amp;= \int\int \mathbb{E}[R|A=a,M=m,S=s]p(m|A=a,S=s)p(s) d\mu(m,s)
@@ -1211,8 +1218,8 @@ title="Print to PDF"
 <section id="direct-estimator">
 <h3>1. Direct Estimator<a class="headerlink" href="#direct-estimator" title="Permalink to this heading">#</a></h3>
 <p>The first estimator is the direct method, which is a plug-in estimator based on the identification result above.  Since TE, DE and IE can be written as a function of <span class="math notranslate nohighlight">\(\mathbb{E}[R_{a,m_{a'}}]\)</span>, it suffice to estimate them separately for any <span class="math notranslate nohighlight">\(a, a'\in \mathcal{A}\)</span> and construct a DM estimator as below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6d5f42f3-6780-4bd1-a1bf-f81f197cf513">
-<span class="eqno">(48)<a class="headerlink" href="#equation-6d5f42f3-6780-4bd1-a1bf-f81f197cf513" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-816d0107-100a-46ac-90be-a32d9df2d103">
+<span class="eqno">(48)<a class="headerlink" href="#equation-816d0107-100a-46ac-90be-a32d9df2d103" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \widehat{\text{DE}}_{\text{DM}}&amp;= \frac{1}{N}\sum_{i,m} \bigg\{R(S_i,a_1,m)p(m|S_i,a_0)-R(S_i,a_0,m)p(m|S_i,a_0)\bigg\}\\
 \widehat{\text{IE}}_{\text{DM}}&amp;= \frac{1}{N}\sum_{i,m} \bigg\{R(S_i,a_1,m)p(m|S_i,a_1)- R(S_i,a_1,m)p(m|S_i,a_0)\bigg\}
@@ -1222,8 +1229,8 @@ title="Print to PDF"
 <section id="ipw-estimator">
 <h3>2. IPW Estimator<a class="headerlink" href="#ipw-estimator" title="Permalink to this heading">#</a></h3>
 <p>The second estimator in literature is named as the inverse probability weighting estimator, which is similar to the IPW estimator in ATE. Under the existence of mediators, the IPW estimators [2] of DE and IE are given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-37b68607-4085-4950-998c-3ff365546444">
-<span class="eqno">(49)<a class="headerlink" href="#equation-37b68607-4085-4950-998c-3ff365546444" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-499823ee-b031-46ab-8ac9-dc1561ae6b82">
+<span class="eqno">(49)<a class="headerlink" href="#equation-499823ee-b031-46ab-8ac9-dc1561ae6b82" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \widehat{\text{DE}}_{\text{IPW}}&amp;= \frac{1}{N}\sum_{i=1}^N \bigg\{\frac{\mathbb{1}\{A_i=a_1\}\rho(S_i,A_i,M_i)}{p_a(A_i|S_i)}-\frac{\mathbb{1}\{A_i=a_0\}}{p_a(A_i|S_i)}\bigg\}\cdot R_i\\
 \widehat{\text{IE}}_{\text{IPW}}&amp;= \frac{1}{N}\sum_{i=1}^N \bigg\{\frac{\mathbb{1}\{A_i=a_1\}}{p_a(A_i|S_i)}-\frac{\mathbb{1}\{A_i=a_1\}\rho(S_i,A_i,M_i)}{p_a(A_i|S_i)}\bigg\}\cdot R_i
@@ -1234,8 +1241,8 @@ title="Print to PDF"
 <section id="multiple-robust-mr-estimator">
 <h3>3. Multiple Robust (MR) Estimator<a class="headerlink" href="#multiple-robust-mr-estimator" title="Permalink to this heading">#</a></h3>
 <p>The last estimator is called the multiple robust estimator, which was proposed by Tchetgen and Shpitser [5] based on the efficient influence function in semiparametric theory. The final MR estimator for DE and IE are derived as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-85357fad-64b1-48e0-b9cb-f646f5c15fc1">
-<span class="eqno">(50)<a class="headerlink" href="#equation-85357fad-64b1-48e0-b9cb-f646f5c15fc1" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9f5f8063-c20b-4b16-974f-f6b2e805a00b">
+<span class="eqno">(50)<a class="headerlink" href="#equation-9f5f8063-c20b-4b16-974f-f6b2e805a00b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \widehat{\text{DE}}_{\text{MR}}&amp;= \frac{1}{N}\sum_{i=1}^N \bigg[\frac{\mathbb{1}\{A_i=a_1\}}{p_a(A_i|S_i)}\rho(S_i,A_i,M_i)\big\{R_i-\mathbb{E}[R|S_i,A_i=1,M_i]\big\}\\
 &amp;+\frac{\mathbb{1}\{A_i=a_0\}}{p_a(A_i|S_i)}\big\{\mathbb{E}[R|S_i,A_i=1,M_i]-R_i-\eta(a_1,a_0,S)+\eta(a_0,a_0,S)\big\}+\eta(a_1,a_0,S)-\eta(a_0,a_0,S)\big\}\bigg]\\
@@ -1334,12 +1341,12 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_3801/2568975421.py:1: SettingWithCopyWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_36264/2568975421.py:1: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
   action[np.where(action&gt;=0)[0]] = 1
-/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_3801/2568975421.py:2: SettingWithCopyWarning: 
+/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_36264/2568975421.py:2: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
@@ -1516,8 +1523,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Analysis of causal effects of 2020 Hubei lockdowns on reducing the COVID-19 spread in China regulated by Chinese major cities outside Hubei</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Mediators&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;Four mediators in Total&#39;</span><span class="p">,</span><span class="s1">&#39;peritraumatic distress&#39;</span><span class="p">,</span> <span class="s1">&#39;W2 acute stress disorder&#39;</span><span class="p">,</span> <span class="s1">&#39;W2 ptsd&#39;</span><span class="p">,</span><span class="s1">&#39;W2 Depression&#39;</span><span class="p">])</span>
 
 
@@ -1594,6 +1600,396 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </table>
 </div></div></div>
 </div>
+<section id="treatment-effect">
+<h4>treatment effect<a class="headerlink" href="#treatment-effect" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">AURORA_CEL</span><span class="p">)</span>
+<span class="c1">#userinfo_index = np.array([3,5,6,7,8,9,10])</span>
+<span class="n">SandA</span> <span class="o">=</span> <span class="n">AURORA_CEL</span><span class="p">[[</span><span class="s1">&#39;Female&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="s1">&#39;Non-Hispanic White&#39;</span><span class="p">,</span> <span class="s1">&#39;Education&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;pre-trauma physical health&#39;</span><span class="p">,</span> <span class="s1">&#39;pre-trauma mental health&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;Chronic Perception of Severity of Stress&#39;</span><span class="p">,</span> <span class="s1">&#39;Neuroticism&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;Childhood trauma&#39;</span><span class="p">,</span><span class="s1">&#39;pre-trauma insomnia (cont)&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SandA</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Female</th>
+      <th>Age</th>
+      <th>Non-Hispanic White</th>
+      <th>Education</th>
+      <th>pre-trauma physical health</th>
+      <th>pre-trauma mental health</th>
+      <th>Chronic Perception of Severity of Stress</th>
+      <th>Neuroticism</th>
+      <th>Childhood trauma</th>
+      <th>pre-trauma insomnia (cont)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>-10.131861</td>
+      <td>1</td>
+      <td>-0.151941</td>
+      <td>5.741954</td>
+      <td>0.476881</td>
+      <td>3.776439</td>
+      <td>7.879518</td>
+      <td>-2.062249</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>13.868139</td>
+      <td>0</td>
+      <td>2.848059</td>
+      <td>6.081954</td>
+      <td>1.706881</td>
+      <td>-1.223561</td>
+      <td>6.879518</td>
+      <td>11.937751</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>-11.131861</td>
+      <td>1</td>
+      <td>2.848059</td>
+      <td>-2.718046</td>
+      <td>-16.393119</td>
+      <td>3.776439</td>
+      <td>14.879518</td>
+      <td>16.937751</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>15.868139</td>
+      <td>0</td>
+      <td>5.848059</td>
+      <td>-28.418046</td>
+      <td>-21.323119</td>
+      <td>3.776439</td>
+      <td>13.879518</td>
+      <td>0.937751</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>22.868139</td>
+      <td>1</td>
+      <td>-5.151941</td>
+      <td>0.241954</td>
+      <td>-4.483119</td>
+      <td>3.776439</td>
+      <td>8.879518</td>
+      <td>-9.062249</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1489</th>
+      <td>1</td>
+      <td>-15.131861</td>
+      <td>1</td>
+      <td>-2.151941</td>
+      <td>2.641954</td>
+      <td>3.506881</td>
+      <td>1.776439</td>
+      <td>-7.120482</td>
+      <td>-9.062249</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1490</th>
+      <td>0</td>
+      <td>22.868139</td>
+      <td>0</td>
+      <td>2.848059</td>
+      <td>4.321954</td>
+      <td>4.656881</td>
+      <td>-3.223561</td>
+      <td>-12.120482</td>
+      <td>13.937751</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>1491</th>
+      <td>1</td>
+      <td>-4.131861</td>
+      <td>1</td>
+      <td>-2.151941</td>
+      <td>7.841954</td>
+      <td>9.146881</td>
+      <td>-3.223561</td>
+      <td>-13.120482</td>
+      <td>-9.062249</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1492</th>
+      <td>0</td>
+      <td>-5.131861</td>
+      <td>0</td>
+      <td>-2.151941</td>
+      <td>5.231954</td>
+      <td>7.216881</td>
+      <td>-0.223561</td>
+      <td>2.879518</td>
+      <td>-9.062249</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1493</th>
+      <td>0</td>
+      <td>-14.131861</td>
+      <td>1</td>
+      <td>-2.151941</td>
+      <td>7.441954</td>
+      <td>-2.333119</td>
+      <td>1.776439</td>
+      <td>4.879518</td>
+      <td>-9.062249</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>1494 rows × 10 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># S-learner</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">S_learner</span> <span class="o">=</span> <span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">S_learner</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">SandA</span><span class="p">,</span> <span class="n">reward</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GradientBoostingRegressor(max_depth=5)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SandA_all1</span> <span class="o">=</span> <span class="n">SandA</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">SandA_all0</span> <span class="o">=</span> <span class="n">SandA</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">SandA_all1</span><span class="p">[</span><span class="s1">&#39;pre-trauma insomnia (cont)&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">SandA_all0</span><span class="p">[</span><span class="s1">&#39;pre-trauma insomnia (cont)&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="n">ATE_DM</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">SandA_all1</span><span class="p">)</span> <span class="o">-</span> <span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">SandA_all0</span><span class="p">))</span><span class="o">/</span><span class="n">n</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ATE_DM</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.3238214724070896
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># propensity score model fitting</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+
+<span class="n">ps_model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="n">ps_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">state</span><span class="p">,</span>  <span class="n">action</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LogisticRegression()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pi_S</span> <span class="o">=</span> <span class="n">ps_model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<span class="n">ATE_IS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">action</span><span class="o">/</span><span class="n">pi_S</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">action</span><span class="p">)</span><span class="o">/</span><span class="n">pi_S</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="n">reward</span><span class="p">)</span><span class="o">/</span><span class="n">n</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ATE_IS</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.583008488326464
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">action</span><span class="o">*</span><span class="p">(</span><span class="n">reward</span><span class="o">-</span><span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">SandA_all1</span><span class="p">))</span><span class="o">/</span><span class="n">pi_S</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">action</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">reward</span><span class="o">-</span><span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">SandA_all0</span><span class="p">))</span><span class="o">/</span><span class="n">pi_S</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">n</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6766993378439592
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># combine the DM estimator and IS estimator</span>
+<span class="n">ATE_DR</span> <span class="o">=</span> <span class="n">ATE_DM</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">action</span><span class="o">*</span><span class="p">(</span><span class="n">reward</span><span class="o">-</span><span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">SandA_all1</span><span class="p">))</span><span class="o">/</span><span class="n">pi_S</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">action</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">reward</span><span class="o">-</span><span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">SandA_all0</span><span class="p">))</span><span class="o">/</span><span class="n">pi_S</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">n</span>
+<span class="n">ATE_DR</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.0005208102510488
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># mediation effect</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DE&#39;</span><span class="p">,</span><span class="s1">&#39;IE&#39;</span><span class="p">,</span><span class="s1">&#39;TE&#39;</span><span class="p">],</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;four mediators in total&#39;</span><span class="p">])</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">Robust_est</span><span class="o">.</span><span class="n">est_DE</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="n">Robust_est</span><span class="o">.</span><span class="n">est_ME</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="n">Robust_est</span><span class="o">.</span><span class="n">est_TE</span><span class="p">,</span><span class="mi">3</span><span class="p">)]</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>DE</th>
+      <th>IE</th>
+      <th>TE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>four mediators in total</th>
+      <td>2.465</td>
+      <td>0.748</td>
+      <td>3.214</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># treatment effect</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DM&#39;</span><span class="p">,</span><span class="s1">&#39;IS&#39;</span><span class="p">,</span><span class="s1">&#39;DR&#39;</span><span class="p">],</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;treatment effect&#39;</span><span class="p">])</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">ATE_DM</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="n">ATE_IS</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="n">ATE_DR</span><span class="p">,</span><span class="mi">3</span><span class="p">)]</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>DM</th>
+      <th>IS</th>
+      <th>DR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>treatment effect</th>
+      <td>2.324</td>
+      <td>3.583</td>
+      <td>3.001</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
 </section>
 <section id="covid19-data">
 <h3>2. Covid19 Data<a class="headerlink" href="#covid19-data" title="Permalink to this heading">#</a></h3>
@@ -3115,6 +3511,13 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
     <a class="reference internal nav-link" href="#aurora-data">
      1. AURORA Data
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#treatment-effect">
+       treatment effect
+      </a>
+     </li>
+    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#covid19-data">
