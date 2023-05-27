@@ -1149,15 +1149,33 @@ title="Print to PDF"
 </div>
 </div>
 <p>In the context of panel data, we define <span class="math notranslate nohighlight">\(G_i=1\)</span> if unit <span class="math notranslate nohighlight">\(i\)</span> comes from the treatment group, and <span class="math notranslate nohighlight">\(G_i=0\)</span> if it’s in control group. Similarly, define <span class="math notranslate nohighlight">\(T_i=1\)</span> if the unit is in the post-treatment period, and <span class="math notranslate nohighlight">\(T_i=0\)</span> if it’s in pre-treatment period. Therefore, the observed outcome is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-48958bdd-0b56-47e2-9139-2af24f99c245">
-<span class="eqno">(52)<a class="headerlink" href="#equation-48958bdd-0b56-47e2-9139-2af24f99c245" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-73715a64-197b-4e00-a1c9-a7d7dd5fdb1e">
+<span class="eqno">(52)<a class="headerlink" href="#equation-73715a64-197b-4e00-a1c9-a7d7dd5fdb1e" title="Permalink to this equation">#</a></span>\[\begin{equation}
     Y_i = (1-G_iT_i)\cdot Y_i(0) + G_iT_i\cdot Y_i(1),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(Y_i(a)\)</span> denotes the potential outcome one would observe under action <span class="math notranslate nohighlight">\(A=a\)</span>.</p>
+<p>Notations:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(G_i\in\{0,1\}\)</span>: State indicator denoting whether unit <span class="math notranslate nohighlight">\(i\)</span> is in the control or exposed state;</p></li>
+<li><p><span class="math notranslate nohighlight">\(T_i\in\{0,1\}\)</span>: Time of the observation. <span class="math notranslate nohighlight">\(T_i=0\)</span> if <span class="math notranslate nohighlight">\(0\leq t\leq T_0\)</span>, and <span class="math notranslate nohighlight">\(T_i=1\)</span> if <span class="math notranslate nohighlight">\(T_0+1\leq T_i\leq T_0+T_1\)</span>.</p></li>
+</ul>
 <p>The standard DiD method assumes the following linear model:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b795d7c9-547c-4936-b341-e6c2ec636348">
-<span class="eqno">(53)<a class="headerlink" href="#equation-b795d7c9-547c-4936-b341-e6c2ec636348" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b60c5b13-ba04-4253-a06a-512644009caf">
+<span class="eqno">(53)<a class="headerlink" href="#equation-b60c5b13-ba04-4253-a06a-512644009caf" title="Permalink to this equation">#</a></span>\[\begin{equation}
     Y_i = \alpha + \beta \cdot T_i + \gamma \cdot G_i + \epsilon_i.
+\end{equation}\]</div>
+<p>Define the heterogeneous treatment effect as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-502509e1-dad0-4975-901c-2f541ceac7bb">
+<span class="eqno">(54)<a class="headerlink" href="#equation-502509e1-dad0-4975-901c-2f541ceac7bb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\tau(x) = \mathbb{E}[Y(1)|X_i=x,G_i=1,T_i=1]-\mathbb{E}[Y(0)|X_i=x,G_i=1,T_i=1]
+\end{equation}\]</div>
+<p>Under the <code class="docutils literal notranslate"><span class="pre">parallel</span> <span class="pre">trend</span></code> assumption, the outcomes in treatment and control groups follow the same trend. That is,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-13a78b6f-3ec7-4fe4-b38f-9150bf3291d5">
+<span class="eqno">(55)<a class="headerlink" href="#equation-13a78b6f-3ec7-4fe4-b38f-9150bf3291d5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\begin{aligned}
+\tau(x) =&amp; \mathbb{E}[Y_i|X_i=x,G_i=1,T_i=1]- \mathbb{E}[Y_i|X_i=x,G_i=1,T_i=0]\\
+&amp;-\mathbb{E}[Y_i|X_i=x,G_i=0,T_i=1]+\mathbb{E}[Y_i|X_i=x,G_i=0,T_i=0]
+\end{aligned}
 \end{equation}\]</div>
 <p><strong>[TO BE CONTINUED]</strong></p>
 </section>
@@ -1169,26 +1187,26 @@ title="Print to PDF"
 </section>
 <section id="estimation">
 <h2>Estimation<a class="headerlink" href="#estimation" title="Permalink to this heading">#</a></h2>
-<div class="amsmath math notranslate nohighlight" id="equation-a060917a-8726-4670-84f7-fc8a2f09e3d6">
-<span class="eqno">(54)<a class="headerlink" href="#equation-a060917a-8726-4670-84f7-fc8a2f09e3d6" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-89f6e956-0ba1-43d9-92ab-8d1379603c96">
+<span class="eqno">(56)<a class="headerlink" href="#equation-89f6e956-0ba1-43d9-92ab-8d1379603c96" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \tau(s)_{\text{DiD}} = \mathbb{E}[Y_i|S_i=s,G_i=1,T_i=1]-\mathbb{E}[Y_i|S_i=s,G_i=1,T_i=0]-\mathbb{E}[Y_i|S_i=s,G_i=0,T_i=1]+\mathbb{E}[Y_i|S_i=s,G_i=0,T_i=0]
 \end{equation}\]</div>
 </section>
 <section id="extensions">
 <h2>Extensions<a class="headerlink" href="#extensions" title="Permalink to this heading">#</a></h2>
 <p>The difference of average outcomes for the <span class="math notranslate nohighlight">\(m\)</span> treated units after and before the treatment time point is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-03a21857-7b88-4ae7-9b9f-c83956d0d0ae">
-<span class="eqno">(55)<a class="headerlink" href="#equation-03a21857-7b88-4ae7-9b9f-c83956d0d0ae" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b7c38eec-95e4-4b0d-b46e-8732f73fc2fc">
+<span class="eqno">(57)<a class="headerlink" href="#equation-b7c38eec-95e4-4b0d-b46e-8732f73fc2fc" title="Permalink to this equation">#</a></span>\[\begin{equation}
 D_{\text{tr}} = \frac{1}{m} \sum_{i=1}^m\Big[\frac{1}{T_1}\sum_{t=T_0+1}^{T_0+T_1} Y_{i,t}-\frac{1}{T_0} \sum_{t=1}^{T_0} Y_{i,t}\Big]
 \end{equation}\]</div>
 <p>Similarly, the difference of average outcomes for the <span class="math notranslate nohighlight">\(n\)</span> control units after and before the treatment time point is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0c11cd54-9d6f-4ee1-ad33-19e6f027bb36">
-<span class="eqno">(56)<a class="headerlink" href="#equation-0c11cd54-9d6f-4ee1-ad33-19e6f027bb36" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-059788f1-98c4-4c83-bb86-4c5c6b91fb19">
+<span class="eqno">(58)<a class="headerlink" href="#equation-059788f1-98c4-4c83-bb86-4c5c6b91fb19" title="Permalink to this equation">#</a></span>\[\begin{equation}
 D_{\text{co}} = \frac{1}{n} \sum_{i=m+1}^{m+n}\Big[\frac{1}{T_1}\sum_{t=T_0+1}^{T_0+T_1} Y_{i,t}-\frac{1}{T_0}\sum_{t=1}^{T_0} Y_{i,t}\Big]
 \end{equation}\]</div>
 <p>Under the parallel trend assumption, we are able to subtract the effect that’s not caused by treatment intervention:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f50ba19d-55ea-48a1-878f-63a8d8ba9f9e">
-<span class="eqno">(57)<a class="headerlink" href="#equation-f50ba19d-55ea-48a1-878f-63a8d8ba9f9e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9a3ea298-6f2f-478f-9bc1-07511371c4b5">
+<span class="eqno">(59)<a class="headerlink" href="#equation-9a3ea298-6f2f-478f-9bc1-07511371c4b5" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\Delta} = D_{\text{tr}} - D_{\text{co}} = \frac{1}{m} \sum_{i=1}^m\Big[\frac{1}{T_1}\sum_{t=T_0+1}^{T_0+T_1} Y_{i,t}-\frac{1}{T_0} \sum_{t=1}^{T_0} Y_{i,t}\Big] - \frac{1}{n} \sum_{i=m+1}^{m+n}\Big[\frac{1}{T_1}\sum_{t=T_0+1}^{T_0+T_1} Y_{i,t}-\frac{1}{T_0}\sum_{t=1}^{T_0} Y_{i,t}\Big].
 \end{equation}\]</div>
 </section>
