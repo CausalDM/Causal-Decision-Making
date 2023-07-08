@@ -1118,9 +1118,9 @@ title="Print to PDF"
 \[\begin{equation*}
 \tau(s)=\mathbb{E}[R|S,A=1]-\mathbb{E}[R|S,A=0].
 \end{equation*}\]</div>
-<p>The basic idea of S-learner is to fit a model for <span class="math notranslate nohighlight">\(\mathbb{E}[R|S,A]\)</span>, and then construct a plug-in estimator based on the expression above. Specifically, the algorithm can be summarized as below:</p>
-<p><strong>Step 1:</strong>  Estimate the combined response function <span class="math notranslate nohighlight">\(\mu(s,a):=\mathbb{E}[R|S=s,A=a]\)</span> with any regression algorithm or supervised machine learning methods;</p>
-<p><strong>Step 2:</strong>  Estimate HTE by</p>
+<p>The basic idea of S-learner is to fit a model for <span class="math notranslate nohighlight">\(\mathbb{E}[R|S,A]\)</span>, and then construct a plug-in estimator for it. Specifically, the algorithm can be summarized as below:</p>
+<p><strong>Step 1:</strong>  Estimate the response function <span class="math notranslate nohighlight">\(\mu(s,a):=\mathbb{E}[R|S=s,A=a]\)</span> with any supervised machine learning algorithm;</p>
+<p><strong>Step 2:</strong>  The estimated HTE of S-learner is given by</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*}
 \hat{\tau}_{\text{S-learner}}(s)=\hat\mu(s,1)-\hat\mu(s,0).
@@ -1172,7 +1172,11 @@ title="Print to PDF"
       <th>movie_id</th>
       <th>rating</th>
       <th>age</th>
+      <th>Comedy</th>
       <th>Drama</th>
+      <th>Action</th>
+      <th>Thriller</th>
+      <th>Sci-Fi</th>
       <th>gender_M</th>
       <th>occupation_academic/educator</th>
       <th>occupation_college/grad student</th>
@@ -1188,7 +1192,11 @@ title="Print to PDF"
       <td>1193.0</td>
       <td>4.0</td>
       <td>25.0</td>
+      <td>0.0</td>
       <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>1.0</td>
@@ -1202,7 +1210,11 @@ title="Print to PDF"
       <td>919.0</td>
       <td>4.0</td>
       <td>25.0</td>
+      <td>0.0</td>
       <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>1.0</td>
@@ -1216,7 +1228,11 @@ title="Print to PDF"
       <td>527.0</td>
       <td>5.0</td>
       <td>25.0</td>
+      <td>0.0</td>
       <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>1.0</td>
@@ -1230,7 +1246,11 @@ title="Print to PDF"
       <td>1721.0</td>
       <td>4.0</td>
       <td>25.0</td>
+      <td>0.0</td>
       <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>1.0</td>
@@ -1244,7 +1264,11 @@ title="Print to PDF"
       <td>150.0</td>
       <td>4.0</td>
       <td>25.0</td>
+      <td>0.0</td>
       <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>1.0</td>
@@ -1254,6 +1278,10 @@ title="Print to PDF"
     </tr>
     <tr>
       <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
@@ -1276,6 +1304,10 @@ title="Print to PDF"
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
@@ -1287,6 +1319,10 @@ title="Print to PDF"
       <td>1.0</td>
       <td>25.0</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
@@ -1304,6 +1340,10 @@ title="Print to PDF"
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
@@ -1315,6 +1355,10 @@ title="Print to PDF"
       <td>1.0</td>
       <td>25.0</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
@@ -1332,13 +1376,17 @@ title="Print to PDF"
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
     </tr>
   </tbody>
 </table>
-<p>65642 rows × 11 columns</p>
+<p>65642 rows × 15 columns</p>
 </div></div></div>
 </div>
 <div class="cell docutils container">
@@ -1387,7 +1435,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>S-learner:   [-0.13686218  0.52931381 -0.10841595]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>S-learner:   [0. 0. 0.]
 </pre></div>
 </div>
 </div>
@@ -1400,7 +1448,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by 0.1453 out of 5 points.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by 0.0 out of 5 points.
 </pre></div>
 </div>
 </div>
