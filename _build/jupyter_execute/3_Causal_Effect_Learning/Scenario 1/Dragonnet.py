@@ -156,8 +156,7 @@ print("Choosing Drama instead of Sci-Fi is expected to improve the rating of all
 # Treatment Effects. 33rd Conference on Neural Information Processing Systems (NeurIPS 2019).
 # 
 # 9. Chernozhukov, V., D. Chetverikov, M. Demirer, E. Duflo, C. Hansen, W. Newey, and
-# J. Robins (2018). Double/debiased machine learning for treatment and structural pa-
-# rameters.
+# J. Robins (2018). Double/debiased machine learning for treatment and structural parameters.
 
 # In[ ]:
 

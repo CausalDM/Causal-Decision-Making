@@ -29,7 +29,8 @@
 
 import os
 os.getcwd()
-os.chdir('/Users/alinaxu/Documents/CDM/CausalDM')
+path = 'D:\GitHub\CausalDM'
+os.chdir(path)
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression
@@ -39,26 +40,26 @@ env = _env.Single_Contextual_Env(seed = 0, Binary = False)
 logged_data, arms = env.get_logged_dat()
 
 
-# In[2]:
+# In[25]:
 
 
 logged_data.keys()
 
 
-# In[3]:
+# In[26]:
 
 
 logged_data['Comedy']
 
 
-# In[4]:
+# In[27]:
 
 
 userinfo_index = np.array([3,9,11,12,13,14])
 movie_generes = ['Comedy', 'Drama', 'Action', 'Thriller', 'Sci-Fi']
 
 
-# In[5]:
+# In[28]:
 
 
 # convert the sampled dataset of interest to dataframe format
@@ -67,7 +68,7 @@ for movie_genere in movie_generes[1:5]:
     data_CEL_sample = pd.concat([data_CEL_sample, logged_data[movie_genere]])
 
 
-# In[6]:
+# In[29]:
 
 
 len(data_CEL_sample) # the total sample size we selected: n=1286
@@ -75,7 +76,7 @@ len(data_CEL_sample) # the total sample size we selected: n=1286
 
 # ### nonlinear model fitting
 
-# In[7]:
+# In[30]:
 
 
 models_CEL = {}
@@ -83,38 +84,20 @@ models_CEL = {}
 # initialize the models we'll fit in Causal Effect Learning
 for i in movie_generes:
     models_CEL[i] = None   
-
-
-# In[8]:
-
-
 from lightgbm import LGBMRegressor
 for movie_genere in movie_generes: 
     models_CEL[movie_genere] = LGBMRegressor(max_depth=3)
     models_CEL[movie_genere].fit(data_CEL_sample.iloc[np.where(data_CEL_sample[movie_genere]==1)[0],userinfo_index],data_CEL_sample.iloc[np.where(data_CEL_sample[movie_genere]==1)[0],2] )
 
 
-# In[9]:
-
-
-min(data_CEL_sample['age'])
-
-
-# In[10]:
-
-
-max(data_CEL_sample['age'])
-
-
-# In[11]:
+# In[31]:
 
 
 # record thev estimated expected reward for each movie genere, under each possible combination of state variable
 age_range = np.linspace(min(data_CEL_sample['age']),max(data_CEL_sample['age']),int(max(data_CEL_sample['age'])-min(data_CEL_sample['age'])+1)).astype(int)
-print(age_range)
 
 
-# In[12]:
+# In[32]:
 
 
 import itertools
@@ -128,29 +111,17 @@ occupation_technician = np.array([0,1])
 # result contains all possible combinations.
 combinations = pd.DataFrame(itertools.product(age_range,gender,occupation_college,
                                               occupation_executive,occupation_other,occupation_technician))
-
-
-# In[13]:
-
-
 combinations.columns =['age','gender','occupation_college', 'occupation_executive','occupation_other','occupation_technician']
-combinations
 
 
-# In[14]:
-
-
-len(models_CEL['Comedy'].predict(combinations))
-
-
-# In[16]:
+# In[33]:
 
 
 models_CEL['Comedy'].predict(combinations)
 #models_CEL['Comedy'].predict(data_CEL_sample.iloc[np.where(data_CEL_sample['Comedy']==1)[0],userinfo_index])
 
 
-# In[17]:
+# In[34]:
 
 
 values = np.zeros((5,1312))
@@ -158,56 +129,46 @@ i=0
 for movie_genere in movie_generes:
     values[i,:] = models_CEL[movie_genere].predict(combinations)
     i=i+1
-    print(values)
+    #print(values)
+
+
+# In[35]:
+
+
+result_CEL_nonlinear = combinations.copy()
+i=0
+for movie_genere in movie_generes:
+    #values = models_CEL[movie_genere].predict(combinations)
+    result_CEL_nonlinear.insert(len(result_CEL_nonlinear.columns), movie_genere, values[i,:])
+    i=i+1
+
+
+# In[36]:
+
+
+result_CEL_nonlinear
 
 
 # In[37]:
 
 
-len(result_CEL.columns)
+# save the result to
+path += '/5_Case_Study/MovieLens'
+result_CEL_nonlinear.to_csv(path+'/result_CEL_nonlinear.csv')
 
 
-# In[18]:
-
-
-result_CEL = combinations.copy()
-i=0
-for movie_genere in movie_generes:
-    #values = models_CEL[movie_genere].predict(combinations)
-    result_CEL.insert(len(result_CEL.columns), movie_genere, values[i,:])
-    i=i+1
-
-
-# In[19]:
-
-
-result_CEL
-
-
-# In[20]:
-
-
-result_CEL.to_csv('/Users/alinaxu/Documents/CDM/Causal-Decision-Making/5_Case_Study/MovieLens/result_CEL_nonlinear.csv')
-
-
-# In[21]:
+# In[38]:
 
 
 # read the result file
-result_CEL_nonlinear = pd.read_csv('/Users/alinaxu/Documents/CDM/Causal-Decision-Making/5_Case_Study/MovieLens/result_CEL_nonlinear.csv')
+result_CEL_nonlinear = pd.read_csv(path+'/result_CEL_nonlinear.csv')
 result_CEL_nonlinear = result_CEL_nonlinear.drop(result_CEL_nonlinear.columns[0], axis=1)
 result_CEL_nonlinear
 
 
 # #### Analysis
 
-# In[23]:
-
-
-result_CEL_nonlinear.iloc[np.where(result_CEL_nonlinear['gender']==0)[0],6:11]
-
-
-# In[24]:
+# In[39]:
 
 
 # calculate the expected reward of Comedy for female
@@ -216,7 +177,7 @@ TE_female=pd.DataFrame(TE_female.sum(axis=0))
 TE_female.columns =['Expected Rating']
 
 
-# In[25]:
+# In[40]:
 
 
 TE_female
@@ -228,7 +189,7 @@ TE_female
 
 
 
-# In[26]:
+# In[41]:
 
 
 # calculate the expected reward of Comedy for female
@@ -237,21 +198,17 @@ TE_male=pd.DataFrame(TE_male.sum(axis=0))
 TE_male.columns =['Expected Rating']
 
 
-# In[27]:
+# In[42]:
 
 
 TE_male
 
 
-# In[ ]:
-
-
-
-
+# **Conclusion**: Among these five selected movie generes, `Comedy` is the most popular one that received the highest expected rating. On the contrary, the estimated rating for `Schi-Fi` is the lowest, both for males and females. In addition, the expected ratings of women are generally slightly higher than men, except for `Drama` movies where men's rating is expected to be 0.02/5 points higher than women.
 
 # ### linear model fitting
 
-# In[28]:
+# In[43]:
 
 
 models_CEL_linear = {}
@@ -259,32 +216,14 @@ models_CEL_linear = {}
 # initialize the models we'll fit in Causal Effect Learning
 for i in movie_generes:
     models_CEL_linear[i] = None   
-
-
-# In[29]:
-
-
+    
 from sklearn.linear_model import LinearRegression
 for movie_genere in movie_generes: 
     models_CEL_linear[movie_genere] = LinearRegression()
     models_CEL_linear[movie_genere].fit(data_CEL_sample.iloc[np.where(data_CEL_sample[movie_genere]==1)[0],userinfo_index],data_CEL_sample.iloc[np.where(data_CEL_sample[movie_genere]==1)[0],2] )
 
 
-# In[31]:
-
-
-#models_CEL_linear['Comedy'].predict(data_CEL_sample.iloc[np.where(data_CEL_sample['Comedy']==1)[0],userinfo_index])
-
-
-# In[32]:
-
-
-# record thev estimated expected reward for each movie genere, under each possible combination of state variable
-age_range = np.linspace(min(data_CEL_sample['age']),max(data_CEL_sample['age']),int(max(data_CEL_sample['age'])-min(data_CEL_sample['age'])+1)).astype(int)
-print(age_range)
-
-
-# In[33]:
+# In[44]:
 
 
 import itertools
@@ -298,16 +237,10 @@ occupation_technician = np.array([0,1])
 # result contains all possible combinations.
 combinations = pd.DataFrame(itertools.product(age_range,gender,occupation_college,
                                               occupation_executive,occupation_other,occupation_technician))
-
-
-# In[34]:
-
-
 combinations.columns =['age','gender','occupation_college', 'occupation_executive','occupation_other','occupation_technician']
-combinations
 
 
-# In[35]:
+# In[45]:
 
 
 values = np.zeros((5,1312))
@@ -315,10 +248,10 @@ i=0
 for movie_genere in movie_generes:
     values[i,:] = models_CEL_linear[movie_genere].predict(combinations)
     i=i+1
-    print(values)
+    #print(values)
 
 
-# In[36]:
+# In[46]:
 
 
 result_CEL_linear = combinations
@@ -329,42 +262,31 @@ for movie_genere in movie_generes:
     i=i+1
 
 
-# In[37]:
-
-
-result_CEL_linear
-
-
 # In[ ]:
 
 
 
 
 
-# In[38]:
+# In[47]:
 
 
-result_CEL_linear.to_csv('/Users/alinaxu/Documents/CDM/Causal-Decision-Making/5_Case_Study/MovieLens/result_CEL_linear.csv')
+# the result is saved to
+result_CEL_linear.to_csv(path+'/result_CEL_linear.csv')
 
 
-# In[39]:
+# In[48]:
 
 
 # read the result file
-result_CEL_linear = pd.read_csv('/Users/alinaxu/Documents/CDM/Causal-Decision-Making/5_Case_Study/MovieLens/result_CEL_linear.csv')
+result_CEL_linear = pd.read_csv(path+'/result_CEL_linear.csv')
 result_CEL_linear = result_CEL_linear.drop(result_CEL_linear.columns[0], axis=1)
 result_CEL_linear
 
 
 # #### Analysis
 
-# In[40]:
-
-
-result_CEL_linear.iloc[np.where(result_CEL_linear['gender']==0)[0],6:11]
-
-
-# In[41]:
+# In[49]:
 
 
 # calculate the expected reward of Comedy for female
@@ -373,13 +295,13 @@ TE_female_linear=pd.DataFrame(TE_female_linear.sum(axis=0))
 TE_female_linear.columns =['Expected Rating']
 
 
-# In[42]:
+# In[50]:
 
 
 TE_female_linear
 
 
-# In[43]:
+# In[51]:
 
 
 # calculate the expected reward of Comedy for female
@@ -388,24 +310,20 @@ TE_male_linear=pd.DataFrame(TE_male_linear.sum(axis=0))
 TE_male_linear.columns =['Expected Rating']
 
 
-# In[44]:
+# In[52]:
 
 
 TE_male_linear
 
 
-# In[ ]:
-
-
-
-
+# **Conclusion**: The expected ratings obtained under linear model is generally consistent with the result under nonlinear model. 
 
 # ## Online Learning
 # 
 # In this section, we aim to implement the contextual TS to learn the optimal policy online. Specifically, we assume that, for each arm $i$, 
 # $$R_t(i)\sim \mathcal{N}(\boldsymbol{s}_i^T \boldsymbol{\gamma},\sigma^2).$$
 
-# In[49]:
+# In[53]:
 
 
 #import os
@@ -420,14 +338,14 @@ env = _env.Single_Contextual_Env(seed = 0, Binary = False)
 K = env.K
 p = env.p
 logged_data, arms = env.get_logged_dat()
-CEL_results = pd.read_csv('./causaldm/learners/Online/CMAB/result_CEL_nonlinear.csv').iloc[:,1:]  
+CEL_results = pd.read_csv(path+'/result_CEL_nonlinear.csv').iloc[:,1:]  
 
 
 # ### Estimated $\sigma$ and $\boldsymbol{\gamma}$
 # 
-# Here, we estimated the $\sigma$ and $\boldsymbol{\gamma}$ based on the logged data and the estimated results obtained from the causal effect learning step.
+# Here, we estimated the $\sigma$ and $\boldsymbol{\gamma}$ based on the logged data and the estimated results obtained from the causal effect learning (CEL) step.
 
-# In[50]:
+# In[54]:
 
 
 mean_error = []
@@ -450,12 +368,12 @@ for genere in arms:
 # 
 # Here, we run an informative TS with informative prior information, including the estimated $\sigma$ and $\gamma$. Specifically, we use $\mathcal{N}(\hat{\boldsymbol{\gamma}},.05I)$ as the prior distribution of $\gamma$. In total, we ran 50 replicates, each with 5000 total steps, to get the expected performance of online learning.
 
-# In[51]:
+# In[55]:
 
 
-T = 5000
+T = 20000
 S = 50
-sigma1 = .05
+sigma1 = .3
 cum_reward_informative = []
 for seed in range(S):
     env = _env.Single_Contextual_Env(seed = seed, Binary = False)
@@ -479,12 +397,12 @@ for seed in range(S):
 
 # ### Run Uninformative TS
 # 
-# To further show the advantages of a causal effect learning step, we run an uninformative TS with uninformative prior information. Specifically, we use $\mathcal{N}(\boldsymbol{0},1000I)$ as the prior distribution of $\gamma$. In total, we ran 50 replicates, each with 5000 total steps, to get the expected performance of online learning.
+# To further show the advantages of integrating the information from a CEL step, we run an uninformative TS with uninformative prior information. Specifically, we use $\mathcal{N}(\boldsymbol{0},1000I)$ as the prior distribution of $\gamma$. In total, we ran 50 replicates, each with 5000 total steps, to get the expected performance of online learning.
 
-# In[52]:
+# In[56]:
 
 
-T = 5000
+T = 20000
 S = 50
 cum_reward_uninformative = []
 for seed in range(S):
@@ -509,30 +427,57 @@ for seed in range(S):
     cum_reward_uninformative.append(cum_reward_uninformative_t)
 
 
+# ### Run Greedy
+# 
+# We also run a greedy algorithm using the results of the CEL step as a natural baseline. In particular, for each round, we estimated the expected reward for each arm solely based on the estimated results from the CEL step and then pulled the arm with the highest expected reward.
+
+# In[66]:
+
+
+T = 20000
+S = 50
+cum_reward_greedy = []
+for seed in range(S):
+    env = _env.Single_Contextual_Env(seed = seed, Binary = False)
+    cum_reward_greedy_t = []
+    rec_action_greedy_t = []
+    for t in range(T):
+        X, feature_info= env.get_Phi(t)
+        A = np.argmax(X.dot(np.array(gamma)))
+        R = env.get_reward(t,A)
+        cum_reward_greedy_t.append(R)
+        rec_action_greedy_t.append(A)
+    cum_reward_greedy_t = np.cumsum(cum_reward_greedy_t)/(np.array(range(T))+1)
+    cum_reward_greedy.append(cum_reward_greedy_t)
+
+
 # ### Results
 # 
-# Comparing the results of the uninformative TS to the results of the informative TS, it is evident that the TS algorithm with an informative prior performs significantly better than the uninformative TS. Furthermore, based on the result of the last replicate of the informative TS, the mean of the final estimation of the posterior distribution of $\boldsymbol{\gamma}$ is summarized as follows (it can be retrieved by `informative_TS.u`):
+# On the one hand, while the greedy algorithm outperforms the TS algorithms in the early stages due to extra exploration, both TS algorithms continue to learn new information from the environment and eventually outperform the greedy algorithm. On the other hand, when the results of the uninformative TS are compared to the results of the informative TS, it is clear that the TS algorithm with an informative prior outperforms the uninformative TS, especially in the early stages, due to the use of prior information obtained from the CEL step. Based on the result of the last replicate of the informative TS, the mean of the final estimation of the posterior distribution of $\boldsymbol{\gamma}$ is summarized as follows (it can be retrieved by `informative_TS.u`):
 # 
 # |          | intercept | age   | gender | college/grad student | executive/managerial | other | technician/engineer |
 # |----------|:---------:|-------|--------|----------------------|----------------------|-------|---------------------|
-# |  Comedy  |   3.954   | -.001 |  -.120 | -.173                | -.080                | -.003 | -.135               |
-# | Drama    |     3.872 | -.435 | -.082  | .030                 | -.047                | -.138 | -.335               |
-# | Action   | 3.159     | -.263 | -.143  | -.034                | -.005                | -.084 | -.409               |
-# | Thriller | 3.976     | -.477 | -.398  | -.366                | -.151                | -.113 | 0                   |
-# | Sci-Fi   | 3.468     | -.219 | -.009  | -.165                | 0                    | -.127 | 0                   |
+# |  Comedy   | 2.7521  |  0.017302   | -0.00560719 |  0.117822 | -0.00510732 | -0.531808  | -0.223075  |
+# |  Drama    | 4.01964 | -0.0162288  | -0.028724   | -0.207823 |  0.00479902 |  0.0676476 | -0.102133  |
+# |  Action   | 1.54029 |  0.0443065  | -0.510173   |  0.914312 |  0.511538   | -0.598424  | -0.111526  |
+# |  Thriller | 2.66016 | -0.00952059 |  0.990777   | -0.188495 | -0.0529917  | -0.0598801 | -0.114229  |
+# |  Sci-Fi   | 2.14277 |  0.0179173  |  0.254292   |  0.371529 |  0.292346   | -0.338238  | -0.0267336 |
 # 
 # To use the estimated results greedily, we can calculate the mean reward of each movie genre using the estimated $\boldsymbol{\gamma}$ and the incoming user's information, and then recommend the genre with the highest estimated mean reward.
 
-# In[53]:
+# In[69]:
 
 
 import seaborn as sns
-result = pd.DataFrame({'rep':np.concatenate([np.ones(T)*rep for rep in range(S)]*2),
-                       't':np.concatenate([range(T)]*2*S),
-                       'Reward':np.concatenate(cum_reward_informative+cum_reward_uninformative),
-                       'Algo':['informative']*T*S+['uninformative']*T*S})
-sns.lineplot(data=result[result.t>20], x='t', y="Reward", hue="Algo", ci = 95,
+import matplotlib.pyplot as plt
+result = pd.DataFrame({'rep':np.concatenate([np.ones(T)*rep for rep in range(S)]*3),
+                       't':np.concatenate([range(T)]*3*S),
+                       'Reward':np.concatenate(cum_reward_informative+cum_reward_uninformative+cum_reward_greedy),
+                       'Algo':['informative']*T*S+['uninformative']*T*S+['greedy']*T*S})
+sns.lineplot(data=result[result.t>0], x='t', y="Reward", hue="Algo", ci = 95,
              n_boot = 20, linewidth = 1.0, markers = False)
+plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0)
+plt.ylabel('Average Reward')
 
 
 # In[ ]:

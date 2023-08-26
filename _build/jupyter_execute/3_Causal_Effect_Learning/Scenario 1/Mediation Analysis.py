@@ -123,9 +123,32 @@ display.Image("CEL-Mediation-IID.png")
 
 
 
-# ## Data Demo [to be revised]
+# ## Data Demo
+# ### 1. AURORA Data
 
 # In[2]:
+
+
+import os
+import pandas as pd
+os.chdir('/Users/alinaxu/Documents/CDM/Causal-Decision-Making/3_Causal_Effect_Learning/Scenario 1')
+AURORA_CEL = pd.read_csv('Survey_red.csv')
+
+
+# In[2]:
+
+
+AURORA_CEL.columns
+
+
+# In[3]:
+
+
+import matplotlib.pyplot as plt
+plt.hist(AURORA_CEL['pre-trauma insomnia (cont)'],bins=10)
+
+
+# In[4]:
 
 
 # import related packages
@@ -135,37 +158,39 @@ from matplotlib import pyplot as plt;
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.linear_model import LinearRegression
 
-# Get data
-MovieLens_CEL = pd.read_csv("/Users/alinaxu/Documents/CDM/CausalDM/causaldm/data/MovieLens_CEL.csv")
-MovieLens_CEL.pop(MovieLens_CEL.columns[0])
-MovieLens_CEL
+
+n = len(AURORA_CEL)
 
 
-# In[12]:
+# In[5]:
 
 
-n = len(MovieLens_CEL)
-userinfo_index = np.array([3,5,6,7,8,9,10])
-SandA = MovieLens_CEL.iloc[:, np.array([3,4,5,6,7,8,9,10])]
+state = AURORA_CEL[['Female', 'Age', 'Non-Hispanic White', 'Education',
+       'pre-trauma physical health', 'pre-trauma mental health',
+       'Chronic Perception of Severity of Stress', 'Neuroticism',
+       'Childhood trauma']]
+action = AURORA_CEL['pre-trauma insomnia (cont)']
+mediator = AURORA_CEL[['peritraumatic distress', 'W2 acute stress disorder', 'W2 ptsd',
+       'W2 Depression']]
+reward = AURORA_CEL['3 month ptsd']
+
+AURORA_CEL_MD = {'state':state,'action':action,'mediator':mediator,'reward':reward}
 
 
-# In[ ]:
+# In[6]:
 
 
-state = np.array(MovieLens_CEL.iloc[,userinfo_index])
-action = np.array(MovieLens_CEL['Drama'])
-mediator = np.array(single_data[['SOFA']])
-reward = np.array(single_data['rating'])
-MovieLens_CEL_MD = {'state':state,'action':action,'mediator':mediator,'reward':reward}
+action[np.where(action>=0)[0]] = 1
+action[np.where(action<0)[0]] = 0
 
 
-# In[14]:
+# In[7]:
 
 
 from causaldm.causaldm.learners.Causal_Effect_Learning.Mediation_Analysis.ME_Single import ME_Single
 
 
-# In[15]:
+# In[8]:
 
 
 # Control Policy
@@ -201,15 +226,15 @@ def target_policy(state, dim_state = 1, action=None):
     return action_value
 
 
-# In[ ]:
+# In[9]:
 
 
 problearner_parameters = {"splitter":["best","random"], "max_depth" : range(1,50)},
-Direct_est = ME_Single(single_dataset, r_model = 'OLS',
+Direct_est = ME_Single(AURORA_CEL_MD, r_model = 'OLS',
                      problearner_parameters = problearner_parameters,
                      truncate = 50, 
                      target_policy=target_policy, control_policy = control_policy, 
-                     dim_state = 2, dim_mediator = 1, 
+                     dim_state = 9, dim_mediator = 4, 
                      expectation_MCMC_iter = 50,
                      nature_decomp = True,
                      seed = 10,
@@ -219,14 +244,14 @@ Direct_est.estimate_DE_ME()
 Direct_est.est_DE, Direct_est.est_ME, Direct_est.est_TE,
 
 
-# In[ ]:
+# In[10]:
 
 
-IPW_est = ME_Single(single_dataset, r_model = 'OLS',
+IPW_est = ME_Single(AURORA_CEL_MD, r_model = 'OLS',
                      problearner_parameters = problearner_parameters,
                      truncate = 50, 
                      target_policy=target_policy, control_policy = control_policy, 
-                     dim_state = 2, dim_mediator = 1, 
+                     dim_state = 9, dim_mediator = 4, 
                      expectation_MCMC_iter = 50,
                      nature_decomp = True,
                      seed = 10,
@@ -236,14 +261,14 @@ IPW_est.estimate_DE_ME()
 IPW_est.est_DE, IPW_est.est_ME, IPW_est.est_TE,
 
 
-# In[ ]:
+# In[38]:
 
 
-Robust_est = ME_Single(single_dataset, r_model = 'OLS',
+Robust_est = ME_Single(AURORA_CEL_MD, r_model = 'OLS',
                      problearner_parameters = problearner_parameters,
                      truncate = 50, 
                      target_policy=target_policy, control_policy = control_policy, 
-                     dim_state = 2, dim_mediator = 1, 
+                     dim_state = 9, dim_mediator = 4, 
                      expectation_MCMC_iter = 50,
                      nature_decomp = True,
                      seed = 10,
@@ -253,10 +278,344 @@ Robust_est.estimate_DE_ME()
 Robust_est.est_DE, Robust_est.est_ME, Robust_est.est_TE,
 
 
+# In[54]:
+
+
+Robust_DE = np.zeros(5)
+Robust_IE = np.zeros(5)
+Robust_TE = np.zeros(5)
+
+Robust_DE[0] = Robust_est.est_DE
+Robust_IE[0] = Robust_est.est_ME
+Robust_TE[0] = Robust_est.est_TE
+
+
+# In[64]:
+
+
+for i in range(1,5):
+    mediator_1d = mediator.iloc[:,i-1]
+    AURORA_CEL_1D = {'state':state,'action':action,'mediator':mediator_1d,'reward':reward}
+    
+    Robust_est = ME_Single(AURORA_CEL_1D, r_model = 'OLS',
+                         problearner_parameters = problearner_parameters,
+                         truncate = 50, 
+                         target_policy=target_policy, control_policy = control_policy, 
+                         dim_state = 9, dim_mediator = 1, 
+                         expectation_MCMC_iter = 50,
+                         nature_decomp = True,
+                         seed = 10,
+                         method = 'Robust')
+
+    Robust_est.estimate_DE_ME()
+    Robust_DE[i] = Robust_est.est_DE
+    Robust_IE[i] = Robust_est.est_ME
+    Robust_TE[i] = Robust_est.est_TE
+
+
+# In[73]:
+
+
+Mediators_index = ["Overall"]
+Mediators_index.append(mediator.columns.values)
+print(Mediators_index)
+
+
+# In[77]:
+
+
+df = pd.DataFrame()
+df['Mediators'] = np.array(['Four mediators in Total','peritraumatic distress', 'W2 acute stress disorder', 'W2 ptsd','W2 Depression'])
+
+
+df['DE'] = np.round(Robust_DE.reshape(-1, 1), 3)
+df['IE'] = np.round(Robust_IE.reshape(-1, 1), 3)
+df['TE'] = np.round(Robust_TE.reshape(-1, 1), 3)
+
+df
+
+
+# #### treatment effect
+
+# In[12]:
+
+
+n = len(AURORA_CEL)
+#userinfo_index = np.array([3,5,6,7,8,9,10])
+SandA = AURORA_CEL[['Female', 'Age', 'Non-Hispanic White', 'Education',
+       'pre-trauma physical health', 'pre-trauma mental health',
+       'Chronic Perception of Severity of Stress', 'Neuroticism',
+       'Childhood trauma','pre-trauma insomnia (cont)']]
+
+
+# In[16]:
+
+
+SandA
+
+
+# In[15]:
+
+
+# S-learner
+np.random.seed(0)
+S_learner = GradientBoostingRegressor(max_depth=5)
+S_learner.fit(SandA, reward)
+
+
+# In[17]:
+
+
+SandA_all1 = SandA.copy()
+SandA_all0 = SandA.copy()
+SandA_all1['pre-trauma insomnia (cont)']=np.ones(n)
+SandA_all0['pre-trauma insomnia (cont)']=np.zeros(n)
+
+ATE_DM = np.sum(S_learner.predict(SandA_all1) - S_learner.predict(SandA_all0))/n
+
+
+# In[18]:
+
+
+ATE_DM
+
+
+# In[19]:
+
+
+# propensity score model fitting
+from sklearn.linear_model import LogisticRegression
+
+ps_model = LogisticRegression()
+ps_model.fit(state,  action)
+
+
+# In[20]:
+
+
+pi_S = ps_model.predict_proba(state)
+ATE_IS = np.sum((action/pi_S[:,1] - (1-action)/pi_S[:,0])*reward)/n
+
+
+# In[21]:
+
+
+ATE_IS
+
+
+# In[22]:
+
+
+np.sum(action*(reward-S_learner.predict(SandA_all1))/pi_S[:,1] - (1-action)*(reward-S_learner.predict(SandA_all0))/pi_S[:,0])/n
+
+
+# In[23]:
+
+
+# combine the DM estimator and IS estimator
+ATE_DR = ATE_DM + np.sum(action*(reward-S_learner.predict(SandA_all1))/pi_S[:,1] - (1-action)*(reward-S_learner.predict(SandA_all0))/pi_S[:,0])/n
+ATE_DR
+
+
+# In[52]:
+
+
+# mediation effect
+df = pd.DataFrame(columns=['DE','IE','TE'],index=['four mediators in total'])
+df.iloc[0,] = [round(Robust_est.est_DE,3), round(Robust_est.est_ME,3), round(Robust_est.est_TE,3)]
+df
+
+
+# In[53]:
+
+
+# treatment effect
+df = pd.DataFrame(columns=['DM','IS','DR'],index=['treatment effect'])
+df.iloc[0,] = [round(ATE_DM,3), round(ATE_IS,3), round(ATE_DR,3)]
+df
+
+
+# ### 2. Covid19 Data
+
 # In[ ]:
 
 
+import os
+import pandas as pd
+Covid19_CEL = pd.read_csv('/Users/alinaxu/Documents/CDM/Causal-Decision-Making/2_Causal_Structure_Learning/covid19.csv')
 
+
+# In[4]:
+
+
+Covid19_CEL
+
+
+# In[6]:
+
+
+# import related packages
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt;
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.linear_model import LinearRegression
+
+
+n = len(Covid19_CEL)
+
+
+# In[38]:
+
+
+state = np.zeros(n).reshape(-1, 1)
+#state = np.array(Covid19_CEL['Beijing']).reshape(-1, 1)
+action = np.array(Covid19_CEL['A'])
+mediator = np.array(Covid19_CEL['Y'])
+reward = np.array(Covid19_CEL['Tianjin'])
+MovieLens_CEL_MD = {'state':state,'action':action,'mediator':mediator,'reward':reward}
+
+
+# In[39]:
+
+
+from causaldm.causaldm.learners.Causal_Effect_Learning.Mediation_Analysis.ME_Single import ME_Single
+
+
+# In[40]:
+
+
+# Control Policy
+def control_policy(state = None, dim_state=None, action=None, get_a = False):
+    if get_a:
+        action_value = np.array([0])
+    else:
+        state = np.copy(state).reshape(-1,dim_state)
+        NT = state.shape[0]
+        if action is None:
+            action_value = np.array([0]*NT)
+        else:
+            action = np.copy(action).flatten()
+            if len(action) == 1 and NT>1:
+                action = action * np.ones(NT)
+            action_value = 1-action
+    return action_value
+
+def target_policy(state, dim_state = 1, action=None):
+    state = np.copy(state).reshape((-1, dim_state))
+    NT = state.shape[0]
+    pa = 1 * np.ones(NT)
+    if action is None:
+        if NT == 1:
+            pa = pa[0]
+            prob_arr = np.array([1-pa, pa])
+            action_value = np.random.choice([0, 1], 1, p=prob_arr)
+        else:
+            raise ValueError('No random for matrix input')
+    else:
+        action = np.copy(action).flatten()
+        action_value = pa * action + (1-pa) * (1-action)
+    return action_value
+
+
+# In[41]:
+
+
+problearner_parameters = {"splitter":["best","random"], "max_depth" : range(1,50)},
+Direct_est = ME_Single(MovieLens_CEL_MD, r_model = 'OLS',
+                     problearner_parameters = problearner_parameters,
+                     truncate = 50, 
+                     target_policy=target_policy, control_policy = control_policy, 
+                     dim_state = 1, dim_mediator = 1, 
+                     expectation_MCMC_iter = 50,
+                     nature_decomp = True,
+                     seed = 10,
+                     method = 'Direct')
+
+Direct_est.estimate_DE_ME()
+Direct_est.est_DE, Direct_est.est_ME, Direct_est.est_TE,
+
+
+# In[42]:
+
+
+IPW_est = ME_Single(MovieLens_CEL_MD, r_model = 'OLS',
+                     problearner_parameters = problearner_parameters,
+                     truncate = 50, 
+                     target_policy=target_policy, control_policy = control_policy, 
+                     dim_state = 1, dim_mediator = 1, 
+                     expectation_MCMC_iter = 50,
+                     nature_decomp = True,
+                     seed = 10,
+                     method = 'IPW')
+
+IPW_est.estimate_DE_ME()
+IPW_est.est_DE, IPW_est.est_ME, IPW_est.est_TE,
+
+
+# In[44]:
+
+
+Robust_est = ME_Single(MovieLens_CEL_MD, r_model = 'OLS',
+                     problearner_parameters = problearner_parameters,
+                     truncate = 50, 
+                     target_policy=target_policy, control_policy = control_policy, 
+                     dim_state = 1, dim_mediator = 1, 
+                     expectation_MCMC_iter = 50,
+                     nature_decomp = True,
+                     seed = 10,
+                     method = 'Robust')
+
+Robust_est.estimate_DE_ME()
+Robust_est.est_DE, Robust_est.est_ME, Robust_est.est_TE,
+
+
+# In[49]:
+
+
+Robust_DE = np.zeros(30)
+Robust_IE = np.zeros(30)
+Robust_TE = np.zeros(30)
+
+
+for i in range(1,31):
+    state = np.zeros(n).reshape(-1, 1)
+    #state = np.array(Covid19_CEL['Beijing']).reshape(-1, 1)
+    action = np.array(Covid19_CEL['A'])
+    mediator = np.array(Covid19_CEL['Y'])
+    reward = np.array(Covid19_CEL.iloc[:,i])
+    MovieLens_CEL_MD = {'state':state,'action':action,'mediator':mediator,'reward':reward}
+    
+    MovieLens_CEL_MD
+    Robust_est = ME_Single(MovieLens_CEL_MD, r_model = 'OLS',
+                         problearner_parameters = problearner_parameters,
+                         truncate = 50, 
+                         target_policy=target_policy, control_policy = control_policy, 
+                         dim_state = 1, dim_mediator = 1, 
+                         expectation_MCMC_iter = 50,
+                         nature_decomp = True,
+                         seed = 10,
+                         method = 'Robust')
+
+    Robust_est.estimate_DE_ME()
+    Robust_DE[i-1] = Robust_est.est_DE
+    Robust_IE[i-1] = Robust_est.est_ME
+    Robust_TE[i-1] = Robust_est.est_TE
+
+
+# In[51]:
+
+
+# Analysis of causal effects of 2020 Hubei lockdowns on reducing the COVID-19 spread in China regulated by Chinese major cities outside Hubei
+df = pd.DataFrame()
+df['cities'] = np.array(Covid19_CEL.columns.values[1:31])
+
+
+df['DE'] = np.round(Robust_DE.reshape(-1, 1), 3)
+df['IE'] = np.round(Robust_IE.reshape(-1, 1), 3)
+df['TE'] = np.round(Robust_TE.reshape(-1, 1), 3)
+
+df
 
 
 # In[ ]:

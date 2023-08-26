@@ -45,7 +45,7 @@ MediatedQLearn.est_NDE_NIE()
 MediatedQLearn.NIE, MediatedQLearn.NDE, MediatedQLearn.TE
 
 
-# In[3]:
+# In[7]:
 
 
 MediatedQLearn.train(state, action, mediator, reward, T=3, dim_state = 2, dim_mediator = 1, 
@@ -56,7 +56,7 @@ MediatedQLearn.NIE_se, MediatedQLearn.NDE_se, MediatedQLearn.TE_se
 
 # ## CPL: 3-Stage Policy Evaluation
 
-# In[4]:
+# In[8]:
 
 
 from causaldm.learners import QLearning
@@ -77,7 +77,7 @@ from causaldm.learners import QLearning
 # 
 # Using the code below, we evaluated two target polices (regimes). The first one is a fixed treatement regime that applies no treatment at all stages (Policy1), with an estimated value of .8991. Another is a fixed treatment regime that applies treatment at all stages (Policy2), with an estimated value of .8246. Therefore, the treatment effect of Policy2 comparing to Policy1 is -.0745, implying that receiving IV input increase the mortality rate.
 
-# In[5]:
+# In[9]:
 
 
 MDTR_data.rename(columns = {'Died_within_48H':'R',
@@ -97,7 +97,7 @@ model_info = [{"model": "R~S1_1+S3_1+A1+S1_1*A1+S3_1*A1",
               'action_space':{'A3':[0,1]}}]
 
 
-# In[6]:
+# In[10]:
 
 
 # Evaluating the policy with no treatment
@@ -111,7 +111,7 @@ QLearn.train(S, A, R, model_info, T=3, regime = regime, evaluate = True, mimic3_
 QLearn.predict_value(S)
 
 
-# In[7]:
+# In[11]:
 
 
 # Evaluating the policy that gives IV input at both stages
@@ -154,7 +154,7 @@ QLearn.predict_value(S)
 # 
 # The estimated value of the estimated optimal policy is **.9637**.
 
-# In[8]:
+# In[13]:
 
 
 # initialize the learner

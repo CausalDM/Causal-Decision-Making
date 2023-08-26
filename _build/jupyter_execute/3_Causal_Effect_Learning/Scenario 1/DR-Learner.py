@@ -7,11 +7,14 @@
 # 
 # The basic steps of DR-learner is given below:
 # 
-# **Step 1**: Nuisance training: \\
-# (a)  Using $I_{1}^n$ to construct estimates $\hat{\pi}$ for the propensity scores $\pi$; \\
+# **Step 1**: Nuisance training: 
+# 
+# (a)  Using $I_{1}^n$ to construct estimates $\hat{\pi}$ for the propensity scores $\pi$; 
+# 
 # (b)  Using $I_{1}^n$ to construct estimates $\hat\mu_a(s)$ for $\mu_a(s):=\mathbb{E}[R|S=s,A=a]$;
 # 
-# **Step 2**: Pseudo-outcome regression: \\
+# **Step 2**: Pseudo-outcome regression: 
+# 
 # Define $\widehat{\phi}(Z)$ as the pseudo-outcome where 
 # \begin{equation}
 # \widehat{\phi}(Z)=\frac{A-\hat{\pi}(S)}{\hat{\pi}(S)\{1-\hat{\pi}(S)\}}\Big\{R-\hat{\mu}_A(S)\Big\}+\hat{\mu}_1(S)-\hat{\mu}_0(S),

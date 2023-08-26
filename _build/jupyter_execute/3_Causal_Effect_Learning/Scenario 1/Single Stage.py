@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# ## **Single Stage**
+# ## **Single Stage -- Paradigm 1**
 # 
 # ### Real Data 1. Movie Lens
 # 
@@ -14,6 +14,9 @@
 
 
 # import related packages
+import os
+os.getcwd()
+os.chdir('/Users/alinaxu/Documents/CDM/CausalDM')
 import pickle
 import numpy as np
 import causaldm.learners.Online.CMAB._env_realCMAB as env

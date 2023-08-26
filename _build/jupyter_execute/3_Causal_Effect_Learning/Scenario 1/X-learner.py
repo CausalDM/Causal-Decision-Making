@@ -4,7 +4,7 @@
 # ### **3. X-learner**
 # Next, let's introduce the X-learner. As a combination of S-learner and T-learner, the X-learner can use information from the control(treatment) group to derive better estimators for the treatment(control) group, which is provably more efficient than the above two.
 # 
-# The basic
+# The algorithm of X learner can be summarized as the following steps:
 # 
 # 
 # **Step 1:**  Estimate $\mu_0(s)$ and $\mu_1(s)$ separately with any regression algorithms or supervised machine learning methods (same as T-learner);

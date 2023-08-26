@@ -36,7 +36,7 @@
 #     - Received the reward R, and update $C$ and $U$ with
 #         \begin{align}
 #         C_{A_{t}}^{t+1} &= C_{A_{t}}^{t} + 1 \\
-#         U_{A_{t}}^{t+1} &= \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} 
+#         U_{A_{t}}^{t+1} &= \frac{1}{C_{A_{t}}^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=A_{t}) + \sqrt{\frac{2*log(t+1)}{C_{A_{t}}^{t+1}}} 
 #         \end{align}
 
 # ## Demo Code
@@ -62,7 +62,7 @@ from causaldm.learners.Online.MAB import UCB
 # 
 # Here, we imitate an environment based on the MovieLens data.
 
-# In[3]:
+# In[14]:
 
 
 from causaldm.learners.Online.MAB import _env_realMAB as _env
@@ -73,7 +73,7 @@ env = _env.Single_Gaussian_Env(seed = 42)
 # 
 # - K: # of arms
 
-# In[4]:
+# In[15]:
 
 
 UCB_agent = UCB.UCB1(env.K)
@@ -89,7 +89,7 @@ UCB_agent = UCB.UCB1(env.K)
 # 3. Update the posterior distribution
 # <code> UCB_agent.receive_reward(t,A,R) </code>
 
-# In[5]:
+# In[16]:
 
 
 t = 0
@@ -104,7 +104,7 @@ t, A, R
 # ### Demo Code for Bernoulli Bandit
 # The steps are similar to those previously performed with a Gaussian Bandit.
 
-# In[6]:
+# In[18]:
 
 
 env = _env.Single_Bernoulli_Env(seed=42)

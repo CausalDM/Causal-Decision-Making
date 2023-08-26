@@ -40,7 +40,7 @@ MRL_df[MRL_df.icustayid==1006]
 from causaldm.learners.Causal_Effect_Learning.Mediation_Analysis import ME_MDP
 
 
-# In[3]:
+# In[11]:
 
 
 # Control Policy
@@ -76,7 +76,7 @@ def target_policy(state, dim_state = 1, action=None):
     return action_value
 
 
-# In[4]:
+# In[12]:
 
 
 #Fixed hyper-parameter--no need to modify
@@ -91,7 +91,7 @@ L = 5
 scaler = 'Identity'
 
 
-# In[5]:
+# In[21]:
 
 
 Robust_est = ME_MDP.evaluator(mimic3_MRL, r_model = 'OLS',

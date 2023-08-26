@@ -11,11 +11,11 @@
 # \tau(s)=\mathbb{E}[R|S,A=1]-\mathbb{E}[R|S,A=0].
 # \end{equation*}
 # 
-# The basic idea of S-learner is to fit a model for $\mathbb{E}[R|S,A]$, and then construct a plug-in estimator based on the expression above. Specifically, the algorithm can be summarized as below:
+# The basic idea of S-learner is to fit a model for $\mathbb{E}[R|S,A]$, and then construct a plug-in estimator for it. Specifically, the algorithm can be summarized as below:
 # 
-# **Step 1:**  Estimate the combined response function $\mu(s,a):=\mathbb{E}[R|S=s,A=a]$ with any regression algorithm or supervised machine learning methods;
+# **Step 1:**  Estimate the response function $\mu(s,a):=\mathbb{E}[R|S=s,A=a]$ with any supervised machine learning algorithm;
 # 
-# **Step 2:**  Estimate HTE by 
+# **Step 2:**  The estimated HTE of S-learner is given by 
 # \begin{equation*}
 # \hat{\tau}_{\text{S-learner}}(s)=\hat\mu(s,1)-\hat\mu(s,0).
 # \end{equation*}

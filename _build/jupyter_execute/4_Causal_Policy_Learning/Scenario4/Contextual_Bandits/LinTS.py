@@ -98,19 +98,19 @@ LinTS_Gaussian_agent = LinTS.LinTS_Gaussian(sigma = sigma, prior_theta_u = prior
 
 
 t = 0
-X, feature_info, _ = env.get_Phi(t)
+X, feature_info = env.get_Phi(t)
 A = LinTS_Gaussian_agent.take_action(X)
 R = env.get_reward(t,A)
 LinTS_Gaussian_agent.receive_reward(t,A,R,X)
 t,A,R,feature_info
 
 
-# **Interpretation**: For step 0, the TS agent encounter a male user who is a 25-year-old college/grad student. Given the information, the agent recommend a Comedy (arm 0), and receive a rate of 3 from the user.
+# **Interpretation**: For step 0, the TS agent encounter a male user who is a 25-year-old college/grad student. Given the information, the agent recommend a Thriller (arm 3), and receive a rate of 2 from the user.
 
 # ### Demo Code for Bernoulli Bandit
 # The steps are similar to those previously performed with a Gaussian Bandit. Note that, when specifying the prior distribution of the expected reward, the mean-precision form of the Beta distribution is used here, i.e., Beta($\mu$, $\phi$), where $\mu$ is the mean reward of each arm and $\phi$ is the precision of the Beta distribution. 
 
-# In[ ]:
+# In[6]:
 
 
 env = _env.Single_Contextual_Env(seed = 0, Binary = True)
@@ -122,14 +122,14 @@ retrain_freq = 1 #frequency to train the GLM model
 
 LinTS_GLM_agent = LinTS.LinTS_GLM(K = K, p = p , alpha = alpha, retrain_freq = retrain_freq)
 t = 0
-X, feature_info, _ = env.get_Phi(t)
+X, feature_info = env.get_Phi(t)
 A = LinTS_GLM_agent.take_action(X)
 R = env.get_reward(t,A)
 LinTS_GLM_agent.receive_reward(t,A,R,X)
 t,A,R,feature_info
 
 
-# **Interpretation**: For step 0, the TS agent encounter a male user who is a 25-year-old college/grad student. Given the information, the agent recommend a Sci-Fi (arm 4), and receive a rate of 1 from the user.
+# **Interpretation**: For step 0, the TS agent encounter a male user who is a 25-year-old college/grad student. Given the information, the agent recommend a Thriller (arm 3), and receive a rate of 0 from the user.
 
 # ## References
 # 
