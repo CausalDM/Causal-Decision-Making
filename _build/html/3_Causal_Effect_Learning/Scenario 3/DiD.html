@@ -1112,8 +1112,13 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#extensions-to-be-revised">
-     Extensions [to be revised]
+    <a class="reference internal nav-link" href="#demo">
+     Demo
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#time-varying-att">
+     Time-Varying ATT
     </a>
    </li>
   </ul>
@@ -1157,27 +1162,29 @@ title="Print to PDF"
 <h2>Definitions<a class="headerlink" href="#definitions" title="Permalink to this heading">#</a></h2>
 <p>In the context of panel data, we define <span class="math notranslate nohighlight">\(Y_t(d)\)</span> as the potential outcome one would observe under treatment <span class="math notranslate nohighlight">\(D=d\)</span> at stage <span class="math notranslate nohighlight">\(T=t\)</span>.</p>
 <p>Our problem of interest is to identify and estimate the average treatment effect of intervention <span class="math notranslate nohighlight">\(D\)</span> on the treated, which is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6712d9a8-7f79-47de-ad39-e97aaec48c79">
-<span class="eqno">(52)<a class="headerlink" href="#equation-6712d9a8-7f79-47de-ad39-e97aaec48c79" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-df663f91-d060-4e32-8658-f60cd779c423">
+<span class="eqno">(52)<a class="headerlink" href="#equation-df663f91-d060-4e32-8658-f60cd779c423" title="Permalink to this equation">#</a></span>\[\begin{equation}
 ATT_t = \mathbb{E}[Y_t(1)-Y_t(0)|D=1].
 \end{equation}\]</div>
 <p>The heterogeneous treatment effect on the treated can be similarly defined by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dced250c-524f-4b03-b095-507af7f7c808">
-<span class="eqno">(53)<a class="headerlink" href="#equation-dced250c-524f-4b03-b095-507af7f7c808" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-19014a38-6d49-4cff-ae94-4e607a96cdf2">
+<span class="eqno">(53)<a class="headerlink" href="#equation-19014a38-6d49-4cff-ae94-4e607a96cdf2" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \tau_t(s) = \mathbb{E}[Y_t(1)-Y_t(0)|D=1,S=s],
 \end{equation}\]</div>
 <p>where we also condition on the covariates <span class="math notranslate nohighlight">\(S=s\)</span> to denote the individualized treatment effect.</p>
+<p>For the units in treated group, we can estimate the potential outcome <span class="math notranslate nohighlight">\(\mathbb{E}[Y_t(1)|D=1]\)</span> from observational data after they received treatment (under SUTVA assumption that we are going to introduce very shortly). The tricky part of estimating ATT lies in the estimation of the counterfactual, <span class="math notranslate nohighlight">\(\mathbb{E}[Y_t(0)|D=1]\)</span>. That is, we need to answer the question ``What’s the potential outcome for a treated unit if it was untreated?”</p>
+<p>The key idea of diff-in-diff approach is that we can utilize the information in the control unit group, i.e. finding similar units who have never been treated before and after treatment time to construct an estimator for <span class="math notranslate nohighlight">\(\mathbb{E}[Y_t(0)|D=1]\)</span>. To achieve this, we need some further assumptions aside from SUTVA to guarantee that the similarity between treated and control groups can be ``transfered”.</p>
 </section>
 <section id="assumptions">
 <h2>Assumptions<a class="headerlink" href="#assumptions" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">SUTVA</span></code>: <span class="math notranslate nohighlight">\(Y_t=dY_t(1) + (1-d) Y_t(0)\)</span>, <span class="math notranslate nohighlight">\(\forall d\in \{0,1\}\)</span></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">exogeneity</span></code>: the covariates <span class="math notranslate nohighlight">\(S\)</span> won’t be affected by the treatment assigned to the subject, i.e. <span class="math notranslate nohighlight">\(S(d)=S\)</span> for any <span class="math notranslate nohighlight">\(d\in\{0,1\}\)</span>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">NEPT</span></code>: the treatment has No Effect on the Pre-Treated population (NEPT), i.e. <span class="math notranslate nohighlight">\(\tau_t(s)=0,\)</span> <span class="math notranslate nohighlight">\(\forall s\in\mathcal{S}\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NEPT</span></code>: the treatment has No Effect on the Pre-Treated population (NEPT), i.e. <span class="math notranslate nohighlight">\(\tau_0(s)=0,\)</span> <span class="math notranslate nohighlight">\(\forall s\in\mathcal{S}\)</span>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">parallel</span> <span class="pre">trend</span></code>: the outcomes in treatment and control groups follow the same trend. That is,</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-ed798e48-7f85-4fd1-984c-cdc4c441be2f">
-<span class="eqno">(54)<a class="headerlink" href="#equation-ed798e48-7f85-4fd1-984c-cdc4c441be2f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c144eb06-8f7e-4d8e-be4b-b785ca725b67">
+<span class="eqno">(54)<a class="headerlink" href="#equation-c144eb06-8f7e-4d8e-be4b-b785ca725b67" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \mathbb{E}[Y_1(0)|S_i=s,D=1]- \mathbb{E}[Y_1(0)|S_i=s,D=0]=\mathbb{E}[Y_0(0)|S_i=s,D=1]- \mathbb{E}[Y_0(0)|S_i=s,D=0]
 \end{aligned}
@@ -1186,37 +1193,178 @@ ATT_t = \mathbb{E}[Y_t(1)-Y_t(0)|D=1].
 <section id="estimation">
 <h2>Estimation<a class="headerlink" href="#estimation" title="Permalink to this heading">#</a></h2>
 <p>The heterogeneous treatment effect on the treated group can be estimated by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-133996e1-9507-478b-b12e-d4e52b0ad621">
-<span class="eqno">(55)<a class="headerlink" href="#equation-133996e1-9507-478b-b12e-d4e52b0ad621" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-005aab01-3057-40af-92d1-380d4ee6bdd9">
+<span class="eqno">(55)<a class="headerlink" href="#equation-005aab01-3057-40af-92d1-380d4ee6bdd9" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \tau_1(s) = \mathbb{E}[Y_1|S=s,D=1]-\mathbb{E}[Y_1|S=s,D=0]-\mathbb{E}[Y_0|S=s,D=1]+\mathbb{E}[Y_0|S=s,D=0]
 \end{equation}\]</div>
+<p>The name ``difference-in-difference” comes from the expression above, where we are taking the difference of the post-treatment effect and pre-treatment effect between treated group and control group.</p>
 </section>
-<section id="extensions-to-be-revised">
-<h2>Extensions [to be revised]<a class="headerlink" href="#extensions-to-be-revised" title="Permalink to this heading">#</a></h2>
+<section id="demo">
+<h2>Demo<a class="headerlink" href="#demo" title="Permalink to this heading">#</a></h2>
+<p>In this section, we estimate the individualized treatment effect over time through a simple dataset. This data is available in <a class="reference external" href="https://davidcard.berkeley.edu/papers/njmin-aer.pdf">Card and Krueger (1994)</a>, which aims to investigate the effect of raising the in-state minimum wage on employment.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is the demo for panel data</span>
+<span class="c1"># km</span>
+<span class="c1"># https://www.kaggle.com/code/harrywang/difference-in-differences-in-python/input</span>
+<span class="c1"># https://www.kaggle.com/datasets/parulpandey/covid19-clinical-trials-dataset</span>
+<span class="c1"># https://www.kaggle.com/code/sandhyakrishnan02/econometric-analysis-of-panel-data-using-r/input</span>
+<span class="c1"># employment: https://www.kaggle.com/datasets/harrywang/propensity-score-matching?resource=download</span>
+<span class="c1"># california tobacco: https://github.com/susanathey/MCPanel/blob/master/tests/examples_from_paper/california/smok_outcome.csv</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The dataset contains 384 rows in total, where each row denotes a specific fast-food restaurant in New Jersey or Pennsylvania. On April 1, 1992, New Jersey raised the state minimum wage from <span class="math notranslate nohighlight">\(\$\)</span>4.25 to <span class="math notranslate nohighlight">\(\$\)</span>5.05 while the minimum wage in Pennsylvania stays the same at <span class="math notranslate nohighlight">\(\$\)</span>4.25. For each company, we record the total number of employees in Febuarary (i.e. before executing new policy) and the number of employees in November (i.e. after executing the new policy).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load the data</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">data_employment</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;employment.csv&#39;</span><span class="p">)</span>
+<span class="n">data_employment</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>state</th>
+      <th>total_emp_feb</th>
+      <th>total_emp_nov</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>40.50</td>
+      <td>24.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>13.75</td>
+      <td>11.5</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>8.50</td>
+      <td>10.5</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>34.00</td>
+      <td>20.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>24.00</td>
+      <td>35.5</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_PA</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_employment</span><span class="p">[</span><span class="n">data_employment</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">n_NJ</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_employment</span><span class="p">[</span><span class="n">data_employment</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">n_PA</span><span class="p">,</span> <span class="n">n_NJ</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(75, 309)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># calculate the estimated </span>
+<span class="n">Y_PA_feb</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">data_employment</span><span class="p">[</span><span class="n">data_employment</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">total_emp_feb</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="n">n_PA</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Y_PA_nov</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">data_employment</span><span class="p">[</span><span class="n">data_employment</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">total_emp_nov</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="n">n_PA</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Y_NJ_feb</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">data_employment</span><span class="p">[</span><span class="n">data_employment</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">total_emp_feb</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="n">n_NJ</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Y_NJ_nov</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">data_employment</span><span class="p">[</span><span class="n">data_employment</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">total_emp_nov</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="n">n_NJ</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Y_PA_feb</span><span class="p">,</span> <span class="n">Y_PA_nov</span><span class="p">,</span> <span class="n">Y_NJ_feb</span><span class="p">,</span> <span class="n">Y_NJ_nov</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(23.38, 21.1, 20.43, 20.9)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Definition of three columns:</p>
+<ul class="simple">
+<li><p>``State”: PA(0) and NJ(1)</p></li>
+<li><p>``total_emp_feb”: Total number of employees in Febuarary, 1992.</p></li>
+<li><p>``total_emp_nov”: Total number of employees in November, 1992.</p></li>
+</ul>
+<p>In this example, we define the treated group as the restaurants in NJ, and control group as the restaurants in PA.
+First, if we look at the control group (i.e. restaurants in PA), the average number of employees is 23.38 in Feb and changes to 21.1 in Nov, yielding</p>
+<div class="amsmath math notranslate nohighlight" id="equation-345c7db2-e676-4520-8bef-eec94ca19eb5">
+<span class="eqno">(56)<a class="headerlink" href="#equation-345c7db2-e676-4520-8bef-eec94ca19eb5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+    \hat{\mathbb{E}}[Y_1|D=0]-\hat{\mathbb{E}}[Y_0|D=0] = 21.1 - 23.38 = -2.28.
+\end{equation}\]</div>
+<p>Similarly, for treated group (i.e. restaurants in NJ), the average number of employees is 20.43 in Feb and changes to 20.9 in Nov, yielding</p>
+<div class="amsmath math notranslate nohighlight" id="equation-5d23c76a-ac38-4c8c-a7bf-27158a4ae9c5">
+<span class="eqno">(57)<a class="headerlink" href="#equation-5d23c76a-ac38-4c8c-a7bf-27158a4ae9c5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+    \hat{\mathbb{E}}[Y_1|D=0]-\hat{\mathbb{E}}[Y_0|D=0] = 20.9 - 20.43 = 0.47.
+\end{equation}\]</div>
+<p>According to the diff-in-diff expression, raising minimum wage in state has a positive impact on the employment. The average treatment effect is estimated by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-22802b4c-ae5c-4aaf-b2fb-f2af38b34d0a">
+<span class="eqno">(58)<a class="headerlink" href="#equation-22802b4c-ae5c-4aaf-b2fb-f2af38b34d0a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\hat{\tau} = \hat{\mathbb{E}}[Y_1|D=1]-\hat{\mathbb{E}}[Y_1|D=0]-\hat{\mathbb{E}}[Y_0|D=1]+\hat{\mathbb{E}}[Y_0|D=0] =  0.47 - (-2.28) = 2.75.
+\end{equation}\]</div>
+</section>
+<section id="time-varying-att">
+<h2>Time-Varying ATT<a class="headerlink" href="#time-varying-att" title="Permalink to this heading">#</a></h2>
 <p>Notations:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(G_i\in\{0,1\}\)</span>: State indicator denoting whether unit <span class="math notranslate nohighlight">\(i\)</span> is in the control or treated group;</p></li>
 <li><p><span class="math notranslate nohighlight">\(T_i\in\{0,1\}\)</span>: Time of the observation. <span class="math notranslate nohighlight">\(T_i=0\)</span> if <span class="math notranslate nohighlight">\(0\leq t\leq T_0\)</span>, and <span class="math notranslate nohighlight">\(T_i=1\)</span> if <span class="math notranslate nohighlight">\(T_0+1\leq T_i\leq T_0+T_1\)</span>.</p></li>
 </ul>
 <p><span class="math notranslate nohighlight">\(G_i=1\)</span> if unit <span class="math notranslate nohighlight">\(i\)</span> comes from the treatment group, and <span class="math notranslate nohighlight">\(G_i=0\)</span> if it is in control group. Similarly, define <span class="math notranslate nohighlight">\(T_i=1\)</span> if the unit is in the post-treatment period, and <span class="math notranslate nohighlight">\(T_i=0\)</span> if it’s in pre-treatment period. The observed outcome is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-62f31574-cd03-4f7b-b47a-b7752e3198eb">
-<span class="eqno">(56)<a class="headerlink" href="#equation-62f31574-cd03-4f7b-b47a-b7752e3198eb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-03e61673-e4da-4794-a3ee-9b38b1dd45ee">
+<span class="eqno">(59)<a class="headerlink" href="#equation-03e61673-e4da-4794-a3ee-9b38b1dd45ee" title="Permalink to this equation">#</a></span>\[\begin{equation}
     Y_i = (1-G_iT_i)\cdot Y_i(0) + G_iT_i\cdot Y_i(1),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(Y_i(a)\)</span> denotes the potential outcome one would observe under action <span class="math notranslate nohighlight">\(A=a\)</span>.</p>
 <p>The difference of average outcomes for the <span class="math notranslate nohighlight">\(m\)</span> treated units after and before the treatment time point is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dff71183-8327-4b82-82dc-0c60135f395e">
-<span class="eqno">(57)<a class="headerlink" href="#equation-dff71183-8327-4b82-82dc-0c60135f395e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a5ce67d1-54d6-420a-8117-aa449d665247">
+<span class="eqno">(60)<a class="headerlink" href="#equation-a5ce67d1-54d6-420a-8117-aa449d665247" title="Permalink to this equation">#</a></span>\[\begin{equation}
 D_{\text{tr}} = \frac{1}{m} \sum_{i=1}^m\Big[\frac{1}{T_1}\sum_{t=T_0+1}^{T_0+T_1} Y_{i,t}-\frac{1}{T_0} \sum_{t=1}^{T_0} Y_{i,t}\Big]
 \end{equation}\]</div>
 <p>Similarly, the difference of average outcomes for the <span class="math notranslate nohighlight">\(n\)</span> control units after and before the treatment time point is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5c611bc3-368d-476c-96e6-b4ecb1e8f52f">
-<span class="eqno">(58)<a class="headerlink" href="#equation-5c611bc3-368d-476c-96e6-b4ecb1e8f52f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-82df179c-0973-4563-a19a-a9e24105764b">
+<span class="eqno">(61)<a class="headerlink" href="#equation-82df179c-0973-4563-a19a-a9e24105764b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 D_{\text{co}} = \frac{1}{n} \sum_{i=m+1}^{m+n}\Big[\frac{1}{T_1}\sum_{t=T_0+1}^{T_0+T_1} Y_{i,t}-\frac{1}{T_0}\sum_{t=1}^{T_0} Y_{i,t}\Big]
 \end{equation}\]</div>
 <p>Under the parallel trend assumption, we are able to subtract the effect that’s not caused by treatment intervention:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-28c7444e-c6ce-406a-b937-a6509ce14723">
-<span class="eqno">(59)<a class="headerlink" href="#equation-28c7444e-c6ce-406a-b937-a6509ce14723" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-54610dbe-ad50-4a99-a7fd-af81296ccc3e">
+<span class="eqno">(62)<a class="headerlink" href="#equation-54610dbe-ad50-4a99-a7fd-af81296ccc3e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\Delta} = D_{\text{tr}} - D_{\text{co}} = \frac{1}{m} \sum_{i=1}^m\Big[\frac{1}{T_1}\sum_{t=T_0+1}^{T_0+T_1} Y_{i,t}-\frac{1}{T_0} \sum_{t=1}^{T_0} Y_{i,t}\Big] - \frac{1}{n} \sum_{i=m+1}^{m+n}\Big[\frac{1}{T_1}\sum_{t=T_0+1}^{T_0+T_1} Y_{i,t}-\frac{1}{T_0}\sum_{t=1}^{T_0} Y_{i,t}\Big].
 \end{equation}\]</div>
 </section>
@@ -1315,8 +1463,13 @@ D_{\text{co}} = \frac{1}{n} \sum_{i=m+1}^{m+n}\Big[\frac{1}{T_1}\sum_{t=T_0+1}^{
     </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#extensions-to-be-revised">
-     Extensions [to be revised]
+    <a class="reference internal nav-link" href="#demo">
+     Demo
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#time-varying-att">
+     Time-Varying ATT
     </a>
    </li>
   </ul>
