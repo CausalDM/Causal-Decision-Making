@@ -1,4 +1,15 @@
 Traceback (most recent call last):
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 730, in _async_poll_for_reply
+    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/util.py", line 96, in ensure_async
+    result = await obj
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/jupyter_client/channels.py", line 230, in get_msg
+    raise Empty
+_queue.Empty
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
   File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
     executenb(
   File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 1204, in execute
@@ -11,30 +22,20 @@ Traceback (most recent call last):
     return future.result()
   File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 663, in async_execute
     await self.async_execute_cell(
-  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 965, in async_execute_cell
-    await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
-    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
-nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
-------------------
-# The code is available at https://github.com/claudiashi57/dragonnet
-# import related packages
-import numpy as np
-import pandas as pd
-from matplotlib import pyplot as plt;
-from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.linear_model import LinearRegression
-
-from causaldm.learners.Causal_Effect_Learning.Single_Stage.Dragonnet import *
-------------------
-
-[0;31m---------------------------------------------------------------------------[0m
-[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-[0;32m/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_80980/244113421.py[0m in [0;36m<module>[0;34m[0m
-[1;32m      7[0m [0;32mfrom[0m [0msklearn[0m[0;34m.[0m[0mlinear_model[0m [0;32mimport[0m [0mLinearRegression[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      8[0m [0;34m[0m[0m
-[0;32m----> 9[0;31m [0;32mfrom[0m [0mcausaldm[0m[0;34m.[0m[0mlearners[0m[0;34m.[0m[0mCausal_Effect_Learning[0m[0;34m.[0m[0mSingle_Stage[0m[0;34m.[0m[0mDragonnet[0m [0;32mimport[0m [0;34m*[0m[0;34m[0m[0;34m[0m[0m
-[0m
-[0;31mModuleNotFoundError[0m: No module named 'causaldm.learners.Causal_Effect_Learning.Single_Stage.Dragonnet'
-ModuleNotFoundError: No module named 'causaldm.learners.Causal_Effect_Learning.Single_Stage.Dragonnet'
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 949, in async_execute_cell
+    exec_reply = await self.task_poll_for_reply
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 754, in _async_poll_for_reply
+    await self._async_handle_timeout(timeout, cell)
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 801, in _async_handle_timeout
+    raise CellTimeoutError.error_from_timeout_and_cell(
+nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+test_outputs, train_output = train_and_predict_dragons(MovieLens_CEL['Drama'].to_numpy().reshape(-1,1),MovieLens_CEL['rating'].to_numpy().reshape(-1,1), S.to_numpy(),
+                                                       targeted_regularization=True,
+                                                       output_dir='/Users/alinaxu/Downloads/dragonnet-master/result',
+                                                       knob_loss=dragonnet_loss_binarycross, ratio=1., dragon='dragonnet',
+                                                       val_split=0.2, batch_size=64)
+-------------------
 
