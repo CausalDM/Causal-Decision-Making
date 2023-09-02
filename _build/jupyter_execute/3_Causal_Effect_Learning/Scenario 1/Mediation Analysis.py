@@ -13,7 +13,9 @@
 
 
 from IPython import display
-display.Image("CEL-Mediation-IID.png")
+import os
+os.chdir('/Users/alinaxu/Documents/CDM/CausalDM')
+display.Image("./images/CEL-Mediation-IID.png")
 
 
 # 
@@ -126,22 +128,22 @@ display.Image("CEL-Mediation-IID.png")
 # ## Data Demo
 # ### 1. AURORA Data
 
-# In[2]:
+# In[4]:
 
 
 import os
 import pandas as pd
-os.chdir('/Users/alinaxu/Documents/CDM/Causal-Decision-Making/3_Causal_Effect_Learning/Scenario 1')
-AURORA_CEL = pd.read_csv('Survey_red.csv')
+os.chdir('/Users/alinaxu/Documents/CDM/CausalDM')
+AURORA_CEL = pd.read_csv('./causaldm/data/Survey_red.csv')
 
 
-# In[2]:
+# In[5]:
 
 
 AURORA_CEL.columns
 
 
-# In[3]:
+# In[6]:
 
 
 import matplotlib.pyplot as plt
@@ -437,15 +439,15 @@ df
 
 # ### 2. Covid19 Data
 
-# In[ ]:
+# In[7]:
 
 
 import os
 import pandas as pd
-Covid19_CEL = pd.read_csv('/Users/alinaxu/Documents/CDM/Causal-Decision-Making/2_Causal_Structure_Learning/covid19.csv')
+Covid19_CEL = pd.read_csv('./causaldm/data/covid19.csv')
 
 
-# In[4]:
+# In[8]:
 
 
 Covid19_CEL

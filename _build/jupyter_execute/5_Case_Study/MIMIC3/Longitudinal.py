@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# ## MIMIC III (3-Stages)
+# # MIMIC III (3-Stages)
 # 
 # In this notebook, we conducted analysis on the MIMIC III data with 3 stages. We first analyzed the mediation effect and then evaluate the policy of interest and calculated the optimal policy. As informed by the causal structure learning, here we consider Glucose and PaO2_FiO2 as confounders/states, IV_Input as the action, SOFA as the mediator. 
 
@@ -9,7 +9,7 @@
 
 
 import os
-os.chdir('D:/Github/CausalDM')
+os.chdir('D:/GitHub/CausalDM')
 import pandas as pd
 import pickle
 import numpy as np
@@ -34,7 +34,7 @@ MDTR_data.head()
 # In[2]:
 
 
-from causaldm.learners.Causal_Effect_Learning.Mediation_Analysis import Mediated_QLearning
+from causaldm.learners.CEL.MA import Mediated_QLearning
 MediatedQLearn = Mediated_QLearning.Mediated_QLearning()
 N=len(state)
 regime_control = pd.DataFrame({'IV_Input_1':[0]*N,'IV_Input_2':[0]*N, 'IV_Input_3':[0]*N}).set_index(state.index)
@@ -45,7 +45,7 @@ MediatedQLearn.est_NDE_NIE()
 MediatedQLearn.NIE, MediatedQLearn.NDE, MediatedQLearn.TE
 
 
-# In[7]:
+# In[3]:
 
 
 MediatedQLearn.train(state, action, mediator, reward, T=3, dim_state = 2, dim_mediator = 1, 
@@ -56,10 +56,10 @@ MediatedQLearn.NIE_se, MediatedQLearn.NDE_se, MediatedQLearn.TE_se
 
 # ## CPL: 3-Stage Policy Evaluation
 
-# In[8]:
+# In[4]:
 
 
-from causaldm.learners import QLearning
+from causaldm.learners.CPL13.disc import QLearning
 
 
 # As an example, we use the **Q-learning** algorithm to evaluate policies based on the observed data, with the linear regression models defined as the following:
@@ -77,7 +77,7 @@ from causaldm.learners import QLearning
 # 
 # Using the code below, we evaluated two target polices (regimes). The first one is a fixed treatement regime that applies no treatment at all stages (Policy1), with an estimated value of .8991. Another is a fixed treatment regime that applies treatment at all stages (Policy2), with an estimated value of .8246. Therefore, the treatment effect of Policy2 comparing to Policy1 is -.0745, implying that receiving IV input increase the mortality rate.
 
-# In[9]:
+# In[5]:
 
 
 MDTR_data.rename(columns = {'Died_within_48H':'R',
@@ -97,7 +97,7 @@ model_info = [{"model": "R~S1_1+S3_1+A1+S1_1*A1+S3_1*A1",
               'action_space':{'A3':[0,1]}}]
 
 
-# In[10]:
+# In[6]:
 
 
 # Evaluating the policy with no treatment
@@ -111,7 +111,7 @@ QLearn.train(S, A, R, model_info, T=3, regime = regime, evaluate = True, mimic3_
 QLearn.predict_value(S)
 
 
-# In[11]:
+# In[7]:
 
 
 # Evaluating the policy that gives IV input at both stages
@@ -154,7 +154,7 @@ QLearn.predict_value(S)
 # 
 # The estimated value of the estimated optimal policy is **.9637**.
 
-# In[13]:
+# In[8]:
 
 
 # initialize the learner
@@ -175,9 +175,3 @@ print("opt value:",V_hat)
 # ## Reference
 # 
 # [1] Zheng, W., & van der Laan, M. (2017). Longitudinal mediation analysis with time-varying mediators and exposures, with application to survival outcomes. Journal of causal inference, 5(2).
-
-# In[ ]:
-
-
-
-

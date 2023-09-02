@@ -9,7 +9,7 @@
 
 
 import os
-os.chdir('D:/Github/CausalDM')
+os.chdir('D:/GitHub/CausalDM')
 import pandas as pd
 import numpy as np
 single_data = pd.read_csv('./causaldm/MIMIC3/mimic3_single_stage.csv')
@@ -44,10 +44,10 @@ single_dataset = {'state':state,'action':action,'mediator':mediator,'reward':rew
 # In[3]:
 
 
-from causaldm.learners.Causal_Effect_Learning.Mediation_Analysis.ME_Single import ME_Single
+from causaldm.learners.CEL.MA.ME_Single import ME_Single
 
 
-# In[5]:
+# In[4]:
 
 
 # Control Policy
@@ -83,7 +83,7 @@ def target_policy(state, dim_state = 1, action=None):
     return action_value
 
 
-# In[6]:
+# In[5]:
 
 
 problearner_parameters = {"splitter":["best","random"], "max_depth" : range(1,50)},
@@ -92,7 +92,7 @@ Direct_est = ME_Single(single_dataset, r_model = 'OLS',
                      truncate = 50, 
                      target_policy=target_policy, control_policy = control_policy, 
                      dim_state = 2, dim_mediator = 1, 
-                     expectation_MCMC_iter = 50,
+                     MCMC = 50,
                      nature_decomp = True,
                      seed = 10,
                      method = 'Direct')
@@ -101,7 +101,7 @@ Direct_est.estimate_DE_ME()
 Direct_est.est_DE, Direct_est.est_ME, Direct_est.est_TE,
 
 
-# In[7]:
+# In[6]:
 
 
 IPW_est = ME_Single(single_dataset, r_model = 'OLS',
@@ -109,7 +109,7 @@ IPW_est = ME_Single(single_dataset, r_model = 'OLS',
                      truncate = 50, 
                      target_policy=target_policy, control_policy = control_policy, 
                      dim_state = 2, dim_mediator = 1, 
-                     expectation_MCMC_iter = 50,
+                     MCMC = 50,
                      nature_decomp = True,
                      seed = 10,
                      method = 'IPW')
@@ -118,7 +118,7 @@ IPW_est.estimate_DE_ME()
 IPW_est.est_DE, IPW_est.est_ME, IPW_est.est_TE,
 
 
-# In[8]:
+# In[7]:
 
 
 Robust_est = ME_Single(single_dataset, r_model = 'OLS',
@@ -126,7 +126,7 @@ Robust_est = ME_Single(single_dataset, r_model = 'OLS',
                      truncate = 50, 
                      target_policy=target_policy, control_policy = control_policy, 
                      dim_state = 2, dim_mediator = 1, 
-                     expectation_MCMC_iter = 50,
+                     MCMC = 50,
                      nature_decomp = True,
                      seed = 10,
                      method = 'Robust')
@@ -137,10 +137,10 @@ Robust_est.est_DE, Robust_est.est_ME, Robust_est.est_TE,
 
 # ## CPL: Single-Stage Policy Evaluation
 
-# In[9]:
+# In[8]:
 
 
-from causaldm.learners import QLearning
+from causaldm.learners.CPL13.disc import QLearning
 
 
 # As an example, we use the **Q-learning** algorithm to evaluate policies based on the observed data, with the linear regression models defined as the following:
@@ -151,7 +151,7 @@ from causaldm.learners import QLearning
 # 
 # Using the code below, we evaluated two target polices (regimes). The first one is a fixed treatement regime that applies no treatment (Policy1), with an estimated value of .9999. Another is a fixed treatment regime that applies treatment all the time (Policy2), with an estimated value of .7646. Therefore, the treatment effect of Policy2 comparing to Policy1 is -.2353, implying that receiving IV input increase the mortality rate.
 
-# In[10]:
+# In[9]:
 
 
 single_data.rename(columns = {'Died within 48H':'R', 'Glucose':'S1', 'PaO2_FiO2':'S2', 'IV Input':'A'}, inplace = True)
@@ -163,7 +163,7 @@ model_info = [{"model": "R~S1+S2+A+S1*A+S2*A",
               'action_space':{'A':[0,1]}}]
 
 
-# In[11]:
+# In[10]:
 
 
 # Evaluating the policy with no treatment
@@ -175,7 +175,7 @@ QLearn.train(S, A, R, model_info, T=1, regime = regime, evaluate = True, mimic3_
 QLearn.predict_value(S)
 
 
-# In[12]:
+# In[11]:
 
 
 # Evaluating the policy that gives IV input at both stages
@@ -202,7 +202,7 @@ QLearn.predict_value(S)
 # | 6          | 1        |
 # The estimated value of the estimated optimal policy is **.9999**.
 
-# In[14]:
+# In[12]:
 
 
 # initialize the learner
@@ -227,9 +227,3 @@ print("opt value:",V_hat)
 # [2]Hong, G. (2010). Ratio of mediator probability weighting for estimating natural direct and indirect effects. In Proceedings of the American Statistical Association, biometrics section (pp. 2401-2415).
 # 
 # [3] Tchetgen, E. J. T., & Shpitser, I. (2012). Semiparametric theory for causal mediation analysis: efficiency bounds, multiple robustness, and sensitivity analysis. Annals of statistics, 40(3), 1816.
-
-# In[ ]:
-
-
-
-

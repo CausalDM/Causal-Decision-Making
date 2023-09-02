@@ -15,7 +15,9 @@
 
 
 from IPython import display
-display.Image("CEL-DiD.png")
+import os
+os.chdir('/Users/alinaxu/Documents/CDM/CausalDM')
+display.Image("./images/CEL-DiD.png")
 
 
 # In the above figure, the green real line denotes the observed outcome in the control group, and the purple real line (along with the orange dashed line in the pre-treatment period) denotes the observed outcome in the treatment group. The essense of DiD method is based on the `parallel trend assumption`: i.e. if the data in treatment group remain untreated all the time, the outcome trend (shown by the orange line above) will be the same as the control group.
@@ -68,7 +70,7 @@ display.Image("CEL-DiD.png")
 # In this section, we estimate the individualized treatment effect over time through a simple dataset. This data is available in [Card and Krueger (1994)](https://davidcard.berkeley.edu/papers/njmin-aer.pdf), which aims to investigate the effect of raising the in-state minimum wage on employment. 
 # 
 
-# In[2]:
+# In[8]:
 
 
 # this is the demo for panel data
@@ -82,17 +84,19 @@ display.Image("CEL-DiD.png")
 
 # The dataset contains 384 rows in total, where each row denotes a specific fast-food restaurant in New Jersey or Pennsylvania. On April 1, 1992, New Jersey raised the state minimum wage from $\$$4.25 to $\$$5.05 while the minimum wage in Pennsylvania stays the same at $\$$4.25. For each company, we record the total number of employees in Febuarary (i.e. before executing new policy) and the number of employees in November (i.e. after executing the new policy).
 
-# In[3]:
+# In[2]:
 
 
 # load the data
 import numpy as np
 import pandas as pd
-data_employment = pd.read_csv('employment.csv')
+import os
+os.chdir('/Users/alinaxu/Documents/CDM/CausalDM')
+data_employment = pd.read_csv('./causaldm/data/employment.csv')
 data_employment.head()
 
 
-# In[4]:
+# In[20]:
 
 
 n_PA = len(data_employment[data_employment.state == 0])
@@ -100,7 +104,7 @@ n_NJ = len(data_employment[data_employment.state == 1])
 n_PA, n_NJ
 
 
-# In[5]:
+# In[24]:
 
 
 # calculate the estimated 

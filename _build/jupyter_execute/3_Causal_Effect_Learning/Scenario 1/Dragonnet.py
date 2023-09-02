@@ -37,7 +37,9 @@
 
 
 from IPython import display
-display.Image("/Users/alinaxu/Documents/CDM/Causal-Decision-Making/CEL-SingleStage-Dragonnet.png", width=500)
+import os
+os.chdir('/Users/alinaxu/Documents/CDM/CausalDM')
+display.Image("./images/CEL-SingleStage-Dragonnet.png", width=500)
 
 
 # By first training the propensity score model through several layers of neural network, we are able to capture the resourceful information of $g(S)$ in layer $Z$. The core idea of Dragonnet is to directly utilize the information in $Z$ to fit outcome regression models for $\hat{Q}(1,s)$ and $\hat{Q}(0,s)$.
@@ -75,7 +77,7 @@ display.Image("/Users/alinaxu/Documents/CDM/Causal-Decision-Making/CEL-SingleSta
 # 
 # **Note**: The simulation code of Dragonnet is available at https://github.com/claudiashi57/dragonnet. To check its performance, we apply this method on MovieLens data for a primary illustration.
 
-# In[2]:
+# In[1]:
 
 
 # The code is available at https://github.com/claudiashi57/dragonnet
@@ -86,21 +88,21 @@ from matplotlib import pyplot as plt;
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.linear_model import LinearRegression
 
-from causaldm.learners.Causal_Effect_Learning.Single_Stage.Dragonnet import *
+from causaldm.learners.CEL.Single_Stage.Dragonnet import *
 
 
 # ### MovieLens Data
 
-# In[52]:
+# In[3]:
 
 
 # Get data
-MovieLens_CEL = pd.read_csv("/Users/alinaxu/Documents/CDM/CausalDM/causaldm/data/MovieLens_CEL.csv")
+MovieLens_CEL = pd.read_csv("./causaldm/data/MovieLens_CEL.csv")
 MovieLens_CEL.pop(MovieLens_CEL.columns[0])
 MovieLens_CEL
 
 
-# In[53]:
+# In[4]:
 
 
 n = len(MovieLens_CEL)
@@ -109,7 +111,7 @@ S = MovieLens_CEL.iloc[:, userinfo_index]
 SandA = MovieLens_CEL.iloc[:, np.array([3,4,5,6,7,8,9,10])]
 
 
-# In[54]:
+# In[5]:
 
 
 test_outputs, train_output = train_and_predict_dragons(MovieLens_CEL['Drama'].to_numpy().reshape(-1,1),MovieLens_CEL['rating'].to_numpy().reshape(-1,1), S.to_numpy(),
@@ -119,14 +121,14 @@ test_outputs, train_output = train_and_predict_dragons(MovieLens_CEL['Drama'].to
                                                        val_split=0.2, batch_size=64)
 
 
-# In[55]:
+# In[21]:
 
 
 # the output keys
 train_output[0].keys()
 
 
-# In[56]:
+# In[22]:
 
 
 HTE_Dragonnet = train_output[0]['q_t1'] - train_output[0]['q_t0']
@@ -134,13 +136,13 @@ HTE_Dragonnet = train_output[0]['q_t1'] - train_output[0]['q_t0']
 
 # Let's focus on the estimated HTEs for three randomly chosen users:
 
-# In[57]:
+# In[23]:
 
 
-print("Dragonnet:  ",HTE_Dragonnet[np.array([0,1000,5000])])
+print("Dragonnet:  ",HTE_Dragonnet[0][np.array([0,1000,5000])])
 
 
-# In[58]:
+# In[24]:
 
 
 # Calculate the Aaverage Treatment Effect by Dragonnet
@@ -148,7 +150,7 @@ ATE_Dragonnet = np.sum(HTE_Dragonnet)/n
 print("Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by",round(ATE_Dragonnet,4), "out of 5 points.")
 
 
-# **Conclusion:** Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by 0.3225 out of 5 points.
+# **Conclusion:** Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by 0.3182 out of 5 points.
 
 # ## References
 # 

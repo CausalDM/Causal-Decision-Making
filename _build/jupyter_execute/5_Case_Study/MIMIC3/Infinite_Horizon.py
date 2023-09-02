@@ -9,7 +9,7 @@
 
 
 import os
-os.chdir('D:/Github/CausalDM')
+os.chdir('D:/GitHub/CausalDM')
 import pandas as pd
 import numpy as np
 import pandas as pd
@@ -37,10 +37,10 @@ MRL_df[MRL_df.icustayid==1006]
 # In[2]:
 
 
-from causaldm.learners.Causal_Effect_Learning.Mediation_Analysis import ME_MDP
+from causaldm.learners.CEL.MA import ME_MDP
 
 
-# In[11]:
+# In[3]:
 
 
 # Control Policy
@@ -76,12 +76,11 @@ def target_policy(state, dim_state = 1, action=None):
     return action_value
 
 
-# In[12]:
+# In[4]:
 
 
 #Fixed hyper-parameter--no need to modify
-expectation_MCMC_iter = 50
-expectation_MCMC_iter_Q3 = expectation_MCMC_iter_Q_diff = 50
+MCMC = 50
 truncate = 50
 problearner_parameters = {"splitter":["best","random"], "max_depth" : range(1,50)},
 dim_state=2; dim_mediator = 1
@@ -89,28 +88,31 @@ ratio_ndim = 10
 d = 2
 L = 5
 scaler = 'Identity'
+method = "Robust"
+seed = 0
+r_model = "OLS"
+Q_settings = {'scaler': 'Identity','product_tensor': False, 'beta': 3/7, 
+              'include_intercept': False, 
+              'penalty': 10**(-4),'d': d, 'min_L': L, 't_dependent_Q': False}
 
 
-# In[21]:
+# In[5]:
 
 
-Robust_est = ME_MDP.evaluator(mimic3_MRL, r_model = 'OLS',
+Robust_est = ME_MDP.evaluator(mimic3_MRL, r_model = r_model,
                      problearner_parameters = problearner_parameters,
                      ratio_ndim = ratio_ndim, truncate = truncate, l2penalty = 10**(-4),
                      target_policy=target_policy, control_policy = control_policy, 
                      dim_state = dim_state, dim_mediator = dim_mediator, 
-                     Q_settings = {'scaler': scaler,'product_tensor': False, 'beta': 3/7, 
-                                   'include_intercept': False, 'expectation_MCMC_iter_Q3': expectation_MCMC_iter_Q3, 
-                                   'expectation_MCMC_iter_Q_diff':expectation_MCMC_iter_Q_diff, 
-                                   'penalty': 10**(-4),'d': d, 'min_L': L, 't_dependent_Q': False},
-                     expectation_MCMC_iter = expectation_MCMC_iter,
-                     seed = 0, nature_decomp = True, method = 'Robust')
+                     Q_settings = Q_settings,
+                     MCMC = MCMC,
+                     seed = seed, nature_decomp = True, method = method)
 
 Robust_est.estimate_DE_ME()
 Robust_est.est_IDE, Robust_est.IME, Robust_est.DDE, Robust_est.DME, Robust_est.TE
 
 
-# In[22]:
+# In[6]:
 
 
 Robust_est.IDE_se, Robust_est.IME_se, Robust_est.DDE_se, Robust_est.DME_se, Robust_est.TE_se
@@ -119,9 +121,3 @@ Robust_est.IDE_se, Robust_est.IME_se, Robust_est.DDE_se, Robust_est.DME_se, Robu
 # ## Reference
 # 
 # [1] Ge, L., Wang, J., Shi, C., Wu, Z., & Song, R. (2023). A Reinforcement Learning Framework for Dynamic Mediation Analysis. arXiv preprint arXiv:2301.13348.
-
-# In[ ]:
-
-
-
-

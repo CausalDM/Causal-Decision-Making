@@ -46,8 +46,10 @@ from causaldm.learners.Causal_Effect_Learning.Single_Stage.LpRlearner import LpR
 # In[2]:
 
 
-# Get data
-MovieLens_CEL = pd.read_csv("/Users/alinaxu/Documents/CDM/CausalDM/causaldm/data/MovieLens_CEL.csv")
+# Get the MovieLens data
+import os
+os.chdir('/Users/alinaxu/Documents/CDM/CausalDM')
+MovieLens_CEL = pd.read_csv("./causaldm/data/MovieLens_CEL.csv")
 MovieLens_CEL.pop(MovieLens_CEL.columns[0])
 MovieLens_CEL
 

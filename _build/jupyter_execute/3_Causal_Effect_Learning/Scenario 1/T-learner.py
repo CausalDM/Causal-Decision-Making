@@ -32,13 +32,15 @@ from sklearn.linear_model import LinearRegression
 # In[2]:
 
 
-# Get data
-MovieLens_CEL = pd.read_csv("/Users/alinaxu/Documents/CDM/CausalDM/causaldm/data/MovieLens_CEL.csv")
+# Get the MovieLens data
+import os
+os.chdir('/Users/alinaxu/Documents/CDM/CausalDM')
+MovieLens_CEL = pd.read_csv("./causaldm/data/MovieLens_CEL.csv")
 MovieLens_CEL.pop(MovieLens_CEL.columns[0])
 MovieLens_CEL
 
 
-# In[3]:
+# In[5]:
 
 
 n = len(MovieLens_CEL)
@@ -46,7 +48,7 @@ userinfo_index = np.array([3,5,6,7,8,9,10])
 SandA = MovieLens_CEL.iloc[:, np.array([3,4,5,6,7,8,9,10])]
 
 
-# In[6]:
+# In[8]:
 
 
 mu0 = GradientBoostingRegressor(max_depth=3)
@@ -57,25 +59,18 @@ mu1.fit(MovieLens_CEL.iloc[np.where(MovieLens_CEL['Drama']==1)[0],userinfo_index
 
 
 # estimate the HTE by T-learner
-HTE_TLet's focus on the estimated HTEs for three randomly chosen users:
-
-print("S-learner:  ",HTE_S_learner[np.array([0,1000,5000])])
-
-ATE_S_learner = np.sum(HTE_S_learner)/n
-print("Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by",round(ATE_S_learner,4), "out of 5 points.")
-
-**Conclusion:** As we can see from the estimated ATE by S-learner, people are more inclined to give higher ratings to drama than science fictions. _learner = mu1.predict(MovieLens_CEL.iloc[:,userinfo_index]) - mu0.predict(MovieLens_CEL.iloc[:,userinfo_index])
+HTE_T_learner = mu1.predict(MovieLens_CEL.iloc[:,userinfo_index]) - mu0.predict(MovieLens_CEL.iloc[:,userinfo_index])
 
 
 # Let's focus on the estimated HTEs for three randomly chosen users:
 
-# In[12]:
+# In[10]:
 
 
 print("T-learner:  ",HTE_T_learner[np.array([0,1000,5000])])
 
 
-# In[13]:
+# In[11]:
 
 
 ATE_T_learner = np.sum(HTE_T_learner)/n

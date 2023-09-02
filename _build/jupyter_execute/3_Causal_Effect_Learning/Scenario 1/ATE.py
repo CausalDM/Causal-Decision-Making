@@ -84,9 +84,10 @@ import pandas as pd
 from matplotlib import pyplot as plt;
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.linear_model import LinearRegression
-
+import os
+os.chdir('/Users/alinaxu/Documents/CDM/CausalDM')
 # Get the MovieLens data
-MovieLens_CEL = pd.read_csv("/Users/alinaxu/Documents/CDM/CausalDM/causaldm/data/MovieLens_CEL.csv")
+MovieLens_CEL = pd.read_csv("./causaldm/data/MovieLens_CEL.csv")
 MovieLens_CEL.pop(MovieLens_CEL.columns[0])
 MovieLens_CEL
 
