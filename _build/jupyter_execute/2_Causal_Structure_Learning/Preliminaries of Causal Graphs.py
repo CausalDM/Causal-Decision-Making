@@ -10,7 +10,7 @@
 # 
 # Consider a graph $\mathcal{G} =(\mathbf{Z},\mathbf{E})$ with a node set $\mathbf{Z}$ and an edge set $\mathbf{E}$. A node $Z_i$ is said to be a parent of $Z_j$ if there is a directed edge from $Z_i$ to $Z_j$. Let the set of all parents of node $Z_j$ in $\mathcal{G}$ as $PA_{Z_j} (\mathcal{G})$. A directed graph that does not contain directed cycles is called a directed acyclic graph (DAG). Suppose a DAG $\mathcal{G}=(\mathbf{Z},\mathbf{E})$ that characterizes the causal relationship among $|\mathbf{Z}|=d$ nodes, where $\mathbf{Z}=[Z_1,Z_2,\cdots,Z_d]^\top $ represents a random vector and an edge $Z_i\rightarrow Z_j$ means that $Z_i$ is a direct cause of $Z_j$. 
 
-# ### Toy Example 1:  Causal Graph for Heterogeneous Treatment Effect and Personalized Decision Making
+# ### Example 1:  Causal Graph for Heterogeneous Treatment Effect and Personalized Decision Making
 # In this example, the feature $S$ determines the treatment assignment $A$ (i.e., $S\rightarrow A$) and the outcome $R$ (i.e., $S\rightarrow R$), and the treatment assignment $A$ further influences the outcome $R$ (i.e., $A\rightarrow R$).
 # 
 # ```{image} xay.png
@@ -20,6 +20,15 @@
 # ``` 
 # 
 # Based on this causal graph, to optimize the outcome of interest, the doctor should assign the right treatment according to different features. Thus, the methods for personalized decision making focus on modeling the conditional mean outcome and the propensity score.
+# 
+
+# #### Real Case: Personalized Decision Making in Sepsis for Intensive Care Unit (ICU)
+# 
+# ```{image} mimic1.png
+# :alt: name
+# :width: 400px
+# :align: center
+# ``` 
 
 # ### Toy Example 2:  Causal Graph for Causal Mediation Analysis
 # 
@@ -48,6 +57,15 @@
 # 
 # 2. Connection to Conditional Average Treatment Effect: When there is no mediator but with additional modifiers $S$ in the system, we have the conditional average treatment effect (CATE), i.e., $\text{CATE} = E[R^*(1) - R^*(0)|S] = E[ R|do(A=1),S] -  E[ R|do(A=0),S] = DE(S) = TE(S)$.
 
+# 
+# ### Real Case: Personalized Decision Making in Sepsis for Intensive Care Unit (ICU)
+# 
+# ```{image} mimic2.png
+# :alt: name
+# :width: 400px
+# :align: center
+# ``` 
+
 # ### Toy Example 3:  Causal Graph for Mediated Personalized Decision Making
 # In this example, the feature $S$ determines the treatment assignment $A$ (i.e., $S\rightarrow A$), the mediators $M$ (i.e., $S\rightarrow M$), and the outcome $R$ (i.e., $S\rightarrow R$), and the treatment assignment $A$ further influences the mediators $M$ (i.e., $A\rightarrow M$) and the outcome $R$ (i.e., $A\rightarrow R$). In addition, the mediators $M$ also affects the outcome $R$ (i.e., $M\rightarrow R$).
 # 
@@ -58,6 +76,15 @@
 # ```  
 # 
 # Based on this causal graph, to optimize the outcome of interest, the doctor should assign the right treatment through useful mediators according to different features. 
+
+# 
+# ### Real Case: Personalized Decision Making in Sepsis for Intensive Care Unit (ICU)
+# 
+# ```{image} mimic3.png
+# :alt: name
+# :width: 400px
+# :align: center
+# ``` 
 
 # ## References
 # 

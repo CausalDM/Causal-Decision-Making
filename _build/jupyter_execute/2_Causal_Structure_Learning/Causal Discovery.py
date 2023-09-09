@@ -57,6 +57,8 @@
 
 # ### Causal Discovery Methods To Be Detailed
 # 
+# #### For Paradigm 1
+# 
 # - PC algorithm (Spirtes et al., 2000): set the Fisher-z test for conditional independence testing. The implementation is available through the py-causal package at https://github.com/bd2kccd/py-causal, written in highly optimized Java codes. Also see examples here https://github.com/bd2kccd/py-causal/blob/development/example/py-causal%20-%20PC-ALL%20in%20Action.ipynb.
 # 
 # - ICA-LiNGAM (Shimizu et al., 2006): The ICA-LiNGAM assumes linear non-Gaussian additive model to recover the weighted adjacency matrix. The ICA-LiNGAM is implemented with default hyper-parameters through the lingam package for all settings. See their repository at https://github.com/cdt15/lingam.
@@ -66,6 +68,24 @@
 # - DAG-GNN (Yu et al., 2019): The DAG-GNN incorporates the variational auto-encoder into causal discovery with a modified smooth characterization on acyclicity in the evidence lower bound as the loss function. Codes are available at their repository at https://github.com/ fishmoon1234/DAG-GNN based on PyTorch (Paszke et al., 2017). 
 # 
 # - ANOCE-CVAE: The ANOCE-CVAE is constrained causal structure learning method by incorporating a novel identification constraint that specifies the temporal causal relationship of variables. The code is publicly available at an anonymous repository at https://github.com/anoce-cvae/ANOCE-CVAE.
+# 
+# #### For Paradigms 2&3
+# 
+# 
+# - Granger Causality - Granger (1969)
+# 
+# - Time series fast PC - Entner & Hoyer (2010)
+# 
+# - Momentary conditional independence (MCI) - Runge et al. (2019)
+# 
+# - Vector Autoregressive (VAR) -LiNGAM - Hyvärinen et al. (2010)
+# 
+# - Time-series Models with Independent Noise (TiMINo) - Peters et al. (2013)
+# 
+# - Dynamic NOTEARS (DYNOTEARS) - Pamfil et al. (2020): Estimate contemporaneous (intra-slice) and time-lagged (interslice) relationships between variables in a time-series.
+# 
+# - NTS-NOTEARS - Sun et al. (2021): Use neural networks to capture nonparametric time series data along with ensuring the acyclicity property of a DAG.
+# 
 
 # ## References
 # 
