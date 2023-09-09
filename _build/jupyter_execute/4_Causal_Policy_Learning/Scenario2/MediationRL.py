@@ -8,10 +8,11 @@
 # ![Proposed_MDP.jpg](Proposed_MDP.jpg)
 # 
 # ## Main Idea
-# The core of [1] is a **four-way effect decomposition** of the average treatment effect. Let $\pi_e$ denote the treatment policy of interest, where $\pi_e(a|S_t = s) = P^{\pi_e}(A_t=a|S_t=s)$, and $\pi_0$ denote the control policy. Let $E^{\pi}[\cdot]$ dentoe the expectation of a random variable under a policy $\pi$. Then the average treatment effect can be defined as \begin{align}
-# \textrm{ATE($\pi_e,\pi_0$)}=\lim_{T\to \infty} \frac{1}{T}\sum_{t=0}^{T-1} \textrm{TE}_t\textrm{($\pi_e,\pi_0$)},
+# The core of [1] is a **four-way effect decomposition** of the average treatment effect. Let $\pi_e$ denote the treatment policy of interest, where $\pi_e(a|S_t = s) = P^{\pi_e}(A_t=a|S_t=s)$, and $\pi_0$ denote the control policy. Let $E^{\pi}[\cdot]$ dentoe the expectation of a random variable under a policy $\pi$. Then the average treatment effect can be defined as 
+# \begin{align}
+# \textrm{ATE($\pi_e,\pi_0$)}=\lim_{T\to \infty} \frac{1}{T}\sum_{t=0}^{T-1} \textrm{TE$_t$($\pi_e,\pi_0$)},
 # \end{align}
-# where $\textrm{TE}_t\textrm{($\pi_e,\pi_0$)} = E^{\pi_e}[R_t] - E^{\pi_0}[R_t]$. We first decompose the $\textrm{TE}_t(\pi_e,\pi_0)$ into four effect components, such that
+# where $\textrm{TE}_t(\pi_e,\pi_0) = E^{\pi_e}[R_t] - E^{\pi_0}[R_t]$. We first decompose the $\textrm{TE}_t(\pi_e,\pi_0)$ into four effect components, such that
 # $\textrm{TE}_t(\pi_e,\pi_0) = \textrm{IDE}_t(\pi_e,\pi_0)+\textrm{IME}_t(\pi_e,\pi_0)+\textrm{DDE}_t(\pi_e,\pi_0)+\textrm{DME}_t(\pi_e,\pi_0),$
 # where i) the $\textrm{IDE}_t$ quantifies the direct treatment effect on the proximal outcome $R_t$; ii) the $\textrm{IME}_t$ evaluates the indirect effect mediated by $M_t$; iii) the $\textrm{DDE}_t$ quantifies how past actions directly impact the current outcome; and iv) the $\textrm{DME}_t$ measures the indirect past treatment effects mediated by past mediators. 
 # 
