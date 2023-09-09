@@ -50,8 +50,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="Multi-Task Thompson Sampling (MTTS)" href="MTTS.html" />
@@ -497,7 +497,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../Scenario2/MediationRL.html">
-   Mediation Analysis under MDP
+   Policy Evaluation--Mediation Analysis
   </a>
  </li>
  <li class="toctree-l1 has-children">
@@ -1165,8 +1165,8 @@ title="Print to PDF"
 <section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>The <strong>Meta-TS</strong>[1] assumes that the mean potential rewards, <span class="math notranslate nohighlight">\(\mu_{j,a} = E(R_{j,t}(a))\)</span>, for each task <span class="math notranslate nohighlight">\(j\)</span> are i.i.d sampled from some distribution parameterized by <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>. Specifically, it assumes that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-32ecf390-0303-498e-8986-ef1416786c99">
-<span class="eqno">(125)<a class="headerlink" href="#equation-32ecf390-0303-498e-8986-ef1416786c99" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b131891e-b021-4156-8060-e06b81193641">
+<span class="eqno">(125)<a class="headerlink" href="#equation-b131891e-b021-4156-8060-e06b81193641" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{alignedat}{2}
 &amp;\text{(meta-Prior)} \quad
 \quad\quad\quad    \boldsymbol{\gamma} &amp;&amp;\sim Q(\boldsymbol{\gamma}), \\
@@ -1178,8 +1178,8 @@ title="Print to PDF"
 \end{equation}\]</div>
 <p>To learn the prior distribution of <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_{j}\)</span>, it introduces a meta-parameter <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span> with a meta-prior distribution <span class="math notranslate nohighlight">\(Q(\boldsymbol{\gamma})\)</span>. The <strong>Meta-TS</strong> efficiently leverages the knowledge received from different tasks to learn the prior distribution and to guide the exploration of each task by maintaining the meta-posterior distribution of <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>. Theoretically, it is demonstrated to have a regret bound comparable to that of the Thompson sampling method with known prior distribution of <span class="math notranslate nohighlight">\(\mu_{j,a}\)</span>. Both the</p>
 <p>Considering a Gaussian bandits, we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b437ef8f-71a1-490d-9438-bd2e5daf579c">
-<span class="eqno">(126)<a class="headerlink" href="#equation-b437ef8f-71a1-490d-9438-bd2e5daf579c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-12a90055-06e8-4aff-9a1f-a5c8e88b8bed">
+<span class="eqno">(126)<a class="headerlink" href="#equation-12a90055-06e8-4aff-9a1f-a5c8e88b8bed" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{alignedat}{2}
 &amp;\text{(meta-Prior)} \quad
 \quad\quad\quad    \boldsymbol{\gamma} &amp;&amp;\sim Q(\boldsymbol{\gamma}), \\
@@ -1190,8 +1190,8 @@ title="Print to PDF"
       \end{alignedat}
 \end{equation}\]</div>
 <p>Similarly, considering the Bernoulli bandits, we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-93bb7c27-1a5f-444e-be1a-21f5e1045e8d">
-<span class="eqno">(127)<a class="headerlink" href="#equation-93bb7c27-1a5f-444e-be1a-21f5e1045e8d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a89ccd62-21e5-4433-9a19-00e3b6856673">
+<span class="eqno">(127)<a class="headerlink" href="#equation-a89ccd62-21e5-4433-9a19-00e3b6856673" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{alignedat}{2}
 &amp;\text{(meta-Prior)} \quad
 \quad\quad\quad    \boldsymbol{\gamma} &amp;&amp;\sim Q(\boldsymbol{\gamma}), \\
@@ -1202,8 +1202,8 @@ title="Print to PDF"
       \end{alignedat}
 \end{equation}\]</div>
 <p>While various meta-priors can be used, by default, we consider a finite space of <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-82350ee9-ff4d-4a0c-9ebf-e1176b9b0477">
-<span class="eqno">(128)<a class="headerlink" href="#equation-82350ee9-ff4d-4a0c-9ebf-e1176b9b0477" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e7b6fd54-c4c4-4ea8-8ddf-2752a87477ea">
+<span class="eqno">(128)<a class="headerlink" href="#equation-e7b6fd54-c4c4-4ea8-8ddf-2752a87477ea" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \mathcal{P} = \{(\alpha_{i,j})_{i=1}^{K}, (\beta_{i,j})_{i=1}^{K}\}_{j=1}^{L},
 \end{equation}\]</div>
 <p>which contains <strong>L</strong> potential instance priors and assume a categorical distribution over the <span class="math notranslate nohighlight">\(\mathcal{P}\)</span> as the meta-prior. See [1] for more information about the corresponding meta-posterior updating.</p>

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Dynamic Mediaition Anlysis in Reinforcement Learning
+# # Dynamic Mediation Analysis in Reinforcement Learning
 
 # While the majority of existing works concentrate on mediation analysis with a single exposure or a limited number of treatments, there are a growing number of applications (e.g., mobile health) in which treatments are sequentially assigned over time, resulting in a large number of decision times. To learn the mediation effects in such settings with an infinite horizon, [1] proposed to construct the mediation analysis with a reinforcement learning framework. Based on a newly introduced Mediated MDP data structure as illustrated below, [1] devised a novel four-way decomposition of the average treatment effect, encompassing both long-term and short-term direct/indirect effects. A direct estimator, an IPW estimator, and a multiply-robust estimator are provided for each effect component, in accordance with the standard methodologies used in literature of off-policy evaluation (OPE).
 # 

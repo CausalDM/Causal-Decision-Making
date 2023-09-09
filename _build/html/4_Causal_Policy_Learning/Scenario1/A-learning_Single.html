@@ -50,8 +50,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Outcome Weighted Learning" href="Classification/O-Learning.html" />
@@ -497,7 +497,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../Scenario2/MediationRL.html">
-   Mediation Analysis under MDP
+   Policy Evaluation--Mediation Analysis
   </a>
  </li>
  <li class="toctree-l1 has-children">
@@ -1144,32 +1144,32 @@ title="Print to PDF"
 <p>Suppose there are <span class="math notranslate nohighlight">\(m\)</span> number of options, and the action space <span class="math notranslate nohighlight">\(\mathcal{A}=\{0,1,\dots,m-1\}\)</span>. Contrast-based A-learning, as the name suggested, aims to learn and estimate the constrast function, <span class="math notranslate nohighlight">\(C_{j}(\boldsymbol{S})\)</span> for each treatment <span class="math notranslate nohighlight">\(j=1,2,\cdots, m-1\)</span>. Furthermore, we also need to posit a model for the conditional expected potential outcome for the control option (treatment <span class="math notranslate nohighlight">\(0\)</span>), <span class="math notranslate nohighlight">\(Q(\boldsymbol{S},0)\)</span>, and the propensity function <span class="math notranslate nohighlight">\(\omega(\boldsymbol{S},A)\)</span>, if the true values are not specified. Detailed definitions are provided in the following.</p>
 <ul>
 <li><p>Q-function:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1561c1e7-93fa-481e-9333-df8da214ec05">
-<span class="eqno">(67)<a class="headerlink" href="#equation-1561c1e7-93fa-481e-9333-df8da214ec05" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-063dd5a7-782b-4ea3-a543-b4b3421f9fb3">
+<span class="eqno">(67)<a class="headerlink" href="#equation-063dd5a7-782b-4ea3-a543-b4b3421f9fb3" title="Permalink to this equation">#</a></span>\[\begin{align}
     Q(\boldsymbol{s},a)=E[R(a)|\boldsymbol{S}=\boldsymbol{s}],
     \end{align}\]</div>
 <p>Alternatively, with the contrast function <span class="math notranslate nohighlight">\(C_j(\boldsymbol{S})\)</span> which will be defined later,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6c4487f6-254e-4a26-aefc-c6b93dc5fe67">
-<span class="eqno">(68)<a class="headerlink" href="#equation-6c4487f6-254e-4a26-aefc-c6b93dc5fe67" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1123ff40-b7aa-4cb1-b421-e03ef821b06c">
+<span class="eqno">(68)<a class="headerlink" href="#equation-1123ff40-b7aa-4cb1-b421-e03ef821b06c" title="Permalink to this equation">#</a></span>\[\begin{align}
     Q(\boldsymbol{s},j) = Q(\boldsymbol{s},0) + C_{j}(\boldsymbol{s}),\quad j=0,\dots,m-1.
     \end{align}\]</div>
 </li>
 <li><p>Contrast functions (optimal blip to zero functions)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1d8728dc-18d7-4b0f-9704-a8394fdc5ad1">
-<span class="eqno">(69)<a class="headerlink" href="#equation-1d8728dc-18d7-4b0f-9704-a8394fdc5ad1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2179868c-1f1f-43fa-8bcc-34ced8599206">
+<span class="eqno">(69)<a class="headerlink" href="#equation-2179868c-1f1f-43fa-8bcc-34ced8599206" title="Permalink to this equation">#</a></span>\[\begin{align}
     C_{j}(\boldsymbol{s})=Q(\boldsymbol{s},j)-Q(\boldsymbol{s},0),\quad j=0,\dots,m-1,
     \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(C_{0}(\boldsymbol{s}) = 0\)</span>.</p>
 </li>
 <li><p>Propensity score</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a2d197d6-0ba3-426e-8b9d-3df98d494bad">
-<span class="eqno">(70)<a class="headerlink" href="#equation-a2d197d6-0ba3-426e-8b9d-3df98d494bad" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9b6e6338-9859-41d5-9acc-6ebeea71c7a5">
+<span class="eqno">(70)<a class="headerlink" href="#equation-9b6e6338-9859-41d5-9acc-6ebeea71c7a5" title="Permalink to this equation">#</a></span>\[\begin{align}
     \omega(\boldsymbol{s},a)=P(A=a|\boldsymbol{S}=\boldsymbol{s})
     \end{align}\]</div>
 </li>
 <li><p>Optimal regime</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b619b90c-0ff5-4c6d-8e65-d6b8c7ce1cd9">
-<span class="eqno">(71)<a class="headerlink" href="#equation-b619b90c-0ff5-4c6d-8e65-d6b8c7ce1cd9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d5b0d7aa-037f-4de5-9038-203c1a101874">
+<span class="eqno">(71)<a class="headerlink" href="#equation-d5b0d7aa-037f-4de5-9038-203c1a101874" title="Permalink to this equation">#</a></span>\[\begin{align}
     d^{opt}(\boldsymbol{s})=\arg\max_{j\in\mathcal{A}}C_{j}(\boldsymbol{s})
     \end{align}\]</div>
 </li>
@@ -1247,8 +1247,8 @@ title="Print to PDF"
 </div>
 </div>
 <p>By specifing the model_info, we assume  the following models:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ee21fa85-3af4-432b-820c-4aaa82923bf0">
-<span class="eqno">(72)<a class="headerlink" href="#equation-ee21fa85-3af4-432b-820c-4aaa82923bf0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6dee62f1-2def-4011-8162-8ea54e56a752">
+<span class="eqno">(72)<a class="headerlink" href="#equation-6dee62f1-2def-4011-8162-8ea54e56a752" title="Permalink to this equation">#</a></span>\[\begin{align}
 Q(\boldsymbol{s},0,\boldsymbol{\phi}) &amp;= \phi_{00}+\phi_{01}*recency+\phi_{02}*history,\\
 C_{1}(\boldsymbol{s},\boldsymbol{\psi}_{0}) &amp;= 0\\
 C_{1}(\boldsymbol{s},\boldsymbol{\psi}_{1}) &amp;= \psi_{10}+\psi_{11}*recency+\psi_{12}*history,\\
@@ -1290,8 +1290,8 @@ opt value: 126.18615811062617
 </div>
 </div>
 <p><strong>Interpretation:</strong> the fitted contrast models are</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bf181a4c-0f25-4b93-b3a8-cda71e770647">
-<span class="eqno">(73)<a class="headerlink" href="#equation-bf181a4c-0f25-4b93-b3a8-cda71e770647" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-eccc6258-1297-4590-b13e-5bbb4211eced">
+<span class="eqno">(73)<a class="headerlink" href="#equation-eccc6258-1297-4590-b13e-5bbb4211eced" title="Permalink to this equation">#</a></span>\[\begin{align}
 C_{0}(\boldsymbol{s},\boldsymbol{\psi}_{0}) &amp;= 0\\
 C_{1}(\boldsymbol{s},\boldsymbol{\psi}_{1}) &amp;= 23.39-4.03*recency+.005*history,\\
 C_{2}(\boldsymbol{s},\boldsymbol{\psi}_{2}) &amp;= 21.03-4.71*recency-.003*history,\\

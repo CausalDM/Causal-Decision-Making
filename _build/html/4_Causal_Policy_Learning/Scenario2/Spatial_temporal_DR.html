@@ -50,8 +50,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -495,7 +495,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="MediationRL.html">
-   Mediation Analysis under MDP
+   Policy Evaluation--Mediation Analysis
   </a>
  </li>
  <li class="toctree-l1 has-children">
@@ -1159,8 +1159,8 @@ following this line of research,</p>
 DRL is a doubly robust method and our proposal in Section \ref{sec:our_method} is built upon DRL to achieve statistical efficiency.</p>
 <p>To begin with, we first define the \textit{marginalized density ratio} under the target policy <span class="math notranslate nohighlight">\(\pi\)</span> as<br />
 \vspace{-0.1cm}</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eb5b625a-8c04-45fa-bb47-79a273da8818">
-<span class="eqno">()<a class="headerlink" href="#equation-eb5b625a-8c04-45fa-bb47-79a273da8818" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:omega}
+<div class="amsmath math notranslate nohighlight" id="equation-412ac535-014d-4991-a7af-84e57b3b466c">
+<span class="eqno">()<a class="headerlink" href="#equation-412ac535-014d-4991-a7af-84e57b3b466c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:omega}
 % =\frac{\pi(a|s)p_{\gamma,\pi}(s)}{b(a|s)p_b(s)}
 	\omega^{\pi}(a,s)=\frac{(1-\gamma)\sum_{t=0}^{+\infty} \gamma^{t} p_t^{\pi}(a,s)}{p_b(a, s)}, 
 \end{eqnarray}\]</div>
@@ -1170,8 +1170,8 @@ It is worthy to mention that the denominator of \eqref{eqn:omega} is slightly di
 This modification avoids throwing away samples with a geometric probability and is  essential to achieve the semiparametric efficiency bound.</p>
 <p>One critical question is how to estimate the nuisance function <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span>.
 The following observation forms the basis: <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span> is the only function that satisfies the equation <span class="math notranslate nohighlight">\(\Mean L(\omega^{\pi},f)=0\)</span> for any function <span class="math notranslate nohighlight">\(f\)</span>, where <span class="math notranslate nohighlight">\(L(\omega^{\pi},f)\)</span> equals \vspace{-0.2cm}</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2fa3982b-43e1-44eb-870f-3065c568d692">
-<span class="eqno">()<a class="headerlink" href="#equation-2fa3982b-43e1-44eb-870f-3065c568d692" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn_omega}
+<div class="amsmath math notranslate nohighlight" id="equation-62f9290b-82d0-46c9-999e-1e08e91aed17">
+<span class="eqno">()<a class="headerlink" href="#equation-62f9290b-82d0-46c9-999e-1e08e91aed17" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn_omega}
 \begin{split}
 	\Big[\Mean_{a \sim \pi(\cdot|S_{t+1})} \{\omega^{\pi}(A_{t},S_{t})
 	(\gamma f(a, S_{t+1})- f(A_{t},S_{t}) ) \}
@@ -1179,8 +1179,8 @@ The following observation forms the basis: <span class="math notranslate nohighl
 \end{split}
 \end{eqnarray}\]</div>
 <p>As such, <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span> can be learned by solving the following mini-max problem, \vspace{-0.1cm}</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c0f35b08-55c4-4014-b3aa-1869822dbc66">
-<span class="eqno">()<a class="headerlink" href="#equation-c0f35b08-55c4-4014-b3aa-1869822dbc66" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:solveL}
+<div class="amsmath math notranslate nohighlight" id="equation-aeb1e1cd-9a1f-4690-ae50-85b63214f9ba">
+<span class="eqno">()<a class="headerlink" href="#equation-aeb1e1cd-9a1f-4690-ae50-85b63214f9ba" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:solveL}
 \argmin_{\omega\in \Omega} \sup_{f\in \mathcal{F}} \{\Mean L(\omega, f)\}^2, 
 \end{eqnarray}\]</div>
 <p>for some function classes <span class="math notranslate nohighlight">\(\Omega\)</span> and <span class="math notranslate nohighlight">\(\mathcal{F}\)</span>.
@@ -1191,8 +1191,8 @@ with the expectation in \eqref{eqn:solveL} approximated by the sample mean.
 <p>Let <span class="math notranslate nohighlight">\(\widehat{Q}\)</span> and <span class="math notranslate nohighlight">\(\widehat{\omega}\)</span> be some estimates of  <span class="math notranslate nohighlight">\(Q^{\pi}\)</span> and <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span>,  respectively.
 DRL first constructs the following estimator for every <span class="math notranslate nohighlight">\((i,t)\)</span> in a doubly robust manner:
 \vspace{-0.1cm}</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bc2b0374-05cc-40dc-a61d-7dc617305836">
-<span class="eqno">()<a class="headerlink" href="#equation-bc2b0374-05cc-40dc-a61d-7dc617305836" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{term}
+<div class="amsmath math notranslate nohighlight" id="equation-e4b56483-5ae3-4d35-a292-c82c61aa0339">
+<span class="eqno">()<a class="headerlink" href="#equation-e4b56483-5ae3-4d35-a292-c82c61aa0339" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{term}
 \begin{split}
 	\psi_{i,t}
 	\equiv
@@ -1214,8 +1214,8 @@ DRL first constructs the following estimator for every <span class="math notrans
 <p>In addition, %informally speaking,
 when both <span class="math notranslate nohighlight">\(\widehat{Q}\)</span> and <span class="math notranslate nohighlight">\(\widehat{\omega}\)</span> converge at a rate faster than <span class="math notranslate nohighlight">\((nT)^{-1/4}\)</span>, %it follows from Theorems 9-11 of \citet{kallus2019efficiently} that
 <span class="math notranslate nohighlight">\(\sqrt{nT} (\widehat{\eta}_{\tiny{\textrm{DRL}}} - \eta^{\pi})\)</span> converges weakly to a normal distribution with mean zero and variance% <span class="math notranslate nohighlight">\(\sigma^2\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a1161bc6-ec4b-4474-8625-2f93f107a6e8">
-<span class="eqno">()<a class="headerlink" href="#equation-a1161bc6-ec4b-4474-8625-2f93f107a6e8" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{lower_bound}
+<div class="amsmath math notranslate nohighlight" id="equation-e70304fc-35dc-41fa-ae8b-3720441b4038">
+<span class="eqno">()<a class="headerlink" href="#equation-e70304fc-35dc-41fa-ae8b-3720441b4038" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{lower_bound}
     % \sigma^2 = 
     \frac{1}{(1-\gamma)^2}\Mean \left[ 
     \omega^{\pi}(A, S) \{R + \gamma V^{\pi}(S') -  Q^{\pi}(A,S)\}

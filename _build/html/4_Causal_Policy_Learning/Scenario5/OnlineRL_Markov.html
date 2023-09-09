@@ -50,8 +50,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Ooline Policy Learning in Non-Markovian Environments" href="../Scenario6/OnlineRL_non_Markov.html" />
@@ -497,7 +497,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../Scenario2/MediationRL.html">
-   Mediation Analysis under MDP
+   Policy Evaluation--Mediation Analysis
   </a>
  </li>
  <li class="toctree-l1 has-children">
@@ -1164,14 +1164,14 @@ An alternative is to leverage the Bellman equation and the dynamic optimization 
 The is known as the Temporal-Difference (TD) Learning <span id="id3">[<a class="reference internal" href="#id38" title="Richard S Sutton. Learning to predict by the methods of temporal differences. Machine learning, 3:9–44, 1988.">Sut88</a>]</span>.
 The name is from the fact that it involves the estimate at time point <span class="math notranslate nohighlight">\(t\)</span> and $t+1).
 We first recall the Bellman equation:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c6000178-5ab1-4102-9d46-5f72c4795b66">
-<span class="eqno">(155)<a class="headerlink" href="#equation-c6000178-5ab1-4102-9d46-5f72c4795b66" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
+<div class="amsmath math notranslate nohighlight" id="equation-0a0c6c87-5bd4-480f-a5ed-7be39425b5c1">
+<span class="eqno">(155)<a class="headerlink" href="#equation-0a0c6c87-5bd4-480f-a5ed-7be39425b5c1" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
     Q^\pi(a, s) = \mathbb{E}^\pi \Big(R_t + \gamma Q^\pi(A_{t + 1}, S_{t+1})  | A_t = a, S_t = s \Big). 
 \end{equation}\]</div>
 <p>Therefore, suppose we currently have an Q-function estimate <span class="math notranslate nohighlight">\(\hat{Q}^{\pi}\)</span>.
 Then, after collecting a trasition tuple <span class="math notranslate nohighlight">\((s, a, r, s')\)</span>, we can then update the estimate of <span class="math notranslate nohighlight">\(\hat{Q}^{\pi}(s, a)\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fcd48a3d-6189-4e52-b4a2-e8e4cc95844b">
-<span class="eqno">(156)<a class="headerlink" href="#equation-fcd48a3d-6189-4e52-b4a2-e8e4cc95844b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4d7ec49c-44e6-4c30-be32-3de7434bdb92">
+<span class="eqno">(156)<a class="headerlink" href="#equation-4d7ec49c-44e6-4c30-be32-3de7434bdb92" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \hat{Q}^\pi(a, s) + \alpha \Big[r + \gamma \hat{Q}^\pi(\pi(s'), s')  - \hat{Q}^\pi(a, s) \Big], 
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is a learning rate.</p>
@@ -1189,8 +1189,8 @@ We will focus on illustrate their main idea and connection to other topics in th
 In its simplist form, the value estimation is obtained via MC, i.e., sampling trajectories following a policy.
 However, the gradient descient is not straightforward, as it requires the value estimation of any policies around the current one to compute the gradient, which is not feasible.
 Fortunately, we have the following <em>policy gradient theorem</em>.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ef58b825-295a-4a25-a6c2-695a24d53234">
-<span class="eqno">(157)<a class="headerlink" href="#equation-ef58b825-295a-4a25-a6c2-695a24d53234" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2246b210-92e0-4558-9f5f-41e5b2e39924">
+<span class="eqno">(157)<a class="headerlink" href="#equation-2246b210-92e0-4558-9f5f-41e5b2e39924" title="Permalink to this equation">#</a></span>\[\begin{align}
 \bigtriangledown_{\theta}\, J(\theta)
 &amp;= 
 \mathbb{E}_{\tau \sim \pi(\cdot;\theta)}
@@ -1210,13 +1210,13 @@ G(\tau) \times
 <h3>Value-based (Approximate DP)<a class="headerlink" href="#value-based-approximate-dp" title="Permalink to this headline">#</a></h3>
 <p>The second appraoch is closely related to the Q-function-based appraoch discussed in Paradigm 1 and 2, and in particular, the <a class="reference internal" href="../Scenario2/FQI.html#section-fqi"><span class="std std-ref">FQI</span></a> algorithm.</p>
 <p>Recall the Bellman optimality equations: <span class="math notranslate nohighlight">\(Q^*\)</span> is the unique solution of</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fb3317ec-55ba-4100-86de-1c0554eeb012">
-<span class="eqno">(158)<a class="headerlink" href="#equation-fb3317ec-55ba-4100-86de-1c0554eeb012" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c7acd895-ce44-4458-b412-60b81ef37790">
+<span class="eqno">(158)<a class="headerlink" href="#equation-c7acd895-ce44-4458-b412-60b81ef37790" title="Permalink to this equation">#</a></span>\[\begin{equation}
     Q(a, s) = \mathbb{E} \Big(R_t + \gamma \arg \max_{a'} Q(a, S_{t+1})  | A_t = a, S_t = s \Big).  \;\;\;\;\; \text{(1)}. 
 \end{equation}\]</div>
 <p>Since the right-hand side of (1) is a contraction mapping on <span class="math notranslate nohighlight">\(Q\)</span> and its fixed point is <span class="math notranslate nohighlight">\(Q^*\)</span>, we can iteratively solve the following problem to update the estimation of <span class="math notranslate nohighlight">\(Q^*\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5f37cfab-dac7-4937-8c14-2368e3267298">
-<span class="eqno">(159)<a class="headerlink" href="#equation-5f37cfab-dac7-4937-8c14-2368e3267298" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-b4bf1ee5-0f96-4d43-a55a-e13c4b7d00d9">
+<span class="eqno">(159)<a class="headerlink" href="#equation-b4bf1ee5-0f96-4d43-a55a-e13c4b7d00d9" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 	\widehat{Q}^{{\ell}}=\arg \min_{Q} 
 	\sum_{(s,a,r,s') \sim D}
 	\Big\{
@@ -1237,8 +1237,8 @@ For example, DQN <span id="id9">[<a class="reference internal" href="#id40" titl
 A natural idea is:
 if we have a value estimator, then it can be used for policy evaluation as well.
 Such a motivation is well grounded by the following relationship (there are more extensions):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dd012b27-fe94-4156-bfe4-4930ebd32bac">
-<span class="eqno">(160)<a class="headerlink" href="#equation-dd012b27-fe94-4156-bfe4-4930ebd32bac" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9b5448cc-ce2e-4205-ad60-378dc817eabd">
+<span class="eqno">(160)<a class="headerlink" href="#equation-9b5448cc-ce2e-4205-ad60-378dc817eabd" title="Permalink to this equation">#</a></span>\[\begin{align}
 \bigtriangledown_{\theta}\, J(\theta)
 &amp;= 
 \mathbb{E}_{\tau \sim \pi(\cdot;\theta)}

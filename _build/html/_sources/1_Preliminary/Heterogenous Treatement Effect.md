@@ -1,2 +1,0 @@
-# Heterogenous Treatment Effect
-

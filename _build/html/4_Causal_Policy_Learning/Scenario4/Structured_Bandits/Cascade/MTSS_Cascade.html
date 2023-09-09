@@ -50,8 +50,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../../../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="next" title="Online Combinatorial Optimization (Combinatorial Semi-Bandit)" href="../Combinatorial-Semi/Combinatorial%20Optimization.html" />
@@ -497,7 +497,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../../Scenario2/MediationRL.html">
-   Mediation Analysis under MDP
+   Policy Evaluation--Mediation Analysis
   </a>
  </li>
  <li class="toctree-l1 has-children">
@@ -1166,8 +1166,8 @@ title="Print to PDF"
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>MTSS_Cascade is an example of the general Thompson Sampling(TS)-based framework, MTSS [1], to deal with online learning to rank problems.</p>
 <p><strong>Review of MTSS:</strong> MTSS[1] is a meta-learning framework designed for large-scale structured bandit problems [2]. Mainly, it is a TS-based algorithm that learns the information-sharing structure while minimizing the cumulative regrets. Adapting the TS framework to a problem-specific Bayesian hierarchical model, MTSS simultaneously enables information sharing among items via their features and models the inter-item heterogeneity. Specifically, it assumes that the item-specific parameter <span class="math notranslate nohighlight">\(\theta_i = E[W_t(i)]\)</span> is sampled from a distribution <span class="math notranslate nohighlight">\(g(\theta_i|\boldsymbol{s}_i, \boldsymbol{\gamma})\)</span> instead of being entirely determined by <span class="math notranslate nohighlight">\(\boldsymbol{s}_i\)</span> via a deterministic function. Here, <span class="math notranslate nohighlight">\(g\)</span> is a model parameterized by an <strong>unknown</strong> vector <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>. The following is the general feature-based hierarchical model MTSS considered.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8ae4d804-af2b-4f5c-bd3d-4926b50f6895">
-<span class="eqno">(136)<a class="headerlink" href="#equation-8ae4d804-af2b-4f5c-bd3d-4926b50f6895" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:general_hierachical}
+<div class="amsmath math notranslate nohighlight" id="equation-9e5dac8a-d003-4fd2-b404-05b3f7d85596">
+<span class="eqno">(136)<a class="headerlink" href="#equation-9e5dac8a-d003-4fd2-b404-05b3f7d85596" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:general_hierachical}
   \begin{alignedat}{2}
 &amp;\text{(Prior)} \quad
 \quad\quad\quad\quad\quad\quad\quad\quad\quad
@@ -1183,8 +1183,8 @@ title="Print to PDF"
 <p>where <span class="math notranslate nohighlight">\(Q(\boldsymbol{\gamma})\)</span> is the prior distribution for <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>.
 Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class of practical problems, <strong>scalable</strong> to large systems, and <strong>robust</strong> to the specification of the generalization model.</p>
 <p><strong>Review of MTSS_Cascade:</strong> To characterize the relationship between items using their features, one example choice of <span class="math notranslate nohighlight">\(g\)</span> is the popular Beta-Bernoulli logistic model [1,2], where <span class="math notranslate nohighlight">\(\theta_i {\sim} Beta(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma}), \phi)\)</span> for some known parameter <span class="math notranslate nohighlight">\(\phi\)</span>. We adopt the mean-precision parameterization of the Beta distribution, with <span class="math notranslate nohighlight">\(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})\)</span> being the mean and <span class="math notranslate nohighlight">\(\phi\)</span> being the precision parameter. Specifically, the full model is as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-42a73ec9-644b-4ee3-8c31-dce92fd8a5c9">
-<span class="eqno">(137)<a class="headerlink" href="#equation-42a73ec9-644b-4ee3-8c31-dce92fd8a5c9" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:model_cascading}
+<div class="amsmath math notranslate nohighlight" id="equation-f53d9f48-57b9-405a-a5fe-a4b6f639d039">
+<span class="eqno">(137)<a class="headerlink" href="#equation-f53d9f48-57b9-405a-a5fe-a4b6f639d039" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:model_cascading}
     \begin{split}
     \theta_i &amp; \sim Beta(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma}), \phi), \forall i \in [N]\\
     W_{k, t}(a) &amp;\sim Bernoulli(\theta_{a^k}), \forall k \in [K], \\

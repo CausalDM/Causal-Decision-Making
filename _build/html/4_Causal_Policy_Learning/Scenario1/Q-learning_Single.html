@@ -50,8 +50,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="A-Learning (Single Stage)" href="A-learning_Single.html" />
@@ -497,7 +497,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../Scenario2/MediationRL.html">
-   Mediation Analysis under MDP
+   Policy Evaluation--Mediation Analysis
   </a>
  </li>
  <li class="toctree-l1 has-children">
@@ -1132,12 +1132,12 @@ title="Print to PDF"
 <section id="algorithm-details">
 <h2>Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this headline">#</a></h2>
 <p>Q-learning with a single decision point is mainly a regression modeling problem, as the major component is to find the relationship between the expectation of potential reward <span class="math notranslate nohighlight">\(R(a)\)</span> and <span class="math notranslate nohighlight">\(\{\boldsymbol{s},a\}\)</span>. Let’s first define a Q-function, such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-78c00e43-a8c7-4d49-b832-40dd54186961">
-<span class="eqno">(63)<a class="headerlink" href="#equation-78c00e43-a8c7-4d49-b832-40dd54186961" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2deedbb0-ab57-4a10-8d14-7148f1c718e5">
+<span class="eqno">(63)<a class="headerlink" href="#equation-2deedbb0-ab57-4a10-8d14-7148f1c718e5" title="Permalink to this equation">#</a></span>\[\begin{align}
     Q(\boldsymbol{s},a) = E(R(a)|\boldsymbol{S}=\boldsymbol{s}).
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-8756a82f-4281-4ac8-9bca-d325999ab723">
-<span class="eqno">(64)<a class="headerlink" href="#equation-8756a82f-4281-4ac8-9bca-d325999ab723" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-89fd123f-9160-43b7-8915-04b345f75610">
+<span class="eqno">(64)<a class="headerlink" href="#equation-89fd123f-9160-43b7-8915-04b345f75610" title="Permalink to this equation">#</a></span>\[\begin{align}
     \text{arg max}_{\pi}Q(\boldsymbol{s}_{i},\pi(\boldsymbol{s}_{i})).
 \end{align}\]</div>
 </section>
@@ -1202,8 +1202,8 @@ title="Print to PDF"
 </div>
 </div>
 <p>By specifing the model_info, we assume a regression model that:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4577cfda-920b-4310-8a68-bb8430366460">
-<span class="eqno">(65)<a class="headerlink" href="#equation-4577cfda-920b-4310-8a68-bb8430366460" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e0b4fc05-4877-43e6-9b37-a4a12cae4b9a">
+<span class="eqno">(65)<a class="headerlink" href="#equation-e0b4fc05-4877-43e6-9b37-a4a12cae4b9a" title="Permalink to this equation">#</a></span>\[\begin{align}
 Q(\boldsymbol{s},a,\boldsymbol{\beta}) &amp;= \beta_{00}+\beta_{01}*recency+\beta_{02}*history\\
 &amp;+I(a=1)*\{\beta_{10}+\beta_{11}*recency+\beta_{12}*history\} \\
 &amp;+I(a=2)*\{\beta_{20}+\beta_{21}*recency+\beta_{22}*history\} 
@@ -1251,8 +1251,8 @@ opt value: 126.48792828230047
 </div>
 </div>
 <p><strong>Interpretation:</strong> the fitted model is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1ed9d14d-869b-4347-aa18-ea256e5e6a36">
-<span class="eqno">(66)<a class="headerlink" href="#equation-1ed9d14d-869b-4347-aa18-ea256e5e6a36" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7ac10bdb-14db-4bd9-9bbe-0c037e03c620">
+<span class="eqno">(66)<a class="headerlink" href="#equation-7ac10bdb-14db-4bd9-9bbe-0c037e03c620" title="Permalink to this equation">#</a></span>\[\begin{align}
 Q(\boldsymbol{s},a,\boldsymbol{\beta}) &amp;= 94.20+4.53*recency+0.0005*history\\
 &amp;+I(a=1)*\{23.24-4.15*recency+0.0076*history\} \\
 &amp;+I(a=2)*\{20.61-4.84*recency+0.0004history\}. 
