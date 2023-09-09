@@ -8,7 +8,7 @@
 
 import os
 os.getcwd()
-os.chdir('/nas/longleaf/home/lge/CausalDM')
+os.chdir('D:/Github/CausalDM')
 # import learner
 from causaldm._util_causaldm import *
 from scipy.linalg import block_diag
@@ -65,7 +65,7 @@ class Single_Gaussian_Env():
 
 # ### True Model
 
-# In[37]:
+# In[2]:
 
 
 true_model = np.array([ 1.  ,  0.01, -0.5 ,  3.3 , -0.8 , -0.5 ,  4 ,  
@@ -82,10 +82,10 @@ print(true_model_1.to_markdown())
 
 # ## Offline Policy Optimization
 
-# In[16]:
+# In[3]:
 
 
-from causaldm.learners import QLearning
+from causaldm.learners.CPL13.disc import QLearning
 seed = 0
 user_info = Single_Gaussian_Env(true_model, sigma, seed = seed, with_intercept = True, logged_dat = True)
 user_info = user_info.user_info
@@ -94,7 +94,7 @@ A = user_info['rec_genre']
 R = user_info['reward']
 
 
-# In[17]:
+# In[4]:
 
 
 r_mean = block_diag(*([np.array([1,40,.5,1,0,0,0])] * 5)).dot(true_model).tolist()+ block_diag(
@@ -106,7 +106,7 @@ r_mean = np.array(r_mean).reshape((5,-1))
 r_mean.T
 
 
-# In[18]:
+# In[5]:
 
 
 model_info = [{"model": "reward~C(rec_genre)*(age+gender+educator+student+executive+technician)", #default is add an intercept!!!
@@ -124,7 +124,7 @@ print("opt regime:",opt_d)
 print("opt value:",V_hat)
 
 
-# In[19]:
+# In[6]:
 
 
 fitted_model = np.array(QLearn.fitted_model[0].params).reshape((7,-1)).T
@@ -137,7 +137,7 @@ print(fitted_model.to_markdown())
 
 # ## Online MAB
 
-# In[21]:
+# In[7]:
 
 
 T = 1000
@@ -147,18 +147,18 @@ K = 5
 sigma = 1
 estimated_gamma = np.array(fitted_model).reshape(-1)
 alpha = .1
-exploration_T = 10*K
+exploration_T = K
 Reward_Type = "Gaussian"
 u_prior_mean = np.zeros(K)
 u_prior_cov = 1000*np.identity(K)
 
 
-# In[26]:
+# In[8]:
 
 
 #LINTS-informative
-from causaldm.learners.Online.CMAB import LinTS, LinUCB
-from causaldm.learners.Online.MAB import TS, UCB
+from causaldm.learners.CPL4.CMAB import LinTS, LinUCB
+from causaldm.learners.CPL4.MAB import TS, UCB
 sigma1 = 3
 cum_reward_greedy = []
 cum_reward_infoLinTS = []
@@ -198,8 +198,8 @@ for seed in range(S):
     
     ##uninfo_LINTS
     env = Single_Gaussian_Env(true_model, sigma, seed = seed, with_intercept = True, logged_dat = False)
-    prior_theta_u = np.zeros(p)
-    prior_theta_cov = 1000*np.identity(p)
+    prior_theta_u = 100*np.ones(p)
+    prior_theta_cov = 200*np.identity(p)
     uninfo_LinTS= LinTS.LinTS_Gaussian(sigma = sigma, prior_theta_u = prior_theta_u, 
                                                     prior_theta_cov = prior_theta_cov, 
                                                     K = K, p = p,seed = seed)
@@ -259,7 +259,7 @@ for seed in range(S):
     
 
 
-# In[36]:
+# In[42]:
 
 
 import seaborn as sns
@@ -276,7 +276,14 @@ sns.lineplot(data=result[result.t>0], x='t', y="Reward", hue="Algo", ci = 95,
              n_boot = 20, linewidth = 1.0, markers = False)
 plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0)
 plt.ylabel('Average Reward')
+plt.tight_layout()
 plt.savefig('MovieLens_Contextual.png')
+
+
+# In[36]:
+
+
+plt.tight_layout()
 
 
 # In[ ]:

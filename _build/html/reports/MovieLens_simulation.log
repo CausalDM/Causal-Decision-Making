@@ -1,4 +1,15 @@
 Traceback (most recent call last):
+  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 730, in _async_poll_for_reply
+    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
+  File "D:\anaconda3\lib\site-packages\nbclient\util.py", line 96, in ensure_async
+    result = await obj
+  File "D:\anaconda3\lib\site-packages\jupyter_client\asynchronous\channels.py", line 48, in get_msg
+    raise Empty
+_queue.Empty
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
   File "D:\anaconda3\lib\site-packages\jupyter_cache\executors\utils.py", line 51, in single_nb_execution
     executenb(
   File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 1204, in execute
@@ -11,78 +22,18 @@ Traceback (most recent call last):
     return future.result()
   File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 663, in async_execute
     await self.async_execute_cell(
-  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 965, in async_execute_cell
-    await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 862, in _check_raise_for_error
-    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
-nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
-------------------
-import os
-os.getcwd()
-os.chdir('/nas/longleaf/home/lge/CausalDM')
-# import learner
-from causaldm._util_causaldm import *
-from scipy.linalg import block_diag
-class Single_Gaussian_Env():
-    @autoargs()
-    def __init__(self, true_model, sigma, seed = 42, with_intercept = True, logged_dat = False):
-        self.setting = locals()
-        self.setting['self'] = None
-        self.seed = seed
-        np.random.seed(self.seed)
-        
-        self.true_model = true_model
-        self.sigma = sigma
-        
-        if logged_dat:
-            self.get_logged_dat()
-            
-        
-    def get_Phi(self):
-        """ consider the simple case now 
-        [K, p]
-        """
-        occup = np.random.multinomial(1, [1/5, 1/5, 1/5, 1/5, 1/5], size=1)
-        gender = np.random.binomial(1, 1/2, size=1)
-        age = np.random.randint(low=20, high=60, size = 1)
-        user_info = age.tolist()+gender.tolist()+occup.tolist()[0][:-1]
-        if self.with_intercept:
-            user_info = [1] + user_info
-        self.Phi = block_diag(*([np.array(user_info)] * 5))   
-        return self.Phi
-    
-    def get_reward(self, a):
-        self.r_mean = self.Phi.dot(self.true_model)
-        self.r = self.r_mean
-        return self.r[a] + abs(np.random.randn(1)[0])*self.sigma
-    
-    def optimal_action_reward(self):
-        a = np.argmax(self.r)
-        return a
-    
-    def get_logged_dat(self):
-        true_model = self.true_model.reshape((5,-1))
-        occup = np.random.multinomial(1, [2/5, 3/5, 0, 0, 0], size=100)
-        gender = np.random.binomial(1, 1/20, size=100).reshape(-1,1)
-        age = np.random.randint(low=20, high=25, size = 100).reshape(-1,1)
-        rec_genre = np.random.randint(low=0, high=5, size = 100).reshape(-1,1)
-        user_info = pd.DataFrame(np.concatenate((age, gender, occup, rec_genre), axis=1))
-        user_info.columns = ['age', 'gender', 'educator', 'student', 'executive', 'technician', 'others','rec_genre']
-        user_info['reward'] = user_info.apply(lambda row : np.dot(true_model[row['rec_genre']],
-                                                          np.array([1]+row.iloc[:-2].tolist()))+
-                                              self.sigma*abs(np.random.randn(1)[0]), axis = 1)
-        self.user_info = user_info
-------------------
-
-[1;31m---------------------------------------------------------------------------[0m
-[1;31mFileNotFoundError[0m                         Traceback (most recent call last)
-Input [1;32mIn [1][0m, in [0;36m<cell line: 3>[1;34m()[0m
-[0;32m      1[0m [38;5;28;01mimport[39;00m [38;5;21;01mos[39;00m
-[0;32m      2[0m os[38;5;241m.[39mgetcwd()
-[1;32m----> 3[0m [43mos[49m[38;5;241;43m.[39;49m[43mchdir[49m[43m([49m[38;5;124;43m'[39;49m[38;5;124;43m/nas/longleaf/home/lge/CausalDM[39;49m[38;5;124;43m'[39;49m[43m)[49m
-[0;32m      4[0m [38;5;66;03m# import learner[39;00m
-[0;32m      5[0m [38;5;28;01mfrom[39;00m [38;5;21;01mcausaldm[39;00m[38;5;21;01m.[39;00m[38;5;21;01m_util_causaldm[39;00m [38;5;28;01mimport[39;00m [38;5;241m*[39m
-
-[1;31mFileNotFoundError[0m: [WinError 3] 系统找不到指定的路径。: '/nas/longleaf/home/lge/CausalDM'
-FileNotFoundError: [WinError 3] 系统找不到指定的路径。: '/nas/longleaf/home/lge/CausalDM'
+  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 949, in async_execute_cell
+    exec_reply = await self.task_poll_for_reply
+  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 754, in _async_poll_for_reply
+    await self._async_handle_timeout(timeout, cell)
+  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 801, in _async_handle_timeout
+    raise CellTimeoutError.error_from_timeout_and_cell(
+nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+['#LINTS-informative', 'from causaldm.learners.CPL4.CMAB import LinTS, LinUCB', 'from causaldm.learners.CPL4.MAB import TS, UCB', 'sigma1 = 3', 'cum_reward_greedy = []']
+...
+['        R = env.get_reward(A)', '        uninfo_UCB.receive_reward(t,A,R)', '        cum_reward_UCB_t.append(R)', '    cum_reward_UCB_t = np.cumsum(cum_reward_UCB_t)/(np.array(range(T))+1)', '    cum_reward_UCB.append(cum_reward_UCB_t)']
+-------------------
 
