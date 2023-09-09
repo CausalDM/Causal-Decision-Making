@@ -17,57 +17,16 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-sigma_1 = 1
-sigma_2 = 1
-L = env.L
-T = 2000
-K = 10
-p = env.p
-gamma_prior_mean = np.zeros(env.p)
-gamma_prior_cov = np.identity(env.p)
-Xs = env.Phi
-update_freq = 1
-seed = 0
-MTSS_agent = MTSS_Comb.MTSS_Semi(sigma_1 = sigma_1, sigma_2 = sigma_2, L=L, T = T, K = K,
-                                 gamma_prior_mean = gamma_prior_mean, gamma_prior_cov = gamma_prior_cov,
-                                 Xs = Xs, update_freq = update_freq, seed = seed)
+import numpy as np
+from causaldm.learners.Online.Structured_Bandits.Combinatorial_Semi import MTSS_Comb
 ------------------
 
 [1;31m---------------------------------------------------------------------------[0m
-[1;31mMemoryError[0m                               Traceback (most recent call last)
-Input [1;32mIn [4][0m, in [0;36m<cell line: 12>[1;34m()[0m
-[0;32m     10[0m update_freq [38;5;241m=[39m [38;5;241m1[39m
-[0;32m     11[0m seed [38;5;241m=[39m [38;5;241m0[39m
-[1;32m---> 12[0m MTSS_agent [38;5;241m=[39m [43mMTSS_Comb[49m[38;5;241;43m.[39;49m[43mMTSS_Semi[49m[43m([49m[43msigma_1[49m[43m [49m[38;5;241;43m=[39;49m[43m [49m[43msigma_1[49m[43m,[49m[43m [49m[43msigma_2[49m[43m [49m[38;5;241;43m=[39;49m[43m [49m[43msigma_2[49m[43m,[49m[43m [49m[43mL[49m[38;5;241;43m=[39;49m[43mL[49m[43m,[49m[43m [49m[43mT[49m[43m [49m[38;5;241;43m=[39;49m[43m [49m[43mT[49m[43m,[49m[43m [49m[43mK[49m[43m [49m[38;5;241;43m=[39;49m[43m [49m[43mK[49m[43m,[49m
-[0;32m     13[0m [43m                                 [49m[43mgamma_prior_mean[49m[43m [49m[38;5;241;43m=[39;49m[43m [49m[43mgamma_prior_mean[49m[43m,[49m[43m [49m[43mgamma_prior_cov[49m[43m [49m[38;5;241;43m=[39;49m[43m [49m[43mgamma_prior_cov[49m[43m,[49m
-[0;32m     14[0m [43m                                 [49m[43mXs[49m[43m [49m[38;5;241;43m=[39;49m[43m [49m[43mXs[49m[43m,[49m[43m [49m[43mupdate_freq[49m[43m [49m[38;5;241;43m=[39;49m[43m [49m[43mupdate_freq[49m[43m,[49m[43m [49m[43mseed[49m[43m [49m[38;5;241;43m=[39;49m[43m [49m[43mseed[49m[43m)[49m
+[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Input [1;32mIn [2][0m, in [0;36m<cell line: 2>[1;34m()[0m
+[0;32m      1[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
+[1;32m----> 2[0m [38;5;28;01mfrom[39;00m [38;5;21;01mcausaldm[39;00m[38;5;21;01m.[39;00m[38;5;21;01mlearners[39;00m[38;5;21;01m.[39;00m[38;5;21;01mOnline[39;00m[38;5;21;01m.[39;00m[38;5;21;01mStructured_Bandits[39;00m[38;5;21;01m.[39;00m[38;5;21;01mCombinatorial_Semi[39;00m [38;5;28;01mimport[39;00m MTSS_Comb
 
-File [1;32mD:\GitHub\CausalDM\causaldm\learners\Online\_util_online.py:223[0m, in [0;36mautoargs.<locals>._autoargs.<locals>.wrapper[1;34m(self, *args, **kwargs)[0m
-[0;32m    221[0m         [38;5;28;01mif[39;00m sieve(attr):
-[0;32m    222[0m             [38;5;28msetattr[39m([38;5;28mself[39m, attr, val)
-[1;32m--> 223[0m [38;5;28;01mreturn[39;00m func([38;5;28mself[39m, [38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs)
-
-File [1;32mD:\GitHub\CausalDM\causaldm\learners\Online\Structured_Bandits\Combinatorial_Semi\MTSS_Comb.py:32[0m, in [0;36mMTSS_Semi.__init__[1;34m(self, sigma_1, sigma_2, L, T, K, gamma_prior_mean, gamma_prior_cov, Xs, update_freq, seed)[0m
-[0;32m     29[0m [38;5;28mself[39m[38;5;241m.[39mPhi [38;5;241m=[39m Xs [38;5;66;03m# [L, p][39;00m
-[0;32m     30[0m [38;5;28mself[39m[38;5;241m.[39mPhi_Simga [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mPhi[38;5;241m.[39mdot(gamma_prior_cov)        
-[1;32m---> 32[0m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_init_data_storate[49m[43m([49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mL_tot[49m[43m,[49m[43m [49m[43mp[49m[43m)[49m
-[0;32m     33[0m [38;5;28mself[39m[38;5;241m.[39m_init_else([38;5;28mself[39m[38;5;241m.[39mL_tot, p)
-[0;32m     34[0m [38;5;28mself[39m[38;5;241m.[39m_init_Sigma_12_part()
-
-File [1;32mD:\GitHub\CausalDM\causaldm\learners\Online\Structured_Bandits\Combinatorial_Semi\MTSS_Comb.py:86[0m, in [0;36mMTSS_Semi._init_data_storate[1;34m(self, L_tot, p)[0m
-[0;32m     84[0m [38;5;28mself[39m[38;5;241m.[39mSigma12 [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_init_empty([38;5;124m"[39m[38;5;124mcol[39m[38;5;124m"[39m) [38;5;66;03m#np.zeros((L, 0)) [39;00m
-[0;32m     85[0m [38;5;66;03m# each i has a list, which stores the M_ij part for each j[39;00m
-[1;32m---> 86[0m [38;5;28mself[39m[38;5;241m.[39mSigma12_data [38;5;241m=[39m [np[38;5;241m.[39mzeros((L_tot, [38;5;28mself[39m[38;5;241m.[39mT)) [38;5;28;01mfor[39;00m a [38;5;129;01min[39;00m [38;5;28mrange[39m(L_tot)]
-[0;32m     87[0m [38;5;28mself[39m[38;5;241m.[39mSigma_idx [38;5;241m=[39m np[38;5;241m.[39marray([38;5;28mself[39m[38;5;241m.[39m_init_empty([38;5;124m"[39m[38;5;124mnum[39m[38;5;124m"[39m)) [38;5;66;03m#[0 for a in range(L)] [39;00m
-[0;32m     88[0m [38;5;66;03m### inverse part[39;00m
-
-File [1;32mD:\GitHub\CausalDM\causaldm\learners\Online\Structured_Bandits\Combinatorial_Semi\MTSS_Comb.py:86[0m, in [0;36m<listcomp>[1;34m(.0)[0m
-[0;32m     84[0m [38;5;28mself[39m[38;5;241m.[39mSigma12 [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_init_empty([38;5;124m"[39m[38;5;124mcol[39m[38;5;124m"[39m) [38;5;66;03m#np.zeros((L, 0)) [39;00m
-[0;32m     85[0m [38;5;66;03m# each i has a list, which stores the M_ij part for each j[39;00m
-[1;32m---> 86[0m [38;5;28mself[39m[38;5;241m.[39mSigma12_data [38;5;241m=[39m [[43mnp[49m[38;5;241;43m.[39;49m[43mzeros[49m[43m([49m[43m([49m[43mL_tot[49m[43m,[49m[43m [49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mT[49m[43m)[49m[43m)[49m [38;5;28;01mfor[39;00m a [38;5;129;01min[39;00m [38;5;28mrange[39m(L_tot)]
-[0;32m     87[0m [38;5;28mself[39m[38;5;241m.[39mSigma_idx [38;5;241m=[39m np[38;5;241m.[39marray([38;5;28mself[39m[38;5;241m.[39m_init_empty([38;5;124m"[39m[38;5;124mnum[39m[38;5;124m"[39m)) [38;5;66;03m#[0 for a in range(L)] [39;00m
-[0;32m     88[0m [38;5;66;03m### inverse part[39;00m
-
-[1;31mMemoryError[0m: Unable to allocate 45.8 MiB for an array with shape (3000, 2000) and data type float64
-MemoryError: Unable to allocate 45.8 MiB for an array with shape (3000, 2000) and data type float64
+[1;31mModuleNotFoundError[0m: No module named 'causaldm.learners.Online'
+ModuleNotFoundError: No module named 'causaldm.learners.Online'
 

@@ -1,4 +1,4 @@
-# Markov Decision Processes
+# Markov Decision Processes -- Paradigm 2
 
 In this section, we move to the case where the data is no long single stage. In some real cases, researchers may encounter the longitudinal data with long horizons or even infinite horizons. For example, in clinical trial, the doctor will periodically check the health status of patients to provide them with personalized treatment at each time they visit. Under this scenario, the problem becomes: ``What's the causal effect of taking a target treatment at each stage versus the control?". 
 

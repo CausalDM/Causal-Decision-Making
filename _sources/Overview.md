@@ -7,7 +7,7 @@
 ## What to expect?
 ---
 
-```{figure} Workflow_CausalDM.png
+```{figure} pics/Workflow_CausalDM.png
 ---
 width: 800px
 align: center
@@ -23,7 +23,7 @@ Following is a brief summary of the contents of each chapter.
 ---
 The main goal of causal structure learning is to learn the unknown causal relationships among different variables.
 
-```{image} CSL_aim.png
+```{image} pics/CSL_aim.png
 :alt: Scenario1
 :width: 500px
 :align: center
@@ -31,7 +31,7 @@ The main goal of causal structure learning is to learn the unknown causal relati
 
 The classical causal structure learning methods can be categorized into three types.
 
-```{image} CSL_type.png
+```{image} pics/CSL_type.png
 :alt: Scenario1
 :width: 500px
 :align: center
@@ -54,7 +54,7 @@ Causal effect learning, as we've mentioned at the beginning, aims to infer on th
 
 
 
-![Table_of_Fixed_Policy.png](Table_of_Fixed_Policy.png)
+![Table_of_Fixed_Policy.png](pics/Table_of_Fixed_Policy.png)
 
 
 
@@ -68,9 +68,9 @@ In Paradigm 1, we consider the standard case where all observations are i.i.d.. 
 
 
 
-```{image} CEL-IID.png
+```{image} pics/CEL-IID.png
 :alt: Scenario1
-:width: 400px
+:width: 500px
 :align: center
 ```
 
@@ -86,9 +86,9 @@ In observational data analysis, the data we obtained does not come from the targ
 
 
 
-```{image} CEL-Markovian.png
+```{image} pics/CEL-Markovian.png
 :alt: Scenario2
-:width: 200px
+:width: 500px
 :align: center
 ```
 
@@ -125,9 +125,9 @@ The current literature in dealing with panel data can be roughly divided into tw
 
 
 
-```{image} CEL-PanelData.png
+```{image} pics/CEL-PanelData.png
 :alt: Scenario3
-:width: 400px
+:width: 500px
 :align: center
 ```
 
@@ -144,7 +144,7 @@ provide a good approximation for the counterfactual outcome of the treated unit 
 ---
 This chapter focuses on six common data dependence structures in decision making, including [**Fixed Policy with Independent States**](#Case1), [**Fixed Policy with Markovian State Transition**](#Case2), [**Fixed Policy with Non-Markovian State Transition**](#Case3), [**Adaptive Policy with Independent States**](#Case4), [**Adaptive Policy with Markovian State Transition**](#Case5), and [**Adaptive Policy with Non-Markovian State Transition**](#Case6). The similarities and differences between six paradigms are summarized as follows.
 
-![Table_of_Six_Scenarios.png](Table_of_Six_Scenarios.png)
+![Table_of_Six_Scenarios.png](pics/Table_of_Six_Scenarios.png)
 
 ### <a name="Case1"></a> Paradigm 1: Fixed Policy with Independent States
 As the figure illustrated, observations in Paradigm 1 are i.i.d. sampled. For each observation, there are three components, $S_i$ is the context information if there is any, $A_i$ is the action taken, and $R_i$ is the reward received. When there is contextual information, the action would be affected by the contextual information, while the final reward would be affected by both the contextual information and the action. A classical class of problems that are widely studied in this context is the **Single-Stage Dynamic Treatment Regime (DTR)**[1]. In this book, we mainly focus on methods for policy evaluation and policy optimization for Single-Stage DTR, with a detailed map in [Appendix A](#SingleDTR)
@@ -176,7 +176,7 @@ We can further relax the Markovian assumption required in Paradigm 5 to allow No
 ## Appendix
 ---
 ### <a name="SingelDTR"></a> A. Paradigm 1
-```{image} CPL_Paradigm1.png
+```{image} pics/CPL_Paradigm1.png
 :alt: Scenario1
 :width: 500px
 :align: center
@@ -194,14 +194,14 @@ We can further relax the Markovian assumption required in Paradigm 5 to allow No
 
 
 ### <a name="MDP"></a> B. Paradigm 2
-```{image} CPL_Paradigm2.png
+```{image} pics/CPL_Paradigm2.png
 :alt: Scenario2
 :width: 400px
 :align: center
 ```
 
 ### <a name="MultiDTR"></a> C. Paradigm 3
-```{image} CPL_Paradigm3.png
+```{image} pics/CPL_Paradigm3.png
 :alt: Scenario3
 :width: 300px
 :align: center
@@ -214,7 +214,7 @@ We can further relax the Markovian assumption required in Paradigm 5 to allow No
 
 
 ### <a name="Bandits"></a> D. Paradigm 4
-```{image} CPL_Paradigm4.png
+```{image} pics/CPL_Paradigm4.png
 :alt: Scenario4
 :width: 900px
 :align: center
