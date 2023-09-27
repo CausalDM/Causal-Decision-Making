@@ -2,6 +2,8 @@
 ## Introduction
 ---
 
+## Authors
+---
 
 
 ## What to expect?
