@@ -58,6 +58,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '3_Causal_Effect_Learning/Scenario 3/Synthetic Control';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -724,9 +726,9 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Motivating Examples</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../0_Motivating_Examples/CSL.html"><em>Causal Structure Learning (CSL)</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../0_Motivating_Examples/CEL.html"><em>Causal Effect Learning (CEL)</em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../0_Motivating_Examples/CPL.html"><em>Causal Policy Learning (CPL)</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../0_Motivating_Examples/CSL.html">Causal Structure Learning (CSL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../0_Motivating_Examples/CEL.html">Causal Effect Learning (CEL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../0_Motivating_Examples/CPL.html">Causal Policy Learning (CPL)</a></li>
 
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminary</span></p>
@@ -1095,7 +1097,20 @@ title="Print to PDF"
               
   <section id="synthetic-control">
 <h1><strong>Synthetic Control</strong><a class="headerlink" href="#synthetic-control" title="Permalink to this heading">#</a></h1>
-<p>to be added</p>
+<p>Unlike the Difference-in-Differences (DiD) method, synthetic control is a frequently employed technique when dealing with datasets where there is a significant imbalance between the number of control units and treated units. DiD methods typically demand a high degree of comparability between the treated and control groups to establish the critical “parallel trend” assumption. However, this assumption becomes challenging to fulfill when the dataset contains only a limited number, or even just a single, treated unit, often due to issues related to data collection or funding constraints. In this situation, synthetic control aims to reweight the substantial information in control group to provide another perspective to learn the conterfactuals for treated unit(s).</p>
+<p>To illustrate the basic idea of synthetic control, we suppose that there are <span class="math notranslate nohighlight">\(N\)</span> units and <span class="math notranslate nohighlight">\(T\)</span> time periods in total, and denote <span class="math notranslate nohighlight">\(Y_{it}\)</span> as the outcome for unit <span class="math notranslate nohighlight">\(i\)</span> in period <span class="math notranslate nohighlight">\(t\)</span>. Without the loss of generality, e suppose the first <span class="math notranslate nohighlight">\(N_{\text{co}}\)</span> units are in the control group, who have no possibility to be exposed to treatment at any time. The rest <span class="math notranslate nohighlight">\(N_{\text{tr}} := N-N_{\text{co}}\)</span> units belong to the treated group, and will receive treatment starting from period <span class="math notranslate nohighlight">\(T_0 +1\)</span>.</p>
+<p>There are two main steps in synthetic control methods:</p>
+<p><strong>Step 1:</strong> Calculate the weights <span class="math notranslate nohighlight">\(\hat{\omega}_i^{\text{sdid}}\)</span> that align pre-exposure trends in the outcome of control units for treated units；\</p>
+<div class="amsmath math notranslate nohighlight" id="equation-1549edc4-0f1a-4a86-b747-d49502c0d9ac">
+<span class="eqno">(63)<a class="headerlink" href="#equation-1549edc4-0f1a-4a86-b747-d49502c0d9ac" title="Permalink to this equation">#</a></span>\[\begin{equation}
+    \hat{Y}_{it} = \hat{\omega}_{i0} + \sum_{j=1}^{N_{\text{co}}}\hat{\omega}_{ij} Y_{jt}, \qquad \forall i\in\{N_{\text{co}+1},\dots, N\}, \forall t\in \{1,\dots,T\},
+\end{equation}\]</div>
+<p>where</p>
+<div class="amsmath math notranslate nohighlight" id="equation-5a2f913e-3f09-4f50-bc32-268129bd496a">
+<span class="eqno">(64)<a class="headerlink" href="#equation-5a2f913e-3f09-4f50-bc32-268129bd496a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\hat{\omega}_i = \arg\min_{\omega} \sum_{1\leq t\leq T_0} \bigg(Y_{it} - \omega_{i0} -\sum_{j=1}^{N_{\text{co}}} \omega_{ij} Y_{jt}\bigg)^2
+\end{equation}\]</div>
+<p><strong>Step 2:</strong> Use the weights to estimate the post-exposure conterfactuals in causal effect estimation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># </span>
@@ -1107,7 +1122,7 @@ title="Print to PDF"
 <section id="references">
 <h1>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h1>
 <ol class="arabic simple">
-<li><p>Abadie, A., Diamond, A., and Hainmueller, J. (2010), “Synthetic Control Methods for Comparative Case Studies: Estimating the Effect of Cali- fornia’s Tobacco Control Program,” Journal of the American Statistical Association, 105, 493–505. [2068,2069,2070,2071]</p></li>
+<li><p>Abadie, A., Diamond, A., and Hainmueller, J. (2010), “Synthetic Control Methods for Comparative Case Studies: Estimating the Effect of California’s Tobacco Control Program,” Journal of the American Statistical Association, 105, 493–505. [2068,2069,2070,2071]</p></li>
 <li><p>Li, K. T. (2020), “Statistical Inference for Average Treatment Effects Esti-mated by Synthetic Control Methods,”Journal of the American StatisticalAssociation, 115, 2068–2083. [1716]</p></li>
 </ol>
 </section>
