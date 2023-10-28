@@ -8,11 +8,9 @@
 # In[1]:
 
 
-import os
-os.chdir('D:/GitHub/CausalDM')
 import pandas as pd
 import numpy as np
-single_data = pd.read_csv('./causaldm/MIMIC3/mimic3_single_stage.csv')
+single_data = pd.read_csv('mimic3_single_stage.csv')
 single_data.iloc[np.where(single_data['IV Input']<1)[0],3]=0 # change the discrete action to binary
 single_data.iloc[np.where(single_data['IV Input']>=1)[0],3]=1 # change the discrete action to binary
 single_data.iloc[np.where(single_data['Died within 48H']==-1)[0],5]=0 # change the discrete action to binary
@@ -101,7 +99,7 @@ Direct_est.estimate_DE_ME()
 Direct_est.est_DE, Direct_est.est_ME, Direct_est.est_TE,
 
 
-# In[6]:
+# In[7]:
 
 
 IPW_est = ME_Single(single_dataset, r_model = 'OLS',
@@ -118,7 +116,7 @@ IPW_est.estimate_DE_ME()
 IPW_est.est_DE, IPW_est.est_ME, IPW_est.est_TE,
 
 
-# In[7]:
+# In[8]:
 
 
 Robust_est = ME_Single(single_dataset, r_model = 'OLS',
@@ -137,7 +135,7 @@ Robust_est.est_DE, Robust_est.est_ME, Robust_est.est_TE,
 
 # ## CPL: Single-Stage Policy Evaluation
 
-# In[8]:
+# In[9]:
 
 
 from causaldm.learners.CPL13.disc import QLearning
@@ -151,7 +149,7 @@ from causaldm.learners.CPL13.disc import QLearning
 # 
 # Using the code below, we evaluated two target polices (regimes). The first one is a fixed treatement regime that applies no treatment (Policy1), with an estimated value of .9999. Another is a fixed treatment regime that applies treatment all the time (Policy2), with an estimated value of .7646. Therefore, the treatment effect of Policy2 comparing to Policy1 is -.2353, implying that receiving IV input increase the mortality rate.
 
-# In[9]:
+# In[10]:
 
 
 single_data.rename(columns = {'Died within 48H':'R', 'Glucose':'S1', 'PaO2_FiO2':'S2', 'IV Input':'A'}, inplace = True)
@@ -163,7 +161,7 @@ model_info = [{"model": "R~S1+S2+A+S1*A+S2*A",
               'action_space':{'A':[0,1]}}]
 
 
-# In[10]:
+# In[11]:
 
 
 # Evaluating the policy with no treatment
@@ -175,7 +173,7 @@ QLearn.train(S, A, R, model_info, T=1, regime = regime, evaluate = True, mimic3_
 QLearn.predict_value(S)
 
 
-# In[11]:
+# In[12]:
 
 
 # Evaluating the policy that gives IV input at both stages
@@ -202,7 +200,7 @@ QLearn.predict_value(S)
 # | 6          | 1        |
 # The estimated value of the estimated optimal policy is **.9999**.
 
-# In[12]:
+# In[13]:
 
 
 # initialize the learner

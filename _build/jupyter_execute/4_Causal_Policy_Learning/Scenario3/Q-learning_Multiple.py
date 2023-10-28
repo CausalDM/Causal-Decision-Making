@@ -43,7 +43,7 @@
 
 
 # TODO: feasible set
-from causaldm.learners import QLearning
+from causaldm.learners.CPL13.disc import QLearning
 from causaldm.test import shared_simulation
 import numpy as np
 

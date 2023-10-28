@@ -17,18 +17,32 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# import learner
-from causaldm._util_causaldm import *
-from causaldm.learners import ALearning
+#2. initialize the learner
+ALearn = ALearning.ALearning()
+#3. train the policy
+ALearn.train(S, A, R, model_info, T=1)
 ------------------
 
 [1;31m---------------------------------------------------------------------------[0m
-[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-Input [1;32mIn [1][0m, in [0;36m<cell line: 2>[1;34m()[0m
-[0;32m      1[0m [38;5;66;03m# import learner[39;00m
-[1;32m----> 2[0m [38;5;28;01mfrom[39;00m [38;5;21;01mcausaldm[39;00m[38;5;21;01m.[39;00m[38;5;21;01m_util_causaldm[39;00m [38;5;28;01mimport[39;00m [38;5;241m*[39m
-[0;32m      3[0m [38;5;28;01mfrom[39;00m [38;5;21;01mcausaldm[39;00m[38;5;21;01m.[39;00m[38;5;21;01mlearners[39;00m [38;5;28;01mimport[39;00m ALearning
+[1;31mAttributeError[0m                            Traceback (most recent call last)
+Input [1;32mIn [5][0m, in [0;36m<cell line: 4>[1;34m()[0m
+[0;32m      2[0m ALearn [38;5;241m=[39m ALearning[38;5;241m.[39mALearning()
+[0;32m      3[0m [38;5;66;03m#3. train the policy[39;00m
+[1;32m----> 4[0m [43mALearn[49m[38;5;241;43m.[39;49m[43mtrain[49m[43m([49m[43mS[49m[43m,[49m[43m [49m[43mA[49m[43m,[49m[43m [49m[43mR[49m[43m,[49m[43m [49m[43mmodel_info[49m[43m,[49m[43m [49m[43mT[49m[38;5;241;43m=[39;49m[38;5;241;43m1[39;49m[43m)[49m
 
-[1;31mModuleNotFoundError[0m: No module named 'causaldm'
-ModuleNotFoundError: No module named 'causaldm'
+File [1;32mD:\anaconda3\lib\site-packages\causaldm\learners\CPL13\disc\ALearning.py:97[0m, in [0;36mALearning.train[1;34m(self, X, A, Y, model_info, T, true_prop, regime, evaluate, bootstrap, n_bs)[0m
+[0;32m     95[0m     [38;5;28;01mreturn[39;00m [38;5;28mself[39m[38;5;241m.[39mboots_fitted
+[0;32m     96[0m [38;5;28;01melse[39;00m:
+[1;32m---> 97[0m     [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_fit[49m[43m([49m[43mX[49m[43m,[49m[43m [49m[43mA[49m[43m,[49m[43m [49m[43mY[49m[43m,[49m[43m [49m[43mT[49m[43m,[49m[43m [49m[43mregime[49m[43m)[49m
+[0;32m     98[0m     [38;5;28;01mreturn[39;00m [38;5;28mself[39m[38;5;241m.[39mfitted_model
+
+File [1;32mD:\anaconda3\lib\site-packages\causaldm\learners\CPL13\disc\ALearning.py:104[0m, in [0;36mALearning._fit[1;34m(self, X, A, Y, T, regime)[0m
+[0;32m    102[0m [38;5;28;01mif[39;00m t [38;5;241m==[39m T[38;5;241m-[39m[38;5;241m1[39m:
+[0;32m    103[0m     [38;5;28mself[39m[38;5;241m.[39m_fit_model(A,X,Y,t)
+[1;32m--> 104[0m     pseudo_Y_prev [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mget_pseudo_Y[49m(X, A, Y, t, regime)
+[0;32m    105[0m [38;5;28;01melse[39;00m:
+[0;32m    106[0m     [38;5;28mself[39m[38;5;241m.[39m_fit_model(A,X,pseudo_Y_prev,t,)
+
+[1;31mAttributeError[0m: 'ALearning' object has no attribute 'get_pseudo_Y'
+AttributeError: 'ALearning' object has no attribute 'get_pseudo_Y'
 

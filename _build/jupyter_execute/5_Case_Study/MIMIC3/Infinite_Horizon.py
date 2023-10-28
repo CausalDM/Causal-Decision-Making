@@ -8,17 +8,15 @@
 # In[1]:
 
 
-import os
-os.chdir('D:/GitHub/CausalDM')
 import pandas as pd
 import numpy as np
 import pandas as pd
 import pickle
-file = open('./causaldm/MIMIC3/mimic3_MRL_data_dict_V2.pickle', 'rb')
+file = open('mimic3_MRL_data_dict_V2.pickle', 'rb')
 mimic3_MRL = pickle.load(file)
 mimic3_MRL['reward'] = [1 if r == 0 else r for r in mimic3_MRL['reward']]
 mimic3_MRL['reward'] = [0 if r == -1 else r for r in mimic3_MRL['reward']]
-MRL_df = pd.read_csv('./causaldm/MIMIC3/mimic3_MRL_df_V2.csv')
+MRL_df = pd.read_csv('mimic3_MRL_df_V2.csv')
 MRL_df.iloc[np.where(MRL_df['Died_within_48H']==0)[0],-1]=1
 MRL_df.iloc[np.where(MRL_df['Died_within_48H']==-1)[0],-1]=0
 MRL_df[MRL_df.icustayid==1006]

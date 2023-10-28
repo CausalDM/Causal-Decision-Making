@@ -85,7 +85,7 @@
 
 
 # A demo with code on how to use the package
-from causaldm.learners import ALearning
+from causaldm.learners.CPL13.disc import ALearning
 from causaldm.test import shared_simulation
 import numpy as np
 

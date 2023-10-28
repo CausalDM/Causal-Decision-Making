@@ -41,7 +41,7 @@ from sklearn.linear_model import LogisticRegression
 from causaldm._util_causaldm import *
 
 
-# In[ ]:
+# In[2]:
 
 
 n = 10**3  # sample size in observed data
@@ -49,7 +49,7 @@ n0 = 10**5 # the number of samples used to estimate the true reward distribution
 seed=223
 
 
-# In[ ]:
+# In[3]:
 
 
 # Get data

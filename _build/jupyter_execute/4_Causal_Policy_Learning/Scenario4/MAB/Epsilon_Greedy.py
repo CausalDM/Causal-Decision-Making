@@ -39,31 +39,23 @@
 
 # ## Demo Code
 
+# ### Import the learner.
+
 # In[1]:
 
 
-import os
-os.getcwd()
-os.chdir('D:\GitHub\CausalDM')
-
-
-# ### Import the learner.
-
-# In[2]:
-
-
 import numpy as np
-from causaldm.learners.Online.MAB import Epsilon_Greedy
+from causaldm.learners.CPL4.MAB import Epsilon_Greedy
 
 
 # ### Generate the Environment
 # 
 # Here, we imitate an environment based on the MovieLens data.
 
-# In[3]:
+# In[2]:
 
 
-from causaldm.learners.Online.MAB import _env_realMAB as _env
+from causaldm.learners.CPL4.MAB import _env_realMAB as _env
 env = _env.Single_Gaussian_Env(seed = 42)
 
 

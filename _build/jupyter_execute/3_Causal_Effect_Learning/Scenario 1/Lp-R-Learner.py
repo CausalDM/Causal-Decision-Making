@@ -36,11 +36,13 @@ from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import LogisticRegression 
 from causaldm.learners.CEL.Single_Stage.LpRlearner import LpRlearner
+import warnings
+warnings.filterwarnings('ignore')
 
 
 # ### MovieLens Data
 
-# In[3]:
+# In[2]:
 
 
 # Get the MovieLens data
@@ -48,34 +50,22 @@ import os
 os.chdir('/Users/alinaxu/Documents/CDM/CausalDM')
 MovieLens_CEL = pd.read_csv("./causaldm/data/MovieLens_CEL.csv")
 MovieLens_CEL.pop(MovieLens_CEL.columns[0])
+MovieLens_CEL = MovieLens_CEL[MovieLens_CEL.columns.drop(['Comedy','Action', 'Thriller'])]
 MovieLens_CEL
 
 
-# In[3]:
+# In[14]:
 
 
 n = len(MovieLens_CEL)
-userinfo_index = np.array([3,5,6,7,8,9,10])
-SandA = MovieLens_CEL.iloc[:, np.array([3,4,5,6,7,8,9,10])]
 
 
-# In[4]:
-
-
-MovieLens_CEL.columns[userinfo_index]
-
-
-# In[30]:
+# In[17]:
 
 
 import random
-sample_index = random.sample(np.arange(len(MovieLens_CEL)).tolist(),1000)
-
-
-# In[31]:
-
-
 np.random.seed(1)
+
 outcome = 'rating'
 treatment = 'Drama'
 controls = ['age', 'gender_M', 'occupation_academic/educator',
@@ -88,6 +78,7 @@ ps_model_b = LogisticRegression()
 s = 1
 LpRlearner_model = LinearRegression()
 
+sample_index = random.sample(np.arange(len(MovieLens_CEL)).tolist(),1000)
 MovieLens_CEL = MovieLens_CEL.iloc[sample_index,:]
 
 HTE_Lp_R_learner = LpRlearner(MovieLens_CEL, outcome, treatment, controls, y_model, ps_model_a, ps_model_b, s, LpRlearner_model, degree = 1)
@@ -95,20 +86,20 @@ HTE_Lp_R_learner = LpRlearner(MovieLens_CEL, outcome, treatment, controls, y_mod
 
 # Let's focus on the estimated HTEs for three randomly chosen users:
 
-# In[34]:
+# In[18]:
 
 
 print("Lp-R-learner:  ",HTE_Lp_R_learner[np.array([0,300,900])])
 
 
-# In[35]:
+# In[19]:
 
 
 ATE_Lp_R_learner = np.sum(HTE_Lp_R_learner)/1000
 print("Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by",round(ATE_Lp_R_learner,4), "out of 5 points.")
 
 
-# **Conclusion:** Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by 0.3884 out of 5 points.
+# **Conclusion:** Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by 0.2182 out of 5 points.
 
 # ## References
 # 

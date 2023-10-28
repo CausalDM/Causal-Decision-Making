@@ -58,7 +58,7 @@ MRL_df[MRL_df.icustayid==1006]
 
 # ### Import the learner.
 
-# In[3]:
+# In[2]:
 
 
 from causaldm.learners.CEL.MA import ME_MDP
@@ -66,7 +66,7 @@ from causaldm.learners.CEL.MA import ME_MDP
 
 # ### Specify the control policy and the target policy
 
-# In[4]:
+# In[3]:
 
 
 # Control Policy
@@ -104,7 +104,7 @@ def target_policy(state, dim_state = 1, action=None):
 
 # ### Specify Hyperparameters
 
-# In[5]:
+# In[8]:
 
 
 dim_state=2
@@ -124,7 +124,7 @@ Q_settings = {'scaler': 'Identity','product_tensor': False, 'beta': 3/7,
 
 # ### Define the estimation function
 
-# In[6]:
+# In[5]:
 
 
 Robust_est = ME_MDP.evaluator(mimic3_MRL, r_model = r_model,

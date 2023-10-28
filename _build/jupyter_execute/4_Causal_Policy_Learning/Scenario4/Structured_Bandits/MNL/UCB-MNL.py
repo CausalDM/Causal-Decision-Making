@@ -34,20 +34,8 @@
 # In[1]:
 
 
-# After we publish the pack age, we can directly import it
-# TODO: explore more efficient way
-# we can hide this cell later
-import os
-os.getcwd()
-os.chdir('/nas/longleaf/home/lge/CausalDM')
-# code used to import the learner
-
-
-# In[2]:
-
-
-from causaldm.learners.Online.Slate.MNL import UCB_MNL
-from causaldm.learners.Online.Slate.MNL import _env_MNL
+from causaldm.learners.CPL4.Structured_Bandits.MNL import UCB_MNL
+from causaldm.learners.CPL4.Structured_Bandits.MNL import _env_MNL
 import numpy as np
 
 

@@ -76,7 +76,7 @@
 # of Warfarin Dosing (20 features)
 
 # code used to import the learner  
-from DJL_opt import *
+from causaldm.learners.CPL13.cont.Deep_Jump_Learner.DJL_opt import *
 
 # real data generator
 data_gen = data_generator.RealDataGenerator(file_name='real_envir.pickle') 
@@ -101,13 +101,13 @@ DJL_agent.opt_policy(DJL_partition, np.array(DJL_agent.train_data['xt'][0]).resh
 
 # ### 2. Policy Evaluation
 
-# In[3]:
+# In[6]:
 
 
 # To evaluate the deep jump learner on the Real Data of Warfarin Dosing (20 features)
 
 # code used to import the learner  
-from DJL_eval import *
+from causaldm.learners.CPL13.cont.Deep_Jump_Learner.DJL_eval import *
 
 # real data generator
 data_gen = data_generator.RealDataGenerator(file_name='real_envir.pickle') 

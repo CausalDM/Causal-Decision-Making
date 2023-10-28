@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# ## *Causal Structure Learning (CSL)*
+# ## Causal Structure Learning (CSL)
 # ---
 # ### Spread of COVID-19
 # 

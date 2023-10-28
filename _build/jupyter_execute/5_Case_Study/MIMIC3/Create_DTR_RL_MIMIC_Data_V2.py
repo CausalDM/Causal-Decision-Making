@@ -34,32 +34,32 @@ mimic_final
 
 # ## Generating 3-stage-DTR dataset
 
-# In[7]:
+# In[5]:
 
 
 selected_IDs = mimic_final.icustayid.value_counts()
 selected_IDs = selected_IDs[selected_IDs>=3].index.tolist()
 
 
-# In[8]:
+# In[6]:
 
 
 mimic_final[mimic_final.icustayid==1006].iloc[:3,:]
 
 
-# In[9]:
+# In[7]:
 
 
 DTR_data = [np.concatenate(np.array(mimic_final[mimic_final.icustayid==ind].iloc[:3,:])) for ind in selected_IDs]
 
 
-# In[10]:
+# In[8]:
 
 
 varname = mimic_final.columns.tolist()
 
 
-# In[11]:
+# In[9]:
 
 
 varname_formatted = []
@@ -70,19 +70,19 @@ DTR_data = DTR_data.drop(columns = ['bloc_1','bloc_2','bloc_3','Died_within_48H_
 DTR_data.rename(columns = {'Died_within_48H_3':'Died_within_48H'}, inplace = True)
 
 
-# In[12]:
+# In[10]:
 
 
 DTR_data.to_csv (r'mimic3_DTR_3stage_V2.csv', index = False, header=True)
 
 
-# In[13]:
+# In[11]:
 
 
 DTR_data.IV_Input_3.value_counts()
 
 
-# In[14]:
+# In[12]:
 
 
 DTR_data.head()
@@ -90,7 +90,7 @@ DTR_data.head()
 
 # ## Generating 2-stage-mediated DTR dataset
 
-# In[15]:
+# In[13]:
 
 
 selected_IDs = mimic_final.icustayid.value_counts()
@@ -98,7 +98,7 @@ selected_IDs = selected_IDs[selected_IDs>=4].index.tolist()
 mrl_data = mimic_final.copy()
 
 
-# In[16]:
+# In[14]:
 
 
 mediator = [np.array(mrl_data[mrl_data.icustayid==ind].SOFA)[0:3] for ind in selected_IDs]
@@ -107,31 +107,31 @@ action = [np.array(mrl_data[mrl_data.icustayid==ind].IV_Input)[0:3] for ind in s
 reward = [mrl_data[mrl_data.icustayid==ind].Died_within_48H.unique().tolist() for ind in selected_IDs]
 
 
-# In[17]:
+# In[15]:
 
 
 mediator = pd.DataFrame(mediator, columns = ['SOFA_1','SOFA_2','SOFA_3'], index = selected_IDs)
 
 
-# In[18]:
+# In[16]:
 
 
 state = pd.DataFrame(state, columns = ['Glucose_1','PaO2_FiO2_1','Glucose_2','PaO2_FiO2_2','Glucose_3','PaO2_FiO2_3'], index = selected_IDs)
 
 
-# In[19]:
+# In[17]:
 
 
 action = pd.DataFrame(action, columns = ['IV_Input_1','IV_Input_2','IV_Input_3'], index = selected_IDs)
 
 
-# In[20]:
+# In[18]:
 
 
 reward = pd.DataFrame(reward, columns = ['Died_within_48H'], index = selected_IDs)
 
 
-# In[21]:
+# In[19]:
 
 
 MDTR_data = {'state':state, 'action': action, 'mediator': mediator, 'reward': reward}
@@ -141,7 +141,7 @@ with open('mimic3_MDTR_data_dict_3stage_V2.pickle', 'wb') as handle:
     
 
 
-# In[22]:
+# In[20]:
 
 
 MDTR_df = pd.concat([state, action, mediator, reward], axis = 1)
@@ -151,7 +151,7 @@ MDTR_df = MDTR_df[['Glucose_1', 'PaO2_FiO2_1','IV_Input_1', 'SOFA_1', 'Glucose_2
 MDTR_df.head() 
 
 
-# In[23]:
+# In[21]:
 
 
 MDTR_df.to_csv (r'mimic3_MDTR_3stage_V2.csv', index = False, header=True)
@@ -159,7 +159,7 @@ MDTR_df.to_csv (r'mimic3_MDTR_3stage_V2.csv', index = False, header=True)
 
 # ## Generating MRL dataset
 
-# In[24]:
+# In[22]:
 
 
 selected_IDs = mimic_final.icustayid.value_counts()
@@ -167,13 +167,13 @@ selected_IDs = selected_IDs[selected_IDs>=2].index.tolist()
 mrl_data = mimic_final.copy()
 
 
-# In[25]:
+# In[23]:
 
 
 mrl_data[mrl_data.icustayid==1006]
 
 
-# In[26]:
+# In[24]:
 
 
 mediator = [np.array(mrl_data[mrl_data.icustayid==ind].SOFA)[:] for ind in selected_IDs]
@@ -195,7 +195,7 @@ ID = np.vstack(ID)
 time_idx = np.hstack(time_idx)
 
 
-# In[27]:
+# In[25]:
 
 
 MRL_data = {'s0': s0,'state':state, 'action': action, 'mediator': mediator, 'reward': reward, 'next_state': next_state, 'time_idx': time_idx}
@@ -205,7 +205,7 @@ with open('mimic3_MRL_data_dict_V2.pickle', 'wb') as handle:
     
 
 
-# In[28]:
+# In[26]:
 
 
 state = pd.DataFrame(state, columns = ['Glucose','PaO2_FiO2'])
@@ -218,7 +218,7 @@ MRL_df = pd.concat([ID, state, action, mediator, next_state, reward], axis = 1)
 MRL_df.to_csv (r'mimic3_MRL_df_V2.csv', index = False, header=True)
 
 
-# In[29]:
+# In[27]:
 
 
 MRL_df[MRL_df.icustayid==1006]
@@ -226,7 +226,7 @@ MRL_df[MRL_df.icustayid==1006]
 
 # ## Generate RL data
 
-# In[51]:
+# In[28]:
 
 
 mrl_data = mimic_final.copy()

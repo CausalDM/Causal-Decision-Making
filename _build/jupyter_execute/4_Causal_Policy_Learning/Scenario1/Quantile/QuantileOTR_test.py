@@ -128,10 +128,11 @@ data=pd.DataFrame(data)
 
 # #### Quantile Optimal Treatment Regime
 
-# In[ ]:
+# In[3]:
 
 
 # initialize the learner
+from causaldm.learners.CPL13.disc.DR_QuantileOTR import *
 Quantile_OTR=QuantileOTR()
 
 # when a=1, Y ~ 1+x1+2.5*x2
@@ -378,6 +379,7 @@ data=pd.DataFrame(data)
 # In[ ]:
 
 
+from causaldm.learners.CPL13.disc.DR_QuantileOPE import *
 Quantile_OTR=QuantileOPE()
 QOPE_est=Quantile_OTR.QDR_QOPE(data=data,tau=0.5)
 

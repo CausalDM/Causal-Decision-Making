@@ -44,11 +44,13 @@ from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import LogisticRegression 
 from causaldm.learners.CEL.Single_Stage.Rlearner import Rlearner
+import warnings
+warnings.filterwarnings('ignore')
 
 
 # ### MovieLens Data
 
-# In[4]:
+# In[2]:
 
 
 # Get the MovieLens data
@@ -56,24 +58,23 @@ import os
 os.chdir('/Users/alinaxu/Documents/CDM/CausalDM')
 MovieLens_CEL = pd.read_csv("./causaldm/data/MovieLens_CEL.csv")
 MovieLens_CEL.pop(MovieLens_CEL.columns[0])
+MovieLens_CEL = MovieLens_CEL[MovieLens_CEL.columns.drop(['Comedy','Action', 'Thriller'])]
 MovieLens_CEL
 
 
-# In[9]:
+# In[24]:
 
 
 n = len(MovieLens_CEL)
-userinfo_index = np.array([3,5,6,7,8,9,10])
-SandA = MovieLens_CEL.iloc[:, np.array([3,4,5,6,7,8,9,10])]
 
 
-# In[33]:
+# In[20]:
 
 
 MovieLens_CEL.columns[userinfo_index]
 
 
-# In[40]:
+# In[21]:
 
 
 # R-learner for HTE estimation
@@ -94,13 +95,13 @@ HTE_R_learner = HTE_R_learner.to_numpy()
 
 # Let's focus on the estimated HTEs for three randomly chosen users:
 
-# In[41]:
+# In[22]:
 
 
 print("R-learner:  ",HTE_R_learner[np.array([0,1000,5000])])
 
 
-# In[42]:
+# In[23]:
 
 
 ATE_R_learner = np.sum(HTE_R_learner)/n

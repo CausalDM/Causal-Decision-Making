@@ -119,7 +119,7 @@ mimic3_data.to_csv (r'mimic3_single_stage.csv', index = False, header=True)
 mimic3_data.head(6)
 
 
-# In[10]:
+# In[9]:
 
 
 # ----------- Estimated DAG based on NOTEARS 
@@ -136,7 +136,7 @@ est_mt = notears_linear(np.array(smaple_demo), lambda1=0, loss_type='l2',w_thres
 est_mt, _ = refit(smaple_demo, est_mt, selected) 
 
 
-# In[12]:
+# In[10]:
 
 
 # ----------- Plot Associated Estimated DAG based on NOTEARS 
@@ -144,7 +144,7 @@ est_mt, _ = refit(smaple_demo, est_mt, selected)
 plot_net(est_mt, labels_name=selected, file_name='demo_res_net')
 
 
-# In[13]:
+# In[11]:
 
 
 topo_list = np.array(selected)[list(nx.topological_sort(nx.DiGraph(est_mt)))].tolist()

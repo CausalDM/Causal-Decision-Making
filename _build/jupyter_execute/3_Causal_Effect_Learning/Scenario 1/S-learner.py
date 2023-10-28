@@ -44,18 +44,21 @@ import os
 os.chdir('/Users/alinaxu/Documents/CDM/CausalDM')
 MovieLens_CEL = pd.read_csv("./causaldm/data/MovieLens_CEL.csv")
 MovieLens_CEL.pop(MovieLens_CEL.columns[0])
+cc
 MovieLens_CEL
 
 
-# In[3]:
+# In this selected dataset, we only consider two movie genres for comparison: `Drama` and `Sci-Fi`. That is, the users not watching `Drama` movies are exposed to `Sci-Fi` movies instead.
+
+# In[40]:
 
 
 n = len(MovieLens_CEL)
-userinfo_index = np.array([3,5,6,7,8,9,10])
-SandA = MovieLens_CEL.iloc[:, np.array([3,4,5,6,7,8,9,10])]
+userinfo_index = np.array([3,6,7,8,9,10,11])
+SandA = MovieLens_CEL.iloc[:, np.array([3,4,6,7,8,9,10,11])]
 
 
-# In[8]:
+# In[41]:
 
 
 # S-learner
@@ -66,7 +69,7 @@ S_learner = GradientBoostingRegressor(max_depth=5)
 S_learner.fit(SandA, MovieLens_CEL['rating'])
 
 
-# In[9]:
+# In[42]:
 
 
 SandA_all1 = SandA.copy()
@@ -79,13 +82,13 @@ HTE_S_learner = S_learner.predict(SandA_all1) - S_learner.predict(SandA_all0)
 
 # Let's focus on the estimated HTEs for three randomly chosen users:
 
-# In[10]:
+# In[43]:
 
 
 print("S-learner:  ",HTE_S_learner[np.array([0,1000,5000])])
 
 
-# In[11]:
+# In[44]:
 
 
 ATE_S_learner = np.sum(HTE_S_learner)/n

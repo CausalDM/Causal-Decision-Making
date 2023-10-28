@@ -45,11 +45,11 @@ os.chdir('../CausalDM')
 
 # ## Demo
 
-# In[21]:
+# In[1]:
 
 
 # A demo with code on how to use the package
-from causaldm.learners import OWL
+from causaldm.learners.CPL13.disc import OWL
 from causaldm.test import shared_simulation
 from causaldm.test import OWL_simu
 from causaldm.metric import metric

@@ -34,31 +34,23 @@
 
 # ## Demo Code
 
+# ### Import the learner.
+
 # In[1]:
 
 
-import os
-os.getcwd()
-os.chdir('D:\GitHub\CausalDM')
-
-
-# ### Import the learner.
-
-# In[2]:
-
-
 import numpy as np
-from causaldm.learners.Online.Structured_Bandits.MNL import TS_Contextual_MNL
+from causaldm.learners.CPL4.Structured_Bandits.MNL import TS_Contextual_MNL
 
 
 # ### Generate the Environment
 # 
 # Here, we imitate an environment based on the MovieLens dataset.
 
-# In[3]:
+# In[2]:
 
 
-from causaldm.learners.Online.Structured_Bandits.MNL import _env_realMNL as _env
+from causaldm.learners.CPL4.Structured_Bandits.MNL import _env_realMNL as _env
 env = _env.MNL_env(seed = 0)
 
 

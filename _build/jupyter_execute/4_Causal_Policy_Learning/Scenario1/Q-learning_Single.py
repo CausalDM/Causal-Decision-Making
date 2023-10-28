@@ -41,17 +41,17 @@
 
 # import learner
 from causaldm._util_causaldm import *
-from causaldm.learners import QLearning
+from causaldm.learners.CPL13.disc import QLearning
 
 
-# In[ ]:
+# In[2]:
 
 
 # get the data
 S,A,R = get_data(target_col = 'spend', binary_trt = False)
 
 
-# In[ ]:
+# In[3]:
 
 
 #1. specify the model you would like to use
@@ -69,7 +69,7 @@ model_info = [{"model": "Y~C(A)*(recency+history)", #default is add an intercept
 # &+I(a=2)*\{\beta_{20}+\beta_{21}*recency+\beta_{22}*history\} 
 # \end{align}
 
-# In[ ]:
+# In[4]:
 
 
 #2. initialize the learner
@@ -78,7 +78,7 @@ QLearn = QLearning.QLearning()
 QLearn.train(S, A, R, model_info, T=1)
 
 
-# In[ ]:
+# In[5]:
 
 
 #4. recommend action
@@ -103,7 +103,7 @@ print("opt value:",V_hat)
 # 
 # The estimated value for the estimated optimal regime is 126.49.
 
-# In[ ]:
+# In[6]:
 
 
 # Optional: 

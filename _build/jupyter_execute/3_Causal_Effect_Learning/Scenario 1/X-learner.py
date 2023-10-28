@@ -45,6 +45,7 @@ import os
 os.chdir('/Users/alinaxu/Documents/CDM/CausalDM')
 MovieLens_CEL = pd.read_csv("./causaldm/data/MovieLens_CEL.csv")
 MovieLens_CEL.pop(MovieLens_CEL.columns[0])
+MovieLens_CEL = MovieLens_CEL[MovieLens_CEL.columns.drop(['Comedy','Action', 'Thriller'])]
 MovieLens_CEL
 
 
@@ -52,8 +53,8 @@ MovieLens_CEL
 
 
 n = len(MovieLens_CEL)
-userinfo_index = np.array([3,5,6,7,8,9,10])
-SandA = MovieLens_CEL.iloc[:, np.array([3,4,5,6,7,8,9,10])]
+userinfo_index = np.array([3,6,7,8,9,10,11])
+SandA = MovieLens_CEL.iloc[:, np.array([3,4,6,7,8,9,10,11])]
 
 
 # In[5]:
@@ -98,7 +99,7 @@ tau0.fit(S_T0, Delta0)
 tau1.fit(S_T1, Delta1)
 
 
-# In[9]:
+# In[8]:
 
 
 # Step 4: fit the propensity score model $\hat{g}(s)$ and obtain the final HTE estimator by taking weighted average of tau0 and tau1
@@ -114,13 +115,13 @@ HTE_X_learner = g.predict_proba(MovieLens_CEL.iloc[:,userinfo_index])[:,0]*tau0.
 
 # Let's focus on the estimated HTEs for three randomly chosen users:
 
-# In[10]:
+# In[9]:
 
 
 print("X-learner:  ",HTE_X_learner[np.array([0,1000,5000])])
 
 
-# In[11]:
+# In[10]:
 
 
 ATE_X_learner = np.sum(HTE_X_learner)/n

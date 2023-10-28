@@ -63,31 +63,23 @@
 
 # ## Demo Code
 
+# ### Import the learner.
+
 # In[1]:
 
 
-import os
-os.getcwd()
-os.chdir('D:\GitHub\CausalDM')
-
-
-# ### Import the learner.
-
-# In[2]:
-
-
 import numpy as np
-from causaldm.learners.Online.Meta_Bandits import meta_TS_Gaussian
+from causaldm.learners.CPL4.Meta_Bandits import meta_TS_Gaussian
 
 
 # ### Generate the Environment
 # 
 # Here, we imitate an environment based on the MovieLens data.
 
-# In[3]:
+# In[2]:
 
 
-from causaldm.learners.Online.Meta_Bandits import _env_realMultiTask as _env
+from causaldm.learners.CPL4.Meta_Bandits import _env_realMultiTask as _env
 env = _env.MultiTask_Env(seed = 0, Binary = False)
 
 

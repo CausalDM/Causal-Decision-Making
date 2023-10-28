@@ -37,18 +37,19 @@ import os
 os.chdir('/Users/alinaxu/Documents/CDM/CausalDM')
 MovieLens_CEL = pd.read_csv("./causaldm/data/MovieLens_CEL.csv")
 MovieLens_CEL.pop(MovieLens_CEL.columns[0])
+MovieLens_CEL = MovieLens_CEL[MovieLens_CEL.columns.drop(['Comedy','Action', 'Thriller'])]
 MovieLens_CEL
 
 
-# In[5]:
+# In[3]:
 
 
 n = len(MovieLens_CEL)
-userinfo_index = np.array([3,5,6,7,8,9,10])
-SandA = MovieLens_CEL.iloc[:, np.array([3,4,5,6,7,8,9,10])]
+userinfo_index = np.array([3,6,7,8,9,10,11])
+SandA = MovieLens_CEL.iloc[:, np.array([3,5,6,7,8,9,10,11])]
 
 
-# In[8]:
+# In[4]:
 
 
 mu0 = GradientBoostingRegressor(max_depth=3)
@@ -64,13 +65,13 @@ HTE_T_learner = mu1.predict(MovieLens_CEL.iloc[:,userinfo_index]) - mu0.predict(
 
 # Let's focus on the estimated HTEs for three randomly chosen users:
 
-# In[10]:
+# In[5]:
 
 
 print("T-learner:  ",HTE_T_learner[np.array([0,1000,5000])])
 
 
-# In[11]:
+# In[6]:
 
 
 ATE_T_learner = np.sum(HTE_T_learner)/n

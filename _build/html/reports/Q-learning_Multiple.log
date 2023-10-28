@@ -17,20 +17,90 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# TODO: feasible set
-from causaldm.learners import QLearning
-from causaldm.test import shared_simulation
-import numpy as np
+#prepare the dataset (dataset from the DTR book)
+import pandas as pd
+#Important!! reset the index is required
+dataMDP = pd.read_csv("dataMDP_feasible.txt", sep=',')#.reset_index(drop=True) 
+R = dataMDP['Y']
+S = dataMDP[['CD4_0','CD4_6','CD4_12']]
+A = dataMDP[['A1','A2','A3']]
 ------------------
 
 [1;31m---------------------------------------------------------------------------[0m
-[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-Input [1;32mIn [1][0m, in [0;36m<cell line: 2>[1;34m()[0m
-[0;32m      1[0m [38;5;66;03m# TODO: feasible set[39;00m
-[1;32m----> 2[0m [38;5;28;01mfrom[39;00m [38;5;21;01mcausaldm[39;00m[38;5;21;01m.[39;00m[38;5;21;01mlearners[39;00m [38;5;28;01mimport[39;00m QLearning
-[0;32m      3[0m [38;5;28;01mfrom[39;00m [38;5;21;01mcausaldm[39;00m[38;5;21;01m.[39;00m[38;5;21;01mtest[39;00m [38;5;28;01mimport[39;00m shared_simulation
-[0;32m      4[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
+[1;31mFileNotFoundError[0m                         Traceback (most recent call last)
+Input [1;32mIn [2][0m, in [0;36m<cell line: 4>[1;34m()[0m
+[0;32m      2[0m [38;5;28;01mimport[39;00m [38;5;21;01mpandas[39;00m [38;5;28;01mas[39;00m [38;5;21;01mpd[39;00m
+[0;32m      3[0m [38;5;66;03m#Important!! reset the index is required[39;00m
+[1;32m----> 4[0m dataMDP [38;5;241m=[39m [43mpd[49m[38;5;241;43m.[39;49m[43mread_csv[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mdataMDP_feasible.txt[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[43msep[49m[38;5;241;43m=[39;49m[38;5;124;43m'[39;49m[38;5;124;43m,[39;49m[38;5;124;43m'[39;49m[43m)[49m[38;5;66;03m#.reset_index(drop=True) [39;00m
+[0;32m      5[0m R [38;5;241m=[39m dataMDP[[38;5;124m'[39m[38;5;124mY[39m[38;5;124m'[39m]
+[0;32m      6[0m S [38;5;241m=[39m dataMDP[[[38;5;124m'[39m[38;5;124mCD4_0[39m[38;5;124m'[39m,[38;5;124m'[39m[38;5;124mCD4_6[39m[38;5;124m'[39m,[38;5;124m'[39m[38;5;124mCD4_12[39m[38;5;124m'[39m]]
 
-[1;31mModuleNotFoundError[0m: No module named 'causaldm'
-ModuleNotFoundError: No module named 'causaldm'
+File [1;32mD:\anaconda3\lib\site-packages\pandas\util\_decorators.py:311[0m, in [0;36mdeprecate_nonkeyword_arguments.<locals>.decorate.<locals>.wrapper[1;34m(*args, **kwargs)[0m
+[0;32m    305[0m [38;5;28;01mif[39;00m [38;5;28mlen[39m(args) [38;5;241m>[39m num_allow_args:
+[0;32m    306[0m     warnings[38;5;241m.[39mwarn(
+[0;32m    307[0m         msg[38;5;241m.[39mformat(arguments[38;5;241m=[39marguments),
+[0;32m    308[0m         [38;5;167;01mFutureWarning[39;00m,
+[0;32m    309[0m         stacklevel[38;5;241m=[39mstacklevel,
+[0;32m    310[0m     )
+[1;32m--> 311[0m [38;5;28;01mreturn[39;00m func([38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs)
+
+File [1;32mD:\anaconda3\lib\site-packages\pandas\io\parsers\readers.py:680[0m, in [0;36mread_csv[1;34m(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, squeeze, prefix, mangle_dupe_cols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, error_bad_lines, warn_bad_lines, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options)[0m
+[0;32m    665[0m kwds_defaults [38;5;241m=[39m _refine_defaults_read(
+[0;32m    666[0m     dialect,
+[0;32m    667[0m     delimiter,
+[1;32m   (...)[0m
+[0;32m    676[0m     defaults[38;5;241m=[39m{[38;5;124m"[39m[38;5;124mdelimiter[39m[38;5;124m"[39m: [38;5;124m"[39m[38;5;124m,[39m[38;5;124m"[39m},
+[0;32m    677[0m )
+[0;32m    678[0m kwds[38;5;241m.[39mupdate(kwds_defaults)
+[1;32m--> 680[0m [38;5;28;01mreturn[39;00m [43m_read[49m[43m([49m[43mfilepath_or_buffer[49m[43m,[49m[43m [49m[43mkwds[49m[43m)[49m
+
+File [1;32mD:\anaconda3\lib\site-packages\pandas\io\parsers\readers.py:575[0m, in [0;36m_read[1;34m(filepath_or_buffer, kwds)[0m
+[0;32m    572[0m _validate_names(kwds[38;5;241m.[39mget([38;5;124m"[39m[38;5;124mnames[39m[38;5;124m"[39m, [38;5;28;01mNone[39;00m))
+[0;32m    574[0m [38;5;66;03m# Create the parser.[39;00m
+[1;32m--> 575[0m parser [38;5;241m=[39m TextFileReader(filepath_or_buffer, [38;5;241m*[39m[38;5;241m*[39mkwds)
+[0;32m    577[0m [38;5;28;01mif[39;00m chunksize [38;5;129;01mor[39;00m iterator:
+[0;32m    578[0m     [38;5;28;01mreturn[39;00m parser
+
+File [1;32mD:\anaconda3\lib\site-packages\pandas\io\parsers\readers.py:933[0m, in [0;36mTextFileReader.__init__[1;34m(self, f, engine, **kwds)[0m
+[0;32m    930[0m     [38;5;28mself[39m[38;5;241m.[39moptions[[38;5;124m"[39m[38;5;124mhas_index_names[39m[38;5;124m"[39m] [38;5;241m=[39m kwds[[38;5;124m"[39m[38;5;124mhas_index_names[39m[38;5;124m"[39m]
+[0;32m    932[0m [38;5;28mself[39m[38;5;241m.[39mhandles: IOHandles [38;5;241m|[39m [38;5;28;01mNone[39;00m [38;5;241m=[39m [38;5;28;01mNone[39;00m
+[1;32m--> 933[0m [38;5;28mself[39m[38;5;241m.[39m_engine [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_make_engine[49m[43m([49m[43mf[49m[43m,[49m[43m [49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mengine[49m[43m)[49m
+
+File [1;32mD:\anaconda3\lib\site-packages\pandas\io\parsers\readers.py:1217[0m, in [0;36mTextFileReader._make_engine[1;34m(self, f, engine)[0m
+[0;32m   1213[0m     mode [38;5;241m=[39m [38;5;124m"[39m[38;5;124mrb[39m[38;5;124m"[39m
+[0;32m   1214[0m [38;5;66;03m# error: No overload variant of "get_handle" matches argument types[39;00m
+[0;32m   1215[0m [38;5;66;03m# "Union[str, PathLike[str], ReadCsvBuffer[bytes], ReadCsvBuffer[str]]"[39;00m
+[0;32m   1216[0m [38;5;66;03m# , "str", "bool", "Any", "Any", "Any", "Any", "Any"[39;00m
+[1;32m-> 1217[0m [38;5;28mself[39m[38;5;241m.[39mhandles [38;5;241m=[39m [43mget_handle[49m[43m([49m[43m  [49m[38;5;66;43;03m# type: ignore[call-overload][39;49;00m
+[0;32m   1218[0m [43m    [49m[43mf[49m[43m,[49m
+[0;32m   1219[0m [43m    [49m[43mmode[49m[43m,[49m
+[0;32m   1220[0m [43m    [49m[43mencoding[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mencoding[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mNone[39;49;00m[43m)[49m[43m,[49m
+[0;32m   1221[0m [43m    [49m[43mcompression[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mcompression[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mNone[39;49;00m[43m)[49m[43m,[49m
+[0;32m   1222[0m [43m    [49m[43mmemory_map[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mmemory_map[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mFalse[39;49;00m[43m)[49m[43m,[49m
+[0;32m   1223[0m [43m    [49m[43mis_text[49m[38;5;241;43m=[39;49m[43mis_text[49m[43m,[49m
+[0;32m   1224[0m [43m    [49m[43merrors[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mencoding_errors[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;124;43m"[39;49m[38;5;124;43mstrict[39;49m[38;5;124;43m"[39;49m[43m)[49m[43m,[49m
+[0;32m   1225[0m [43m    [49m[43mstorage_options[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mstorage_options[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mNone[39;49;00m[43m)[49m[43m,[49m
+[0;32m   1226[0m [43m[49m[43m)[49m
+[0;32m   1227[0m [38;5;28;01massert[39;00m [38;5;28mself[39m[38;5;241m.[39mhandles [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m
+[0;32m   1228[0m f [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mhandles[38;5;241m.[39mhandle
+
+File [1;32mD:\anaconda3\lib\site-packages\pandas\io\common.py:789[0m, in [0;36mget_handle[1;34m(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)[0m
+[0;32m    784[0m [38;5;28;01melif[39;00m [38;5;28misinstance[39m(handle, [38;5;28mstr[39m):
+[0;32m    785[0m     [38;5;66;03m# Check whether the filename is to be opened in binary mode.[39;00m
+[0;32m    786[0m     [38;5;66;03m# Binary mode does not support 'encoding' and 'newline'.[39;00m
+[0;32m    787[0m     [38;5;28;01mif[39;00m ioargs[38;5;241m.[39mencoding [38;5;129;01mand[39;00m [38;5;124m"[39m[38;5;124mb[39m[38;5;124m"[39m [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m ioargs[38;5;241m.[39mmode:
+[0;32m    788[0m         [38;5;66;03m# Encoding[39;00m
+[1;32m--> 789[0m         handle [38;5;241m=[39m [38;5;28;43mopen[39;49m[43m([49m
+[0;32m    790[0m [43m            [49m[43mhandle[49m[43m,[49m
+[0;32m    791[0m [43m            [49m[43mioargs[49m[38;5;241;43m.[39;49m[43mmode[49m[43m,[49m
+[0;32m    792[0m [43m            [49m[43mencoding[49m[38;5;241;43m=[39;49m[43mioargs[49m[38;5;241;43m.[39;49m[43mencoding[49m[43m,[49m
+[0;32m    793[0m [43m            [49m[43merrors[49m[38;5;241;43m=[39;49m[43merrors[49m[43m,[49m
+[0;32m    794[0m [43m            [49m[43mnewline[49m[38;5;241;43m=[39;49m[38;5;124;43m"[39;49m[38;5;124;43m"[39;49m[43m,[49m
+[0;32m    795[0m [43m        [49m[43m)[49m
+[0;32m    796[0m     [38;5;28;01melse[39;00m:
+[0;32m    797[0m         [38;5;66;03m# Binary mode[39;00m
+[0;32m    798[0m         handle [38;5;241m=[39m [38;5;28mopen[39m(handle, ioargs[38;5;241m.[39mmode)
+
+[1;31mFileNotFoundError[0m: [Errno 2] No such file or directory: 'dataMDP_feasible.txt'
+FileNotFoundError: [Errno 2] No such file or directory: 'dataMDP_feasible.txt'
 

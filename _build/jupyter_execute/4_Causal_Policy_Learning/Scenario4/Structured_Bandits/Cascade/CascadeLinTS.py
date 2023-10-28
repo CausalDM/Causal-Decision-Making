@@ -36,31 +36,23 @@
 
 # ## Demo Code
 
+# ### Import the learner.
+
 # In[1]:
 
 
-import os
-os.getcwd()
-os.chdir('D:\GitHub\CausalDM')
-
-
-# ### Import the learner.
-
-# In[2]:
-
-
 import numpy as np
-from causaldm.learners.Online.Structured_Bandits.Cascade import CascadeLinTS
+from causaldm.learners.CPL4.Structured_Bandits.Cascade import CascadeLinTS
 
 
 # ### Generate the Environment
 # 
 # Here, we imitate an environment based on the Yelp dataset. The number of items recommended at each round, $K$, is specified as $3$.
 
-# In[3]:
+# In[2]:
 
 
-from causaldm.learners.Online.Structured_Bandits.Cascade import _env_realCascade as _env
+from causaldm.learners.CPL4.Structured_Bandits.Cascade import _env_realCascade as _env
 env = _env.Cascading_env(K = 3, seed = 0)
 
 

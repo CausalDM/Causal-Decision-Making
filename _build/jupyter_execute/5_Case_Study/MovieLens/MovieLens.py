@@ -27,15 +27,11 @@
 # In[1]:
 
 
-import os
-os.getcwd()
-path = 'D:/Github/CausalDM'
-os.chdir(path)
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression
-from causaldm.learners.Online.CMAB import _env_realCMAB as _env
-from causaldm.learners.Online.CMAB import LinTS
+from causaldm.learners.CPL4.CMAB import _env_realCMAB as _env
+from causaldm.learners.CPL4.CMAB import LinTS
 env = _env.Single_Contextual_Env(seed = 0, Binary = False)
 logged_data, arms = env.get_logged_dat()
 
@@ -320,14 +316,11 @@ TE_male_linear
 # In[23]:
 
 
-#import os
-#os.getcwd()
-#os.chdir('D:/Github/CausalDM')
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression
-from causaldm.learners.Online.CMAB import _env_realCMAB as _env
-from causaldm.learners.Online.CMAB import LinTS
+from causaldm.learners.CPL4.CMAB import _env_realCMAB as _env
+from causaldm.learners.CPL4.CMAB import LinTS
 env = _env.Single_Contextual_Env(seed = 0, Binary = False)
 K = env.K
 p = env.p

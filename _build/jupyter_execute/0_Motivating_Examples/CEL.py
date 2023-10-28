@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# ## *Causal Effect Learning (CEL)*
+# ## Causal Effect Learning (CEL)
 # ---
 # 
 # Causal effect learning, as an important subfield of causal inference, aims at identifying, estimating and conducting statistical inference on the effect of a specific intervention on a system. It tries to answer the question: "What if we have done something different?", "What's the effect/consequence of excecuting a policy?" "How to quantify the causal effect of an intervention?", etc.

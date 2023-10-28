@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# ## *Causal Policy Learning (CPL)*
+# ## Causal Policy Learning (CPL)
 # ---
 # ### Scenario 1: Fixed Policy with Independent States
 # 

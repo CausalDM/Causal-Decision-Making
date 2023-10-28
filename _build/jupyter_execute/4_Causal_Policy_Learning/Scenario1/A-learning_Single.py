@@ -56,7 +56,7 @@
 
 # import learner
 from causaldm._util_causaldm import *
-from causaldm.learners import ALearning
+from causaldm.learners.CPL13.disc import ALearning
 
 
 # In[2]:

@@ -54,31 +54,23 @@
 
 # ## Demo Code
 
+# ### Import the learner.
+
 # In[1]:
 
 
-import os
-os.getcwd()
-os.chdir('D:\GitHub\CausalDM')
-
-
-# ### Import the learner.
-
-# In[2]:
-
-
 import numpy as np
-from causaldm.learners.Online.Structured_Bandits.Combinatorial_Semi import MTSS_Comb
+from causaldm.learners.CPL4.Structured_Bandits.Combinatorial_Semi import MTSS_Comb
 
 
 # ### Generate the Environment
 # 
 # Here, we imitate an environment based on the Adult dataset. The length of horizon, $T$, is specified as $500$.
 
-# In[3]:
+# In[2]:
 
 
-from causaldm.learners.Online.Structured_Bandits.Combinatorial_Semi import _env_realComb as _env
+from causaldm.learners.CPL4.Structured_Bandits.Combinatorial_Semi import _env_realComb as _env
 env = _env.CombSemi_env(T = 500, seed = 0)
 
 

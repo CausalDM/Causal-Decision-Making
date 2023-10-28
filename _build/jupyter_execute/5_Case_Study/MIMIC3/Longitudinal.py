@@ -8,17 +8,15 @@
 # In[1]:
 
 
-import os
-os.chdir('D:/GitHub/CausalDM')
 import pandas as pd
 import pickle
 import numpy as np
 import pandas as pd
-file = open('./causaldm/MIMIC3/mimic3_MDTR_data_dict_3stage_V2.pickle', 'rb')
+file = open('mimic3_MDTR_data_dict_3stage_V2.pickle', 'rb')
 mimic3_MDTR = pickle.load(file)
 state, action, mediator, reward = mimic3_MDTR.values()
 reward.iloc[np.where(reward['Died_within_48H']==-1)[0],-1]=0 # change the discrete action to binary
-MDTR_data = pd.read_csv('./causaldm/MIMIC3/mimic3_MDTR_3stage_V2.csv')
+MDTR_data = pd.read_csv('mimic3_MDTR_3stage_V2.csv')
 MDTR_data.iloc[np.where(MDTR_data['Died_within_48H']==-1)[0],-1]=0
 MDTR_data.head()
 
