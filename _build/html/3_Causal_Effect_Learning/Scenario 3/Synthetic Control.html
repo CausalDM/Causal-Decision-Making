@@ -786,6 +786,9 @@ const thebe_selector_output = ".output, .cell_output"
 
 <li class="toctree-l2 current active"><a class="current reference internal" href="#"><strong>Synthetic Control</strong></a></li>
 
+
+
+
 <li class="toctree-l2 has-children"><a class="reference internal" href="Extensions.html">Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="Matrix%20Completion.html"><strong>Matrix Completion</strong></a></li>
 
@@ -1082,6 +1085,21 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#background">
+   Background
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#algorithm">
+   Algorithm
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#demo">
+   Demo
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
    References
   </a>
@@ -1097,27 +1115,290 @@ title="Print to PDF"
               
   <section id="synthetic-control">
 <h1><strong>Synthetic Control</strong><a class="headerlink" href="#synthetic-control" title="Permalink to this heading">#</a></h1>
+</section>
+<section id="background">
+<h1>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h1>
 <p>Unlike the Difference-in-Differences (DiD) method, synthetic control is a frequently employed technique when dealing with datasets where there is a significant imbalance between the number of control units and treated units. DiD methods typically demand a high degree of comparability between the treated and control groups to establish the critical “parallel trend” assumption. However, this assumption becomes challenging to fulfill when the dataset contains only a limited number, or even just a single, treated unit, often due to issues related to data collection or funding constraints. In this situation, synthetic control aims to reweight the substantial information in control group to provide another perspective to learn the conterfactuals for treated unit(s).</p>
-<p>To illustrate the basic idea of synthetic control, we suppose that there are <span class="math notranslate nohighlight">\(N\)</span> units and <span class="math notranslate nohighlight">\(T\)</span> time periods in total, and denote <span class="math notranslate nohighlight">\(Y_{it}\)</span> as the outcome for unit <span class="math notranslate nohighlight">\(i\)</span> in period <span class="math notranslate nohighlight">\(t\)</span>. Without the loss of generality, e suppose the first <span class="math notranslate nohighlight">\(N_{\text{co}}\)</span> units are in the control group, who have no possibility to be exposed to treatment at any time. The rest <span class="math notranslate nohighlight">\(N_{\text{tr}} := N-N_{\text{co}}\)</span> units belong to the treated group, and will receive treatment starting from period <span class="math notranslate nohighlight">\(T_0 +1\)</span>.</p>
+<p>To illustrate the basic idea of synthetic control, we suppose that there are <span class="math notranslate nohighlight">\(N\)</span> units and <span class="math notranslate nohighlight">\(T\)</span> time periods in total, and denote <span class="math notranslate nohighlight">\(Y_{it}\)</span> as the outcome for unit <span class="math notranslate nohighlight">\(i\)</span> in period <span class="math notranslate nohighlight">\(t\)</span>. Without the loss of generality, suppose the first <span class="math notranslate nohighlight">\(N_{\text{tr}}\)</span> units are in the treated group, which will receive treatment starting from period <span class="math notranslate nohighlight">\(T_0+1\)</span>. The rest <span class="math notranslate nohighlight">\(N_{\text{co}} := N-N_{\text{tr}}\)</span> units belong to the control group, which have no possibility to be exposed to treatment at any time.</p>
+</section>
+<section id="algorithm">
+<h1>Algorithm<a class="headerlink" href="#algorithm" title="Permalink to this heading">#</a></h1>
 <p>There are two main steps in synthetic control methods:</p>
-<p><strong>Step 1:</strong> Calculate the weights <span class="math notranslate nohighlight">\(\hat{\omega}_i^{\text{sdid}}\)</span> that align pre-exposure trends in the outcome of control units for treated units；\</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1549edc4-0f1a-4a86-b747-d49502c0d9ac">
-<span class="eqno">(63)<a class="headerlink" href="#equation-1549edc4-0f1a-4a86-b747-d49502c0d9ac" title="Permalink to this equation">#</a></span>\[\begin{equation}
-    \hat{Y}_{it} = \hat{\omega}_{i0} + \sum_{j=1}^{N_{\text{co}}}\hat{\omega}_{ij} Y_{jt}, \qquad \forall i\in\{N_{\text{co}+1},\dots, N\}, \forall t\in \{1,\dots,T\},
+<p><strong>Step 1:</strong> Calculate the weights <span class="math notranslate nohighlight">\(\hat{\omega}_i^{\text{sdid}}\)</span> that align pre-exposure trends in the outcome of control units for treated units；</p>
+<div class="amsmath math notranslate nohighlight" id="equation-f7e8beea-6cfb-4d7c-abe8-acfab721526c">
+<span class="eqno">(63)<a class="headerlink" href="#equation-f7e8beea-6cfb-4d7c-abe8-acfab721526c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+    \hat{Y}_{it} = \hat{\omega}_{i0} + \sum_{j=N_{\text{co}}+1}^{N}\hat{\omega}_{ij} Y_{jt}, \qquad \forall i\in\{1,\dots, N_{\text{tr}}\}, \forall t\in \{1,\dots,T\},
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5a2f913e-3f09-4f50-bc32-268129bd496a">
-<span class="eqno">(64)<a class="headerlink" href="#equation-5a2f913e-3f09-4f50-bc32-268129bd496a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5d148498-1976-4f2e-9b0e-e1945da51e14">
+<span class="eqno">(64)<a class="headerlink" href="#equation-5d148498-1976-4f2e-9b0e-e1945da51e14" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\omega}_i = \arg\min_{\omega} \sum_{1\leq t\leq T_0} \bigg(Y_{it} - \omega_{i0} -\sum_{j=1}^{N_{\text{co}}} \omega_{ij} Y_{jt}\bigg)^2
 \end{equation}\]</div>
 <p><strong>Step 2:</strong> Use the weights to estimate the post-exposure conterfactuals in causal effect estimation.</p>
+</section>
+<section id="demo">
+<h1>Demo<a class="headerlink" href="#demo" title="Permalink to this heading">#</a></h1>
+<p>In the following part, we use the <a class="reference external" href="https://www.tandfonline.com/doi/abs/10.1198/jasa.2009.ap08746?casa_token=aNT_5z3JHO0AAAAA:vyxa3Kh7WQsLZ0w5CzcvyiV-YvIJHO8kJOgYkfM14zIipcgSLxEJXN2Fr0BCpJax3xihcqbCt9S1">Abadie-Diamond-Hainmueller California smoking data</a> to illustrate how we can calculate the treatment effect on the treated via synthetic control.</p>
+<p>In this dataset, our goal aims to study the effects of Proposition 99, a large-scale tobacco
+control program that California implemented in 1988. Typically, the annual tobacco consumption was evaluated from 1970 to 2000 for a total of <span class="math notranslate nohighlight">\(N=39\)</span> states (including California). Therefore, this dataset contains <span class="math notranslate nohighlight">\(N = 39\)</span> units with <span class="math notranslate nohighlight">\(N_{\text{co}} = 38\)</span> states in the control group, and only one unit (<span class="math notranslate nohighlight">\(N_{\text{tr}} = 1\)</span>, corresponding to the California state) starting from the <span class="math notranslate nohighlight">\(19\)</span>th period.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># </span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load the data</span>
+<span class="c1"># california tobacco: https://github.com/susanathey/MCPanel/blob/master/tests/examples_from_paper/california/smok_outcome.csv</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;</span><span class="p">)</span>
+<span class="n">smoke_X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./causaldm/data/smoke_covariates.csv&#39;</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">smoke_A</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./causaldm/data/smoke_treatment.csv&#39;</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">smoke_R</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./causaldm/data/smoke_outcome.csv&#39;</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+
+<span class="n">smoke_R</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1970</span><span class="p">,</span><span class="mi">2000</span><span class="p">,</span><span class="mi">31</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">))</span>
+<span class="n">smoke_A</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1970</span><span class="p">,</span><span class="mi">2000</span><span class="p">,</span><span class="mi">31</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">))</span>
+<span class="n">smoke_R</span> <span class="o">=</span> <span class="n">smoke_R</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;California&quot;</span><span class="p">})</span>
+<span class="n">smoke_A</span> <span class="o">=</span> <span class="n">smoke_A</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;California&quot;</span><span class="p">})</span>
+
+<span class="n">smoke_R</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>California</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>...</th>
+      <th>29</th>
+      <th>30</th>
+      <th>31</th>
+      <th>32</th>
+      <th>33</th>
+      <th>34</th>
+      <th>35</th>
+      <th>36</th>
+      <th>37</th>
+      <th>38</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1970</th>
+      <td>123.0</td>
+      <td>89.8</td>
+      <td>100.3</td>
+      <td>124.8</td>
+      <td>120.0</td>
+      <td>155.0</td>
+      <td>109.9</td>
+      <td>102.4</td>
+      <td>124.8</td>
+      <td>134.6</td>
+      <td>...</td>
+      <td>103.6</td>
+      <td>92.7</td>
+      <td>99.8</td>
+      <td>106.4</td>
+      <td>65.5</td>
+      <td>122.6</td>
+      <td>124.3</td>
+      <td>114.5</td>
+      <td>106.4</td>
+      <td>132.2</td>
+    </tr>
+    <tr>
+      <th>1971</th>
+      <td>121.0</td>
+      <td>95.4</td>
+      <td>104.1</td>
+      <td>125.5</td>
+      <td>117.6</td>
+      <td>161.1</td>
+      <td>115.7</td>
+      <td>108.5</td>
+      <td>125.6</td>
+      <td>139.3</td>
+      <td>...</td>
+      <td>115.0</td>
+      <td>96.7</td>
+      <td>106.3</td>
+      <td>108.9</td>
+      <td>67.7</td>
+      <td>124.4</td>
+      <td>128.4</td>
+      <td>111.5</td>
+      <td>105.4</td>
+      <td>131.7</td>
+    </tr>
+    <tr>
+      <th>1972</th>
+      <td>123.5</td>
+      <td>101.1</td>
+      <td>103.9</td>
+      <td>134.3</td>
+      <td>110.8</td>
+      <td>156.3</td>
+      <td>117.0</td>
+      <td>126.1</td>
+      <td>126.6</td>
+      <td>149.2</td>
+      <td>...</td>
+      <td>118.7</td>
+      <td>103.0</td>
+      <td>111.5</td>
+      <td>108.6</td>
+      <td>71.3</td>
+      <td>138.0</td>
+      <td>137.0</td>
+      <td>117.5</td>
+      <td>108.8</td>
+      <td>140.0</td>
+    </tr>
+    <tr>
+      <th>1973</th>
+      <td>124.4</td>
+      <td>102.9</td>
+      <td>108.0</td>
+      <td>137.9</td>
+      <td>109.3</td>
+      <td>154.7</td>
+      <td>119.8</td>
+      <td>121.8</td>
+      <td>124.4</td>
+      <td>156.0</td>
+      <td>...</td>
+      <td>125.5</td>
+      <td>103.5</td>
+      <td>109.7</td>
+      <td>110.4</td>
+      <td>72.7</td>
+      <td>146.8</td>
+      <td>143.1</td>
+      <td>116.6</td>
+      <td>109.5</td>
+      <td>141.2</td>
+    </tr>
+    <tr>
+      <th>1974</th>
+      <td>126.7</td>
+      <td>108.2</td>
+      <td>109.7</td>
+      <td>132.8</td>
+      <td>112.4</td>
+      <td>151.3</td>
+      <td>123.7</td>
+      <td>125.6</td>
+      <td>131.9</td>
+      <td>159.6</td>
+      <td>...</td>
+      <td>129.7</td>
+      <td>108.4</td>
+      <td>114.8</td>
+      <td>114.7</td>
+      <td>75.6</td>
+      <td>151.8</td>
+      <td>149.6</td>
+      <td>119.9</td>
+      <td>111.8</td>
+      <td>145.8</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 39 columns</p>
+</div></div></div>
+</div>
+<p>Details about the dataset:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">smoke_X</span></code>: a <span class="math notranslate nohighlight">\(7\times 39\)</span> dimensional matrix where each column denotes the contextual information of a specific state. The first column corresponds to California, i.e. the treated unit.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">smoke_A</span></code>: a <span class="math notranslate nohighlight">\(31\times 39\)</span> dimensional matrix with each column denoting a specific unit trajectory among all periods. In this example, the total number of periods is <span class="math notranslate nohighlight">\(T = 31\)</span>, and the number of pre-treatment preriods is <span class="math notranslate nohighlight">\(T_0 = 18\)</span>. It is worth noting that except for the first column (which corresponds to the treated unit - California), the treatment of all other units at all periods are <span class="math notranslate nohighlight">\(0\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">smoke_R</span></code>: a <span class="math notranslate nohighlight">\(31\times 39\)</span> dimensional matrix where the <span class="math notranslate nohighlight">\((t,i)\)</span>th element denotes the observed reward for state <span class="math notranslate nohighlight">\(i\)</span> in time period <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">smoke_R</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">smoke_R</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">T0</span> <span class="o">=</span> <span class="mi">18</span>
 </pre></div>
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 1: calculate the weights to quantify the pre-exposure relationship between the treated unit and control units</span>
+
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">linear_model</span>
+<span class="n">pre_expo_R_ctl</span> <span class="o">=</span> <span class="n">smoke_R</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">T0</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="p">]</span>
+<span class="n">pre_expo_R_trt</span> <span class="o">=</span> <span class="n">smoke_R</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">T0</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">post_expo_R_ctl</span> <span class="o">=</span> <span class="n">smoke_R</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">T0</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">T</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="p">]</span>
+<span class="n">post_expo_R_trt</span> <span class="o">=</span> <span class="n">smoke_R</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">T0</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">T</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+<span class="c1"># fit a lasso regression to select the top units that have higher influence on the treated unit California</span>
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">linear_model</span><span class="o">.</span><span class="n">Lasso</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">pre_expo_R_ctl</span><span class="p">,</span> <span class="n">pre_expo_R_trt</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">clf</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">clf</span><span class="o">.</span><span class="n">coef_</span><span class="p">))</span>
+<span class="c1">#print(clf.intercept_)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-0.         -0.          0.03980357  0.07157998  0.         -0.
+  0.          0.22667637 -0.          0.          0.02990258  0.
+  0.          0.          0.00037257 -0.02313041 -0.          0.09714507
+  0.16905554  0.19878875  0.06427401  0.          0.         -0.
+ -0.          0.          0.         -0.         -0.          0.
+ -0.09209638  0.          0.05463154 -0.          0.          0.
+  0.          0.        ]
+38
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 2: using the weights estimated in Step 1 to estimate the counterfactual of treated unit (California) in post-exposure period</span>
+<span class="n">post_expo_R_trt_counterfactual</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">post_expo_R_ctl</span><span class="p">)</span>
+
+<span class="c1"># now we use a plot to show the estimated post-treatment effect in California.</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">smoke_R</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;California (observed value)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">smoke_R</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="p">]),</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Synthetic Control (predicted value for counterfactual)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;1988&quot;</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">130</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;treatment starting time&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;per-capita cigarette sales (in packs)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/8bc63f8c85de54ac18856b3b79fc22566d98013d916d4312d6480e42a91e04f9.png" src="../../_images/8bc63f8c85de54ac18856b3b79fc22566d98013d916d4312d6480e42a91e04f9.png" />
+</div>
+</div>
+<p>As we can see from the figure above, the execution of Proposition 99 can effectly reduce the pre=capita cigarette sales in California. The longer time after treatment time, the larger the treatment effect tends to be.</p>
 </section>
 <section id="references">
 <h1>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h1>
@@ -1190,6 +1471,21 @@ title="Print to PDF"
    <strong>
     Synthetic Control
    </strong>
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#background">
+   Background
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#algorithm">
+   Algorithm
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#demo">
+   Demo
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
