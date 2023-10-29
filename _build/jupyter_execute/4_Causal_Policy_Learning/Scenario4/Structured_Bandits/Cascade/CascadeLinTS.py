@@ -64,7 +64,7 @@ env = _env.Cascading_env(K = 3, seed = 0)
 # - retrain_freq: frequency to train the generalized linear model (i.e., update every retrain_freq steps)
 # - seed: random seed
 
-# In[4]:
+# In[3]:
 
 
 K = env.K
@@ -87,7 +87,7 @@ LinTS_agent = CascadeLinTS.CascadeLinTS(K = K, L = L, p = p, alpha = alpha,
 # 3. Update the posterior distribution
 # <code> LinTS_agent.receive_reward(A,W,E,t,S) </code>
 
-# In[5]:
+# In[4]:
 
 
 t = 0

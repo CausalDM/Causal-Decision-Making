@@ -65,7 +65,7 @@ env = _env.Single_Gaussian_Env(seed = 42)
 # 
 # - K: # of arms
 
-# In[15]:
+# In[3]:
 
 
 UCB_agent = UCB.UCB1(env.K)
@@ -81,7 +81,7 @@ UCB_agent = UCB.UCB1(env.K)
 # 3. Update the posterior distribution
 # <code> UCB_agent.receive_reward(t,A,R) </code>
 
-# In[16]:
+# In[4]:
 
 
 t = 0
@@ -96,7 +96,7 @@ t, A, R
 # ### Demo Code for Bernoulli Bandit
 # The steps are similar to those previously performed with a Gaussian Bandit.
 
-# In[18]:
+# In[5]:
 
 
 env = _env.Single_Bernoulli_Env(seed=42)

@@ -86,13 +86,13 @@ env = _env.CombSemi_env(T = 500, seed = 0)
 # - update_freq: frequency to update the posterior distribution of $\boldsymbol{\gamma}$ (i.e., update every update_freq steps)
 # - seed: random seed
 
-# In[4]:
+# In[3]:
 
 
 sigma_1 = 1
 sigma_2 = 1
 L = env.L
-T = 2000
+T = 100
 K = 10
 p = env.p
 gamma_prior_mean = np.zeros(env.p)
@@ -116,7 +116,7 @@ MTSS_agent = MTSS_Comb.MTSS_Semi(sigma_1 = sigma_1, sigma_2 = sigma_2, L=L, T = 
 # 3. Update the posterior distribution
 # <code> MTSS_agent.receive_reward(t, A, R, S) </code>
 
-# In[5]:
+# In[4]:
 
 
 S = env.Phi

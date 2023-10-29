@@ -50,7 +50,7 @@ env = _env.Cascading_env(K = 3, seed = 0)
 # - u_prior_beta: Beta of the prior Beta distribution
 # - seed: random seed
 
-# In[4]:
+# In[3]:
 
 
 K = env.K
@@ -73,7 +73,7 @@ TS_agent = TS_Cascade.TS_Cascade(K = K, L = L, u_prior_alpha = u_prior_alpha,
 # 4. Update the posterior distribution
 # <code> TS_agent.receive_reward(A,W,E,t) </code>
 
-# In[5]:
+# In[4]:
 
 
 t = 0

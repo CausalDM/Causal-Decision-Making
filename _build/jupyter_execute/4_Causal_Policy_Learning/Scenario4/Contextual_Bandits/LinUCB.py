@@ -66,7 +66,7 @@ env = _env.Single_Contextual_Env(seed = 0, Binary = False)
 # - seed: random seed
 # - exploration_T: number of rounds to do random exploration at the beginning
 
-# In[4]:
+# In[3]:
 
 
 alpha = .1
@@ -89,7 +89,7 @@ LinUCB_Gaussian_agent = LinUCB.LinUCB_Gaussian(alpha = .1, K = K, p = p, seed = 
 # 4. Update the posterior distribution
 # <code> LinUCB_Gaussian_agent.receive_reward(t,A,R,X) </code>
 
-# In[5]:
+# In[4]:
 
 
 t = 0
@@ -105,7 +105,7 @@ t,A,R,feature_info
 # ### Demo Code for Bernoulli Bandit
 # The steps are similar to those previously performed with a Gaussian Bandit. 
 
-# In[6]:
+# In[5]:
 
 
 env = _env.Single_Contextual_Env(seed = 0, Binary = True)

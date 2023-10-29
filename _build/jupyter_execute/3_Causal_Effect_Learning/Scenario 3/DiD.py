@@ -78,8 +78,7 @@ display.Image("./images/CEL-DiD.png")
 # https://www.kaggle.com/code/harrywang/difference-in-differences-in-python/input
 # https://www.kaggle.com/datasets/parulpandey/covid19-clinical-trials-dataset
 # https://www.kaggle.com/code/sandhyakrishnan02/econometric-analysis-of-panel-data-using-r/input
-# employment: https://www.kaggle.com/datasets/harrywang/propensity-score-matching?resource=download
-# california tobacco: https://github.com/susanathey/MCPanel/blob/master/tests/examples_from_paper/california/smok_outcome.csv
+# employment: https://www.kaggle.com/datasets/harrywang/propensity-score-matching?resource=downloa
 
 
 # The dataset contains 384 rows in total, where each row denotes a specific fast-food restaurant in New Jersey or Pennsylvania. On April 1, 1992, New Jersey raised the state minimum wage from $\$$4.25 to $\$$5.05 while the minimum wage in Pennsylvania stays the same at $\$$4.25. For each company, we record the total number of employees in Febuarary (i.e. before executing new policy) and the number of employees in November (i.e. after executing the new policy).

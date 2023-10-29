@@ -65,7 +65,7 @@ env = _env.Single_Gaussian_Env(seed = 42)
 # - epsilon: fixed $\epsilon$ for time-fixed version of $\epsilon$-greedy algorithm
 # - decrease_eps: indicate if a time-adaptive $\epsilon_t = min(1,\frac{K}{t})$ employed.
 
-# In[4]:
+# In[3]:
 
 
 K = env.K
@@ -82,7 +82,7 @@ greedy_agent = Epsilon_Greedy.Epsilon_Greedy(K, epsilon = None, decrease_eps = T
 # 3. Update the posterior distribution
 # <code> greedy_agent.receive_reward(t,A,R) </code>
 
-# In[5]:
+# In[4]:
 
 
 t = 0
@@ -97,7 +97,7 @@ t, A, R
 # ### Demo Code for Bernoulli Bandit
 # The steps are similar to those previously performed with a Gaussian Bandit.
 
-# In[6]:
+# In[5]:
 
 
 env = _env.Single_Bernoulli_Env(seed=42)

@@ -66,7 +66,7 @@ env = _env.MNL_env(seed = 0)
 # - update_freq: frequency to update the posterior distribution of $\boldsymbol{\gamma}$ (i.e., update every update_freq steps)
 # - seed: random seed
 
-# In[4]:
+# In[3]:
 
 
 L = env.L
@@ -94,7 +94,7 @@ LinTS_agent = TS_Contextual_MNL.MNL_TS_Contextual(L = L, K = K, Xs = Xs, gamma_p
 # 4. Update the posterior distribution
 # <code> LinTS_agent.receive_reward(A,c,R) </code>
 
-# In[5]:
+# In[4]:
 
 
 t = 0

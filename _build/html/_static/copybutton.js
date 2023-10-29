@@ -20,7 +20,7 @@ const messages = {
   },
   'fr' : {
     'copy': 'Copier',
-    'copy_to_clipboard': 'Copier dans le presse-papier',
+    'copy_to_clipboard': 'Copié dans le presse-papier',
     'copy_success': 'Copié !',
     'copy_failure': 'Échec de la copie',
   },
@@ -199,16 +199,7 @@ function formatCopyText(textContent, copybuttonPromptText, isRegexp = false, onl
 
 var copyTargetText = (trigger) => {
   var target = document.querySelector(trigger.attributes['data-clipboard-target'].value);
-<<<<<<< Updated upstream
-
-  // get filtered text
-  let exclude = '.linenos';
-
-  let text = filterText(target, exclude);
-  return formatCopyText(text, '', false, true, true, true, '', '')
-=======
   return formatCopyText(target.innerText, '', false, true, true, true, '', '')
->>>>>>> Stashed changes
 }
 
   // Initialize with a callback so we can modify the text before copy

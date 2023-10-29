@@ -149,7 +149,7 @@ print('Value_hat:',value_avg,'Value_std:',value_std)
 
 # ### 2. Policy Evaluation
 
-# In[10]:
+# In[8]:
 
 
 #1. specify the fixed regime to be tested
@@ -168,7 +168,7 @@ ALearn.predict_value(S)
 
 # **Interpretation:** the estimated value of the regime that always sends no emails ($A=0$) is 116.37, under the specified model.
 
-# In[11]:
+# In[9]:
 
 
 # bootstrap average and the std of estimate value

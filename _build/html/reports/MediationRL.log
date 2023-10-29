@@ -1,4 +1,15 @@
 Traceback (most recent call last):
+  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 730, in _async_poll_for_reply
+    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
+  File "D:\anaconda3\lib\site-packages\nbclient\util.py", line 96, in ensure_async
+    result = await obj
+  File "D:\anaconda3\lib\site-packages\jupyter_client\asynchronous\channels.py", line 48, in get_msg
+    raise Empty
+_queue.Empty
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
   File "D:\anaconda3\lib\site-packages\jupyter_cache\executors\utils.py", line 51, in single_nb_execution
     executenb(
   File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 1204, in execute
@@ -11,29 +22,24 @@ Traceback (most recent call last):
     return future.result()
   File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 663, in async_execute
     await self.async_execute_cell(
-  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 965, in async_execute_cell
-    await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 862, in _check_raise_for_error
-    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
-nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
-------------------
-file = open('./causaldm/MIMIC3/mimic3_MRL_data_dict_V2.pickle', 'rb')
-mimic3_MRL = pickle.load(file)
-mimic3_MRL['reward'] = [1 if r == 0 else r for r in mimic3_MRL['reward']]
-mimic3_MRL['reward'] = [0 if r == -1 else r for r in mimic3_MRL['reward']]
-MRL_df = pd.read_csv('./causaldm/MIMIC3/mimic3_MRL_df_V2.csv')
-MRL_df.iloc[np.where(MRL_df['Died_within_48H']==0)[0],-1]=1
-MRL_df.iloc[np.where(MRL_df['Died_within_48H']==-1)[0],-1]=0
-MRL_df[MRL_df.icustayid==1006]
-------------------
-
-[1;31m---------------------------------------------------------------------------[0m
-[1;31mFileNotFoundError[0m                         Traceback (most recent call last)
-Input [1;32mIn [2][0m, in [0;36m<cell line: 1>[1;34m()[0m
-[1;32m----> 1[0m file [38;5;241m=[39m [38;5;28;43mopen[39;49m[43m([49m[38;5;124;43m'[39;49m[38;5;124;43m./causaldm/MIMIC3/mimic3_MRL_data_dict_V2.pickle[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mrb[39;49m[38;5;124;43m'[39;49m[43m)[49m
-[0;32m      2[0m mimic3_MRL [38;5;241m=[39m pickle[38;5;241m.[39mload(file)
-[0;32m      3[0m mimic3_MRL[[38;5;124m'[39m[38;5;124mreward[39m[38;5;124m'[39m] [38;5;241m=[39m [[38;5;241m1[39m [38;5;28;01mif[39;00m r [38;5;241m==[39m [38;5;241m0[39m [38;5;28;01melse[39;00m r [38;5;28;01mfor[39;00m r [38;5;129;01min[39;00m mimic3_MRL[[38;5;124m'[39m[38;5;124mreward[39m[38;5;124m'[39m]]
-
-[1;31mFileNotFoundError[0m: [Errno 2] No such file or directory: './causaldm/MIMIC3/mimic3_MRL_data_dict_V2.pickle'
-FileNotFoundError: [Errno 2] No such file or directory: './causaldm/MIMIC3/mimic3_MRL_data_dict_V2.pickle'
+  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 949, in async_execute_cell
+    exec_reply = await self.task_poll_for_reply
+  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 754, in _async_poll_for_reply
+    await self._async_handle_timeout(timeout, cell)
+  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 801, in _async_handle_timeout
+    raise CellTimeoutError.error_from_timeout_and_cell(
+nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+Robust_est = ME_MDP.evaluator(mimic3_MRL, r_model = r_model,
+                     problearner_parameters = problearner_parameters,
+                     ratio_ndim = ratio_ndim, truncate = truncate, l2penalty = 10**(-4),
+                     target_policy=target_policy, control_policy = control_policy, 
+                     dim_state = dim_state, dim_mediator = dim_mediator, 
+                     Q_settings = Q_settings,
+                     MCMC = MCMC,
+                     seed = seed, nature_decomp = True, method = method)
+Robust_est.estimate_DE_ME()
+-------------------
 

@@ -88,7 +88,7 @@ env = _env.Cascading_env(K = 3, seed = 0)
 # - update_freq: frequency to update the posterior distribution of $\boldsymbol{\gamma}$ (i.e., update every update_freq steps)
 # - seed: random seed
 
-# In[4]:
+# In[3]:
 
 
 phi_beta = 1/4
@@ -114,7 +114,7 @@ MTSS_agent = MTSS_Cascade.MTSS_Cascade(phi_beta = phi_beta, K = K, Xs = S,
 # 4. Update the posterior distribution
 # <code> MTSS_agent.receive_reward(A,W,E,t,S) </code>
 
-# In[1]:
+# In[4]:
 
 
 t = 0

@@ -3,18 +3,6 @@
 
 # # Outcome Weighted Learning
 
-# In[1]:
-
-
-# After we publish the package, we can directly import it
-# TODO: explore more efficient way
-# we can hide this cell later
-import os
-os.getcwd()
-os.chdir('..')
-os.chdir('../CausalDM')
-
-
 # ## Main Idea
 # 
 # A natural idea for policy learning is to stay close to the behaviour policy in those areas where it performs well. 
@@ -56,7 +44,7 @@ from causaldm.metric import metric
 import numpy as np
 
 
-# In[15]:
+# In[2]:
 
 
 # generate sample data
@@ -64,7 +52,7 @@ instance = OWL_simu.generate_test_case(setup = 'case1', N = 1000, seed = 0, p = 
 X, A, Y = instance['XAY']
 
 
-# In[16]:
+# In[3]:
 
 
 # initialize the learner
@@ -84,7 +72,7 @@ assignment_prob = np.ones(len(A)) / 0.5
 owl.train(X, A, Y, classifier = clf, assignment_prob = assignment_prob)
 
 
-# In[19]:
+# In[4]:
 
 
 # recommend action

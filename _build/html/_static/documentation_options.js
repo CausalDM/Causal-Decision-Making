@@ -8,11 +8,5 @@ var DOCUMENTATION_OPTIONS = {
     LINK_SUFFIX: '.html',
     HAS_SOURCE: true,
     SOURCELINK_SUFFIX: '',
-<<<<<<< Updated upstream
-    NAVIGATION_WITH_KEYS: false,
-    SHOW_SEARCH_SUMMARY: true,
-    ENABLE_SEARCH_SHORTCUTS: false,
-=======
     NAVIGATION_WITH_KEYS: true
->>>>>>> Stashed changes
 };

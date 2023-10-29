@@ -58,7 +58,7 @@ env = _env.CombSemi_env(T = 500, seed = 0)
 # - prior_gamma_cov: the covariance matrix of the Gaussian prior of $\boldsymbol{\gamma}$
 # - seed: random seed
 
-# In[4]:
+# In[3]:
 
 
 L = env.L
@@ -84,7 +84,7 @@ LinTS_agent = CombLinTS.LinTS_Semi(sigma = sigma, prior_gamma_mu = prior_gamma_m
 # 3. Update the posterior distribution
 # <code> LinTS_agent.receive_reward(t, A, R, S) </code>
 
-# In[5]:
+# In[4]:
 
 
 S = env.Phi

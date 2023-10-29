@@ -64,7 +64,7 @@ env = _env.MNL_env(seed = 0)
 # - clip: indicate whether we clip the $\boldsymbol{\theta}$ to be between $.5$ and $.999$
 # - seed: random seed
 
-# In[4]:
+# In[3]:
 
 
 L = env.L
@@ -89,7 +89,7 @@ TS_agent = TS_MNL_Beta.MNL_TS(L = L, K = K, u_prior_alpha = u_prior_alpha, u_pri
 # 4. Update the posterior distribution
 # <code> TS_agent.receive_reward(A,c,R) </code>
 
-# In[5]:
+# In[4]:
 
 
 t = 0

@@ -93,7 +93,7 @@ env = _env.MultiTask_Env(seed = 0, Binary = False)
 # - `order`: = 'episodic', if a sequential schedule is applied (Note: When order = 'episodic', meta-posterior is updated once a task is finished; otherwise, meta-posterior will be updated at every step)
 # - `seed`: random seed
 
-# In[4]:
+# In[3]:
 
 
 K = env.K
@@ -120,7 +120,7 @@ meta_TS_Gaussian_agent = meta_TS_Gaussian.meta_TS_agent(sigma = sigma, sigma_0 =
 #     - if a sequential schedule is applied and a task is finished, we would update the meta posterior by setting  `episode_finished = True`;
 #     - if the schedule is not sequential, no specification of the parameter ` episode_finished` is needed, and the meta-posterior distribution would be updated at every step automatically
 
-# In[5]:
+# In[4]:
 
 
 i = 0
@@ -142,10 +142,10 @@ i,t,A,R
 # - `Q`: categorical distribution of `candi_means`, i.e., each entry is the probability of each candidate mean being the true mean ($\gamma$)
 # - `update_freq`: if the recommending schedule is not sequential, we will update the meta-posterior every `update_freq` steps
 
-# In[6]:
+# In[5]:
 
 
-from causaldm.learners.Online.Meta_Bandits import meta_TS_Binary
+from causaldm.learners.CPL4.Meta_Bandits import meta_TS_Binary
 env = _env.MultiTask_Env(seed = 0, Binary = True)
 K = env.K
 N = env.N

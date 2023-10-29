@@ -52,7 +52,7 @@ env = _env.CombSemi_env(T = 500, seed = 0)
 # - u_prior_cov_diag: the diagonal of the covariance matrix of the Gaussian prior of the mean rewards $\boldsymbol{\theta}$
 # - seed: random seed
 
-# In[4]:
+# In[3]:
 
 
 L = env.L
@@ -75,7 +75,7 @@ TS_agent = CombTS.TS_Semi(L = L, K = K, sigma = sigma, u_prior_mean = u_prior_me
 # 3. Update the posterior distribution
 # <code> TS_agent.receive_reward(t, A, R) </code>
 
-# In[5]:
+# In[4]:
 
 
 t = 0

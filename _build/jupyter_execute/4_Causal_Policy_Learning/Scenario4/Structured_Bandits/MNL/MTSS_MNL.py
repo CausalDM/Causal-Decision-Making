@@ -95,7 +95,7 @@ env = _env.MNL_env(seed = 0)
 # - clip: indicate whether we clip the $\boldsymbol{\theta}$ to be between $.5$ and $.999$
 # - seed: random seed
 
-# In[4]:
+# In[3]:
 
 
 L = env.L
@@ -125,7 +125,7 @@ MTSS_agent = MTSS_MNL.MTSS_MNL(L = L, K = K, Xs = Xs, phi_beta = phi_beta, gamma
 # 4. Update the posterior distribution
 # <code> MTSS_agent.receive_reward(A,c,R) </code>
 
-# In[5]:
+# In[4]:
 
 
 t = 0

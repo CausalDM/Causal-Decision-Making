@@ -59,7 +59,7 @@ env = _env.Single_Contextual_Env(seed = 0, Binary = False)
 # - prior_theta_cov: Covaraince matrix of the prior distribution of the coefficients
 # - seed: random seed
 
-# In[4]:
+# In[3]:
 
 
 K = env.K
@@ -86,7 +86,7 @@ LinTS_Gaussian_agent = LinTS.LinTS_Gaussian(sigma = sigma, prior_theta_u = prior
 # 4. Update the posterior distribution
 # <code> LinTS_Gaussian_agent.receive_reward(t,A,R,X) </code>
 
-# In[5]:
+# In[4]:
 
 
 t = 0
@@ -102,7 +102,7 @@ t,A,R,feature_info
 # ### Demo Code for Bernoulli Bandit
 # The steps are similar to those previously performed with a Gaussian Bandit. Note that, when specifying the prior distribution of the expected reward, the mean-precision form of the Beta distribution is used here, i.e., Beta($\mu$, $\phi$), where $\mu$ is the mean reward of each arm and $\phi$ is the precision of the Beta distribution. 
 
-# In[6]:
+# In[5]:
 
 
 env = _env.Single_Contextual_Env(seed = 0, Binary = True)
@@ -128,3 +128,9 @@ t,A,R,feature_info
 # [1] Agrawal, S., & Goyal, N. (2013, May). Thompson sampling for contextual bandits with linear payoffs. In International conference on machine learning (pp. 127-135). PMLR.
 # 
 # [2] Kveton, B., Zaheer, M., Szepesvari, C., Li, L., Ghavamzadeh, M., & Boutilier, C. (2020, June). Randomized exploration in generalized linear bandits. In International Conference on Artificial Intelligence and Statistics (pp. 2066-2076). PMLR.
+
+# In[ ]:
+
+
+
+

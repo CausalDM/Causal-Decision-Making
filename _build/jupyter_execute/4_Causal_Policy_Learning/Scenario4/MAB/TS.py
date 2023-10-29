@@ -66,7 +66,7 @@ env = _env.Single_Gaussian_Env(seed = 42)
 # - u_prior_cov: Covaraince matrix of the prior distribution of the mean reward
 # - seed: random seed
 
-# In[7]:
+# In[3]:
 
 
 Reward_Type = "Gaussian"
@@ -90,7 +90,7 @@ TS_Gaussian_agent = TS.TS(Reward_Type = Reward_Type, sigma = sigma,
 # 3. Update the posterior distribution
 # <code> TS_Gaussian_agent.receive_reward(t,A,R) </code>
 
-# In[8]:
+# In[4]:
 
 
 t = 0
@@ -105,7 +105,7 @@ t, A, R
 # ### Demo Code for Bernoulli Bandit
 # The steps are similar to those previously performed with a Gaussian Bandit. Note that, when specifying the prior distribution of the expected reward, the mean-precision form of the Beta distribution is used here, i.e., Beta($\mu$, $\phi$), where $\mu$ is the mean reward of each arm and $\phi$ is the precision of the Beta distribution. 
 
-# In[13]:
+# In[5]:
 
 
 env = _env.Single_Bernoulli_Env(seed=42)

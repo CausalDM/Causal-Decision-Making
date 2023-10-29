@@ -121,7 +121,7 @@ print('Value_hat:',value_avg,'Value_std:',value_std)
 
 # ### 2. Policy Evaluation
 
-# In[ ]:
+# In[7]:
 
 
 #1. specify the fixed regime to be tested (For example, regime d = 'No E-Mail' for all subjects)
@@ -138,7 +138,7 @@ QLearn.predict_value(S)
 
 # **Interpretation:** the estimated value of the regime that always sends no emails ($A=0$) is 116.41, under the specified model.
 
-# In[ ]:
+# In[8]:
 
 
 # Optional: Boostrap
