@@ -121,23 +121,17 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../../../../0_Motivating_Examples/CSL.html">
-   <em>
-    Causal Structure Learning (CSL)
-   </em>
+   Causal Structure Learning (CSL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../../../0_Motivating_Examples/CEL.html">
-   <em>
-    Causal Effect Learning (CEL)
-   </em>
+   Causal Effect Learning (CEL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../../../0_Motivating_Examples/CPL.html">
-   <em>
-    Causal Policy Learning (CPL)
-   </em>
+   Causal Policy Learning (CPL)
   </a>
  </li>
 </ul>
@@ -1091,8 +1085,8 @@ title="Print to PDF"
 <section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>UCB_MNL [1] is an UCB-based algorithm, using the epoch-type offering schedule to deal with dynamic assortment optimization problems. Adapted to the standard UCB-style framework, UCB_MNL estimates the upper confidence bound of <span class="math notranslate nohighlight">\(v_{i}\)</span> at epoch <span class="math notranslate nohighlight">\(l\)</span> by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5fa2f4b4-303a-427f-afd2-f096a0aea95b">
-<span class="eqno">()<a class="headerlink" href="#equation-5fa2f4b4-303a-427f-afd2-f096a0aea95b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a0b577bf-8d4f-4b16-a39a-96b5cf98b152">
+<span class="eqno">()<a class="headerlink" href="#equation-a0b577bf-8d4f-4b16-a39a-96b5cf98b152" title="Permalink to this equation">#</a></span>\[\begin{equation}
     v_{i,l}^{UCB}= \hat{v_{i}^{l}}+\sqrt{\hat{v_{i}^{l}}\frac{48log(\sqrt{N}l+1)}{s_{i,l}}}+\frac{48log(\sqrt{N}l+1)}{s_{i,l}}.
 \end{equation}\]</div>
 <p>💥 Application Situation?</p>
@@ -1107,8 +1101,8 @@ title="Print to PDF"
 <li><p>Receive reward <span class="math notranslate nohighlight">\(R^{l}\)</span>;</p></li>
 <li><p>Update <span class="math notranslate nohighlight">\(v_{i,l}^{UCB}=0\)</span> based on the observations as</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-a086d997-cce2-489e-9543-4d7bd4f071bd">
-<span class="eqno">()<a class="headerlink" href="#equation-a086d997-cce2-489e-9543-4d7bd4f071bd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a17582ef-7c7d-4105-9593-4d8ff6c81df1">
+<span class="eqno">()<a class="headerlink" href="#equation-a17582ef-7c7d-4105-9593-4d8ff6c81df1" title="Permalink to this equation">#</a></span>\[\begin{equation}
     v_{i,l}^{UCB}= \hat{v_{i}^{l}}+\sqrt{\hat{v_{i}^{l}}\frac{48log(\sqrt{N}l+1)}{s_{i,l}}}+\frac{48log(\sqrt{N}l+1)}{s_{i,l}}
 \end{equation}\]</div>
 </section>
@@ -1118,34 +1112,21 @@ title="Print to PDF"
 <p>*Notations can be found in the introduction of the combinatorial Semi-Bandit problems.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># After we publish the pack age, we can directly import it</span>
-<span class="c1"># TODO: explore more efficient way</span>
-<span class="c1"># we can hide this cell later</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM&#39;</span><span class="p">)</span>
-<span class="c1"># code used to import the learner</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.CPL4.Structured_Bandits.MNL</span> <span class="kn">import</span> <span class="n">UCB_MNL</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.CPL4.Structured_Bandits.MNL</span> <span class="kn">import</span> <span class="n">_env_MNL</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 6&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">os</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/nas/longleaf/home/lge/CausalDM&#39;</span><span class="p">)</span>
+<span class="ne">ImportError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 1&gt;</span><span class="nt">()</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">causaldm.learners.CPL4.Structured_Bandits.MNL</span> <span class="kn">import</span> <span class="n">UCB_MNL</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">causaldm.learners.CPL4.Structured_Bandits.MNL</span> <span class="kn">import</span> <span class="n">_env_MNL</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="ne">FileNotFoundError</span>: [WinError 3] 系统找不到指定的路径。: &#39;/nas/longleaf/home/lge/CausalDM&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Slate.MNL</span> <span class="kn">import</span> <span class="n">UCB_MNL</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Slate.MNL</span> <span class="kn">import</span> <span class="n">_env_MNL</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="ne">ImportError</span>: cannot import name &#39;UCB_MNL&#39; from &#39;causaldm.learners.CPL4.Structured_Bandits.MNL&#39; (D:\anaconda3\lib\site-packages\causaldm\learners\CPL4\Structured_Bandits\MNL\__init__.py)
 </pre></div>
 </div>
 </div>

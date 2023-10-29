@@ -123,23 +123,17 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../../../0_Motivating_Examples/CSL.html">
-   <em>
-    Causal Structure Learning (CSL)
-   </em>
+   Causal Structure Learning (CSL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../../0_Motivating_Examples/CEL.html">
-   <em>
-    Causal Effect Learning (CEL)
-   </em>
+   Causal Effect Learning (CEL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../../0_Motivating_Examples/CPL.html">
-   <em>
-    Causal Policy Learning (CPL)
-   </em>
+   Causal Policy Learning (CPL)
   </a>
  </li>
 </ul>
@@ -1110,39 +1104,14 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="outcome-weighted-learning">
 <h1>Outcome Weighted Learning<a class="headerlink" href="#outcome-weighted-learning" title="Permalink to this headline">#</a></h1>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># After we publish the package, we can directly import it</span>
-<span class="c1"># TODO: explore more efficient way</span>
-<span class="c1"># we can hide this cell later</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 7&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;../CausalDM&#39;</span><span class="p">)</span>
-
-<span class="ne">FileNotFoundError</span>: [WinError 2] 系统找不到指定的文件。: &#39;../CausalDM&#39;
-</pre></div>
-</div>
-</div>
-</div>
 <section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>A natural idea for policy learning is to stay close to the behaviour policy in those areas where it performs well.
 Outcome Weighted Learning (OWL) shares similar ideas.
 OWL was first proposed in [1] under the binary treatment case, and extended in [3] to allow multiple treatments.
 The foundation of OWL is built on the relationship that, maximizing <span class="math notranslate nohighlight">\(V(\pi)\)</span> is equivalent to solve</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d8de7377-1031-43c4-bfba-694da9b2acd2">
-<span class="eqno">(74)<a class="headerlink" href="#equation-d8de7377-1031-43c4-bfba-694da9b2acd2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1431f988-77ff-4037-98be-247781f7206d">
+<span class="eqno">(76)<a class="headerlink" href="#equation-1431f988-77ff-4037-98be-247781f7206d" title="Permalink to this equation">#</a></span>\[\begin{align}
     \text{arg min}_{\pi} \mathbb{E}\Big[ \frac{Y_i}{b(A_i|X_i)}\mathbb{I}(A_i \neq \pi(X_i))\Big]. 
 \end{align}\]</div>
 <p>When <span class="math notranslate nohighlight">\(Y_i\)</span> is non-negative, this goal corresponds to the objective function of a cost-sensitive classification problem with <span class="math notranslate nohighlight">\({Y_i}/{b(A_i|X_i)}\)</span> as the weight,
@@ -1174,7 +1143,7 @@ This is why the estimator is called <em>outcome weighted</em>.
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A demo with code on how to use the package</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">OWL</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.CPL13.disc</span> <span class="kn">import</span> <span class="n">OWL</span>
 <span class="kn">from</span> <span class="nn">causaldm.test</span> <span class="kn">import</span> <span class="n">shared_simulation</span>
 <span class="kn">from</span> <span class="nn">causaldm.test</span> <span class="kn">import</span> <span class="n">OWL_simu</span>
 <span class="kn">from</span> <span class="nn">causaldm.metric</span> <span class="kn">import</span> <span class="n">metric</span>

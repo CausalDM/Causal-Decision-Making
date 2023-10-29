@@ -121,23 +121,17 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CSL.html">
-   <em>
-    Causal Structure Learning (CSL)
-   </em>
+   Causal Structure Learning (CSL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CEL.html">
-   <em>
-    Causal Effect Learning (CEL)
-   </em>
+   Causal Effect Learning (CEL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CPL.html">
-   <em>
-    Causal Policy Learning (CPL)
-   </em>
+   Causal Policy Learning (CPL)
   </a>
  </li>
 </ul>
@@ -1107,25 +1101,25 @@ title="Print to PDF"
 <section id="generalized-random-forest">
 <h2><strong>7. Generalized Random Forest</strong><a class="headerlink" href="#generalized-random-forest" title="Permalink to this headline">#</a></h2>
 <p>Developed by Susan Athey, Julie Tibshirani and Stefan Wager, Generalized Random Forest [8] aims to give the solution to a set of local moment equations:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1c6e4082-6de8-47ba-89b7-3c56839af941">
-<span class="eqno">()<a class="headerlink" href="#equation-1c6e4082-6de8-47ba-89b7-3c56839af941" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-05e9b9b6-9790-4988-ab79-a960a8838126">
+<span class="eqno">()<a class="headerlink" href="#equation-05e9b9b6-9790-4988-ab79-a960a8838126" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \mathbb{E}\big[\psi_{\tau(s),\nu(s)}(O_i)\big| S_i=s\big]=0,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\tau(s)\)</span> is the parameter we care about and <span class="math notranslate nohighlight">\(\nu(s)\)</span> is an optional nuisance parameter. In the problem of Heterogeneous Treatment Effect Evaluation, our parameter of interest <span class="math notranslate nohighlight">\(\tau(s)=\xi\cdot \beta(s)\)</span> is identified by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-68682842-fcd3-4498-bb2b-413c6e257d1d">
-<span class="eqno">()<a class="headerlink" href="#equation-68682842-fcd3-4498-bb2b-413c6e257d1d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e25540e3-8cae-4c9a-9617-b5cd0e083dc3">
+<span class="eqno">()<a class="headerlink" href="#equation-e25540e3-8cae-4c9a-9617-b5cd0e083dc3" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \psi_{\beta(s),\nu(s)}(R_i,A_i)=(R_i-\beta(s)\cdot A_i-c(s))(1 \quad A_i^T)^T.
 \end{equation}\]</div>
 <p>The induced estimator <span class="math notranslate nohighlight">\(\hat{\tau}(s)\)</span> for <span class="math notranslate nohighlight">\(\tau(s)\)</span> can thus be solved by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-52212cd2-fce3-4cdf-9b55-46b62064c717">
-<span class="eqno">()<a class="headerlink" href="#equation-52212cd2-fce3-4cdf-9b55-46b62064c717" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6e79ca60-b350-48f5-b155-a73034673354">
+<span class="eqno">()<a class="headerlink" href="#equation-6e79ca60-b350-48f5-b155-a73034673354" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \hat{\tau}(s)=\xi^T\left(\sum_{i=1}^n \alpha_i(s)\big(A_i-\bar{A}_\alpha\big)^{\otimes 2}\right)^{-1}\sum_{i=1}^n \alpha_i(s)\big(A_i-\bar{A}_\alpha\big)\big(R_i-\bar{R}_\alpha\big),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\bar{A}_\alpha=\sum \alpha_i(s)A_i\)</span> and <span class="math notranslate nohighlight">\(\bar{R}_\alpha=\sum \alpha_i(s)R_i\)</span>, and we write <span class="math notranslate nohighlight">\(v^{\otimes 2}=vv^T\)</span>.</p>
 <p>Notice that this formula is just a weighted version of R-learner introduced above. However, instead of using ordinary kernel weighting functions that are prone to a strong curse of dimensionality, GRF uses an adaptive weighting function <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span> derived from a forest designed to express heterogeneity in the specified quantity of interest.</p>
 <p>To be more specific, in order to obtain <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span>, GRF first grows a set of <span class="math notranslate nohighlight">\(B\)</span> trees indexed by <span class="math notranslate nohighlight">\(1,\dots,B\)</span>. Then for each such tree, define <span class="math notranslate nohighlight">\(L_b(s)\)</span> as the set of training samples falling in the same ``leaf” as x. The weights <span class="math notranslate nohighlight">\(\alpha_i(s)\)</span> then capture the frequency with which the <span class="math notranslate nohighlight">\(i\)</span>-th training example falls into the same leaf as <span class="math notranslate nohighlight">\(s\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-80093324-13c7-4e98-b9d4-c9c181647435">
-<span class="eqno">()<a class="headerlink" href="#equation-80093324-13c7-4e98-b9d4-c9c181647435" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3a26b422-4668-49e8-8e96-9a80a0df978c">
+<span class="eqno">()<a class="headerlink" href="#equation-3a26b422-4668-49e8-8e96-9a80a0df978c" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \alpha_{bi}(s)=\frac{\boldsymbol{1}\big(\{S_i\in L_b(s)\}\big)}{\big|L_b(s)\big|},\quad \alpha_i(s)=\frac{1}{B}\sum_{b=1}^B \alpha_{bi}(s).
 \end{equation}\]</div>
 <p>To sum up, GRF aims to leverage the splitting result of a series of trees to decide the ``localized” weight for HTE estimation at each point <span class="math notranslate nohighlight">\(x_0\)</span>. Compared with kernel functions, we may expect tree-based weights to be more flexible and better performed in real settings.</p>
@@ -1136,18 +1130,6 @@ title="Print to PDF"
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span> 
 <span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 5&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span> 
-<span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;causaldm&#39;
 </pre></div>
 </div>
 </div>
@@ -1169,6 +1151,25 @@ title="Print to PDF"
 
 <span class="c1"># The true expected heterogeneous treatment effect</span>
 <span class="n">HTE_true</span> <span class="o">=</span> <span class="n">get_data_simulation</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">policy</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">)[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">get_data_simulation</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">policy</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="p">)[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">UnboundLocalError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="nn">Input In [3],</span> in <span class="ni">&lt;cell line: 6&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">data_behavior</span> <span class="o">=</span> <span class="n">get_data_simulation</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">policy</span><span class="o">=</span><span class="s2">&quot;behavior&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="c1">#data_target = get_data_simulation(n0, seed, policy=&quot;target&quot;)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> 
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="c1"># The true expected heterogeneous treatment effect</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">HTE_true</span> <span class="o">=</span> <span class="n">get_data_simulation</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">policy</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">)[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">get_data_simulation</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">policy</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="p">)[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span>
+
+<span class="nn">File D:\anaconda3\lib\site-packages\causaldm\_util_causaldm.py:229,</span> in <span class="ni">get_data_simulation</span><span class="nt">(n0, seed, policy)</span>
+<span class="g g-Whitespace">    </span><span class="mi">226</span>     <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;S1&#39;</span><span class="p">:</span><span class="n">S_1</span><span class="p">,</span><span class="s1">&#39;S2&#39;</span><span class="p">:</span><span class="n">S_2</span><span class="p">,</span><span class="s1">&#39;A&#39;</span><span class="p">:</span><span class="n">A</span><span class="p">,</span><span class="s1">&#39;R&#39;</span><span class="p">:</span><span class="n">R</span><span class="p">}</span>
+<span class="g g-Whitespace">    </span><span class="mi">227</span>     <span class="n">data</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">229</span> <span class="k">return</span> <span class="n">data</span>
+
+<span class="ne">UnboundLocalError</span>: local variable &#39;data&#39; referenced before assignment
 </pre></div>
 </div>
 </div>

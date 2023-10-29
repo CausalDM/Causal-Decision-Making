@@ -123,23 +123,17 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CSL.html">
-   <em>
-    Causal Structure Learning (CSL)
-   </em>
+   Causal Structure Learning (CSL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CEL.html">
-   <em>
-    Causal Effect Learning (CEL)
-   </em>
+   Causal Effect Learning (CEL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CPL.html">
-   <em>
-    Causal Policy Learning (CPL)
-   </em>
+   Causal Policy Learning (CPL)
   </a>
  </li>
 </ul>
@@ -1085,8 +1079,8 @@ title="Print to PDF"
   <section id="r-learner">
 <h1><strong>4. R learner</strong><a class="headerlink" href="#r-learner" title="Permalink to this headline">#</a></h1>
 <p>The idea of classical R-learner came from Robinson 1988 [3] and was formalized by Nie and Wager in 2020 [2]. The main idea of R learner starts from the partially linear model setup, in which we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5c839552-898c-4b0f-a03f-8c190fd35fa4">
-<span class="eqno">(27)<a class="headerlink" href="#equation-5c839552-898c-4b0f-a03f-8c190fd35fa4" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-eed17569-8644-41a8-b819-db01ccc5732d">
+<span class="eqno">(27)<a class="headerlink" href="#equation-eed17569-8644-41a8-b819-db01ccc5732d" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{aligned}
     R&amp;=A\tau(S)+g_0(S)+U,\\
     A&amp;=m_0(S)+V,
@@ -1094,21 +1088,21 @@ title="Print to PDF"
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(V\)</span> satisfies <span class="math notranslate nohighlight">\(\mathbb{E}[U|D,X]=0\)</span>, <span class="math notranslate nohighlight">\(\mathbb{E}[V|X]=0\)</span>.</p>
 <p>After several manipulations, it’s easy to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dd78e7d5-5bc4-44fd-a8a3-d57913995855">
-<span class="eqno">(28)<a class="headerlink" href="#equation-dd78e7d5-5bc4-44fd-a8a3-d57913995855" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6f858911-56b8-4972-96a0-e3fcbea55ff6">
+<span class="eqno">(28)<a class="headerlink" href="#equation-6f858911-56b8-4972-96a0-e3fcbea55ff6" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	R-\mathbb{E}[R|S]=\tau(S)\cdot(A-\mathbb{E}[A|S])+\epsilon.
 \end{equation}\]</div>
 <p>Define <span class="math notranslate nohighlight">\(m_0(X)=\mathbb{E}[A|S]\)</span> and <span class="math notranslate nohighlight">\(l_0(X)=\mathbb{E}[R|S]\)</span>. A natural way to estimate <span class="math notranslate nohighlight">\(\tau(X)\)</span> is given below, which is also the main idea of R-learner:</p>
 <p><strong>Step 1</strong>: Regress <span class="math notranslate nohighlight">\(R\)</span> on <span class="math notranslate nohighlight">\(S\)</span> to obtain model <span class="math notranslate nohighlight">\(\hat{\eta}(S)=\hat{\mathbb{E}}[R|S]\)</span>; and regress <span class="math notranslate nohighlight">\(A\)</span> on <span class="math notranslate nohighlight">\(S\)</span> to obtain model <span class="math notranslate nohighlight">\(\hat{m}(S)=\hat{\mathbb{E}}[A|S]\)</span>.</p>
 <p><strong>Step 2</strong>: Regress outcome residual <span class="math notranslate nohighlight">\(R-\hat{l}(S)\)</span> on propensity score residual <span class="math notranslate nohighlight">\(A-\hat{m}(S)\)</span>.</p>
 <p>That is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5b348a03-8a19-4a32-a919-baf2213614e9">
-<span class="eqno">(29)<a class="headerlink" href="#equation-5b348a03-8a19-4a32-a919-baf2213614e9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a69b1f07-65f5-41ca-926a-04adcfbcd1d1">
+<span class="eqno">(29)<a class="headerlink" href="#equation-a69b1f07-65f5-41ca-926a-04adcfbcd1d1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	\hat{\tau}(S)=\arg\min_{\tau}\left\{\mathbb{E}_n\left[\left(\{R_i-\hat{\eta}(S_i)\}-\{A_i-\hat{m}(S_i)\}\cdot\tau(S_i)\right)^2\right]\right\}	
 \end{equation}\]</div>
 <p>The easiest way to do so is to specify <span class="math notranslate nohighlight">\(\hat{\tau}(S)\)</span> to the linear function class. In this case, <span class="math notranslate nohighlight">\(\tau(S)=S\beta\)</span>, and the problem becomes to estimate <span class="math notranslate nohighlight">\(\beta\)</span> by solving the following linear regression:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0724a397-1174-460a-82a9-9dd61db63d90">
-<span class="eqno">(30)<a class="headerlink" href="#equation-0724a397-1174-460a-82a9-9dd61db63d90" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a01e46cc-0cf4-4eb2-b9d1-66f382e542e5">
+<span class="eqno">(30)<a class="headerlink" href="#equation-a01e46cc-0cf4-4eb2-b9d1-66f382e542e5" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	\hat{\beta}=\arg\min_{\beta}\left\{\mathbb{E}_n\left[\left(\{R_i-\hat{\eta}(S_i)\}-\{A_i-\hat{m}(S_i)\} S_i\cdot \beta\right)^2\right]\right\}.
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -1121,18 +1115,8 @@ title="Print to PDF"
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span> 
 <span class="kn">from</span> <span class="nn">causaldm.learners.CEL.Single_Stage.Rlearner</span> <span class="kn">import</span> <span class="n">Rlearner</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 8&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span> 
-<span class="ne">----&gt; </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">causaldm.learners.CEL.Single_Stage.Rlearner</span> <span class="kn">import</span> <span class="n">Rlearner</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;causaldm&#39;
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1147,255 +1131,29 @@ title="Print to PDF"
 <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;</span><span class="p">)</span>
 <span class="n">MovieLens_CEL</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./causaldm/data/MovieLens_CEL.csv&quot;</span><span class="p">)</span>
 <span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">MovieLens_CEL</span> <span class="o">=</span> <span class="n">MovieLens_CEL</span><span class="p">[</span><span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Comedy&#39;</span><span class="p">,</span><span class="s1">&#39;Action&#39;</span><span class="p">,</span> <span class="s1">&#39;Thriller&#39;</span><span class="p">])]</span>
 <span class="n">MovieLens_CEL</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="nn">Input In [2],</span> in <span class="ni">&lt;cell line: 3&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Get the MovieLens data</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">os</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">MovieLens_CEL</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./causaldm/data/MovieLens_CEL.csv&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>user_id</th>
-      <th>movie_id</th>
-      <th>rating</th>
-      <th>age</th>
-      <th>Comedy</th>
-      <th>Drama</th>
-      <th>Action</th>
-      <th>Thriller</th>
-      <th>Sci-Fi</th>
-      <th>gender_M</th>
-      <th>occupation_academic/educator</th>
-      <th>occupation_college/grad student</th>
-      <th>occupation_executive/managerial</th>
-      <th>occupation_other</th>
-      <th>occupation_technician/engineer</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>48.0</td>
-      <td>1193.0</td>
-      <td>4.0</td>
-      <td>25.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>48.0</td>
-      <td>919.0</td>
-      <td>4.0</td>
-      <td>25.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>48.0</td>
-      <td>527.0</td>
-      <td>5.0</td>
-      <td>25.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>48.0</td>
-      <td>1721.0</td>
-      <td>4.0</td>
-      <td>25.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>48.0</td>
-      <td>150.0</td>
-      <td>4.0</td>
-      <td>25.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>65637</th>
-      <td>5878.0</td>
-      <td>3300.0</td>
-      <td>2.0</td>
-      <td>25.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>65638</th>
-      <td>5878.0</td>
-      <td>1391.0</td>
-      <td>1.0</td>
-      <td>25.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>65639</th>
-      <td>5878.0</td>
-      <td>185.0</td>
-      <td>4.0</td>
-      <td>25.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>65640</th>
-      <td>5878.0</td>
-      <td>2232.0</td>
-      <td>1.0</td>
-      <td>25.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>65641</th>
-      <td>5878.0</td>
-      <td>426.0</td>
-      <td>3.0</td>
-      <td>25.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-    </tr>
-  </tbody>
-</table>
-<p>65642 rows × 15 columns</p>
-</div></div></div>
+<span class="ne">FileNotFoundError</span>: [WinError 3] 系统找不到指定的路径。: &#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="p">)</span>
-<span class="n">userinfo_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
-<span class="n">SandA</span> <span class="o">=</span> <span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">])]</span>
 </pre></div>
 </div>
 </div>
@@ -1441,45 +1199,11 @@ fold 2,testing r2 y_learner: 0.015, ps_learner: 0.739
 fold 3,testing r2 y_learner: 0.017, ps_learner: 0.740
 fold 4,testing r2 y_learner: 0.017, ps_learner: 0.736
 fold 5,testing r2 y_learner: 0.018, ps_learner: 0.725
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/causaldm/learners/Causal_Effect_Learning/Single_Stage/Rlearner.py:68: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  x_residual[&#39;Intercept&#39;]=1
-/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but GradientBoostingRegressor was fitted without feature names
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fold 1, training r2 R-learner: 0.028, testing r2 R-learner: 0.028
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but GradientBoostingRegressor was fitted without feature names
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fold 2, training r2 R-learner: 0.031, testing r2 R-learner: 0.020
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but GradientBoostingRegressor was fitted without feature names
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fold 3, training r2 R-learner: 0.029, testing r2 R-learner: 0.029
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but GradientBoostingRegressor was fitted without feature names
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fold 4, training r2 R-learner: 0.030, testing r2 R-learner: 0.024
+fold 1, training r2 R-learner: 0.028, testing r2 R-learner: 0.028
+fold 2, training r2 R-learner: 0.031, testing r2 R-learner: 0.020
+fold 3, training r2 R-learner: 0.029, testing r2 R-learner: 0.029
+fold 4, training r2 R-learner: 0.030, testing r2 R-learner: 0.024
 fold 5, training r2 R-learner: 0.030, testing r2 R-learner: 0.024
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but GradientBoostingRegressor was fitted without feature names
-  warnings.warn(
 </pre></div>
 </div>
 </div>

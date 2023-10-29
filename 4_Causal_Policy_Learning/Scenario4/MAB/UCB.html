@@ -123,23 +123,17 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../../../0_Motivating_Examples/CSL.html">
-   <em>
-    Causal Structure Learning (CSL)
-   </em>
+   Causal Structure Learning (CSL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../../0_Motivating_Examples/CEL.html">
-   <em>
-    Causal Effect Learning (CEL)
-   </em>
+   Causal Effect Learning (CEL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../../0_Motivating_Examples/CPL.html">
-   <em>
-    Causal Policy Learning (CPL)
-   </em>
+   Causal Policy Learning (CPL)
   </a>
  </li>
 </ul>
@@ -1176,8 +1170,8 @@ title="Print to PDF"
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>As the name suggested, the UCB algorithm estimates the upper confidence bound <span class="math notranslate nohighlight">\(U_{a}^{t}\)</span> of the mean of the potential reward of arm <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(R_t(a)\)</span>, based on the observations and then choose the action has the highest estimates. The class of UCB-based algorithms is firstly introduced by Auer et al. [1]. Generally, at each round <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(U_{a}^{t}\)</span> is calculated as the sum of the estimated reward (exploitation) and the estimated confidence radius (exploration) of item <span class="math notranslate nohighlight">\(i\)</span> based on previous observations. Then, <span class="math notranslate nohighlight">\(A_{t}\)</span> is selected as
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4619a314-092d-44e5-8e77-14dc125265a0">
-<span class="eqno">(115)<a class="headerlink" href="#equation-4619a314-092d-44e5-8e77-14dc125265a0" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1d421eb9-5c3f-48eb-9803-b6b7cafdd611">
+<span class="eqno">(117)<a class="headerlink" href="#equation-1d421eb9-5c3f-48eb-9803-b6b7cafdd611" title="Permalink to this equation">#</a></span>\[\begin{equation}
     A_t = \arg \max_{a \in \mathcal{A}} U_a^t.
 \end{equation}\]</div>
 <p>$<span class="math notranslate nohighlight">\(
@@ -1186,13 +1180,13 @@ As an example, **UCB** [1] estimates the confidence radius as \)</span>\sqrt{\fr
 <section id="algorithms-details">
 <h2>Algorithms Details<a class="headerlink" href="#algorithms-details" title="Permalink to this headline">#</a></h2>
 <p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. The UCB1 algorithm start with initializing the estimated upper confidence bound <span class="math notranslate nohighlight">\(U_a^{0}\)</span> and the count of being pulled <span class="math notranslate nohighlight">\(C_a^{0}\)</span> for each action <span class="math notranslate nohighlight">\(a\)</span> as 0. At each round <span class="math notranslate nohighlight">\(t\)</span>, we greedily select an action <span class="math notranslate nohighlight">\(A_t\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1c5e169b-416f-462c-8bd9-f2d11f068def">
-<span class="eqno">(116)<a class="headerlink" href="#equation-1c5e169b-416f-462c-8bd9-f2d11f068def" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c49da078-72d6-4a75-8c13-7e8ad7a5a55f">
+<span class="eqno">(118)<a class="headerlink" href="#equation-c49da078-72d6-4a75-8c13-7e8ad7a5a55f" title="Permalink to this equation">#</a></span>\[\begin{align}
 A_t = \arg \max_{a\in \mathcal{A}} U_{a}^{t}.
 \end{align}\]</div>
 <p>After observing the rewards corresponding to the selected action <span class="math notranslate nohighlight">\(A_t\)</span>, we first update the total number of being pulled for <span class="math notranslate nohighlight">\(A_t\)</span> accordingly. Then, we estimate the upper confidence bound for each action <span class="math notranslate nohighlight">\(a\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-be0111d4-19d2-4fac-8bc0-7c027a5f0afd">
-<span class="eqno">(117)<a class="headerlink" href="#equation-be0111d4-19d2-4fac-8bc0-7c027a5f0afd" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d92dcb39-7888-4307-b309-1cf0b68619b0">
+<span class="eqno">(119)<a class="headerlink" href="#equation-d92dcb39-7888-4307-b309-1cf0b68619b0" title="Permalink to this equation">#</a></span>\[\begin{align}
 U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} ,
 \end{align}\]</div>
 </section>
@@ -1204,8 +1198,8 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 <ul>
 <li><p>select action <span class="math notranslate nohighlight">\(A_t\)</span> as the arm with the maximum <span class="math notranslate nohighlight">\(U_a^t\)</span></p></li>
 <li><p>Received the reward R, and update <span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(U\)</span> with</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2337ec28-2734-4746-9c8f-09e2cd9a536d">
-<span class="eqno">(118)<a class="headerlink" href="#equation-2337ec28-2734-4746-9c8f-09e2cd9a536d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a8ba78e1-5533-495c-840a-9a7228a4b782">
+<span class="eqno">(120)<a class="headerlink" href="#equation-a8ba78e1-5533-495c-840a-9a7228a4b782" title="Permalink to this equation">#</a></span>\[\begin{align}
         C_{A_{t}}^{t+1} &amp;= C_{A_{t}}^{t} + 1 \\
         U_{A_{t}}^{t+1} &amp;= \frac{1}{C_{A_{t}}^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=A_{t}) + \sqrt{\frac{2*log(t+1)}{C_{A_{t}}^{t+1}}} 
         \end{align}\]</div>
@@ -1216,32 +1210,17 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 </section>
 <section id="demo-code">
 <h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:\GitHub\CausalDM&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
 <section id="import-the-learner">
 <h3>Import the learner.<a class="headerlink" href="#import-the-learner" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.MAB</span> <span class="kn">import</span> <span class="n">UCB</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.CPL4.MAB</span> <span class="kn">import</span> <span class="n">UCB</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="nn">Input In [2],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">causaldm.learners.Online.MAB</span> <span class="kn">import</span> <span class="n">UCB</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;causaldm.learners.Online&#39;
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
 </pre></div>
 </div>
 </div>
@@ -1252,7 +1231,7 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 <p>Here, we imitate an environment based on the MovieLens data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.MAB</span> <span class="kn">import</span> <span class="n">_env_realMAB</span> <span class="k">as</span> <span class="n">_env</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.CPL4.MAB</span> <span class="kn">import</span> <span class="n">_env_realMAB</span> <span class="k">as</span> <span class="n">_env</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">_env</span><span class="o">.</span><span class="n">Single_Gaussian_Env</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>

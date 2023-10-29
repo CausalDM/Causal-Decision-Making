@@ -17,13 +17,24 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-mimic3 = pd.read_csv("subset_rl_data_final_cont.csv")
+User = pd.read_csv('users.dat', sep='::', names = ["user_id","gender","age","occupation","zip_code"]  , encoding='latin-1')
+Occupation = ["other","academic/educator","artist","clerical/admin","college/grad student","customer service","doctor/health care","executive/managerial","farmer"
+                 ,"homemaker","K-12 student","lawyer","programmer","retired","sales/marketing","scientist","self-employed","technician/engineer"
+                 ,"tradesman/craftsman","unemployed","writer"]
+User = np.array(User)
+for row in range(User.shape[0]):
+    User[row,3] = Occupation[User[row,3]]
+User = pd.DataFrame(User,columns = ["user_id","gender","age","occupation","zip_code"])
 ------------------
 
 [1;31m---------------------------------------------------------------------------[0m
 [1;31mFileNotFoundError[0m                         Traceback (most recent call last)
 Input [1;32mIn [2][0m, in [0;36m<cell line: 1>[1;34m()[0m
-[1;32m----> 1[0m mimic3 [38;5;241m=[39m [43mpd[49m[38;5;241;43m.[39;49m[43mread_csv[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43msubset_rl_data_final_cont.csv[39;49m[38;5;124;43m"[39;49m[43m)[49m
+[1;32m----> 1[0m User [38;5;241m=[39m [43mpd[49m[38;5;241;43m.[39;49m[43mread_csv[49m[43m([49m[38;5;124;43m'[39;49m[38;5;124;43musers.dat[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[43msep[49m[38;5;241;43m=[39;49m[38;5;124;43m'[39;49m[38;5;124;43m::[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[43mnames[49m[43m [49m[38;5;241;43m=[39;49m[43m [49m[43m[[49m[38;5;124;43m"[39;49m[38;5;124;43muser_id[39;49m[38;5;124;43m"[39;49m[43m,[49m[38;5;124;43m"[39;49m[38;5;124;43mgender[39;49m[38;5;124;43m"[39;49m[43m,[49m[38;5;124;43m"[39;49m[38;5;124;43mage[39;49m[38;5;124;43m"[39;49m[43m,[49m[38;5;124;43m"[39;49m[38;5;124;43moccupation[39;49m[38;5;124;43m"[39;49m[43m,[49m[38;5;124;43m"[39;49m[38;5;124;43mzip_code[39;49m[38;5;124;43m"[39;49m[43m][49m[43m  [49m[43m,[49m[43m [49m[43mencoding[49m[38;5;241;43m=[39;49m[38;5;124;43m'[39;49m[38;5;124;43mlatin-1[39;49m[38;5;124;43m'[39;49m[43m)[49m
+[0;32m      2[0m Occupation [38;5;241m=[39m [[38;5;124m"[39m[38;5;124mother[39m[38;5;124m"[39m,[38;5;124m"[39m[38;5;124macademic/educator[39m[38;5;124m"[39m,[38;5;124m"[39m[38;5;124martist[39m[38;5;124m"[39m,[38;5;124m"[39m[38;5;124mclerical/admin[39m[38;5;124m"[39m,[38;5;124m"[39m[38;5;124mcollege/grad student[39m[38;5;124m"[39m,[38;5;124m"[39m[38;5;124mcustomer service[39m[38;5;124m"[39m,[38;5;124m"[39m[38;5;124mdoctor/health care[39m[38;5;124m"[39m,[38;5;124m"[39m[38;5;124mexecutive/managerial[39m[38;5;124m"[39m,[38;5;124m"[39m[38;5;124mfarmer[39m[38;5;124m"[39m
+[0;32m      3[0m                  ,[38;5;124m"[39m[38;5;124mhomemaker[39m[38;5;124m"[39m,[38;5;124m"[39m[38;5;124mK-12 student[39m[38;5;124m"[39m,[38;5;124m"[39m[38;5;124mlawyer[39m[38;5;124m"[39m,[38;5;124m"[39m[38;5;124mprogrammer[39m[38;5;124m"[39m,[38;5;124m"[39m[38;5;124mretired[39m[38;5;124m"[39m,[38;5;124m"[39m[38;5;124msales/marketing[39m[38;5;124m"[39m,[38;5;124m"[39m[38;5;124mscientist[39m[38;5;124m"[39m,[38;5;124m"[39m[38;5;124mself-employed[39m[38;5;124m"[39m,[38;5;124m"[39m[38;5;124mtechnician/engineer[39m[38;5;124m"[39m
+[0;32m      4[0m                  ,[38;5;124m"[39m[38;5;124mtradesman/craftsman[39m[38;5;124m"[39m,[38;5;124m"[39m[38;5;124munemployed[39m[38;5;124m"[39m,[38;5;124m"[39m[38;5;124mwriter[39m[38;5;124m"[39m]
+[0;32m      5[0m User [38;5;241m=[39m np[38;5;241m.[39marray(User)
 
 File [1;32mD:\anaconda3\lib\site-packages\pandas\util\_decorators.py:311[0m, in [0;36mdeprecate_nonkeyword_arguments.<locals>.decorate.<locals>.wrapper[1;34m(*args, **kwargs)[0m
 [0;32m    305[0m [38;5;28;01mif[39;00m [38;5;28mlen[39m(args) [38;5;241m>[39m num_allow_args:
@@ -91,6 +102,6 @@ File [1;32mD:\anaconda3\lib\site-packages\pandas\io\common.py:789[0m, in [0;3
 [0;32m    797[0m         [38;5;66;03m# Binary mode[39;00m
 [0;32m    798[0m         handle [38;5;241m=[39m [38;5;28mopen[39m(handle, ioargs[38;5;241m.[39mmode)
 
-[1;31mFileNotFoundError[0m: [Errno 2] No such file or directory: 'subset_rl_data_final_cont.csv'
-FileNotFoundError: [Errno 2] No such file or directory: 'subset_rl_data_final_cont.csv'
+[1;31mFileNotFoundError[0m: [Errno 2] No such file or directory: 'users.dat'
+FileNotFoundError: [Errno 2] No such file or directory: 'users.dat'
 

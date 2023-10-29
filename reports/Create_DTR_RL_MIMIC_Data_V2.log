@@ -17,84 +17,65 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import pandas as pd
-import numpy as np
-mimic3 = pd.read_csv("subset_rl_data_final_cont.csv")
+mrl_data = mimic_final.copy()
+#for var in ['Glucose','paO2','PaO2_FiO2','SOFA']:
+#    mrl_data[var] = (mrl_data[var] - mrl_data[var].mean()) / mrl_data[var].std()
+
+next_state = [np.array(mrl_data[mrl_data.icustayid==ind][['Glucose','paO2','PaO2_FiO2','SOFA']])[1:,:] for ind in selected_IDs]
+state = [np.array(mrl_data[mrl_data.icustayid==ind][['Glucose','paO2','PaO2_FiO2','SOFA']])[:-1,:] for ind in selected_IDs]
+action = [np.array(mrl_data[mrl_data.icustayid==ind].IV_Input)[:-1] for ind in selected_IDs]
+reward = [np.array([0]*(len(np.array(mrl_data[mrl_data.icustayid==ind].IV_Input)[:-1])-1)+mrl_data[mrl_data.icustayid==ind].Died_within_48H.unique().tolist()) for ind in selected_IDs]
+ID =  [np.array(mrl_data[mrl_data.icustayid==ind][['icustayid','bloc']])[:-1,:] for ind in selected_IDs]
+s0 = [np.array(mrl_data[mrl_data.icustayid==ind][['Glucose','paO2','PaO2_FiO2','SOFA']])[0,:] for ind in selected_IDs]
+time_idx = [np.array(mrl_data[mrl_data.icustayid==ind].bloc)[:-1] for ind in selected_IDs]
+
+s0 = np.array(s0)
+state = np.vstack(state)
+next_state = np.vstack(next_state)
+action = np.hstack(action)
+reward =np.hstack(reward)
+ID = np.vstack(ID)
+time_idx = np.hstack(time_idx)
 ------------------
 
 [1;31m---------------------------------------------------------------------------[0m
-[1;31mFileNotFoundError[0m                         Traceback (most recent call last)
-Input [1;32mIn [1][0m, in [0;36m<cell line: 3>[1;34m()[0m
-[0;32m      1[0m [38;5;28;01mimport[39;00m [38;5;21;01mpandas[39;00m [38;5;28;01mas[39;00m [38;5;21;01mpd[39;00m
-[0;32m      2[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
-[1;32m----> 3[0m mimic3 [38;5;241m=[39m [43mpd[49m[38;5;241;43m.[39;49m[43mread_csv[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43msubset_rl_data_final_cont.csv[39;49m[38;5;124;43m"[39;49m[43m)[49m
+[1;31mKeyError[0m                                  Traceback (most recent call last)
+Input [1;32mIn [28][0m, in [0;36m<cell line: 5>[1;34m()[0m
+[0;32m      1[0m mrl_data [38;5;241m=[39m mimic_final[38;5;241m.[39mcopy()
+[0;32m      2[0m [38;5;66;03m#for var in ['Glucose','paO2','PaO2_FiO2','SOFA']:[39;00m
+[0;32m      3[0m [38;5;66;03m#    mrl_data[var] = (mrl_data[var] - mrl_data[var].mean()) / mrl_data[var].std()[39;00m
+[1;32m----> 5[0m next_state [38;5;241m=[39m [np[38;5;241m.[39marray(mrl_data[mrl_data[38;5;241m.[39micustayid[38;5;241m==[39mind][[[38;5;124m'[39m[38;5;124mGlucose[39m[38;5;124m'[39m,[38;5;124m'[39m[38;5;124mpaO2[39m[38;5;124m'[39m,[38;5;124m'[39m[38;5;124mPaO2_FiO2[39m[38;5;124m'[39m,[38;5;124m'[39m[38;5;124mSOFA[39m[38;5;124m'[39m]])[[38;5;241m1[39m:,:] [38;5;28;01mfor[39;00m ind [38;5;129;01min[39;00m selected_IDs]
+[0;32m      6[0m state [38;5;241m=[39m [np[38;5;241m.[39marray(mrl_data[mrl_data[38;5;241m.[39micustayid[38;5;241m==[39mind][[[38;5;124m'[39m[38;5;124mGlucose[39m[38;5;124m'[39m,[38;5;124m'[39m[38;5;124mpaO2[39m[38;5;124m'[39m,[38;5;124m'[39m[38;5;124mPaO2_FiO2[39m[38;5;124m'[39m,[38;5;124m'[39m[38;5;124mSOFA[39m[38;5;124m'[39m]])[:[38;5;241m-[39m[38;5;241m1[39m,:] [38;5;28;01mfor[39;00m ind [38;5;129;01min[39;00m selected_IDs]
+[0;32m      7[0m action [38;5;241m=[39m [np[38;5;241m.[39marray(mrl_data[mrl_data[38;5;241m.[39micustayid[38;5;241m==[39mind][38;5;241m.[39mIV_Input)[:[38;5;241m-[39m[38;5;241m1[39m] [38;5;28;01mfor[39;00m ind [38;5;129;01min[39;00m selected_IDs]
 
-File [1;32mD:\anaconda3\lib\site-packages\pandas\util\_decorators.py:311[0m, in [0;36mdeprecate_nonkeyword_arguments.<locals>.decorate.<locals>.wrapper[1;34m(*args, **kwargs)[0m
-[0;32m    305[0m [38;5;28;01mif[39;00m [38;5;28mlen[39m(args) [38;5;241m>[39m num_allow_args:
-[0;32m    306[0m     warnings[38;5;241m.[39mwarn(
-[0;32m    307[0m         msg[38;5;241m.[39mformat(arguments[38;5;241m=[39marguments),
-[0;32m    308[0m         [38;5;167;01mFutureWarning[39;00m,
-[0;32m    309[0m         stacklevel[38;5;241m=[39mstacklevel,
-[0;32m    310[0m     )
-[1;32m--> 311[0m [38;5;28;01mreturn[39;00m func([38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs)
+Input [1;32mIn [28][0m, in [0;36m<listcomp>[1;34m(.0)[0m
+[0;32m      1[0m mrl_data [38;5;241m=[39m mimic_final[38;5;241m.[39mcopy()
+[0;32m      2[0m [38;5;66;03m#for var in ['Glucose','paO2','PaO2_FiO2','SOFA']:[39;00m
+[0;32m      3[0m [38;5;66;03m#    mrl_data[var] = (mrl_data[var] - mrl_data[var].mean()) / mrl_data[var].std()[39;00m
+[1;32m----> 5[0m next_state [38;5;241m=[39m [np[38;5;241m.[39marray([43mmrl_data[49m[43m[[49m[43mmrl_data[49m[38;5;241;43m.[39;49m[43micustayid[49m[38;5;241;43m==[39;49m[43mind[49m[43m][49m[43m[[49m[43m[[49m[38;5;124;43m'[39;49m[38;5;124;43mGlucose[39;49m[38;5;124;43m'[39;49m[43m,[49m[38;5;124;43m'[39;49m[38;5;124;43mpaO2[39;49m[38;5;124;43m'[39;49m[43m,[49m[38;5;124;43m'[39;49m[38;5;124;43mPaO2_FiO2[39;49m[38;5;124;43m'[39;49m[43m,[49m[38;5;124;43m'[39;49m[38;5;124;43mSOFA[39;49m[38;5;124;43m'[39;49m[43m][49m[43m][49m)[[38;5;241m1[39m:,:] [38;5;28;01mfor[39;00m ind [38;5;129;01min[39;00m selected_IDs]
+[0;32m      6[0m state [38;5;241m=[39m [np[38;5;241m.[39marray(mrl_data[mrl_data[38;5;241m.[39micustayid[38;5;241m==[39mind][[[38;5;124m'[39m[38;5;124mGlucose[39m[38;5;124m'[39m,[38;5;124m'[39m[38;5;124mpaO2[39m[38;5;124m'[39m,[38;5;124m'[39m[38;5;124mPaO2_FiO2[39m[38;5;124m'[39m,[38;5;124m'[39m[38;5;124mSOFA[39m[38;5;124m'[39m]])[:[38;5;241m-[39m[38;5;241m1[39m,:] [38;5;28;01mfor[39;00m ind [38;5;129;01min[39;00m selected_IDs]
+[0;32m      7[0m action [38;5;241m=[39m [np[38;5;241m.[39marray(mrl_data[mrl_data[38;5;241m.[39micustayid[38;5;241m==[39mind][38;5;241m.[39mIV_Input)[:[38;5;241m-[39m[38;5;241m1[39m] [38;5;28;01mfor[39;00m ind [38;5;129;01min[39;00m selected_IDs]
 
-File [1;32mD:\anaconda3\lib\site-packages\pandas\io\parsers\readers.py:680[0m, in [0;36mread_csv[1;34m(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, squeeze, prefix, mangle_dupe_cols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, error_bad_lines, warn_bad_lines, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options)[0m
-[0;32m    665[0m kwds_defaults [38;5;241m=[39m _refine_defaults_read(
-[0;32m    666[0m     dialect,
-[0;32m    667[0m     delimiter,
-[1;32m   (...)[0m
-[0;32m    676[0m     defaults[38;5;241m=[39m{[38;5;124m"[39m[38;5;124mdelimiter[39m[38;5;124m"[39m: [38;5;124m"[39m[38;5;124m,[39m[38;5;124m"[39m},
-[0;32m    677[0m )
-[0;32m    678[0m kwds[38;5;241m.[39mupdate(kwds_defaults)
-[1;32m--> 680[0m [38;5;28;01mreturn[39;00m [43m_read[49m[43m([49m[43mfilepath_or_buffer[49m[43m,[49m[43m [49m[43mkwds[49m[43m)[49m
+File [1;32mD:\anaconda3\lib\site-packages\pandas\core\frame.py:3511[0m, in [0;36mDataFrame.__getitem__[1;34m(self, key)[0m
+[0;32m   3509[0m     [38;5;28;01mif[39;00m is_iterator(key):
+[0;32m   3510[0m         key [38;5;241m=[39m [38;5;28mlist[39m(key)
+[1;32m-> 3511[0m     indexer [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mcolumns[49m[38;5;241;43m.[39;49m[43m_get_indexer_strict[49m[43m([49m[43mkey[49m[43m,[49m[43m [49m[38;5;124;43m"[39;49m[38;5;124;43mcolumns[39;49m[38;5;124;43m"[39;49m[43m)[49m[[38;5;241m1[39m]
+[0;32m   3513[0m [38;5;66;03m# take() does not accept boolean indexers[39;00m
+[0;32m   3514[0m [38;5;28;01mif[39;00m [38;5;28mgetattr[39m(indexer, [38;5;124m"[39m[38;5;124mdtype[39m[38;5;124m"[39m, [38;5;28;01mNone[39;00m) [38;5;241m==[39m [38;5;28mbool[39m:
 
-File [1;32mD:\anaconda3\lib\site-packages\pandas\io\parsers\readers.py:575[0m, in [0;36m_read[1;34m(filepath_or_buffer, kwds)[0m
-[0;32m    572[0m _validate_names(kwds[38;5;241m.[39mget([38;5;124m"[39m[38;5;124mnames[39m[38;5;124m"[39m, [38;5;28;01mNone[39;00m))
-[0;32m    574[0m [38;5;66;03m# Create the parser.[39;00m
-[1;32m--> 575[0m parser [38;5;241m=[39m TextFileReader(filepath_or_buffer, [38;5;241m*[39m[38;5;241m*[39mkwds)
-[0;32m    577[0m [38;5;28;01mif[39;00m chunksize [38;5;129;01mor[39;00m iterator:
-[0;32m    578[0m     [38;5;28;01mreturn[39;00m parser
+File [1;32mD:\anaconda3\lib\site-packages\pandas\core\indexes\base.py:5782[0m, in [0;36mIndex._get_indexer_strict[1;34m(self, key, axis_name)[0m
+[0;32m   5779[0m [38;5;28;01melse[39;00m:
+[0;32m   5780[0m     keyarr, indexer, new_indexer [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_reindex_non_unique(keyarr)
+[1;32m-> 5782[0m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_raise_if_missing[49m[43m([49m[43mkeyarr[49m[43m,[49m[43m [49m[43mindexer[49m[43m,[49m[43m [49m[43maxis_name[49m[43m)[49m
+[0;32m   5784[0m keyarr [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mtake(indexer)
+[0;32m   5785[0m [38;5;28;01mif[39;00m [38;5;28misinstance[39m(key, Index):
+[0;32m   5786[0m     [38;5;66;03m# GH 42790 - Preserve name from an Index[39;00m
 
-File [1;32mD:\anaconda3\lib\site-packages\pandas\io\parsers\readers.py:933[0m, in [0;36mTextFileReader.__init__[1;34m(self, f, engine, **kwds)[0m
-[0;32m    930[0m     [38;5;28mself[39m[38;5;241m.[39moptions[[38;5;124m"[39m[38;5;124mhas_index_names[39m[38;5;124m"[39m] [38;5;241m=[39m kwds[[38;5;124m"[39m[38;5;124mhas_index_names[39m[38;5;124m"[39m]
-[0;32m    932[0m [38;5;28mself[39m[38;5;241m.[39mhandles: IOHandles [38;5;241m|[39m [38;5;28;01mNone[39;00m [38;5;241m=[39m [38;5;28;01mNone[39;00m
-[1;32m--> 933[0m [38;5;28mself[39m[38;5;241m.[39m_engine [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_make_engine[49m[43m([49m[43mf[49m[43m,[49m[43m [49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mengine[49m[43m)[49m
+File [1;32mD:\anaconda3\lib\site-packages\pandas\core\indexes\base.py:5845[0m, in [0;36mIndex._raise_if_missing[1;34m(self, key, indexer, axis_name)[0m
+[0;32m   5842[0m     [38;5;28;01mraise[39;00m [38;5;167;01mKeyError[39;00m([38;5;124mf[39m[38;5;124m"[39m[38;5;124mNone of [[39m[38;5;132;01m{[39;00mkey[38;5;132;01m}[39;00m[38;5;124m] are in the [[39m[38;5;132;01m{[39;00maxis_name[38;5;132;01m}[39;00m[38;5;124m][39m[38;5;124m"[39m)
+[0;32m   5844[0m not_found [38;5;241m=[39m [38;5;28mlist[39m(ensure_index(key)[missing_mask[38;5;241m.[39mnonzero()[[38;5;241m0[39m]][38;5;241m.[39munique())
+[1;32m-> 5845[0m [38;5;28;01mraise[39;00m [38;5;167;01mKeyError[39;00m([38;5;124mf[39m[38;5;124m"[39m[38;5;132;01m{[39;00mnot_found[38;5;132;01m}[39;00m[38;5;124m not in index[39m[38;5;124m"[39m)
 
-File [1;32mD:\anaconda3\lib\site-packages\pandas\io\parsers\readers.py:1217[0m, in [0;36mTextFileReader._make_engine[1;34m(self, f, engine)[0m
-[0;32m   1213[0m     mode [38;5;241m=[39m [38;5;124m"[39m[38;5;124mrb[39m[38;5;124m"[39m
-[0;32m   1214[0m [38;5;66;03m# error: No overload variant of "get_handle" matches argument types[39;00m
-[0;32m   1215[0m [38;5;66;03m# "Union[str, PathLike[str], ReadCsvBuffer[bytes], ReadCsvBuffer[str]]"[39;00m
-[0;32m   1216[0m [38;5;66;03m# , "str", "bool", "Any", "Any", "Any", "Any", "Any"[39;00m
-[1;32m-> 1217[0m [38;5;28mself[39m[38;5;241m.[39mhandles [38;5;241m=[39m [43mget_handle[49m[43m([49m[43m  [49m[38;5;66;43;03m# type: ignore[call-overload][39;49;00m
-[0;32m   1218[0m [43m    [49m[43mf[49m[43m,[49m
-[0;32m   1219[0m [43m    [49m[43mmode[49m[43m,[49m
-[0;32m   1220[0m [43m    [49m[43mencoding[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mencoding[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mNone[39;49;00m[43m)[49m[43m,[49m
-[0;32m   1221[0m [43m    [49m[43mcompression[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mcompression[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mNone[39;49;00m[43m)[49m[43m,[49m
-[0;32m   1222[0m [43m    [49m[43mmemory_map[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mmemory_map[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mFalse[39;49;00m[43m)[49m[43m,[49m
-[0;32m   1223[0m [43m    [49m[43mis_text[49m[38;5;241;43m=[39;49m[43mis_text[49m[43m,[49m
-[0;32m   1224[0m [43m    [49m[43merrors[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mencoding_errors[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;124;43m"[39;49m[38;5;124;43mstrict[39;49m[38;5;124;43m"[39;49m[43m)[49m[43m,[49m
-[0;32m   1225[0m [43m    [49m[43mstorage_options[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mstorage_options[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mNone[39;49;00m[43m)[49m[43m,[49m
-[0;32m   1226[0m [43m[49m[43m)[49m
-[0;32m   1227[0m [38;5;28;01massert[39;00m [38;5;28mself[39m[38;5;241m.[39mhandles [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m
-[0;32m   1228[0m f [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mhandles[38;5;241m.[39mhandle
-
-File [1;32mD:\anaconda3\lib\site-packages\pandas\io\common.py:789[0m, in [0;36mget_handle[1;34m(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)[0m
-[0;32m    784[0m [38;5;28;01melif[39;00m [38;5;28misinstance[39m(handle, [38;5;28mstr[39m):
-[0;32m    785[0m     [38;5;66;03m# Check whether the filename is to be opened in binary mode.[39;00m
-[0;32m    786[0m     [38;5;66;03m# Binary mode does not support 'encoding' and 'newline'.[39;00m
-[0;32m    787[0m     [38;5;28;01mif[39;00m ioargs[38;5;241m.[39mencoding [38;5;129;01mand[39;00m [38;5;124m"[39m[38;5;124mb[39m[38;5;124m"[39m [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m ioargs[38;5;241m.[39mmode:
-[0;32m    788[0m         [38;5;66;03m# Encoding[39;00m
-[1;32m--> 789[0m         handle [38;5;241m=[39m [38;5;28;43mopen[39;49m[43m([49m
-[0;32m    790[0m [43m            [49m[43mhandle[49m[43m,[49m
-[0;32m    791[0m [43m            [49m[43mioargs[49m[38;5;241;43m.[39;49m[43mmode[49m[43m,[49m
-[0;32m    792[0m [43m            [49m[43mencoding[49m[38;5;241;43m=[39;49m[43mioargs[49m[38;5;241;43m.[39;49m[43mencoding[49m[43m,[49m
-[0;32m    793[0m [43m            [49m[43merrors[49m[38;5;241;43m=[39;49m[43merrors[49m[43m,[49m
-[0;32m    794[0m [43m            [49m[43mnewline[49m[38;5;241;43m=[39;49m[38;5;124;43m"[39;49m[38;5;124;43m"[39;49m[43m,[49m
-[0;32m    795[0m [43m        [49m[43m)[49m
-[0;32m    796[0m     [38;5;28;01melse[39;00m:
-[0;32m    797[0m         [38;5;66;03m# Binary mode[39;00m
-[0;32m    798[0m         handle [38;5;241m=[39m [38;5;28mopen[39m(handle, ioargs[38;5;241m.[39mmode)
-
-[1;31mFileNotFoundError[0m: [Errno 2] No such file or directory: 'subset_rl_data_final_cont.csv'
-FileNotFoundError: [Errno 2] No such file or directory: 'subset_rl_data_final_cont.csv'
+[1;31mKeyError[0m: "['paO2'] not in index"
+KeyError: "['paO2'] not in index"
 

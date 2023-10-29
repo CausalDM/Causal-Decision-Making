@@ -123,23 +123,17 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../../../../0_Motivating_Examples/CSL.html">
-   <em>
-    Causal Structure Learning (CSL)
-   </em>
+   Causal Structure Learning (CSL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../../../0_Motivating_Examples/CEL.html">
-   <em>
-    Causal Effect Learning (CEL)
-   </em>
+   Causal Effect Learning (CEL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../../../0_Motivating_Examples/CPL.html">
-   <em>
-    Causal Policy Learning (CPL)
-   </em>
+   Causal Policy Learning (CPL)
   </a>
  </li>
 </ul>
@@ -1166,8 +1160,8 @@ title="Print to PDF"
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>MTSS_Cascade is an example of the general Thompson Sampling(TS)-based framework, MTSS [1], to deal with online learning to rank problems.</p>
 <p><strong>Review of MTSS:</strong> MTSS[1] is a meta-learning framework designed for large-scale structured bandit problems [2]. Mainly, it is a TS-based algorithm that learns the information-sharing structure while minimizing the cumulative regrets. Adapting the TS framework to a problem-specific Bayesian hierarchical model, MTSS simultaneously enables information sharing among items via their features and models the inter-item heterogeneity. Specifically, it assumes that the item-specific parameter <span class="math notranslate nohighlight">\(\theta_i = E[W_t(i)]\)</span> is sampled from a distribution <span class="math notranslate nohighlight">\(g(\theta_i|\boldsymbol{s}_i, \boldsymbol{\gamma})\)</span> instead of being entirely determined by <span class="math notranslate nohighlight">\(\boldsymbol{s}_i\)</span> via a deterministic function. Here, <span class="math notranslate nohighlight">\(g\)</span> is a model parameterized by an <strong>unknown</strong> vector <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>. The following is the general feature-based hierarchical model MTSS considered.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9e5dac8a-d003-4fd2-b404-05b3f7d85596">
-<span class="eqno">(136)<a class="headerlink" href="#equation-9e5dac8a-d003-4fd2-b404-05b3f7d85596" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:general_hierachical}
+<div class="amsmath math notranslate nohighlight" id="equation-7899a02d-8589-4edb-b8db-55542dcbc8cd">
+<span class="eqno">(138)<a class="headerlink" href="#equation-7899a02d-8589-4edb-b8db-55542dcbc8cd" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:general_hierachical}
   \begin{alignedat}{2}
 &amp;\text{(Prior)} \quad
 \quad\quad\quad\quad\quad\quad\quad\quad\quad
@@ -1183,8 +1177,8 @@ title="Print to PDF"
 <p>where <span class="math notranslate nohighlight">\(Q(\boldsymbol{\gamma})\)</span> is the prior distribution for <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>.
 Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class of practical problems, <strong>scalable</strong> to large systems, and <strong>robust</strong> to the specification of the generalization model.</p>
 <p><strong>Review of MTSS_Cascade:</strong> To characterize the relationship between items using their features, one example choice of <span class="math notranslate nohighlight">\(g\)</span> is the popular Beta-Bernoulli logistic model [1,2], where <span class="math notranslate nohighlight">\(\theta_i {\sim} Beta(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma}), \phi)\)</span> for some known parameter <span class="math notranslate nohighlight">\(\phi\)</span>. We adopt the mean-precision parameterization of the Beta distribution, with <span class="math notranslate nohighlight">\(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})\)</span> being the mean and <span class="math notranslate nohighlight">\(\phi\)</span> being the precision parameter. Specifically, the full model is as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f53d9f48-57b9-405a-a5fe-a4b6f639d039">
-<span class="eqno">(137)<a class="headerlink" href="#equation-f53d9f48-57b9-405a-a5fe-a4b6f639d039" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:model_cascading}
+<div class="amsmath math notranslate nohighlight" id="equation-e6f4f392-d3f4-43b1-8d59-fed0ee2344ce">
+<span class="eqno">(139)<a class="headerlink" href="#equation-e6f4f392-d3f4-43b1-8d59-fed0ee2344ce" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:model_cascading}
     \begin{split}
     \theta_i &amp; \sim Beta(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma}), \phi), \forall i \in [N]\\
     W_{k, t}(a) &amp;\sim Bernoulli(\theta_{a^k}), \forall k \in [K], \\
@@ -1214,32 +1208,17 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
 </section>
 <section id="demo-code">
 <h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:\GitHub\CausalDM&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
 <section id="import-the-learner">
 <h3>Import the learner.<a class="headerlink" href="#import-the-learner" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.Structured_Bandits.Cascade</span> <span class="kn">import</span> <span class="n">MTSS_Cascade</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.CPL4.Structured_Bandits.Cascade</span> <span class="kn">import</span> <span class="n">MTSS_Cascade</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="nn">Input In [2],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">causaldm.learners.Online.Structured_Bandits.Cascade</span> <span class="kn">import</span> <span class="n">MTSS_Cascade</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;causaldm.learners.Online&#39;
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
 </pre></div>
 </div>
 </div>
@@ -1250,7 +1229,7 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
 <p>Here, we imitate an environment based on the Yelp dataset. The number of items recommended at each round, <span class="math notranslate nohighlight">\(K\)</span>, is specified as <span class="math notranslate nohighlight">\(3\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.Structured_Bandits.Cascade</span> <span class="kn">import</span> <span class="n">_env_realCascade</span> <span class="k">as</span> <span class="n">_env</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.CPL4.Structured_Bandits.Cascade</span> <span class="kn">import</span> <span class="n">_env_realCascade</span> <span class="k">as</span> <span class="n">_env</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">_env</span><span class="o">.</span><span class="n">Cascading_env</span><span class="p">(</span><span class="n">K</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1306,20 +1285,6 @@ Overall, MTTS is a <strong>general</strong> framework that subsumes a wide class
 <span class="n">W</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get_reward</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
 <span class="n">MTSS_agent</span><span class="o">.</span><span class="n">receive_reward</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
 <span class="n">A</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">R</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_540529</span><span class="o">/</span><span class="mf">4210367235.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">A</span> <span class="o">=</span> <span class="n">MTSS_agent</span><span class="o">.</span><span class="n">take_action</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">W</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get_reward</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">MTSS_agent</span><span class="o">.</span><span class="n">receive_reward</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">A</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">R</span>
-
-<span class="ne">NameError</span>: name &#39;MTSS_agent&#39; is not defined
 </pre></div>
 </div>
 </div>

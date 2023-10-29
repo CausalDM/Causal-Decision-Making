@@ -123,23 +123,17 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../../../0_Motivating_Examples/CSL.html">
-   <em>
-    Causal Structure Learning (CSL)
-   </em>
+   Causal Structure Learning (CSL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../../0_Motivating_Examples/CEL.html">
-   <em>
-    Causal Effect Learning (CEL)
-   </em>
+   Causal Effect Learning (CEL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../../0_Motivating_Examples/CPL.html">
-   <em>
-    Causal Policy Learning (CPL)
-   </em>
+   Causal Policy Learning (CPL)
   </a>
  </li>
 </ul>
@@ -1165,13 +1159,13 @@ title="Print to PDF"
 <section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. Noticing that feature information are commonly avialable, the <strong>LinTS</strong>[1,2] algorithm consdiers modeling the expectation of the potential reward <span class="math notranslate nohighlight">\(R_t(i)\)</span> with features of item <span class="math notranslate nohighlight">\(i\)</span>. As an example, considering the Gaussian reward, we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e5b3e1e3-fa41-42b5-8d4b-155601d68b41">
-<span class="eqno">(123)<a class="headerlink" href="#equation-e5b3e1e3-fa41-42b5-8d4b-155601d68b41" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-50996370-f06c-4f20-9d5e-360819be337d">
+<span class="eqno">(125)<a class="headerlink" href="#equation-50996370-f06c-4f20-9d5e-360819be337d" title="Permalink to this equation">#</a></span>\[\begin{align}
 R_t(i)\sim \mathcal{N}(\boldsymbol{s}_i^T \boldsymbol{\gamma},\sigma^2).
 \end{align}\]</div>
 <p>As for the Bernoulli reward, we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f34f9cf6-7ecd-4652-ae35-d53299decffd">
-<span class="eqno">(124)<a class="headerlink" href="#equation-f34f9cf6-7ecd-4652-ae35-d53299decffd" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d67b7607-e3fc-45dd-a250-ea8d2506eb43">
+<span class="eqno">(126)<a class="headerlink" href="#equation-d67b7607-e3fc-45dd-a250-ea8d2506eb43" title="Permalink to this equation">#</a></span>\[\begin{align}
 R_t(i) \sim Bernoulli(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})).
 \end{align}\]</div>
 <p>Similar as the standard TS algorithm, the LinTS algorithm starts with specifying a prior distribution of the parameter <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}\)</span>, and a variance of the reward, based on the domian knowledge. At each round <span class="math notranslate nohighlight">\(t\)</span>, the agent will samples a vector of <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\gamma}}^{t}\)</span> from thecorresponding posterior distribution, and the mean reward <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\theta}}^{t}\)</span> is then calculated accordingly. The action <span class="math notranslate nohighlight">\(a\)</span> with the greatest <span class="math notranslate nohighlight">\(\tilde{\theta}_{a}^{t}\)</span> is then selected. Finally, the posterior distribution would be updated after receiving the feedback at the end of each round. It should be noted that the posterior updating step differs for different pairs of the prior distribution of expected potential reward and reward distribution, and the code can be easily modified to different prior/reward distribution specifications if necessary.</p>
@@ -1192,32 +1186,17 @@ R_t(i) \sim Bernoulli(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})).
 </section>
 <section id="demo-code">
 <h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this headline">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:\GitHub\CausalDM&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
 <section id="import-the-learner">
 <h3>Import the learner.<a class="headerlink" href="#import-the-learner" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners.Online.CMAB</span> <span class="kn">import</span> <span class="n">LinTS</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.CPL4.CMAB</span> <span class="kn">import</span> <span class="n">LinTS</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="nn">Input In [2],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">causaldm.learners.Online.CMAB</span> <span class="kn">import</span> <span class="n">LinTS</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;causaldm.learners.Online&#39;
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
 </pre></div>
 </div>
 </div>
@@ -1228,7 +1207,7 @@ R_t(i) \sim Bernoulli(logistic(\boldsymbol{s}_i^T \boldsymbol{\gamma})).
 <p>Here, we imitate an environment based on the MovieLens data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.Online.CMAB</span> <span class="kn">import</span> <span class="n">_env_realCMAB</span> <span class="k">as</span> <span class="n">_env</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.CPL4.CMAB</span> <span class="kn">import</span> <span class="n">_env_realCMAB</span> <span class="k">as</span> <span class="n">_env</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">_env</span><span class="o">.</span><span class="n">Single_Contextual_Env</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Binary</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>

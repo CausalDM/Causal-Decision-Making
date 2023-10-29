@@ -123,23 +123,17 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CSL.html">
-   <em>
-    Causal Structure Learning (CSL)
-   </em>
+   Causal Structure Learning (CSL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CEL.html">
-   <em>
-    Causal Effect Learning (CEL)
-   </em>
+   Causal Effect Learning (CEL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CPL.html">
-   <em>
-    Causal Policy Learning (CPL)
-   </em>
+   Causal Policy Learning (CPL)
   </a>
  </li>
 </ul>
@@ -1152,8 +1146,8 @@ By doing so, the pseudo-outcome taking the <strong>delayed effect</strong> into 
 </ol>
 <p><strong>Policy Evaluation:</strong><br />
 We use the backward iteration as what we did in policy learning. However, here for each round, the pseudo outcome is not the maximum of Q values. Instead, the pseudo outcome at decision point t is defined as below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-334c0a46-ed60-4260-b736-0c08e873c963">
-<span class="eqno">(103)<a class="headerlink" href="#equation-334c0a46-ed60-4260-b736-0c08e873c963" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4c343eb2-30b9-4478-9563-ae5569217ddb">
+<span class="eqno">(105)<a class="headerlink" href="#equation-4c343eb2-30b9-4478-9563-ae5569217ddb" title="Permalink to this equation">#</a></span>\[\begin{align}
 \tilde{R}_{ti} = \hat{Q}_{t}(h_{ti},d_{t}(h_{ti}),\hat{\boldsymbol{\beta}}_{t}),
 \end{align}\]</div>
 <p>The estimated value of the policy is then the average of <span class="math notranslate nohighlight">\(\tilde{R}_{1i}\)</span>.</p>
@@ -1167,22 +1161,9 @@ We use the backward iteration as what we did in policy learning. However, here f
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: feasible set</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">QLearning</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.CPL13.disc</span> <span class="kn">import</span> <span class="n">QLearning</span>
 <span class="kn">from</span> <span class="nn">causaldm.test</span> <span class="kn">import</span> <span class="n">shared_simulation</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># TODO: feasible set</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">QLearning</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">causaldm.test</span> <span class="kn">import</span> <span class="n">shared_simulation</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;causaldm&#39;
 </pre></div>
 </div>
 </div>
@@ -1217,6 +1198,13 @@ We use the backward iteration as what we did in policy learning. However, here f
 
 <span class="c1"># train the policy</span>
 <span class="n">QLearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{2: &lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x2ae2c31fd30&gt;,
+ 1: &lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x2ae2c3567c0&gt;,
+ 0: &lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x2ae2cee6e20&gt;}
 </pre></div>
 </div>
 </div>
@@ -1258,7 +1246,7 @@ opt regime: A3  A2  A1
 0   1   1     550
     0   1     450
 dtype: int64
-opt value: 1113.3004201781748
+opt value: 1113.3004201781755
 </pre></div>
 </div>
 </div>
@@ -1296,7 +1284,7 @@ dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 1112.9663576650953 Value_std: 3.6050454629164577
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 1113.100643602505 Value_std: 3.668375356613295
 </pre></div>
 </div>
 </div>
@@ -1327,7 +1315,7 @@ dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>979.4518636939481
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>979.4518636939476
 </pre></div>
 </div>
 </div>
@@ -1342,7 +1330,7 @@ dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 979.0772776227565 Value_std: 4.2034780374001155
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 979.5583600996052 Value_std: 4.398806583775552
 </pre></div>
 </div>
 </div>

@@ -123,23 +123,17 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CSL.html">
-   <em>
-    Causal Structure Learning (CSL)
-   </em>
+   Causal Structure Learning (CSL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CEL.html">
-   <em>
-    Causal Effect Learning (CEL)
-   </em>
+   Causal Effect Learning (CEL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CPL.html">
-   <em>
-    Causal Policy Learning (CPL)
-   </em>
+   Causal Policy Learning (CPL)
   </a>
  </li>
 </ul>
@@ -1132,12 +1126,12 @@ title="Print to PDF"
 <section id="algorithm-details">
 <h2>Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this headline">#</a></h2>
 <p>Q-learning with a single decision point is mainly a regression modeling problem, as the major component is to find the relationship between the expectation of potential reward <span class="math notranslate nohighlight">\(R(a)\)</span> and <span class="math notranslate nohighlight">\(\{\boldsymbol{s},a\}\)</span>. Let’s first define a Q-function, such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2deedbb0-ab57-4a10-8d14-7148f1c718e5">
-<span class="eqno">(63)<a class="headerlink" href="#equation-2deedbb0-ab57-4a10-8d14-7148f1c718e5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-44414dfb-f237-4a40-87c2-cc0fd2e23ebc">
+<span class="eqno">(65)<a class="headerlink" href="#equation-44414dfb-f237-4a40-87c2-cc0fd2e23ebc" title="Permalink to this equation">#</a></span>\[\begin{align}
     Q(\boldsymbol{s},a) = E(R(a)|\boldsymbol{S}=\boldsymbol{s}).
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-89fd123f-9160-43b7-8915-04b345f75610">
-<span class="eqno">(64)<a class="headerlink" href="#equation-89fd123f-9160-43b7-8915-04b345f75610" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5fabb2e0-21fd-4424-8d12-475241cb104a">
+<span class="eqno">(66)<a class="headerlink" href="#equation-5fabb2e0-21fd-4424-8d12-475241cb104a" title="Permalink to this equation">#</a></span>\[\begin{align}
     \text{arg max}_{\pi}Q(\boldsymbol{s}_{i},\pi(\boldsymbol{s}_{i})).
 \end{align}\]</div>
 </section>
@@ -1164,19 +1158,7 @@ title="Print to PDF"
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import learner</span>
 <span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">QLearning</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># import learner</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">causaldm.learners</span> <span class="kn">import</span> <span class="n">QLearning</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;causaldm&#39;
+<span class="kn">from</span> <span class="nn">causaldm.learners.CPL13.disc</span> <span class="kn">import</span> <span class="n">QLearning</span>
 </pre></div>
 </div>
 </div>
@@ -1202,8 +1184,8 @@ title="Print to PDF"
 </div>
 </div>
 <p>By specifing the model_info, we assume a regression model that:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e0b4fc05-4877-43e6-9b37-a4a12cae4b9a">
-<span class="eqno">(65)<a class="headerlink" href="#equation-e0b4fc05-4877-43e6-9b37-a4a12cae4b9a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b783c2df-b80c-461b-9bf9-88d6e094ad73">
+<span class="eqno">(67)<a class="headerlink" href="#equation-b783c2df-b80c-461b-9bf9-88d6e094ad73" title="Permalink to this equation">#</a></span>\[\begin{align}
 Q(\boldsymbol{s},a,\boldsymbol{\beta}) &amp;= \beta_{00}+\beta_{01}*recency+\beta_{02}*history\\
 &amp;+I(a=1)*\{\beta_{10}+\beta_{11}*recency+\beta_{12}*history\} \\
 &amp;+I(a=2)*\{\beta_{20}+\beta_{21}*recency+\beta_{22}*history\} 
@@ -1214,6 +1196,11 @@ Q(\boldsymbol{s},a,\boldsymbol{\beta}) &amp;= \beta_{00}+\beta_{01}*recency+\bet
 <span class="n">QLearn</span> <span class="o">=</span> <span class="n">QLearning</span><span class="o">.</span><span class="n">QLearning</span><span class="p">()</span>
 <span class="c1">#3. train the policy</span>
 <span class="n">QLearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{0: &lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x2bc8c8c1790&gt;}
 </pre></div>
 </div>
 </div>
@@ -1245,14 +1232,14 @@ opt regime: A
 1    371
 0    207
 dtype: int64
-opt value: 126.48792828230047
+opt value: 126.48792828230197
 </pre></div>
 </div>
 </div>
 </div>
 <p><strong>Interpretation:</strong> the fitted model is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7ac10bdb-14db-4bd9-9bbe-0c037e03c620">
-<span class="eqno">(66)<a class="headerlink" href="#equation-7ac10bdb-14db-4bd9-9bbe-0c037e03c620" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-45057339-740d-4af3-88d5-176725abb95c">
+<span class="eqno">(68)<a class="headerlink" href="#equation-45057339-740d-4af3-88d5-176725abb95c" title="Permalink to this equation">#</a></span>\[\begin{align}
 Q(\boldsymbol{s},a,\boldsymbol{\beta}) &amp;= 94.20+4.53*recency+0.0005*history\\
 &amp;+I(a=1)*\{23.24-4.15*recency+0.0076*history\} \\
 &amp;+I(a=2)*\{20.61-4.84*recency+0.0004history\}. 
@@ -1279,7 +1266,7 @@ Q(\boldsymbol{s},a,\boldsymbol{\beta}) &amp;= 94.20+4.53*recency+0.0005*history\
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 132.31352423343282 Value_std: 7.37323834017361
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 131.53067522436325 Value_std: 8.060633089846416
 </pre></div>
 </div>
 </div>
@@ -1304,7 +1291,7 @@ Q(\boldsymbol{s},a,\boldsymbol{\beta}) &amp;= 94.20+4.53*recency+0.0005*history\
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>116.40675465960642
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>116.40675465960962
 </pre></div>
 </div>
 </div>
@@ -1321,7 +1308,7 @@ Q(\boldsymbol{s},a,\boldsymbol{\beta}) &amp;= 94.20+4.53*recency+0.0005*history\
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 115.95548975939548 Value_std: 10.502988081748748
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 117.1399948090646 Value_std: 9.383117966692588
 </pre></div>
 </div>
 </div>

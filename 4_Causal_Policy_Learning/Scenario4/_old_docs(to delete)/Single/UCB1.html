@@ -121,23 +121,17 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../../../../0_Motivating_Examples/CSL.html">
-   <em>
-    Causal Structure Learning (CSL)
-   </em>
+   Causal Structure Learning (CSL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../../../0_Motivating_Examples/CEL.html">
-   <em>
-    Causal Effect Learning (CEL)
-   </em>
+   Causal Effect Learning (CEL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../../../0_Motivating_Examples/CPL.html">
-   <em>
-    Causal Policy Learning (CPL)
-   </em>
+   Causal Policy Learning (CPL)
   </a>
  </li>
 </ul>
@@ -1101,8 +1095,8 @@ title="Print to PDF"
 <section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this headline">#</a></h2>
 <p>As the name suggested, the UCB algorithm estimates the upper confidence bound <span class="math notranslate nohighlight">\(U_{i}^{t}\)</span> of the mean rewards based on the observations and then choose the action has the highest estimates. The class of UCB-based algorithms is firstly introduced by Auer et al. [2]. Generally, at each round <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(U_{i}^{t}\)</span> is calculated as the sum of the estimated reward (exploitation) and the estimated confidence radius (exploration) of item <span class="math notranslate nohighlight">\(i\)</span> based on <span class="math notranslate nohighlight">\(\mathcal{H}_{t}\)</span>. Then, <span class="math notranslate nohighlight">\(A_{t}\)</span> is selected as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4a9076f2-45a5-45c8-a7ac-7ee1d131b5c1">
-<span class="eqno">()<a class="headerlink" href="#equation-4a9076f2-45a5-45c8-a7ac-7ee1d131b5c1" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-22b436ef-23db-4567-85e3-19abd4c7665b">
+<span class="eqno">()<a class="headerlink" href="#equation-22b436ef-23db-4567-85e3-19abd4c7665b" title="Permalink to this equation">#</a></span>\[\begin{equation}
     A_t = argmax_{a \in \mathcal{A}} E(R_t \mid a,\{ U_{i}^{t}\}_{i=1}^{N}).
 \end{equation}\]</div>
 <p>Doing so, either the item with a large average reward or the item with limited exploration will be selected.</p>
@@ -1110,13 +1104,13 @@ title="Print to PDF"
 <section id="algorithms-details">
 <h2>Algorithms Details<a class="headerlink" href="#algorithms-details" title="Permalink to this headline">#</a></h2>
 <p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. The UCB1 algorithm start with initializing the estimated upper confidence bound <span class="math notranslate nohighlight">\(U_a^{0}\)</span> and the count of being pulled <span class="math notranslate nohighlight">\(C_a^{0}\)</span> for each action <span class="math notranslate nohighlight">\(a\)</span> as 0. At each round <span class="math notranslate nohighlight">\(t\)</span>, we greedily select an action <span class="math notranslate nohighlight">\(A_t\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-356732c3-e94b-4566-9dfa-cdd7a8276730">
-<span class="eqno">()<a class="headerlink" href="#equation-356732c3-e94b-4566-9dfa-cdd7a8276730" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7d0a1408-937b-4c67-8187-ae1777506def">
+<span class="eqno">()<a class="headerlink" href="#equation-7d0a1408-937b-4c67-8187-ae1777506def" title="Permalink to this equation">#</a></span>\[\begin{align}
 A_t = arg max_{a\in \mathcal{A}} U_{a}^{t}.
 \end{align}\]</div>
 <p>After observing the rewards corresponding to the selected action <span class="math notranslate nohighlight">\(A_t\)</span>, we first update the total number of being pulled for <span class="math notranslate nohighlight">\(A_t\)</span> accordingly. Then, we estimate the upper confidence bound for each action <span class="math notranslate nohighlight">\(a\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6be5dc6d-ec9c-4d5a-add3-0788ff5aa447">
-<span class="eqno">()<a class="headerlink" href="#equation-6be5dc6d-ec9c-4d5a-add3-0788ff5aa447" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b57131d1-c8b3-4bd5-8c5a-31259cb5910a">
+<span class="eqno">()<a class="headerlink" href="#equation-b57131d1-c8b3-4bd5-8c5a-31259cb5910a" title="Permalink to this equation">#</a></span>\[\begin{align}
 U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} 
 \end{align}\]</div>
 </section>
@@ -1127,8 +1121,8 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 <li><p>For t = <span class="math notranslate nohighlight">\(0, 1,\cdots, T\)</span>:</p>
 <p>2.1. select action <span class="math notranslate nohighlight">\(A_t\)</span> as the arm with the maximum <span class="math notranslate nohighlight">\(U_a^t\)</span></p>
 <p>2.2. Received the reward R, and update <span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(U\)</span> with</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b0cf7b7b-5109-41d0-ae7b-8acee722f09e">
-<span class="eqno">()<a class="headerlink" href="#equation-b0cf7b7b-5109-41d0-ae7b-8acee722f09e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-469cfd55-f674-4644-b225-0da98486f297">
+<span class="eqno">()<a class="headerlink" href="#equation-469cfd55-f674-4644-b225-0da98486f297" title="Permalink to this equation">#</a></span>\[\begin{align}
     C_{A_{t}}^{t+1} &amp;= C_{A_{t}}^{t} + 1 \\
     U_{A_{t}}^{t+1} &amp;= \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} 
     \end{align}\]</div>

@@ -123,23 +123,17 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CSL.html">
-   <em>
-    Causal Structure Learning (CSL)
-   </em>
+   Causal Structure Learning (CSL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CEL.html">
-   <em>
-    Causal Effect Learning (CEL)
-   </em>
+   Causal Effect Learning (CEL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CPL.html">
-   <em>
-    Causal Policy Learning (CPL)
-   </em>
+   Causal Policy Learning (CPL)
   </a>
  </li>
 </ul>
@@ -1107,11 +1101,9 @@ title="Print to PDF"
 <p>In this notebook, we conducted analysis on the MIMIC III data with a single stage. We first analyzed the mediation effect and then evaluate the policy of interest and calculated the optimal policy. As informed by the causal structure learning, here we consider Glucose and PaO2_FiO2 as confounders/states, IV_Input as the action, SOFA as the mediator.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:/GitHub/CausalDM&#39;</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="n">single_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./causaldm/MIMIC3/mimic3_single_stage.csv&#39;</span><span class="p">)</span>
+<span class="n">single_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;mimic3_single_stage.csv&#39;</span><span class="p">)</span>
 <span class="n">single_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">single_data</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span> <span class="c1"># change the discrete action to binary</span>
 <span class="n">single_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">single_data</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span> <span class="c1"># change the discrete action to binary</span>
 <span class="n">single_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">single_data</span><span class="p">[</span><span class="s1">&#39;Died within 48H&#39;</span><span class="p">]</span><span class="o">==-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span> <span class="c1"># change the discrete action to binary</span>
@@ -1378,8 +1370,8 @@ title="Print to PDF"
 </div>
 </div>
 <p>As an example, we use the <strong>Q-learning</strong> algorithm to evaluate policies based on the observed data, with the linear regression models defined as the following:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-82419290-8d00-4c63-beae-cd74aea44877">
-<span class="eqno">(161)<a class="headerlink" href="#equation-82419290-8d00-4c63-beae-cd74aea44877" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8e2931a5-2713-4d27-b3b1-85b4c2de42e1">
+<span class="eqno">(163)<a class="headerlink" href="#equation-8e2931a5-2713-4d27-b3b1-85b4c2de42e1" title="Permalink to this equation">#</a></span>\[\begin{align}
 Q(s,a,\boldsymbol{\beta}) = &amp;\beta_{00}+\beta_{01}*\textrm{Glucose}+\beta_{02}*\textrm{PaO2_FiO2}\\
                     &amp;I(a_1=1)*\{\beta_{10}+\beta_{11}*\textrm{Glucose}+\beta_{12}*\textrm{PaO2_FiO2}\},
 \end{align}\]</div>

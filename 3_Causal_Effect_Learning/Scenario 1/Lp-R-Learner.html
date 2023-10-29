@@ -123,23 +123,17 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CSL.html">
-   <em>
-    Causal Structure Learning (CSL)
-   </em>
+   Causal Structure Learning (CSL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CEL.html">
-   <em>
-    Causal Effect Learning (CEL)
-   </em>
+   Causal Effect Learning (CEL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CPL.html">
-   <em>
-    Causal Policy Learning (CPL)
-   </em>
+   Causal Policy Learning (CPL)
   </a>
  </li>
 </ul>
@@ -1091,8 +1085,8 @@ title="Print to PDF"
 <p>(b)  Using <span class="math notranslate nohighlight">\(I_{1b}^n\)</span> to construct estimates <span class="math notranslate nohighlight">\(\hat{\eta}\)</span> of the regression function <span class="math notranslate nohighlight">\(\eta=\pi\mu_1+(1-\pi)\mu_0\)</span>, and estimtes <span class="math notranslate nohighlight">\(\hat{\pi}_b\)</span> of the propensity scores <span class="math notranslate nohighlight">\(\pi\)</span>.</p>
 <p><strong>Step 2</strong>: Localized double-residual regression:</p>
 <p>Define <span class="math notranslate nohighlight">\(\hat{\tau}_r(s)\)</span> as the fitted value from a kernel-weighted least squares regression (in the test sample <span class="math notranslate nohighlight">\(I_2^n\)</span>) of outcome residual <span class="math notranslate nohighlight">\((R-\hat{\eta})\)</span> on basis terms <span class="math notranslate nohighlight">\(b\)</span> scaled by the treatment residual <span class="math notranslate nohighlight">\(A-\hat{\pi}_b\)</span>, with weights <span class="math notranslate nohighlight">\(\Big(\frac{A-\hat{\pi}_a}{A-\hat{\pi}_b}\Big)\cdot K_{hs}\)</span>. Thus <span class="math notranslate nohighlight">\(\hat{\tau}_r(s)=b(0)^T\hat{\theta}\)</span> for</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2ef723d3-c8ce-420b-9360-decd6734006b">
-<span class="eqno">(33)<a class="headerlink" href="#equation-2ef723d3-c8ce-420b-9360-decd6734006b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-acc27a40-48bd-4310-a25e-4d84f961b7bd">
+<span class="eqno">(33)<a class="headerlink" href="#equation-acc27a40-48bd-4310-a25e-4d84f961b7bd" title="Permalink to this equation">#</a></span>\[\begin{equation}
 		\hat{\theta}=\arg\min_{\theta\in\mathbb{R}^p}\mathbb{P}_n\left(K_{hs}(S)\Big\{ \frac{A-\hat{\pi}_a(S)}{A-\hat{\pi}_b(S)}\Big\} \left[  \big\{R-\hat{\eta}(S)\big\}-\theta^Tb(S-s_0)\big\{A-\hat{\pi}_b(S)\big\} \right] \right).
 \end{equation}\]</div>
 <p><strong>Step 3</strong>: Cross-fitting(optional):</p>
@@ -1108,18 +1102,8 @@ title="Print to PDF"
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span> 
 <span class="kn">from</span> <span class="nn">causaldm.learners.CEL.Single_Stage.LpRlearner</span> <span class="kn">import</span> <span class="n">LpRlearner</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 8&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span> 
-<span class="ne">----&gt; </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">causaldm.learners.CEL.Single_Stage.LpRlearner</span> <span class="kn">import</span> <span class="n">LpRlearner</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;causaldm&#39;
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1134,270 +1118,29 @@ title="Print to PDF"
 <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;</span><span class="p">)</span>
 <span class="n">MovieLens_CEL</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./causaldm/data/MovieLens_CEL.csv&quot;</span><span class="p">)</span>
 <span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">MovieLens_CEL</span> <span class="o">=</span> <span class="n">MovieLens_CEL</span><span class="p">[</span><span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Comedy&#39;</span><span class="p">,</span><span class="s1">&#39;Action&#39;</span><span class="p">,</span> <span class="s1">&#39;Thriller&#39;</span><span class="p">])]</span>
 <span class="n">MovieLens_CEL</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="nn">Input In [2],</span> in <span class="ni">&lt;cell line: 3&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Get the MovieLens data</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">os</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">MovieLens_CEL</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./causaldm/data/MovieLens_CEL.csv&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>user_id</th>
-      <th>movie_id</th>
-      <th>rating</th>
-      <th>age</th>
-      <th>Comedy</th>
-      <th>Drama</th>
-      <th>Action</th>
-      <th>Thriller</th>
-      <th>Sci-Fi</th>
-      <th>gender_M</th>
-      <th>occupation_academic/educator</th>
-      <th>occupation_college/grad student</th>
-      <th>occupation_executive/managerial</th>
-      <th>occupation_other</th>
-      <th>occupation_technician/engineer</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>48.0</td>
-      <td>1193.0</td>
-      <td>4.0</td>
-      <td>25.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>48.0</td>
-      <td>919.0</td>
-      <td>4.0</td>
-      <td>25.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>48.0</td>
-      <td>527.0</td>
-      <td>5.0</td>
-      <td>25.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>48.0</td>
-      <td>1721.0</td>
-      <td>4.0</td>
-      <td>25.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>48.0</td>
-      <td>150.0</td>
-      <td>4.0</td>
-      <td>25.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>65637</th>
-      <td>5878.0</td>
-      <td>3300.0</td>
-      <td>2.0</td>
-      <td>25.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>65638</th>
-      <td>5878.0</td>
-      <td>1391.0</td>
-      <td>1.0</td>
-      <td>25.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>65639</th>
-      <td>5878.0</td>
-      <td>185.0</td>
-      <td>4.0</td>
-      <td>25.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>65640</th>
-      <td>5878.0</td>
-      <td>2232.0</td>
-      <td>1.0</td>
-      <td>25.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>65641</th>
-      <td>5878.0</td>
-      <td>426.0</td>
-      <td>3.0</td>
-      <td>25.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-    </tr>
-  </tbody>
-</table>
-<p>65642 rows × 15 columns</p>
-</div></div></div>
+<span class="ne">FileNotFoundError</span>: [WinError 3] 系统找不到指定的路径。: &#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="p">)</span>
-<span class="n">userinfo_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
-<span class="n">SandA</span> <span class="o">=</span> <span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">])]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">userinfo_index</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;age&#39;, &#39;gender_M&#39;, &#39;occupation_academic/educator&#39;,
-       &#39;occupation_college/grad student&#39;, &#39;occupation_executive/managerial&#39;,
-       &#39;occupation_other&#39;, &#39;occupation_technician/engineer&#39;],
-      dtype=&#39;object&#39;)
 </pre></div>
 </div>
 </div>
@@ -1405,14 +1148,8 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
-<span class="n">sample_index</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="p">))</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span><span class="mi">1000</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
 <span class="n">outcome</span> <span class="o">=</span> <span class="s1">&#39;rating&#39;</span>
 <span class="n">treatment</span> <span class="o">=</span> <span class="s1">&#39;Drama&#39;</span>
 <span class="n">controls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;gender_M&#39;</span><span class="p">,</span> <span class="s1">&#39;occupation_academic/educator&#39;</span><span class="p">,</span>
@@ -1425,6 +1162,7 @@ title="Print to PDF"
 <span class="n">s</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">LpRlearner_model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
 
+<span class="n">sample_index</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="p">))</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span><span class="mi">1000</span><span class="p">)</span>
 <span class="n">MovieLens_CEL</span> <span class="o">=</span> <span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">sample_index</span><span class="p">,:]</span>
 
 <span class="n">HTE_Lp_R_learner</span> <span class="o">=</span> <span class="n">LpRlearner</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="p">,</span> <span class="n">outcome</span><span class="p">,</span> <span class="n">treatment</span><span class="p">,</span> <span class="n">controls</span><span class="p">,</span> <span class="n">y_model</span><span class="p">,</span> <span class="n">ps_model_a</span><span class="p">,</span> <span class="n">ps_model_b</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">LpRlearner_model</span><span class="p">,</span> <span class="n">degree</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
@@ -1445,7 +1183,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Lp-R-learner:   [0.42383282 0.61112563 0.12977467]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Lp-R-learner:   [0.42175269 0.52461763 0.13400663]
 </pre></div>
 </div>
 </div>
@@ -1458,12 +1196,12 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by 0.3884 out of 5 points.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by 0.2182 out of 5 points.
 </pre></div>
 </div>
 </div>
 </div>
-<p><strong>Conclusion:</strong> Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by 0.3884 out of 5 points.</p>
+<p><strong>Conclusion:</strong> Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by 0.2182 out of 5 points.</p>
 </section>
 <section id="references">
 <h1>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h1>

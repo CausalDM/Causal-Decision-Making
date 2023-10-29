@@ -123,23 +123,17 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CSL.html">
-   <em>
-    Causal Structure Learning (CSL)
-   </em>
+   Causal Structure Learning (CSL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CEL.html">
-   <em>
-    Causal Effect Learning (CEL)
-   </em>
+   Causal Effect Learning (CEL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CPL.html">
-   <em>
-    Causal Policy Learning (CPL)
-   </em>
+   Causal Policy Learning (CPL)
   </a>
  </li>
 </ul>
@@ -1107,17 +1101,15 @@ title="Print to PDF"
 <p>In this notebook, we conducted analysis on the MIMIC III data with 3 stages. We first analyzed the mediation effect and then evaluate the policy of interest and calculated the optimal policy. As informed by the causal structure learning, here we consider Glucose and PaO2_FiO2 as confounders/states, IV_Input as the action, SOFA as the mediator.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;D:/GitHub/CausalDM&#39;</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">pickle</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./causaldm/MIMIC3/mimic3_MDTR_data_dict_3stage_V2.pickle&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+<span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;mimic3_MDTR_data_dict_3stage_V2.pickle&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
 <span class="n">mimic3_MDTR</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
 <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">mediator</span><span class="p">,</span> <span class="n">reward</span> <span class="o">=</span> <span class="n">mimic3_MDTR</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
 <span class="n">reward</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">reward</span><span class="p">[</span><span class="s1">&#39;Died_within_48H&#39;</span><span class="p">]</span><span class="o">==-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span> <span class="c1"># change the discrete action to binary</span>
-<span class="n">MDTR_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./causaldm/MIMIC3/mimic3_MDTR_3stage_V2.csv&#39;</span><span class="p">)</span>
+<span class="n">MDTR_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;mimic3_MDTR_3stage_V2.csv&#39;</span><span class="p">)</span>
 <span class="n">MDTR_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">MDTR_data</span><span class="p">[</span><span class="s1">&#39;Died_within_48H&#39;</span><span class="p">]</span><span class="o">==-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
 <span class="n">MDTR_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -1310,8 +1302,8 @@ title="Print to PDF"
 </div>
 </div>
 <p>As an example, we use the <strong>Q-learning</strong> algorithm to evaluate policies based on the observed data, with the linear regression models defined as the following:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0407eeac-e28b-478c-b5c8-dfcd8d5e0934">
-<span class="eqno">(162)<a class="headerlink" href="#equation-0407eeac-e28b-478c-b5c8-dfcd8d5e0934" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f416f5c0-37b8-45e2-8c59-1b28d74abe81">
+<span class="eqno">(164)<a class="headerlink" href="#equation-f416f5c0-37b8-45e2-8c59-1b28d74abe81" title="Permalink to this equation">#</a></span>\[\begin{align}
 Q_1(s,a_1,\boldsymbol{\beta}) = &amp;\beta_{00}+\beta_{01}*\textrm{Glucose}_1+\beta_{02}*\textrm{PaO2_FiO2}_1\\
                     &amp;I(a_1=1)*\{\beta_{10}+\beta_{11}*\textrm{Glucose}_1+\beta_{12}*\textrm{PaO2_FiO2}_1\},\\
 Q_2(s,a_2,\boldsymbol{\mu}) = &amp;\mu_{00}+\mu_{01}*\textrm{Glucose}_1+\mu_{02}*\textrm{PaO2_FiO2}_1+\mu_{03}*\textrm{SOFA}_1+\\

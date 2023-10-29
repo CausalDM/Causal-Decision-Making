@@ -123,23 +123,17 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CSL.html">
-   <em>
-    Causal Structure Learning (CSL)
-   </em>
+   Causal Structure Learning (CSL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CEL.html">
-   <em>
-    Causal Effect Learning (CEL)
-   </em>
+   Causal Effect Learning (CEL)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../0_Motivating_Examples/CPL.html">
-   <em>
-    Causal Policy Learning (CPL)
-   </em>
+   Causal Policy Learning (CPL)
   </a>
  </li>
 </ul>
@@ -1119,18 +1113,18 @@ title="Print to PDF"
 <section id="part-1-dragonnet">
 <h2>Part 1: Dragonnet<a class="headerlink" href="#part-1-dragonnet" title="Permalink to this headline">#</a></h2>
 <p>Define the conditional outcome as <span class="math notranslate nohighlight">\(Q(a,s)=E[R|a,s]\)</span> amd propensity score <span class="math notranslate nohighlight">\(g(s)=P(A=1|S=s)\)</span>. Our goal is to estimate the effect of treatment <span class="math notranslate nohighlight">\(A=1\)</span> versus <span class="math notranslate nohighlight">\(A=0\)</span>, i.e.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-433611ba-b71a-4866-9291-c2ae4793e3f3">
-<span class="eqno">(38)<a class="headerlink" href="#equation-433611ba-b71a-4866-9291-c2ae4793e3f3" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d876533d-0022-499f-8528-980341bca338">
+<span class="eqno">(38)<a class="headerlink" href="#equation-d876533d-0022-499f-8528-980341bca338" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \text{HTE}_{\text{Dragonnet}}(s)=E[R(1)|S=s]-E[R(0)|S=s],
 \end{equation}\]</div>
 <p>and the average treatment effect</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5e29dc35-94ba-42cb-bf61-4b46f2b31acf">
-<span class="eqno">(39)<a class="headerlink" href="#equation-5e29dc35-94ba-42cb-bf61-4b46f2b31acf" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6cbb169b-e660-4fa1-8f33-732afcf09b3b">
+<span class="eqno">(39)<a class="headerlink" href="#equation-6cbb169b-e660-4fa1-8f33-732afcf09b3b" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \text{ATE}_{\text{Dragonnet}}=E\Big[E[R(1)|S]-E[R(0)|S]\Big].
 \end{equation}\]</div>
 <p>Under certain identifiability assumptions, the HTE can be estimated by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f0e3409b-2cd3-466f-a18c-6d2b1bf8d974">
-<span class="eqno">(40)<a class="headerlink" href="#equation-f0e3409b-2cd3-466f-a18c-6d2b1bf8d974" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-bb7e145e-b46f-4df8-844b-b7c31c56f956">
+<span class="eqno">(40)<a class="headerlink" href="#equation-bb7e145e-b46f-4df8-844b-b7c31c56f956" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \widehat{\text{HTE}}_{\text{Dragonnet}}(s)=\hat{E}[R|A=1,S=s]-\hat{E}[R|A=0,S=s]=\hat{Q}(1,s)-\hat{Q}(1,s).
 \end{equation}\]</div>
 <p>According to the sufficiency of propensity score (Theorem 2.1 in [8]), all of the information in <span class="math notranslate nohighlight">\(S\)</span> that is useful in estimating ATE is contained in <span class="math notranslate nohighlight">\(g(S)\)</span>. In other words, we should train <span class="math notranslate nohighlight">\(\hat{Q}(a,s)\)</span> only through the information in <span class="math notranslate nohighlight">\(g(S)\)</span>, instead of the entire <span class="math notranslate nohighlight">\(S\)</span>. To achieve so, the author proposed a novel three-headed archetecture, which is shown in Figure 1 below.</p>
@@ -1159,8 +1153,8 @@ title="Print to PDF"
 </div>
 <p>By first training the propensity score model through several layers of neural network, we are able to capture the resourceful information of <span class="math notranslate nohighlight">\(g(S)\)</span> in layer <span class="math notranslate nohighlight">\(Z\)</span>. The core idea of Dragonnet is to directly utilize the information in <span class="math notranslate nohighlight">\(Z\)</span> to fit outcome regression models for <span class="math notranslate nohighlight">\(\hat{Q}(1,s)\)</span> and <span class="math notranslate nohighlight">\(\hat{Q}(0,s)\)</span>.</p>
 <p>The objective function of Dragonnet is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c14c3b99-6c81-44db-af0f-d36a5e6049a1">
-<span class="eqno">(41)<a class="headerlink" href="#equation-c14c3b99-6c81-44db-af0f-d36a5e6049a1" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6b4d2cbc-62d5-4839-a9fd-5380936f6730">
+<span class="eqno">(41)<a class="headerlink" href="#equation-6b4d2cbc-62d5-4839-a9fd-5380936f6730" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\theta}=\arg\min_{\theta} \frac{1}{n}\sum_{i}\Big[(Q^{\text{nn}}(a_i,s_i;\theta)-R_i)^2+\alpha \text{CrossEntropy}(g^{\text{nn}}(s_i,\theta),a_i)\Big],
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\theta\)</span> is the collection of all parameters, and <span class="math notranslate nohighlight">\(\alpha\)</span> is a weighting hyperparameter.</p>
@@ -1168,22 +1162,22 @@ title="Print to PDF"
 <section id="part-2-targeted-regularization">
 <h2>Part 2. Targeted Regularization<a class="headerlink" href="#part-2-targeted-regularization" title="Permalink to this headline">#</a></h2>
 <p>In targeted regularization, the author modified the objective function to yield a better finite sample performance. Specifically, the author defined</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8faa68c9-90ec-44b9-ade5-acc52436e45c">
-<span class="eqno">(42)<a class="headerlink" href="#equation-8faa68c9-90ec-44b9-ade5-acc52436e45c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0f995f7b-796d-44bb-b4cc-a1c458b2a537">
+<span class="eqno">(42)<a class="headerlink" href="#equation-0f995f7b-796d-44bb-b4cc-a1c458b2a537" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 &amp; \tilde{Q}(a_i,s_i;\theta,\epsilon) = {Q}^{\text{nn}}(a_i,s_i;\theta)+\epsilon, \bigg[\frac{a_i}{g^{\text{nn}}(s_i;\theta)}-\frac{1-a_i}{1-g^{\text{nn}}(s_i;\theta)}\bigg]\\
 &amp; \gamma(R_i,a_i,s_i;\theta,\epsilon) = (R_i-\tilde{Q}(a_i,s_i;\theta,\epsilon))^2,
 \end{aligned}
 \end{equation}\]</div>
 <p>and then train the model by minimizing a new objective function with an extra parameter <span class="math notranslate nohighlight">\(\epsilon\)</span> as below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-30442d8e-d98d-4155-9573-304c850e761b">
-<span class="eqno">(43)<a class="headerlink" href="#equation-30442d8e-d98d-4155-9573-304c850e761b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-df1d5e58-add4-4957-bde7-bb24f64be2b5">
+<span class="eqno">(43)<a class="headerlink" href="#equation-df1d5e58-add4-4957-bde7-bb24f64be2b5" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\theta},\hat{\epsilon} = \arg\min_{\theta,\epsilon} \Big[\hat{R}(\theta,S)+\beta\frac{1}{n}\sum_{i} \gamma(R_i,a_i,s_i;\theta,\epsilon)\Big],
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\beta\)</span> is another weighting hyperparameter.</p>
 <p>The final treatment effect estimator, after targeted regularization, is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-de0d5f83-45b7-4d37-8d06-869f113a1963">
-<span class="eqno">(44)<a class="headerlink" href="#equation-de0d5f83-45b7-4d37-8d06-869f113a1963" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e543875a-97a3-4781-83f1-f9d27a5a02ea">
+<span class="eqno">(44)<a class="headerlink" href="#equation-e543875a-97a3-4781-83f1-f9d27a5a02ea" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \widehat{\text{HTE}}_{\text{Dragonnet}}(s)=\tilde{Q}(1,s;\hat\theta,\hat\epsilon)-\tilde{Q}(0,s;\hat\theta,\hat\epsilon),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\((\hat\theta,\hat\epsilon)\)</span> is the solution we obtained above.</p>
@@ -1199,6 +1193,8 @@ title="Print to PDF"
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
 
 <span class="kn">from</span> <span class="nn">causaldm.learners.CEL.Single_Stage.Dragonnet</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1212,6 +1208,7 @@ title="Print to PDF"
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get data</span>
 <span class="n">MovieLens_CEL</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./causaldm/data/MovieLens_CEL.csv&quot;</span><span class="p">)</span>
 <span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">MovieLens_CEL</span> <span class="o">=</span> <span class="n">MovieLens_CEL</span><span class="p">[</span><span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Comedy&#39;</span><span class="p">,</span><span class="s1">&#39;Action&#39;</span><span class="p">,</span> <span class="s1">&#39;Thriller&#39;</span><span class="p">])]</span>
 <span class="n">MovieLens_CEL</span>
 </pre></div>
 </div>
@@ -1239,10 +1236,7 @@ title="Print to PDF"
       <th>movie_id</th>
       <th>rating</th>
       <th>age</th>
-      <th>Comedy</th>
       <th>Drama</th>
-      <th>Action</th>
-      <th>Thriller</th>
       <th>Sci-Fi</th>
       <th>gender_M</th>
       <th>occupation_academic/educator</th>
@@ -1259,10 +1253,7 @@ title="Print to PDF"
       <td>1193.0</td>
       <td>4.0</td>
       <td>25.0</td>
-      <td>0.0</td>
       <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
@@ -1277,10 +1268,7 @@ title="Print to PDF"
       <td>919.0</td>
       <td>4.0</td>
       <td>25.0</td>
-      <td>0.0</td>
       <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
@@ -1295,10 +1283,7 @@ title="Print to PDF"
       <td>527.0</td>
       <td>5.0</td>
       <td>25.0</td>
-      <td>0.0</td>
       <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
@@ -1313,10 +1298,7 @@ title="Print to PDF"
       <td>1721.0</td>
       <td>4.0</td>
       <td>25.0</td>
-      <td>0.0</td>
       <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
@@ -1331,10 +1313,7 @@ title="Print to PDF"
       <td>150.0</td>
       <td>4.0</td>
       <td>25.0</td>
-      <td>0.0</td>
       <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
@@ -1357,9 +1336,6 @@ title="Print to PDF"
       <td>...</td>
       <td>...</td>
       <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
     </tr>
     <tr>
       <th>65637</th>
@@ -1367,9 +1343,6 @@ title="Print to PDF"
       <td>3300.0</td>
       <td>2.0</td>
       <td>25.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
@@ -1386,9 +1359,6 @@ title="Print to PDF"
       <td>1.0</td>
       <td>25.0</td>
       <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>0.0</td>
@@ -1403,9 +1373,6 @@ title="Print to PDF"
       <td>185.0</td>
       <td>4.0</td>
       <td>25.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
@@ -1422,9 +1389,6 @@ title="Print to PDF"
       <td>1.0</td>
       <td>25.0</td>
       <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>0.0</td>
@@ -1440,9 +1404,6 @@ title="Print to PDF"
       <td>3.0</td>
       <td>25.0</td>
       <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>1.0</td>
       <td>0.0</td>
       <td>0.0</td>
@@ -1453,15 +1414,15 @@ title="Print to PDF"
     </tr>
   </tbody>
 </table>
-<p>65642 rows × 15 columns</p>
+<p>65642 rows × 12 columns</p>
 </div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="p">)</span>
-<span class="n">userinfo_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">userinfo_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">])</span>
 <span class="n">S</span> <span class="o">=</span> <span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">userinfo_index</span><span class="p">]</span>
-<span class="n">SandA</span> <span class="o">=</span> <span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">])]</span>
+<span class="c1">#SandA = MovieLens_CEL.iloc[:, np.array([3,4,5,6,7,8,9,10])]</span>
 </pre></div>
 </div>
 </div>
@@ -1478,21 +1439,11 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>I am here making dragonnet
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2023-09-02 11:45:51.379310: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE4.1 SSE4.2
-To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/keras/optimizers/optimizer_v2/adam.py:110: UserWarning: The `lr` argument is deprecated, use `learning_rate` instead.
-  super(Adam, self).__init__(name, **kwargs)
-/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/keras/optimizers/optimizer_v2/gradient_descent.py:108: UserWarning: The `lr` argument is deprecated, use `learning_rate` instead.
-  super(SGD, self).__init__(name, **kwargs)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>***************************** elapsed_time is:  192.32130670547485
-2031/2031 [==============================] - 2s 885us/step
-2031/2031 [==============================] - 2s 885us/step
-average propensity for treated: 0.9999962449073792 and untreated: 5.508495632966515e-06
-average propensity for treated: 0.9999962449073792 and untreated: 5.508495632966515e-06
+***************************** elapsed_time is:  285.40207719802856
+2031/2031 [==============================] - 2s 898us/step
+2031/2031 [==============================] - 2s 964us/step
+average propensity for treated: 0.7404845356941223 and untreated: 0.7264252305030823
+average propensity for treated: 0.7404845356941223 and untreated: 0.7264252305030823
 </pre></div>
 </div>
 </div>
@@ -1525,7 +1476,7 @@ average propensity for treated: 0.9999962449073792 and untreated: 5.508495632966
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dragonnet:   [0.31679773 0.37061787 0.33835626]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dragonnet:   [0.34005857 0.33967185 0.46262145]
 </pre></div>
 </div>
 </div>
@@ -1539,12 +1490,12 @@ average propensity for treated: 0.9999962449073792 and untreated: 5.508495632966
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by 0.3182 out of 5 points.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by 0.3526 out of 5 points.
 </pre></div>
 </div>
 </div>
 </div>
-<p><strong>Conclusion:</strong> Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by 0.3182 out of 5 points.</p>
+<p><strong>Conclusion:</strong> Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by 0.3526 out of 5 points.</p>
 </section>
 <section id="references">
 <h1>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h1>
