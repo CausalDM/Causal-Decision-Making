@@ -1,0 +1,80 @@
+Traceback (most recent call last):
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/asyncio/base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+mrl_data = mimic_final.copy()
+#for var in ['Glucose','paO2','PaO2_FiO2','SOFA']:
+#    mrl_data[var] = (mrl_data[var] - mrl_data[var].mean()) / mrl_data[var].std()
+
+next_state = [np.array(mrl_data[mrl_data.icustayid==ind][['Glucose','paO2','PaO2_FiO2','SOFA']])[1:,:] for ind in selected_IDs]
+state = [np.array(mrl_data[mrl_data.icustayid==ind][['Glucose','paO2','PaO2_FiO2','SOFA']])[:-1,:] for ind in selected_IDs]
+action = [np.array(mrl_data[mrl_data.icustayid==ind].IV_Input)[:-1] for ind in selected_IDs]
+reward = [np.array([0]*(len(np.array(mrl_data[mrl_data.icustayid==ind].IV_Input)[:-1])-1)+mrl_data[mrl_data.icustayid==ind].Died_within_48H.unique().tolist()) for ind in selected_IDs]
+ID =  [np.array(mrl_data[mrl_data.icustayid==ind][['icustayid','bloc']])[:-1,:] for ind in selected_IDs]
+s0 = [np.array(mrl_data[mrl_data.icustayid==ind][['Glucose','paO2','PaO2_FiO2','SOFA']])[0,:] for ind in selected_IDs]
+time_idx = [np.array(mrl_data[mrl_data.icustayid==ind].bloc)[:-1] for ind in selected_IDs]
+
+s0 = np.array(s0)
+state = np.vstack(state)
+next_state = np.vstack(next_state)
+action = np.hstack(action)
+reward =np.hstack(reward)
+ID = np.vstack(ID)
+time_idx = np.hstack(time_idx)
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mKeyError[0m                                  Traceback (most recent call last)
+[0;32m/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_69607/3741024878.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      3[0m [0;31m#    mrl_data[var] = (mrl_data[var] - mrl_data[var].mean()) / mrl_data[var].std()[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      4[0m [0;34m[0m[0m
+[0;32m----> 5[0;31m [0mnext_state[0m [0;34m=[0m [0;34m[[0m[0mnp[0m[0;34m.[0m[0marray[0m[0;34m([0m[0mmrl_data[0m[0;34m[[0m[0mmrl_data[0m[0;34m.[0m[0micustayid[0m[0;34m==[0m[0mind[0m[0;34m][0m[0;34m[[0m[0;34m[[0m[0;34m'Glucose'[0m[0;34m,[0m[0;34m'paO2'[0m[0;34m,[0m[0;34m'PaO2_FiO2'[0m[0;34m,[0m[0;34m'SOFA'[0m[0;34m][0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m:[0m[0;34m,[0m[0;34m:[0m[0;34m][0m [0;32mfor[0m [0mind[0m [0;32min[0m [0mselected_IDs[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      6[0m [0mstate[0m [0;34m=[0m [0;34m[[0m[0mnp[0m[0;34m.[0m[0marray[0m[0;34m([0m[0mmrl_data[0m[0;34m[[0m[0mmrl_data[0m[0;34m.[0m[0micustayid[0m[0;34m==[0m[0mind[0m[0;34m][0m[0;34m[[0m[0;34m[[0m[0;34m'Glucose'[0m[0;34m,[0m[0;34m'paO2'[0m[0;34m,[0m[0;34m'PaO2_FiO2'[0m[0;34m,[0m[0;34m'SOFA'[0m[0;34m][0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;34m:[0m[0;34m-[0m[0;36m1[0m[0;34m,[0m[0;34m:[0m[0;34m][0m [0;32mfor[0m [0mind[0m [0;32min[0m [0mselected_IDs[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m      7[0m [0maction[0m [0;34m=[0m [0;34m[[0m[0mnp[0m[0;34m.[0m[0marray[0m[0;34m([0m[0mmrl_data[0m[0;34m[[0m[0mmrl_data[0m[0;34m.[0m[0micustayid[0m[0;34m==[0m[0mind[0m[0;34m][0m[0;34m.[0m[0mIV_Input[0m[0;34m)[0m[0;34m[[0m[0;34m:[0m[0;34m-[0m[0;36m1[0m[0;34m][0m [0;32mfor[0m [0mind[0m [0;32min[0m [0mselected_IDs[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_69607/3741024878.py[0m in [0;36m<listcomp>[0;34m(.0)[0m
+[1;32m      3[0m [0;31m#    mrl_data[var] = (mrl_data[var] - mrl_data[var].mean()) / mrl_data[var].std()[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      4[0m [0;34m[0m[0m
+[0;32m----> 5[0;31m [0mnext_state[0m [0;34m=[0m [0;34m[[0m[0mnp[0m[0;34m.[0m[0marray[0m[0;34m([0m[0mmrl_data[0m[0;34m[[0m[0mmrl_data[0m[0;34m.[0m[0micustayid[0m[0;34m==[0m[0mind[0m[0;34m][0m[0;34m[[0m[0;34m[[0m[0;34m'Glucose'[0m[0;34m,[0m[0;34m'paO2'[0m[0;34m,[0m[0;34m'PaO2_FiO2'[0m[0;34m,[0m[0;34m'SOFA'[0m[0;34m][0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m:[0m[0;34m,[0m[0;34m:[0m[0;34m][0m [0;32mfor[0m [0mind[0m [0;32min[0m [0mselected_IDs[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      6[0m [0mstate[0m [0;34m=[0m [0;34m[[0m[0mnp[0m[0;34m.[0m[0marray[0m[0;34m([0m[0mmrl_data[0m[0;34m[[0m[0mmrl_data[0m[0;34m.[0m[0micustayid[0m[0;34m==[0m[0mind[0m[0;34m][0m[0;34m[[0m[0;34m[[0m[0;34m'Glucose'[0m[0;34m,[0m[0;34m'paO2'[0m[0;34m,[0m[0;34m'PaO2_FiO2'[0m[0;34m,[0m[0;34m'SOFA'[0m[0;34m][0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;34m:[0m[0;34m-[0m[0;36m1[0m[0;34m,[0m[0;34m:[0m[0;34m][0m [0;32mfor[0m [0mind[0m [0;32min[0m [0mselected_IDs[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m      7[0m [0maction[0m [0;34m=[0m [0;34m[[0m[0mnp[0m[0;34m.[0m[0marray[0m[0;34m([0m[0mmrl_data[0m[0;34m[[0m[0mmrl_data[0m[0;34m.[0m[0micustayid[0m[0;34m==[0m[0mind[0m[0;34m][0m[0;34m.[0m[0mIV_Input[0m[0;34m)[0m[0;34m[[0m[0;34m:[0m[0;34m-[0m[0;36m1[0m[0;34m][0m [0;32mfor[0m [0mind[0m [0;32min[0m [0mselected_IDs[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/opt/anaconda3/lib/python3.9/site-packages/pandas/core/frame.py[0m in [0;36m__getitem__[0;34m(self, key)[0m
+[1;32m   3509[0m             [0;32mif[0m [0mis_iterator[0m[0;34m([0m[0mkey[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   3510[0m                 [0mkey[0m [0;34m=[0m [0mlist[0m[0;34m([0m[0mkey[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m-> 3511[0;31m             [0mindexer[0m [0;34m=[0m [0mself[0m[0;34m.[0m[0mcolumns[0m[0;34m.[0m[0m_get_indexer_strict[0m[0;34m([0m[0mkey[0m[0;34m,[0m [0;34m"columns"[0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m   3512[0m [0;34m[0m[0m
+[1;32m   3513[0m         [0;31m# take() does not accept boolean indexers[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/opt/anaconda3/lib/python3.9/site-packages/pandas/core/indexes/base.py[0m in [0;36m_get_indexer_strict[0;34m(self, key, axis_name)[0m
+[1;32m   5794[0m             [0mkeyarr[0m[0;34m,[0m [0mindexer[0m[0;34m,[0m [0mnew_indexer[0m [0;34m=[0m [0mself[0m[0;34m.[0m[0m_reindex_non_unique[0m[0;34m([0m[0mkeyarr[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   5795[0m [0;34m[0m[0m
+[0;32m-> 5796[0;31m         [0mself[0m[0;34m.[0m[0m_raise_if_missing[0m[0;34m([0m[0mkeyarr[0m[0;34m,[0m [0mindexer[0m[0;34m,[0m [0maxis_name[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m   5797[0m [0;34m[0m[0m
+[1;32m   5798[0m         [0mkeyarr[0m [0;34m=[0m [0mself[0m[0;34m.[0m[0mtake[0m[0;34m([0m[0mindexer[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/opt/anaconda3/lib/python3.9/site-packages/pandas/core/indexes/base.py[0m in [0;36m_raise_if_missing[0;34m(self, key, indexer, axis_name)[0m
+[1;32m   5857[0m [0;34m[0m[0m
+[1;32m   5858[0m             [0mnot_found[0m [0;34m=[0m [0mlist[0m[0;34m([0m[0mensure_index[0m[0;34m([0m[0mkey[0m[0;34m)[0m[0;34m[[0m[0mmissing_mask[0m[0;34m.[0m[0mnonzero[0m[0;34m([0m[0;34m)[0m[0;34m[[0m[0;36m0[0m[0;34m][0m[0;34m][0m[0;34m.[0m[0munique[0m[0;34m([0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m-> 5859[0;31m             [0;32mraise[0m [0mKeyError[0m[0;34m([0m[0;34mf"{not_found} not in index"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m   5860[0m [0;34m[0m[0m
+[1;32m   5861[0m     [0;34m@[0m[0moverload[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mKeyError[0m: "['paO2'] not in index"
+KeyError: "['paO2'] not in index"
+

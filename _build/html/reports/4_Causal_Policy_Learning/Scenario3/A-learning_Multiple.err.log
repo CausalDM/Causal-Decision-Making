@@ -1,0 +1,60 @@
+Traceback (most recent call last):
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/asyncio/base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+ALearn = ALearning.ALearning()
+model_info = [{'X_prop': list(range(2)),
+              'X_q0': list(range(2)),
+               'X_C':{1:list(range(2))},
+              'action_space': {'A1':[0,1]}},
+             {'X_prop': list(range(3)),
+              'X_q0': list(range(3)),
+               'X_C':{1:list(range(3))},
+              'action_space': {'A2':[0,1]}},
+             {'X_prop': list(range(4)),
+              'X_q0': list(range(4)),
+               'X_C':{1:list(range(4))},
+              'action_space': {'A3':[0,1]}}]
+# train the policy
+ALearn.train(S, A, R, model_info, T=3)
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mAttributeError[0m                            Traceback (most recent call last)
+[0;32m/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_69336/2644300625.py[0m in [0;36m<module>[0;34m[0m
+[1;32m     13[0m               'action_space': {'A3':[0,1]}}]
+[1;32m     14[0m [0;31m# train the policy[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 15[0;31m [0mALearn[0m[0;34m.[0m[0mtrain[0m[0;34m([0m[0mS[0m[0;34m,[0m [0mA[0m[0;34m,[0m [0mR[0m[0;34m,[0m [0mmodel_info[0m[0;34m,[0m [0mT[0m[0;34m=[0m[0;36m3[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m
+[0;32m~/opt/anaconda3/lib/python3.9/site-packages/causaldm/learners/CPL13/disc/ALearning.py[0m in [0;36mtrain[0;34m(self, X, A, Y, model_info, T, true_prop, regime, evaluate, bootstrap, n_bs)[0m
+[1;32m     95[0m             [0;32mreturn[0m [0mself[0m[0;34m.[0m[0mboots_fitted[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     96[0m         [0;32melse[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 97[0;31m             [0mself[0m[0;34m.[0m[0m_fit[0m[0;34m([0m[0mX[0m[0;34m,[0m [0mA[0m[0;34m,[0m [0mY[0m[0;34m,[0m [0mT[0m[0;34m,[0m [0mregime[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     98[0m             [0;32mreturn[0m [0mself[0m[0;34m.[0m[0mfitted_model[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     99[0m [0;34m[0m[0m
+
+[0;32m~/opt/anaconda3/lib/python3.9/site-packages/causaldm/learners/CPL13/disc/ALearning.py[0m in [0;36m_fit[0;34m(self, X, A, Y, T, regime)[0m
+[1;32m    102[0m             [0;32mif[0m [0mt[0m [0;34m==[0m [0mT[0m[0;34m-[0m[0;36m1[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    103[0m                 [0mself[0m[0;34m.[0m[0m_fit_model[0m[0;34m([0m[0mA[0m[0;34m,[0m[0mX[0m[0;34m,[0m[0mY[0m[0;34m,[0m[0mt[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 104[0;31m                 [0mpseudo_Y_prev[0m [0;34m=[0m [0mself[0m[0;34m.[0m[0mget_pseudo_Y[0m[0;34m([0m[0mX[0m[0;34m,[0m [0mA[0m[0;34m,[0m [0mY[0m[0;34m,[0m [0mt[0m[0;34m,[0m [0mregime[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    105[0m             [0;32melse[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    106[0m                 [0mself[0m[0;34m.[0m[0m_fit_model[0m[0;34m([0m[0mA[0m[0;34m,[0m[0mX[0m[0;34m,[0m[0mpseudo_Y_prev[0m[0;34m,[0m[0mt[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mAttributeError[0m: 'ALearning' object has no attribute 'get_pseudo_Y'
+AttributeError: 'ALearning' object has no attribute 'get_pseudo_Y'
+
