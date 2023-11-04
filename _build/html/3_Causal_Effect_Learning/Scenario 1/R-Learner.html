@@ -808,7 +808,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Q-learning_Single.html">Q-Learning (Single Stage)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/A-learning_Single.html">A-Learning (Single Stage)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Classification/O-Learning.html">Outcome Weighted Learning</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Quantile/QuantileOTR_test.html">1. Quantile Optimal Treatment Regime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Quantile/QuantileOTR_test.html">Quantile Optimal Treatment Regime</a></li>
 
 </ul>
 </li>
@@ -1106,8 +1106,8 @@ title="Print to PDF"
   <section id="r-learner">
 <h1><strong>4. R learner</strong><a class="headerlink" href="#r-learner" title="Permalink to this heading">#</a></h1>
 <p>The idea of classical R-learner came from Robinson 1988 [3] and was formalized by Nie and Wager in 2020 [2]. The main idea of R learner starts from the partially linear model setup, in which we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8c50d12b-33c1-4df3-b85e-396c186c01c9">
-<span class="eqno">(27)<a class="headerlink" href="#equation-8c50d12b-33c1-4df3-b85e-396c186c01c9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-45ab39d2-1a6e-4388-8fb0-1fc89fe7711c">
+<span class="eqno">(27)<a class="headerlink" href="#equation-45ab39d2-1a6e-4388-8fb0-1fc89fe7711c" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{aligned}
     R&amp;=A\tau(S)+g_0(S)+U,\\
     A&amp;=m_0(S)+V,
@@ -1115,21 +1115,21 @@ title="Print to PDF"
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(V\)</span> satisfies <span class="math notranslate nohighlight">\(\mathbb{E}[U|D,X]=0\)</span>, <span class="math notranslate nohighlight">\(\mathbb{E}[V|X]=0\)</span>.</p>
 <p>After several manipulations, it’s easy to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d31859c5-5fb9-443f-a1ab-b25447270846">
-<span class="eqno">(28)<a class="headerlink" href="#equation-d31859c5-5fb9-443f-a1ab-b25447270846" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-917d5ee8-2a06-4148-9a85-3a228d25d6fa">
+<span class="eqno">(28)<a class="headerlink" href="#equation-917d5ee8-2a06-4148-9a85-3a228d25d6fa" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	R-\mathbb{E}[R|S]=\tau(S)\cdot(A-\mathbb{E}[A|S])+\epsilon.
 \end{equation}\]</div>
 <p>Define <span class="math notranslate nohighlight">\(m_0(X)=\mathbb{E}[A|S]\)</span> and <span class="math notranslate nohighlight">\(l_0(X)=\mathbb{E}[R|S]\)</span>. A natural way to estimate <span class="math notranslate nohighlight">\(\tau(X)\)</span> is given below, which is also the main idea of R-learner:</p>
 <p><strong>Step 1</strong>: Regress <span class="math notranslate nohighlight">\(R\)</span> on <span class="math notranslate nohighlight">\(S\)</span> to obtain model <span class="math notranslate nohighlight">\(\hat{\eta}(S)=\hat{\mathbb{E}}[R|S]\)</span>; and regress <span class="math notranslate nohighlight">\(A\)</span> on <span class="math notranslate nohighlight">\(S\)</span> to obtain model <span class="math notranslate nohighlight">\(\hat{m}(S)=\hat{\mathbb{E}}[A|S]\)</span>.</p>
 <p><strong>Step 2</strong>: Regress outcome residual <span class="math notranslate nohighlight">\(R-\hat{l}(S)\)</span> on propensity score residual <span class="math notranslate nohighlight">\(A-\hat{m}(S)\)</span>.</p>
 <p>That is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c22153fa-e916-4924-94af-289cd771ef8a">
-<span class="eqno">(29)<a class="headerlink" href="#equation-c22153fa-e916-4924-94af-289cd771ef8a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c7944051-f87c-4244-81e0-ec0d9d04a578">
+<span class="eqno">(29)<a class="headerlink" href="#equation-c7944051-f87c-4244-81e0-ec0d9d04a578" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	\hat{\tau}(S)=\arg\min_{\tau}\left\{\mathbb{E}_n\left[\left(\{R_i-\hat{\eta}(S_i)\}-\{A_i-\hat{m}(S_i)\}\cdot\tau(S_i)\right)^2\right]\right\}	
 \end{equation}\]</div>
 <p>The easiest way to do so is to specify <span class="math notranslate nohighlight">\(\hat{\tau}(S)\)</span> to the linear function class. In this case, <span class="math notranslate nohighlight">\(\tau(S)=S\beta\)</span>, and the problem becomes to estimate <span class="math notranslate nohighlight">\(\beta\)</span> by solving the following linear regression:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-58540ee3-b7f2-4ae3-803b-ec5e54b5e31a">
-<span class="eqno">(30)<a class="headerlink" href="#equation-58540ee3-b7f2-4ae3-803b-ec5e54b5e31a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5c88e38a-eb96-4bc7-b403-6248e0a16caf">
+<span class="eqno">(30)<a class="headerlink" href="#equation-5c88e38a-eb96-4bc7-b403-6248e0a16caf" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	\hat{\beta}=\arg\min_{\beta}\left\{\mathbb{E}_n\left[\left(\{R_i-\hat{\eta}(S_i)\}-\{A_i-\hat{m}(S_i)\} S_i\cdot \beta\right)^2\right]\right\}.
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -1141,9 +1141,25 @@ title="Print to PDF"
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span> 
+
+<span class="kn">from</span> <span class="nn">causaldm.learners.CEL.Single_Stage</span> <span class="kn">import</span> <span class="n">_env_getdata_CEL</span>
 <span class="kn">from</span> <span class="nn">causaldm.learners.CEL.Single_Stage.Rlearner</span> <span class="kn">import</span> <span class="n">Rlearner</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ImportError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_71149</span><span class="o">/</span><span class="mf">778938008.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> 
+<span class="ne">----&gt; </span><span class="mi">9</span> <span class="kn">from</span> <span class="nn">causaldm.learners.CEL.Single_Stage</span> <span class="kn">import</span> <span class="n">_env_getdata_CEL</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">from</span> <span class="nn">causaldm.learners.CEL.Single_Stage.Rlearner</span> <span class="kn">import</span> <span class="n">Rlearner</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="ne">ImportError</span>: cannot import name &#39;_env_getdata_CEL&#39; from &#39;causaldm.learners.CEL.Single_Stage&#39; (/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/causaldm/learners/CEL/Single_Stage/__init__.py)
 </pre></div>
 </div>
 </div>
@@ -1154,9 +1170,10 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the MovieLens data</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;</span><span class="p">)</span>
-<span class="n">MovieLens_CEL</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./causaldm/data/MovieLens_CEL.csv&quot;</span><span class="p">)</span>
+<span class="c1">#import os</span>
+<span class="c1">#os.chdir(&#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;)</span>
+<span class="c1">#MovieLens_CEL = pd.read_csv(&quot;./causaldm/data/MovieLens_CEL.csv&quot;)</span>
+<span class="n">MovieLens_CEL</span> <span class="o">=</span> <span class="n">get_movielens_CEL</span><span class="p">()</span>
 <span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">MovieLens_CEL</span> <span class="o">=</span> <span class="n">MovieLens_CEL</span><span class="p">[</span><span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Comedy&#39;</span><span class="p">,</span><span class="s1">&#39;Action&#39;</span><span class="p">,</span> <span class="s1">&#39;Thriller&#39;</span><span class="p">])]</span>
 <span class="n">MovieLens_CEL</span>
@@ -1381,12 +1398,10 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_69134</span><span class="o">/</span><span class="mf">2628946087.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">userinfo_index</span><span class="p">]</span>
-
-<span class="ne">NameError</span>: name &#39;userinfo_index&#39; is not defined
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;age&#39;, &#39;gender_M&#39;, &#39;occupation_academic/educator&#39;,
+       &#39;occupation_college/grad student&#39;, &#39;occupation_executive/managerial&#39;,
+       &#39;occupation_other&#39;, &#39;occupation_technician/engineer&#39;],
+      dtype=&#39;object&#39;)
 </pre></div>
 </div>
 </div>

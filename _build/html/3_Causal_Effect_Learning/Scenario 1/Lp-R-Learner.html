@@ -808,7 +808,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Q-learning_Single.html">Q-Learning (Single Stage)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/A-learning_Single.html">A-Learning (Single Stage)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Classification/O-Learning.html">Outcome Weighted Learning</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Quantile/QuantileOTR_test.html">1. Quantile Optimal Treatment Regime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Quantile/QuantileOTR_test.html">Quantile Optimal Treatment Regime</a></li>
 
 </ul>
 </li>
@@ -1112,8 +1112,8 @@ title="Print to PDF"
 <p>(b)  Using <span class="math notranslate nohighlight">\(I_{1b}^n\)</span> to construct estimates <span class="math notranslate nohighlight">\(\hat{\eta}\)</span> of the regression function <span class="math notranslate nohighlight">\(\eta=\pi\mu_1+(1-\pi)\mu_0\)</span>, and estimtes <span class="math notranslate nohighlight">\(\hat{\pi}_b\)</span> of the propensity scores <span class="math notranslate nohighlight">\(\pi\)</span>.</p>
 <p><strong>Step 2</strong>: Localized double-residual regression:</p>
 <p>Define <span class="math notranslate nohighlight">\(\hat{\tau}_r(s)\)</span> as the fitted value from a kernel-weighted least squares regression (in the test sample <span class="math notranslate nohighlight">\(I_2^n\)</span>) of outcome residual <span class="math notranslate nohighlight">\((R-\hat{\eta})\)</span> on basis terms <span class="math notranslate nohighlight">\(b\)</span> scaled by the treatment residual <span class="math notranslate nohighlight">\(A-\hat{\pi}_b\)</span>, with weights <span class="math notranslate nohighlight">\(\Big(\frac{A-\hat{\pi}_a}{A-\hat{\pi}_b}\Big)\cdot K_{hs}\)</span>. Thus <span class="math notranslate nohighlight">\(\hat{\tau}_r(s)=b(0)^T\hat{\theta}\)</span> for</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7f2ade93-85a3-486c-a27b-c40a976cd39b">
-<span class="eqno">(33)<a class="headerlink" href="#equation-7f2ade93-85a3-486c-a27b-c40a976cd39b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-53a1e143-e454-4f0f-93ca-38ee099b3f83">
+<span class="eqno">(33)<a class="headerlink" href="#equation-53a1e143-e454-4f0f-93ca-38ee099b3f83" title="Permalink to this equation">#</a></span>\[\begin{equation}
 		\hat{\theta}=\arg\min_{\theta\in\mathbb{R}^p}\mathbb{P}_n\left(K_{hs}(S)\Big\{ \frac{A-\hat{\pi}_a(S)}{A-\hat{\pi}_b(S)}\Big\} \left[  \big\{R-\hat{\eta}(S)\big\}-\theta^Tb(S-s_0)\big\{A-\hat{\pi}_b(S)\big\} \right] \right).
 \end{equation}\]</div>
 <p><strong>Step 3</strong>: Cross-fitting(optional):</p>
@@ -1128,9 +1128,24 @@ title="Print to PDF"
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span> 
+<span class="kn">from</span> <span class="nn">causaldm.learners.CEL.Single_Stage</span> <span class="kn">import</span> <span class="n">_env_getdata_CEL</span>
 <span class="kn">from</span> <span class="nn">causaldm.learners.CEL.Single_Stage.LpRlearner</span> <span class="kn">import</span> <span class="n">LpRlearner</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ImportError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_71142</span><span class="o">/</span><span class="mf">3497684307.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="ne">----&gt; </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">causaldm.learners.CEL.Single_Stage</span> <span class="kn">import</span> <span class="n">_env_getdata_CEL</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="kn">from</span> <span class="nn">causaldm.learners.CEL.Single_Stage.LpRlearner</span> <span class="kn">import</span> <span class="n">LpRlearner</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="ne">ImportError</span>: cannot import name &#39;_env_getdata_CEL&#39; from &#39;causaldm.learners.CEL.Single_Stage&#39; (/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/causaldm/learners/CEL/Single_Stage/__init__.py)
 </pre></div>
 </div>
 </div>
@@ -1141,9 +1156,10 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the MovieLens data</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;</span><span class="p">)</span>
-<span class="n">MovieLens_CEL</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./causaldm/data/MovieLens_CEL.csv&quot;</span><span class="p">)</span>
+<span class="c1">#import os</span>
+<span class="c1">#os.chdir(&#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;)</span>
+<span class="c1">#MovieLens_CEL = pd.read_csv(&quot;./causaldm/data/MovieLens_CEL.csv&quot;)</span>
+<span class="n">MovieLens_CEL</span> <span class="o">=</span> <span class="n">get_movielens_CEL</span><span class="p">()</span>
 <span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">MovieLens_CEL</span> <span class="o">=</span> <span class="n">MovieLens_CEL</span><span class="p">[</span><span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Comedy&#39;</span><span class="p">,</span><span class="s1">&#39;Action&#39;</span><span class="p">,</span> <span class="s1">&#39;Thriller&#39;</span><span class="p">])]</span>
 <span class="n">MovieLens_CEL</span>
@@ -1387,65 +1403,6 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>estimate with Lp-R-learner
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_69094</span><span class="o">/</span><span class="mf">3012518900.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="n">MovieLens_CEL</span> <span class="o">=</span> <span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">sample_index</span><span class="p">,:]</span>
-<span class="g g-Whitespace">     </span><span class="mi">18</span> 
-<span class="ne">---&gt; </span><span class="mi">19</span> <span class="n">HTE_Lp_R_learner</span> <span class="o">=</span> <span class="n">LpRlearner</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="p">,</span> <span class="n">outcome</span><span class="p">,</span> <span class="n">treatment</span><span class="p">,</span> <span class="n">controls</span><span class="p">,</span> <span class="n">y_model</span><span class="p">,</span> <span class="n">ps_model_a</span><span class="p">,</span> <span class="n">ps_model_b</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">LpRlearner_model</span><span class="p">,</span> <span class="n">degree</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/causaldm/learners/CEL/Single_Stage/LpRlearner.py</span> in <span class="ni">LpRlearner</span><span class="nt">(df, outcome, treatment, controls, y_model, ps_model_a, ps_model_b, s, LpRlearner_model, degree)</span>
-<span class="g g-Whitespace">     </span><span class="mi">90</span> 
-<span class="g g-Whitespace">     </span><span class="mi">91</span>             <span class="c1"># step 1: nuisance training</span>
-<span class="ne">---&gt; </span><span class="mi">92</span>             <span class="n">ps_learner_a</span><span class="p">[</span><span class="n">fold1a</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">folds</span><span class="o">==</span><span class="n">fold1a</span><span class="p">][</span><span class="n">controls</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="n">folds</span><span class="o">==</span><span class="n">fold1a</span><span class="p">][</span><span class="n">treatment</span><span class="p">])</span>
-<span class="g g-Whitespace">     </span><span class="mi">93</span> 
-<span class="g g-Whitespace">     </span><span class="mi">94</span>             <span class="n">y_learner</span><span class="p">[</span><span class="n">fold1b</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">folds</span><span class="o">==</span><span class="n">fold1b</span><span class="p">][</span><span class="n">controls</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="n">folds</span><span class="o">==</span><span class="n">fold1b</span><span class="p">][</span><span class="n">outcome</span><span class="p">])</span>
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/sklearn/linear_model/_logistic.py</span> in <span class="ni">fit</span><span class="nt">(self, X, y, sample_weight)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1506</span>             <span class="n">_dtype</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">]</span>
-<span class="g g-Whitespace">   </span><span class="mi">1507</span> 
-<span class="ne">-&gt; </span><span class="mi">1508</span>         <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_data</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1509</span>             <span class="n">X</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1510</span>             <span class="n">y</span><span class="p">,</span>
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/sklearn/base.py</span> in <span class="ni">_validate_data</span><span class="nt">(self, X, y, reset, validate_separately, **check_params)</span>
-<span class="g g-Whitespace">    </span><span class="mi">579</span>                 <span class="n">y</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">check_y_params</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">580</span>             <span class="k">else</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">581</span>                 <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">check_X_y</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">check_params</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">582</span>             <span class="n">out</span> <span class="o">=</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span>
-<span class="g g-Whitespace">    </span><span class="mi">583</span> 
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/sklearn/utils/validation.py</span> in <span class="ni">check_X_y</span><span class="nt">(X, y, accept_sparse, accept_large_sparse, dtype, order, copy, force_all_finite, ensure_2d, allow_nd, multi_output, ensure_min_samples, ensure_min_features, y_numeric, estimator)</span>
-<span class="g g-Whitespace">    </span><span class="mi">962</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;y cannot be None&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">963</span> 
-<span class="ne">--&gt; </span><span class="mi">964</span>     <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">965</span>         <span class="n">X</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">966</span>         <span class="n">accept_sparse</span><span class="o">=</span><span class="n">accept_sparse</span><span class="p">,</span>
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/sklearn/utils/validation.py</span> in <span class="ni">check_array</span><span class="nt">(array, accept_sparse, accept_large_sparse, dtype, order, copy, force_all_finite, ensure_2d, allow_nd, ensure_min_samples, ensure_min_features, estimator)</span>
-<span class="g g-Whitespace">    </span><span class="mi">627</span>                 <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">628</span> 
-<span class="ne">--&gt; </span><span class="mi">629</span>         <span class="n">dtypes_orig</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">630</span>         <span class="c1"># pandas boolean dtype __array__ interface coerces bools to objects</span>
-<span class="g g-Whitespace">    </span><span class="mi">631</span>         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">dtype_iter</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dtypes_orig</span><span class="p">):</span>
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/pandas/core/generic.py</span> in <span class="ni">dtypes</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">   </span><span class="mi">5745</span>         <span class="s2">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">   </span><span class="mi">5746</span><span class="s2">         data = self._mgr.get_dtypes()</span>
-<span class="ne">-&gt; </span><span class="mi">5747</span><span class="s2">         return self._constructor_sliced(data, index=self._info_axis, dtype=np.object_)</span>
-<span class="g g-Whitespace">   </span><span class="mi">5748</span><span class="s2"> </span>
-<span class="g g-Whitespace">   </span><span class="mi">5749</span><span class="s2">     def astype(</span>
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/pandas/core/series.py</span> in <span class="ni">__init__</span><span class="nt">(self, data, index, dtype, name, copy, fastpath)</span>
-<span class="g g-Whitespace">    </span><span class="mi">458</span><span class="s2"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">459</span><span class="s2">         NDFrame.__init__(self, data)</span>
-<span class="ne">--&gt; </span><span class="mi">460</span><span class="s2">         self.name = name</span>
-<span class="g g-Whitespace">    </span><span class="mi">461</span><span class="s2">         self._set_axis(0, index, fastpath=True)</span>
-<span class="g g-Whitespace">    </span><span class="mi">462</span><span class="s2"> </span>
-
-<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
