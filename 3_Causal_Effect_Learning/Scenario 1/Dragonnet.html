@@ -1,48 +1,60 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" >
+
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>8. Dragon Net &#8212; Causal Decision Making</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="../../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../../_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
@@ -50,63 +62,105 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '3_Causal_Effect_Learning/Scenario 1/Dragonnet';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Mediation Analysis" href="Mediation%20Analysis.html" />
     <link rel="prev" title="7. Generalized Random Forest" href="GRF.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
 
-    
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+      <div class="bd-sidebar-primary bd-sidebar">
         
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../Overview.html">
+  
+  
+  
+  
+  
+    
+    
       
-      
-      <img src="../../_static/logo.png" class="logo" alt="logo">
-      
-      
-      <h1 class="site-logo" id="site-title">Causal Decision Making</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Causal Decision Making - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Causal Decision Making - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
@@ -115,1016 +169,433 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Motivating Examples
- </span>
-</p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Motivating Examples</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../0_Motivating_Examples/CSL.html">
-   Causal Structure Learning (CSL)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../0_Motivating_Examples/CEL.html">
-   Causal Effect Learning (CEL)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../0_Motivating_Examples/CPL.html">
-   Causal Policy Learning (CPL)
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../../0_Motivating_Examples/CSL.html">Causal Structure Learning (CSL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../0_Motivating_Examples/CEL.html">Causal Effect Learning (CEL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../0_Motivating_Examples/CPL.html">Causal Policy Learning (CPL)</a></li>
+
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Preliminary
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminary</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../1_Preliminary/Causal%20Inference%20Preliminary.html">
-   Causal Inference Preliminary
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../../1_Preliminary/Causal%20Inference%20Preliminary.html">Causal Inference Preliminary</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Causal Structure Learning (CSL)
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Structure Learning (CSL)</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../2_Causal_Structure_Learning/Preliminaries%20of%20Causal%20Graphs.html">
-   Preliminaries of Causal Graphs
-  </a>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../2_Causal_Structure_Learning/Causal%20Discovery.html">
-   Causal Discovery
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../2_Causal_Structure_Learning/Testing-based%20Learner.html">
-     Testing-based Learner
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../2_Causal_Structure_Learning/Functional-based%20Learner.html">
-     Functional-based Learner
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../2_Causal_Structure_Learning/Score-based%20Learner.html">
-     Score-based Learner
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../2_Causal_Structure_Learning/Causal%20Mediation%20Analysis.html">
-   Causal Mediation Analysis
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../../2_Causal_Structure_Learning/Preliminaries%20of%20Causal%20Graphs.html">Preliminaries of Causal Graphs</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../2_Causal_Structure_Learning/Causal%20Discovery.html">Causal Discovery</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../2_Causal_Structure_Learning/Testing-based%20Learner.html">Testing-based Learner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../2_Causal_Structure_Learning/Functional-based%20Learner.html">Functional-based Learner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../2_Causal_Structure_Learning/Score-based%20Learner.html">Score-based Learner</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Causal Effect Learning (CEL)
- </span>
-</p>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../2_Causal_Structure_Learning/Causal%20Mediation%20Analysis.html">Causal Mediation Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Effect Learning (CEL)</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active has-children">
-  <a class="reference internal" href="Single%20Stage.html">
-   <strong>
-    Single Stage – Paradigm 1
-   </strong>
-  </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-  <label for="toctree-checkbox-2">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul class="current">
-   <li class="toctree-l2">
-    <a class="reference internal" href="ATE.html">
-     ATE Estimation
-    </a>
-   </li>
-   <li class="toctree-l2 current active has-children">
-    <a class="reference internal" href="HTE.html">
-     HTE Estimation
-    </a>
-    <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
-    <label for="toctree-checkbox-3">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul class="current">
-     <li class="toctree-l3">
-      <a class="reference internal" href="S-learner.html">
-       <strong>
-        1. S-learner
-       </strong>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="T-learner.html">
-       <strong>
-        2. T-learner
-       </strong>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="X-learner.html">
-       <strong>
-        3. X-learner
-       </strong>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="R-Learner.html">
-       <strong>
-        4. R learner
-       </strong>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="DR-Learner.html">
-       <strong>
-        5. DR-learner
-       </strong>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="Lp-R-Learner.html">
-       <strong>
-        6. Lp-R-learner
-       </strong>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="GRF.html">
-       <strong>
-        7. Generalized Random Forest
-       </strong>
-      </a>
-     </li>
-     <li class="toctree-l3 current active">
-      <a class="current reference internal" href="#">
-       <strong>
-        8. Dragon Net
-       </strong>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="Mediation%20Analysis.html">
-     Mediation Analysis
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../Scenario%202/underMDP.html">
-   Markov Decision Processes – Paradigm 2
-  </a>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../Scenario%203/Panel%20Data.html">
-   Panel Data  – Paradigm 3
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
-  <label for="toctree-checkbox-4">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../Scenario%203/DiD.html">
-     <strong>
-      Difference in Difference
-     </strong>
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../Scenario%203/Synthetic%20Control.html">
-     <strong>
-      Synthetic Control
-     </strong>
-    </a>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../Scenario%203/Extensions.html">
-     Extensions
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
-    <label for="toctree-checkbox-5">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../Scenario%203/Matrix%20Completion.html">
-       <strong>
-        Matrix Completion
-       </strong>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../Scenario%203/Synthetic%20DiD.html">
-       <strong>
-        Synthetic DiD
-       </strong>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../Scenario%203/H1SL_H2SL.html">
-       <strong>
-        H1SL and H2SL
-       </strong>
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="Single%20Stage.html"><strong>Single Stage – Paradigm 1</strong></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ATE.html">ATE Estimation</a></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="HTE.html">HTE Estimation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="S-learner.html"><strong>1. S-learner</strong></a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="T-learner.html"><strong>2. T-learner</strong></a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="X-learner.html"><strong>3. X-learner</strong></a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="R-Learner.html"><strong>4. R learner</strong></a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="DR-Learner.html"><strong>5. DR-learner</strong></a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="Lp-R-Learner.html"><strong>6. Lp-R-learner</strong></a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="GRF.html"><strong>7. Generalized Random Forest</strong></a></li>
+
+
+<li class="toctree-l3 current active"><a class="current reference internal" href="#"><strong>8. Dragon Net</strong></a></li>
+
+
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Causal Policy Learning (CPL)--Paradigm 1
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Single%20Stage.html">
-   Single Stage
-  </a>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Discrete.html">
-   Discrete Action Space
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
-  <label for="toctree-checkbox-6">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Q-learning_Single.html">
-     Q-Learning (Single Stage)
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/A-learning_Single.html">
-     A-Learning (Single Stage)
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Classification/O-Learning.html">
-     Outcome Weighted Learning
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Quantile/QuantileOTR_test.html">
-     <strong>
-      Quantile Optimal Treatment Regime
-     </strong>
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Continuous.html">
-   Continuous Action Space
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
-  <label for="toctree-checkbox-7">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Continuous/Deep%20Jump%20Learner.html">
-     Deep Jump Learner for Continuous Actions
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Continuous/Kernel-Based%20Learner.html">
-     Kernel-Based Learner
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Continuous/Outcome%20Learning.html">
-     Outcome Learning
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/PlanToDo.html">
-   Plan To Do
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
-  <label for="toctree-checkbox-8">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Classification/E-learning.html">
-     Entropy learning
-    </a>
-   </li>
-  </ul>
- </li>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Mediation%20Analysis.html">Mediation Analysis</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Causal Policy Learning (CPL)--Paradigm 2
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/preliminary_MDP-potential-outcome.html">
-   Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes
-  </a>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/Evaluation.html">
-   Policy Evaluation–Value Estimation
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
-  <label for="toctree-checkbox-9">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/FQE.html">
-     Fitted-Q Evaluation
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/IPW_Infinite.html">
-     Importance Sampling for Policy Evaluation (Infinite Horizon)
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/DR_Infinite.html">
-     Doubly Robust Estimator for Policy Evaluation (Infinite Horizon)
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/Deeply_Debiased.html">
-     Deeply-Debiased Off-Policy Evaluation
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/MediationRL.html">
-   Policy Evaluation--Mediation Analysis
-  </a>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/Optimization.html">
-   Policy Optimization
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
-  <label for="toctree-checkbox-10">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/FQI.html">
-     Fitted-Q Iteration
-    </a>
-   </li>
-  </ul>
- </li>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Scenario%202/underMDP.html">Markov Decision Processes – Paradigm 2</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario%203/Panel%20Data.html">Panel Data  – Paradigm 3</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario%203/DiD.html"><strong>Difference in Difference</strong></a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Scenario%203/Synthetic%20Control.html"><strong>Synthetic Control</strong></a></li>
+
+
+
+
+<li class="toctree-l2 has-children"><a class="reference internal" href="../Scenario%203/Extensions.html">Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Scenario%203/Matrix%20Completion.html"><strong>Matrix Completion</strong></a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../Scenario%203/Synthetic%20DiD.html"><strong>Synthetic DiD</strong></a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../Scenario%203/H1SL_H2SL.html"><strong>H1SL and H2SL</strong></a></li>
+
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Causal Policy Learning (CPL)--Paradigm 3
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario3/Multi%20Stage.html">
-   Multiple Stages (DTR)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario3/Q-learning_Multiple.html">
-   Q-Learning (Multiple Stages)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario3/A-learning_Multiple.html">
-   A-Learning (Multiple Stages)
-  </a>
- </li>
+</li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Causal Policy Learning (CPL)--Paradigm 4
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Bandits.html">
-   Overview: Bandits ALgorithm
-  </a>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/MAB/MAB.html">
-   Multi-Armed Bandits (MAB)
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
-  <label for="toctree-checkbox-11">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/MAB/Epsilon_Greedy.html">
-     <span class="math notranslate nohighlight">
-      \(\epsilon\)
-     </span>
-     -Greedy
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/MAB/UCB.html">
-     UCB
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/MAB/TS.html">
-     TS
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/Contextual_Bandits.html">
-   Contextual Bandits
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
-  <label for="toctree-checkbox-12">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/LinUCB.html">
-     LinUCB
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/LinTS.html">
-     LinTS
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/Meta_Bandits.html">
-   Meta Bandits
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
-  <label for="toctree-checkbox-13">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/Meta_TS.html">
-     Meta Thompson Sampling
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/MTTS.html">
-     Multi-Task Thompson Sampling (MTTS)
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Structured_Bandit.html">
-   Structured Bandit (Slate Recommendation)
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
-  <label for="toctree-checkbox-14">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/Learning%20to%20rank.html">
-     Online Learning to Rank (Cascading Bandit)
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
-    <label for="toctree-checkbox-15">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/TS_Cascade.html">
-       TS_Cascade
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/CascadeLinTS.html">
-       CascadeLinTS
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/MTSS_Cascade.html">
-       MTSS_Cascade
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/Combinatorial%20Optimization.html">
-     Online Combinatorial Optimization (Combinatorial Semi-Bandit)
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/CombTS.html">
-       CombTS
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/CombLinTS.html">
-       CombLinTS
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/MTSS_Comb.html">
-       MTSS_Comb
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/Assortment%20Optimization.html">
-     Dynamic Assortment Optimization (Multinomial Logit Bandit)
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/TS_MNL_Beta.html">
-       TS_MNL
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/TS_Contextual_MNL.html">
-       TS_Contextual_MNL
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/MTSS_MNL.html">
-       MTSS_MNL
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/OnlineEval/Online%20Policy%20Evaluation.html">
-   Online Policy Evaluation
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-  <label for="toctree-checkbox-18">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/OnlineEval/Direct%20Online%20Policy%20Evaluator.html">
-     Direct Online Policy Evaluator
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/OnlineEval/Inverse%20Probability%20Weighted%20Online%20Policy%20Evaluator.html">
-     Inverse Probability Weighted Online Policy Evaluator
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/OnlineEval/Doubly%20Robust%20Online%20Policy%20Evaluator.html">
-     Doubly Robust Online Policy Evaluator
-    </a>
-   </li>
-  </ul>
- </li>
+</li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Causal Policy Learning (CPL)--Paradigm 5
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 1</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario5/OnlineRL_Markov.html">
-   Ooline Policy Learning and Evaluation in Markovian Environments
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Single%20Stage.html">Single Stage</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Discrete.html">Discrete Action Space</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Q-learning_Single.html">Q-Learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/A-learning_Single.html">A-Learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Classification/O-Learning.html">Outcome Weighted Learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Quantile/QuantileOTR_test.html">Quantile Optimal Treatment Regime</a></li>
+
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Causal Policy Learning (CPL)--Paradigm 6
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario6/OnlineRL_non_Markov.html">
-   Ooline Policy Learning in Non-Markovian Environments
-  </a>
- </li>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Continuous.html">Continuous Action Space</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Continuous/Deep%20Jump%20Learner.html">Deep Jump Learner for Continuous Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Continuous/Kernel-Based%20Learner.html">Kernel-Based Learner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Continuous/Outcome%20Learning.html">Outcome Learning</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Case Studies
- </span>
-</p>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/PlanToDo.html">Plan To Do</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario1/Classification/E-learning.html">Entropy learning</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 2</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3_intro.html">
-   Mimic3
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-  <label for="toctree-checkbox-19">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3-Demo-Ver2.html">
-     Mimic3 Demo-Ver2
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../5_Case_Study/MIMIC3/Single_Stage.html">
-     MIMIC III (Single-Stage)
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../5_Case_Study/MIMIC3/Longitudinal.html">
-     MIMIC III (3-Stages)
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../5_Case_Study/MIMIC3/Infinite_Horizon.html">
-     MIMIC III (Infinite Horizon)
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../5_Case_Study/MovieLens/MovieLens.html">
-   MovieLens
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/preliminary_MDP-potential-outcome.html">Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/Evaluation.html">Policy Evaluation–Value Estimation</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/FQE.html">Fitted-Q Evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/IPW_Infinite.html">Importance Sampling for Policy Evaluation (Infinite Horizon)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/DR_Infinite.html">Doubly Robust Estimator for Policy Evaluation (Infinite Horizon)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/Deeply_Debiased.html">Deeply-Debiased Off-Policy Evaluation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/MediationRL.html">Policy Evaluation--Mediation Analysis</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/Optimization.html">Policy Optimization</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario2/FQI.html">Fitted-Q Iteration</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario3/Multi%20Stage.html">Multiple Stages (DTR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario3/Q-learning_Multiple.html">Q-Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario3/A-learning_Multiple.html">A-Learning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Bandits.html">Overview: Bandits ALgorithm</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/MAB/MAB.html">Multi-Armed Bandits (MAB)</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/MAB/Epsilon_Greedy.html"><span class="math notranslate nohighlight">\(\epsilon\)</span>-Greedy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/MAB/UCB.html">UCB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/MAB/TS.html">TS</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/Contextual_Bandits.html">Contextual Bandits</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/LinUCB.html">LinUCB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/LinTS.html">LinTS</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/Meta_Bandits.html">Meta Bandits</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/Meta_TS.html">Meta Thompson Sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/MTTS.html">Multi-Task Thompson Sampling (MTTS)</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Structured_Bandit.html">Structured Bandit (Slate Recommendation)</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/Learning%20to%20rank.html">Online Learning to Rank (Cascading Bandit)</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/TS_Cascade.html">TS_Cascade</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/CascadeLinTS.html">CascadeLinTS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/MTSS_Cascade.html">MTSS_Cascade</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/Combinatorial%20Optimization.html">Online Combinatorial Optimization (Combinatorial Semi-Bandit)</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/CombTS.html">CombTS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/CombLinTS.html">CombLinTS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/MTSS_Comb.html">MTSS_Comb</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/Assortment%20Optimization.html">Dynamic Assortment Optimization (Multinomial Logit Bandit)</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/TS_MNL_Beta.html">TS_MNL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/TS_Contextual_MNL.html">TS_Contextual_MNL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/MTSS_MNL.html">MTSS_MNL</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/OnlineEval/Online%20Policy%20Evaluation.html">Online Policy Evaluation</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-18"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/OnlineEval/Direct%20Online%20Policy%20Evaluator.html">Direct Online Policy Evaluator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/OnlineEval/Inverse%20Probability%20Weighted%20Online%20Policy%20Evaluator.html">Inverse Probability Weighted Online Policy Evaluator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario4/OnlineEval/Doubly%20Robust%20Online%20Policy%20Evaluator.html">Doubly Robust Online Policy Evaluator</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario5/OnlineRL_Markov.html">Ooline Policy Learning and Evaluation in Markovian Environments</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 6</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../4_Causal_Policy_Learning/Scenario6/OnlineRL_non_Markov.html">Ooline Policy Learning in Non-Markovian Environments</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Case Studies</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3_intro.html">Mimic3</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-19"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3-Demo-Ver2.html">Mimic3 Demo-Ver2</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../5_Case_Study/MIMIC3/Single_Stage.html">MIMIC III (Single-Stage)</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../5_Case_Study/MIMIC3/Longitudinal.html">MIMIC III (3-Stages)</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../5_Case_Study/MIMIC3/Infinite_Horizon.html">MIMIC III (Infinite Horizon)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../5_Case_Study/MovieLens/MovieLens.html">MovieLens</a></li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
-</div>
-
-
-          
-
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
-<div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
-
-
-
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
->
   
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
-  </span>
-
-</label>
-
-        
-    </div>
-    <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
-  </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/3_Causal_Effect_Learning/Scenario 1/Dragonnet.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Binder"
->
   
-
-<span class="headerbtn__icon-container">
-  
-    <img src="../../_static/images/logo_binder.svg">
-  </span>
-<span class="headerbtn__text-container">Binder</span>
-</a>
-
-      </li>
-      
-    </ul>
+  <div class="sidebar-primary-items__end sidebar-primary__section">
   </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F3_Causal_Effect_Learning/Scenario 1/Dragonnet.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
 </div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/3_Causal_Effect_Learning/Scenario 1/Dragonnet.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
 
 <button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
 </button>
 
-<div class="menu-dropdown menu-dropdown-repository-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Source repositories">
-      <i class="fab fa-github"></i>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://github.com/executablebooks/jupyter-book"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Source repository"
->
-  
+`);
+</script>
 
-<span class="headerbtn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="headerbtn__text-container">repository</span>
-</a>
-
-      </li>
-      
-      <li>
-        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F3_Causal_Effect_Learning/Scenario 1/Dragonnet.html&body=Your%20issue%20content%20here."
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Open an issue"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="headerbtn__text-container">open issue</span>
-</a>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="../../_sources/3_Causal_Effect_Learning/Scenario 1/Dragonnet.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
 </label>
-
+</div></div>
+      
     </div>
+  
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   <strong>
-    8. Dragon Net
-   </strong>
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#part-1-dragonnet">
-     Part 1: Dragonnet
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#part-2-targeted-regularization">
-     Part 2. Targeted Regularization
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#movielens-data">
-   MovieLens Data
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#references">
-   References
-  </a>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>8. Dragon Net</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   <strong>
-    8. Dragon Net
-   </strong>
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#part-1-dragonnet">
-     Part 1: Dragonnet
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#part-2-targeted-regularization">
-     Part 2. Targeted Regularization
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#movielens-data">
-   MovieLens Data
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#references">
-   References
-  </a>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>8. Dragon Net</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
             </div>
-            <main id="main-content" role="main">
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#"><strong>8. Dragon Net</strong></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-dragonnet">Part 1: Dragonnet</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-targeted-regularization">Part 2. Targeted Regularization</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#movielens-data">MovieLens Data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
                 
-              <div>
-                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section id="dragon-net">
-<h1><strong>8. Dragon Net</strong><a class="headerlink" href="#dragon-net" title="Permalink to this headline">#</a></h1>
+<h1><strong>8. Dragon Net</strong><a class="headerlink" href="#dragon-net" title="Permalink to this heading">#</a></h1>
 <p>In previous sections, we reviewed quite a large amount of work utilizing machine learning or deep learning based approaches to estimate ATE and HTE. To guarantee the consistency and asymptotic convergence rate of the treatment effect estimator, the underlying models are often required to satisfy certain convergence rate. For example, in double machine learning (DML) [9], the treatment effect estimator is asymptotically normal when both the propensity score and outcome regression models satisfy a convergence rate <span class="math notranslate nohighlight">\(o(n^{-1/4})\)</span>. Most of the existing work can be summarized into a two-stage estimation structure: In stage 1, we fit the models for the propensity score and expected outcome; In stage 2, we plug in the estimated models to formalize the final estimator of interest, such as ATE, HTE, ATT (averaged treatment effect on the treated), etc.</p>
 <p>Despite the versatile choices of ML-based methods in both stages, there seems to be no targeted criteria about which model can serve for the best performance of the treatment effect estimation in stage 2. Therefore, Dragonnet [8] aims to answer this question: how can we adapt the design and training of the neural networks used in the first step in order to improve the quality of treatment effect estimation?</p>
 <p>The author addressed this problem from two angles:</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>Based on the sufficiency of the propensity score for causal estimation, the author designed an innovative neural network structure, named as Dragonnet, so as to discard the irrelevant information in observational data and thus improve the quality of treatment effect estimation;</p></li>
 <li><p>Starting from the non-parametric theory, the author utilized targeted minimum loss estimation (TMLE) procedure to imporve the finite sample stability of the final estimator.</p></li>
 </ol>
 <p>In the rest of this section, we will introduce the above two innovations parts in details, and use a real data example to illustrate the estimation procedure.</p>
 <section id="part-1-dragonnet">
-<h2>Part 1: Dragonnet<a class="headerlink" href="#part-1-dragonnet" title="Permalink to this headline">#</a></h2>
+<h2>Part 1: Dragonnet<a class="headerlink" href="#part-1-dragonnet" title="Permalink to this heading">#</a></h2>
 <p>Define the conditional outcome as <span class="math notranslate nohighlight">\(Q(a,s)=E[R|a,s]\)</span> amd propensity score <span class="math notranslate nohighlight">\(g(s)=P(A=1|S=s)\)</span>. Our goal is to estimate the effect of treatment <span class="math notranslate nohighlight">\(A=1\)</span> versus <span class="math notranslate nohighlight">\(A=0\)</span>, i.e.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d876533d-0022-499f-8528-980341bca338">
-<span class="eqno">(38)<a class="headerlink" href="#equation-d876533d-0022-499f-8528-980341bca338" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-08bb3d84-6108-4f8b-9876-91afbabe1ba2">
+<span class="eqno">(38)<a class="headerlink" href="#equation-08bb3d84-6108-4f8b-9876-91afbabe1ba2" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \text{HTE}_{\text{Dragonnet}}(s)=E[R(1)|S=s]-E[R(0)|S=s],
 \end{equation}\]</div>
 <p>and the average treatment effect</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6cbb169b-e660-4fa1-8f33-732afcf09b3b">
-<span class="eqno">(39)<a class="headerlink" href="#equation-6cbb169b-e660-4fa1-8f33-732afcf09b3b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3474865f-267f-44d5-ad25-556c38250b10">
+<span class="eqno">(39)<a class="headerlink" href="#equation-3474865f-267f-44d5-ad25-556c38250b10" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \text{ATE}_{\text{Dragonnet}}=E\Big[E[R(1)|S]-E[R(0)|S]\Big].
 \end{equation}\]</div>
 <p>Under certain identifiability assumptions, the HTE can be estimated by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bb7e145e-b46f-4df8-844b-b7c31c56f956">
-<span class="eqno">(40)<a class="headerlink" href="#equation-bb7e145e-b46f-4df8-844b-b7c31c56f956" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f6bd9da5-9f4c-473a-8256-73995a15aa6d">
+<span class="eqno">(40)<a class="headerlink" href="#equation-f6bd9da5-9f4c-473a-8256-73995a15aa6d" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \widehat{\text{HTE}}_{\text{Dragonnet}}(s)=\hat{E}[R|A=1,S=s]-\hat{E}[R|A=0,S=s]=\hat{Q}(1,s)-\hat{Q}(1,s).
 \end{equation}\]</div>
 <p>According to the sufficiency of propensity score (Theorem 2.1 in [8]), all of the information in <span class="math notranslate nohighlight">\(S\)</span> that is useful in estimating ATE is contained in <span class="math notranslate nohighlight">\(g(S)\)</span>. In other words, we should train <span class="math notranslate nohighlight">\(\hat{Q}(a,s)\)</span> only through the information in <span class="math notranslate nohighlight">\(g(S)\)</span>, instead of the entire <span class="math notranslate nohighlight">\(S\)</span>. To achieve so, the author proposed a novel three-headed archetecture, which is shown in Figure 1 below.</p>
@@ -1153,31 +624,31 @@ title="Print to PDF"
 </div>
 <p>By first training the propensity score model through several layers of neural network, we are able to capture the resourceful information of <span class="math notranslate nohighlight">\(g(S)\)</span> in layer <span class="math notranslate nohighlight">\(Z\)</span>. The core idea of Dragonnet is to directly utilize the information in <span class="math notranslate nohighlight">\(Z\)</span> to fit outcome regression models for <span class="math notranslate nohighlight">\(\hat{Q}(1,s)\)</span> and <span class="math notranslate nohighlight">\(\hat{Q}(0,s)\)</span>.</p>
 <p>The objective function of Dragonnet is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6b4d2cbc-62d5-4839-a9fd-5380936f6730">
-<span class="eqno">(41)<a class="headerlink" href="#equation-6b4d2cbc-62d5-4839-a9fd-5380936f6730" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-899f28c0-0d33-4390-9fe7-51a677b9fe6d">
+<span class="eqno">(41)<a class="headerlink" href="#equation-899f28c0-0d33-4390-9fe7-51a677b9fe6d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\theta}=\arg\min_{\theta} \frac{1}{n}\sum_{i}\Big[(Q^{\text{nn}}(a_i,s_i;\theta)-R_i)^2+\alpha \text{CrossEntropy}(g^{\text{nn}}(s_i,\theta),a_i)\Big],
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\theta\)</span> is the collection of all parameters, and <span class="math notranslate nohighlight">\(\alpha\)</span> is a weighting hyperparameter.</p>
 </section>
 <section id="part-2-targeted-regularization">
-<h2>Part 2. Targeted Regularization<a class="headerlink" href="#part-2-targeted-regularization" title="Permalink to this headline">#</a></h2>
+<h2>Part 2. Targeted Regularization<a class="headerlink" href="#part-2-targeted-regularization" title="Permalink to this heading">#</a></h2>
 <p>In targeted regularization, the author modified the objective function to yield a better finite sample performance. Specifically, the author defined</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0f995f7b-796d-44bb-b4cc-a1c458b2a537">
-<span class="eqno">(42)<a class="headerlink" href="#equation-0f995f7b-796d-44bb-b4cc-a1c458b2a537" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-47eecb7b-fbba-4814-bbe6-e444107e1405">
+<span class="eqno">(42)<a class="headerlink" href="#equation-47eecb7b-fbba-4814-bbe6-e444107e1405" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 &amp; \tilde{Q}(a_i,s_i;\theta,\epsilon) = {Q}^{\text{nn}}(a_i,s_i;\theta)+\epsilon, \bigg[\frac{a_i}{g^{\text{nn}}(s_i;\theta)}-\frac{1-a_i}{1-g^{\text{nn}}(s_i;\theta)}\bigg]\\
 &amp; \gamma(R_i,a_i,s_i;\theta,\epsilon) = (R_i-\tilde{Q}(a_i,s_i;\theta,\epsilon))^2,
 \end{aligned}
 \end{equation}\]</div>
 <p>and then train the model by minimizing a new objective function with an extra parameter <span class="math notranslate nohighlight">\(\epsilon\)</span> as below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-df1d5e58-add4-4957-bde7-bb24f64be2b5">
-<span class="eqno">(43)<a class="headerlink" href="#equation-df1d5e58-add4-4957-bde7-bb24f64be2b5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7af10c5d-825c-443f-8500-7755d8d3d3b6">
+<span class="eqno">(43)<a class="headerlink" href="#equation-7af10c5d-825c-443f-8500-7755d8d3d3b6" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\theta},\hat{\epsilon} = \arg\min_{\theta,\epsilon} \Big[\hat{R}(\theta,S)+\beta\frac{1}{n}\sum_{i} \gamma(R_i,a_i,s_i;\theta,\epsilon)\Big],
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\beta\)</span> is another weighting hyperparameter.</p>
 <p>The final treatment effect estimator, after targeted regularization, is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e543875a-97a3-4781-83f1-f9d27a5a02ea">
-<span class="eqno">(44)<a class="headerlink" href="#equation-e543875a-97a3-4781-83f1-f9d27a5a02ea" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-81dbf74d-6599-445f-b1bd-26c57f6ef4d0">
+<span class="eqno">(44)<a class="headerlink" href="#equation-81dbf74d-6599-445f-b1bd-26c57f6ef4d0" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \widehat{\text{HTE}}_{\text{Dragonnet}}(s)=\tilde{Q}(1,s;\hat\theta,\hat\epsilon)-\tilde{Q}(0,s;\hat\theta,\hat\epsilon),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\((\hat\theta,\hat\epsilon)\)</span> is the solution we obtained above.</p>
@@ -1202,7 +673,7 @@ title="Print to PDF"
 </section>
 </section>
 <section id="movielens-data">
-<h1>MovieLens Data<a class="headerlink" href="#movielens-data" title="Permalink to this headline">#</a></h1>
+<h1>MovieLens Data<a class="headerlink" href="#movielens-data" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get data</span>
@@ -1498,8 +969,8 @@ average propensity for treated: 0.7404845356941223 and untreated: 0.726425230503
 <p><strong>Conclusion:</strong> Choosing Drama instead of Sci-Fi is expected to improve the rating of all users by 0.3526 out of 5 points.</p>
 </section>
 <section id="references">
-<h1>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h1>
-<ol class="simple">
+<h1>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h1>
+<ol class="arabic simple" start="8">
 <li><p>Claudia Shi, David M. Blei, and Victor Veitch. Adapting Neural Networks for the Estimation of
 Treatment Effects. 33rd Conference on Neural Information Processing Systems (NeurIPS 2019).</p></li>
 <li><p>Chernozhukov, V., D. Chetverikov, M. Demirer, E. Duflo, C. Hansen, W. Newey, and
@@ -1519,7 +990,7 @@ J. Robins (2018). Double/debiased machine learning for treatment and structural 
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./3_Causal_Effect_Learning\Scenario 1"
         },
         predefinedOutput: true
@@ -1527,50 +998,108 @@ J. Robins (2018). Double/debiased machine learning for treatment and structural 
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="GRF.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title"><strong>7. Generalized Random Forest</strong></p>
-        </div>
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="GRF.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><strong>7. Generalized Random Forest</strong></p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="Mediation%20Analysis.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="Mediation%20Analysis.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Mediation Analysis</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#"><strong>8. Dragon Net</strong></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-dragonnet">Part 1: Dragonnet</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-targeted-regularization">Part 2. Targeted Regularization</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#movielens-data">MovieLens Data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
-    By Causal Decision Making Team<br/>
-  
-      &copy; Copyright 2022.<br/>
-</p>
-        </footer>
-    </div>
+  <div class="footer-item">
     
+<p class="component-author">
+By Causal Decision Making Team
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
 </div>
+          </footer>
+        
 
-
-      </div>
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>
