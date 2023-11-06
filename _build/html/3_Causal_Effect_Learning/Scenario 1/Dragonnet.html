@@ -584,33 +584,18 @@ document.write(`
 <section id="part-1-dragonnet">
 <h2>Part 1: Dragonnet<a class="headerlink" href="#part-1-dragonnet" title="Permalink to this heading">#</a></h2>
 <p>Define the conditional outcome as <span class="math notranslate nohighlight">\(Q(a,s)=E[R|a,s]\)</span> amd propensity score <span class="math notranslate nohighlight">\(g(s)=P(A=1|S=s)\)</span>. Our goal is to estimate the effect of treatment <span class="math notranslate nohighlight">\(A=1\)</span> versus <span class="math notranslate nohighlight">\(A=0\)</span>, i.e.</p>
-<<<<<<< Updated upstream
-<div class="amsmath math notranslate nohighlight" id="equation-3c01ad1f-a56a-4079-b25e-267c273b5e19">
-<span class="eqno">(38)<a class="headerlink" href="#equation-3c01ad1f-a56a-4079-b25e-267c273b5e19" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e8f10421-f937-4026-914c-7f8715f17f39">
+<span class="eqno">(38)<a class="headerlink" href="#equation-e8f10421-f937-4026-914c-7f8715f17f39" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \text{HTE}_{\text{Dragonnet}}(s)=E[R(1)|S=s]-E[R(0)|S=s],
 \end{equation}\]</div>
 <p>and the average treatment effect</p>
-<div class="amsmath math notranslate nohighlight" id="equation-922c212c-3ee4-46ec-a30b-46dff653b600">
-<span class="eqno">(39)<a class="headerlink" href="#equation-922c212c-3ee4-46ec-a30b-46dff653b600" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-63ee6700-fe36-488d-820e-ecd3add9c715">
+<span class="eqno">(39)<a class="headerlink" href="#equation-63ee6700-fe36-488d-820e-ecd3add9c715" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \text{ATE}_{\text{Dragonnet}}=E\Big[E[R(1)|S]-E[R(0)|S]\Big].
 \end{equation}\]</div>
 <p>Under certain identifiability assumptions, the HTE can be estimated by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-40af90b3-c412-4aa4-b4a3-47e675196e5c">
-<span class="eqno">(40)<a class="headerlink" href="#equation-40af90b3-c412-4aa4-b4a3-47e675196e5c" title="Permalink to this equation">#</a></span>\[\begin{equation}
-=======
-<div class="amsmath math notranslate nohighlight" id="equation-08bb3d84-6108-4f8b-9876-91afbabe1ba2">
-<span class="eqno">(38)<a class="headerlink" href="#equation-08bb3d84-6108-4f8b-9876-91afbabe1ba2" title="Permalink to this equation">#</a></span>\[\begin{equation}
-    \text{HTE}_{\text{Dragonnet}}(s)=E[R(1)|S=s]-E[R(0)|S=s],
-\end{equation}\]</div>
-<p>and the average treatment effect</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3474865f-267f-44d5-ad25-556c38250b10">
-<span class="eqno">(39)<a class="headerlink" href="#equation-3474865f-267f-44d5-ad25-556c38250b10" title="Permalink to this equation">#</a></span>\[\begin{equation}
-    \text{ATE}_{\text{Dragonnet}}=E\Big[E[R(1)|S]-E[R(0)|S]\Big].
-\end{equation}\]</div>
-<p>Under certain identifiability assumptions, the HTE can be estimated by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f6bd9da5-9f4c-473a-8256-73995a15aa6d">
-<span class="eqno">(40)<a class="headerlink" href="#equation-f6bd9da5-9f4c-473a-8256-73995a15aa6d" title="Permalink to this equation">#</a></span>\[\begin{equation}
->>>>>>> Stashed changes
+<div class="amsmath math notranslate nohighlight" id="equation-43c18839-1a10-44a5-82f2-63ef9f1201df">
+<span class="eqno">(40)<a class="headerlink" href="#equation-43c18839-1a10-44a5-82f2-63ef9f1201df" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \widehat{\text{HTE}}_{\text{Dragonnet}}(s)=\hat{E}[R|A=1,S=s]-\hat{E}[R|A=0,S=s]=\hat{Q}(1,s)-\hat{Q}(1,s).
 \end{equation}\]</div>
 <p>According to the sufficiency of propensity score (Theorem 2.1 in [8]), all of the information in <span class="math notranslate nohighlight">\(S\)</span> that is useful in estimating ATE is contained in <span class="math notranslate nohighlight">\(g(S)\)</span>. In other words, we should train <span class="math notranslate nohighlight">\(\hat{Q}(a,s)\)</span> only through the information in <span class="math notranslate nohighlight">\(g(S)\)</span>, instead of the entire <span class="math notranslate nohighlight">\(S\)</span>. To achieve so, the author proposed a novel three-headed archetecture, which is shown in Figure 1 below.</p>
@@ -639,13 +624,8 @@ document.write(`
 </div>
 <p>By first training the propensity score model through several layers of neural network, we are able to capture the resourceful information of <span class="math notranslate nohighlight">\(g(S)\)</span> in layer <span class="math notranslate nohighlight">\(Z\)</span>. The core idea of Dragonnet is to directly utilize the information in <span class="math notranslate nohighlight">\(Z\)</span> to fit outcome regression models for <span class="math notranslate nohighlight">\(\hat{Q}(1,s)\)</span> and <span class="math notranslate nohighlight">\(\hat{Q}(0,s)\)</span>.</p>
 <p>The objective function of Dragonnet is given by</p>
-<<<<<<< Updated upstream
-<div class="amsmath math notranslate nohighlight" id="equation-13c4b2c8-2993-4601-8818-136d896a237c">
-<span class="eqno">(41)<a class="headerlink" href="#equation-13c4b2c8-2993-4601-8818-136d896a237c" title="Permalink to this equation">#</a></span>\[\begin{equation}
-=======
-<div class="amsmath math notranslate nohighlight" id="equation-899f28c0-0d33-4390-9fe7-51a677b9fe6d">
-<span class="eqno">(41)<a class="headerlink" href="#equation-899f28c0-0d33-4390-9fe7-51a677b9fe6d" title="Permalink to this equation">#</a></span>\[\begin{equation}
->>>>>>> Stashed changes
+<div class="amsmath math notranslate nohighlight" id="equation-be5ce028-41f6-4a76-b6b8-845abf49b8eb">
+<span class="eqno">(41)<a class="headerlink" href="#equation-be5ce028-41f6-4a76-b6b8-845abf49b8eb" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\theta}=\arg\min_{\theta} \frac{1}{n}\sum_{i}\Big[(Q^{\text{nn}}(a_i,s_i;\theta)-R_i)^2+\alpha \text{CrossEntropy}(g^{\text{nn}}(s_i,\theta),a_i)\Big],
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\theta\)</span> is the collection of all parameters, and <span class="math notranslate nohighlight">\(\alpha\)</span> is a weighting hyperparameter.</p>
@@ -653,37 +633,22 @@ document.write(`
 <section id="part-2-targeted-regularization">
 <h2>Part 2. Targeted Regularization<a class="headerlink" href="#part-2-targeted-regularization" title="Permalink to this heading">#</a></h2>
 <p>In targeted regularization, the author modified the objective function to yield a better finite sample performance. Specifically, the author defined</p>
-<<<<<<< Updated upstream
-<div class="amsmath math notranslate nohighlight" id="equation-1add466d-5e00-4520-80c3-ff345ca19668">
-<span class="eqno">(42)<a class="headerlink" href="#equation-1add466d-5e00-4520-80c3-ff345ca19668" title="Permalink to this equation">#</a></span>\[\begin{equation}
-=======
-<div class="amsmath math notranslate nohighlight" id="equation-47eecb7b-fbba-4814-bbe6-e444107e1405">
-<span class="eqno">(42)<a class="headerlink" href="#equation-47eecb7b-fbba-4814-bbe6-e444107e1405" title="Permalink to this equation">#</a></span>\[\begin{equation}
->>>>>>> Stashed changes
+<div class="amsmath math notranslate nohighlight" id="equation-95fe42df-433c-4960-9742-54ba4fafd8ec">
+<span class="eqno">(42)<a class="headerlink" href="#equation-95fe42df-433c-4960-9742-54ba4fafd8ec" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 &amp; \tilde{Q}(a_i,s_i;\theta,\epsilon) = {Q}^{\text{nn}}(a_i,s_i;\theta)+\epsilon, \bigg[\frac{a_i}{g^{\text{nn}}(s_i;\theta)}-\frac{1-a_i}{1-g^{\text{nn}}(s_i;\theta)}\bigg]\\
 &amp; \gamma(R_i,a_i,s_i;\theta,\epsilon) = (R_i-\tilde{Q}(a_i,s_i;\theta,\epsilon))^2,
 \end{aligned}
 \end{equation}\]</div>
 <p>and then train the model by minimizing a new objective function with an extra parameter <span class="math notranslate nohighlight">\(\epsilon\)</span> as below:</p>
-<<<<<<< Updated upstream
-<div class="amsmath math notranslate nohighlight" id="equation-9237cc57-c70f-46d9-9714-8f42ed5a5c60">
-<span class="eqno">(43)<a class="headerlink" href="#equation-9237cc57-c70f-46d9-9714-8f42ed5a5c60" title="Permalink to this equation">#</a></span>\[\begin{equation}
-=======
-<div class="amsmath math notranslate nohighlight" id="equation-7af10c5d-825c-443f-8500-7755d8d3d3b6">
-<span class="eqno">(43)<a class="headerlink" href="#equation-7af10c5d-825c-443f-8500-7755d8d3d3b6" title="Permalink to this equation">#</a></span>\[\begin{equation}
->>>>>>> Stashed changes
+<div class="amsmath math notranslate nohighlight" id="equation-33fc9e78-7699-41e7-8232-b2801a88f884">
+<span class="eqno">(43)<a class="headerlink" href="#equation-33fc9e78-7699-41e7-8232-b2801a88f884" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\theta},\hat{\epsilon} = \arg\min_{\theta,\epsilon} \Big[\hat{R}(\theta,S)+\beta\frac{1}{n}\sum_{i} \gamma(R_i,a_i,s_i;\theta,\epsilon)\Big],
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\beta\)</span> is another weighting hyperparameter.</p>
 <p>The final treatment effect estimator, after targeted regularization, is given by</p>
-<<<<<<< Updated upstream
-<div class="amsmath math notranslate nohighlight" id="equation-18c48ae6-144e-41a4-bb4f-33387af0f2d1">
-<span class="eqno">(44)<a class="headerlink" href="#equation-18c48ae6-144e-41a4-bb4f-33387af0f2d1" title="Permalink to this equation">#</a></span>\[\begin{equation}
-=======
-<div class="amsmath math notranslate nohighlight" id="equation-81dbf74d-6599-445f-b1bd-26c57f6ef4d0">
-<span class="eqno">(44)<a class="headerlink" href="#equation-81dbf74d-6599-445f-b1bd-26c57f6ef4d0" title="Permalink to this equation">#</a></span>\[\begin{equation}
->>>>>>> Stashed changes
+<div class="amsmath math notranslate nohighlight" id="equation-3c27f7ec-4f99-4bf0-9cb7-979b46e8f6d5">
+<span class="eqno">(44)<a class="headerlink" href="#equation-3c27f7ec-4f99-4bf0-9cb7-979b46e8f6d5" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \widehat{\text{HTE}}_{\text{Dragonnet}}(s)=\tilde{Q}(1,s;\hat\theta,\hat\epsilon)-\tilde{Q}(0,s;\hat\theta,\hat\epsilon),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\((\hat\theta,\hat\epsilon)\)</span> is the solution we obtained above.</p>
@@ -701,27 +666,6 @@ document.write(`
 <span class="kn">from</span> <span class="nn">causaldm.learners.CEL.Single_Stage.Dragonnet</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_71135</span><span class="o">/</span><span class="mf">1311581033.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="ne">----&gt; </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">causaldm.learners.CEL.Single_Stage</span> <span class="kn">import</span> <span class="n">_env_getdata_CEL</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="kn">from</span> <span class="nn">causaldm.learners.CEL.Single_Stage.Dragonnet</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">import</span> <span class="nn">warnings</span>
-
-<span class="o">~/</span><span class="n">Documents</span><span class="o">/</span><span class="n">CDM</span><span class="o">/</span><span class="n">CausalDM</span><span class="o">/</span><span class="n">causaldm</span><span class="o">/</span><span class="n">learners</span><span class="o">/</span><span class="n">CEL</span><span class="o">/</span><span class="n">Single_Stage</span><span class="o">/</span><span class="n">_env_getdata_CEL</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">.._util_online</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">os</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">random</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">pickle</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;causaldm.learners.CEL._util_online&#39;
 </pre></div>
 </div>
 </div>

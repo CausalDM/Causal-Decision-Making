@@ -1,0 +1,1034 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>A-Learning &#8212; Causal Decision Making</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '4_Causal_Policy_Learning/Scenario3/A-learning_Multiple';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Overview: Bandits ALgorithm" href="../Scenario4/Bandits.html" />
+    <link rel="prev" title="Q-Learning" href="Q-learning_Multiple.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../Overview.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Causal Decision Making - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Causal Decision Making - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../Overview.html">
+                    Overview
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Motivating Examples</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../0_Motivating_Examples/CSL.html">Causal Structure Learning (CSL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../0_Motivating_Examples/CEL.html">Causal Effect Learning (CEL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../0_Motivating_Examples/CPL.html">Causal Policy Learning (CPL)</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminary</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../1_Preliminary/Causal%20Inference%20Preliminary.html">Causal Inference Preliminary</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Structure Learning (CSL)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../2_Causal_Structure_Learning/Preliminaries%20of%20Causal%20Graphs.html">Preliminaries of Causal Graphs</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../2_Causal_Structure_Learning/Causal%20Discovery.html">Causal Discovery</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../2_Causal_Structure_Learning/Testing-based%20Learner.html">Testing-based Learner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../2_Causal_Structure_Learning/Functional-based%20Learner.html">Functional-based Learner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../2_Causal_Structure_Learning/Score-based%20Learner.html">Score-based Learner</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../2_Causal_Structure_Learning/Causal%20Mediation%20Analysis.html">Causal Mediation Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Effect Learning (CEL)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/Single%20Stage.html"><strong>Single Stage – Paradigm 1</strong></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/ATE.html">ATE Estimation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/HTE.html">HTE Estimation</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/S-learner.html"><strong>1. S-learner</strong></a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/T-learner.html"><strong>2. T-learner</strong></a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/X-learner.html"><strong>3. X-learner</strong></a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/R-Learner.html"><strong>4. R learner</strong></a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/DR-Learner.html"><strong>5. DR-learner</strong></a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/Lp-R-Learner.html"><strong>6. Lp-R-learner</strong></a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/GRF.html"><strong>7. Generalized Random Forest</strong></a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/Dragonnet.html"><strong>8. Dragon Net</strong></a></li>
+
+
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/Mediation%20Analysis.html">Mediation Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%202/underMDP.html">Markov Decision Processes – Paradigm 2</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%203/Panel%20Data.html">Panel Data  – Paradigm 3</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%203/DiD.html"><strong>Difference in Difference</strong></a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%203/Synthetic%20Control.html"><strong>Synthetic Control</strong></a></li>
+
+
+
+
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%203/Extensions.html">Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%203/Matrix%20Completion.html"><strong>Matrix Completion</strong></a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%203/Synthetic%20DiD.html"><strong>Synthetic DiD</strong></a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%203/H1SL_H2SL.html"><strong>H1SL and H2SL</strong></a></li>
+
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Scenario1/Single%20Stage.html">Single Stage</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario1/Discrete.html">Discrete Action Space</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario1/Q-learning_Single.html">Q-Learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario1/A-learning_Single.html">A-Learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario1/Classification/O-Learning.html">Outcome Weighted Learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario1/Quantile/QuantileOTR_test.html">Quantile Optimal Treatment Regime</a></li>
+
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario1/Continuous.html">Continuous Action Space</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario1/Continuous/Deep%20Jump%20Learner.html">Deep Jump Learner for Continuous Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario1/Continuous/Kernel-Based%20Learner.html">Kernel-Based Learner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario1/Continuous/Outcome%20Learning.html">Outcome Learning</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario1/PlanToDo.html">Plan To Do</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario1/Classification/E-learning.html">Entropy learning</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Scenario2/preliminary_MDP-potential-outcome.html">Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario2/Evaluation.html">Policy Evaluation–Value Estimation</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario2/FQE.html">Fitted-Q Evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario2/IPW_Infinite.html">Importance Sampling for Policy Evaluation (Infinite Horizon)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario2/DR_Infinite.html">Doubly Robust Estimator for Policy Evaluation (Infinite Horizon)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario2/Deeply_Debiased.html">Deeply-Debiased Off-Policy Evaluation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Scenario2/MediationRL.html">Policy Evaluation--Mediation Analysis</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario2/Optimization.html">Policy Optimization</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario2/FQI.html">Fitted-Q Iteration</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 3</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Multi%20Stage.html">Multiple Stages (DTR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Q-learning_Multiple.html">Q-Learning</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">A-Learning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Scenario4/Bandits.html">Overview: Bandits ALgorithm</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario4/MAB/MAB.html">Multi-Armed Bandits (MAB)</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario4/MAB/Epsilon_Greedy.html"><span class="math notranslate nohighlight">\(\epsilon\)</span>-Greedy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario4/MAB/UCB.html">UCB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario4/MAB/TS.html">TS</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario4/Contextual_Bandits/Contextual_Bandits.html">Contextual Bandits</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario4/Contextual_Bandits/LinUCB.html">LinUCB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario4/Contextual_Bandits/LinTS.html">LinTS</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario4/Meta_Bandits/Meta_Bandits.html">Meta Bandits</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario4/Meta_Bandits/Meta_TS.html">Meta Thompson Sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario4/Meta_Bandits/MTTS.html">Multi-Task Thompson Sampling (MTTS)</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario4/Structured_Bandits/Structured_Bandit.html">Structured Bandit (Slate Recommendation)</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../Scenario4/Structured_Bandits/Cascade/Learning%20to%20rank.html">Online Learning to Rank (Cascading Bandit)</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Scenario4/Structured_Bandits/Cascade/TS_Cascade.html">TS_Cascade</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Scenario4/Structured_Bandits/Cascade/CascadeLinTS.html">CascadeLinTS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Scenario4/Structured_Bandits/Cascade/MTSS_Cascade.html">MTSS_Cascade</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../Scenario4/Structured_Bandits/Combinatorial-Semi/Combinatorial%20Optimization.html">Online Combinatorial Optimization (Combinatorial Semi-Bandit)</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Scenario4/Structured_Bandits/Combinatorial-Semi/CombTS.html">CombTS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Scenario4/Structured_Bandits/Combinatorial-Semi/CombLinTS.html">CombLinTS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Scenario4/Structured_Bandits/Combinatorial-Semi/MTSS_Comb.html">MTSS_Comb</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../Scenario4/Structured_Bandits/MNL/Assortment%20Optimization.html">Dynamic Assortment Optimization (Multinomial Logit Bandit)</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Scenario4/Structured_Bandits/MNL/TS_MNL_Beta.html">TS_MNL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Scenario4/Structured_Bandits/MNL/TS_Contextual_MNL.html">TS_Contextual_MNL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Scenario4/Structured_Bandits/MNL/MTSS_MNL.html">MTSS_MNL</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario4/OnlineEval/Online%20Policy%20Evaluation.html">Online Policy Evaluation</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-18"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario4/OnlineEval/Direct%20Online%20Policy%20Evaluator.html">Direct Online Policy Evaluator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario4/OnlineEval/Inverse%20Probability%20Weighted%20Online%20Policy%20Evaluator.html">Inverse Probability Weighted Online Policy Evaluator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Scenario4/OnlineEval/Doubly%20Robust%20Online%20Policy%20Evaluator.html">Doubly Robust Online Policy Evaluator</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Scenario5/OnlineRL_Markov.html">Ooline Policy Learning and Evaluation in Markovian Environments</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 6</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Scenario6/OnlineRL_non_Markov.html">Ooline Policy Learning in Non-Markovian Environments</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Case Studies</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3_intro.html">Mimic3</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-19"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3-Demo-Ver2.html">Mimic3 Demo-Ver2</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../5_Case_Study/MIMIC3/Single_Stage.html">MIMIC III (Single-Stage)</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../5_Case_Study/MIMIC3/Longitudinal.html">MIMIC III (3-Stages)</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../5_Case_Study/MIMIC3/Infinite_Horizon.html">MIMIC III (Infinite Horizon)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../5_Case_Study/MovieLens/MovieLens.html">MovieLens</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F4_Causal_Policy_Learning/Scenario3/A-learning_Multiple.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/4_Causal_Policy_Learning/Scenario3/A-learning_Multiple.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>A-Learning</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#main-idea">Main Idea</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#algorithm-details">Algorithm Details</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-steps">Key Steps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#demo-code">Demo Code</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#policy-learning">1. Policy Learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#policy-evaluation">2. Policy Evaluation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-1">A.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-2">A.2</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="a-learning">
+<h1>A-Learning<a class="headerlink" href="#a-learning" title="Permalink to this heading">#</a></h1>
+<section id="main-idea">
+<h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this heading">#</a></h2>
+<p>A-Learning, also known as Advantage Learning, is one of the main approaches to learning the optimal regime and works similarly to Q-learning. However, while Q-learning requires positing regression models to fit the expected outcome, A-learning models the contrasts between treatments and control, directly informing the optimal decision. For example, in the case of <strong>Personalized Incentives</strong>, A-learning aims to find the optimal incentive (<span class="math notranslate nohighlight">\(A\)</span>) for each user by modeling the difference in expected return-on-investment (<span class="math notranslate nohighlight">\(R\)</span>) between treatments. A detailed comparison between Q-learning and A-learning can be found in [1]. While [1] mainly focus on the case with binary treatment options, a complete review of A-learning with multiple treatment options can be found in [2]. Here, following the algorithm in [1], we consider contrast-based A-learning. However, there is an alternative regret-based A-learning introduced in [3]. Some recent extensions to conventional A-learning, such as deep A-learning [4] and high-dimensional A-Learning [5], will be added soon. Overall, A-learning is doubly-robust. In other words, it is less sensitive and more robust to model misspecification.</p>
+<p>Note that, we assume the action space is either <strong>binary</strong> (i.e., 0,1) or <strong>multinomial</strong> (i.e., 0,1,2,3,4, where 0 stands for the control group by convention), and the outcome of interest R is <strong>continuous</strong> and <strong>non-negative</strong>, where the larger the <span class="math notranslate nohighlight">\(R\)</span> the better.</p>
+</section>
+<section id="algorithm-details">
+<h2>Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this heading">#</a></h2>
+<p>Suppose there are <span class="math notranslate nohighlight">\(m_t\)</span> number of options at decision point <span class="math notranslate nohighlight">\(t\)</span>, and the corresponding action space <span class="math notranslate nohighlight">\(\mathcal{A}_t=\{0,1,\dots,m_t-1\}\)</span>. At each decision point <span class="math notranslate nohighlight">\(t\)</span>, contrast-based A-learning aims to learn and estimate the constrast function, <span class="math notranslate nohighlight">\(C_{tj}(h_{t}), j=1,2,\dots,m_t-1\)</span>. Here, <span class="math notranslate nohighlight">\(h_{t}=\{\boldsymbol{S}_{1i},A_{1i},\cdots,\boldsymbol{S}_{ti}\})\)</span> includes all the information observed till step t. Furthermore, we also need to posit a model for the conditional expected outcome for the control option (treatment <span class="math notranslate nohighlight">\(0\)</span>), <span class="math notranslate nohighlight">\(Q_t(h_t,0)\)</span>, and the propensity function <span class="math notranslate nohighlight">\(\omega(h_{t},a_{t})\)</span>. Detailed definitions are provided in the following:</p>
+<ul>
+<li><p>Q-function:
+For the final step <span class="math notranslate nohighlight">\(T\)</span>,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a935ee37-d841-47a1-b898-fa602e88ea03">
+<span class="eqno">(107)<a class="headerlink" href="#equation-a935ee37-d841-47a1-b898-fa602e88ea03" title="Permalink to this equation">#</a></span>\[\begin{align}
+    Q_T(h_T,a_{T})=E[R|H_{T}=h_{T}, A_{T}=a_{T}],
+    \end{align}\]</div>
+<p>If there is a multi-stage case with total step <span class="math notranslate nohighlight">\(T&gt;1\)</span>, for the step <span class="math notranslate nohighlight">\(t=1,\cdots,T-1\)</span>,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-86bf9b78-cbe3-4946-a551-693e8a8eab2f">
+<span class="eqno">(108)<a class="headerlink" href="#equation-86bf9b78-cbe3-4946-a551-693e8a8eab2f" title="Permalink to this equation">#</a></span>\[\begin{align}
+    Q_t(h_t,a_{t})=E[V_{t+1}|H_{t}=h_{t}, A_{t}=a_{t}],
+    \end{align}\]</div>
+<p>where</p>
+<div class="amsmath math notranslate nohighlight" id="equation-64c78903-fa16-4cf7-b9cf-0dee43570ddb">
+<span class="eqno">(109)<a class="headerlink" href="#equation-64c78903-fa16-4cf7-b9cf-0dee43570ddb" title="Permalink to this equation">#</a></span>\[\begin{align}
+    V_{t}(h_{t}) = \max_{j\in\mathcal{A}_t}Q_{t}(h_t,j)
+    \end{align}\]</div>
+<p>Alternatively, with the contrast function <span class="math notranslate nohighlight">\(C_{tj}(h_t)\)</span>, which will be defined later,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-51177484-95db-405d-becf-be0657ca98af">
+<span class="eqno">(110)<a class="headerlink" href="#equation-51177484-95db-405d-becf-be0657ca98af" title="Permalink to this equation">#</a></span>\[\begin{align}
+    Q_t(h_t,j) = Q_t(h_t,0) + C_{tj}(h_t),\quad j=0,\dots,m_t-1,\quad t=1,\dots,T.
+    \end{align}\]</div>
+</li>
+<li><p>Contrast functions (optimal blip to zero functions)</p>
+<div class="amsmath math notranslate nohighlight" id="equation-6c3a7256-0756-447c-9948-19aebd6f1569">
+<span class="eqno">(111)<a class="headerlink" href="#equation-6c3a7256-0756-447c-9948-19aebd6f1569" title="Permalink to this equation">#</a></span>\[\begin{align}
+    C_{tj}(h_t)=Q_t(h_t,j)-Q_t(h_t,0),\quad j=0,\dots,m_t-1,\quad t=1,\dots,T,
+    \end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(C_{t0}(h_t) = 0\)</span>.</p>
+</li>
+<li><p>Propensity score</p>
+<div class="amsmath math notranslate nohighlight" id="equation-c7eb5b3d-3105-4492-9624-349091958c3a">
+<span class="eqno">(112)<a class="headerlink" href="#equation-c7eb5b3d-3105-4492-9624-349091958c3a" title="Permalink to this equation">#</a></span>\[\begin{align}
+    \omega_{t}(h_t,a_t)=P(A_t=a_t|H_t=h_t)
+    \end{align}\]</div>
+</li>
+<li><p>Optimal regime</p>
+<div class="amsmath math notranslate nohighlight" id="equation-f356e1d6-02bf-45d4-84e7-bd13e37147cf">
+<span class="eqno">(113)<a class="headerlink" href="#equation-f356e1d6-02bf-45d4-84e7-bd13e37147cf" title="Permalink to this equation">#</a></span>\[\begin{align}
+    d_t^{opt}(h_t)=\arg\max_{j\in\mathcal{A}_t}C_{tj}(h_t)
+    \end{align}\]</div>
+</li>
+</ul>
+<p>A backward approach was proposed to find the optimized treatment regime at each decision point.</p>
+<p>At Decision <span class="math notranslate nohighlight">\(T\)</span>, similar as what we did previously with single decision point, we estimate the <span class="math notranslate nohighlight">\(\boldsymbol{\psi}_{Tj}\)</span>, <span class="math notranslate nohighlight">\(\boldsymbol{\phi}_T\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}_T\)</span> by solving the eqautions in A.1 jointly, and the optimal decision at time <span class="math notranslate nohighlight">\(T\)</span> is calculated accordingly.</p>
+<p>Then, at Decision <span class="math notranslate nohighlight">\(t=T-1,\dots,1\)</span>, we use similar trick as decision <span class="math notranslate nohighlight">\(T\)</span>, except for changing <span class="math notranslate nohighlight">\(R\)</span> in the estimating eqautions to some pseudo outcome <span class="math notranslate nohighlight">\(\tilde{R}_{t+1,i}\)</span>, such that:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-c5700aa9-48ac-4dce-a31f-1675b7e230db">
+<span class="eqno">(114)<a class="headerlink" href="#equation-c5700aa9-48ac-4dce-a31f-1675b7e230db" title="Permalink to this equation">#</a></span>\[\begin{align}
+\tilde{R}_{ti}=\tilde{R}_{t+1,i}+\max_{j=0,\dots,m_t-1}C_{tj}(h_{ti},\hat{\boldsymbol{\psi}}_{tj})-\sum_{j=1}^{m_k-1}\mathbb{I}\{A_{ti}=j\}C_{tj}(h_{ti},\hat{\boldsymbol{\psi}}_{tj}),
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\tilde{R}_{T+1,i} = R_{i}\)</span>.</p>
+<p>Estimating <span class="math notranslate nohighlight">\(\boldsymbol{\psi}_{tj}\)</span>, <span class="math notranslate nohighlight">\(\boldsymbol{\phi}_t\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{\gamma}_t\)</span> iteratively for <span class="math notranslate nohighlight">\(t=T-1,\cdots,1\)</span>, we calculated the optimal decision at time <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(d^{opt}_{t}(h_{ti})\)</span> as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-7fa6d573-7e33-45fc-84d5-95676c32205c">
+<span class="eqno">(115)<a class="headerlink" href="#equation-7fa6d573-7e33-45fc-84d5-95676c32205c" title="Permalink to this equation">#</a></span>\[\begin{align}
+d^{opt}_{t}(h_{ti})=\arg\max_{j=0,\dots,m_t-1} C_{tj}(h_{ti};\hat{\boldsymbol{\psi}}_{tj}).
+\end{align}\]</div>
+</section>
+<section id="key-steps">
+<h2>Key Steps<a class="headerlink" href="#key-steps" title="Permalink to this heading">#</a></h2>
+<p><strong>Policy Learning:</strong></p>
+<ol class="arabic simple">
+<li><p>At the final decision point <span class="math notranslate nohighlight">\(t=T\)</span>, fitted a model <span class="math notranslate nohighlight">\(\omega_{T}(h_{T},a,\hat{\boldsymbol{\gamma}}_{T})\)</span>, and estimating <span class="math notranslate nohighlight">\(\boldsymbol{\psi}_{Tj}\)</span>, <span class="math notranslate nohighlight">\(\boldsymbol{\phi}_{T}\)</span> by solving the equations in A.2 jointly;</p></li>
+<li><p>For each individual <span class="math notranslate nohighlight">\(i\)</span>, calculated the pseudo-outcome <span class="math notranslate nohighlight">\(\tilde{R}_{Ti}\)</span>, and the optimal action <span class="math notranslate nohighlight">\(a_{Ti}\)</span>;</p></li>
+<li><p>For decision point <span class="math notranslate nohighlight">\(t = T-1,\cdots, 1\)</span>,</p>
+<ol class="arabic simple">
+<li><p>fitted a model <span class="math notranslate nohighlight">\(\omega_{t}(h_{t},a,\hat{\boldsymbol{\gamma}}_{t})\)</span>, and estimating <span class="math notranslate nohighlight">\(\boldsymbol{\psi}_{tj}\)</span>, <span class="math notranslate nohighlight">\(\boldsymbol{\phi}_{t}\)</span> by solving the equations in A.2 jointly with the pseudo-outcome <span class="math notranslate nohighlight">\(\tilde{R}_{t+1}\)</span></p></li>
+<li><p>For each individual <span class="math notranslate nohighlight">\(i\)</span>, calculated the pseudo-outcome <span class="math notranslate nohighlight">\(\tilde{R}_{ti}\)</span>, and the optimal action <span class="math notranslate nohighlight">\(d_t^{opt}(h_ti)\)</span>;</p></li>
+</ol>
+</li>
+</ol>
+<p><strong>Policy Evaluation:</strong><br />
+We use the backward iteration as what we did in policy learning. However, here for each round, the pseudo outcome is not the maximum of Q values. Instead, the pseudo outcome at decision point t is defined as below:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-e87ddd13-c02d-42c1-86d1-23558c99886f">
+<span class="eqno">(116)<a class="headerlink" href="#equation-e87ddd13-c02d-42c1-86d1-23558c99886f" title="Permalink to this equation">#</a></span>\[\begin{align}
+\tilde{R}_{ti}=\tilde{R}_{t+1,i}+C_{tj*}(h_{ti},\hat{\boldsymbol{\psi}}_{tj*})-\sum_{j=1}^{m_k-1}\mathbb{I}\{A_{ti}=j\}C_{tj}(h_{ti},\hat{\boldsymbol{\psi}}_{tj}),
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(j*=d(H_{ti})\)</span>, and <span class="math notranslate nohighlight">\(d\)</span> is the fixed regime that we want to evaluate.
+The estimated value of the policy is then the average of <span class="math notranslate nohighlight">\(\tilde{R}_{1}\)</span>.</p>
+<p><strong>Note</strong> we also provide an option for bootstrapping. Particularly, for a given policy, we utilze the boostrap resampling to get the estimated value of the regime and the corresponding estimated standard error.</p>
+</section>
+<section id="demo-code">
+<h2>Demo Code<a class="headerlink" href="#demo-code" title="Permalink to this heading">#</a></h2>
+<p>In the following, we exhibit how to apply the learner on real data to do policy learning and policy evaluation, respectively.</p>
+<section id="policy-learning">
+<h3>1. Policy Learning<a class="headerlink" href="#policy-learning" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A demo with code on how to use the package</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.CPL13.disc</span> <span class="kn">import</span> <span class="n">ALearning</span>
+<span class="kn">from</span> <span class="nn">causaldm.test</span> <span class="kn">import</span> <span class="n">shared_simulation</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">dataMDP</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;dataMDP_feasible.txt&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dataMDP</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">])</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">R</span><span class="p">),</span><span class="mi">1</span><span class="p">)),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dataMDP</span><span class="p">[[</span><span class="s1">&#39;CD4_0&#39;</span><span class="p">,</span><span class="s1">&#39;CD4_6&#39;</span><span class="p">,</span><span class="s1">&#39;CD4_12&#39;</span><span class="p">]])])</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dataMDP</span><span class="p">[[</span><span class="s1">&#39;A1&#39;</span><span class="p">,</span><span class="s1">&#39;A2&#39;</span><span class="p">,</span><span class="s1">&#39;A3&#39;</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ALearn</span> <span class="o">=</span> <span class="n">ALearning</span><span class="o">.</span><span class="n">ALearning</span><span class="p">()</span>
+<span class="n">model_info</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;X_prop&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span>
+              <span class="s1">&#39;X_q0&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span>
+               <span class="s1">&#39;X_C&#39;</span><span class="p">:{</span><span class="mi">1</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">))},</span>
+              <span class="s1">&#39;action_space&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;A1&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]}},</span>
+             <span class="p">{</span><span class="s1">&#39;X_prop&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)),</span>
+              <span class="s1">&#39;X_q0&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)),</span>
+               <span class="s1">&#39;X_C&#39;</span><span class="p">:{</span><span class="mi">1</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))},</span>
+              <span class="s1">&#39;action_space&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;A2&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]}},</span>
+             <span class="p">{</span><span class="s1">&#39;X_prop&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)),</span>
+              <span class="s1">&#39;X_q0&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)),</span>
+               <span class="s1">&#39;X_C&#39;</span><span class="p">:{</span><span class="mi">1</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))},</span>
+              <span class="s1">&#39;action_space&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;A3&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]}}]</span>
+<span class="c1"># train the policy</span>
+<span class="n">ALearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;prop&#39;: {2: &lt;statsmodels.discrete.discrete_model.MultinomialResultsWrapper at 0x19213166910&gt;,
+  1: &lt;statsmodels.discrete.discrete_model.MultinomialResultsWrapper at 0x192193bb190&gt;,
+  0: &lt;statsmodels.discrete.discrete_model.MultinomialResultsWrapper at 0x192193bb8b0&gt;},
+ &#39;Q0&#39;: {2: array([40.8924,  3.1455, -0.5109, -0.1229]),
+  1: array([158.0503,   2.9351,  -0.595 ]),
+  0: array([241.7725,   2.0474])},
+ &#39;contrast&#39;: {2: {1: array([ 3.5872e+02, -1.0493e+00,  4.9347e-03, -5.2010e-02])},
+  1: {1: array([-214.568 ,    1.1057,   -0.62  ])},
+  0: {1: array([-9.8412e+01,  9.2479e-02])}}}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># recommend action</span>
+<span class="n">opt_d</span> <span class="o">=</span> <span class="n">ALearn</span><span class="o">.</span><span class="n">recommend_action</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="c1"># get the estimated value of the optimal regime</span>
+<span class="n">V_hat</span> <span class="o">=</span> <span class="n">ALearn</span><span class="o">.</span><span class="n">predict_value</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;fitted contrast model:&quot;</span><span class="p">,</span><span class="n">ALearn</span><span class="o">.</span><span class="n">fitted_model</span><span class="p">[</span><span class="s1">&#39;contrast&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;opt regime:&quot;</span><span class="p">,</span><span class="n">opt_d</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;opt value:&quot;</span><span class="p">,</span><span class="n">V_hat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fitted contrast model: {2: {1: array([ 3.5872e+02, -1.0493e+00,  4.9347e-03, -5.2010e-02])}, 1: {1: array([-214.568 ,    1.1057,   -0.62  ])}, 0: {1: array([-9.8412e+01,  9.2479e-02])}}
+opt regime:    A3  A2  A1
+0   0   0   0
+1   0   0   0
+2   0   0   0
+3   0   0   0
+4   0   0   0
+opt value: 1162.4662578531563
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Optional: we also provide a bootstrap standard deviaiton of the optimal value estimation</span>
+<span class="c1"># Warning: results amay not be reliable</span>
+<span class="n">ALearn</span> <span class="o">=</span> <span class="n">ALearning</span><span class="o">.</span><span class="n">ALearning</span><span class="p">()</span>
+<span class="n">model_info</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;X_prop&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span>
+              <span class="s1">&#39;X_q0&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span>
+               <span class="s1">&#39;X_C&#39;</span><span class="p">:{</span><span class="mi">1</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">))},</span>
+              <span class="s1">&#39;action_space&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;A1&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]}},</span>
+             <span class="p">{</span><span class="s1">&#39;X_prop&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)),</span>
+              <span class="s1">&#39;X_q0&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)),</span>
+               <span class="s1">&#39;X_C&#39;</span><span class="p">:{</span><span class="mi">1</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))},</span>
+              <span class="s1">&#39;action_space&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;A2&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]}},</span>
+             <span class="p">{</span><span class="s1">&#39;X_prop&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)),</span>
+              <span class="s1">&#39;X_q0&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)),</span>
+               <span class="s1">&#39;X_C&#39;</span><span class="p">:{</span><span class="mi">1</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))},</span>
+              <span class="s1">&#39;action_space&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;A3&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]}}]</span>
+<span class="n">ALearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">bootstrap</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">n_bs</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">fitted_params</span><span class="p">,</span><span class="n">fitted_value</span><span class="p">,</span><span class="n">value_avg</span><span class="p">,</span><span class="n">value_std</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">ALearn</span><span class="o">.</span><span class="n">predict_value_boots</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Value_hat:&#39;</span><span class="p">,</span><span class="n">value_avg</span><span class="p">,</span><span class="s1">&#39;Value_std:&#39;</span><span class="p">,</span><span class="n">value_std</span><span class="p">)</span>
+<span class="c1">##estimated contrast model at t = 0</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;estimated_contrast:&#39;</span><span class="p">,</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;contrast&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="nn">Input In [5],</span> in <span class="ni">&lt;cell line: 16&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">ALearn</span> <span class="o">=</span> <span class="n">ALearning</span><span class="o">.</span><span class="n">ALearning</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">model_info</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;X_prop&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>               <span class="s1">&#39;X_q0&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>                <span class="s1">&#39;X_C&#39;</span><span class="p">:{</span><span class="mi">1</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">))},</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span>                <span class="s1">&#39;X_C&#39;</span><span class="p">:{</span><span class="mi">1</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))},</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span>               <span class="s1">&#39;action_space&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;A3&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]}}]</span>
+<span class="ne">---&gt; </span><span class="mi">16</span> <span class="n">ALearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">bootstrap</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">n_bs</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="n">fitted_params</span><span class="p">,</span><span class="n">fitted_value</span><span class="p">,</span><span class="n">value_avg</span><span class="p">,</span><span class="n">value_std</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">ALearn</span><span class="o">.</span><span class="n">predict_value_boots</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Value_hat:&#39;</span><span class="p">,</span><span class="n">value_avg</span><span class="p">,</span><span class="s1">&#39;Value_std:&#39;</span><span class="p">,</span><span class="n">value_std</span><span class="p">)</span>
+
+<span class="nn">File D:\anaconda3\lib\site-packages\causaldm\learners\CPL13\disc\ALearning.py:88,</span> in <span class="ni">ALearning.train</span><span class="nt">(self, X, A, Y, model_info, T, true_prop, regime, evaluate, bootstrap, n_bs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">86</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">87</span>     <span class="n">regime_sample</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="ne">---&gt; </span><span class="mi">88</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fit</span><span class="p">(</span><span class="n">X_sample</span><span class="p">,</span> <span class="n">A_sample</span><span class="p">,</span> <span class="n">Y_sample</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">regime</span> <span class="o">=</span> <span class="n">regime_sample</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">89</span> <span class="bp">self</span><span class="o">.</span><span class="n">boots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">estimate_V0</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">90</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+
+<span class="nn">File D:\anaconda3\lib\site-packages\causaldm\learners\CPL13\disc\ALearning.py:106,</span> in <span class="ni">ALearning._fit</span><span class="nt">(self, X, A, Y, T, regime)</span>
+<span class="g g-Whitespace">    </span><span class="mi">104</span>     <span class="n">pseudo_Y_prev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_pseudo_Y</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">regime</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">105</span> <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">106</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_fit_model</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">pseudo_Y_prev</span><span class="p">,</span><span class="n">t</span><span class="p">,)</span>
+<span class="g g-Whitespace">    </span><span class="mi">107</span>     <span class="n">pseudo_Y_prev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_pseudo_Y</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">pseudo_Y_prev</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span><span class="n">regime</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">108</span> <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+
+<span class="nn">File D:\anaconda3\lib\site-packages\causaldm\learners\CPL13\disc\ALearning.py:177,</span> in <span class="ni">ALearning._fit_model</span><span class="nt">(self, A, X, Y, t)</span>
+<span class="g g-Whitespace">    </span><span class="mi">175</span> <span class="n">tmp_mul</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="bp">self</span><span class="o">.</span><span class="n">contrast_model</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="n">j</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">((</span><span class="n">A</span><span class="p">[:,</span><span class="n">t</span><span class="p">]</span><span class="o">==</span><span class="n">j</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">-</span><span class="n">fitted_prop</span><span class="p">[:,</span><span class="n">j</span><span class="p">]))</span>
+<span class="g g-Whitespace">    </span><span class="mi">176</span> <span class="n">right</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">tmp_mul</span><span class="p">,</span><span class="n">right</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">177</span> <span class="n">left</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">tmp_mul</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">((</span><span class="n">A</span><span class="p">[:,</span><span class="n">t</span><span class="p">]</span><span class="o">==</span><span class="n">j</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)),</span><span class="n">X</span><span class="p">[:,</span><span class="bp">self</span><span class="o">.</span><span class="n">contrast_model</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="n">j</span><span class="p">]]))</span>
+<span class="g g-Whitespace">    </span><span class="mi">178</span> <span class="n">new_psi</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">left</span><span class="p">),</span><span class="n">right</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">179</span> <span class="n">delta</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">new_psi</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">-</span><span class="n">old_psi</span><span class="p">[</span><span class="n">j</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="nn">File &lt;__array_function__ internals&gt;:5,</span> in <span class="ni">dot</span><span class="nt">(*args, **kwargs)</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="policy-evaluation">
+<h3>2. Policy Evaluation<a class="headerlink" href="#policy-evaluation" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#specify the fixed regime to be tested</span>
+<span class="c1"># For example, regime d = 0 for all subjects</span>
+<span class="n">N</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">shape</span>
+<span class="n">ALearn</span> <span class="o">=</span> <span class="n">ALearning</span><span class="o">.</span><span class="n">ALearning</span><span class="p">()</span>
+<span class="c1"># regime should be in the same format as A, which is a dict</span>
+<span class="n">regime</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;A1&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">N</span><span class="p">),</span><span class="s1">&#39;A2&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">N</span><span class="p">),</span><span class="s1">&#39;A3&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">N</span><span class="p">)})</span>
+<span class="n">model_info</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;X_prop&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span>
+              <span class="s1">&#39;X_q0&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span>
+               <span class="s1">&#39;X_C&#39;</span><span class="p">:{</span><span class="mi">1</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">))},</span>
+              <span class="s1">&#39;action_space&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;A1&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]}},</span>
+             <span class="p">{</span><span class="s1">&#39;X_prop&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)),</span>
+              <span class="s1">&#39;X_q0&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)),</span>
+               <span class="s1">&#39;X_C&#39;</span><span class="p">:{</span><span class="mi">1</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))},</span>
+              <span class="s1">&#39;action_space&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;A2&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]}},</span>
+             <span class="p">{</span><span class="s1">&#39;X_prop&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)),</span>
+              <span class="s1">&#39;X_q0&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)),</span>
+               <span class="s1">&#39;X_C&#39;</span><span class="p">:{</span><span class="mi">1</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))},</span>
+              <span class="s1">&#39;action_space&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;A3&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]}}]</span>
+<span class="n">ALearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">regime</span> <span class="o">=</span> <span class="n">regime</span><span class="p">,</span> <span class="n">evaluate</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">ALearn</span><span class="o">.</span><span class="n">predict_value</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1162.4662578531918
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># bootstrap average and the std of estimate value</span>
+<span class="n">ALearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">regime</span> <span class="o">=</span> <span class="n">regime</span><span class="p">,</span> <span class="n">evaluate</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">bootstrap</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">n_bs</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">fitted_params</span><span class="p">,</span><span class="n">fitted_value</span><span class="p">,</span><span class="n">value_avg</span><span class="p">,</span><span class="n">value_std</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">ALearn</span><span class="o">.</span><span class="n">predict_value_boots</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Value_hat:&#39;</span><span class="p">,</span><span class="n">value_avg</span><span class="p">,</span><span class="s1">&#39;Value_std:&#39;</span><span class="p">,</span><span class="n">value_std</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 1162.3966192806022 Value_std: 4.626837283714682
+</pre></div>
+</div>
+</div>
+</div>
+<p>💥 Placeholder for C.I.</p>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Schulte, P. J., Tsiatis, A. A., Laber, E. B., &amp; Davidian, M. (2014). Q-and A-learning methods for estimating optimal dynamic treatment regimes. Statistical science: a review journal of the Institute of Mathematical Statistics, 29(4), 640.</p></li>
+<li><p>Robins, J. M. (2004). Optimal structural nested models for optimal sequential decisions. In Proceedings of the second seattle Symposium in Biostatistics (pp. 189-326). Springer, New York, NY.</p></li>
+<li><p>Murphy, S. A. (2003). Optimal dynamic treatment regimes. Journal of the Royal Statistical Society: Series B (Statistical Methodology), 65(2), 331-355.</p></li>
+<li><p>Liang, S., Lu, W., &amp; Song, R. (2018). Deep advantage learning for optimal dynamic treatment regime. Statistical theory and related fields, 2(1), 80-88.</p></li>
+<li><p>Shi, C., Fan, A., Song, R., &amp; Lu, W. (2018). High-dimensional A-learning for optimal dynamic treatment regimes. Annals of statistics, 46(3), 925.</p></li>
+</ol>
+</section>
+<section id="a-1">
+<h2>A.1<a class="headerlink" href="#a-1" title="Permalink to this heading">#</a></h2>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+&amp;\sum_{i=1}^n \left[\frac{\partial C_{Tj}(H_{Ti};\boldsymbol{\psi}_{Tj})}{\partial \psi_{Tj}}\{\mathbb{I}\{A_{Ti}=j\}-\omega_T(H_{Ti},j;\boldsymbol{\gamma}_T)\}\times \Big\{R_i-\sum_{j'=1}^{m_T-1} \mathbb{I}\{A_{Ti}=j'\}C_{Tj'}(H_{Ti};\boldsymbol{\psi}_{Tj'})-Q_T(H_{Ti},0;\boldsymbol{\phi}_{T})\Big\}\right]=0\\
+&amp;\sum_{i=1}^n \left[\frac{\partial Q_T(H_{Ti},0;\boldsymbol{\phi}_T)}{\partial \boldsymbol{\phi}_T}\Big\{R_i-\sum_{j'=1}^{m_T-1} \mathbb{I}\{A_{Ti}=j'\}C_{Tj'}(H_{Ti};\boldsymbol{\psi}_{Tj'})-Q_T(H_{Ti},0;\boldsymbol{\phi}_T)\Big\}\right]=0\\
+&amp;\sum_{i=1}^n \left[\frac{\partial \omega_T(H_{Ti},j;\boldsymbol{\gamma}_T)}{\partial \boldsymbol{\gamma}_T}\Big\{R_i-\sum_{j'=1}^{m_T-1} \mathbb{I}\{A_{Ti}=j'\}C_{Tj'}(H_{Ti};\boldsymbol{\psi}_{Tj'})-Q_T(H_{Ti},0;\boldsymbol{\phi}_T)\Big\}\right]=0
+\end{aligned}
+\end{split}\]</div>
+</section>
+<section id="a-2">
+<h2>A.2<a class="headerlink" href="#a-2" title="Permalink to this heading">#</a></h2>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+&amp;\sum_{i=1}^n \left[\frac{\partial C_{tj}(H_{ti};\boldsymbol{\psi}_{tj})}{\partial \boldsymbol{\psi}_{tj}}\{\mathbb{I}\{A_{ti}=j\}-\omega_T(H_{ti},j;\boldsymbol{\gamma}_t)\}\times \Big\{\tilde{R}_{t+1,i}-\sum_{j'=1}^{m_t-1} \mathbb{I}\{A_{ti}=j'\}C_{tj'}(H_{ti};\boldsymbol{\psi}_{tj'})-Q_t(H_{ti},0;\boldsymbol{\phi}_{t})\Big\}\right]=0\\
+&amp;\sum_{i=1}^n \left[\frac{\partial Q_t(H_{ti},0;\boldsymbol{\phi}_t)}{\partial \boldsymbol{\phi}_t}\Big\{\tilde{R}_{t+1,i}-\sum_{j'=1}^{m_t-1} \mathbb{I}\{A_{ti}=j'\}C_{tj'}(H_{ti};\boldsymbol{\psi}_{tj'})-Q_t(H_{ti},0;\boldsymbol{\phi}_t)\Big\}\right]=0\\
+&amp;\sum_{i=1}^n \left[\frac{\partial \omega_t(H_{ti},j;\boldsymbol{\gamma}_t)}{\partial \boldsymbol{\gamma}_t}\Big\{\tilde{R}_{t+1,i}-\sum_{j'=1}^{m_t-1} \mathbb{I}\{A_{ti}=j'\}C_{tj'}(H_{ti};\boldsymbol{\psi}_{tj'})-Q_t(H_{ti},0;\boldsymbol{\phi}_t)\Big\}\right]=0
+\end{aligned}
+\end{split}\]</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./4_Causal_Policy_Learning\Scenario3"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Q-learning_Multiple.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Q-Learning</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Scenario4/Bandits.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Overview: Bandits ALgorithm</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#main-idea">Main Idea</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#algorithm-details">Algorithm Details</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-steps">Key Steps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#demo-code">Demo Code</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#policy-learning">1. Policy Learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#policy-evaluation">2. Policy Evaluation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-1">A.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-2">A.2</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Causal Decision Making Team
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
