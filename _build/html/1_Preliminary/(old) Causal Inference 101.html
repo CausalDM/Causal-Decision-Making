@@ -1,13 +1,10 @@
 
-
 <!DOCTYPE html>
 
-
-<html lang="en" >
-
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Causal Inference 101 &#8212; Causal Decision Making</title>
   
@@ -19,18 +16,18 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
@@ -38,9 +35,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -49,7 +45,7 @@
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -67,97 +63,656 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = '1_Preliminary/(old) Causal Inference 101';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="en"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
   </head>
   
   
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
 
   
   
   <a class="skip-link" href="#main-content">Skip to main content</a>
-  
-  <div id="pst-scroll-pixel-helper"></div>
 
   
-  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
-
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
   <label class="overlay overlay-primary" for="__primary"></label>
+
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
   <label class="overlay overlay-secondary" for="__secondary"></label>
+
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
     <div class="search-button__search-container">
-<form class="bd-search d-flex align-items-center"
-      action="../search.html"
-      method="get">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search"
-         class="form-control"
-         name="q"
-         id="search-input"
-         placeholder="Search this book..."
-         aria-label="Search this book..."
-         autocomplete="off"
-         autocorrect="off"
-         autocapitalize="off"
-         spellcheck="false"/>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
+</form>
+    </div>
   </div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
   
+
+
+<a class="navbar-brand logo" href="../Overview.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../0_Motivating_Examples/CSL.html">
+                        Causal Structure Learning (CSL)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../0_Motivating_Examples/CEL.html">
+                        Causal Effect Learning (CEL)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../0_Motivating_Examples/CPL.html">
+                        Causal Policy Learning (CPL)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="Causal%20Inference%20Preliminary.html">
+                        Causal Inference Preliminary
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../2_Causal_Structure_Learning/Preliminaries%20of%20Causal%20Graphs.html">
+                        Preliminaries of Causal Graphs
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../2_Causal_Structure_Learning/Causal%20Discovery.html">
+                        Causal Discovery
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../2_Causal_Structure_Learning/Causal%20Mediation%20Analysis.html">
+                        Causal Mediation Analysis
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../3_Causal_Effect_Learning/Scenario%201/Single%20Stage.html">
+                        Single Stage – Paradigm 1
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../3_Causal_Effect_Learning/Scenario%202/underMDP.html">
+                        Markov Decision Processes – Paradigm 2
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../3_Causal_Effect_Learning/Scenario%203/Panel%20Data.html">
+                        Panel Data  – Paradigm 3
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario1/Single%20Stage.html">
+                        Single Stage
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario1/Discrete.html">
+                        Discrete Action Space
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario1/Continuous.html">
+                        Continuous Action Space
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario1/PlanToDo.html">
+                        Plan To Do
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario2/preliminary_MDP-potential-outcome.html">
+                        Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario2/Evaluation.html">
+                        Policy Evaluation–Value Estimation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario2/MediationRL.html">
+                        Policy Evaluation--Mediation Analysis
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario2/Optimization.html">
+                        Policy Optimization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario3/Multi%20Stage.html">
+                        Multiple Stages (DTR)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario3/Q-learning_Multiple.html">
+                        Q-Learning
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario3/A-learning_Multiple.html">
+                        A-Learning
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/Bandits.html">
+                        Overview: Bandits ALgorithm
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/MAB/MAB.html">
+                        Multi-Armed Bandits (MAB)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/Contextual_Bandits.html">
+                        Contextual Bandits
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/Meta_Bandits.html">
+                        Meta Bandits
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Structured_Bandit.html">
+                        Structured Bandit (Slate Recommendation)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/OnlineEval/Online%20Policy%20Evaluation.html">
+                        Online Policy Evaluation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario5/OnlineRL_Markov.html">
+                        Ooline Policy Learning and Evaluation in Markovian Environments
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario6/OnlineRL_non_Markov.html">
+                        Ooline Policy Learning in Non-Markovian Environments
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../5_Case_Study/MIMIC3/MIMIC3_intro.html">
+                        Mimic3
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../5_Case_Study/MovieLens/MovieLens.html">
+                        MovieLens
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
       <div class="bd-sidebar-primary bd-sidebar">
         
-
   
   <div class="sidebar-header-items sidebar-primary__section">
     
     
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../0_Motivating_Examples/CSL.html">
+                        Causal Structure Learning (CSL)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../0_Motivating_Examples/CEL.html">
+                        Causal Effect Learning (CEL)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../0_Motivating_Examples/CPL.html">
+                        Causal Policy Learning (CPL)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="Causal%20Inference%20Preliminary.html">
+                        Causal Inference Preliminary
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../2_Causal_Structure_Learning/Preliminaries%20of%20Causal%20Graphs.html">
+                        Preliminaries of Causal Graphs
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../2_Causal_Structure_Learning/Causal%20Discovery.html">
+                        Causal Discovery
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../2_Causal_Structure_Learning/Causal%20Mediation%20Analysis.html">
+                        Causal Mediation Analysis
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../3_Causal_Effect_Learning/Scenario%201/Single%20Stage.html">
+                        Single Stage – Paradigm 1
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../3_Causal_Effect_Learning/Scenario%202/underMDP.html">
+                        Markov Decision Processes – Paradigm 2
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../3_Causal_Effect_Learning/Scenario%203/Panel%20Data.html">
+                        Panel Data  – Paradigm 3
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario1/Single%20Stage.html">
+                        Single Stage
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario1/Discrete.html">
+                        Discrete Action Space
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario1/Continuous.html">
+                        Continuous Action Space
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario1/PlanToDo.html">
+                        Plan To Do
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario2/preliminary_MDP-potential-outcome.html">
+                        Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario2/Evaluation.html">
+                        Policy Evaluation–Value Estimation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario2/MediationRL.html">
+                        Policy Evaluation--Mediation Analysis
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario2/Optimization.html">
+                        Policy Optimization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario3/Multi%20Stage.html">
+                        Multiple Stages (DTR)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario3/Q-learning_Multiple.html">
+                        Q-Learning
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario3/A-learning_Multiple.html">
+                        A-Learning
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/Bandits.html">
+                        Overview: Bandits ALgorithm
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/MAB/MAB.html">
+                        Multi-Armed Bandits (MAB)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/Contextual_Bandits.html">
+                        Contextual Bandits
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/Meta_Bandits.html">
+                        Meta Bandits
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Structured_Bandit.html">
+                        Structured Bandit (Slate Recommendation)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario4/OnlineEval/Online%20Policy%20Evaluation.html">
+                        Online Policy Evaluation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario5/OnlineRL_Markov.html">
+                        Ooline Policy Learning and Evaluation in Markovian Environments
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../4_Causal_Policy_Learning/Scenario6/OnlineRL_non_Markov.html">
+                        Ooline Policy Learning in Non-Markovian Environments
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../5_Case_Study/MIMIC3/MIMIC3_intro.html">
+                        Mimic3
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../5_Case_Study/MovieLens/MovieLens.html">
+                        MovieLens
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
     
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
     
   </div>
+
   
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item">
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
   
 
+
 <a class="navbar-brand logo" href="../Overview.html">
+
   
   
   
   
   
-    
-    
-      
-    
-    
-    <img src="../_static/logo.png" class="logo__image only-light" alt="Causal Decision Making - Home"/>
-    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Causal Decision Making - Home"/>`);</script>
   
   
-</a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+
+  
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -360,146 +915,57 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 
     </div>
-</nav></div>
+</nav>
     </div>
-  
-  
-  <div class="sidebar-primary-items__end sidebar-primary__section">
   </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
   
   <div id="rtd-footer-container"></div>
 
-
       </div>
-      
       <main id="main-content" class="bd-main">
         
         
 
 <div class="sbt-scroll-pixel-helper"></div>
 
-          <div class="bd-content">
-            <div class="bd-article-container">
-              
-              <div class="bd-header-article">
-<div class="header-article-items header-article__inner">
-  
-    <div class="header-article-items__start">
-      
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <span class="fa-solid fa-bars"></span>
-</label></div>
-      
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
     </div>
-  
-  
-    <div class="header-article-items__end">
-      
-        <div class="header-article-item">
-
-<div class="article-header-buttons">
+    <div class="header-article__right">
 
 
-
-
-
-<div class="dropdown dropdown-source-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
-    <i class="fab fa-github"></i>
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
   </button>
   <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
-   class="btn btn-sm btn-source-repository-button dropdown-item"
-   title="Source repository"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="btn__text-container">Repository</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F1_Preliminary/(old) Causal Inference 101.html&body=Your%20issue%20content%20here." target="_blank"
-   class="btn btn-sm btn-source-issues-button dropdown-item"
-   title="Open an issue"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="btn__text-container">Open issue</span>
-</a>
-</li>
-      
   </ul>
 </div>
-
-
-
-
-
-
-<div class="dropdown dropdown-download-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
-    <i class="fas fa-download"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="../_sources/1_Preliminary/(old) Causal Inference 101.ipynb" target="_blank"
-   class="btn btn-sm btn-download-source-button dropdown-item"
-   title="Download source file"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="btn__text-container">.ipynb</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li>
-<button onclick="window.print()"
-  class="btn btn-sm btn-download-pdf-button dropdown-item"
-  title="Print to PDF"
-  data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="btn__text-container">.pdf</span>
-</button>
-</li>
-      
-  </ul>
-</div>
-
-
-
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
-  title="Fullscreen mode"
-  data-bs-placement="bottom" data-bs-toggle="tooltip"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
 >
   
 
@@ -510,34 +976,93 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
-  </button>
-`);
-</script>
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+<div class="dropdown dropdown-repository-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
   </button>
-`);
-</script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
-</div></div>
-      
-    </div>
+  <ul class="dropdown-menu">
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
   
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">repository</span>
+</a>
+</a>
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F1_Preliminary/(old) Causal Inference 101.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">open issue</span>
+</a>
+</a>
+      
+  </ul>
 </div>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="../_sources/1_Preliminary/(old) Causal Inference 101.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
 </div>
-              
-              
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
+    </div>
+</div>
+            </div>
+            
+            
 
 <div id="jb-print-docs-body" class="onlyprint">
     <h1>Causal Inference 101</h1>
@@ -550,29 +1075,59 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#potential-outcome">Potential Outcome</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions">Assumptions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#average-causal-effect">Average Causal Effect</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#outcome-regression-models">Outcome Regression Models</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#propensity-score">Propensity Score</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#stratification">Stratification</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#inverse-propensity-score-weighting">Inverse Propensity Score Weighting</a></li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#potential-outcome">
+   Potential Outcome
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#assumptions">
+   Assumptions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#average-causal-effect">
+   Average Causal Effect
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#outcome-regression-models">
+     Outcome Regression Models
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#propensity-score">
+     Propensity Score
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#stratification">
+       Stratification
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#inverse-propensity-score-weighting">
+       Inverse Propensity Score Weighting
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#doubly-robust-estimators">
+     Doubly Robust Estimators
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#doubly-robust-estimators">Doubly Robust Estimators</a></li>
-</ul>
-</li>
-</ul>
+
             </nav>
         </div>
     </div>
 </div>
 
+            <article class="bd-article" role="main">
               
-                
-<div id="searchbox"></div>
-                <article class="bd-article" role="main">
-                  
   <section id="causal-inference-101">
 <h1>Causal Inference 101<a class="headerlink" href="#causal-inference-101" title="Permalink to this heading">#</a></h1>
 <p>Classical statistical inference considers associational relationships of different variables in a population of interest. However, in scientific research, we are often interested in causal relationships. Does action <span class="math notranslate nohighlight">\(T\)</span> cause <span class="math notranslate nohighlight">\(Y\)</span>. In this section, we will focus on establishing and estimating causal relationships between actions or interventions and subsequent response, under the potential outcome framework advocated by Neyman, Rubin, Robins and others.</p>
@@ -587,24 +1142,24 @@ document.write(`
 <ul class="simple">
 <li><p>SUTVA (stable unit treatment value assumption)</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-b777ac82-c1ab-406d-af62-6e784e0b9f1d">
-<span class="eqno">()<a class="headerlink" href="#equation-b777ac82-c1ab-406d-af62-6e784e0b9f1d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-401a17e8-d273-4488-81df-9c8a8e4b55f9">
+<span class="eqno">()<a class="headerlink" href="#equation-401a17e8-d273-4488-81df-9c8a8e4b55f9" title="Permalink to this equation">#</a></span>\[\begin{align}
 Y_i = Y_i^*(1) T_i + Y_i^*(0) (1-T_i), i = 1, \cdots, n.
 \end{align}\]</div>
 <p>That is, the actual response that is observed for the <span class="math notranslate nohighlight">\(i\)</span>-th individual in our sample, <span class="math notranslate nohighlight">\(Y_i\)</span>, who received treatment <span class="math notranslate nohighlight">\(T_i\)</span>, is the same as the potential outcome for that assigned treatment regardless of the experimental conditions used to assign treatment. This assumption also indicates that there are not any interference between subjects in the population, that is, the observed response for any individual is not affected by the responses of other individuals</p>
 <ul class="simple">
 <li><p>No Unmeasured Confounders (Strong Ignorability)</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-8f432a03-55a1-4dfa-819d-04c64efb4fbf">
-<span class="eqno">()<a class="headerlink" href="#equation-8f432a03-55a1-4dfa-819d-04c64efb4fbf" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-03ae6e66-97dc-405d-a155-cbfb499e4ba2">
+<span class="eqno">()<a class="headerlink" href="#equation-03ae6e66-97dc-405d-a155-cbfb499e4ba2" title="Permalink to this equation">#</a></span>\[\begin{align}
 \{Y^*(0), Y^*(1)\} \perp\!\!\!\perp T|X
 \end{align}\]</div>
 <p>We cannot use the data in an observational study to either confirm or refute this assumption. However, if we believe that <span class="math notranslate nohighlight">\(X\)</span> contained all the relevant information about the treatment assignment, then it will be reasonable to make the above assumption.</p>
 <ul class="simple">
 <li><p>Positivity Assumption</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-5ea2a86e-d849-4603-9032-8ad5f1aad4cb">
-<span class="eqno">()<a class="headerlink" href="#equation-5ea2a86e-d849-4603-9032-8ad5f1aad4cb" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5139698e-95bd-458f-b603-a3d9bab68540">
+<span class="eqno">()<a class="headerlink" href="#equation-5139698e-95bd-458f-b603-a3d9bab68540" title="Permalink to this equation">#</a></span>\[\begin{align}
 0 &lt; P(T=1|X=x) &lt; 1
 \end{align}\]</div>
 <p>This assumption ensures that for any given individual in treatment group <span class="math notranslate nohighlight">\(1\)</span>, we are able to find a similar individual in treatment group <span class="math notranslate nohighlight">\(0\)</span>, and vice versa.</p>
@@ -616,52 +1171,52 @@ There are two general approaches to deriving estimators for the average causal t
 <section id="outcome-regression-models">
 <h3>Outcome Regression Models<a class="headerlink" href="#outcome-regression-models" title="Permalink to this heading">#</a></h3>
 <p>The use of outcome regression modeling to estimate the average causal treatment effect from observational data under the assumption of no unmeasured confouners and SUTVA comes from the following consideration:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-70baf78e-9ce0-456b-a67b-4b1b70d15f65">
-<span class="eqno">()<a class="headerlink" href="#equation-70baf78e-9ce0-456b-a67b-4b1b70d15f65" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-344bab8f-e778-441d-8cbe-d233c4c4554b">
+<span class="eqno">()<a class="headerlink" href="#equation-344bab8f-e778-441d-8cbe-d233c4c4554b" title="Permalink to this equation">#</a></span>\[\begin{align}
 E[Y^*(1)] &amp;= E_x [E\{Y^*(1)|X\}] \\
 &amp;= E_x[E\{Y^*(1)|T=1, X\}] \quad \text{No Unmeasured Confounders}\\
 &amp;= E_x[E\{Y|T=1, X\}] \quad \text{SUTVA}
 \end{align}\]</div>
 <p>Similarly, we can show that <span class="math notranslate nohighlight">\(E[Y^*(0)] = E_x[E\{Y|T=0, X\}].\)</span>
 Hence, the average causal treatment effect</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4aa26f1b-5141-4562-8f23-78fb79fcb387">
-<span class="eqno">()<a class="headerlink" href="#equation-4aa26f1b-5141-4562-8f23-78fb79fcb387" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-949b1314-e700-4f08-b9e0-b88a30b49df1">
+<span class="eqno">()<a class="headerlink" href="#equation-949b1314-e700-4f08-b9e0-b88a30b49df1" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{ATE} = E_x[E\{Y|T=1, X\}] - E_x[E\{Y|T=0, X\}]
 \end{align}\]</div>
 <p>We can posit a model for <span class="math notranslate nohighlight">\(E[Y|T, X] = \mu(X, T;\gamma)\)</span>, and estimate the parameter <span class="math notranslate nohighlight">\(\gamma\)</span> via MLE or least square estimation. Then,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-80b20a0a-7a0b-45b2-8fbd-8f330335e4af">
-<span class="eqno">()<a class="headerlink" href="#equation-80b20a0a-7a0b-45b2-8fbd-8f330335e4af" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b0391e7a-424e-4f6c-bb67-b0b812736326">
+<span class="eqno">()<a class="headerlink" href="#equation-b0391e7a-424e-4f6c-bb67-b0b812736326" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{\text{ATE}} = n^{-1}\sum_{i=1}^n \{\mu(X_i, 1;\hat{\gamma}) - \mu(X_i, 0; \hat{\gamma})\}
 \end{align}\]</div>
 </section>
 <section id="propensity-score">
 <h3>Propensity Score<a class="headerlink" href="#propensity-score" title="Permalink to this heading">#</a></h3>
 <p>Another class of estimators for the average causal treatment effect uses propensity score, defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5c461c69-12b6-4e89-9142-351525b86e6a">
-<span class="eqno">()<a class="headerlink" href="#equation-5c461c69-12b6-4e89-9142-351525b86e6a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fd1eb466-523f-4b3a-b577-28bbb790f0e0">
+<span class="eqno">()<a class="headerlink" href="#equation-fd1eb466-523f-4b3a-b577-28bbb790f0e0" title="Permalink to this equation">#</a></span>\[\begin{align}
 \pi(X) = P(T=1|X)
 \end{align}\]</div>
 <p>in the case where there are two treatments. It refers to the propensity of getting one of the treatments as a function of the covariates. One of the attractive features of the propensity score, that makes it useful for causal inference follows from the fact that given the <code class="docutils literal notranslate"><span class="pre">SUTVA</span></code> and <code class="docutils literal notranslate"><span class="pre">strong</span> <span class="pre">ignorability</span></code> assumptions, then</p>
-<div class="amsmath math notranslate nohighlight" id="equation-74252906-c510-4cf4-a531-7f60ed3c856c">
-<span class="eqno">()<a class="headerlink" href="#equation-74252906-c510-4cf4-a531-7f60ed3c856c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d7c38851-a496-4b4e-b717-70ec69c069be">
+<span class="eqno">()<a class="headerlink" href="#equation-d7c38851-a496-4b4e-b717-70ec69c069be" title="Permalink to this equation">#</a></span>\[\begin{align}
 \{Y^*(1), Y^*(0)\} \perp\!\!\!\perp T|\pi(X)
 \end{align}\]</div>
 <p>It may be difficult to build an outcome regression model for <span class="math notranslate nohighlight">\(E[Y|T, X]\)</span> if <span class="math notranslate nohighlight">\(X\)</span> is high dimensional, however, based on the above result, we can simply build models for <span class="math notranslate nohighlight">\(E[Y|T, \pi(X)]\)</span>.</p>
 <section id="stratification">
 <h4>Stratification<a class="headerlink" href="#stratification" title="Permalink to this heading">#</a></h4>
 <p>Rubin suggested the following to estimate ATE. Stratify the observations into groups based on the value of the estimated propensity scores <span class="math notranslate nohighlight">\(\hat{\pi}(X_i), i=1, \cdots, n\)</span>. That is, choose cutoff values,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3ce8d2b4-7607-454c-a724-d51451fa1464">
-<span class="eqno">()<a class="headerlink" href="#equation-3ce8d2b4-7607-454c-a724-d51451fa1464" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7f2c7ace-a8b6-408b-95dc-4dfadc17835c">
+<span class="eqno">()<a class="headerlink" href="#equation-7f2c7ace-a8b6-408b-95dc-4dfadc17835c" title="Permalink to this equation">#</a></span>\[\begin{align}
 0 = C_0 &lt; C_1 &lt; \cdots &lt; C_K = 1,
 \end{align}\]</div>
 <p>then individual <span class="math notranslate nohighlight">\(i\)</span> belongs to group <span class="math notranslate nohighlight">\(k\)</span> if</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6ba2a1e2-314a-4f15-89d3-bfafba5b202b">
-<span class="eqno">()<a class="headerlink" href="#equation-6ba2a1e2-314a-4f15-89d3-bfafba5b202b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c7ac6cb8-7bdb-4489-b1ea-393a9c4ed34a">
+<span class="eqno">()<a class="headerlink" href="#equation-c7ac6cb8-7bdb-4489-b1ea-393a9c4ed34a" title="Permalink to this equation">#</a></span>\[\begin{align}
 C_{k-1} &lt; \hat{\pi}(X_i) \le C_k, k=1, \cdots, K,
 \end{align}\]</div>
 <p>then</p>
-<div class="amsmath math notranslate nohighlight" id="equation-23fc480e-3061-41a5-b96a-2d6450da24d9">
-<span class="eqno">()<a class="headerlink" href="#equation-23fc480e-3061-41a5-b96a-2d6450da24d9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-88af37ac-97f5-42cf-898d-7af6ae819583">
+<span class="eqno">()<a class="headerlink" href="#equation-88af37ac-97f5-42cf-898d-7af6ae819583" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{ATE} = \sum_{k=1}^K (\bar{Y}_{1k} - \bar{Y}_{0k}) n_k /n
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\hat{Y}_{1k}, \hat{Y}_{0k}\)</span> are the sample average responses among individuals in the <span class="math notranslate nohighlight">\(k-\)</span>th group receiving treatments <span class="math notranslate nohighlight">\(1\)</span> and <span class="math notranslate nohighlight">\(0\)</span> respectively, and <span class="math notranslate nohighlight">\(n_k\)</span> is the number of individuals from both treatments in the <span class="math notranslate nohighlight">\(k-\)</span>th group.</p>
@@ -670,18 +1225,18 @@ C_{k-1} &lt; \hat{\pi}(X_i) \le C_k, k=1, \cdots, K,
 <h4>Inverse Propensity Score Weighting<a class="headerlink" href="#inverse-propensity-score-weighting" title="Permalink to this heading">#</a></h4>
 <p>Another class of estimators with a more theoretical justification coming from semiparametric theory uses the inverse propensity score estimator and augmented inverse propensity score estimator for the average causal treatment effect.</p>
 <p>The motivation of IPW is as follows. Since the propensity (probability) of receiving treatment <span class="math notranslate nohighlight">\(1\)</span> is <span class="math notranslate nohighlight">\(\pi(X)\)</span> for an individual with baseline covariates <span class="math notranslate nohighlight">\(X\)</span>, then every individual with covariates <span class="math notranslate nohighlight">\(X_i\)</span> that was observed to receive treatment 1 in our sample is weighted by <span class="math notranslate nohighlight">\(1/\pi(X_i)\)</span> so that their response not only represent themselves but also other individuals who did not receive treatment 1. More formally, we will show that <span class="math notranslate nohighlight">\(\frac{TY}{\pi(X)}\)</span> is an unbiased estimator of <span class="math notranslate nohighlight">\(E[Y^*(1)]\)</span>. This follows that, given the <code class="docutils literal notranslate"><span class="pre">positivity</span></code> assumption,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2d3adf9c-c4ed-4a28-92b7-0e02e467ef35">
-<span class="eqno">()<a class="headerlink" href="#equation-2d3adf9c-c4ed-4a28-92b7-0e02e467ef35" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-92ccf121-1279-4468-8221-653d18b4db0f">
+<span class="eqno">()<a class="headerlink" href="#equation-92ccf121-1279-4468-8221-653d18b4db0f" title="Permalink to this equation">#</a></span>\[\begin{align}
 E\left[\frac{TY}{\pi(X)}\right] = E\left[\frac{TY^*(1)}{\pi(X)}\right] = E\left[E\left\{\frac{TY^*(1)}{\pi(X)}|X\right\}\right] = E\left[E\left\{\frac{T}{\pi(X)}|X\right\}Y^*(1)\right] = E[Y^*(1)].
 \end{align}\]</div>
 <p>Similarly, we have</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8efc4b36-8ecb-4bf7-9429-71160cb50d80">
-<span class="eqno">()<a class="headerlink" href="#equation-8efc4b36-8ecb-4bf7-9429-71160cb50d80" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-264aeb2c-a1f8-404e-9b8a-3554fa81c708">
+<span class="eqno">()<a class="headerlink" href="#equation-264aeb2c-a1f8-404e-9b8a-3554fa81c708" title="Permalink to this equation">#</a></span>\[\begin{align}
 E[Y^*(0)] = E\left[\frac{(1-T)Y}{1-\pi(X)} \right],
 \end{align}\]</div>
 <p>Consequently, then another unbiased estimator for the average causal treatment effect would be</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3b19dd6a-8c26-4756-9f36-37f8eccc0e5f">
-<span class="eqno">()<a class="headerlink" href="#equation-3b19dd6a-8c26-4756-9f36-37f8eccc0e5f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ca1ed448-76c2-453c-85e5-b45d8339fb28">
+<span class="eqno">()<a class="headerlink" href="#equation-ca1ed448-76c2-453c-85e5-b45d8339fb28" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{\text{ATE}} = n^{-1}\sum_{i=1}^n \left\{\frac{T_iY_i}{\pi(X_i)}  - \frac{(1-T_i)Y_i}{1-\pi(X_i)}  \right\}
 \end{align}\]</div>
 </section>
@@ -689,8 +1244,8 @@ E[Y^*(0)] = E\left[\frac{(1-T)Y}{1-\pi(X)} \right],
 <section id="doubly-robust-estimators">
 <h3>Doubly Robust Estimators<a class="headerlink" href="#doubly-robust-estimators" title="Permalink to this heading">#</a></h3>
 <p>We are able to combine outcome regression estimator and the propensity score weighted estimator to obtain another so-called doubly robust estimator, as follows</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7b82103f-fbb0-4c94-a01c-e24c00752ae6">
-<span class="eqno">()<a class="headerlink" href="#equation-7b82103f-fbb0-4c94-a01c-e24c00752ae6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5bbd49ea-18ce-4472-8fdc-f545588ddbb3">
+<span class="eqno">()<a class="headerlink" href="#equation-5bbd49ea-18ce-4472-8fdc-f545588ddbb3" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{\text{ATE}} = n^{-1}\sum_{i=1}^n \left\{\mu(X_i,1;\hat{\gamma})+\frac{T_i(Y_i - \mu(X_i,1;\hat{\gamma}))}{\hat{\pi}(X_i)} - \mu(X_i,0;\hat{\gamma}) - \frac{(1-T_i)(Y_i-\mu(X_i,0;\hat{\gamma}))}{1-\hat{\pi}(X_i)} \right\}
 \end{align}\]</div>
 </section>
@@ -717,51 +1272,85 @@ E[Y^*(0)] = E\left[\frac{(1-T)Y}{1-\pi(X)} \right],
     </script>
     <script>kernelName = 'python3'</script>
 
-                </article>
-              
+            </article>
+            
 
-              
-              
-              
-              
-                <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
-<div class="prev-next-area">
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
 </div>
-                </footer>
-              
-            </div>
-            
-            
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#potential-outcome">Potential Outcome</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions">Assumptions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#average-causal-effect">Average Causal Effect</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#outcome-regression-models">Outcome Regression Models</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#propensity-score">Propensity Score</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#stratification">Stratification</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#inverse-propensity-score-weighting">Inverse Propensity Score Weighting</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#doubly-robust-estimators">Doubly Robust Estimators</a></li>
-</ul>
-</li>
-</ul>
-  </nav></div>
-
-</div></div>
-              
+            </footer>
             
           </div>
-          <footer class="bd-footer-content">
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#potential-outcome">
+   Potential Outcome
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#assumptions">
+   Assumptions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#average-causal-effect">
+   Average Causal Effect
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#outcome-regression-models">
+     Outcome Regression Models
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#propensity-score">
+     Propensity Score
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#stratification">
+       Stratification
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#inverse-propensity-score-weighting">
+       Inverse Propensity Score Weighting
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#doubly-robust-estimators">
+     Doubly Robust Estimators
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
             
 <div class="bd-footer-content__inner container">
   
@@ -775,17 +1364,18 @@ By Causal Decision Making Team
   
   <div class="footer-item">
     
-  <p class="copyright">
-    
-      © Copyright 2022.
-      <br/>
-    
-  </p>
+<p class="copyright">
+
+    &copy; Copyright 2022.<br>
+
+</p>
 
   </div>
   
   <div class="footer-item">
-    
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
   </div>
   
   <div class="footer-item">
@@ -793,18 +1383,19 @@ By Causal Decision Making Team
   </div>
   
 </div>
-          </footer>
+          </div>
+        </footer>
         
 
       </main>
     </div>
   </div>
-  
-  <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
 
-  <footer class="bd-footer">
-  </footer>
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
   </body>
 </html>

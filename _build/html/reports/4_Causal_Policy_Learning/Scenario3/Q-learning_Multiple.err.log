@@ -1,40 +1,52 @@
 Traceback (most recent call last):
-  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 730, in _async_poll_for_reply
-    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
-  File "D:\anaconda3\lib\site-packages\nbclient\util.py", line 96, in ensure_async
-    result = await obj
-  File "D:\anaconda3\lib\site-packages\jupyter_client\asynchronous\channels.py", line 48, in get_msg
-    raise Empty
-_queue.Empty
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "D:\anaconda3\lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
     executenb(
-  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 1204, in execute
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 1204, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
-  File "D:\anaconda3\lib\site-packages\nbclient\util.py", line 84, in wrapped
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/util.py", line 84, in wrapped
     return just_run(coro(*args, **kwargs))
-  File "D:\anaconda3\lib\site-packages\nbclient\util.py", line 62, in just_run
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/util.py", line 62, in just_run
     return loop.run_until_complete(coro)
-  File "D:\anaconda3\lib\asyncio\base_events.py", line 647, in run_until_complete
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/asyncio/base_events.py", line 647, in run_until_complete
     return future.result()
-  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 663, in async_execute
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 663, in async_execute
     await self.async_execute_cell(
-  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 949, in async_execute_cell
-    exec_reply = await self.task_poll_for_reply
-  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 754, in _async_poll_for_reply
-    await self._async_handle_timeout(timeout, cell)
-  File "D:\anaconda3\lib\site-packages\nbclient\client.py", line 801, in _async_handle_timeout
-    raise CellTimeoutError.error_from_timeout_and_cell(
-nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
-The message was: Cell execution timed out.
-Here is a preview of the cell contents:
--------------------
-# bootstrap average and the std of estimate value
-QLearn.train(S, A, R, model_info, T=3, regime = regime, evaluate = True, bootstrap = True, n_bs = 200)
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/Users/alinaxu/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Optional: we also provide a bootstrap standard deviaiton of the optimal value estimation
+# Warning: results amay not be reliable
+QLearn = QLearning.QLearning()
+model_info = [{"model": "Y~CD4_0+A1+CD4_0*A1",
+              'action_space':{'A1':[0,1]}},
+             {"model": "Y~CD4_0+CD4_6+A2+CD4_0*A2+CD4_6*A2",
+              'action_space':{'A2':[0,1]}},
+             {"model": "Y~CD4_0+CD4_6+CD4_12+A3+CD4_0*A3+CD4_6*A3+CD4_12*A3",
+              'action_space':{'A3':[0,1]}}]
+QLearn.train(S, A, R, model_info, T=3, bootstrap = True, n_bs = 200)
 fitted_params,fitted_value,value_avg,value_std,params=QLearn.predict_value_boots(S)
 print('Value_hat:',value_avg,'Value_std:',value_std)
--------------------
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mAttributeError[0m                            Traceback (most recent call last)
+[0;32m/var/folders/9j/vb5nb4rd5bx0gr1q5ytx9q600000gn/T/ipykernel_51244/2461346363.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      8[0m              {"model": "Y~CD4_0+CD4_6+CD4_12+A3+CD4_0*A3+CD4_6*A3+CD4_12*A3",
+[1;32m      9[0m               'action_space':{'A3':[0,1]}}]
+[0;32m---> 10[0;31m [0mQLearn[0m[0;34m.[0m[0mtrain[0m[0;34m([0m[0mS[0m[0;34m,[0m [0mA[0m[0;34m,[0m [0mR[0m[0;34m,[0m [0mmodel_info[0m[0;34m,[0m [0mT[0m[0;34m=[0m[0;36m3[0m[0;34m,[0m [0mbootstrap[0m [0;34m=[0m [0;32mTrue[0m[0;34m,[0m [0mn_bs[0m [0;34m=[0m [0;36m200[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     11[0m [0mfitted_params[0m[0;34m,[0m[0mfitted_value[0m[0;34m,[0m[0mvalue_avg[0m[0;34m,[0m[0mvalue_std[0m[0;34m,[0m[0mparams[0m[0;34m=[0m[0mQLearn[0m[0;34m.[0m[0mpredict_value_boots[0m[0;34m([0m[0mS[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     12[0m [0mprint[0m[0;34m([0m[0;34m'Value_hat:'[0m[0;34m,[0m[0mvalue_avg[0m[0;34m,[0m[0;34m'Value_std:'[0m[0;34m,[0m[0mvalue_std[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/opt/anaconda3/lib/python3.9/site-packages/causaldm/learners/CPL13/disc/QLearning.py[0m in [0;36mtrain[0;34m(self, X, A, Y, model_info, T, regime, evaluate, bootstrap, n_bs, mimic3_clip)[0m
+[1;32m     64[0m                 [0;32melse[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     65[0m                     [0mregime_sample[0m [0;34m=[0m [0;32mNone[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 66[0;31m                 [0mself[0m[0;34m.[0m[0mfit[0m[0;34m([0m[0mX_sample[0m[0;34m,[0m [0mA_sample[0m[0;34m,[0m [0mY_sample[0m[0;34m,[0m [0mT[0m[0;34m,[0m [0mregime[0m [0;34m=[0m [0mregime_sample[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     67[0m                 [0mself[0m[0;34m.[0m[0mboots[0m[0;34m.[0m[0mappend[0m[0;34m([0m[0mself[0m[0;34m.[0m[0mV1[0m[0;34m[[0m[0mself[0m[0;34m.[0m[0mreward_name[0m[0;34m][0m[0;34m.[0m[0mmean[0m[0;34m([0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     68[0m                 [0;32mfor[0m [0mt[0m [0;32min[0m [0mrange[0m[0;34m([0m[0mT[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mAttributeError[0m: 'QLearning' object has no attribute 'fit'
+AttributeError: 'QLearning' object has no attribute 'fit'
 
