@@ -582,8 +582,8 @@ document.write(`
 <section id="algorithm-details">
 <h2>Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this heading">#</a></h2>
 <p>For multistage cases, we apply a backward iterative approach, which means that we start from the final decision point T and work our way backward to the initial decision point. At the final step <span class="math notranslate nohighlight">\(T\)</span>, it is again a standard regression modeling problem that is the same as what we did for the single decision point case. Particularly, we posit a model <span class="math notranslate nohighlight">\(Q_{T}(h_{T},a_{T})\)</span> for the expectation of potential outcome <span class="math notranslate nohighlight">\(R(\bar{a}_T)\)</span>, and then the optimal policy at step <span class="math notranslate nohighlight">\(T\)</span> is derived as <span class="math notranslate nohighlight">\(\text{arg max}_{\pi_{T}}Q_{T}(h_{T},\pi_{T}(h_{T}))\)</span>. For the decision point <span class="math notranslate nohighlight">\(T-1\)</span> till the decision point <span class="math notranslate nohighlight">\(1\)</span>, a new term is introduced, which is the pseudo-outcome <span class="math notranslate nohighlight">\(\tilde{R}_{t}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e4fa7227-cf23-411b-b4b6-809eaf87ecab">
-<span class="eqno">(105)<a class="headerlink" href="#equation-e4fa7227-cf23-411b-b4b6-809eaf87ecab" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e0339dac-cd02-4fb5-8c01-f65012e1ece1">
+<span class="eqno">(105)<a class="headerlink" href="#equation-e0339dac-cd02-4fb5-8c01-f65012e1ece1" title="Permalink to this equation">#</a></span>\[\begin{align}
 \tilde{R}_t = \max_{\pi_{t}}\hat{Q}_{t}(h_{t},\pi_{t}(h_{t}),\hat{\boldsymbol{\beta}}_{t}).
 \end{align}\]</div>
 <p>By doing so, the pseudo-outcome taking the <strong>delayed effect</strong> into account to help explore the optimal policy. Then, for each decision point <span class="math notranslate nohighlight">\(t&lt;T\)</span>, with the <span class="math notranslate nohighlight">\(\tilde{R}_{t+1}\)</span> calculated, we repeat the regression modeling step for <span class="math notranslate nohighlight">\(\tilde{R}_{t+1}\)</span>. After obtaining the fitted model <span class="math notranslate nohighlight">\(\hat{Q}_{t}(h_{t},a_{t},\hat{\boldsymbol{\beta}}_{t})\)</span>, the optimal policy is obtained as <span class="math notranslate nohighlight">\(\arg \max_{\pi_{t}}Q_{t}(h_{t},\pi_{t}(h_{t}))\)</span>.</p>
@@ -603,8 +603,8 @@ document.write(`
 </ol>
 <p><strong>Policy Evaluation:</strong><br />
 We use the backward iteration as what we did in policy learning. However, here for each round, the pseudo outcome is not the maximum of Q values. Instead, the pseudo outcome at decision point t is defined as below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3272c486-2374-44e5-8366-5f805a903538">
-<span class="eqno">(106)<a class="headerlink" href="#equation-3272c486-2374-44e5-8366-5f805a903538" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1c333bf2-d855-4ccd-b698-5fffa4a48d5c">
+<span class="eqno">(106)<a class="headerlink" href="#equation-1c333bf2-d855-4ccd-b698-5fffa4a48d5c" title="Permalink to this equation">#</a></span>\[\begin{align}
 \tilde{R}_{ti} = \hat{Q}_{t}(h_{ti},d_{t}(h_{ti}),\hat{\boldsymbol{\beta}}_{t}),
 \end{align}\]</div>
 <p>The estimated value of the policy is then the average of <span class="math notranslate nohighlight">\(\tilde{R}_{1i}\)</span>.</p>
@@ -659,9 +659,9 @@ We use the backward iteration as what we did in policy learning. However, here f
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{2: &lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x2939a7beeb0&gt;,
- 1: &lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x293a09f2dc0&gt;,
- 0: &lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x293a15b7670&gt;}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{2: &lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x24c71d49f10&gt;,
+ 1: &lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x24c6baf5a60&gt;,
+ 0: &lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x24c728d7670&gt;}
 </pre></div>
 </div>
 </div>
@@ -741,7 +741,7 @@ dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 1113.3666811952648 Value_std: 3.7349311391153175
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 1113.8032161821366 Value_std: 3.280320270143468
 </pre></div>
 </div>
 </div>
@@ -783,6 +783,11 @@ dtype: int64
 <span class="n">QLearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">regime</span> <span class="o">=</span> <span class="n">regime</span><span class="p">,</span> <span class="n">evaluate</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">bootstrap</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">n_bs</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span>
 <span class="n">fitted_params</span><span class="p">,</span><span class="n">fitted_value</span><span class="p">,</span><span class="n">value_avg</span><span class="p">,</span><span class="n">value_std</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">QLearn</span><span class="o">.</span><span class="n">predict_value_boots</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Value_hat:&#39;</span><span class="p">,</span><span class="n">value_avg</span><span class="p">,</span><span class="s1">&#39;Value_std:&#39;</span><span class="p">,</span><span class="n">value_std</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 979.5400939625302 Value_std: 4.5445941159910745
 </pre></div>
 </div>
 </div>

@@ -1,10 +1,26 @@
 # Overview
 ## Introduction
 ---
+Welcome to the collaborative research project led by Dr. Rui Song and her team. This webpage focuses on integrating causal decision-making into a unified framework, including causal structure learning (CSL), causal effect learning (CEL), and causal policy learning (CPL).
 
 ## Authors
 ---
 
+Main contributors of this project are
+- **Rui Song:** Senior Principal Scientist at Amazon (songray@gmail.com)
+- **Hengrui Cai:** Assistant Professor at UC Irvine (hengrc1@uci.edu)
+- **Runzhe Wan:** Senior Applied Scientist at Amazon (runzhe.wan@gmail.com)
+- **Lin Ge:** PhD Candidate at NC State University (lge@ncsu.edu)
+- **Yang Xu:** PhD Candidate at NC State University (yxu63@ncsu.edu)
+- **Shikai Luo:** Researcher at Bytedance (sluo198912@163.com)
+ 
+We welcome and appreciate contributions and suggestions from the community. Feel free to contact us with your ideas and comments to further enhance this project.
+
+#### Acknowledgments
+A special thanks to the following researcher(s) for the valuable comments and revision suggestions:
+- **Xiaodong Wang:** PhD Candidate at Singapore Management University
+
+Your collaboration and input are crucial to the success of this project.
 
 ## What to expect?
 ---

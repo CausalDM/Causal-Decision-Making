@@ -586,8 +586,8 @@ See <span id="id2">Shi <em>et al.</em> [<a class="reference internal" href="#id4
 <p>The limitation of DRL motivates us to consider constructing a valid CI under weaker and practically more feasible conditions.
 To achieve this goal, we first take a deeper look at DRL. First recall that <span class="math notranslate nohighlight">\(\widehat{\eta}_{\tiny{\textrm{DRL}}}= (nT)^{-1}
 \sum_{i=1}^n\sum_{t=0}^{T-1} \psi_{i,t}\)</span>, where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-974959bd-89d9-4dbf-a54e-6a4bfaa87f0f">
-<span class="eqno">(97)<a class="headerlink" href="#equation-974959bd-89d9-4dbf-a54e-6a4bfaa87f0f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{new_DRL_term}
+<div class="amsmath math notranslate nohighlight" id="equation-704617f1-58ad-45ae-aafb-5db335c621ea">
+<span class="eqno">(97)<a class="headerlink" href="#equation-704617f1-58ad-45ae-aafb-5db335c621ea" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{new_DRL_term}
 \begin{split}
 	\psi_{i,t}
 	\equiv
@@ -610,8 +610,8 @@ Specifically, by replacing <span class="math notranslate nohighlight">\(\mathbb{
 <p>where <span class="math notranslate nohighlight">\(p_t^{\pi}(a,s|a_0,s_0)\)</span> denotes the probability of <span class="math notranslate nohighlight">\((A_t,S_t)=(a,s)\)</span> following policy <span class="math notranslate nohighlight">\(\pi\)</span> conditional on the event that <span class="math notranslate nohighlight">\(\{A_0=a_0, S_0=s_0\}\)</span>. By definition, the numerator corresponds to the discounted conditional visitation probability following <span class="math notranslate nohighlight">\(\pi\)</span> given that the initial state-action pair equals <span class="math notranslate nohighlight">\((s_0,a_0)\)</span>.</p>
 <p><strong>Debias the Q-function.</strong>
 By replacing <span class="math notranslate nohighlight">\(\widehat{\omega}\)</span> in (1) with some estimated conditional density ratio <span class="math notranslate nohighlight">\(\widehat{\tau}\)</span>, we obtain the following estimation function for any <span class="math notranslate nohighlight">\(Q\)</span>-function estimate <span class="math notranslate nohighlight">\(\tilde{Q}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a5158d95-4c4d-4420-b92d-11cb86bcf0d3">
-<span class="eqno">(98)<a class="headerlink" href="#equation-a5158d95-4c4d-4420-b92d-11cb86bcf0d3" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:debiasterm}
+<div class="amsmath math notranslate nohighlight" id="equation-b9de848f-9603-4a0f-b2b6-37e6dcf687da">
+<span class="eqno">(98)<a class="headerlink" href="#equation-b9de848f-9603-4a0f-b2b6-37e6dcf687da" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:debiasterm}
 \begin{split}
 \mathcal{D}^{(i,t)}\tilde{Q}(a,s) =
 \tilde{Q}(a,s)
@@ -630,8 +630,8 @@ We can prove the bias of <span class="math notranslate nohighlight">\(\widehat{Q
 <p><strong>The two-step debias iteration.</strong>
 Similar with DRL, we can construct an estimating function <span class="math notranslate nohighlight">\(\psi_{i,t}^{(2)}\)</span> for any <span class="math notranslate nohighlight">\((i,t)\)</span> by replacing <span class="math notranslate nohighlight">\(\widehat{Q}\)</span> in (1) with <span class="math notranslate nohighlight">\(\widehat{Q}^{(2)}\)</span>.
 This yields our second-order estimator</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eb68aa0f-0842-4620-b67e-3a5f9f035534">
-<span class="eqno">(99)<a class="headerlink" href="#equation-eb68aa0f-0842-4620-b67e-3a5f9f035534" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-726b6985-587c-4bf5-ac25-d9880110c72c">
+<span class="eqno">(99)<a class="headerlink" href="#equation-726b6985-587c-4bf5-ac25-d9880110c72c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \begin{split}
 \widehat{\eta}^{(2)}_{\tiny{\textrm{TR}}}=(nT)^{-1} \sum_{i,t} \psi_{i,t}^{(2)}.
 \end{split}
@@ -639,8 +639,8 @@ This yields our second-order estimator</p>
 <p>We can establish that the bias of <span class="math notranslate nohighlight">\(\widehat{\eta}^{(2)}_{\tiny{\textrm{TR}}}\)</span> decays at a  faster rate than the DRL estimator.
 Moreover, based on the structure of this estimator, we can establish that <span class="math notranslate nohighlight">\(\widehat{\eta}^{(2)}_{\tiny{\textrm{TR}}}\)</span> converges to the true value when one model for <span class="math notranslate nohighlight">\(Q^{\pi}\)</span>, <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span> or <span class="math notranslate nohighlight">\(\tau^{\pi}\)</span> is correctly specified. As such, it is <em>triply-robust</em>.
 Finally, let <span class="math notranslate nohighlight">\(\widehat{\sigma}^{(2)} = \Big[(nT-1)^{-1} \sum_{i,t} (\psi_{i,t}^{(2)}-\widehat{\eta}_{\textrm{TR}}^{(2)})^2\Big]^{1/2}\)</span>, an asymptotic <span class="math notranslate nohighlight">\((1 - \alpha)\)</span>-CI is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-adbcb44c-f635-4010-a670-6d113ad55e43">
-<span class="eqno">(100)<a class="headerlink" href="#equation-adbcb44c-f635-4010-a670-6d113ad55e43" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:CI_TR}
+<div class="amsmath math notranslate nohighlight" id="equation-6d1dd7a4-ae49-4166-aabf-012f6a37df3c">
+<span class="eqno">(100)<a class="headerlink" href="#equation-6d1dd7a4-ae49-4166-aabf-012f6a37df3c" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:CI_TR}
     [\widehat{\eta}_{\textrm{TR}}^{(2)} - z_{\alpha/2} (nT)^{-1/2}	\widehat{\sigma}^{(2)} \; , \; \widehat{\eta}_{\textrm{TR}}^{(2)} +z_{\alpha/2} (nT)^{-1/2}	\widehat{\sigma}^{(2)}], 
 \end{equation}\]</div>
 <p>and roughly speaking, its validity only requires the nuisanses to converge at a rate faster than <span class="math notranslate nohighlight">\((nT)^{-1/6}\)</span>.</p>

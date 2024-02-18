@@ -589,8 +589,8 @@ document.write(`
 <section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this heading">#</a></h2>
 <p>As the name suggested, the UCB algorithm estimates the upper confidence bound <span class="math notranslate nohighlight">\(U_{a}^{t}\)</span> of the mean of the potential reward of arm <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(R_t(a)\)</span>, based on the observations and then choose the action has the highest estimates. The class of UCB-based algorithms is firstly introduced by Auer et al. [1]. Generally, at each round <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(U_{a}^{t}\)</span> is calculated as the sum of the estimated reward (exploitation) and the estimated confidence radius (exploration) of item <span class="math notranslate nohighlight">\(i\)</span> based on previous observations. Then, <span class="math notranslate nohighlight">\(A_{t}\)</span> is selected as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ffc6fcfc-cade-4b07-9074-e1f017057758">
-<span class="eqno">(118)<a class="headerlink" href="#equation-ffc6fcfc-cade-4b07-9074-e1f017057758" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3e8336f8-a45a-4e2f-8495-e07613049499">
+<span class="eqno">(118)<a class="headerlink" href="#equation-3e8336f8-a45a-4e2f-8495-e07613049499" title="Permalink to this equation">#</a></span>\[\begin{align}
     A_t = \arg \max_{a \in \mathcal{A}} U_a^t.
 \end{align}\]</div>
 <p>As an example, <strong>UCB</strong> [1] estimates the confidence radius as <span class="math notranslate nohighlight">\(\sqrt{\frac{2log(t)}{\text{# item i played so far}}}\)</span>. Doing so, either the item with a large average reward or the item with limited exploration will be selected. Note that this algorithm support cases with either binary reward or continuous reward.</p>
@@ -598,13 +598,13 @@ document.write(`
 <section id="algorithms-details">
 <h2>Algorithms Details<a class="headerlink" href="#algorithms-details" title="Permalink to this heading">#</a></h2>
 <p>Supposed there are <span class="math notranslate nohighlight">\(K\)</span> options, and the action space is <span class="math notranslate nohighlight">\(\mathcal{A} = \{0,1,\cdots, K-1\}\)</span>. The UCB1 algorithm start with initializing the estimated upper confidence bound <span class="math notranslate nohighlight">\(U_a^{0}\)</span> and the count of being pulled <span class="math notranslate nohighlight">\(C_a^{0}\)</span> for each action <span class="math notranslate nohighlight">\(a\)</span> as 0. At each round <span class="math notranslate nohighlight">\(t\)</span>, we greedily select an action <span class="math notranslate nohighlight">\(A_t\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6c658d93-4b43-4903-a813-b2645fb1d946">
-<span class="eqno">(119)<a class="headerlink" href="#equation-6c658d93-4b43-4903-a813-b2645fb1d946" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7f73e32d-a54a-417e-9d60-ab09562c2948">
+<span class="eqno">(119)<a class="headerlink" href="#equation-7f73e32d-a54a-417e-9d60-ab09562c2948" title="Permalink to this equation">#</a></span>\[\begin{align}
 A_t = \arg \max_{a\in \mathcal{A}} U_{a}^{t}.
 \end{align}\]</div>
 <p>After observing the rewards corresponding to the selected action <span class="math notranslate nohighlight">\(A_t\)</span>, we first update the total number of being pulled for <span class="math notranslate nohighlight">\(A_t\)</span> accordingly. Then, we estimate the upper confidence bound for each action <span class="math notranslate nohighlight">\(a\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-748db316-2b16-44c0-9e4c-e31001b8c2d2">
-<span class="eqno">(120)<a class="headerlink" href="#equation-748db316-2b16-44c0-9e4c-e31001b8c2d2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-cc52fe61-5179-40fb-9b0f-d82421cba564">
+<span class="eqno">(120)<a class="headerlink" href="#equation-cc52fe61-5179-40fb-9b0f-d82421cba564" title="Permalink to this equation">#</a></span>\[\begin{align}
 U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{2*log(t+1)}{C_a^{t+1}}} ,
 \end{align}\]</div>
 </section>
@@ -616,8 +616,8 @@ U_{a}^{t+1} = \frac{1}{C_a^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=a) + \sqrt{\frac{
 <ul>
 <li><p>select action <span class="math notranslate nohighlight">\(A_t\)</span> as the arm with the maximum <span class="math notranslate nohighlight">\(U_a^t\)</span></p></li>
 <li><p>Received the reward R, and update <span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(U\)</span> with</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d6a5ff05-3061-43c4-8b5a-0712c0df9c6f">
-<span class="eqno">(121)<a class="headerlink" href="#equation-d6a5ff05-3061-43c4-8b5a-0712c0df9c6f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-35f6e299-9d12-4144-9197-a03d94e6d768">
+<span class="eqno">(121)<a class="headerlink" href="#equation-35f6e299-9d12-4144-9197-a03d94e6d768" title="Permalink to this equation">#</a></span>\[\begin{align}
         C_{A_{t}}^{t+1} &amp;= C_{A_{t}}^{t} + 1 \\
         U_{A_{t}}^{t+1} &amp;= \frac{1}{C_{A_{t}}^{t+1}}\sum_{t'=0}^{t}R_{t'}I(A_{t'}=A_{t}) + \sqrt{\frac{2*log(t+1)}{C_{A_{t}}^{t+1}}} 
         \end{align}\]</div>
