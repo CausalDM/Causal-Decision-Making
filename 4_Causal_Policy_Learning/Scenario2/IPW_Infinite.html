@@ -594,14 +594,14 @@ IS has been widely used in statistics, and the idea can be extended to OPE after
 <p>Since the transition and reward generation probabilities are shared  between both policies, this ratio is equal to the probability ratio of observing the <span class="math notranslate nohighlight">\(i\)</span>th trajectory until time point <span class="math notranslate nohighlight">\(t\)</span>.</p>
 <p>The standard <strong>(trajectory-wise) IS</strong> estimator <span id="id2">[<a class="reference internal" href="#id9" title="Philip S Thomas. Safe reinforcement learning. Doctoral Dissertations at University of Massachusetts Amherst, 2015.">Tho15</a>]</span>
 regards each trajectory (and the corresponding observed cumulative reward, <span class="math notranslate nohighlight">\(\sum_{t=0}^{T-1} \gamma^t R_{i,t}\)</span>) as one realization, and it estimates <span class="math notranslate nohighlight">\(\eta^{\pi}\)</span> by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-77ea72c9-e039-4f16-8fcf-25349a238967">
-<span class="eqno">(88)<a class="headerlink" href="#equation-77ea72c9-e039-4f16-8fcf-25349a238967" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:IS}
+<div class="amsmath math notranslate nohighlight" id="equation-b8aa0ff4-db97-493a-a89f-e4cef29517db">
+<span class="eqno">(88)<a class="headerlink" href="#equation-b8aa0ff4-db97-493a-a89f-e4cef29517db" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:IS}
     \hat{\eta}^{\pi}_{IS} = \frac{1}{n} \sum_{i=1}^n \rho^i_T (\sum_{t=0}^{T-1} \gamma^t R_{i,t}). 
 \end{align}\]</div>
 <p>In contrast, the <strong>step-wise IS</strong> <span id="id3">[<a class="reference internal" href="#id9" title="Philip S Thomas. Safe reinforcement learning. Doctoral Dissertations at University of Massachusetts Amherst, 2015.">Tho15</a>]</span>
 focuses on reweighting each immediate reward <span class="math notranslate nohighlight">\(R_{i,t}\)</span> and typically yields a lower variance than the trajectory-wise IS. It is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-57af20ec-93ff-4e12-9753-9d7bd49b727f">
-<span class="eqno">(89)<a class="headerlink" href="#equation-57af20ec-93ff-4e12-9753-9d7bd49b727f" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:stepIS}
+<div class="amsmath math notranslate nohighlight" id="equation-9aab3c75-cf95-4c3f-a048-4c62d5c1079c">
+<span class="eqno">(89)<a class="headerlink" href="#equation-9aab3c75-cf95-4c3f-a048-4c62d5c1079c" title="Permalink to this equation">#</a></span>\[\begin{align}\label{eqn:stepIS}
     \hat{\eta}^{\pi}_{StepIS} = \frac{1}{n} \sum_{i=1}^n \Big[ \sum_{t=0}^{T-1} \rho^i_t  \gamma^t R_{i,t} \Big]. 
 \end{align}\]</div>
 <p>In addition to these two IS-type estimators, their <strong>self-normalized variants</strong> are also commonly considered <span id="id4">[<a class="reference internal" href="#id10" title="Nan Jiang and Lihong Li. Doubly robust off-policy value evaluation for reinforcement learning. In International Conference on Machine Learning, 652–661. PMLR, 2016.">JL16</a>]</span>.
@@ -618,8 +618,8 @@ The key observation is that, under the stationary assumption and when the data i
 We introduce the average visitation distribution under a policy <span class="math notranslate nohighlight">\(\pi\)</span> as <span class="math notranslate nohighlight">\(d^{\pi}(s)= (1 - \gamma)^{-1} \sum_{t=0}^{+\infty} \gamma^{t} p_t^{\pi}(s)\)</span>, where <span class="math notranslate nohighlight">\(p_t^{\pi}(s)\)</span> denotes the probability of <span class="math notranslate nohighlight">\(\{S_t = s\}\)</span> following policy <span class="math notranslate nohighlight">\(\pi\)</span> with  <span class="math notranslate nohighlight">\(S_{0}\sim \mathbb{G}\)</span>.
 Define <span class="math notranslate nohighlight">\(\widetilde{\omega}^{\pi}(s) = d^{\pi}(s) / d^{b}(s)\)</span>.
 Therefore, <span class="math notranslate nohighlight">\(\widetilde{\omega}^{\pi}(s)\)</span> can be understood as a marginalized version of the importance ratio. With a similar change-of-measure trick as in IS, we can obtain the relationship that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0921cbc5-8c0a-4bd1-a04e-d34778f5d73d">
-<span class="eqno">(90)<a class="headerlink" href="#equation-0921cbc5-8c0a-4bd1-a04e-d34778f5d73d" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:breaking}
+<div class="amsmath math notranslate nohighlight" id="equation-ee980dce-f93b-4935-bc85-4fe03f3002e7">
+<span class="eqno">(90)<a class="headerlink" href="#equation-ee980dce-f93b-4935-bc85-4fe03f3002e7" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:breaking}
     \eta^{\pi} =  \mathbb{E}_{(s,a) \sim p_b(s, a), r \sim \mathcal{R}(\cdot; s, a)} \widetilde{\omega}^{\pi}(s) \frac{\pi(a|s)}{b(a|s)} r. 
 \end{equation}\]</div>
 <p>According to this relationship, we can construct an estimator by replacing the nuisance functions  with their estimates and then approximating the expectation by its empirical mean over <span class="math notranslate nohighlight">\(\{(S_{i,t},A_{i,t},R_{i,t},S_{i,t+1})\}\)</span>.
