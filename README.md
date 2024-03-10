@@ -10,6 +10,17 @@ The tutorial surveys and discusses classic methods and recent advanced in the th
 2. Introduce the key formulae (not be heavy in notation) and algorithms (pseudo code)
 3. Demo of how to use the package
 
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
 ## How to contribute
 
 This book is powered by a package call [Jupyter Book](https://jupyterbook.org/intro.html). 
