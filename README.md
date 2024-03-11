@@ -21,7 +21,9 @@ To add or update a Jupyter Notebook, submit a pull request. If you are unfamilia
    
 See 0_Learner Template.ipynb in the main folder for a template. Once you've finished preparing the Jupyter Notebook, you need to choose which chapter/folder to add it to by determining which of the three steps and six paradigms the method belongs to and providing this information when requesting a pull. Once the pull request is received, the main authors will take charge of adding it to the online book's table of contents and publishing it online.
 
-## Contributors
+## Contributors✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
