@@ -33,6 +33,7 @@ See 0_Learner Template.ipynb in the main folder for a template. Once you've fini
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/RunzheStat"><img src="https://avatars.githubusercontent.com/u/32082916?v=4?s=100" width="100px;" alt="RunzheStat"/><br /><sub><b>RunzheStat</b></sub></a><br /><a href="#code-RunzheStat" title="Code">💻</a> <a href="#doc-RunzheStat" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/HengruiCai"><img src="https://avatars.githubusercontent.com/u/22984812?v=4?s=100" width="100px;" alt="Hengrui Cai"/><br /><sub><b>Hengrui Cai</b></sub></a><br /><a href="#code-HengruiCai" title="Code">💻</a> <a href="#doc-HengruiCai" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/YangXU63"><img src="https://avatars.githubusercontent.com/u/98960911?v=4?s=100" width="100px;" alt="YangXU63"/><br /><sub><b>YangXU63</b></sub></a><br /><a href="#code-YangXU63" title="Code">💻</a> <a href="#doc-YangXU63" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/rui-song"><img src="https://avatars.githubusercontent.com/u/22645894?v=4?s=100" width="100px;" alt="Rui Song"/><br /><sub><b>Rui Song</b></sub></a><br /><a href="#doc-rui-song" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>
