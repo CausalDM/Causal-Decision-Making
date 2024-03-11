@@ -591,17 +591,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 3&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">IPython</span> <span class="kn">import</span> <span class="n">display</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">os</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">display</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="s2">&quot;./images/CEL-DiD.png&quot;</span><span class="p">)</span>
-
-<span class="ne">FileNotFoundError</span>: [WinError 3] 系统找不到指定的路径。: &#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;
-</pre></div>
-</div>
+<img alt="_build/jupyter_execute/d05180347a0eecf8d9e44d705072931d106b10795183f25871c6ff6ec99b50e7.png" src="_build/jupyter_execute/d05180347a0eecf8d9e44d705072931d106b10795183f25871c6ff6ec99b50e7.png" />
 </div>
 </div>
 <p>In the above figure, the green real line denotes the observed outcome in the control group, and the purple real line (along with the orange dashed line in the pre-treatment period) denotes the observed outcome in the treatment group. The essense of DiD method is based on the <code class="docutils literal notranslate"><span class="pre">parallel</span> <span class="pre">trend</span> <span class="pre">assumption</span></code>: i.e. if the data in treatment group remain untreated all the time, the outcome trend (shown by the orange line above) will be the same as the control group.</p>
@@ -611,13 +601,13 @@ document.write(`
 <h2>Definitions<a class="headerlink" href="#definitions" title="Permalink to this heading">#</a></h2>
 <p>In the context of panel data, we define <span class="math notranslate nohighlight">\(Y_t(d)\)</span> as the potential outcome one would observe under treatment <span class="math notranslate nohighlight">\(D=d\)</span> at stage <span class="math notranslate nohighlight">\(T=t\)</span>.</p>
 <p>Our problem of interest is to identify and estimate the average treatment effect of intervention <span class="math notranslate nohighlight">\(D\)</span> on the treated, which is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d993db0a-e442-4a88-bc26-0a8694031e96">
-<span class="eqno">(52)<a class="headerlink" href="#equation-d993db0a-e442-4a88-bc26-0a8694031e96" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a9e5ca64-f136-4807-bd62-7f2284bd19bd">
+<span class="eqno">(52)<a class="headerlink" href="#equation-a9e5ca64-f136-4807-bd62-7f2284bd19bd" title="Permalink to this equation">#</a></span>\[\begin{equation}
 ATT_t = \mathbb{E}[Y_t(1)-Y_t(0)|D=1].
 \end{equation}\]</div>
 <p>The heterogeneous treatment effect on the treated can be similarly defined by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6ef4db6c-bc87-4ed0-81b1-19be68ff6ce0">
-<span class="eqno">(53)<a class="headerlink" href="#equation-6ef4db6c-bc87-4ed0-81b1-19be68ff6ce0" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-78e0448c-d468-4511-9a9e-f007ec80af93">
+<span class="eqno">(53)<a class="headerlink" href="#equation-78e0448c-d468-4511-9a9e-f007ec80af93" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \tau_t(s) = \mathbb{E}[Y_t(1)-Y_t(0)|D=1,S=s],
 \end{equation}\]</div>
 <p>where we also condition on the covariates <span class="math notranslate nohighlight">\(S=s\)</span> to denote the individualized treatment effect.</p>
@@ -632,8 +622,8 @@ ATT_t = \mathbb{E}[Y_t(1)-Y_t(0)|D=1].
 <li><p><code class="docutils literal notranslate"><span class="pre">NEPT</span></code>: the treatment has No Effect on the Pre-Treated population (NEPT), i.e. <span class="math notranslate nohighlight">\(\tau_0(s)=0,\)</span> <span class="math notranslate nohighlight">\(\forall s\in\mathcal{S}\)</span>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">parallel</span> <span class="pre">trend</span></code>: the outcomes in treatment and control groups follow the same trend. That is,</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-ce399373-8c4a-434d-a92d-acb6c5bac979">
-<span class="eqno">(54)<a class="headerlink" href="#equation-ce399373-8c4a-434d-a92d-acb6c5bac979" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b19c8941-cbc9-4cd8-96c3-9c293a673468">
+<span class="eqno">(54)<a class="headerlink" href="#equation-b19c8941-cbc9-4cd8-96c3-9c293a673468" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \mathbb{E}[Y_1(0)|S_i=s,D=1]- \mathbb{E}[Y_1(0)|S_i=s,D=0]=\mathbb{E}[Y_0(0)|S_i=s,D=1]- \mathbb{E}[Y_0(0)|S_i=s,D=0]
 \end{aligned}
@@ -642,8 +632,8 @@ ATT_t = \mathbb{E}[Y_t(1)-Y_t(0)|D=1].
 <section id="estimation">
 <h2>Estimation<a class="headerlink" href="#estimation" title="Permalink to this heading">#</a></h2>
 <p>The heterogeneous treatment effect on the treated group can be estimated by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d55694a3-096a-42cb-a897-2a7c6d3f8dd2">
-<span class="eqno">(55)<a class="headerlink" href="#equation-d55694a3-096a-42cb-a897-2a7c6d3f8dd2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-947e695d-7ea2-4f72-89ee-29e114d2c7e4">
+<span class="eqno">(55)<a class="headerlink" href="#equation-947e695d-7ea2-4f72-89ee-29e114d2c7e4" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \tau_1(s) = \mathbb{E}[Y_1|S=s,D=1]-\mathbb{E}[Y_1|S=s,D=0]-\mathbb{E}[Y_0|S=s,D=1]+\mathbb{E}[Y_0|S=s,D=0]
 \end{equation}\]</div>
 <p>The name ``difference-in-difference” comes from the expression above, where we are taking the difference of the post-treatment effect and pre-treatment effect between treated group and control group.</p>
@@ -773,18 +763,18 @@ ATT_t = \mathbb{E}[Y_t(1)-Y_t(0)|D=1].
 </ul>
 <p>In this example, we define the treated group as the restaurants in NJ, and control group as the restaurants in PA.
 First, if we look at the control group (i.e. restaurants in PA), the average number of employees is 23.38 in Feb and changes to 21.1 in Nov, yielding</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1da3d8fd-92c2-40b3-b642-23bacc5eb0c0">
-<span class="eqno">(56)<a class="headerlink" href="#equation-1da3d8fd-92c2-40b3-b642-23bacc5eb0c0" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4a34731a-5031-4900-87d1-813d6966ced0">
+<span class="eqno">(56)<a class="headerlink" href="#equation-4a34731a-5031-4900-87d1-813d6966ced0" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \hat{\mathbb{E}}[Y_1|D=0]-\hat{\mathbb{E}}[Y_0|D=0] = 21.1 - 23.38 = -2.28.
 \end{equation}\]</div>
 <p>Similarly, for treated group (i.e. restaurants in NJ), the average number of employees is 20.43 in Feb and changes to 20.9 in Nov, yielding</p>
-<div class="amsmath math notranslate nohighlight" id="equation-239786fc-b8a9-42bc-9448-f3bd842f3533">
-<span class="eqno">(57)<a class="headerlink" href="#equation-239786fc-b8a9-42bc-9448-f3bd842f3533" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8bfd3ca1-1034-4006-a1ce-951c7f90d47e">
+<span class="eqno">(57)<a class="headerlink" href="#equation-8bfd3ca1-1034-4006-a1ce-951c7f90d47e" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \hat{\mathbb{E}}[Y_1|D=0]-\hat{\mathbb{E}}[Y_0|D=0] = 20.9 - 20.43 = 0.47.
 \end{equation}\]</div>
 <p>According to the diff-in-diff expression, raising minimum wage in state has a positive impact on the employment. The average treatment effect is estimated by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7553954a-44e9-47cf-a2dc-24528e865da4">
-<span class="eqno">(58)<a class="headerlink" href="#equation-7553954a-44e9-47cf-a2dc-24528e865da4" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-cd5361f9-bc31-4e63-8f5d-9e8d3f4d0aa7">
+<span class="eqno">(58)<a class="headerlink" href="#equation-cd5361f9-bc31-4e63-8f5d-9e8d3f4d0aa7" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\tau} = \hat{\mathbb{E}}[Y_1|D=1]-\hat{\mathbb{E}}[Y_1|D=0]-\hat{\mathbb{E}}[Y_0|D=1]+\hat{\mathbb{E}}[Y_0|D=0] =  0.47 - (-2.28) = 2.75.
 \end{equation}\]</div>
 </section>
@@ -796,24 +786,24 @@ First, if we look at the control group (i.e. restaurants in PA), the average num
 <li><p><span class="math notranslate nohighlight">\(T_i\in\{0,1\}\)</span>: Time of the observation. <span class="math notranslate nohighlight">\(T_i=0\)</span> if <span class="math notranslate nohighlight">\(0\leq t\leq T_0\)</span>, and <span class="math notranslate nohighlight">\(T_i=1\)</span> if <span class="math notranslate nohighlight">\(T_0+1\leq T_i\leq T_0+T_1\)</span>.</p></li>
 </ul>
 <p><span class="math notranslate nohighlight">\(G_i=1\)</span> if unit <span class="math notranslate nohighlight">\(i\)</span> comes from the treatment group, and <span class="math notranslate nohighlight">\(G_i=0\)</span> if it is in control group. Similarly, define <span class="math notranslate nohighlight">\(T_i=1\)</span> if the unit is in the post-treatment period, and <span class="math notranslate nohighlight">\(T_i=0\)</span> if it’s in pre-treatment period. The observed outcome is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bea0f92b-0855-4349-958e-e4c861b5bae4">
-<span class="eqno">(59)<a class="headerlink" href="#equation-bea0f92b-0855-4349-958e-e4c861b5bae4" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a8d10c40-a089-4945-8b07-14a73d7ed587">
+<span class="eqno">(59)<a class="headerlink" href="#equation-a8d10c40-a089-4945-8b07-14a73d7ed587" title="Permalink to this equation">#</a></span>\[\begin{equation}
     Y_i = (1-G_iT_i)\cdot Y_i(0) + G_iT_i\cdot Y_i(1),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(Y_i(a)\)</span> denotes the potential outcome one would observe under action <span class="math notranslate nohighlight">\(A=a\)</span>.</p>
 <p>The difference of average outcomes for the <span class="math notranslate nohighlight">\(m\)</span> treated units after and before the treatment time point is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3b70dd35-093c-4f29-b26e-60a8748cc98f">
-<span class="eqno">(60)<a class="headerlink" href="#equation-3b70dd35-093c-4f29-b26e-60a8748cc98f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9d260b67-d1f7-47d0-8b99-f4d13c899d0d">
+<span class="eqno">(60)<a class="headerlink" href="#equation-9d260b67-d1f7-47d0-8b99-f4d13c899d0d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 D_{\text{tr}} = \frac{1}{m} \sum_{i=1}^m\Big[\frac{1}{T_1}\sum_{t=T_0+1}^{T_0+T_1} Y_{i,t}-\frac{1}{T_0} \sum_{t=1}^{T_0} Y_{i,t}\Big]
 \end{equation}\]</div>
 <p>Similarly, the difference of average outcomes for the <span class="math notranslate nohighlight">\(n\)</span> control units after and before the treatment time point is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e5d15dc4-0d30-4a4e-a4f7-a53488a48114">
-<span class="eqno">(61)<a class="headerlink" href="#equation-e5d15dc4-0d30-4a4e-a4f7-a53488a48114" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f20946b0-50c1-4f6b-90c0-927c32223bf5">
+<span class="eqno">(61)<a class="headerlink" href="#equation-f20946b0-50c1-4f6b-90c0-927c32223bf5" title="Permalink to this equation">#</a></span>\[\begin{equation}
 D_{\text{co}} = \frac{1}{n} \sum_{i=m+1}^{m+n}\Big[\frac{1}{T_1}\sum_{t=T_0+1}^{T_0+T_1} Y_{i,t}-\frac{1}{T_0}\sum_{t=1}^{T_0} Y_{i,t}\Big]
 \end{equation}\]</div>
 <p>Under the parallel trend assumption, we are able to subtract the effect that’s not caused by treatment intervention:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7acc9e42-7874-48b1-b836-453a4662b8ed">
-<span class="eqno">(62)<a class="headerlink" href="#equation-7acc9e42-7874-48b1-b836-453a4662b8ed" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a36e648c-55b1-407a-adf3-9d7a33adeed1">
+<span class="eqno">(62)<a class="headerlink" href="#equation-a36e648c-55b1-407a-adf3-9d7a33adeed1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\Delta} = D_{\text{tr}} - D_{\text{co}} = \frac{1}{m} \sum_{i=1}^m\Big[\frac{1}{T_1}\sum_{t=T_0+1}^{T_0+T_1} Y_{i,t}-\frac{1}{T_0} \sum_{t=1}^{T_0} Y_{i,t}\Big] - \frac{1}{n} \sum_{i=m+1}^{m+n}\Big[\frac{1}{T_1}\sum_{t=T_0+1}^{T_0+T_1} Y_{i,t}-\frac{1}{T_0}\sum_{t=1}^{T_0} Y_{i,t}\Big].
 \end{equation}\]</div>
 </section>
