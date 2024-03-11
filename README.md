@@ -35,6 +35,7 @@ See 0_Learner Template.ipynb in the main folder for a template. Once you've fini
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/YangXU63"><img src="https://avatars.githubusercontent.com/u/98960911?v=4?s=100" width="100px;" alt="YangXU63"/><br /><sub><b>YangXU63</b></sub></a><br /><a href="#code-YangXU63" title="Code">💻</a> <a href="#doc-YangXU63" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/rui-song"><img src="https://avatars.githubusercontent.com/u/22645894?v=4?s=100" width="100px;" alt="Rui Song"/><br /><sub><b>Rui Song</b></sub></a><br /><a href="#doc-rui-song" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/shikailuo"><img src="https://avatars.githubusercontent.com/u/41993979?v=4?s=100" width="100px;" alt="Shadow"/><br /><sub><b>Shadow</b></sub></a><br /><a href="#doc-shikailuo" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Xiaodong332"><img src="https://avatars.githubusercontent.com/u/30361794?v=4?s=100" width="100px;" alt="Xiaodong WANG"/><br /><sub><b>Xiaodong WANG</b></sub></a><br /><a href="#bug-Xiaodong332" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
