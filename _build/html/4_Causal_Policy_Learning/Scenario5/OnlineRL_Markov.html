@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Ooline Policy Learning and Evaluation in Markovian Environments &#8212; Causal Decision Making</title>
+    <title>Online Policy Learning and Evaluation in Markovian Environments &#8212; Causal Decision Making</title>
   
   
   
@@ -339,7 +339,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 5</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Ooline Policy Learning and Evaluation in Markovian Environments</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Online Policy Learning and Evaluation in Markovian Environments</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 6</span></p>
 <ul class="nav bd-sidenav">
@@ -413,7 +413,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+      <li><a href="https://github.com/CausalDM/Causal-Decision-Making/tree/main" target="_blank"
    class="btn btn-sm btn-source-repository-button dropdown-item"
    title="Source repository"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -430,7 +430,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F4_Causal_Policy_Learning/Scenario5/OnlineRL_Markov.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/CausalDM/Causal-Decision-Making/tree/main/issues/new?title=Issue%20on%20page%20%2F4_Causal_Policy_Learning/Scenario5/OnlineRL_Markov.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -542,7 +542,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Ooline Policy Learning and Evaluation in Markovian Environments</h1>
+    <h1>Online Policy Learning and Evaluation in Markovian Environments</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -572,8 +572,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="ooline-policy-learning-and-evaluation-in-markovian-environments">
-<span id="section-online-rl"></span><h1>Ooline Policy Learning and Evaluation in Markovian Environments<a class="headerlink" href="#ooline-policy-learning-and-evaluation-in-markovian-environments" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="online-policy-learning-and-evaluation-in-markovian-environments">
+<span id="section-online-rl"></span><h1>Online Policy Learning and Evaluation in Markovian Environments<a class="headerlink" href="#online-policy-learning-and-evaluation-in-markovian-environments" title="Permalink to this heading">#</a></h1>
 <p>This chapter focuses on the online policy learning and evaluation problem in an Markov Decision Process (MDP), which is the most well-known and typically default setup of Reinforcement Learning (RL).
 From the causal perspective, the data dependency structure is the same with that in <a class="reference internal" href="../Scenario2/preliminary_MDP-potential-outcome.html#section-ope-opo-preliminary"><span class="std std-ref">offline RL</span></a>, with the major difference in that the data collection policy is now data-dependent and the objective is sometimes shifted from finding the optimal policy to maximizing the cumulative rewards.
 As this is a vast area with a huge literature, we do not aim to repeat the disucssions hear. Instead, we will focus on connecting online RL to the other parts of this paper.
@@ -614,14 +614,14 @@ An alternative is to leverage the Bellman equation and the dynamic optimization 
 The is known as the Temporal-Difference (TD) Learning <span id="id3">[<a class="reference internal" href="#id38" title="Richard S Sutton. Learning to predict by the methods of temporal differences. Machine learning, 3:9–44, 1988.">Sut88</a>]</span>.
 The name is from the fact that it involves the estimate at time point <span class="math notranslate nohighlight">\(t\)</span> and $t+1).
 We first recall the Bellman equation:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0daf0ea7-2299-46e5-9287-0aed5ac59432">
-<span class="eqno">(160)<a class="headerlink" href="#equation-0daf0ea7-2299-46e5-9287-0aed5ac59432" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
+<div class="amsmath math notranslate nohighlight" id="equation-a260d821-492f-46bd-9b76-f3eae9095620">
+<span class="eqno">(160)<a class="headerlink" href="#equation-a260d821-492f-46bd-9b76-f3eae9095620" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
     Q^\pi(a, s) = \mathbb{E}^\pi \Big(R_t + \gamma Q^\pi(A_{t + 1}, S_{t+1})  | A_t = a, S_t = s \Big). 
 \end{equation}\]</div>
 <p>Therefore, suppose we currently have an Q-function estimate <span class="math notranslate nohighlight">\(\hat{Q}^{\pi}\)</span>.
 Then, after collecting a trasition tuple <span class="math notranslate nohighlight">\((s, a, r, s')\)</span>, we can then update the estimate of <span class="math notranslate nohighlight">\(\hat{Q}^{\pi}(s, a)\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-098a1755-6873-4a0f-a5f4-dc8ee26eca68">
-<span class="eqno">(161)<a class="headerlink" href="#equation-098a1755-6873-4a0f-a5f4-dc8ee26eca68" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4a442ec5-a026-4734-8643-f9ab321b5247">
+<span class="eqno">(161)<a class="headerlink" href="#equation-4a442ec5-a026-4734-8643-f9ab321b5247" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \hat{Q}^\pi(a, s) + \alpha \Big[r + \gamma \hat{Q}^\pi(\pi(s'), s')  - \hat{Q}^\pi(a, s) \Big], 
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is a learning rate.</p>
@@ -639,8 +639,8 @@ We will focus on illustrate their main idea and connection to other topics in th
 In its simplist form, the value estimation is obtained via MC, i.e., sampling trajectories following a policy.
 However, the gradient descient is not straightforward, as it requires the value estimation of any policies around the current one to compute the gradient, which is not feasible.
 Fortunately, we have the following <em>policy gradient theorem</em>.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-54251fe4-1bf4-4d28-8155-b1c93d1443ab">
-<span class="eqno">(162)<a class="headerlink" href="#equation-54251fe4-1bf4-4d28-8155-b1c93d1443ab" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-aebd4d96-3f67-4ccb-844b-1c36d339a985">
+<span class="eqno">(162)<a class="headerlink" href="#equation-aebd4d96-3f67-4ccb-844b-1c36d339a985" title="Permalink to this equation">#</a></span>\[\begin{align}
 \bigtriangledown_{\theta}\, J(\theta)
 &amp;= 
 \mathbb{E}_{\tau \sim \pi(\cdot;\theta)}
@@ -660,13 +660,13 @@ G(\tau) \times
 <h3>Value-based (Approximate DP)<a class="headerlink" href="#value-based-approximate-dp" title="Permalink to this heading">#</a></h3>
 <p>The second appraoch is closely related to the Q-function-based appraoch discussed in Paradigm 1 and 2, and in particular, the <a class="reference internal" href="../Scenario2/FQI.html#section-fqi"><span class="std std-ref">FQI</span></a> algorithm.</p>
 <p>Recall the Bellman optimality equations: <span class="math notranslate nohighlight">\(Q^*\)</span> is the unique solution of</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f46d108e-970a-40a8-8ed2-b204101c37f3">
-<span class="eqno">(163)<a class="headerlink" href="#equation-f46d108e-970a-40a8-8ed2-b204101c37f3" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-cddca9e1-1134-4380-a823-b7c1b41cef49">
+<span class="eqno">(163)<a class="headerlink" href="#equation-cddca9e1-1134-4380-a823-b7c1b41cef49" title="Permalink to this equation">#</a></span>\[\begin{equation}
     Q(a, s) = \mathbb{E} \Big(R_t + \gamma \arg \max_{a'} Q(a, S_{t+1})  | A_t = a, S_t = s \Big).  \;\;\;\;\; \text{(1)}. 
 \end{equation}\]</div>
 <p>Since the right-hand side of (1) is a contraction mapping on <span class="math notranslate nohighlight">\(Q\)</span> and its fixed point is <span class="math notranslate nohighlight">\(Q^*\)</span>, we can iteratively solve the following problem to update the estimation of <span class="math notranslate nohighlight">\(Q^*\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9a713761-740f-477c-b5f6-63c11fea58aa">
-<span class="eqno">(164)<a class="headerlink" href="#equation-9a713761-740f-477c-b5f6-63c11fea58aa" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-53715650-a543-4ae6-804e-64c2485047ae">
+<span class="eqno">(164)<a class="headerlink" href="#equation-53715650-a543-4ae6-804e-64c2485047ae" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 	\widehat{Q}^{{\ell}}=\arg \min_{Q} 
 	\sum_{(s,a,r,s') \sim D}
 	\Big\{
@@ -687,8 +687,8 @@ For example, DQN <span id="id9">[<a class="reference internal" href="#id40" titl
 A natural idea is:
 if we have a value estimator, then it can be used for policy evaluation as well.
 Such a motivation is well grounded by the following relationship (there are more extensions):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1de87ab1-4099-4881-92e7-ab0a60425f94">
-<span class="eqno">(165)<a class="headerlink" href="#equation-1de87ab1-4099-4881-92e7-ab0a60425f94" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9b656366-3108-4408-aa74-2b1185f2c816">
+<span class="eqno">(165)<a class="headerlink" href="#equation-9b656366-3108-4408-aa74-2b1185f2c816" title="Permalink to this equation">#</a></span>\[\begin{align}
 \bigtriangledown_{\theta}\, J(\theta)
 &amp;= 
 \mathbb{E}_{\tau \sim \pi(\cdot;\theta)}
