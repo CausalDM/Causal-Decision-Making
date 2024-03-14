@@ -143,7 +143,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="sidebar-primary-item">
   
 
-<a class="navbar-brand logo" href="../../Overview.html">
+<a class="navbar-brand logo" href="../../Intro.html">
   
   
   
@@ -164,12 +164,16 @@ const thebe_selector_output = ".output, .cell_output"
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="../../Overview.html">
-                    Overview
+                <a class="reference internal" href="../../Intro.html">
+                    Introduction
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Motivating Examples</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Overview.html">Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Motivating Examples</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../0_Motivating_Examples/CSL.html">Causal Structure Learning (CSL)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../0_Motivating_Examples/CEL.html">Causal Effect Learning (CEL)</a></li>
@@ -581,13 +585,13 @@ document.write(`
 <h1>Algorithm<a class="headerlink" href="#algorithm" title="Permalink to this heading">#</a></h1>
 <p>There are two main steps in synthetic control methods:</p>
 <p><strong>Step 1:</strong> Calculate the weights <span class="math notranslate nohighlight">\(\hat{\omega}_i^{\text{sdid}}\)</span> that align pre-exposure trends in the outcome of control units for treated units；</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1627b34e-7895-4c16-8e6a-7877391acf33">
-<span class="eqno">(63)<a class="headerlink" href="#equation-1627b34e-7895-4c16-8e6a-7877391acf33" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c28d1b8a-2794-48fb-b4f5-2c448628166b">
+<span class="eqno">(63)<a class="headerlink" href="#equation-c28d1b8a-2794-48fb-b4f5-2c448628166b" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \hat{Y}_{it} = \hat{\omega}_{i0} + \sum_{j=N_{\text{co}}+1}^{N}\hat{\omega}_{ij} Y_{jt}, \qquad \forall i\in\{1,\dots, N_{\text{tr}}\}, \forall t\in \{1,\dots,T\},
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fa56b0ae-dc50-49c1-90a8-90d7595f1466">
-<span class="eqno">(64)<a class="headerlink" href="#equation-fa56b0ae-dc50-49c1-90a8-90d7595f1466" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ee1df7a4-b552-4744-be34-98fa3efb7441">
+<span class="eqno">(64)<a class="headerlink" href="#equation-ee1df7a4-b552-4744-be34-98fa3efb7441" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\omega}_i = \arg\min_{\omega} \sum_{1\leq t\leq T_0} \bigg(Y_{it} - \omega_{i0} -\sum_{j=1}^{N_{\text{co}}} \omega_{ij} Y_{jt}\bigg)^2
 \end{equation}\]</div>
 <p><strong>Step 2:</strong> Use the weights to estimate the post-exposure conterfactuals in causal effect estimation.</p>
@@ -619,172 +623,19 @@ control program that California implemented in 1988. Typically, the annual tobac
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 6&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">os</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">smoke_X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./causaldm/data/smoke_covariates.csv&#39;</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">smoke_A</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./causaldm/data/smoke_treatment.csv&#39;</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>California</th>
-      <th>1</th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-      <th>5</th>
-      <th>6</th>
-      <th>7</th>
-      <th>8</th>
-      <th>9</th>
-      <th>...</th>
-      <th>29</th>
-      <th>30</th>
-      <th>31</th>
-      <th>32</th>
-      <th>33</th>
-      <th>34</th>
-      <th>35</th>
-      <th>36</th>
-      <th>37</th>
-      <th>38</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1970</th>
-      <td>123.0</td>
-      <td>89.8</td>
-      <td>100.3</td>
-      <td>124.8</td>
-      <td>120.0</td>
-      <td>155.0</td>
-      <td>109.9</td>
-      <td>102.4</td>
-      <td>124.8</td>
-      <td>134.6</td>
-      <td>...</td>
-      <td>103.6</td>
-      <td>92.7</td>
-      <td>99.8</td>
-      <td>106.4</td>
-      <td>65.5</td>
-      <td>122.6</td>
-      <td>124.3</td>
-      <td>114.5</td>
-      <td>106.4</td>
-      <td>132.2</td>
-    </tr>
-    <tr>
-      <th>1971</th>
-      <td>121.0</td>
-      <td>95.4</td>
-      <td>104.1</td>
-      <td>125.5</td>
-      <td>117.6</td>
-      <td>161.1</td>
-      <td>115.7</td>
-      <td>108.5</td>
-      <td>125.6</td>
-      <td>139.3</td>
-      <td>...</td>
-      <td>115.0</td>
-      <td>96.7</td>
-      <td>106.3</td>
-      <td>108.9</td>
-      <td>67.7</td>
-      <td>124.4</td>
-      <td>128.4</td>
-      <td>111.5</td>
-      <td>105.4</td>
-      <td>131.7</td>
-    </tr>
-    <tr>
-      <th>1972</th>
-      <td>123.5</td>
-      <td>101.1</td>
-      <td>103.9</td>
-      <td>134.3</td>
-      <td>110.8</td>
-      <td>156.3</td>
-      <td>117.0</td>
-      <td>126.1</td>
-      <td>126.6</td>
-      <td>149.2</td>
-      <td>...</td>
-      <td>118.7</td>
-      <td>103.0</td>
-      <td>111.5</td>
-      <td>108.6</td>
-      <td>71.3</td>
-      <td>138.0</td>
-      <td>137.0</td>
-      <td>117.5</td>
-      <td>108.8</td>
-      <td>140.0</td>
-    </tr>
-    <tr>
-      <th>1973</th>
-      <td>124.4</td>
-      <td>102.9</td>
-      <td>108.0</td>
-      <td>137.9</td>
-      <td>109.3</td>
-      <td>154.7</td>
-      <td>119.8</td>
-      <td>121.8</td>
-      <td>124.4</td>
-      <td>156.0</td>
-      <td>...</td>
-      <td>125.5</td>
-      <td>103.5</td>
-      <td>109.7</td>
-      <td>110.4</td>
-      <td>72.7</td>
-      <td>146.8</td>
-      <td>143.1</td>
-      <td>116.6</td>
-      <td>109.5</td>
-      <td>141.2</td>
-    </tr>
-    <tr>
-      <th>1974</th>
-      <td>126.7</td>
-      <td>108.2</td>
-      <td>109.7</td>
-      <td>132.8</td>
-      <td>112.4</td>
-      <td>151.3</td>
-      <td>123.7</td>
-      <td>125.6</td>
-      <td>131.9</td>
-      <td>159.6</td>
-      <td>...</td>
-      <td>129.7</td>
-      <td>108.4</td>
-      <td>114.8</td>
-      <td>114.7</td>
-      <td>75.6</td>
-      <td>151.8</td>
-      <td>149.6</td>
-      <td>119.9</td>
-      <td>111.8</td>
-      <td>145.8</td>
-    </tr>
-  </tbody>
-</table>
-<p>5 rows × 39 columns</p>
-</div></div></div>
+<span class="ne">FileNotFoundError</span>: [WinError 3] 系统找不到指定的路径。: &#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;
+</pre></div>
+</div>
+</div>
 </div>
 <p>Details about the dataset:</p>
 <ul class="simple">
@@ -851,7 +702,7 @@ control program that California implemented in 1988. Typically, the annual tobac
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_build/jupyter_execute/8bc63f8c85de54ac18856b3b79fc22566d98013d916d4312d6480e42a91e04f9.png" src="_build/jupyter_execute/8bc63f8c85de54ac18856b3b79fc22566d98013d916d4312d6480e42a91e04f9.png" />
+<img alt="../../_images/8bc63f8c85de54ac18856b3b79fc22566d98013d916d4312d6480e42a91e04f9.png" src="../../_images/8bc63f8c85de54ac18856b3b79fc22566d98013d916d4312d6480e42a91e04f9.png" />
 </div>
 </div>
 <p>As we can see from the figure above, the execution of Proposition 99 can effectly reduce the pre-capita cigarette sales in California. The longer time after treatment time, the larger the treatment effect tends to be.</p>

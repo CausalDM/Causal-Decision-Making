@@ -143,7 +143,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="sidebar-primary-item">
   
 
-<a class="navbar-brand logo" href="../../Overview.html">
+<a class="navbar-brand logo" href="../../Intro.html">
   
   
   
@@ -164,12 +164,16 @@ const thebe_selector_output = ".output, .cell_output"
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="../../Overview.html">
-                    Overview
+                <a class="reference internal" href="../../Intro.html">
+                    Introduction
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Motivating Examples</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Overview.html">Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Motivating Examples</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../0_Motivating_Examples/CSL.html">Causal Structure Learning (CSL)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../0_Motivating_Examples/CEL.html">Causal Effect Learning (CEL)</a></li>
@@ -582,8 +586,8 @@ document.write(`
 <section id="algorithm-details">
 <h2>Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this heading">#</a></h2>
 <p>For multistage cases, we apply a backward iterative approach, which means that we start from the final decision point T and work our way backward to the initial decision point. At the final step <span class="math notranslate nohighlight">\(T\)</span>, it is again a standard regression modeling problem that is the same as what we did for the single decision point case. Particularly, we posit a model <span class="math notranslate nohighlight">\(Q_{T}(h_{T},a_{T})\)</span> for the expectation of potential outcome <span class="math notranslate nohighlight">\(R(\bar{a}_T)\)</span>, and then the optimal policy at step <span class="math notranslate nohighlight">\(T\)</span> is derived as <span class="math notranslate nohighlight">\(\text{arg max}_{\pi_{T}}Q_{T}(h_{T},\pi_{T}(h_{T}))\)</span>. For the decision point <span class="math notranslate nohighlight">\(T-1\)</span> till the decision point <span class="math notranslate nohighlight">\(1\)</span>, a new term is introduced, which is the pseudo-outcome <span class="math notranslate nohighlight">\(\tilde{R}_{t}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6f936ad6-0f42-406d-98a7-791ec66d52b4">
-<span class="eqno">(105)<a class="headerlink" href="#equation-6f936ad6-0f42-406d-98a7-791ec66d52b4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7a15c928-a9a9-40e5-9ad6-6676a5b1725b">
+<span class="eqno">(105)<a class="headerlink" href="#equation-7a15c928-a9a9-40e5-9ad6-6676a5b1725b" title="Permalink to this equation">#</a></span>\[\begin{align}
 \tilde{R}_t = \max_{\pi_{t}}\hat{Q}_{t}(h_{t},\pi_{t}(h_{t}),\hat{\boldsymbol{\beta}}_{t}).
 \end{align}\]</div>
 <p>By doing so, the pseudo-outcome taking the <strong>delayed effect</strong> into account to help explore the optimal policy. Then, for each decision point <span class="math notranslate nohighlight">\(t&lt;T\)</span>, with the <span class="math notranslate nohighlight">\(\tilde{R}_{t+1}\)</span> calculated, we repeat the regression modeling step for <span class="math notranslate nohighlight">\(\tilde{R}_{t+1}\)</span>. After obtaining the fitted model <span class="math notranslate nohighlight">\(\hat{Q}_{t}(h_{t},a_{t},\hat{\boldsymbol{\beta}}_{t})\)</span>, the optimal policy is obtained as <span class="math notranslate nohighlight">\(\arg \max_{\pi_{t}}Q_{t}(h_{t},\pi_{t}(h_{t}))\)</span>.</p>
@@ -603,8 +607,8 @@ document.write(`
 </ol>
 <p><strong>Policy Evaluation:</strong><br />
 We use the backward iteration as what we did in policy learning. However, here for each round, the pseudo outcome is not the maximum of Q values. Instead, the pseudo outcome at decision point t is defined as below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8e38ba92-7f6c-4a4b-827f-53117cb51e0a">
-<span class="eqno">(106)<a class="headerlink" href="#equation-8e38ba92-7f6c-4a4b-827f-53117cb51e0a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e3e4dc6f-41ca-407b-8e94-849b7a26c1c5">
+<span class="eqno">(106)<a class="headerlink" href="#equation-e3e4dc6f-41ca-407b-8e94-849b7a26c1c5" title="Permalink to this equation">#</a></span>\[\begin{align}
 \tilde{R}_{ti} = \hat{Q}_{t}(h_{ti},d_{t}(h_{ti}),\hat{\boldsymbol{\beta}}_{t}),
 \end{align}\]</div>
 <p>The estimated value of the policy is then the average of <span class="math notranslate nohighlight">\(\tilde{R}_{1i}\)</span>.</p>
@@ -659,9 +663,9 @@ We use the backward iteration as what we did in policy learning. However, here f
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{2: &lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x27a0967dca0&gt;,
- 1: &lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x27a034557f0&gt;,
- 0: &lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x27a0b205670&gt;}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{2: &lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x2128a04e940&gt;,
+ 1: &lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x2128a0669a0&gt;,
+ 0: &lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x21290e56670&gt;}
 </pre></div>
 </div>
 </div>
@@ -741,7 +745,7 @@ dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 1113.1723013919952 Value_std: 3.533775540551028
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 1113.4443212897113 Value_std: 3.682135193650189
 </pre></div>
 </div>
 </div>
@@ -787,7 +791,7 @@ dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 979.3928117251199 Value_std: 3.769146611522496
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Value_hat: 979.3750883583473 Value_std: 4.249467182109128
 </pre></div>
 </div>
 </div>
