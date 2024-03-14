@@ -143,7 +143,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="sidebar-primary-item">
   
 
-<a class="navbar-brand logo" href="../../Overview.html">
+<a class="navbar-brand logo" href="../../Intro.html">
   
   
   
@@ -164,12 +164,16 @@ const thebe_selector_output = ".output, .cell_output"
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="../../Overview.html">
-                    Overview
+                <a class="reference internal" href="../../Intro.html">
+                    Introduction
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Motivating Examples</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Overview.html">Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Motivating Examples</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../0_Motivating_Examples/CSL.html">Causal Structure Learning (CSL)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../0_Motivating_Examples/CEL.html">Causal Effect Learning (CEL)</a></li>
@@ -576,8 +580,8 @@ document.write(`
 <p>(b)  Using <span class="math notranslate nohighlight">\(I_{1b}^n\)</span> to construct estimates <span class="math notranslate nohighlight">\(\hat{\eta}\)</span> of the regression function <span class="math notranslate nohighlight">\(\eta=\pi\mu_1+(1-\pi)\mu_0\)</span>, and estimtes <span class="math notranslate nohighlight">\(\hat{\pi}_b\)</span> of the propensity scores <span class="math notranslate nohighlight">\(\pi\)</span>.</p>
 <p><strong>Step 2</strong>: Localized double-residual regression:</p>
 <p>Define <span class="math notranslate nohighlight">\(\hat{\tau}_r(s)\)</span> as the fitted value from a kernel-weighted least squares regression (in the test sample <span class="math notranslate nohighlight">\(I_2^n\)</span>) of outcome residual <span class="math notranslate nohighlight">\((R-\hat{\eta})\)</span> on basis terms <span class="math notranslate nohighlight">\(b\)</span> scaled by the treatment residual <span class="math notranslate nohighlight">\(A-\hat{\pi}_b\)</span>, with weights <span class="math notranslate nohighlight">\(\Big(\frac{A-\hat{\pi}_a}{A-\hat{\pi}_b}\Big)\cdot K_{hs}\)</span>. Thus <span class="math notranslate nohighlight">\(\hat{\tau}_r(s)=b(0)^T\hat{\theta}\)</span> for</p>
-<div class="amsmath math notranslate nohighlight" id="equation-adb1046f-a327-473f-bbb5-64449e685eed">
-<span class="eqno">(33)<a class="headerlink" href="#equation-adb1046f-a327-473f-bbb5-64449e685eed" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0b4682d5-dc48-4486-ab8b-bca26103fbb4">
+<span class="eqno">(33)<a class="headerlink" href="#equation-0b4682d5-dc48-4486-ab8b-bca26103fbb4" title="Permalink to this equation">#</a></span>\[\begin{equation}
 		\hat{\theta}=\arg\min_{\theta\in\mathbb{R}^p}\mathbb{P}_n\left(K_{hs}(S)\Big\{ \frac{A-\hat{\pi}_a(S)}{A-\hat{\pi}_b(S)}\Big\} \left[  \big\{R-\hat{\eta}(S)\big\}-\theta^Tb(S-s_0)\big\{A-\hat{\pi}_b(S)\big\} \right] \right).
 \end{equation}\]</div>
 <p><strong>Step 3</strong>: Cross-fitting(optional):</p>
@@ -596,6 +600,20 @@ document.write(`
 <span class="kn">from</span> <span class="nn">causaldm.learners.CEL.Single_Stage.LpRlearner</span> <span class="kn">import</span> <span class="n">LpRlearner</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ImportError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 8&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span> 
+<span class="ne">----&gt; </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">causaldm.learners.CEL.Single_Stage</span> <span class="kn">import</span> <span class="n">_env_getdata_CEL</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="kn">from</span> <span class="nn">causaldm.learners.CEL.Single_Stage.LpRlearner</span> <span class="kn">import</span> <span class="n">LpRlearner</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="ne">ImportError</span>: cannot import name &#39;_env_getdata_CEL&#39; from &#39;causaldm.learners.CEL.Single_Stage&#39; (D:\anaconda3\lib\site-packages\causaldm\learners\CEL\Single_Stage\__init__.py)
 </pre></div>
 </div>
 </div>
@@ -851,135 +869,6 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>estimate with Lp-R-learner
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">9</span><span class="n">j</span><span class="o">/</span><span class="n">vb5nb4rd5bx0gr1q5ytx9q600000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_70843</span><span class="o">/</span><span class="mf">3012518900.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="n">MovieLens_CEL</span> <span class="o">=</span> <span class="n">MovieLens_CEL</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">sample_index</span><span class="p">,:]</span>
-<span class="g g-Whitespace">     </span><span class="mi">18</span> 
-<span class="ne">---&gt; </span><span class="mi">19</span> <span class="n">HTE_Lp_R_learner</span> <span class="o">=</span> <span class="n">LpRlearner</span><span class="p">(</span><span class="n">MovieLens_CEL</span><span class="p">,</span> <span class="n">outcome</span><span class="p">,</span> <span class="n">treatment</span><span class="p">,</span> <span class="n">controls</span><span class="p">,</span> <span class="n">y_model</span><span class="p">,</span> <span class="n">ps_model_a</span><span class="p">,</span> <span class="n">ps_model_b</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">LpRlearner_model</span><span class="p">,</span> <span class="n">degree</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/causaldm/learners/CEL/Single_Stage/LpRlearner.py</span> in <span class="ni">LpRlearner</span><span class="nt">(df, outcome, treatment, controls, y_model, ps_model_a, ps_model_b, s, LpRlearner_model, degree)</span>
-<span class="g g-Whitespace">     </span><span class="mi">90</span> 
-<span class="g g-Whitespace">     </span><span class="mi">91</span>             <span class="c1"># step 1: nuisance training</span>
-<span class="ne">---&gt; </span><span class="mi">92</span>             <span class="n">ps_learner_a</span><span class="p">[</span><span class="n">fold1a</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">folds</span><span class="o">==</span><span class="n">fold1a</span><span class="p">][</span><span class="n">controls</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="n">folds</span><span class="o">==</span><span class="n">fold1a</span><span class="p">][</span><span class="n">treatment</span><span class="p">])</span>
-<span class="g g-Whitespace">     </span><span class="mi">93</span> 
-<span class="g g-Whitespace">     </span><span class="mi">94</span>             <span class="n">y_learner</span><span class="p">[</span><span class="n">fold1b</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">folds</span><span class="o">==</span><span class="n">fold1b</span><span class="p">][</span><span class="n">controls</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="n">folds</span><span class="o">==</span><span class="n">fold1b</span><span class="p">][</span><span class="n">outcome</span><span class="p">])</span>
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/sklearn/linear_model/_logistic.py</span> in <span class="ni">fit</span><span class="nt">(self, X, y, sample_weight)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1587</span>         <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1588</span>             <span class="n">prefer</span> <span class="o">=</span> <span class="s2">&quot;processes&quot;</span>
-<span class="ne">-&gt; </span><span class="mi">1589</span>         <span class="n">fold_coefs_</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1590</span>             <span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1591</span>             <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/joblib/parallel.py</span> in <span class="ni">__call__</span><span class="nt">(self, iterable)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1041</span>             <span class="c1"># remaining jobs.</span>
-<span class="g g-Whitespace">   </span><span class="mi">1042</span>             <span class="bp">self</span><span class="o">.</span><span class="n">_iterating</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="ne">-&gt; </span><span class="mi">1043</span>             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch_one_batch</span><span class="p">(</span><span class="n">iterator</span><span class="p">):</span>
-<span class="g g-Whitespace">   </span><span class="mi">1044</span>                 <span class="bp">self</span><span class="o">.</span><span class="n">_iterating</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_original_iterator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-<span class="g g-Whitespace">   </span><span class="mi">1045</span> 
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/joblib/parallel.py</span> in <span class="ni">dispatch_one_batch</span><span class="nt">(self, iterator)</span>
-<span class="g g-Whitespace">    </span><span class="mi">859</span>                 <span class="k">return</span> <span class="kc">False</span>
-<span class="g g-Whitespace">    </span><span class="mi">860</span>             <span class="k">else</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">861</span>                 <span class="bp">self</span><span class="o">.</span><span class="n">_dispatch</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">862</span>                 <span class="k">return</span> <span class="kc">True</span>
-<span class="g g-Whitespace">    </span><span class="mi">863</span> 
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/joblib/parallel.py</span> in <span class="ni">_dispatch</span><span class="nt">(self, batch)</span>
-<span class="g g-Whitespace">    </span><span class="mi">777</span>         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">778</span>             <span class="n">job_idx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_jobs</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">779</span>             <span class="n">job</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">cb</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">780</span>             <span class="c1"># A job can complete so quickly than its callback is</span>
-<span class="g g-Whitespace">    </span><span class="mi">781</span>             <span class="c1"># called before we get here, causing self._jobs to</span>
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/joblib/_parallel_backends.py</span> in <span class="ni">apply_async</span><span class="nt">(self, func, callback)</span>
-<span class="g g-Whitespace">    </span><span class="mi">206</span>     <span class="k">def</span> <span class="nf">apply_async</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">207</span><span class="w">         </span><span class="sd">&quot;&quot;&quot;Schedule a func to be run&quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">208</span>         <span class="n">result</span> <span class="o">=</span> <span class="n">ImmediateResult</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">209</span>         <span class="k">if</span> <span class="n">callback</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">210</span>             <span class="n">callback</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/joblib/_parallel_backends.py</span> in <span class="ni">__init__</span><span class="nt">(self, batch)</span>
-<span class="g g-Whitespace">    </span><span class="mi">570</span>         <span class="c1"># Don&#39;t delay the application, to avoid keeping the input</span>
-<span class="g g-Whitespace">    </span><span class="mi">571</span>         <span class="c1"># arguments in memory</span>
-<span class="ne">--&gt; </span><span class="mi">572</span>         <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="n">batch</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">573</span> 
-<span class="g g-Whitespace">    </span><span class="mi">574</span>     <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/joblib/parallel.py</span> in <span class="ni">__call__</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">260</span>         <span class="c1"># change the default number of processes to -1</span>
-<span class="g g-Whitespace">    </span><span class="mi">261</span>         <span class="k">with</span> <span class="n">parallel_backend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_n_jobs</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">262</span>             <span class="k">return</span> <span class="p">[</span><span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">263</span>                     <span class="k">for</span> <span class="n">func</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">264</span> 
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/joblib/parallel.py</span> in <span class="ni">&lt;listcomp&gt;</span><span class="nt">(.0)</span>
-<span class="g g-Whitespace">    </span><span class="mi">260</span>         <span class="c1"># change the default number of processes to -1</span>
-<span class="g g-Whitespace">    </span><span class="mi">261</span>         <span class="k">with</span> <span class="n">parallel_backend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_n_jobs</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">262</span>             <span class="k">return</span> <span class="p">[</span><span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">263</span>                     <span class="k">for</span> <span class="n">func</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">264</span> 
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/sklearn/utils/fixes.py</span> in <span class="ni">__call__</span><span class="nt">(self, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">214</span>     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">215</span>         <span class="k">with</span> <span class="n">config_context</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">216</span>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">217</span> 
-<span class="g g-Whitespace">    </span><span class="mi">218</span> 
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/sklearn/linear_model/_logistic.py</span> in <span class="ni">_logistic_regression_path</span><span class="nt">(X, y, pos_class, Cs, fit_intercept, max_iter, tol, verbose, solver, coef, class_weight, dual, penalty, intercept_scaling, multi_class, random_state, check_input, max_squared_sum, sample_weight, l1_ratio)</span>
-<span class="g g-Whitespace">    </span><span class="mi">804</span>                 <span class="n">np</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span> <span class="n">verbose</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">805</span>             <span class="p">]</span>
-<span class="ne">--&gt; </span><span class="mi">806</span>             <span class="n">opt_res</span> <span class="o">=</span> <span class="n">optimize</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">807</span>                 <span class="n">func</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">808</span>                 <span class="n">w0</span><span class="p">,</span>
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/scipy/optimize/_minimize.py</span> in <span class="ni">minimize</span><span class="nt">(fun, x0, args, method, jac, hess, hessp, bounds, constraints, tol, callback, options)</span>
-<span class="g g-Whitespace">    </span><span class="mi">621</span>                                   <span class="o">**</span><span class="n">options</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">622</span>     <span class="k">elif</span> <span class="n">meth</span> <span class="o">==</span> <span class="s1">&#39;l-bfgs-b&#39;</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">623</span>         <span class="k">return</span> <span class="n">_minimize_lbfgsb</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">jac</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">624</span>                                 <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">625</span>     <span class="k">elif</span> <span class="n">meth</span> <span class="o">==</span> <span class="s1">&#39;tnc&#39;</span><span class="p">:</span>
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/scipy/optimize/lbfgsb.py</span> in <span class="ni">_minimize_lbfgsb</span><span class="nt">(fun, x0, args, jac, bounds, disp, maxcor, ftol, gtol, eps, maxfun, maxiter, iprint, callback, maxls, finite_diff_rel_step, **unknown_options)</span>
-<span class="g g-Whitespace">    </span><span class="mi">358</span>             <span class="c1"># until the completion of the current minimization iteration.</span>
-<span class="g g-Whitespace">    </span><span class="mi">359</span>             <span class="c1"># Overwrite f and g:</span>
-<span class="ne">--&gt; </span><span class="mi">360</span>             <span class="n">f</span><span class="p">,</span> <span class="n">g</span> <span class="o">=</span> <span class="n">func_and_grad</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">361</span>         <span class="k">elif</span> <span class="n">task_str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;NEW_X&#39;</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">362</span>             <span class="c1"># new iteration</span>
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/scipy/optimize/_differentiable_functions.py</span> in <span class="ni">fun_and_grad</span><span class="nt">(self, x)</span>
-<span class="g g-Whitespace">    </span><span class="mi">266</span>             <span class="bp">self</span><span class="o">.</span><span class="n">_update_x_impl</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">267</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_update_fun</span><span class="p">()</span>
-<span class="ne">--&gt; </span><span class="mi">268</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_update_grad</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">269</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span>
-<span class="g g-Whitespace">    </span><span class="mi">270</span> 
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/scipy/optimize/_differentiable_functions.py</span> in <span class="ni">_update_grad</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">236</span>     <span class="k">def</span> <span class="nf">_update_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">237</span>         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">g_updated</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">238</span>             <span class="bp">self</span><span class="o">.</span><span class="n">_update_grad_impl</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">239</span>             <span class="bp">self</span><span class="o">.</span><span class="n">g_updated</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="g g-Whitespace">    </span><span class="mi">240</span> 
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/scipy/optimize/_differentiable_functions.py</span> in <span class="ni">update_grad</span><span class="nt">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">147</span> 
-<span class="g g-Whitespace">    </span><span class="mi">148</span>             <span class="k">def</span> <span class="nf">update_grad</span><span class="p">():</span>
-<span class="ne">--&gt; </span><span class="mi">149</span>                 <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">grad_wrapped</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">150</span> 
-<span class="g g-Whitespace">    </span><span class="mi">151</span>         <span class="k">elif</span> <span class="n">grad</span> <span class="ow">in</span> <span class="n">FD_METHODS</span><span class="p">:</span>
-
-<span class="nn">~/opt/anaconda3/lib/python3.9/site-packages/scipy/optimize/_differentiable_functions.py</span> in <span class="ni">grad_wrapped</span><span class="nt">(x)</span>
-<span class="g g-Whitespace">    </span><span class="mi">144</span>             <span class="k">def</span> <span class="nf">grad_wrapped</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">145</span>                 <span class="bp">self</span><span class="o">.</span><span class="n">ngev</span> <span class="o">+=</span> <span class="mi">1</span>
-<span class="ne">--&gt; </span><span class="mi">146</span>                 <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">grad</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="o">*</span><span class="n">args</span><span class="p">))</span>
-<span class="g g-Whitespace">    </span><span class="mi">147</span> 
-<span class="g g-Whitespace">    </span><span class="mi">148</span>             <span class="k">def</span> <span class="nf">update_grad</span><span class="p">():</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>

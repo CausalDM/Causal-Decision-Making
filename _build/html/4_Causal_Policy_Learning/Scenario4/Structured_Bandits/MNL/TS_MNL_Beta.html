@@ -143,7 +143,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="sidebar-primary-item">
   
 
-<a class="navbar-brand logo" href="../../../../Overview.html">
+<a class="navbar-brand logo" href="../../../../Intro.html">
   
   
   
@@ -164,12 +164,16 @@ const thebe_selector_output = ".output, .cell_output"
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="../../../../Overview.html">
-                    Overview
+                <a class="reference internal" href="../../../../Intro.html">
+                    Introduction
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Motivating Examples</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Overview.html">Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Motivating Examples</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../../0_Motivating_Examples/CSL.html">Causal Structure Learning (CSL)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../0_Motivating_Examples/CEL.html">Causal Effect Learning (CEL)</a></li>
@@ -587,14 +591,14 @@ document.write(`
 <section id="main-idea">
 <h2>Main Idea<a class="headerlink" href="#main-idea" title="Permalink to this heading">#</a></h2>
 <p>The first TS-based algorithm is developed by [1]. Noticing that direct inference under the standard multinomila logit model is intractable due to the complex dependency of the reward distribution on action slate <span class="math notranslate nohighlight">\(a\)</span>, an epoch-based algorithmic structure is introduced and is being more popular in recent bandit literature [1,2,3]. Under the epoch-type offering framework,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9d4522d4-5470-4a94-a27c-b4b330563a3c">
-<span class="eqno">(150)<a class="headerlink" href="#equation-9d4522d4-5470-4a94-a27c-b4b330563a3c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-eea50d69-c517-46c2-afc7-bfd5f56c1c80">
+<span class="eqno">(150)<a class="headerlink" href="#equation-eea50d69-c517-46c2-afc7-bfd5f56c1c80" title="Permalink to this equation">#</a></span>\[\begin{align}
     Y_{i}^l(a) &amp;\sim Geometric(\theta_i), \forall i \in a,\\
     R^l(a) &amp;= \sum_{i\in a}Y_{i}^l(a)\eta_{i}.
 \end{align}\]</div>
 <p>Taking the advantage of the nice conjugate relationship between the geometric distribution and the Beta distribution, the TS-based algorithm <strong>TS_MNL</strong> [1] is tractable and computationally efficient. Assuming a Beta prior over parameters <span class="math notranslate nohighlight">\(\theta_{i}\)</span>, at each epoch <span class="math notranslate nohighlight">\(l\)</span>, <strong>TS_MNL</strong> updates the posterior distribution of <span class="math notranslate nohighlight">\(\theta_{i}\)</span> according to the property of the Beta-Geometric conjugate pair, from which we then sample a <span class="math notranslate nohighlight">\(\tilde{\theta}_{i}^{l}\)</span>, and <span class="math notranslate nohighlight">\(\tilde{v}_{i}^{l}\)</span> is calculated directly as <span class="math notranslate nohighlight">\(\tilde{v}_{i}^{l}=1/\tilde{\theta}_{i}^{l}-1\)</span>. Finally, the optimal assortment <span class="math notranslate nohighlight">\(A^{l}\)</span> is determined efficiently through linear programming [1], such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3fe6f4e2-2719-40a3-9f44-a5d1a27dda3d">
-<span class="eqno">(151)<a class="headerlink" href="#equation-3fe6f4e2-2719-40a3-9f44-a5d1a27dda3d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6f593764-e785-4583-88f1-8130f599962a">
+<span class="eqno">(151)<a class="headerlink" href="#equation-6f593764-e785-4583-88f1-8130f599962a" title="Permalink to this equation">#</a></span>\[\begin{equation}
     A^{l} = arg max_{a \in \mathcal{A}} E(R_t(a) \mid\tilde{\boldsymbol{v}})=argmax_{a \in \mathcal{A}} \frac{\sum_{i\in a}\eta_{i}\tilde{v}_{i}}{1+\sum_{j\in a} \tilde{v}_{j}},
 \end{equation}\]</div>
 </section>
