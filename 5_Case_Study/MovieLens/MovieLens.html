@@ -935,8 +935,9 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[LightGBM] [Warning] Found whitespace in feature_names, replace with underlines
-[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000051 seconds.
-You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Auto-choosing row-wise multi-threading, the overhead of testing was 0.000505 seconds.
+You can set `force_row_wise=true` to remove the overhead.
+And if memory is not enough, you can set `force_col_wise=true`.
 [LightGBM] [Info] Total Bins 18
 [LightGBM] [Info] Number of data points in the train set: 406, number of used features: 6
 [LightGBM] [Info] Start training from score 3.339901
@@ -1147,9 +1148,8 @@ You can set `force_col_wise=true` to remove the overhead.
 [LightGBM] [Warning] No further splits with positive gain, best gain: -inf
 [LightGBM] [Warning] No further splits with positive gain, best gain: -inf
 [LightGBM] [Warning] Found whitespace in feature_names, replace with underlines
-[LightGBM] [Info] Auto-choosing row-wise multi-threading, the overhead of testing was 0.000011 seconds.
-You can set `force_row_wise=true` to remove the overhead.
-And if memory is not enough, you can set `force_col_wise=true`.
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000036 seconds.
+You can set `force_col_wise=true` to remove the overhead.
 [LightGBM] [Info] Total Bins 17
 [LightGBM] [Info] Number of data points in the train set: 235, number of used features: 6
 [LightGBM] [Info] Start training from score 3.319149
@@ -1254,7 +1254,7 @@ And if memory is not enough, you can set `force_col_wise=true`.
 [LightGBM] [Warning] No further splits with positive gain, best gain: -inf
 [LightGBM] [Warning] No further splits with positive gain, best gain: -inf
 [LightGBM] [Warning] Found whitespace in feature_names, replace with underlines
-[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000039 seconds.
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000046 seconds.
 You can set `force_col_wise=true` to remove the overhead.
 [LightGBM] [Info] Total Bins 15
 [LightGBM] [Info] Number of data points in the train set: 169, number of used features: 5
@@ -2545,38 +2545,6 @@ $<span class="math notranslate nohighlight">\(R_t(i)\sim \mathcal{N}(\boldsymbol
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="nn">Input In [32],</span> in <span class="ni">&lt;cell line: 5&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span>     <span class="n">X</span><span class="p">,</span> <span class="n">feature_info</span><span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get_Phi</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">16</span>     <span class="n">A</span> <span class="o">=</span> <span class="n">informative_TS</span><span class="o">.</span><span class="n">take_action</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">17</span>     <span class="n">R</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get_reward</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">A</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">18</span>     <span class="n">informative_TS</span><span class="o">.</span><span class="n">receive_reward</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">R</span><span class="p">,</span><span class="n">X</span><span class="p">)</span>
-
-<span class="nn">File D:\anaconda3\lib\site-packages\causaldm\learners\CPL4\CMAB\LinTS.py:38,</span> in <span class="ni">LinTS_Gaussian.take_action</span><span class="nt">(self, X)</span>
-<span class="g g-Whitespace">     </span><span class="mi">36</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">37</span> <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">+=</span> <span class="mi">1</span>
-<span class="ne">---&gt; </span><span class="mi">38</span> <span class="bp">self</span><span class="o">.</span><span class="n">sampled_beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cov</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">39</span> <span class="bp">self</span><span class="o">.</span><span class="n">sampled_Rs</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sampled_beta</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">40</span> <span class="bp">self</span><span class="o">.</span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sampled_Rs</span><span class="p">)</span>
-
-<span class="nn">File mtrand.pyx:4120,</span> in <span class="ni">numpy.random.mtrand.RandomState.multivariate_normal</span><span class="nt">()</span>
-
-<span class="nn">File &lt;__array_function__ internals&gt;:5,</span> in <span class="ni">svd</span><span class="nt">(*args, **kwargs)</span>
-
-<span class="nn">File D:\anaconda3\lib\site-packages\numpy\linalg\linalg.py:1660,</span> in <span class="ni">svd</span><span class="nt">(a, full_matrices, compute_uv, hermitian)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1657</span>         <span class="n">gufunc</span> <span class="o">=</span> <span class="n">_umath_linalg</span><span class="o">.</span><span class="n">svd_n_s</span>
-<span class="g g-Whitespace">   </span><span class="mi">1659</span> <span class="n">signature</span> <span class="o">=</span> <span class="s1">&#39;D-&gt;DdD&#39;</span> <span class="k">if</span> <span class="n">isComplexType</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;d-&gt;ddd&#39;</span>
-<span class="ne">-&gt; </span><span class="mi">1660</span> <span class="n">u</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">vh</span> <span class="o">=</span> <span class="n">gufunc</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">signature</span><span class="o">=</span><span class="n">signature</span><span class="p">,</span> <span class="n">extobj</span><span class="o">=</span><span class="n">extobj</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1661</span> <span class="n">u</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">result_t</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1662</span> <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">_realType</span><span class="p">(</span><span class="n">result_t</span><span class="p">),</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 <section id="run-uninformative-ts">
@@ -2743,7 +2711,7 @@ $<span class="math notranslate nohighlight">\(R_t(i)\sim \mathcal{N}(\boldsymbol
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/87140374d3030d0e5873b112fedac93011504cc7c7edaffe0ad9452e44513f73.png" src="../../_images/87140374d3030d0e5873b112fedac93011504cc7c7edaffe0ad9452e44513f73.png" />
+<img alt="../../_images/4e04c3d915d6fdd5e35fbe1f2b62f3dce96b6f00c2e5dd53ba8eb13624d7058b.png" src="../../_images/4e04c3d915d6fdd5e35fbe1f2b62f3dce96b6f00c2e5dd53ba8eb13624d7058b.png" />
 </div>
 </div>
 </section>
