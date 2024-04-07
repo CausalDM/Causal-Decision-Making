@@ -574,8 +574,8 @@ document.write(`
   <section id="r-learner">
 <h1><strong>4. R learner</strong><a class="headerlink" href="#r-learner" title="Permalink to this heading">#</a></h1>
 <p>The idea of classical R-learner came from Robinson 1988 [3] and was formalized by Nie and Wager in 2020 [2]. The main idea of R learner starts from the partially linear model setup, in which we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a42b195f-181d-4198-bc8c-46f21a11566a">
-<span class="eqno">(27)<a class="headerlink" href="#equation-a42b195f-181d-4198-bc8c-46f21a11566a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c2898790-7bcb-4f28-bee2-ef333a948abf">
+<span class="eqno">(27)<a class="headerlink" href="#equation-c2898790-7bcb-4f28-bee2-ef333a948abf" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{aligned}
     R&amp;=A\tau(S)+g_0(S)+U,\\
     A&amp;=m_0(S)+V,
@@ -583,21 +583,21 @@ document.write(`
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(V\)</span> satisfies <span class="math notranslate nohighlight">\(\mathbb{E}[U|D,X]=0\)</span>, <span class="math notranslate nohighlight">\(\mathbb{E}[V|X]=0\)</span>.</p>
 <p>After several manipulations, it’s easy to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fdf3957a-8466-4a15-9b3c-7625636f5e16">
-<span class="eqno">(28)<a class="headerlink" href="#equation-fdf3957a-8466-4a15-9b3c-7625636f5e16" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-789d9780-6a95-4b36-a7bc-0a31039bd1a5">
+<span class="eqno">(28)<a class="headerlink" href="#equation-789d9780-6a95-4b36-a7bc-0a31039bd1a5" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	R-\mathbb{E}[R|S]=\tau(S)\cdot(A-\mathbb{E}[A|S])+\epsilon.
 \end{equation}\]</div>
 <p>Define <span class="math notranslate nohighlight">\(m_0(X)=\mathbb{E}[A|S]\)</span> and <span class="math notranslate nohighlight">\(l_0(X)=\mathbb{E}[R|S]\)</span>. A natural way to estimate <span class="math notranslate nohighlight">\(\tau(X)\)</span> is given below, which is also the main idea of R-learner:</p>
 <p><strong>Step 1</strong>: Regress <span class="math notranslate nohighlight">\(R\)</span> on <span class="math notranslate nohighlight">\(S\)</span> to obtain model <span class="math notranslate nohighlight">\(\hat{\eta}(S)=\hat{\mathbb{E}}[R|S]\)</span>; and regress <span class="math notranslate nohighlight">\(A\)</span> on <span class="math notranslate nohighlight">\(S\)</span> to obtain model <span class="math notranslate nohighlight">\(\hat{m}(S)=\hat{\mathbb{E}}[A|S]\)</span>.</p>
 <p><strong>Step 2</strong>: Regress outcome residual <span class="math notranslate nohighlight">\(R-\hat{l}(S)\)</span> on propensity score residual <span class="math notranslate nohighlight">\(A-\hat{m}(S)\)</span>.</p>
 <p>That is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0bfefed1-0249-49ae-aa27-d3f28bc80889">
-<span class="eqno">(29)<a class="headerlink" href="#equation-0bfefed1-0249-49ae-aa27-d3f28bc80889" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1965d580-9d14-4c7e-928f-56fdb8e8a9c5">
+<span class="eqno">(29)<a class="headerlink" href="#equation-1965d580-9d14-4c7e-928f-56fdb8e8a9c5" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	\hat{\tau}(S)=\arg\min_{\tau}\left\{\mathbb{E}_n\left[\left(\{R_i-\hat{\eta}(S_i)\}-\{A_i-\hat{m}(S_i)\}\cdot\tau(S_i)\right)^2\right]\right\}	
 \end{equation}\]</div>
 <p>The easiest way to do so is to specify <span class="math notranslate nohighlight">\(\hat{\tau}(S)\)</span> to the linear function class. In this case, <span class="math notranslate nohighlight">\(\tau(S)=S\beta\)</span>, and the problem becomes to estimate <span class="math notranslate nohighlight">\(\beta\)</span> by solving the following linear regression:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e89ba7d0-6500-4f6c-9e7f-eb097377fe0a">
-<span class="eqno">(30)<a class="headerlink" href="#equation-e89ba7d0-6500-4f6c-9e7f-eb097377fe0a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-843a6bbb-551b-46f8-a3e2-0574c3c6d574">
+<span class="eqno">(30)<a class="headerlink" href="#equation-843a6bbb-551b-46f8-a3e2-0574c3c6d574" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	\hat{\beta}=\arg\min_{\beta}\left\{\mathbb{E}_n\left[\left(\{R_i-\hat{\eta}(S_i)\}-\{A_i-\hat{m}(S_i)\} S_i\cdot \beta\right)^2\right]\right\}.
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -614,20 +614,6 @@ document.write(`
 <span class="kn">from</span> <span class="nn">causaldm.learners.CEL.Single_Stage.Rlearner</span> <span class="kn">import</span> <span class="n">Rlearner</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ImportError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
-<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 9&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span> 
-<span class="ne">----&gt; </span><span class="mi">9</span> <span class="kn">from</span> <span class="nn">causaldm.learners.CEL.Single_Stage</span> <span class="kn">import</span> <span class="n">_env_getdata_CEL</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">from</span> <span class="nn">causaldm.learners.CEL.Single_Stage.Rlearner</span> <span class="kn">import</span> <span class="n">Rlearner</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="kn">import</span> <span class="nn">warnings</span>
-
-<span class="ne">ImportError</span>: cannot import name &#39;_env_getdata_CEL&#39; from &#39;causaldm.learners.CEL.Single_Stage&#39; (D:\anaconda3\lib\site-packages\causaldm\learners\CEL\Single_Stage\__init__.py)
 </pre></div>
 </div>
 </div>
@@ -893,16 +879,36 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>estimate with R-learner
-fold 1,testing r2 y_learner: 0.019, ps_learner: 0.734
-fold 2,testing r2 y_learner: 0.015, ps_learner: 0.739
-fold 3,testing r2 y_learner: 0.017, ps_learner: 0.740
-fold 4,testing r2 y_learner: 0.017, ps_learner: 0.736
-fold 5,testing r2 y_learner: 0.018, ps_learner: 0.725
-fold 1, training r2 R-learner: 0.028, testing r2 R-learner: 0.028
-fold 2, training r2 R-learner: 0.031, testing r2 R-learner: 0.020
-fold 3, training r2 R-learner: 0.029, testing r2 R-learner: 0.029
-fold 4, training r2 R-learner: 0.030, testing r2 R-learner: 0.024
-fold 5, training r2 R-learner: 0.030, testing r2 R-learner: 0.024
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fold 1,testing r2 y_learner: 0.019, ps_learner: 0.734
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fold 2,testing r2 y_learner: 0.015, ps_learner: 0.739
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fold 3,testing r2 y_learner: 0.017, ps_learner: 0.740
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fold 4,testing r2 y_learner: 0.017, ps_learner: 0.736
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fold 5,testing r2 y_learner: 0.018, ps_learner: 0.725
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fold 1, training r2 R-learner: 0.028, testing r2 R-learner: 0.028
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fold 2, training r2 R-learner: 0.031, testing r2 R-learner: 0.020
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fold 3, training r2 R-learner: 0.029, testing r2 R-learner: 0.029
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fold 4, training r2 R-learner: 0.030, testing r2 R-learner: 0.024
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fold 5, training r2 R-learner: 0.030, testing r2 R-learner: 0.024
 </pre></div>
 </div>
 </div>

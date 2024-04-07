@@ -588,24 +588,12 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython</span> <span class="kn">import</span> <span class="n">display</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;</span><span class="p">)</span>
-<span class="n">display</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="s2">&quot;./images/CEL-DiD.png&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="s2">&quot;CEL-DiD.png&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 3&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">IPython</span> <span class="kn">import</span> <span class="n">display</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">os</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">display</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="s2">&quot;./images/CEL-DiD.png&quot;</span><span class="p">)</span>
-
-<span class="ne">FileNotFoundError</span>: [WinError 3] 系统找不到指定的路径。: &#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;
-</pre></div>
-</div>
+<img alt="../../_images/d05180347a0eecf8d9e44d705072931d106b10795183f25871c6ff6ec99b50e7.png" src="../../_images/d05180347a0eecf8d9e44d705072931d106b10795183f25871c6ff6ec99b50e7.png" />
 </div>
 </div>
 <p>In the above figure, the green real line denotes the observed outcome in the control group, and the purple real line (along with the orange dashed line in the pre-treatment period) denotes the observed outcome in the treatment group. The essense of DiD method is based on the <code class="docutils literal notranslate"><span class="pre">parallel</span> <span class="pre">trend</span> <span class="pre">assumption</span></code>: i.e. if the data in treatment group remain untreated all the time, the outcome trend (shown by the orange line above) will be the same as the control group.</p>
@@ -615,13 +603,13 @@ document.write(`
 <h2>Definitions<a class="headerlink" href="#definitions" title="Permalink to this heading">#</a></h2>
 <p>In the context of panel data, we define <span class="math notranslate nohighlight">\(Y_t(d)\)</span> as the potential outcome one would observe under treatment <span class="math notranslate nohighlight">\(D=d\)</span> at stage <span class="math notranslate nohighlight">\(T=t\)</span>.</p>
 <p>Our problem of interest is to identify and estimate the average treatment effect of intervention <span class="math notranslate nohighlight">\(D\)</span> on the treated, which is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d98def28-32fe-47b6-a789-8d60427cfc93">
-<span class="eqno">(52)<a class="headerlink" href="#equation-d98def28-32fe-47b6-a789-8d60427cfc93" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f6b094af-2db3-466a-8a9d-36bb24ef4967">
+<span class="eqno">(52)<a class="headerlink" href="#equation-f6b094af-2db3-466a-8a9d-36bb24ef4967" title="Permalink to this equation">#</a></span>\[\begin{equation}
 ATT_t = \mathbb{E}[Y_t(1)-Y_t(0)|D=1].
 \end{equation}\]</div>
 <p>The heterogeneous treatment effect on the treated can be similarly defined by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-af8891fb-e9ef-46f0-a18c-e69c1687650c">
-<span class="eqno">(53)<a class="headerlink" href="#equation-af8891fb-e9ef-46f0-a18c-e69c1687650c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e1520d31-a4a4-4014-92c4-26452f23ea88">
+<span class="eqno">(53)<a class="headerlink" href="#equation-e1520d31-a4a4-4014-92c4-26452f23ea88" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \tau_t(s) = \mathbb{E}[Y_t(1)-Y_t(0)|D=1,S=s],
 \end{equation}\]</div>
 <p>where we also condition on the covariates <span class="math notranslate nohighlight">\(S=s\)</span> to denote the individualized treatment effect.</p>
@@ -636,8 +624,8 @@ ATT_t = \mathbb{E}[Y_t(1)-Y_t(0)|D=1].
 <li><p><code class="docutils literal notranslate"><span class="pre">NEPT</span></code>: the treatment has No Effect on the Pre-Treated population (NEPT), i.e. <span class="math notranslate nohighlight">\(\tau_0(s)=0,\)</span> <span class="math notranslate nohighlight">\(\forall s\in\mathcal{S}\)</span>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">parallel</span> <span class="pre">trend</span></code>: the outcomes in treatment and control groups follow the same trend. That is,</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-dade454f-faab-4aed-ab72-197e853e88fa">
-<span class="eqno">(54)<a class="headerlink" href="#equation-dade454f-faab-4aed-ab72-197e853e88fa" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1f00ea85-c605-47d9-9423-1869a310c209">
+<span class="eqno">(54)<a class="headerlink" href="#equation-1f00ea85-c605-47d9-9423-1869a310c209" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \mathbb{E}[Y_1(0)|S_i=s,D=1]- \mathbb{E}[Y_1(0)|S_i=s,D=0]=\mathbb{E}[Y_0(0)|S_i=s,D=1]- \mathbb{E}[Y_0(0)|S_i=s,D=0]
 \end{aligned}
@@ -646,8 +634,8 @@ ATT_t = \mathbb{E}[Y_t(1)-Y_t(0)|D=1].
 <section id="estimation">
 <h2>Estimation<a class="headerlink" href="#estimation" title="Permalink to this heading">#</a></h2>
 <p>The heterogeneous treatment effect on the treated group can be estimated by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e485d17d-9b3d-4312-a5da-9e1953af381f">
-<span class="eqno">(55)<a class="headerlink" href="#equation-e485d17d-9b3d-4312-a5da-9e1953af381f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2d25edd0-ec08-466b-a946-086add24d92e">
+<span class="eqno">(55)<a class="headerlink" href="#equation-2d25edd0-ec08-466b-a946-086add24d92e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \tau_1(s) = \mathbb{E}[Y_1|S=s,D=1]-\mathbb{E}[Y_1|S=s,D=0]-\mathbb{E}[Y_0|S=s,D=1]+\mathbb{E}[Y_0|S=s,D=0]
 \end{equation}\]</div>
 <p>The name ``difference-in-difference” comes from the expression above, where we are taking the difference of the post-treatment effect and pre-treatment effect between treated group and control group.</p>
@@ -680,63 +668,19 @@ ATT_t = \mathbb{E}[Y_t(1)-Y_t(0)|D=1].
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="nn">Input In [3],</span> in <span class="ni">&lt;cell line: 5&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">os</span>
+<span class="ne">----&gt; </span><span class="mi">5</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">data_employment</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./causaldm/data/employment.csv&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">data_employment</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>state</th>
-      <th>total_emp_feb</th>
-      <th>total_emp_nov</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0</td>
-      <td>40.50</td>
-      <td>24.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0</td>
-      <td>13.75</td>
-      <td>11.5</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0</td>
-      <td>8.50</td>
-      <td>10.5</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0</td>
-      <td>34.00</td>
-      <td>20.0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0</td>
-      <td>24.00</td>
-      <td>35.5</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
+<span class="ne">FileNotFoundError</span>: [WinError 3] 系统找不到指定的路径。: &#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -777,18 +721,18 @@ ATT_t = \mathbb{E}[Y_t(1)-Y_t(0)|D=1].
 </ul>
 <p>In this example, we define the treated group as the restaurants in NJ, and control group as the restaurants in PA.
 First, if we look at the control group (i.e. restaurants in PA), the average number of employees is 23.38 in Feb and changes to 21.1 in Nov, yielding</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9707b3fc-52a0-458d-8582-8616674e6412">
-<span class="eqno">(56)<a class="headerlink" href="#equation-9707b3fc-52a0-458d-8582-8616674e6412" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-79925a42-9539-4ee1-929f-f40c48a8b945">
+<span class="eqno">(56)<a class="headerlink" href="#equation-79925a42-9539-4ee1-929f-f40c48a8b945" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \hat{\mathbb{E}}[Y_1|D=0]-\hat{\mathbb{E}}[Y_0|D=0] = 21.1 - 23.38 = -2.28.
 \end{equation}\]</div>
 <p>Similarly, for treated group (i.e. restaurants in NJ), the average number of employees is 20.43 in Feb and changes to 20.9 in Nov, yielding</p>
-<div class="amsmath math notranslate nohighlight" id="equation-78f9bf8d-3c71-410c-84f0-1ccf278f45c9">
-<span class="eqno">(57)<a class="headerlink" href="#equation-78f9bf8d-3c71-410c-84f0-1ccf278f45c9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d62afa0a-a547-4a09-a748-c66f9899d4ca">
+<span class="eqno">(57)<a class="headerlink" href="#equation-d62afa0a-a547-4a09-a748-c66f9899d4ca" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \hat{\mathbb{E}}[Y_1|D=0]-\hat{\mathbb{E}}[Y_0|D=0] = 20.9 - 20.43 = 0.47.
 \end{equation}\]</div>
 <p>According to the diff-in-diff expression, raising minimum wage in state has a positive impact on the employment. The average treatment effect is estimated by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f3e47b9e-3d58-4974-9b87-4585766c0a08">
-<span class="eqno">(58)<a class="headerlink" href="#equation-f3e47b9e-3d58-4974-9b87-4585766c0a08" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e4079e33-0df7-4a25-8d54-101a481e7335">
+<span class="eqno">(58)<a class="headerlink" href="#equation-e4079e33-0df7-4a25-8d54-101a481e7335" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\tau} = \hat{\mathbb{E}}[Y_1|D=1]-\hat{\mathbb{E}}[Y_1|D=0]-\hat{\mathbb{E}}[Y_0|D=1]+\hat{\mathbb{E}}[Y_0|D=0] =  0.47 - (-2.28) = 2.75.
 \end{equation}\]</div>
 </section>
@@ -800,24 +744,24 @@ First, if we look at the control group (i.e. restaurants in PA), the average num
 <li><p><span class="math notranslate nohighlight">\(T_i\in\{0,1\}\)</span>: Time of the observation. <span class="math notranslate nohighlight">\(T_i=0\)</span> if <span class="math notranslate nohighlight">\(0\leq t\leq T_0\)</span>, and <span class="math notranslate nohighlight">\(T_i=1\)</span> if <span class="math notranslate nohighlight">\(T_0+1\leq T_i\leq T_0+T_1\)</span>.</p></li>
 </ul>
 <p><span class="math notranslate nohighlight">\(G_i=1\)</span> if unit <span class="math notranslate nohighlight">\(i\)</span> comes from the treatment group, and <span class="math notranslate nohighlight">\(G_i=0\)</span> if it is in control group. Similarly, define <span class="math notranslate nohighlight">\(T_i=1\)</span> if the unit is in the post-treatment period, and <span class="math notranslate nohighlight">\(T_i=0\)</span> if it’s in pre-treatment period. The observed outcome is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-72de360b-1092-4410-9fae-1e1606e36518">
-<span class="eqno">(59)<a class="headerlink" href="#equation-72de360b-1092-4410-9fae-1e1606e36518" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-78c84cdd-1f50-4ed6-b3b9-ee89e4e74f82">
+<span class="eqno">(59)<a class="headerlink" href="#equation-78c84cdd-1f50-4ed6-b3b9-ee89e4e74f82" title="Permalink to this equation">#</a></span>\[\begin{equation}
     Y_i = (1-G_iT_i)\cdot Y_i(0) + G_iT_i\cdot Y_i(1),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(Y_i(a)\)</span> denotes the potential outcome one would observe under action <span class="math notranslate nohighlight">\(A=a\)</span>.</p>
 <p>The difference of average outcomes for the <span class="math notranslate nohighlight">\(m\)</span> treated units after and before the treatment time point is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-80fd3073-9c7c-4ebf-9dc9-e0ca6b84b038">
-<span class="eqno">(60)<a class="headerlink" href="#equation-80fd3073-9c7c-4ebf-9dc9-e0ca6b84b038" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1b044192-9d4b-4cb3-8e43-63add13b6fa0">
+<span class="eqno">(60)<a class="headerlink" href="#equation-1b044192-9d4b-4cb3-8e43-63add13b6fa0" title="Permalink to this equation">#</a></span>\[\begin{equation}
 D_{\text{tr}} = \frac{1}{m} \sum_{i=1}^m\Big[\frac{1}{T_1}\sum_{t=T_0+1}^{T_0+T_1} Y_{i,t}-\frac{1}{T_0} \sum_{t=1}^{T_0} Y_{i,t}\Big]
 \end{equation}\]</div>
 <p>Similarly, the difference of average outcomes for the <span class="math notranslate nohighlight">\(n\)</span> control units after and before the treatment time point is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-27a6638a-7c7c-442c-92a4-aff7749f6390">
-<span class="eqno">(61)<a class="headerlink" href="#equation-27a6638a-7c7c-442c-92a4-aff7749f6390" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-02b2ab79-314c-4cee-b934-0655a2c2edf0">
+<span class="eqno">(61)<a class="headerlink" href="#equation-02b2ab79-314c-4cee-b934-0655a2c2edf0" title="Permalink to this equation">#</a></span>\[\begin{equation}
 D_{\text{co}} = \frac{1}{n} \sum_{i=m+1}^{m+n}\Big[\frac{1}{T_1}\sum_{t=T_0+1}^{T_0+T_1} Y_{i,t}-\frac{1}{T_0}\sum_{t=1}^{T_0} Y_{i,t}\Big]
 \end{equation}\]</div>
 <p>Under the parallel trend assumption, we are able to subtract the effect that’s not caused by treatment intervention:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b0ccffa7-59f7-4f5f-b08f-2da4de723390">
-<span class="eqno">(62)<a class="headerlink" href="#equation-b0ccffa7-59f7-4f5f-b08f-2da4de723390" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-24ce2111-bf56-49a0-88fe-8e1d2ac68f96">
+<span class="eqno">(62)<a class="headerlink" href="#equation-24ce2111-bf56-49a0-88fe-8e1d2ac68f96" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\Delta} = D_{\text{tr}} - D_{\text{co}} = \frac{1}{m} \sum_{i=1}^m\Big[\frac{1}{T_1}\sum_{t=T_0+1}^{T_0+T_1} Y_{i,t}-\frac{1}{T_0} \sum_{t=1}^{T_0} Y_{i,t}\Big] - \frac{1}{n} \sum_{i=m+1}^{m+n}\Big[\frac{1}{T_1}\sum_{t=T_0+1}^{T_0+T_1} Y_{i,t}-\frac{1}{T_0}\sum_{t=1}^{T_0} Y_{i,t}\Big].
 \end{equation}\]</div>
 </section>
