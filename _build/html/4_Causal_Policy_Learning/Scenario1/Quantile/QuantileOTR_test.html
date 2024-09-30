@@ -641,7 +641,9 @@ Thus, the optimal policy to maximize a specific quantile of the outcome distribu
 <h3>Data Processing<a class="headerlink" href="#data-processing" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">causaldm._util_causaldm</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="n">n0</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># the number of samples used to estimate the true reward distribution by MC</span>
 <span class="n">data_sim</span> <span class="o">=</span> <span class="n">get_data_simulation</span><span class="p">(</span><span class="n">n0</span> <span class="o">=</span> <span class="n">n0</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">223</span><span class="p">,</span> <span class="n">policy</span> <span class="o">=</span> <span class="s2">&quot;behavior&quot;</span><span class="p">)</span>
@@ -764,12 +766,15 @@ Thus, the optimal policy to maximize a specific quantile of the outcome distribu
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># initialize the learner</span>
 <span class="kn">from</span> <span class="nn">causaldm.learners.CPL13.disc.DR_QuantileOTR</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="c1"># import os</span>
+<span class="c1"># os.chdir(&#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;)</span>
+
 <span class="n">Quantile_OTR</span><span class="o">=</span><span class="n">QuantileOTR</span><span class="p">()</span>
 
 <span class="c1"># when a=1, Y ~ 1+x1+2.5*x2</span>
 <span class="c1"># when a=0, Y ~ 1-x1+2*x2</span>
-<span class="n">moCondQuant_0</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;X_1&#39;</span><span class="p">,</span> <span class="s1">&#39;X_2&#39;</span><span class="p">]</span>
-<span class="n">moCondQuant_1</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;X_1&#39;</span><span class="p">,</span> <span class="s1">&#39;X_2&#39;</span><span class="p">]</span>
+<span class="n">moCondQuant_0</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;S1&#39;</span><span class="p">,</span> <span class="s1">&#39;S2&#39;</span><span class="p">]</span>
+<span class="n">moCondQuant_1</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;S1&#39;</span><span class="p">,</span> <span class="s1">&#39;S2&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -779,9 +784,9 @@ Thus, the optimal policy to maximize a specific quantile of the outcome distribu
 <span class="nn">Input In [2],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># initialize the learner</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">causaldm.learners.CPL13.disc.DR_QuantileOTR</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">Quantile_OTR</span><span class="o">=</span><span class="n">QuantileOTR</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="c1"># when a=1, Y ~ 1+x1+2.5*x2</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="c1"># when a=0, Y ~ 1-x1+2*x2</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="c1"># import os</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># os.chdir(&#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;)</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">Quantile_OTR</span><span class="o">=</span><span class="n">QuantileOTR</span><span class="p">()</span>
 
 <span class="n">File</span> <span class="n">D</span><span class="p">:</span>\<span class="n">anaconda3</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">causaldm</span>\<span class="n">learners</span>\<span class="n">CPL13</span>\<span class="n">disc</span>\<span class="n">DR_QuantileOTR</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
@@ -1067,7 +1072,7 @@ Thus, the optimal policy to maximize a specific quantile of the outcome distribu
 <span class="n">data_real</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="n">target</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="c1">#X[&#39;Intercept&#39;]=np.ones((len(data),1))</span>
 <span class="n">data_real</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">treatment</span><span class="p">[</span><span class="n">target</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">data_real</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">target</span><span class="p">[</span><span class="n">target</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">data_real</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">target</span><span class="p">[</span><span class="n">target</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
 
 <span class="c1"># The final data we will use</span>
 <span class="n">data_real</span>
@@ -1103,7 +1108,7 @@ Thus, the optimal policy to maximize a specific quantile of the outcome distribu
       <th>channel_Phone</th>
       <th>channel_Web</th>
       <th>A</th>
-      <th>Y</th>
+      <th>R</th>
     </tr>
   </thead>
   <tbody>
@@ -1285,39 +1290,39 @@ Thus, the optimal policy to maximize a specific quantile of the outcome distribu
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning: Maximum number of iterations has been exceeded.
          Current function value: 0.502953
          Iterations: 35
-         Function evaluations: 45
-         Gradient evaluations: 40
- final_simplex: (array([[-1.1895e-04,  1.7227e-04,  1.4110e-04, -3.8883e-05,  1.3248e-04,
-        -1.6189e-04,  1.4630e-06,  8.8951e-05, -1.8789e-05, -4.1688e-05],
-       [-1.1876e-04,  1.7185e-04,  1.4111e-04, -3.9113e-05,  1.3260e-04,
-        -1.6160e-04,  1.5493e-06,  8.8964e-05, -1.8975e-05, -4.1777e-05],
-       [-1.1816e-04,  1.7171e-04,  1.4095e-04, -3.8872e-05,  1.3259e-04,
-        -1.6174e-04,  1.7327e-06,  8.8731e-05, -1.9187e-05, -4.1762e-05],
-       [-1.1882e-04,  1.7222e-04,  1.4113e-04, -3.8993e-05,  1.3252e-04,
-        -1.6171e-04,  1.6759e-06,  8.9012e-05, -1.9038e-05, -4.1803e-05],
-       [-1.1924e-04,  1.7234e-04,  1.4088e-04, -3.8863e-05,  1.3250e-04,
-        -1.6158e-04,  1.4646e-06,  8.9095e-05, -1.8690e-05, -4.2013e-05],
-       [-1.1900e-04,  1.7211e-04,  1.4096e-04, -3.8999e-05,  1.3246e-04,
-        -1.6178e-04,  1.3607e-06,  8.9148e-05, -1.9045e-05, -4.1516e-05],
-       [-1.1880e-04,  1.7227e-04,  1.4096e-04, -3.9149e-05,  1.3250e-04,
-        -1.6187e-04,  1.4407e-06,  8.9451e-05, -1.8686e-05, -4.1759e-05],
-       [-1.1875e-04,  1.7196e-04,  1.4083e-04, -3.9025e-05,  1.3241e-04,
-        -1.6157e-04,  1.5918e-06,  8.9206e-05, -1.8949e-05, -4.1680e-05],
-       [-1.1872e-04,  1.7252e-04,  1.4081e-04, -3.8846e-05,  1.3243e-04,
-        -1.6168e-04,  1.4315e-06,  8.8960e-05, -1.8996e-05, -4.1701e-05],
-       [-1.1925e-04,  1.7192e-04,  1.4085e-04, -3.8711e-05,  1.3264e-04,
-        -1.6172e-04,  1.5903e-06,  8.9406e-05, -1.8946e-05, -4.1745e-05],
-       [-1.1889e-04,  1.7195e-04,  1.4101e-04, -3.8838e-05,  1.3258e-04,
-        -1.6177e-04,  1.4543e-06,  8.9190e-05, -1.8917e-05, -4.1762e-05]]), array([-100.75, -100.75, -100.75, -100.75, -100.75, -100.75, -100.75,
-       -100.75, -100.75, -100.75, -100.75]))
-           fun: -100.75
+         Function evaluations: 44
+         Gradient evaluations: 39
+ final_simplex: (array([[-1.6030e-04,  1.4421e-04,  1.4993e-04, -2.3665e-05,  1.3960e-04,
+        -1.4896e-04, -1.7105e-05,  1.7022e-04, -3.1808e-05, -4.7639e-05],
+       [-1.6023e-04,  1.4452e-04,  1.5004e-04, -2.3869e-05,  1.3954e-04,
+        -1.4917e-04, -1.7135e-05,  1.7018e-04, -3.1694e-05, -4.7577e-05],
+       [-1.6011e-04,  1.4439e-04,  1.5006e-04, -2.3797e-05,  1.3962e-04,
+        -1.4904e-04, -1.7309e-05,  1.7019e-04, -3.1724e-05, -4.7681e-05],
+       [-1.6011e-04,  1.4452e-04,  1.4997e-04, -2.3741e-05,  1.3956e-04,
+        -1.4910e-04, -1.7230e-05,  1.6997e-04, -3.1711e-05, -4.7590e-05],
+       [-1.5996e-04,  1.4419e-04,  1.5000e-04, -2.3787e-05,  1.3965e-04,
+        -1.4909e-04, -1.7180e-05,  1.7024e-04, -3.1827e-05, -4.7586e-05],
+       [-1.6015e-04,  1.4431e-04,  1.5006e-04, -2.3793e-05,  1.3960e-04,
+        -1.4907e-04, -1.7191e-05,  1.7016e-04, -3.1705e-05, -4.7622e-05],
+       [-1.6004e-04,  1.4441e-04,  1.4998e-04, -2.3839e-05,  1.3954e-04,
+        -1.4904e-04, -1.7254e-05,  1.7002e-04, -3.1724e-05, -4.7586e-05],
+       [-1.6015e-04,  1.4443e-04,  1.4999e-04, -2.3810e-05,  1.3956e-04,
+        -1.4902e-04, -1.7239e-05,  1.7018e-04, -3.1761e-05, -4.7565e-05],
+       [-1.6011e-04,  1.4438e-04,  1.5001e-04, -2.3824e-05,  1.3959e-04,
+        -1.4903e-04, -1.7140e-05,  1.7004e-04, -3.1754e-05, -4.7614e-05],
+       [-1.6021e-04,  1.4444e-04,  1.4994e-04, -2.3840e-05,  1.3955e-04,
+        -1.4907e-04, -1.7195e-05,  1.7017e-04, -3.1613e-05, -4.7616e-05],
+       [-1.5992e-04,  1.4450e-04,  1.4997e-04, -2.3838e-05,  1.3960e-04,
+        -1.4908e-04, -1.7125e-05,  1.7013e-04, -3.1732e-05, -4.7662e-05]]), array([-100.7475, -100.7475, -100.7475, -100.7475, -100.7475, -100.7475,
+       -100.7475, -100.7475, -100.7475, -100.7475, -100.7475]))
+           fun: -100.74748816774957
        message: &#39;Optimization terminated successfully.&#39;
-          nfev: 181
-           nit: 63
+          nfev: 207
+           nit: 74
         status: 0
        success: True
-             x: array([-1.1895e-04,  1.7227e-04,  1.4110e-04, -3.8883e-05,  1.3248e-04,
-       -1.6189e-04,  1.4630e-06,  8.8951e-05, -1.8789e-05, -4.1688e-05])
+             x: array([-1.6030e-04,  1.4421e-04,  1.4993e-04, -2.3665e-05,  1.3960e-04,
+       -1.4896e-04, -1.7105e-05,  1.7022e-04, -3.1808e-05, -4.7639e-05])
 </pre></div>
 </div>
 </div>
@@ -1330,8 +1335,8 @@ Thus, the optimal policy to maximize a specific quantile of the outcome distribu
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.0000e+00,  1.5661e-05,  6.6834e-08, -3.8883e-05,  1.3248e-04,
-       -1.6189e-04,  1.4630e-06,  8.8951e-05, -1.8789e-05, -4.1688e-05])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.0000e+00,  1.3110e-05,  7.1020e-08, -2.3665e-05,  1.3960e-04,
+       -1.4896e-04, -1.7105e-05,  1.7022e-04, -3.1808e-05, -4.7639e-05])
 </pre></div>
 </div>
 </div>
@@ -1344,20 +1349,20 @@ Thus, the optimal policy to maximize a specific quantile of the outcome distribu
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100.75
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100.74748816774957
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">patches</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">Data</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">facecolor</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">patches</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data_real</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">facecolor</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
 
 
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;R1&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Histogram of Target&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">Data</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span><span class="o">-</span><span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">Data</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">]))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">data_real</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span><span class="o">-</span><span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">data_real</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">]))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -1365,7 +1370,7 @@ Thus, the optimal policy to maximize a specific quantile of the outcome distribu
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/a4c5100ff133f1a46e5e2a57396a76d93bfa4e9c26b06db18c8b1c693f84f185.png" src="../../../_images/a4c5100ff133f1a46e5e2a57396a76d93bfa4e9c26b06db18c8b1c693f84f185.png" />
+<img alt="../../../_images/a9796005bba793f6976aa68dcdea9c76e3872529101c3580f7a071e817be0d5e.png" src="../../../_images/a9796005bba793f6976aa68dcdea9c76e3872529101c3580f7a071e817be0d5e.png" />
 </div>
 </div>
 </section>
@@ -1378,8 +1383,8 @@ Thus, the optimal policy to maximize a specific quantile of the outcome distribu
 <section id="id3">
 <h2>Main idea<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
 <p>The doubly robust estimator of quantile estimation is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-564d128d-0dc0-4b2c-9205-5dc956b2c1cb">
-<span class="eqno">(77)<a class="headerlink" href="#equation-564d128d-0dc0-4b2c-9205-5dc956b2c1cb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-594b5305-0641-4924-a6a0-59c9ac85f7c4">
+<span class="eqno">(77)<a class="headerlink" href="#equation-594b5305-0641-4924-a6a0-59c9ac85f7c4" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \hat{\eta}_n=\arg\min_{\eta} \frac{1}{n}\sum_{i=1}^n\left[\frac{C(A_i,X_i)}{\hat{K}_C(X_i)}\rho_{\tau}(Y_i-\eta)+\left(1-\frac{C(A_i,X_i)}{\hat{K}_C(X_i)}\right)\hat{\mathbb{E}}[\rho_{\tau}(\hat{Y}-\eta)|X=X_i,A=\pi(X_i)]\right],
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\hat{K}_C(X)=\hat{b}(X)\pi(X)+(1-\hat{b}(X))(1-\pi(X))\)</span>, and</p>
@@ -1396,8 +1401,10 @@ Thus, the optimal policy to maximize a specific quantile of the outcome distribu
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causaldm.learners.CPL13.disc.DR_QuantileOPE</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="k">def</span> <span class="nf">pi</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="c1"># all-1 policy</span>
 <span class="n">Quantile_OTR</span><span class="o">=</span><span class="n">QuantileOPE</span><span class="p">()</span>
-<span class="n">QOPE_est</span><span class="o">=</span><span class="n">Quantile_OTR</span><span class="o">.</span><span class="n">QDR_QOPE</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data_sim</span><span class="p">,</span><span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">QOPE_est</span><span class="o">=</span><span class="n">Quantile_OTR</span><span class="o">.</span><span class="n">QDR_QOPE</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data_sim</span><span class="p">,</span> <span class="n">pi</span> <span class="o">=</span> <span class="n">pi</span><span class="p">,</span><span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1430,20 +1437,10 @@ fold:  4
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># initialize the learner</span>
 <span class="n">Quantile_OTR</span><span class="o">=</span><span class="n">QuantileOPE</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">pi</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="c1"># all-1 policy</span>
 
-<span class="n">QOPE_est</span><span class="o">=</span><span class="n">Quantile_OTR</span><span class="o">.</span><span class="n">QDR_QOPE</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data_real</span><span class="p">,</span><span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># initialize the learner</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">Quantile_OTR</span><span class="o">=</span><span class="n">QuantileOPE</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">QOPE_est</span><span class="o">=</span><span class="n">Quantile_OTR</span><span class="o">.</span><span class="n">QDR_QOPE</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data_real</span><span class="p">,</span><span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;QuantileOPE&#39; is not defined
+<span class="n">QOPE_est</span><span class="o">=</span><span class="n">Quantile_OTR</span><span class="o">.</span><span class="n">QDR_QOPE</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data_real</span><span class="p">,</span> <span class="n">pi</span> <span class="o">=</span> <span class="n">pi</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

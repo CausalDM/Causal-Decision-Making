@@ -620,7 +620,6 @@ document.write(`
  
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span> 
-
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;OMP_NUM_THREADS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
 </pre></div>
 </div>
@@ -629,7 +628,7 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mimic3_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;mimic3_single_stage.csv&#39;</span><span class="p">)</span>
-<span class="n">mimic3_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mimic3_data</span><span class="p">[</span><span class="s1">&#39;Died within 48H&#39;</span><span class="p">]</span><span class="o">==-</span><span class="mf">1.0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span> <span class="c1"># change the discrete action to binary</span>
+<span class="n">mimic3_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mimic3_data</span><span class="p">[</span><span class="s1">&#39;Died within 48H&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span><span class="s1">&#39;Died within 48H&#39;</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span> 
 </pre></div>
 </div>
 </div>
@@ -661,7 +660,6 @@ document.write(`
       <th></th>
       <th>icustayid</th>
       <th>Glucose</th>
-      <th>PaO2</th>
       <th>PaO2_FiO2</th>
       <th>IV Input</th>
       <th>SOFA</th>
@@ -672,61 +670,55 @@ document.write(`
     <tr>
       <th>0</th>
       <td>1006</td>
-      <td>152.000000</td>
-      <td>100.200000</td>
-      <td>137.081590</td>
-      <td>2.800000</td>
-      <td>0.000000</td>
-      <td>-1.0</td>
+      <td>141.833333</td>
+      <td>148.567991</td>
+      <td>2.333333</td>
+      <td>8.333333</td>
+      <td>0.0</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1204</td>
       <td>138.794872</td>
-      <td>127.782051</td>
       <td>430.668956</td>
       <td>1.153846</td>
-      <td>6.153846</td>
+      <td>5.692308</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>2</th>
       <td>4132</td>
       <td>129.364286</td>
-      <td>123.956461</td>
       <td>252.883864</td>
       <td>3.000000</td>
-      <td>0.000000</td>
-      <td>-1.0</td>
+      <td>4.800000</td>
+      <td>0.0</td>
     </tr>
     <tr>
       <th>3</th>
       <td>4201</td>
       <td>145.580087</td>
-      <td>118.083333</td>
       <td>539.065657</td>
       <td>1.363636</td>
-      <td>5.818182</td>
+      <td>5.636364</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>4</th>
       <td>5170</td>
       <td>174.525000</td>
-      <td>147.350198</td>
       <td>394.616727</td>
       <td>2.437500</td>
-      <td>4.125000</td>
+      <td>3.625000</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>5</th>
       <td>6504</td>
       <td>106.081169</td>
-      <td>88.836364</td>
       <td>423.030303</td>
       <td>0.363636</td>
-      <td>5.090909</td>
+      <td>6.000000</td>
       <td>1.0</td>
     </tr>
   </tbody>
@@ -739,7 +731,7 @@ document.write(`
 
 <span class="n">mimic3_data_final</span> <span class="o">=</span> <span class="n">mimic3_data</span>  
 
-<span class="n">selected</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Glucose&#39;</span><span class="p">,</span> <span class="s1">&#39;PaO2_FiO2&#39;</span><span class="p">,</span> <span class="s1">&#39;IV Input&#39;</span><span class="p">,</span> <span class="s1">&#39;SOFA&#39;</span><span class="p">,</span> <span class="s1">&#39;SOFA Post&#39;</span><span class="p">,</span> <span class="s1">&#39;Died within 48H&#39;</span><span class="p">]</span>
+<span class="n">selected</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Glucose&#39;</span><span class="p">,</span> <span class="s1">&#39;PaO2_FiO2&#39;</span><span class="p">,</span> <span class="s1">&#39;IV Input&#39;</span><span class="p">,</span> <span class="s1">&#39;SOFA&#39;</span><span class="p">,</span> <span class="s1">&#39;Died within 48H&#39;</span><span class="p">]</span>
 
 <span class="n">sample_demo</span> <span class="o">=</span> <span class="n">mimic3_data_final</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
 <span class="n">est_mt</span> <span class="o">=</span> <span class="n">notears_linear</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sample_demo</span><span class="p">),</span> <span class="n">lambda1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">loss_type</span><span class="o">=</span><span class="s1">&#39;l2&#39;</span><span class="p">,</span><span class="n">w_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
@@ -747,40 +739,6 @@ document.write(`
 <span class="c1"># ----------- Refit Associated Matrix under LSEM </span>
 
 <span class="n">est_mt</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">refit</span><span class="p">(</span><span class="n">sample_demo</span><span class="p">,</span> <span class="n">est_mt</span><span class="p">,</span> <span class="n">selected</span><span class="p">)</span> 
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
-<span class="nn">Input In [4],</span> in <span class="ni">&lt;cell line: 7&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">mimic3_data_final</span> <span class="o">=</span> <span class="n">mimic3_data</span>  
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">selected</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Glucose&#39;</span><span class="p">,</span> <span class="s1">&#39;PaO2_FiO2&#39;</span><span class="p">,</span> <span class="s1">&#39;IV Input&#39;</span><span class="p">,</span> <span class="s1">&#39;SOFA&#39;</span><span class="p">,</span> <span class="s1">&#39;SOFA Post&#39;</span><span class="p">,</span> <span class="s1">&#39;Died within 48H&#39;</span><span class="p">]</span>
-<span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">sample_demo</span> <span class="o">=</span> <span class="n">mimic3_data_final</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">est_mt</span> <span class="o">=</span> <span class="n">notears_linear</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sample_demo</span><span class="p">),</span> <span class="n">lambda1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">loss_type</span><span class="o">=</span><span class="s1">&#39;l2&#39;</span><span class="p">,</span><span class="n">w_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="c1"># ----------- Refit Associated Matrix under LSEM </span>
-
-<span class="nn">File D:\anaconda3\lib\site-packages\pandas\core\frame.py:3511,</span> in <span class="ni">DataFrame.__getitem__</span><span class="nt">(self, key)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3509</span>     <span class="k">if</span> <span class="n">is_iterator</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
-<span class="g g-Whitespace">   </span><span class="mi">3510</span>         <span class="n">key</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">3511</span>     <span class="n">indexer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">_get_indexer_strict</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s2">&quot;columns&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-<span class="g g-Whitespace">   </span><span class="mi">3513</span> <span class="c1"># take() does not accept boolean indexers</span>
-<span class="g g-Whitespace">   </span><span class="mi">3514</span> <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indexer</span><span class="p">,</span> <span class="s2">&quot;dtype&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
-
-<span class="nn">File D:\anaconda3\lib\site-packages\pandas\core\indexes\base.py:5782,</span> in <span class="ni">Index._get_indexer_strict</span><span class="nt">(self, key, axis_name)</span>
-<span class="g g-Whitespace">   </span><span class="mi">5779</span> <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">5780</span>     <span class="n">keyarr</span><span class="p">,</span> <span class="n">indexer</span><span class="p">,</span> <span class="n">new_indexer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reindex_non_unique</span><span class="p">(</span><span class="n">keyarr</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">5782</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raise_if_missing</span><span class="p">(</span><span class="n">keyarr</span><span class="p">,</span> <span class="n">indexer</span><span class="p">,</span> <span class="n">axis_name</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">5784</span> <span class="n">keyarr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">indexer</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">5785</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">Index</span><span class="p">):</span>
-<span class="g g-Whitespace">   </span><span class="mi">5786</span>     <span class="c1"># GH 42790 - Preserve name from an Index</span>
-
-<span class="nn">File D:\anaconda3\lib\site-packages\pandas\core\indexes\base.py:5845,</span> in <span class="ni">Index._raise_if_missing</span><span class="nt">(self, key, indexer, axis_name)</span>
-<span class="g g-Whitespace">   </span><span class="mi">5842</span>     <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;None of [</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">] are in the [</span><span class="si">{</span><span class="n">axis_name</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">5844</span> <span class="n">not_found</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ensure_index</span><span class="p">(</span><span class="n">key</span><span class="p">)[</span><span class="n">missing_mask</span><span class="o">.</span><span class="n">nonzero</span><span class="p">()[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-<span class="ne">-&gt; </span><span class="mi">5845</span> <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">not_found</span><span class="si">}</span><span class="s2"> not in index&quot;</span><span class="p">)</span>
-
-<span class="ne">KeyError</span>: &quot;[&#39;SOFA Post&#39;] not in index&quot;
 </pre></div>
 </div>
 </div>
@@ -794,7 +752,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/0b9b5528f84de8ec1e5988a09d8a0daa39538d715608eb3c5002fa0daba88b33.png" src="../../_images/0b9b5528f84de8ec1e5988a09d8a0daa39538d715608eb3c5002fa0daba88b33.png" />
+<img alt="../../_images/a525044fa82acdc6518b3a0432f04f5e45430089a93e1d3321d6a541334bf727.png" src="../../_images/a525044fa82acdc6518b3a0432f04f5e45430089a93e1d3321d6a541334bf727.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -807,7 +765,7 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topological order from top to buttom:
- [&#39;PaO2_FiO2&#39;, &#39;Glucose&#39;, &#39;IV Input&#39;, &#39;SOFA&#39;, &#39;SOFA Post&#39;, &#39;Died within 48H&#39;]
+ [&#39;PaO2_FiO2&#39;, &#39;Glucose&#39;, &#39;SOFA&#39;, &#39;IV Input&#39;, &#39;Died within 48H&#39;]
 </pre></div>
 </div>
 </div>
@@ -815,31 +773,13 @@ document.write(`
 </section>
 <section id="causal-effect-learning">
 <h1>Causal Effect Learning<a class="headerlink" href="#causal-effect-learning" title="Permalink to this heading">#</a></h1>
-<p>According to the amount of fluid administraition throughout the entire treatment period, we plot the average IV input for each patient as below:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mimic3_data</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([9., 2., 7., 7., 1., 9., 8., 5., 4., 5.]),
- array([0.        , 0.35384615, 0.70769231, 1.06153846, 1.41538462,
-        1.76923077, 2.12307692, 2.47692308, 2.83076923, 3.18461538,
-        3.53846154]),
- &lt;BarContainer object of 10 artists&gt;)
-</pre></div>
-</div>
-<img alt="../../_images/89726bba2756242f30e5051a4a34f67abe0004fe1698646fc76c7bc7a8cbd58f.png" src="../../_images/89726bba2756242f30e5051a4a34f67abe0004fe1698646fc76c7bc7a8cbd58f.png" />
-</div>
-</div>
-<p>As we can see from the histogram above, there is a small gap when the average IV Input is around <span class="math notranslate nohighlight">\(1.5\)</span>. This gap naturally split the data into two treatment groups: “High-IV-Input” group and “Low-IV-Input” group. We are interested in whether the highe level fluid intake treatment is able to decrease the SOFA score and the death rate of patients within 48 hours of administration.</p>
+<p>For simplicity, we split the data into two treatment groups: “High-IV-Input” group where the IV input is greater than or equal to <span class="math notranslate nohighlight">\(1\)</span>, and “Low-IV-Input” group where the IV input is smaller than <span class="math notranslate nohighlight">\(1\)</span>. We are interested in whether the highe level fluid intake treatment is able to decrease the SOFA score and the death rate of patients within 48 hours of administration.</p>
 <p>Motivated by this problem, we set the “High-IV-Input” group as the treatment group with <span class="math notranslate nohighlight">\(A=1\)</span>, and set the “Low-IV-Input” group as the control group with <span class="math notranslate nohighlight">\(A=0\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_CEL_selected</span> <span class="o">=</span> <span class="n">mimic3_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">&lt;=</span><span class="mf">1.5</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span> <span class="c1"># change the discrete action to binary</span>
-<span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">1.5</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span> <span class="c1"># change the discrete action to binary</span>
+<span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span> <span class="c1"># change the discrete action to binary</span>
+<span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span> <span class="c1"># change the discrete action to binary</span>
 
 <span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 </pre></div>
@@ -870,29 +810,26 @@ document.write(`
       <th>IV Input</th>
       <th>SOFA</th>
       <th>Died within 48H</th>
-      <th>SOFA Post</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
       <td>1006</td>
-      <td>152.000000</td>
-      <td>137.081590</td>
+      <td>141.833333</td>
+      <td>148.567991</td>
       <td>1.0</td>
-      <td>8.400000</td>
+      <td>8.333333</td>
       <td>0.0</td>
-      <td>7.600000</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1204</td>
       <td>138.794872</td>
       <td>430.668956</td>
-      <td>0.0</td>
+      <td>1.0</td>
       <td>5.692308</td>
       <td>1.0</td>
-      <td>6.153846</td>
     </tr>
     <tr>
       <th>2</th>
@@ -902,17 +839,15 @@ document.write(`
       <td>1.0</td>
       <td>4.800000</td>
       <td>0.0</td>
-      <td>4.600000</td>
     </tr>
     <tr>
       <th>3</th>
       <td>4201</td>
       <td>145.580087</td>
       <td>539.065657</td>
-      <td>0.0</td>
+      <td>1.0</td>
       <td>5.636364</td>
       <td>1.0</td>
-      <td>5.818182</td>
     </tr>
     <tr>
       <th>4</th>
@@ -922,7 +857,6 @@ document.write(`
       <td>1.0</td>
       <td>3.625000</td>
       <td>1.0</td>
-      <td>4.125000</td>
     </tr>
     <tr>
       <th>5</th>
@@ -932,7 +866,6 @@ document.write(`
       <td>0.0</td>
       <td>6.000000</td>
       <td>1.0</td>
-      <td>5.090909</td>
     </tr>
   </tbody>
 </table>
@@ -940,13 +873,13 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span> <span class="s2">&quot;The number of patients in treatment group is &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mimic3_data</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">1.5</span><span class="p">)[</span><span class="mi">0</span><span class="p">]),</span> <span class="s2">&quot;;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;The number of patients in control group is &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mimic3_data</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">&lt;=</span><span class="mf">1.5</span><span class="p">)[</span><span class="mi">0</span><span class="p">]),</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span> <span class="s2">&quot;The number of patients in treatment group is &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mimic3_data</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]),</span> <span class="s2">&quot;;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;The number of patients in control group is &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mimic3_data</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]),</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The number of patients in treatment group is  32 ;
- The number of patients in control group is  25 .
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The number of patients in treatment group is  41 ;
+ The number of patients in control group is  16 .
 </pre></div>
 </div>
 </div>
@@ -955,28 +888,13 @@ document.write(`
 <h2>Regard ‘Died_Within_48H’ as the outcome variable<a class="headerlink" href="#regard-died-within-48h-as-the-outcome-variable" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">userinfo_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">)</span>
+<span class="n">userinfo_index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Glucose&#39;</span><span class="p">,</span> <span class="s1">&#39;PaO2_FiO2&#39;</span><span class="p">]</span>
+<span class="n">SandA_index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Glucose&#39;</span><span class="p">,</span> <span class="s1">&#39;PaO2_FiO2&#39;</span><span class="p">,</span> <span class="s1">&#39;IV Input&#39;</span><span class="p">]</span>
 <span class="c1"># outcome: Died within 48H (binary)</span>
 <span class="c1"># treatment: IV Input (binary)</span>
 <span class="c1"># Glucose, PaO2_FiO2: covariates</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>24
-1
-24
-8
+<span class="n">SandA</span> <span class="o">=</span> <span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">SandA_index</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -987,41 +905,51 @@ document.write(`
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingClassifier</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 
-<span class="c1">#mu0 = GradientBoostingClassifier(max_depth=2)</span>
-<span class="c1">#mu1 = GradientBoostingClassifier(max_depth=2)</span>
-
-<span class="n">mu0</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
-<span class="n">mu1</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
-
-<span class="n">mu0</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">userinfo_index</span><span class="p">],</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span> <span class="p">)</span>
-<span class="n">mu1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">userinfo_index</span><span class="p">],</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span> <span class="p">)</span>
-
-
-<span class="c1"># estimate the HTE by T-learner</span>
-<span class="n">HTE_T_learner</span> <span class="o">=</span> <span class="p">(</span><span class="n">mu1</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span> <span class="o">-</span> <span class="n">mu0</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">]))[:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">S_learner</span> <span class="o">=</span> <span class="n">GradientBoostingClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1">#S_learner = LinearRegression()</span>
+<span class="c1">#SandA = np.hstack((S.to_numpy(),A.to_numpy().reshape(-1,1)))</span>
+<span class="n">S_learner</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">SandA</span><span class="p">,</span> <span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;Died within 48H&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GradientBoostingClassifier(max_depth=2)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">HTE_T_learner</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SandA_all1</span> <span class="o">=</span> <span class="n">SandA</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">SandA_all0</span> <span class="o">=</span> <span class="n">SandA</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">SandA_all1</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">SandA_all0</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="n">HTE_S_learner</span> <span class="o">=</span> <span class="n">S_learner</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">SandA_all1</span><span class="p">)[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">S_learner</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">SandA_all0</span><span class="p">)[:,</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">HTE_S_learner</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.45322357, -0.12551825, -0.31095315, -0.06658004, -0.14936954,
-       -0.13404695, -0.32144405, -0.41540906, -0.11657287, -0.0605553 ,
-       -0.41204992, -0.350003  , -0.07587157, -0.1937542 , -0.29406602,
-       -0.27231197, -0.44362365, -0.08949383, -0.4349184 , -0.13355717,
-       -0.16845723, -0.0938565 , -0.30817118, -0.06978495,  0.50736663,
-       -0.20295236, -0.17239035, -0.27745005, -0.2927717 , -0.31615833,
-       -0.3621005 , -0.19816815, -0.29745249, -0.31014128, -0.00821821,
-       -0.19483265, -0.16912685, -0.20077837, -0.37305844, -0.24538905,
-       -0.20552501, -0.38095327, -0.38948743, -0.2780394 , -0.11502808,
-       -0.45806054, -0.29489358, -0.18854476, -0.06531642, -0.22022294,
-       -0.22806464, -0.31916684, -0.05725299, -0.37429873, -0.16776177,
-       -0.30377136, -0.44658451])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-0.94560748, -0.03631782, -0.24418673, -0.01039801, -0.00236894,
+       -0.02500368, -0.16616222, -0.02498772, -0.00680408, -0.01039801,
+       -0.02498772, -0.04663373, -0.00426503, -0.00592246, -0.00346419,
+       -0.00587797, -0.89401845, -0.00426503, -0.05992334, -0.11234352,
+       -0.01286305, -0.01039801, -0.0038123 , -0.00617015, -0.93511454,
+       -0.00592246, -0.00592246, -0.00592246, -0.0038123 , -0.37649399,
+       -0.46904782, -0.01286305, -0.01286305, -0.0038123 , -0.00426503,
+       -0.00587797, -0.00451459, -0.00236894, -0.02498772, -0.0038123 ,
+       -0.00592246, -0.05979807, -0.05979807, -0.00236894, -0.06801119,
+       -0.8041779 , -0.00592246, -0.01286305, -0.01039801, -0.00236894,
+       -0.00592246, -0.29037822, -0.01046084, -0.02623068, -0.00236894,
+       -0.38071179, -0.95121306])
 </pre></div>
 </div>
 </div>
@@ -1029,30 +957,34 @@ document.write(`
 <p>As we can see from the estimated treatment effect of each patient, a higher volumn of fluid intake is inclined to cause negative impact on patients’ health status. This may seem counterintuitive to us, which may indicates some selection bias within this small dataset. Despite so, this result also remind us to pay attention to the potentially unnecessary fluid intake that may increase the death rate of patients.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mu1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span><span class="o">-</span><span class="n">mu0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">userinfo_index</span><span class="p">])</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">SandA_all1</span><span class="p">)</span> <span class="o">-</span> <span class="n">S_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">SandA_all0</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0, 24], dtype=int64)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,
+        0.,  0.,  0., -1.,  0.,  0.,  0.,  0.,  0.,  0.,  0., -1.,  0.,
+        0.,  0.,  0.,  0., -1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,
+        0.,  0.,  0.,  0.,  0.,  0., -1.,  0.,  0.,  0.,  0.,  0.,  0.,
+        0.,  0.,  0.,  0., -1.])
 </pre></div>
 </div>
 </div>
 </div>
-<p>Although it generally might be harmful to patients to take fluids, Patient # {0, 24} is expected to be the surviver after the fluid intake.</p>
+<p>Specifically, the S-learner model advises against switching 6 patients from the ‘High-IV-input’ group to the ‘Low-IV-input’ group, as excessive IV fluid administration may increase the risk of death.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">sum</span><span class="p">(</span><span class="n">HTE_T_learner</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">sum</span><span class="p">(</span><span class="n">HTE_S_learner</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.21392525739350662
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.12708238118972615
 </pre></div>
 </div>
 </div>
 </div>
-<p>Overall, IV Input is expected to increase the death-within-48-hours rate of all patients by 21.39%.</p>
+<p>Overall, IV Input is expected to increase the death-within-48-hours rate of all patients by 12.71%.</p>
 </section>
 <section id="regard-sofa-as-the-outcome-variable">
 <h2>Regard ‘SOFA’ as the outcome variable<a class="headerlink" href="#regard-sofa-as-the-outcome-variable" title="Permalink to this heading">#</a></h2>
@@ -1091,29 +1023,26 @@ document.write(`
       <th>IV Input</th>
       <th>SOFA</th>
       <th>Died within 48H</th>
-      <th>SOFA Post</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
       <td>1006</td>
-      <td>152.000000</td>
-      <td>137.081590</td>
+      <td>141.833333</td>
+      <td>148.567991</td>
       <td>1.0</td>
-      <td>8.400000</td>
+      <td>8.333333</td>
       <td>0.0</td>
-      <td>7.600000</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1204</td>
       <td>138.794872</td>
       <td>430.668956</td>
-      <td>0.0</td>
+      <td>1.0</td>
       <td>5.692308</td>
       <td>1.0</td>
-      <td>6.153846</td>
     </tr>
     <tr>
       <th>2</th>
@@ -1123,17 +1052,15 @@ document.write(`
       <td>1.0</td>
       <td>4.800000</td>
       <td>0.0</td>
-      <td>4.600000</td>
     </tr>
     <tr>
       <th>3</th>
       <td>4201</td>
       <td>145.580087</td>
       <td>539.065657</td>
-      <td>0.0</td>
+      <td>1.0</td>
       <td>5.636364</td>
       <td>1.0</td>
-      <td>5.818182</td>
     </tr>
     <tr>
       <th>4</th>
@@ -1143,7 +1070,6 @@ document.write(`
       <td>1.0</td>
       <td>3.625000</td>
       <td>1.0</td>
-      <td>4.125000</td>
     </tr>
     <tr>
       <th>5</th>
@@ -1153,7 +1079,6 @@ document.write(`
       <td>0.0</td>
       <td>6.000000</td>
       <td>1.0</td>
-      <td>5.090909</td>
     </tr>
   </tbody>
 </table>
@@ -1173,8 +1098,8 @@ document.write(`
 <span class="n">mu0</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
 <span class="n">mu1</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
 
-<span class="n">mu0</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">userinfo_index</span><span class="p">],</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">4</span><span class="p">]</span> <span class="p">)</span>
-<span class="n">mu1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">userinfo_index</span><span class="p">],</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">4</span><span class="p">]</span> <span class="p">)</span>
+<span class="n">mu0</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">userinfo_index</span><span class="p">],</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;SOFA&#39;</span><span class="p">]</span> <span class="p">)</span>
+<span class="n">mu1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="n">userinfo_index</span><span class="p">],</span><span class="n">data_CEL_selected</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data_CEL_selected</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;SOFA&#39;</span><span class="p">]</span> <span class="p">)</span>
 
 
 <span class="c1"># estimate the HTE by T-learner</span>
@@ -1190,18 +1115,18 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.33471421,  0.58750923,  0.69769602,  0.50468707,  0.04119141,
-        1.08032529,  0.24677671, -0.46879497,  1.14228685,  0.40913012,
-       -0.26967209, -2.10424795, -0.15469547,  0.86680554,  1.01699509,
-        0.50534554,  0.50120394,  0.0832772 ,  0.4053538 ,  0.61938348,
-        0.63167011,  0.53840976,  1.10602297,  1.04338229, -0.18159866,
-        0.77996324,  0.7988097 ,  0.94550731,  1.28227784,  0.9895861 ,
-        0.34582444,  0.63707457,  0.67745798,  1.16396444,  0.3173255 ,
-        0.41720785, -1.66927895,  0.09861153, -0.9408872 ,  1.21402004,
-        0.85013445,  0.61804279,  0.67352783, -0.06219661,  0.78217875,
-        0.87809129,  0.81120382,  0.61344813,  0.6384825 , -0.26478542,
-        0.95845848,  1.14744284,  0.86349984,  0.74704598,  0.2168899 ,
-       -0.97526792,  0.68596023])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.19364172,  0.43022668,  0.42227606,  0.42219369, -0.03969731,
+        0.83183631,  0.0446209 , -0.58375899,  0.89697977,  0.35182466,
+       -0.41703565, -1.91625097, -0.13608927,  0.61690587,  0.69365334,
+        0.27918828,  0.2024016 ,  0.04541335,  0.13391923,  0.45044888,
+        0.43695841,  0.41781739,  0.76158097,  0.86397324, -0.36207864,
+        0.53997224,  0.57297452,  0.64149907,  0.91390201,  0.66192588,
+        0.11098695,  0.4242157 ,  0.41103954,  0.8087694 ,  0.4534558 ,
+        0.24395105, -1.46910804, -0.02315674, -0.95875459,  0.87827698,
+        0.59671734,  0.32944522,  0.37227712, -0.19333887,  0.60004377,
+        0.5173245 ,  0.5228714 ,  0.40999269,  0.53478012, -0.33426202,
+        0.6749268 ,  0.79146124,  0.73329554,  0.43873827,  0.09386684,
+       -0.96035613,  0.36221912])
 </pre></div>
 </div>
 </div>
@@ -1214,12 +1139,12 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.4460136626503026
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.2586123201823543
 </pre></div>
 </div>
 </div>
 </div>
-<p><strong>Conclusion</strong>: IV Input is expected to increase the SOFA score by 0.446.</p>
+<p><strong>Conclusion</strong>: IV Input is expected to increase the SOFA score by 0.259.</p>
 </section>
 </section>
 
