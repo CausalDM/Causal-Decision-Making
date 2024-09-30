@@ -585,7 +585,7 @@ document.write(`
 <span class="n">single_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;mimic3_single_stage.csv&#39;</span><span class="p">)</span>
 <span class="n">single_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">single_data</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span> <span class="c1"># change the discrete action to binary</span>
 <span class="n">single_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">single_data</span><span class="p">[</span><span class="s1">&#39;IV Input&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span> <span class="c1"># change the discrete action to binary</span>
-<span class="n">single_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">single_data</span><span class="p">[</span><span class="s1">&#39;Died within 48H&#39;</span><span class="p">]</span><span class="o">==-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">5</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span> <span class="c1"># change the discrete action to binary</span>
+<span class="n">single_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">single_data</span><span class="p">[</span><span class="s1">&#39;Died within 48H&#39;</span><span class="p">]</span><span class="o">==-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span> <span class="c1"># change the discrete action to binary</span>
 <span class="n">single_data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -611,7 +611,6 @@ document.write(`
       <th></th>
       <th>icustayid</th>
       <th>Glucose</th>
-      <th>PaO2</th>
       <th>PaO2_FiO2</th>
       <th>IV Input</th>
       <th>SOFA</th>
@@ -622,66 +621,72 @@ document.write(`
     <tr>
       <th>0</th>
       <td>1006</td>
-      <td>152.000000</td>
-      <td>100.200000</td>
+      <td>141.833333</td>
+      <td>148.567991</td>
       <td>1.0</td>
-      <td>2.800000</td>
-      <td>0.000000</td>
-      <td>-1.0</td>
+      <td>8.333333</td>
+      <td>0.0</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1204</td>
       <td>138.794872</td>
-      <td>127.782051</td>
+      <td>430.668956</td>
       <td>1.0</td>
-      <td>1.153846</td>
-      <td>6.153846</td>
+      <td>5.692308</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>2</th>
       <td>4132</td>
       <td>129.364286</td>
-      <td>123.956461</td>
+      <td>252.883864</td>
       <td>1.0</td>
-      <td>3.000000</td>
-      <td>0.000000</td>
-      <td>-1.0</td>
+      <td>4.800000</td>
+      <td>0.0</td>
     </tr>
     <tr>
       <th>3</th>
       <td>4201</td>
       <td>145.580087</td>
-      <td>118.083333</td>
+      <td>539.065657</td>
       <td>1.0</td>
-      <td>1.363636</td>
-      <td>5.818182</td>
+      <td>5.636364</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>4</th>
       <td>5170</td>
       <td>174.525000</td>
-      <td>147.350198</td>
+      <td>394.616727</td>
       <td>1.0</td>
-      <td>2.437500</td>
-      <td>4.125000</td>
+      <td>3.625000</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>5</th>
       <td>6504</td>
       <td>106.081169</td>
-      <td>88.836364</td>
+      <td>423.030303</td>
       <td>0.0</td>
-      <td>0.363636</td>
-      <td>5.090909</td>
+      <td>6.000000</td>
       <td>1.0</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">single_data</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(57, 6)
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -708,9 +713,9 @@ document.write(`
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Direct Estimator</p></td>
-<td class="text-center"><p>-.2133</p></td>
+<td class="text-center"><p>-.2132</p></td>
 <td><p>.0030</p></td>
-<td><p>-.2104</p></td>
+<td><p>-.2103</p></td>
 </tr>
 <tr class="row-odd"><td><p>IPW</p></td>
 <td class="text-center"><p>-.2332</p></td>
@@ -718,9 +723,9 @@ document.write(`
 <td><p>-.2332</p></td>
 </tr>
 <tr class="row-even"><td><p>Robust</p></td>
-<td class="text-center"><p>-.2276</p></td>
-<td><p>-.0164</p></td>
-<td><p>-.2440</p></td>
+<td class="text-center"><p>-.2274</p></td>
+<td><p>-.0163</p></td>
+<td><p>-.2438</p></td>
 </tr>
 </tbody>
 </table>
@@ -788,110 +793,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>D:\anaconda3\lib\site-packages\sklearn\model_selection\_validation.py:372: FitFailedWarning: 
-490 fits failed out of a total of 490.
-The score on these train-test partitions for these parameters will be set to nan.
-If these failures are not expected, you can try to debug them by setting error_score=&#39;raise&#39;.
-
-Below are more details about the failures:
---------------------------------------------------------------------------------
-490 fits failed with the following error:
-Traceback (most recent call last):
-  File &quot;D:\anaconda3\lib\site-packages\sklearn\model_selection\_validation.py&quot;, line 680, in _fit_and_score
-    estimator.fit(X_train, y_train, **fit_params)
-  File &quot;D:\anaconda3\lib\site-packages\sklearn\tree\_classes.py&quot;, line 937, in fit
-    super().fit(
-  File &quot;D:\anaconda3\lib\site-packages\sklearn\tree\_classes.py&quot;, line 203, in fit
-    check_classification_targets(y)
-  File &quot;D:\anaconda3\lib\site-packages\sklearn\utils\multiclass.py&quot;, line 197, in check_classification_targets
-    raise ValueError(&quot;Unknown label type: %r&quot; % y_type)
-ValueError: Unknown label type: &#39;continuous&#39;
-
-  warnings.warn(some_fits_failed_message, FitFailedWarning)
-D:\anaconda3\lib\site-packages\sklearn\model_selection\_search.py:969: UserWarning: One or more of the test scores are non-finite: [nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan
- nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan
- nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan
- nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan
- nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan
- nan nan nan nan nan nan nan nan]
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="nn">Input In [5],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">problearner_parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;splitter&quot;</span><span class="p">:[</span><span class="s2">&quot;best&quot;</span><span class="p">,</span><span class="s2">&quot;random&quot;</span><span class="p">],</span> <span class="s2">&quot;max_depth&quot;</span> <span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">50</span><span class="p">)},</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">Direct_est</span> <span class="o">=</span> <span class="n">ME_Single</span><span class="p">(</span><span class="n">single_dataset</span><span class="p">,</span> <span class="n">r_model</span> <span class="o">=</span> <span class="s1">&#39;OLS&#39;</span><span class="p">,</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span>                      <span class="n">problearner_parameters</span> <span class="o">=</span> <span class="n">problearner_parameters</span><span class="p">,</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span>                      <span class="n">truncate</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> 
-<span class="g g-Whitespace">      </span><span class="mi">5</span>                      <span class="n">target_policy</span><span class="o">=</span><span class="n">target_policy</span><span class="p">,</span> <span class="n">control_policy</span> <span class="o">=</span> <span class="n">control_policy</span><span class="p">,</span> 
-<span class="g g-Whitespace">      </span><span class="mi">6</span>                      <span class="n">dim_state</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dim_mediator</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> 
-<span class="g g-Whitespace">      </span><span class="mi">7</span>                      <span class="n">MCMC</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span>                      <span class="n">nature_decomp</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span>                      <span class="n">seed</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span>                      <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;Direct&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="n">Direct_est</span><span class="o">.</span><span class="n">estimate_DE_ME</span><span class="p">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="n">Direct_est</span><span class="o">.</span><span class="n">est_DE</span><span class="p">,</span> <span class="n">Direct_est</span><span class="o">.</span><span class="n">est_ME</span><span class="p">,</span> <span class="n">Direct_est</span><span class="o">.</span><span class="n">est_TE</span><span class="p">,</span>
-
-<span class="nn">File D:\anaconda3\lib\site-packages\causaldm\learners\CEL\MA\ME_Single.py:64,</span> in <span class="ni">ME_Single.__init__</span><span class="nt">(self, dataset, r_model, problearner_parameters, truncate, target_policy, control_policy, dim_state, dim_mediator, MCMC, seed, nature_decomp, method)</span>
-<span class="g g-Whitespace">     </span><span class="mi">60</span> <span class="bp">self</span><span class="o">.</span><span class="n">rewardlearner</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">62</span> <span class="bp">self</span><span class="o">.</span><span class="n">palearner</span> <span class="o">=</span> <span class="n">PALearner</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">problearner_parameters</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">dim_state</span> <span class="o">=</span> <span class="n">dim_state</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">63</span>                            <span class="n">dim_mediator</span> <span class="o">=</span> <span class="n">dim_mediator</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">64</span> <span class="bp">self</span><span class="o">.</span><span class="n">palearner</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">66</span> <span class="bp">self</span><span class="o">.</span><span class="n">pie_A</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_policy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim_state</span><span class="p">,</span> <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">67</span> <span class="bp">self</span><span class="o">.</span><span class="n">I_A</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">control_policy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim_state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="p">)</span>
-
-<span class="nn">File D:\anaconda3\lib\site-packages\causaldm\learners\CEL\MA\probLearner.py:182,</span> in <span class="ni">PALearner.train</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">179</span> <span class="n">y</span> <span class="o">=</span> <span class="n">action</span>
-<span class="g g-Whitespace">    </span><span class="mi">181</span> <span class="n">regressor</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">182</span> <span class="n">regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">183</span> <span class="n">best_params</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">best_params_</span>
-<span class="g g-Whitespace">    </span><span class="mi">184</span> <span class="c1">#print(&#39;action&#39;, best_params)</span>
-
-<span class="nn">File D:\anaconda3\lib\site-packages\sklearn\model_selection\_search.py:926,</span> in <span class="ni">BaseSearchCV.fit</span><span class="nt">(self, X, y, groups, **fit_params)</span>
-<span class="g g-Whitespace">    </span><span class="mi">924</span> <span class="n">refit_start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">925</span> <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">926</span>     <span class="bp">self</span><span class="o">.</span><span class="n">best_estimator_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">fit_params</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">927</span> <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">928</span>     <span class="bp">self</span><span class="o">.</span><span class="n">best_estimator_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">**</span><span class="n">fit_params</span><span class="p">)</span>
-
-<span class="nn">File D:\anaconda3\lib\site-packages\sklearn\tree\_classes.py:937,</span> in <span class="ni">DecisionTreeClassifier.fit</span><span class="nt">(self, X, y, sample_weight, check_input, X_idx_sorted)</span>
-<span class="g g-Whitespace">    </span><span class="mi">899</span> <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">900</span>     <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">check_input</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">X_idx_sorted</span><span class="o">=</span><span class="s2">&quot;deprecated&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">901</span> <span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">902</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Build a decision tree classifier from the training set (X, y).</span>
-<span class="g g-Whitespace">    </span><span class="mi">903</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">904</span><span class="sd">     Parameters</span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">    </span><span class="mi">934</span><span class="sd">         Fitted estimator.</span>
-<span class="g g-Whitespace">    </span><span class="mi">935</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">937</span>     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">938</span>         <span class="n">X</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">939</span>         <span class="n">y</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">940</span>         <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">941</span>         <span class="n">check_input</span><span class="o">=</span><span class="n">check_input</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">942</span>         <span class="n">X_idx_sorted</span><span class="o">=</span><span class="n">X_idx_sorted</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">943</span>     <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">944</span>     <span class="k">return</span> <span class="bp">self</span>
-
-<span class="nn">File D:\anaconda3\lib\site-packages\sklearn\tree\_classes.py:203,</span> in <span class="ni">BaseDecisionTree.fit</span><span class="nt">(self, X, y, sample_weight, check_input, X_idx_sorted)</span>
-<span class="g g-Whitespace">    </span><span class="mi">200</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_outputs_</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">202</span> <span class="k">if</span> <span class="n">is_classification</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">203</span>     <span class="n">check_classification_targets</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">204</span>     <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">206</span>     <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="nn">File D:\anaconda3\lib\site-packages\sklearn\utils\multiclass.py:197,</span> in <span class="ni">check_classification_targets</span><span class="nt">(y)</span>
-<span class="g g-Whitespace">    </span><span class="mi">189</span> <span class="n">y_type</span> <span class="o">=</span> <span class="n">type_of_target</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">190</span> <span class="k">if</span> <span class="n">y_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span>
-<span class="g g-Whitespace">    </span><span class="mi">191</span>     <span class="s2">&quot;binary&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">192</span>     <span class="s2">&quot;multiclass&quot;</span><span class="p">,</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">195</span>     <span class="s2">&quot;multilabel-sequences&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">196</span> <span class="p">]:</span>
-<span class="ne">--&gt; </span><span class="mi">197</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown label type: </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">y_type</span><span class="p">)</span>
-
-<span class="ne">ValueError</span>: Unknown label type: &#39;continuous&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.2132360890518064, 0.0029724096241138995, -0.2102636794276925)
 </pre></div>
 </div>
 </div>
@@ -937,7 +839,7 @@ D:\anaconda3\lib\site-packages\sklearn\model_selection\_search.py:969: UserWarni
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.22762835456807218, -0.01638548320515956, -0.24401383777323174)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.22743187935855116, -0.01633182578287201, -0.24376370514142318)
 </pre></div>
 </div>
 </div>
@@ -952,8 +854,8 @@ D:\anaconda3\lib\site-packages\sklearn\model_selection\_search.py:969: UserWarni
 </div>
 </div>
 <p>As an example, we use the <strong>Q-learning</strong> algorithm to evaluate policies based on the observed data, with the linear regression models defined as the following:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-422bd10d-68f0-48b7-8a17-e91bf47fdcca">
-<span class="eqno">(166)<a class="headerlink" href="#equation-422bd10d-68f0-48b7-8a17-e91bf47fdcca" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5e85c879-3cc6-4285-b8a1-816ef6a0c0df">
+<span class="eqno">(166)<a class="headerlink" href="#equation-5e85c879-3cc6-4285-b8a1-816ef6a0c0df" title="Permalink to this equation">#</a></span>\[\begin{align}
 Q(s,a,\boldsymbol{\beta}) = &amp;\beta_{00}+\beta_{01}*\textrm{Glucose}+\beta_{02}*\textrm{PaO2_FiO2}\\
                     &amp;I(a_1=1)*\{\beta_{10}+\beta_{11}*\textrm{Glucose}+\beta_{12}*\textrm{PaO2_FiO2}\},
 \end{align}\]</div>
@@ -984,7 +886,7 @@ Q(s,a,\boldsymbol{\beta}) = &amp;\beta_{00}+\beta_{01}*\textrm{Glucose}+\beta_{0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9999999999999999
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9999999999999976
 </pre></div>
 </div>
 </div>
@@ -1002,7 +904,7 @@ Q(s,a,\boldsymbol{\beta}) = &amp;\beta_{00}+\beta_{01}*\textrm{Glucose}+\beta_{0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.764561656518231
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7647336090193217
 </pre></div>
 </div>
 </div>
@@ -1012,7 +914,7 @@ Q(s,a,\boldsymbol{\beta}) = &amp;\beta_{00}+\beta_{01}*\textrm{Glucose}+\beta_{0
 <h2>CPL: Single-Stage Policy Optimization<a class="headerlink" href="#cpl-single-stage-policy-optimization" title="Permalink to this heading">#</a></h2>
 <p>Further, to find an optimal policy maximizing the expected value, we use the <strong>Q-learning</strong> algorithm again to do policy optimization. Using the regression model we specified above and the code in the following block, the estimated optimal policy is summarized as the following regime.</p>
 <ol class="arabic simple">
-<li><p>We would recommend <span class="math notranslate nohighlight">\(A=0\)</span> (IV_Input = 0) if <span class="math notranslate nohighlight">\(-.0004*\textrm{Glucose}+.0012*\textrm{PaO2_FiO2}&lt;.5510\)</span></p></li>
+<li><p>We would recommend <span class="math notranslate nohighlight">\(A=0\)</span> (IV_Input = 0) if <span class="math notranslate nohighlight">\(-.0003*\textrm{Glucose}+.0012*\textrm{PaO2_FiO2}&lt;.5633\)</span></p></li>
 <li><p>Else, we would recommend <span class="math notranslate nohighlight">\(A=1\)</span> (IV_Input = 1).</p></li>
 </ol>
 <p>Appling the estimated optimal regime to individuals in the observed data, we summarize the regime pattern for each patients in the following table:</p>
@@ -1041,8 +943,7 @@ Q(s,a,\boldsymbol{\beta}) = &amp;\beta_{00}+\beta_{01}*\textrm{Glucose}+\beta_{0
 <span class="c1"># train the policy</span>
 <span class="n">QLearn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">model_info</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mimic3_clip</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 <span class="c1"># get the summary of the fitted Q models using the following code</span>
-<span class="c1">#print(&quot;fitted model Q0:&quot;,QLearn.fitted_model[0].summary())</span>
-<span class="c1">#print(&quot;fitted model Q1:&quot;,QLearn.fitted_model[1].summary())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;fitted model Q0:&quot;</span><span class="p">,</span><span class="n">QLearn</span><span class="o">.</span><span class="n">fitted_model</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
 <span class="c1">#4. recommend action</span>
 <span class="n">opt_d</span> <span class="o">=</span> <span class="n">QLearn</span><span class="o">.</span><span class="n">recommend_action</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 <span class="c1">#5. get the estimated value of the optimal regime</span>
@@ -1053,11 +954,42 @@ Q(s,a,\boldsymbol{\beta}) = &amp;\beta_{00}+\beta_{01}*\textrm{Glucose}+\beta_{0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>opt_d: A
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fitted model Q0:                             OLS Regression Results                            
+==============================================================================
+Dep. Variable:                      R   R-squared:                       0.182
+Model:                            OLS   Adj. R-squared:                  0.102
+Method:                 Least Squares   F-statistic:                     2.276
+Date:                Sun, 29 Sep 2024   Prob (F-statistic):             0.0607
+Time:                        17:51:13   Log-Likelihood:                -17.634
+No. Observations:                  57   AIC:                             47.27
+Df Residuals:                      51   BIC:                             59.53
+Df Model:                           5                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      1.0000      0.318      3.141      0.003       0.361       1.639
+S1          2.342e-17      0.002   1.42e-14      1.000      -0.003       0.003
+S2         -3.442e-17      0.001  -6.81e-14      1.000      -0.001       0.001
+A             -0.5633      0.416     -1.354      0.182      -1.398       0.272
+S1:A          -0.0003      0.002     -0.136      0.892      -0.005       0.004
+S2:A           0.0012      0.001      1.716      0.092      -0.000       0.003
+==============================================================================
+Omnibus:                       16.164   Durbin-Watson:                   1.728
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               18.591
+Skew:                          -1.320   Prob(JB):                     9.19e-05
+Kurtosis:                       3.927   Cond. No.                     5.13e+03
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 5.13e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.
+opt_d: A
 0    51
 1     6
 dtype: int64
-opt value: 0.9999999999999999
+opt value: 0.9999999999999988
 </pre></div>
 </div>
 </div>

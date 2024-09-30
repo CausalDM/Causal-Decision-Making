@@ -553,10 +553,10 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Generating 3-stage-DTR dataset</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-2-stage-mediated-dtr-dataset">Generating 2-stage-mediated DTR dataset</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-3-stage-mediated-dtr-dataset">Generating 3-stage-mediated DTR dataset</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-mrl-dataset">Generating MRL dataset</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-rl-data">Generate RL data</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Generating 2-stage-mediated DTR dataset</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-2-stage-mediated-dtr-dataset">Generating 2-stage-mediated DTR dataset</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#create-single-stage-data">Create single stage data</a></li>
 </ul>
 
@@ -591,13 +591,13 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\vivia\AppData\Local\Temp\ipykernel_36988\4058168275.py:3: SettingWithCopyWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\vivia\AppData\Local\Temp\ipykernel_28072\4058168275.py:3: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
   mimic3_base[&#39;died_within_48h_of_out_time&#39;] = - 2 * np.array(mimic3_base[&#39;died_within_48h_of_out_time&#39;]) + 1
-C:\Users\vivia\AppData\Local\Temp\ipykernel_36988\4058168275.py:5: SettingWithCopyWarning: 
+C:\Users\vivia\AppData\Local\Temp\ipykernel_28072\4058168275.py:5: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
@@ -1163,8 +1163,8 @@ Name: IV_Input_3, dtype: int64
 </div></div></div>
 </div>
 </section>
-<section id="generating-2-stage-mediated-dtr-dataset">
-<h1>Generating 2-stage-mediated DTR dataset<a class="headerlink" href="#generating-2-stage-mediated-dtr-dataset" title="Permalink to this heading">#</a></h1>
+<section id="generating-3-stage-mediated-dtr-dataset">
+<h1>Generating 3-stage-mediated DTR dataset<a class="headerlink" href="#generating-3-stage-mediated-dtr-dataset" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selected_IDs</span> <span class="o">=</span> <span class="n">mimic_final</span><span class="o">.</span><span class="n">icustayid</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
@@ -1366,6 +1366,7 @@ Name: IV_Input_3, dtype: int64
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selected_IDs</span> <span class="o">=</span> <span class="n">mimic_final</span><span class="o">.</span><span class="n">icustayid</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 <span class="n">selected_IDs</span> <span class="o">=</span> <span class="n">selected_IDs</span><span class="p">[</span><span class="n">selected_IDs</span><span class="o">&gt;=</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">selected_IDs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">selected_IDs</span><span class="p">)</span>
 <span class="n">mrl_data</span> <span class="o">=</span> <span class="n">mimic_final</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1472,14 +1473,14 @@ Name: IV_Input_3, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mediator</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mrl_data</span><span class="p">[</span><span class="n">mrl_data</span><span class="o">.</span><span class="n">icustayid</span><span class="o">==</span><span class="n">ind</span><span class="p">]</span><span class="o">.</span><span class="n">SOFA</span><span class="p">)[:]</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">selected_IDs</span><span class="p">]</span>
-<span class="n">next_state</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mrl_data</span><span class="p">[</span><span class="n">mrl_data</span><span class="o">.</span><span class="n">icustayid</span><span class="o">==</span><span class="n">ind</span><span class="p">][[</span><span class="s1">&#39;Glucose&#39;</span><span class="p">,</span><span class="s1">&#39;PaO2_FiO2&#39;</span><span class="p">]])[:,:]</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">selected_IDs</span><span class="p">]</span>
-<span class="n">state</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mrl_data</span><span class="p">[</span><span class="n">mrl_data</span><span class="o">.</span><span class="n">icustayid</span><span class="o">==</span><span class="n">ind</span><span class="p">][[</span><span class="s1">&#39;Glucose&#39;</span><span class="p">,</span><span class="s1">&#39;PaO2_FiO2&#39;</span><span class="p">]])[:,:]</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">selected_IDs</span><span class="p">]</span>
-<span class="n">action</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mrl_data</span><span class="p">[</span><span class="n">mrl_data</span><span class="o">.</span><span class="n">icustayid</span><span class="o">==</span><span class="n">ind</span><span class="p">]</span><span class="o">.</span><span class="n">IV_Input</span><span class="p">)[:]</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">selected_IDs</span><span class="p">]</span>
-<span class="n">reward</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mrl_data</span><span class="p">[</span><span class="n">mrl_data</span><span class="o">.</span><span class="n">icustayid</span><span class="o">==</span><span class="n">ind</span><span class="p">]</span><span class="o">.</span><span class="n">IV_Input</span><span class="p">)[:])</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">mrl_data</span><span class="p">[</span><span class="n">mrl_data</span><span class="o">.</span><span class="n">icustayid</span><span class="o">==</span><span class="n">ind</span><span class="p">]</span><span class="o">.</span><span class="n">Died_within_48H</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">selected_IDs</span><span class="p">]</span>
-<span class="n">ID</span> <span class="o">=</span>  <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mrl_data</span><span class="p">[</span><span class="n">mrl_data</span><span class="o">.</span><span class="n">icustayid</span><span class="o">==</span><span class="n">ind</span><span class="p">][[</span><span class="s1">&#39;icustayid&#39;</span><span class="p">,</span><span class="s1">&#39;bloc&#39;</span><span class="p">]])[:,:]</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">selected_IDs</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mediator</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mrl_data</span><span class="p">[</span><span class="n">mrl_data</span><span class="o">.</span><span class="n">icustayid</span><span class="o">==</span><span class="n">ind</span><span class="p">]</span><span class="o">.</span><span class="n">SOFA</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">selected_IDs</span><span class="p">]</span>
+<span class="n">next_state</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mrl_data</span><span class="p">[</span><span class="n">mrl_data</span><span class="o">.</span><span class="n">icustayid</span><span class="o">==</span><span class="n">ind</span><span class="p">][[</span><span class="s1">&#39;Glucose&#39;</span><span class="p">,</span><span class="s1">&#39;PaO2_FiO2&#39;</span><span class="p">]])[</span><span class="mi">1</span><span class="p">:,:]</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">selected_IDs</span><span class="p">]</span>
+<span class="n">state</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mrl_data</span><span class="p">[</span><span class="n">mrl_data</span><span class="o">.</span><span class="n">icustayid</span><span class="o">==</span><span class="n">ind</span><span class="p">][[</span><span class="s1">&#39;Glucose&#39;</span><span class="p">,</span><span class="s1">&#39;PaO2_FiO2&#39;</span><span class="p">]])[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,:]</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">selected_IDs</span><span class="p">]</span>
+<span class="n">action</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mrl_data</span><span class="p">[</span><span class="n">mrl_data</span><span class="o">.</span><span class="n">icustayid</span><span class="o">==</span><span class="n">ind</span><span class="p">]</span><span class="o">.</span><span class="n">IV_Input</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">selected_IDs</span><span class="p">]</span>
+<span class="n">reward</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mrl_data</span><span class="p">[</span><span class="n">mrl_data</span><span class="o">.</span><span class="n">icustayid</span><span class="o">==</span><span class="n">ind</span><span class="p">]</span><span class="o">.</span><span class="n">IV_Input</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">mrl_data</span><span class="p">[</span><span class="n">mrl_data</span><span class="o">.</span><span class="n">icustayid</span><span class="o">==</span><span class="n">ind</span><span class="p">]</span><span class="o">.</span><span class="n">Died_within_48H</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">selected_IDs</span><span class="p">]</span>
+<span class="n">ID</span> <span class="o">=</span>  <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mrl_data</span><span class="p">[</span><span class="n">mrl_data</span><span class="o">.</span><span class="n">icustayid</span><span class="o">==</span><span class="n">ind</span><span class="p">][[</span><span class="s1">&#39;icustayid&#39;</span><span class="p">,</span><span class="s1">&#39;bloc&#39;</span><span class="p">]])[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,:]</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">selected_IDs</span><span class="p">]</span>
 <span class="n">s0</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mrl_data</span><span class="p">[</span><span class="n">mrl_data</span><span class="o">.</span><span class="n">icustayid</span><span class="o">==</span><span class="n">ind</span><span class="p">][[</span><span class="s1">&#39;Glucose&#39;</span><span class="p">,</span><span class="s1">&#39;PaO2_FiO2&#39;</span><span class="p">]])[</span><span class="mi">0</span><span class="p">,:]</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">selected_IDs</span><span class="p">]</span>
-<span class="n">time_idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mrl_data</span><span class="p">[</span><span class="n">mrl_data</span><span class="o">.</span><span class="n">icustayid</span><span class="o">==</span><span class="n">ind</span><span class="p">]</span><span class="o">.</span><span class="n">bloc</span><span class="p">)[:]</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">selected_IDs</span><span class="p">]</span>
+<span class="n">time_idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mrl_data</span><span class="p">[</span><span class="n">mrl_data</span><span class="o">.</span><span class="n">icustayid</span><span class="o">==</span><span class="n">ind</span><span class="p">]</span><span class="o">.</span><span class="n">bloc</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">selected_IDs</span><span class="p">]</span>
 
 <span class="n">s0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">s0</span><span class="p">)</span>
 <span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
@@ -1556,7 +1557,7 @@ Name: IV_Input_3, dtype: int64
   </thead>
   <tbody>
     <tr>
-      <th>682</th>
+      <th>0</th>
       <td>1006</td>
       <td>1</td>
       <td>91.0</td>
@@ -1568,19 +1569,19 @@ Name: IV_Input_3, dtype: int64
       <td>0</td>
     </tr>
     <tr>
-      <th>683</th>
+      <th>1</th>
       <td>1006</td>
       <td>3</td>
       <td>91.0</td>
       <td>206.000000</td>
       <td>0</td>
       <td>8</td>
-      <td>91.0</td>
-      <td>206.000000</td>
+      <td>175.0</td>
+      <td>100.173913</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>684</th>
+      <th>2</th>
       <td>1006</td>
       <td>6</td>
       <td>175.0</td>
@@ -1588,11 +1589,11 @@ Name: IV_Input_3, dtype: int64
       <td>1</td>
       <td>3</td>
       <td>175.0</td>
-      <td>100.173913</td>
+      <td>96.000000</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>685</th>
+      <th>3</th>
       <td>1006</td>
       <td>7</td>
       <td>175.0</td>
@@ -1604,25 +1605,13 @@ Name: IV_Input_3, dtype: int64
       <td>0</td>
     </tr>
     <tr>
-      <th>686</th>
+      <th>4</th>
       <td>1006</td>
       <td>8</td>
       <td>175.0</td>
       <td>96.000000</td>
       <td>1</td>
       <td>9</td>
-      <td>175.0</td>
-      <td>96.000000</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>687</th>
-      <td>1006</td>
-      <td>10</td>
-      <td>144.0</td>
-      <td>187.234036</td>
-      <td>1</td>
-      <td>12</td>
       <td>144.0</td>
       <td>187.234036</td>
       <td>-1</td>
@@ -1926,8 +1915,8 @@ Name: IV_Input_3, dtype: int64
 </div></div></div>
 </div>
 </section>
-<section id="id1">
-<h1>Generating 2-stage-mediated DTR dataset<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<section id="generating-2-stage-mediated-dtr-dataset">
+<h1>Generating 2-stage-mediated DTR dataset<a class="headerlink" href="#generating-2-stage-mediated-dtr-dataset" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DTR_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mimic_final</span><span class="p">[</span><span class="n">mimic_final</span><span class="o">.</span><span class="n">icustayid</span><span class="o">==</span><span class="n">ind</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">2</span><span class="p">,:]))</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">selected_IDs</span><span class="p">]</span>
@@ -1940,7 +1929,8 @@ Name: IV_Input_3, dtype: int64
 <h1>Create single stage data<a class="headerlink" href="#create-single-stage-data" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mimic3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;subset_rl_data_final_cont.csv&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+<span class="n">mimic3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;subset_rl_data_final_cont.csv&quot;</span><span class="p">)</span>
 <span class="n">mimic3_base</span> <span class="o">=</span> <span class="n">mimic3</span><span class="p">[[</span><span class="s1">&#39;icustayid&#39;</span><span class="p">,</span> <span class="s1">&#39;Glucose&#39;</span><span class="p">,</span> <span class="s1">&#39;PaO2_FiO2&#39;</span><span class="p">,</span>
                            <span class="s1">&#39;iv_input&#39;</span><span class="p">,</span> <span class="s1">&#39;SOFA&#39;</span><span class="p">,</span><span class="s1">&#39;died_within_48h_of_out_time&#39;</span><span class="p">]]</span>
 <span class="n">mimic3_base</span><span class="p">[</span><span class="s1">&#39;died_within_48h_of_out_time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mimic3_base</span><span class="p">[</span><span class="s1">&#39;died_within_48h_of_out_time&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span>
@@ -1948,26 +1938,27 @@ Name: IV_Input_3, dtype: int64
                            <span class="s1">&#39;IV Input&#39;</span><span class="p">,</span> <span class="s1">&#39;SOFA&#39;</span><span class="p">,</span><span class="s1">&#39;Died within 48H&#39;</span><span class="p">]</span> 
 <span class="n">mimic3_base</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mimic3_base</span><span class="p">[</span><span class="s1">&#39;SOFA&#39;</span><span class="p">])</span>
+<span class="c1">#plt.hist(mimic3_base[&#39;SOFA&#39;])</span>
 <span class="n">mimic_final</span> <span class="o">=</span> <span class="n">mimic3_base</span><span class="p">[</span><span class="n">mimic3_base</span><span class="p">[</span><span class="s1">&#39;SOFA&#39;</span><span class="p">]</span><span class="o">&lt;=</span><span class="mi">12</span><span class="p">]</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mimic_final</span><span class="p">[</span><span class="s1">&#39;SOFA&#39;</span><span class="p">])</span>
+<span class="c1">#plt.hist(mimic_final[&#39;SOFA&#39;])</span>
 
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;mimic3_multi_stages.pickle&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
-    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">mimic_final</span><span class="p">,</span> <span class="n">handle</span><span class="p">)</span>
+<span class="c1">#with open(&#39;mimic3_multi_stages.pickle&#39;, &#39;wb&#39;) as handle:</span>
+<span class="c1">#    pickle.dump(mimic_final, handle)</span>
     
-<span class="n">mimic_final</span><span class="o">.</span><span class="n">to_csv</span> <span class="p">(</span><span class="sa">r</span><span class="s1">&#39;mimic3_multi_stages.csv&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">#mimic_final.to_csv (r&#39;mimic3_multi_stages.csv&#39;, index = False, header=True)</span>
 
-<span class="n">mimic_final</span>
+<span class="c1">#mimic_final</span>
 
 
 <span class="c1"># ----------- Set lag data</span>
-<span class="n">lag_k</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="c1">#lag_k = 1</span>
     
 <span class="c1">#     new_sofa = list(np.array(mimic_final[&#39;SOFA&#39;][lag_k:]) - np.array(mimic_final[&#39;SOFA&#39;][:-lag_k]))</span>
 
-<span class="n">new_sofa</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mimic_final</span><span class="p">[</span><span class="s1">&#39;SOFA&#39;</span><span class="p">][:</span><span class="o">-</span><span class="n">lag_k</span><span class="p">])</span>
-<span class="n">mimic3_sample</span> <span class="o">=</span> <span class="n">mimic_final</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">lag_k</span><span class="p">:]</span>
-<span class="n">mimic3_sample</span><span class="p">[</span><span class="s1">&#39;SOFA Post&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_sofa</span> 
+<span class="c1">#new_sofa = np.array(mimic_final[&#39;SOFA&#39;][:-lag_k])</span>
+<span class="c1">#mimic3_sample = mimic_final.iloc[lag_k:]</span>
+<span class="c1">#mimic3_sample[&#39;SOFA Post&#39;] = new_sofa </span>
+<span class="n">mimic3_sample</span> <span class="o">=</span> <span class="n">mimic_final</span>
 <span class="n">mimic3_data</span> <span class="o">=</span> <span class="n">mimic3_sample</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;icustayid&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span> 
 
 
@@ -1980,6 +1971,99 @@ Name: IV_Input_3, dtype: int64
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\vivia\AppData\Local\Temp\ipykernel_15668\2553752622.py:5: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  mimic3_base[&#39;died_within_48h_of_out_time&#39;] = - 2 * np.array(mimic3_base[&#39;died_within_48h_of_out_time&#39;]) + 1
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>icustayid</th>
+      <th>Glucose</th>
+      <th>PaO2_FiO2</th>
+      <th>IV Input</th>
+      <th>SOFA</th>
+      <th>Died within 48H</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1006</td>
+      <td>141.833333</td>
+      <td>148.567991</td>
+      <td>2.333333</td>
+      <td>8.333333</td>
+      <td>-1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1204</td>
+      <td>138.794872</td>
+      <td>430.668956</td>
+      <td>1.153846</td>
+      <td>5.692308</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4132</td>
+      <td>129.364286</td>
+      <td>252.883864</td>
+      <td>3.000000</td>
+      <td>4.800000</td>
+      <td>-1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4201</td>
+      <td>145.580087</td>
+      <td>539.065657</td>
+      <td>1.363636</td>
+      <td>5.636364</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5170</td>
+      <td>174.525000</td>
+      <td>394.616727</td>
+      <td>2.437500</td>
+      <td>3.625000</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6504</td>
+      <td>106.081169</td>
+      <td>423.030303</td>
+      <td>0.363636</td>
+      <td>6.000000</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 </section>
 
@@ -2029,10 +2113,10 @@ Name: IV_Input_3, dtype: int64
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Generating 3-stage-DTR dataset</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-2-stage-mediated-dtr-dataset">Generating 2-stage-mediated DTR dataset</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-3-stage-mediated-dtr-dataset">Generating 3-stage-mediated DTR dataset</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-mrl-dataset">Generating MRL dataset</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-rl-data">Generate RL data</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Generating 2-stage-mediated DTR dataset</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-2-stage-mediated-dtr-dataset">Generating 2-stage-mediated DTR dataset</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#create-single-stage-data">Create single stage data</a></li>
 </ul>
 

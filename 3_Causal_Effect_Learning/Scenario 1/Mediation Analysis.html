@@ -607,8 +607,8 @@ document.write(`
 <li><p>The indirect path from treatment to outcome through the mediator <span class="math notranslate nohighlight">\(M\)</span>, denoted by <span class="math notranslate nohighlight">\(A\rightarrow M\rightarrow R\)</span>.</p></li>
 </ol>
 <p>More specifically, when adjusting the action from <span class="math notranslate nohighlight">\(A=a_0\)</span> to <span class="math notranslate nohighlight">\(A=a_1\)</span>,  we define the total effect (TE), natural direct effect (DE), and the natural indirect effect (IE) as below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0404eb56-a74a-4166-aed9-ecc92092524e">
-<span class="eqno">(45)<a class="headerlink" href="#equation-0404eb56-a74a-4166-aed9-ecc92092524e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0172fb8a-16ae-4eab-ae87-029a1aa2c3ae">
+<span class="eqno">(45)<a class="headerlink" href="#equation-0172fb8a-16ae-4eab-ae87-029a1aa2c3ae" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \text{TE}&amp;= \mathbb{E}[R|do(A=a_1)]-\mathbb{E}[R|do(A=a_0)]\\
 \text{DE}&amp;= \mathbb{E}[R|do(A=a_1,M=m^{(a_0)})]-\mathbb{E}[R|do(A=a_0)]\\
@@ -616,8 +616,8 @@ document.write(`
 \end{aligned}
 \end{equation}\]</div>
 <p>Under the potential outcome’s structure, we define <span class="math notranslate nohighlight">\(M_a\)</span> as the potential mediator when treatment <span class="math notranslate nohighlight">\(A=a\)</span>, and define <span class="math notranslate nohighlight">\(R_{a,m}\)</span> as the potential outcome/reward one would observe under <span class="math notranslate nohighlight">\((A=a, M=m)\)</span>. In some literature, the above effects can be samely written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ca2922bf-5c7d-41ad-8a76-c6c52b494edc">
-<span class="eqno">(46)<a class="headerlink" href="#equation-ca2922bf-5c7d-41ad-8a76-c6c52b494edc" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5bfa23cd-7abf-4502-9d2c-84cd5cdda1bf">
+<span class="eqno">(46)<a class="headerlink" href="#equation-5bfa23cd-7abf-4502-9d2c-84cd5cdda1bf" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \text{TE}&amp;= \mathbb{E}[R_{a_1,m_{a_1}}]-\mathbb{E}[R_{a_0,m_{a_0}}]\\
 \text{DE}&amp;= \mathbb{E}[R_{a_1,m_{a_0}}]-\mathbb{E}[R_{a,m_{a_0}}]\\
@@ -634,8 +634,8 @@ document.write(`
 <li><p><code class="docutils literal notranslate"><span class="pre">Positivity</span></code>: <span class="math notranslate nohighlight">\(p(m|A,X)&gt;0\)</span> for each <span class="math notranslate nohighlight">\(m\in \mathcal{M}\)</span>, and <span class="math notranslate nohighlight">\(p(a|X)&gt;0\)</span> for each <span class="math notranslate nohighlight">\(a\in \mathcal{A}\)</span>.</p></li>
 </ol>
 <p>Under the above three assumptions, Imai et al. [3] proved the identifiability of <span class="math notranslate nohighlight">\(\mathbb{E}[R_{1,M_0}]\)</span> and <span class="math notranslate nohighlight">\(\mathbb{E}[R_{a,M_a}]\)</span> in binary action space, which is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eeb95cbe-a1d2-412e-99a5-04e0250cbd5c">
-<span class="eqno">(47)<a class="headerlink" href="#equation-eeb95cbe-a1d2-412e-99a5-04e0250cbd5c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-509b725d-3fa6-4a59-95ce-a083570e91ba">
+<span class="eqno">(47)<a class="headerlink" href="#equation-509b725d-3fa6-4a59-95ce-a083570e91ba" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \mathbb{E}[R_{1,M_0}] &amp;= \int\int \mathbb{E}[R|A=1,M=m,S=s]p(m|A=0,S=s)p(s) d\mu(m,s)\\
 \mathbb{E}[R_{a,M_a}] &amp;= \int\int \mathbb{E}[R|A=a,M=m,S=s]p(m|A=a,S=s)p(s) d\mu(m,s)
@@ -648,8 +648,8 @@ document.write(`
 <section id="direct-estimator">
 <h3>1. Direct Estimator<a class="headerlink" href="#direct-estimator" title="Permalink to this heading">#</a></h3>
 <p>The first estimator is the direct method, which is a plug-in estimator based on the identification result above.  Since TE, DE and IE can be written as a function of <span class="math notranslate nohighlight">\(\mathbb{E}[R_{a,m_{a'}}]\)</span>, it suffice to estimate them separately for any <span class="math notranslate nohighlight">\(a, a'\in \mathcal{A}\)</span> and construct a DM estimator as below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7cbdc4eb-0514-4fe4-82de-3911b3467b05">
-<span class="eqno">(48)<a class="headerlink" href="#equation-7cbdc4eb-0514-4fe4-82de-3911b3467b05" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-fc275669-0e8c-401f-a994-9d1034b5b6ca">
+<span class="eqno">(48)<a class="headerlink" href="#equation-fc275669-0e8c-401f-a994-9d1034b5b6ca" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \widehat{\text{DE}}_{\text{DM}}&amp;= \frac{1}{N}\sum_{i,m} \bigg\{R(S_i,a_1,m)p(m|S_i,a_0)-R(S_i,a_0,m)p(m|S_i,a_0)\bigg\}\\
 \widehat{\text{IE}}_{\text{DM}}&amp;= \frac{1}{N}\sum_{i,m} \bigg\{R(S_i,a_1,m)p(m|S_i,a_1)- R(S_i,a_1,m)p(m|S_i,a_0)\bigg\}
@@ -659,8 +659,8 @@ document.write(`
 <section id="ipw-estimator">
 <h3>2. IPW Estimator<a class="headerlink" href="#ipw-estimator" title="Permalink to this heading">#</a></h3>
 <p>The second estimator in literature is named as the inverse probability weighting estimator, which is similar to the IPW estimator in ATE. Under the existence of mediators, the IPW estimators [2] of DE and IE are given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b6b0fc1a-f8e0-45f6-9b17-b4be33e1253f">
-<span class="eqno">(49)<a class="headerlink" href="#equation-b6b0fc1a-f8e0-45f6-9b17-b4be33e1253f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6a04ded5-7803-4c6a-a253-27193361d818">
+<span class="eqno">(49)<a class="headerlink" href="#equation-6a04ded5-7803-4c6a-a253-27193361d818" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \widehat{\text{DE}}_{\text{IPW}}&amp;= \frac{1}{N}\sum_{i=1}^N \bigg\{\frac{\mathbb{1}\{A_i=a_1\}\rho(S_i,A_i,M_i)}{p_a(A_i|S_i)}-\frac{\mathbb{1}\{A_i=a_0\}}{p_a(A_i|S_i)}\bigg\}\cdot R_i\\
 \widehat{\text{IE}}_{\text{IPW}}&amp;= \frac{1}{N}\sum_{i=1}^N \bigg\{\frac{\mathbb{1}\{A_i=a_1\}}{p_a(A_i|S_i)}-\frac{\mathbb{1}\{A_i=a_1\}\rho(S_i,A_i,M_i)}{p_a(A_i|S_i)}\bigg\}\cdot R_i
@@ -671,8 +671,8 @@ document.write(`
 <section id="multiple-robust-mr-estimator">
 <h3>3. Multiple Robust (MR) Estimator<a class="headerlink" href="#multiple-robust-mr-estimator" title="Permalink to this heading">#</a></h3>
 <p>The last estimator is called the multiple robust estimator, which was proposed by Tchetgen and Shpitser [5] based on the efficient influence function in semiparametric theory. The final MR estimator for DE and IE are derived as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-db1fdd6a-b725-4ea2-8afe-771553f8318c">
-<span class="eqno">(50)<a class="headerlink" href="#equation-db1fdd6a-b725-4ea2-8afe-771553f8318c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9a3c9cab-7625-46e3-aacc-40e8ab31981b">
+<span class="eqno">(50)<a class="headerlink" href="#equation-9a3c9cab-7625-46e3-aacc-40e8ab31981b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 \widehat{\text{DE}}_{\text{MR}}&amp;= \frac{1}{N}\sum_{i=1}^N \bigg[\frac{\mathbb{1}\{A_i=a_1\}}{p_a(A_i|S_i)}\rho(S_i,A_i,M_i)\big\{R_i-\mathbb{E}[R|S_i,A_i=1,M_i]\big\}\\
 &amp;+\frac{\mathbb{1}\{A_i=a_0\}}{p_a(A_i|S_i)}\big\{\mathbb{E}[R|S_i,A_i=1,M_i]-R_i-\eta(a_1,a_0,S)+\eta(a_0,a_0,S)\big\}+\eta(a_1,a_0,S)-\eta(a_0,a_0,S)\big\}\bigg]\\
@@ -688,23 +688,21 @@ document.write(`
 <h3>1. AURORA Data<a class="headerlink" href="#aurora-data" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;</span><span class="p">)</span>
-<span class="n">AURORA_CEL</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./causaldm/data/Survey_red.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">causaldm.learners.CEL.MA</span> <span class="kn">import</span> <span class="n">_env_getdata_AURORA</span>
+<span class="n">AURORA_CEL</span> <span class="o">=</span> <span class="n">_env_getdata_AURORA</span><span class="o">.</span><span class="n">get_aurora_CEL</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="nn">Input In [2],</span> in <span class="ni">&lt;cell line: 3&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">os</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">AURORA_CEL</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./causaldm/data/Survey_red.csv&#39;</span><span class="p">)</span>
+<span class="ne">ImportError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
+<span class="nn">Input In [2],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">causaldm.learners.CEL.MA</span> <span class="kn">import</span> <span class="n">_env_getdata_AURORA</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">AURORA_CEL</span> <span class="o">=</span> <span class="n">_env_getdata_AURORA</span><span class="o">.</span><span class="n">get_aurora_CEL</span><span class="p">()</span>
 
-<span class="ne">FileNotFoundError</span>: [WinError 3] 系统找不到指定的路径。: &#39;/Users/alinaxu/Documents/CDM/CausalDM&#39;
+<span class="ne">ImportError</span>: cannot import name &#39;_env_getdata_AURORA&#39; from &#39;causaldm.learners.CEL.MA&#39; (D:\anaconda3\lib\site-packages\causaldm\learners\CEL\MA\__init__.py)
 </pre></div>
 </div>
 </div>
