@@ -588,18 +588,18 @@ document.write(`
 <section id="part-1-dragonnet">
 <h2>Part 1: Dragonnet<a class="headerlink" href="#part-1-dragonnet" title="Permalink to this heading">#</a></h2>
 <p>Define the conditional outcome as <span class="math notranslate nohighlight">\(Q(a,s)=E[R|a,s]\)</span> amd propensity score <span class="math notranslate nohighlight">\(g(s)=P(A=1|S=s)\)</span>. Our goal is to estimate the effect of treatment <span class="math notranslate nohighlight">\(A=1\)</span> versus <span class="math notranslate nohighlight">\(A=0\)</span>, i.e.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b487875a-9f02-4a5d-a274-3ad73c2a472b">
-<span class="eqno">(38)<a class="headerlink" href="#equation-b487875a-9f02-4a5d-a274-3ad73c2a472b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ae8a756c-6d96-443a-ba57-b2af57f67d81">
+<span class="eqno">(38)<a class="headerlink" href="#equation-ae8a756c-6d96-443a-ba57-b2af57f67d81" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \text{HTE}_{\text{Dragonnet}}(s)=E[R(1)|S=s]-E[R(0)|S=s],
 \end{equation}\]</div>
 <p>and the average treatment effect</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f537c37d-1557-4f85-b24b-545091eae9e2">
-<span class="eqno">(39)<a class="headerlink" href="#equation-f537c37d-1557-4f85-b24b-545091eae9e2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7a1c2aa9-2c22-4dc3-b115-eddce2a4bb44">
+<span class="eqno">(39)<a class="headerlink" href="#equation-7a1c2aa9-2c22-4dc3-b115-eddce2a4bb44" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \text{ATE}_{\text{Dragonnet}}=E\Big[E[R(1)|S]-E[R(0)|S]\Big].
 \end{equation}\]</div>
 <p>Under certain identifiability assumptions, the HTE can be estimated by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-297cd0d7-e4a0-43f0-958e-ea5ef43e0fcc">
-<span class="eqno">(40)<a class="headerlink" href="#equation-297cd0d7-e4a0-43f0-958e-ea5ef43e0fcc" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-56e10321-d9d3-48a5-9285-ec204d0f5642">
+<span class="eqno">(40)<a class="headerlink" href="#equation-56e10321-d9d3-48a5-9285-ec204d0f5642" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \widehat{\text{HTE}}_{\text{Dragonnet}}(s)=\hat{E}[R|A=1,S=s]-\hat{E}[R|A=0,S=s]=\hat{Q}(1,s)-\hat{Q}(1,s).
 \end{equation}\]</div>
 <p>According to the sufficiency of propensity score (Theorem 2.1 in [8]), all of the information in <span class="math notranslate nohighlight">\(S\)</span> that is useful in estimating ATE is contained in <span class="math notranslate nohighlight">\(g(S)\)</span>. In other words, we should train <span class="math notranslate nohighlight">\(\hat{Q}(a,s)\)</span> only through the information in <span class="math notranslate nohighlight">\(g(S)\)</span>, instead of the entire <span class="math notranslate nohighlight">\(S\)</span>. To achieve so, the author proposed a novel three-headed archetecture, which is shown in Figure 1 below.</p>
@@ -619,8 +619,8 @@ document.write(`
 </div>
 <p>By first training the propensity score model through several layers of neural network, we are able to capture the resourceful information of <span class="math notranslate nohighlight">\(g(S)\)</span> in layer <span class="math notranslate nohighlight">\(Z\)</span>. The core idea of Dragonnet is to directly utilize the information in <span class="math notranslate nohighlight">\(Z\)</span> to fit outcome regression models for <span class="math notranslate nohighlight">\(\hat{Q}(1,s)\)</span> and <span class="math notranslate nohighlight">\(\hat{Q}(0,s)\)</span>.</p>
 <p>The objective function of Dragonnet is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-52d5e0c8-4e00-4c7d-9cd9-d907a1eb207f">
-<span class="eqno">(41)<a class="headerlink" href="#equation-52d5e0c8-4e00-4c7d-9cd9-d907a1eb207f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5db720e7-8f5e-40b3-9bb1-813861e18f27">
+<span class="eqno">(41)<a class="headerlink" href="#equation-5db720e7-8f5e-40b3-9bb1-813861e18f27" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\theta}=\arg\min_{\theta} \frac{1}{n}\sum_{i}\Big[(Q^{\text{nn}}(a_i,s_i;\theta)-R_i)^2+\alpha \text{CrossEntropy}(g^{\text{nn}}(s_i,\theta),a_i)\Big],
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\theta\)</span> is the collection of all parameters, and <span class="math notranslate nohighlight">\(\alpha\)</span> is a weighting hyperparameter.</p>
@@ -628,22 +628,22 @@ document.write(`
 <section id="part-2-targeted-regularization">
 <h2>Part 2. Targeted Regularization<a class="headerlink" href="#part-2-targeted-regularization" title="Permalink to this heading">#</a></h2>
 <p>In targeted regularization, the author modified the objective function to yield a better finite sample performance. Specifically, the author defined</p>
-<div class="amsmath math notranslate nohighlight" id="equation-94343e28-5577-4f30-889b-ad2a076ba0f2">
-<span class="eqno">(42)<a class="headerlink" href="#equation-94343e28-5577-4f30-889b-ad2a076ba0f2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7ac79622-5ad3-4f4d-8e9f-583f03fc9ece">
+<span class="eqno">(42)<a class="headerlink" href="#equation-7ac79622-5ad3-4f4d-8e9f-583f03fc9ece" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \begin{aligned}
 &amp; \tilde{Q}(a_i,s_i;\theta,\epsilon) = {Q}^{\text{nn}}(a_i,s_i;\theta)+\epsilon, \bigg[\frac{a_i}{g^{\text{nn}}(s_i;\theta)}-\frac{1-a_i}{1-g^{\text{nn}}(s_i;\theta)}\bigg]\\
 &amp; \gamma(R_i,a_i,s_i;\theta,\epsilon) = (R_i-\tilde{Q}(a_i,s_i;\theta,\epsilon))^2,
 \end{aligned}
 \end{equation}\]</div>
 <p>and then train the model by minimizing a new objective function with an extra parameter <span class="math notranslate nohighlight">\(\epsilon\)</span> as below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-83b4a9c9-8421-4954-b036-ab12a84676b3">
-<span class="eqno">(43)<a class="headerlink" href="#equation-83b4a9c9-8421-4954-b036-ab12a84676b3" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e55c4e18-5307-4df4-9eb3-8abfbe5727cc">
+<span class="eqno">(43)<a class="headerlink" href="#equation-e55c4e18-5307-4df4-9eb3-8abfbe5727cc" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\theta},\hat{\epsilon} = \arg\min_{\theta,\epsilon} \Big[\hat{R}(\theta,S)+\beta\frac{1}{n}\sum_{i} \gamma(R_i,a_i,s_i;\theta,\epsilon)\Big],
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\beta\)</span> is another weighting hyperparameter.</p>
 <p>The final treatment effect estimator, after targeted regularization, is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e40e9836-8e64-445c-8d17-d5fbb149e3a7">
-<span class="eqno">(44)<a class="headerlink" href="#equation-e40e9836-8e64-445c-8d17-d5fbb149e3a7" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f695e5b0-f26f-477f-b6fb-502d8830928a">
+<span class="eqno">(44)<a class="headerlink" href="#equation-f695e5b0-f26f-477f-b6fb-502d8830928a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \widehat{\text{HTE}}_{\text{Dragonnet}}(s)=\tilde{Q}(1,s;\hat\theta,\hat\epsilon)-\tilde{Q}(0,s;\hat\theta,\hat\epsilon),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\((\hat\theta,\hat\epsilon)\)</span> is the solution we obtained above.</p>
