@@ -581,7 +581,6 @@ document.write(`
 <p>Due to the privacy concerns, we utilized a subset of he original Mimic3 data that is publicly available on Kaggle. For illustration purpose, we selected several representative features for the following analysis:</p>
 <ul class="simple">
 <li><p><strong>Glucose</strong>: glucose values of patients</p></li>
-<li><p><strong>paO2</strong>: The partial pressure of oxygen</p></li>
 <li><p><strong>PaO2_FiO2</strong>: The partial pressure of oxygen (PaO2)/fraction of oxygen delivered (FIO2) ratio.</p></li>
 <li><p><strong>SOFA</strong>: Sepsis-related Organ Failure Assessment score to describe organ dysfunction/failure.</p></li>
 <li><p><strong>iv-input</strong>: the volumn of fluids that have been administered to the patient.</p></li>
@@ -660,6 +659,7 @@ document.write(`
       <th></th>
       <th>icustayid</th>
       <th>Glucose</th>
+      <th>PaO2</th>
       <th>PaO2_FiO2</th>
       <th>IV Input</th>
       <th>SOFA</th>
@@ -670,55 +670,61 @@ document.write(`
     <tr>
       <th>0</th>
       <td>1006</td>
-      <td>141.833333</td>
-      <td>148.567991</td>
-      <td>2.333333</td>
-      <td>8.333333</td>
+      <td>152.000000</td>
+      <td>100.200000</td>
+      <td>137.081590</td>
+      <td>2.800000</td>
+      <td>7.600000</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1204</td>
       <td>138.794872</td>
+      <td>127.782051</td>
       <td>430.668956</td>
       <td>1.153846</td>
-      <td>5.692308</td>
+      <td>6.153846</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>2</th>
       <td>4132</td>
       <td>129.364286</td>
+      <td>123.956461</td>
       <td>252.883864</td>
       <td>3.000000</td>
-      <td>4.800000</td>
+      <td>4.600000</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>3</th>
       <td>4201</td>
       <td>145.580087</td>
+      <td>118.083333</td>
       <td>539.065657</td>
       <td>1.363636</td>
-      <td>5.636364</td>
+      <td>5.818182</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>4</th>
       <td>5170</td>
       <td>174.525000</td>
+      <td>147.350198</td>
       <td>394.616727</td>
       <td>2.437500</td>
-      <td>3.625000</td>
+      <td>4.125000</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>5</th>
       <td>6504</td>
       <td>106.081169</td>
+      <td>88.836364</td>
       <td>423.030303</td>
       <td>0.363636</td>
-      <td>6.000000</td>
+      <td>5.090909</td>
       <td>1.0</td>
     </tr>
   </tbody>
@@ -743,19 +749,7 @@ document.write(`
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ----------- Plot Associated Estimated DAG based on NOTEARS </span>
-
-<span class="n">plot_net</span><span class="p">(</span><span class="n">est_mt</span><span class="p">,</span> <span class="n">labels_name</span><span class="o">=</span><span class="n">selected</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;demo_res_net&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../../_images/a525044fa82acdc6518b3a0432f04f5e45430089a93e1d3321d6a541334bf727.png" src="../../_images/a525044fa82acdc6518b3a0432f04f5e45430089a93e1d3321d6a541334bf727.png" />
-</div>
-</div>
-<div class="cell docutils container">
+<img src="MIMIC3.png" alt="MIMIC3" width="500"><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">topo_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">selected</span><span class="p">)[</span><span class="nb">list</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">topological_sort</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">(</span><span class="n">est_mt</span><span class="p">)))]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 <span class="n">topo_list</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
@@ -806,6 +800,7 @@ document.write(`
       <th></th>
       <th>icustayid</th>
       <th>Glucose</th>
+      <th>PaO2</th>
       <th>PaO2_FiO2</th>
       <th>IV Input</th>
       <th>SOFA</th>
@@ -816,55 +811,61 @@ document.write(`
     <tr>
       <th>0</th>
       <td>1006</td>
-      <td>141.833333</td>
-      <td>148.567991</td>
+      <td>152.000000</td>
+      <td>100.200000</td>
+      <td>137.081590</td>
       <td>1.0</td>
-      <td>8.333333</td>
+      <td>7.600000</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1204</td>
       <td>138.794872</td>
+      <td>127.782051</td>
       <td>430.668956</td>
       <td>1.0</td>
-      <td>5.692308</td>
+      <td>6.153846</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>2</th>
       <td>4132</td>
       <td>129.364286</td>
+      <td>123.956461</td>
       <td>252.883864</td>
       <td>1.0</td>
-      <td>4.800000</td>
+      <td>4.600000</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>3</th>
       <td>4201</td>
       <td>145.580087</td>
+      <td>118.083333</td>
       <td>539.065657</td>
       <td>1.0</td>
-      <td>5.636364</td>
+      <td>5.818182</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>4</th>
       <td>5170</td>
       <td>174.525000</td>
+      <td>147.350198</td>
       <td>394.616727</td>
       <td>1.0</td>
-      <td>3.625000</td>
+      <td>4.125000</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>5</th>
       <td>6504</td>
       <td>106.081169</td>
+      <td>88.836364</td>
       <td>423.030303</td>
       <td>0.0</td>
-      <td>6.000000</td>
+      <td>5.090909</td>
       <td>1.0</td>
     </tr>
   </tbody>
@@ -938,18 +939,18 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-0.94560748, -0.03631782, -0.24418673, -0.01039801, -0.00236894,
-       -0.02500368, -0.16616222, -0.02498772, -0.00680408, -0.01039801,
-       -0.02498772, -0.04663373, -0.00426503, -0.00592246, -0.00346419,
-       -0.00587797, -0.89401845, -0.00426503, -0.05992334, -0.11234352,
-       -0.01286305, -0.01039801, -0.0038123 , -0.00617015, -0.93511454,
-       -0.00592246, -0.00592246, -0.00592246, -0.0038123 , -0.37649399,
-       -0.46904782, -0.01286305, -0.01286305, -0.0038123 , -0.00426503,
-       -0.00587797, -0.00451459, -0.00236894, -0.02498772, -0.0038123 ,
-       -0.00592246, -0.05979807, -0.05979807, -0.00236894, -0.06801119,
-       -0.8041779 , -0.00592246, -0.01286305, -0.01039801, -0.00236894,
-       -0.00592246, -0.29037822, -0.01046084, -0.02623068, -0.00236894,
-       -0.38071179, -0.95121306])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-0.7935056 , -0.05573883, -0.17789437, -0.01291861, -0.00327331,
+       -0.03616324, -0.15807825, -0.02133172, -0.00817926, -0.01291861,
+       -0.02133172, -0.03642929, -0.00494878, -0.00934406, -0.00510541,
+       -0.00866307, -0.70943365, -0.00494878, -0.05460816, -0.17366209,
+       -0.01714046, -0.01291861, -0.00543908, -0.00765503, -0.84943974,
+       -0.00934406, -0.00934406, -0.00934406, -0.00543908, -0.35520862,
+       -0.4361084 , -0.01714046, -0.01714046, -0.00543908, -0.00494878,
+       -0.00866307, -0.00567393, -0.00327331, -0.02133172, -0.00543908,
+       -0.00934406, -0.05460816, -0.05460816, -0.00327331, -0.10858887,
+       -0.54647282, -0.00934406, -0.01714046, -0.01291861, -0.00327331,
+       -0.00934406, -0.26561005, -0.0139195 , -0.02708104, -0.00327331,
+       -0.35007447, -0.87203275])
 </pre></div>
 </div>
 </div>
@@ -979,7 +980,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.12708238118972615
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.11361078792742538
 </pre></div>
 </div>
 </div>
@@ -1019,6 +1020,7 @@ document.write(`
       <th></th>
       <th>icustayid</th>
       <th>Glucose</th>
+      <th>PaO2</th>
       <th>PaO2_FiO2</th>
       <th>IV Input</th>
       <th>SOFA</th>
@@ -1029,55 +1031,61 @@ document.write(`
     <tr>
       <th>0</th>
       <td>1006</td>
-      <td>141.833333</td>
-      <td>148.567991</td>
+      <td>152.000000</td>
+      <td>100.200000</td>
+      <td>137.081590</td>
       <td>1.0</td>
-      <td>8.333333</td>
+      <td>7.600000</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1204</td>
       <td>138.794872</td>
+      <td>127.782051</td>
       <td>430.668956</td>
       <td>1.0</td>
-      <td>5.692308</td>
+      <td>6.153846</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>2</th>
       <td>4132</td>
       <td>129.364286</td>
+      <td>123.956461</td>
       <td>252.883864</td>
       <td>1.0</td>
-      <td>4.800000</td>
+      <td>4.600000</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>3</th>
       <td>4201</td>
       <td>145.580087</td>
+      <td>118.083333</td>
       <td>539.065657</td>
       <td>1.0</td>
-      <td>5.636364</td>
+      <td>5.818182</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>4</th>
       <td>5170</td>
       <td>174.525000</td>
+      <td>147.350198</td>
       <td>394.616727</td>
       <td>1.0</td>
-      <td>3.625000</td>
+      <td>4.125000</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>5</th>
       <td>6504</td>
       <td>106.081169</td>
+      <td>88.836364</td>
       <td>423.030303</td>
       <td>0.0</td>
-      <td>6.000000</td>
+      <td>5.090909</td>
       <td>1.0</td>
     </tr>
   </tbody>
@@ -1115,18 +1123,18 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.19364172,  0.43022668,  0.42227606,  0.42219369, -0.03969731,
-        0.83183631,  0.0446209 , -0.58375899,  0.89697977,  0.35182466,
-       -0.41703565, -1.91625097, -0.13608927,  0.61690587,  0.69365334,
-        0.27918828,  0.2024016 ,  0.04541335,  0.13391923,  0.45044888,
-        0.43695841,  0.41781739,  0.76158097,  0.86397324, -0.36207864,
-        0.53997224,  0.57297452,  0.64149907,  0.91390201,  0.66192588,
-        0.11098695,  0.4242157 ,  0.41103954,  0.8087694 ,  0.4534558 ,
-        0.24395105, -1.46910804, -0.02315674, -0.95875459,  0.87827698,
-        0.59671734,  0.32944522,  0.37227712, -0.19333887,  0.60004377,
-        0.5173245 ,  0.5228714 ,  0.40999269,  0.53478012, -0.33426202,
-        0.6749268 ,  0.79146124,  0.73329554,  0.43873827,  0.09386684,
-       -0.96035613,  0.36221912])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-0.20963072,  0.36363165,  0.45134661,  0.13025089,  0.10068802,
+        0.31679702, -0.36382407, -1.07217217,  1.03274754,  0.28356984,
+       -0.85172173, -2.90975369, -0.31952385,  0.49851422,  0.1926697 ,
+        0.08880954, -0.13806398,  0.91018533, -0.38592831,  0.30080782,
+        0.81897977,  1.22512521,  0.56978246,  1.97367999, -1.06606889,
+        0.46204494,  0.56211986,  0.36768737,  0.97789444,  0.76346229,
+       -0.06702501,  0.3791031 ,  0.73897488,  0.87357018,  1.85450739,
+       -0.38658623, -1.55869654, -0.18709482, -1.49089899,  1.05070015,
+        0.02144515,  0.07582235,  0.02950435, -0.60493756,  1.34331682,
+        0.13339107,  0.74942471,  0.34136664,  2.20697202, -0.89639628,
+        0.67296089,  0.52157244,  2.55823332,  0.01110759, -0.05096632,
+       -0.13785416, -0.00794219])
 </pre></div>
 </div>
 </div>
@@ -1139,7 +1147,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.2586123201823543
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.23241547432382942
 </pre></div>
 </div>
 </div>

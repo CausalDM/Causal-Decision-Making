@@ -574,8 +574,8 @@ document.write(`
   <section id="r-learner">
 <h1><strong>4. R learner</strong><a class="headerlink" href="#r-learner" title="Permalink to this heading">#</a></h1>
 <p>The idea of classical R-learner came from Robinson 1988 [3] and was formalized by Nie and Wager in 2020 [2]. The main idea of R learner starts from the partially linear model setup, in which we assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c2898790-7bcb-4f28-bee2-ef333a948abf">
-<span class="eqno">(27)<a class="headerlink" href="#equation-c2898790-7bcb-4f28-bee2-ef333a948abf" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-05cdffed-d160-4d0d-ae18-e3d180041f9e">
+<span class="eqno">(27)<a class="headerlink" href="#equation-05cdffed-d160-4d0d-ae18-e3d180041f9e" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \begin{aligned}
     R&amp;=A\tau(S)+g_0(S)+U,\\
     A&amp;=m_0(S)+V,
@@ -583,21 +583,21 @@ document.write(`
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(U\)</span> and <span class="math notranslate nohighlight">\(V\)</span> satisfies <span class="math notranslate nohighlight">\(\mathbb{E}[U|D,X]=0\)</span>, <span class="math notranslate nohighlight">\(\mathbb{E}[V|X]=0\)</span>.</p>
 <p>After several manipulations, it’s easy to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-789d9780-6a95-4b36-a7bc-0a31039bd1a5">
-<span class="eqno">(28)<a class="headerlink" href="#equation-789d9780-6a95-4b36-a7bc-0a31039bd1a5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-bc92aa07-9d77-4eb3-921a-1d1d9c102bd1">
+<span class="eqno">(28)<a class="headerlink" href="#equation-bc92aa07-9d77-4eb3-921a-1d1d9c102bd1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	R-\mathbb{E}[R|S]=\tau(S)\cdot(A-\mathbb{E}[A|S])+\epsilon.
 \end{equation}\]</div>
 <p>Define <span class="math notranslate nohighlight">\(m_0(X)=\mathbb{E}[A|S]\)</span> and <span class="math notranslate nohighlight">\(l_0(X)=\mathbb{E}[R|S]\)</span>. A natural way to estimate <span class="math notranslate nohighlight">\(\tau(X)\)</span> is given below, which is also the main idea of R-learner:</p>
 <p><strong>Step 1</strong>: Regress <span class="math notranslate nohighlight">\(R\)</span> on <span class="math notranslate nohighlight">\(S\)</span> to obtain model <span class="math notranslate nohighlight">\(\hat{\eta}(S)=\hat{\mathbb{E}}[R|S]\)</span>; and regress <span class="math notranslate nohighlight">\(A\)</span> on <span class="math notranslate nohighlight">\(S\)</span> to obtain model <span class="math notranslate nohighlight">\(\hat{m}(S)=\hat{\mathbb{E}}[A|S]\)</span>.</p>
 <p><strong>Step 2</strong>: Regress outcome residual <span class="math notranslate nohighlight">\(R-\hat{l}(S)\)</span> on propensity score residual <span class="math notranslate nohighlight">\(A-\hat{m}(S)\)</span>.</p>
 <p>That is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1965d580-9d14-4c7e-928f-56fdb8e8a9c5">
-<span class="eqno">(29)<a class="headerlink" href="#equation-1965d580-9d14-4c7e-928f-56fdb8e8a9c5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7f74a4ba-30a7-425b-828d-949f61005682">
+<span class="eqno">(29)<a class="headerlink" href="#equation-7f74a4ba-30a7-425b-828d-949f61005682" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	\hat{\tau}(S)=\arg\min_{\tau}\left\{\mathbb{E}_n\left[\left(\{R_i-\hat{\eta}(S_i)\}-\{A_i-\hat{m}(S_i)\}\cdot\tau(S_i)\right)^2\right]\right\}	
 \end{equation}\]</div>
 <p>The easiest way to do so is to specify <span class="math notranslate nohighlight">\(\hat{\tau}(S)\)</span> to the linear function class. In this case, <span class="math notranslate nohighlight">\(\tau(S)=S\beta\)</span>, and the problem becomes to estimate <span class="math notranslate nohighlight">\(\beta\)</span> by solving the following linear regression:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-843a6bbb-551b-46f8-a3e2-0574c3c6d574">
-<span class="eqno">(30)<a class="headerlink" href="#equation-843a6bbb-551b-46f8-a3e2-0574c3c6d574" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-236bd75e-e9d5-4889-9189-e6c080ab95e7">
+<span class="eqno">(30)<a class="headerlink" href="#equation-236bd75e-e9d5-4889-9189-e6c080ab95e7" title="Permalink to this equation">#</a></span>\[\begin{equation}
 	\hat{\beta}=\arg\min_{\beta}\left\{\mathbb{E}_n\left[\left(\{R_i-\hat{\eta}(S_i)\}-\{A_i-\hat{m}(S_i)\} S_i\cdot \beta\right)^2\right]\right\}.
 \end{equation}\]</div>
 <div class="cell docutils container">
