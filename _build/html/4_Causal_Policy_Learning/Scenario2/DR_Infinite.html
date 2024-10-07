@@ -592,8 +592,8 @@ document.write(`
 <p>In OPE, a DR estimator first requires a Q-function estimator, denoted as <span class="math notranslate nohighlight">\(\widehat{Q}\)</span>, which can be learned by various methods in the literature, such as <a class="reference internal" href="FQE.html#section-fqe"><span class="std std-ref">FQE</span></a>.
 Denote the corresponding plug-in V-function estimator as <span class="math notranslate nohighlight">\(\widehat{V}\)</span>.
 These estimators will then be integrated with importance ratios in a form typically motivated by the Bellman equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d8f62528-42b0-46d3-b680-e4cb1869c978">
-<span class="eqno">(91)<a class="headerlink" href="#equation-d8f62528-42b0-46d3-b680-e4cb1869c978" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
+<div class="amsmath math notranslate nohighlight" id="equation-e4a4810a-5e7a-4174-a813-10e4cc3e116d">
+<span class="eqno">(91)<a class="headerlink" href="#equation-e4a4810a-5e7a-4174-a813-10e4cc3e116d" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
     Q^\pi(a, s) = \mathbb{E}^\pi \Big(R_t + \gamma Q^\pi(A_{t + 1}, S_{t+1})  | A_t = a, S_t = s \Big).  \;\;\;\;\; \text{(1)} 
 \end{equation}\]</div>
 <p>For example, based on the <a class="reference internal" href="IPW_Infinite.html#section-ipw-rl-main-idea"><span class="std std-ref">step-wise IS</span></a>, <span id="id2">Thomas and Brunskill [<a class="reference internal" href="#id17" title="Philip Thomas and Emma Brunskill. Data-efficient off-policy policy evaluation for reinforcement learning. In International Conference on Machine Learning, 2139–2148. 2016.">TB16</a>]</span> proposes to construct the estimator as</p>
@@ -625,16 +625,16 @@ Besides, a DR estimator typically has lower (or comparable) bias and variance th
 For example, <span id="id5">Tang <em>et al.</em> [<a class="reference internal" href="#id18" title="Ziyang Tang, Yihao Feng, Lihong Li, Dengyong Zhou, and Qiang Liu. Doubly robust bias reduction in infinite horizon off-policy estimation. In International Conference on Learning Representations. 2019.">TFL+19</a>]</span> designs a DR version, and <span id="id6">Uehara <em>et al.</em> [<a class="reference internal" href="#id19" title="Masatoshi Uehara, Jiawei Huang, and Nan Jiang. Minimax weight and q-function learning for off-policy evaluation. arXiv preprint arXiv:1910.12809, 2019.">UHJ19</a>]</span> proposes to learn a single nuisance function <span class="math notranslate nohighlight">\(\widetilde{\xi}^{\pi}(s,a) \equiv \widetilde{\omega}^{\pi}(s) [\pi(a|s) / b(a|s)]\)</span> instead of learning <span class="math notranslate nohighlight">\(\widetilde{\omega}^{\pi}(s)\)</span> and <span class="math notranslate nohighlight">\(b\)</span> separately.</p>
 <p>In particular, following this line of research, <span id="id7">Kallus and Uehara [<a class="reference internal" href="#id20" title="Nathan Kallus and Masatoshi Uehara. Efficiently breaking the curse of horizon in off-policy evaluation with double reinforcement learning. arXiv preprint arXiv:1909.05850, 2019.">KU19</a>]</span> recently proposes a state-of-the-art method named double reinforcement learning (DRL) that achieves the semiparametric efficiency bound for OPE. DRL is a doubly robust-type method.</p>
 <p>To begin with, we first define the marginalized density ratio under the target policy <span class="math notranslate nohighlight">\(\pi\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8b490c2b-bd61-493a-b64b-ccbc1764c140">
-<span class="eqno">(92)<a class="headerlink" href="#equation-8b490c2b-bd61-493a-b64b-ccbc1764c140" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:omega}
+<div class="amsmath math notranslate nohighlight" id="equation-6f63e92a-6d50-457f-877b-1d7f52f61ea0">
+<span class="eqno">(92)<a class="headerlink" href="#equation-6f63e92a-6d50-457f-877b-1d7f52f61ea0" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:omega}
 	\omega^{\pi}(a,s)=\frac{(1-\gamma)\sum_{t=0}^{+\infty} \gamma^{t} p_t^{\pi}(a,s)}{p_b(a, s)}, 
 \end{eqnarray}\]</div>
 <p>where <span class="math notranslate nohighlight">\(p_t^{\pi}(a, s)\)</span> denotes the probability of <span class="math notranslate nohighlight">\(\{S_t = s, A_t = a\}\)</span> following policy <span class="math notranslate nohighlight">\(\pi\)</span> with  <span class="math notranslate nohighlight">\(S_{0}\sim \mathbb{G}\)</span>.
 Recall that <span class="math notranslate nohighlight">\(p_b(s, a)\)</span> is the stationary density function of the state-action pair under the policy <span class="math notranslate nohighlight">\(b\)</span>.</p>
 <p>Let <span class="math notranslate nohighlight">\(\widehat{Q}\)</span> and <span class="math notranslate nohighlight">\(\widehat{\omega}\)</span> be some estimates of  <span class="math notranslate nohighlight">\(Q^{\pi}\)</span> and <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span>,  respectively.
 DRL first constructs the following estimator for every <span class="math notranslate nohighlight">\((i,t)\)</span> in a doubly robust manner:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-70d8bb46-f844-46b1-b377-9d547b162a43">
-<span class="eqno">(93)<a class="headerlink" href="#equation-70d8bb46-f844-46b1-b377-9d547b162a43" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{term}
+<div class="amsmath math notranslate nohighlight" id="equation-cc7c0902-e647-4ba2-81c6-cfdc1e2eccff">
+<span class="eqno">(93)<a class="headerlink" href="#equation-cc7c0902-e647-4ba2-81c6-cfdc1e2eccff" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{term}
 \begin{split}
 	\psi_{i,t}
 	\equiv
@@ -654,8 +654,8 @@ DRL first constructs the following estimator for every <span class="math notrans
 <p>One can show that
 <span class="math notranslate nohighlight">\(\widehat{\eta}_{\tiny{\textrm{DRL}}}\)</span> is consistent when either <span class="math notranslate nohighlight">\(\widehat{Q}\)</span> or <span class="math notranslate nohighlight">\(\widehat{\omega}\)</span> is consistent, and hence is doubly robust.
 In addition, under mild conditions, we can prove that <span class="math notranslate nohighlight">\(\sqrt{nT} (\widehat{\eta}_{\tiny{\textrm{DRL}}} - \eta^{\pi})\)</span> converges weakly to a normal distribution with mean zero and variance <span class="math notranslate nohighlight">\(\sigma^2\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e78c2c11-872d-45b4-8d6d-1626eba63862">
-<span class="eqno">(94)<a class="headerlink" href="#equation-e78c2c11-872d-45b4-8d6d-1626eba63862" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{lower_bound}
+<div class="amsmath math notranslate nohighlight" id="equation-f5aae614-7673-477d-a05f-bd71a78327e4">
+<span class="eqno">(94)<a class="headerlink" href="#equation-f5aae614-7673-477d-a05f-bd71a78327e4" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{lower_bound}
     \sigma^2 = 
     \frac{1}{(1-\gamma)^2}\mathbb{E} \left[ 
     \omega^{\pi}(A, S) \{R + \gamma V^{\pi}(S') -  Q^{\pi}(A,S)\}
@@ -724,8 +724,8 @@ Roughly speaking, this implies the algorithm is statistically most efficient.</p
 <li><p>One critical question is how to estimate the nuisance function <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span>.
 The following observation forms the basis: <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span> is the only function that satisfies the equation <span class="math notranslate nohighlight">\(\mathbb{E} L(\omega^{\pi},f)=0\)</span> for any function <span class="math notranslate nohighlight">\(f\)</span>, where <span class="math notranslate nohighlight">\(L(\omega^{\pi},f)\)</span> equals</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-8032950e-5608-4d39-b7b5-7e70ac351619">
-<span class="eqno">(95)<a class="headerlink" href="#equation-8032950e-5608-4d39-b7b5-7e70ac351619" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn_omega}
+<div class="amsmath math notranslate nohighlight" id="equation-c16834db-963a-4b83-86a9-d12000a2c74a">
+<span class="eqno">(95)<a class="headerlink" href="#equation-c16834db-963a-4b83-86a9-d12000a2c74a" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn_omega}
 \begin{split}
 	\Big[\mathbb{E}_{a \sim \pi(\cdot|S_{t+1})} \{\omega^{\pi}(A_{t},S_{t})
 	(\gamma f(a, S_{t+1})- f(A_{t},S_{t}) ) \}
@@ -733,8 +733,8 @@ The following observation forms the basis: <span class="math notranslate nohighl
 \end{split}
 \end{eqnarray}\]</div>
 <p>As such, <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span> can be learned by solving the following mini-max problem,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a3ba1acf-ad7f-466c-8ee1-71e09d5ee762">
-<span class="eqno">(96)<a class="headerlink" href="#equation-a3ba1acf-ad7f-466c-8ee1-71e09d5ee762" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:solveL}
+<div class="amsmath math notranslate nohighlight" id="equation-20955456-dacb-4c2b-a103-59d015aafd2c">
+<span class="eqno">(96)<a class="headerlink" href="#equation-20955456-dacb-4c2b-a103-59d015aafd2c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:solveL}
 \arg \min_{\omega\in \Omega} \sup_{f\in \mathcal{F}} \{\mathbb{E} L(\omega, f)\}^2, 
 \end{eqnarray}\]</div>
 <p>for some function classes <span class="math notranslate nohighlight">\(\Omega\)</span> and <span class="math notranslate nohighlight">\(\mathcal{F}\)</span>.
