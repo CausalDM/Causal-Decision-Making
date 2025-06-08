@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Doubly Robust Estimator for Policy Evaluation (Infinite Horizon) &#8212; Causal Decision Making</title>
   
@@ -15,19 +15,19 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
@@ -38,9 +38,9 @@
     <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
-  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -78,28 +78,23 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -121,12 +116,20 @@ const thebe_selector_output = ".output, .cell_output"
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -141,6 +144,9 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
+  
+    
   
 
 <a class="navbar-brand logo" href="../../Intro.html">
@@ -187,19 +193,19 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Structure Learning (CSL)</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../2_Causal_Structure_Learning/Preliminaries%20of%20Causal%20Graphs.html">Preliminaries of Causal Graphs</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../2_Causal_Structure_Learning/Causal%20Discovery.html">Causal Discovery</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../2_Causal_Structure_Learning/Causal%20Discovery.html">Causal Discovery</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../2_Causal_Structure_Learning/Testing-based%20Learner.html">Testing-based Learner</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../2_Causal_Structure_Learning/Functional-based%20Learner.html">Functional-based Learner</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../2_Causal_Structure_Learning/Score-based%20Learner.html">Score-based Learner</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../2_Causal_Structure_Learning/Causal%20Mediation%20Analysis.html">Causal Mediation Analysis</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Effect Learning (CEL)</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/Single%20Stage.html"><strong>Single Stage – Paradigm 1</strong></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/Single%20Stage.html"><strong>Single Stage – Paradigm 1</strong></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/ATE.html">ATE Estimation</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/HTE.html">HTE Estimation</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/HTE.html">HTE Estimation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/S-learner.html"><strong>1. S-learner</strong></a></li>
 
 
@@ -224,13 +230,13 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/Dragonnet.html"><strong>8. Dragon Net</strong></a></li>
 
 
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%201/Mediation%20Analysis.html">Mediation Analysis</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%202/underMDP.html">Markov Decision Processes – Paradigm 2</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%203/Panel%20Data.html">Panel Data  – Paradigm 3</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%203/Panel%20Data.html">Panel Data  – Paradigm 3</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%203/DiD.html"><strong>Difference in Difference</strong></a></li>
 
 <li class="toctree-l2"><a class="reference internal" href="../../3_Causal_Effect_Learning/Scenario%203/Synthetic%20Control.html"><strong>Synthetic Control</strong></a></li>
@@ -238,40 +244,40 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 1</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../Scenario1/Single%20Stage.html">Single Stage</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario1/Discrete.html">Discrete Action Space</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario1/Discrete.html">Discrete Action Space</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../Scenario1/Q-learning_Single.html">Q-Learning</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Scenario1/A-learning_Single.html">A-Learning</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Scenario1/Classification/O-Learning.html">Outcome Weighted Learning</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Scenario1/Quantile/QuantileOTR_test.html">Quantile Optimal Treatment Regime</a></li>
 
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario1/Continuous.html">Continuous Action Space</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario1/Continuous.html">Continuous Action Space</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../Scenario1/Continuous/Deep%20Jump%20Learner.html">Deep Jump Learner for Continuous Actions</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 2</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="preliminary_MDP-potential-outcome.html">Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes</a></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="Evaluation.html">Policy Evaluation–Value Estimation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="Evaluation.html">Policy Evaluation–Value Estimation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="FQE.html">Fitted-Q Evaluation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="IPW_Infinite.html">Importance Sampling for Policy Evaluation (Infinite Horizon)</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Doubly Robust Estimator for Policy Evaluation (Infinite Horizon)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Deeply_Debiased.html">Deeply-Debiased Off-Policy Evaluation</a></li>
-</ul>
-</li>
+</ul><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="MediationRL.html">Policy Evaluation--Mediation Analysis</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="Optimization.html">Policy Optimization</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="Optimization.html">Policy Optimization</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="FQI.html">Fitted-Q Iteration</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 3</span></p>
 <ul class="nav bd-sidenav">
@@ -282,49 +288,49 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 4</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../Scenario4/Bandits.html">Overview: Bandits ALgorithm</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario4/MAB/MAB.html">Multi-Armed Bandits (MAB)</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario4/MAB/MAB.html">Multi-Armed Bandits (MAB)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../Scenario4/MAB/Epsilon_Greedy.html"><span class="math notranslate nohighlight">\(\epsilon\)</span>-Greedy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Scenario4/MAB/UCB.html">UCB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Scenario4/MAB/TS.html">TS</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario4/Contextual_Bandits/Contextual_Bandits.html">Contextual Bandits</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario4/Contextual_Bandits/Contextual_Bandits.html">Contextual Bandits</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../Scenario4/Contextual_Bandits/LinUCB.html">LinUCB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Scenario4/Contextual_Bandits/LinTS.html">LinTS</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario4/Meta_Bandits/Meta_Bandits.html">Meta Bandits</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario4/Meta_Bandits/Meta_Bandits.html">Meta Bandits</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../Scenario4/Meta_Bandits/Meta_TS.html">Meta Thompson Sampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Scenario4/Meta_Bandits/MTTS.html">Multi-Task Thompson Sampling (MTTS)</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario4/Structured_Bandits/Structured_Bandit.html">Structured Bandit (Slate Recommendation)</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../Scenario4/Structured_Bandits/Cascade/Learning%20to%20rank.html">Online Learning to Rank (Cascading Bandit)</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario4/Structured_Bandits/Structured_Bandit.html">Structured Bandit (Slate Recommendation)</a><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../Scenario4/Structured_Bandits/Cascade/Learning%20to%20rank.html">Online Learning to Rank (Cascading Bandit)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../Scenario4/Structured_Bandits/Cascade/TS_Cascade.html">TS_Cascade</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../Scenario4/Structured_Bandits/Cascade/CascadeLinTS.html">CascadeLinTS</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../Scenario4/Structured_Bandits/Cascade/MTSS_Cascade.html">MTSS_Cascade</a></li>
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../Scenario4/Structured_Bandits/Combinatorial-Semi/Combinatorial%20Optimization.html">Online Combinatorial Optimization (Combinatorial Semi-Bandit)</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../Scenario4/Structured_Bandits/Combinatorial-Semi/Combinatorial%20Optimization.html">Online Combinatorial Optimization (Combinatorial Semi-Bandit)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../Scenario4/Structured_Bandits/Combinatorial-Semi/CombTS.html">CombTS</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../Scenario4/Structured_Bandits/Combinatorial-Semi/CombLinTS.html">CombLinTS</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../Scenario4/Structured_Bandits/Combinatorial-Semi/MTSS_Comb.html">MTSS_Comb</a></li>
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../Scenario4/Structured_Bandits/MNL/Assortment%20Optimization.html">Dynamic Assortment Optimization (Multinomial Logit Bandit)</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../Scenario4/Structured_Bandits/MNL/Assortment%20Optimization.html">Dynamic Assortment Optimization (Multinomial Logit Bandit)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../Scenario4/Structured_Bandits/MNL/TS_MNL_Beta.html">TS_MNL</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../Scenario4/Structured_Bandits/MNL/TS_Contextual_MNL.html">TS_Contextual_MNL</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../Scenario4/Structured_Bandits/MNL/MTSS_MNL.html">MTSS_MNL</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario4/OnlineEval/Online%20Policy%20Evaluation.html">Online Policy Evaluation</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Scenario4/OnlineEval/Online%20Policy%20Evaluation.html">Online Policy Evaluation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../Scenario4/OnlineEval/Direct%20Online%20Policy%20Evaluator.html">Direct Online Policy Evaluator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Scenario4/OnlineEval/Inverse%20Probability%20Weighted%20Online%20Policy%20Evaluator.html">Inverse Probability Weighted Online Policy Evaluator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Scenario4/OnlineEval/Doubly%20Robust%20Online%20Policy%20Evaluator.html">Doubly Robust Online Policy Evaluator</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 5</span></p>
 <ul class="nav bd-sidenav">
@@ -336,7 +342,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Case Studies</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3_intro.html">Mimic3</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3_intro.html">Mimic3</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../5_Case_Study/MIMIC3/MIMIC3-Demo-Ver2.html">Mimic3 Demo-Ver2</a></li>
 
 
@@ -345,8 +351,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../../5_Case_Study/MIMIC3/Longitudinal.html">MIMIC III (3-Stages)</a></li>
 
 <li class="toctree-l2"><a class="reference internal" href="../../5_Case_Study/MIMIC3/Infinite_Horizon.html">MIMIC III (Infinite Horizon)</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../5_Case_Study/MovieLens/MovieLens.html">MovieLens</a></li>
 </ul>
 
@@ -363,7 +369,7 @@ const thebe_selector_output = ".output, .cell_output"
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -372,7 +378,7 @@ const thebe_selector_output = ".output, .cell_output"
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
@@ -501,19 +507,21 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
@@ -554,7 +562,7 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="doubly-robust-estimator-for-policy-evaluation-infinite-horizon">
 <h1>Doubly Robust Estimator for Policy Evaluation (Infinite Horizon)<a class="headerlink" href="#doubly-robust-estimator-for-policy-evaluation-infinite-horizon" title="Permalink to this heading">#</a></h1>
@@ -576,8 +584,8 @@ document.write(`
 <p>In OPE, a DR estimator first requires a Q-function estimator, denoted as <span class="math notranslate nohighlight">\(\widehat{Q}\)</span>, which can be learned by various methods in the literature, such as <a class="reference internal" href="FQE.html#section-fqe"><span class="std std-ref">FQE</span></a>.
 Denote the corresponding plug-in V-function estimator as <span class="math notranslate nohighlight">\(\widehat{V}\)</span>.
 These estimators will then be integrated with importance ratios in a form typically motivated by the Bellman equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f7ebcd92-afd4-4d12-82eb-8d98b2e1eb8f">
-<span class="eqno">(91)<a class="headerlink" href="#equation-f7ebcd92-afd4-4d12-82eb-8d98b2e1eb8f" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
+<div class="amsmath math notranslate nohighlight" id="equation-2704993d-be47-4ab2-8fda-47ffbeeb77b4">
+<span class="eqno">(91)<a class="headerlink" href="#equation-2704993d-be47-4ab2-8fda-47ffbeeb77b4" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eqn:bellman_Q}
     Q^\pi(a, s) = \mathbb{E}^\pi \Big(R_t + \gamma Q^\pi(A_{t + 1}, S_{t+1})  | A_t = a, S_t = s \Big).  \;\;\;\;\; \text{(1)} 
 \end{equation}\]</div>
 <p>For example, based on the <a class="reference internal" href="IPW_Infinite.html#section-ipw-rl-main-idea"><span class="std std-ref">step-wise IS</span></a>, <span id="id2">Thomas and Brunskill [<a class="reference internal" href="#id17" title="Philip Thomas and Emma Brunskill. Data-efficient off-policy policy evaluation for reinforcement learning. In International Conference on Machine Learning, 2139–2148. 2016.">TB16</a>]</span> proposes to construct the estimator as</p>
@@ -609,16 +617,16 @@ Besides, a DR estimator typically has lower (or comparable) bias and variance th
 For example, <span id="id5">Tang <em>et al.</em> [<a class="reference internal" href="#id18" title="Ziyang Tang, Yihao Feng, Lihong Li, Dengyong Zhou, and Qiang Liu. Doubly robust bias reduction in infinite horizon off-policy estimation. In International Conference on Learning Representations. 2019.">TFL+19</a>]</span> designs a DR version, and <span id="id6">Uehara <em>et al.</em> [<a class="reference internal" href="#id19" title="Masatoshi Uehara, Jiawei Huang, and Nan Jiang. Minimax weight and q-function learning for off-policy evaluation. arXiv preprint arXiv:1910.12809, 2019.">UHJ19</a>]</span> proposes to learn a single nuisance function <span class="math notranslate nohighlight">\(\widetilde{\xi}^{\pi}(s,a) \equiv \widetilde{\omega}^{\pi}(s) [\pi(a|s) / b(a|s)]\)</span> instead of learning <span class="math notranslate nohighlight">\(\widetilde{\omega}^{\pi}(s)\)</span> and <span class="math notranslate nohighlight">\(b\)</span> separately.</p>
 <p>In particular, following this line of research, <span id="id7">Kallus and Uehara [<a class="reference internal" href="#id20" title="Nathan Kallus and Masatoshi Uehara. Efficiently breaking the curse of horizon in off-policy evaluation with double reinforcement learning. arXiv preprint arXiv:1909.05850, 2019.">KU19</a>]</span> recently proposes a state-of-the-art method named double reinforcement learning (DRL) that achieves the semiparametric efficiency bound for OPE. DRL is a doubly robust-type method.</p>
 <p>To begin with, we first define the marginalized density ratio under the target policy <span class="math notranslate nohighlight">\(\pi\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d7b42dc3-944c-42ee-acfd-0d22f0e902fb">
-<span class="eqno">(92)<a class="headerlink" href="#equation-d7b42dc3-944c-42ee-acfd-0d22f0e902fb" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:omega}
+<div class="amsmath math notranslate nohighlight" id="equation-21439cd9-88c8-4808-b5e5-2e61c68b4682">
+<span class="eqno">(92)<a class="headerlink" href="#equation-21439cd9-88c8-4808-b5e5-2e61c68b4682" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:omega}
 	\omega^{\pi}(a,s)=\frac{(1-\gamma)\sum_{t=0}^{+\infty} \gamma^{t} p_t^{\pi}(a,s)}{p_b(a, s)}, 
 \end{eqnarray}\]</div>
 <p>where <span class="math notranslate nohighlight">\(p_t^{\pi}(a, s)\)</span> denotes the probability of <span class="math notranslate nohighlight">\(\{S_t = s, A_t = a\}\)</span> following policy <span class="math notranslate nohighlight">\(\pi\)</span> with  <span class="math notranslate nohighlight">\(S_{0}\sim \mathbb{G}\)</span>.
 Recall that <span class="math notranslate nohighlight">\(p_b(s, a)\)</span> is the stationary density function of the state-action pair under the policy <span class="math notranslate nohighlight">\(b\)</span>.</p>
 <p>Let <span class="math notranslate nohighlight">\(\widehat{Q}\)</span> and <span class="math notranslate nohighlight">\(\widehat{\omega}\)</span> be some estimates of  <span class="math notranslate nohighlight">\(Q^{\pi}\)</span> and <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span>,  respectively.
 DRL first constructs the following estimator for every <span class="math notranslate nohighlight">\((i,t)\)</span> in a doubly robust manner:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f12a914c-9688-4d6b-b688-9c5a8e93888f">
-<span class="eqno">(93)<a class="headerlink" href="#equation-f12a914c-9688-4d6b-b688-9c5a8e93888f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{term}
+<div class="amsmath math notranslate nohighlight" id="equation-faac95f6-c7ec-4be7-b01d-5a1a1761377d">
+<span class="eqno">(93)<a class="headerlink" href="#equation-faac95f6-c7ec-4be7-b01d-5a1a1761377d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{term}
 \begin{split}
 	\psi_{i,t}
 	\equiv
@@ -638,8 +646,8 @@ DRL first constructs the following estimator for every <span class="math notrans
 <p>One can show that
 <span class="math notranslate nohighlight">\(\widehat{\eta}_{\tiny{\textrm{DRL}}}\)</span> is consistent when either <span class="math notranslate nohighlight">\(\widehat{Q}\)</span> or <span class="math notranslate nohighlight">\(\widehat{\omega}\)</span> is consistent, and hence is doubly robust.
 In addition, under mild conditions, we can prove that <span class="math notranslate nohighlight">\(\sqrt{nT} (\widehat{\eta}_{\tiny{\textrm{DRL}}} - \eta^{\pi})\)</span> converges weakly to a normal distribution with mean zero and variance <span class="math notranslate nohighlight">\(\sigma^2\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8d1474f6-e825-4554-91c5-c4119ae8c294">
-<span class="eqno">(94)<a class="headerlink" href="#equation-8d1474f6-e825-4554-91c5-c4119ae8c294" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{lower_bound}
+<div class="amsmath math notranslate nohighlight" id="equation-e0b4795c-a3b9-4b5c-b2ec-4570a7ca5a26">
+<span class="eqno">(94)<a class="headerlink" href="#equation-e0b4795c-a3b9-4b5c-b2ec-4570a7ca5a26" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{lower_bound}
     \sigma^2 = 
     \frac{1}{(1-\gamma)^2}\mathbb{E} \left[ 
     \omega^{\pi}(A, S) \{R + \gamma V^{\pi}(S') -  Q^{\pi}(A,S)\}
@@ -652,26 +660,33 @@ Roughly speaking, this implies the algorithm is statistically most efficient.</p
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
 <div class="docutils container" id="id9">
-<dl class="citation">
-<dt class="label" id="id13"><span class="brackets"><a class="fn-backref" href="#id4">JL16</a></span></dt>
-<dd><p>Nan Jiang and Lihong Li. Doubly robust off-policy value evaluation for reinforcement learning. In <em>International Conference on Machine Learning</em>, 652–661. PMLR, 2016.</p>
-</dd>
-<dt class="label" id="id20"><span class="brackets">KU19</span><span class="fn-backref">(<a href="#id7">1</a>,<a href="#id8">2</a>)</span></dt>
-<dd><p>Nathan Kallus and Masatoshi Uehara. Efficiently breaking the curse of horizon in off-policy evaluation with double reinforcement learning. <em>arXiv preprint arXiv:1909.05850</em>, 2019.</p>
-</dd>
-<dt class="label" id="id18"><span class="brackets"><a class="fn-backref" href="#id5">TFL+19</a></span></dt>
-<dd><p>Ziyang Tang, Yihao Feng, Lihong Li, Dengyong Zhou, and Qiang Liu. Doubly robust bias reduction in infinite horizon off-policy estimation. In <em>International Conference on Learning Representations</em>. 2019.</p>
-</dd>
-<dt class="label" id="id17"><span class="brackets">TB16</span><span class="fn-backref">(<a href="#id2">1</a>,<a href="#id3">2</a>)</span></dt>
-<dd><p>Philip Thomas and Emma Brunskill. Data-efficient off-policy policy evaluation for reinforcement learning. In <em>International Conference on Machine Learning</em>, 2139–2148. 2016.</p>
-</dd>
-<dt class="label" id="id19"><span class="brackets"><a class="fn-backref" href="#id6">UHJ19</a></span></dt>
-<dd><p>Masatoshi Uehara, Jiawei Huang, and Nan Jiang. Minimax weight and q-function learning for off-policy evaluation. <em>arXiv preprint arXiv:1910.12809</em>, 2019.</p>
-</dd>
-<dt class="label" id="id16"><span class="brackets"><a class="fn-backref" href="#id1">VLJY19</a></span></dt>
-<dd><p>Cameron Voloshin, Hoang M Le, Nan Jiang, and Yisong Yue. Empirical study of off-policy policy evaluation for reinforcement learning. <em>arXiv preprint arXiv:1911.06854</em>, 2019.</p>
-</dd>
-</dl>
+<div class="citation" id="id13" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">JL16</a><span class="fn-bracket">]</span></span>
+<p>Nan Jiang and Lihong Li. Doubly robust off-policy value evaluation for reinforcement learning. In <em>International Conference on Machine Learning</em>, 652–661. PMLR, 2016.</p>
+</div>
+<div class="citation" id="id20" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>KU19<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id7">1</a>,<a role="doc-backlink" href="#id8">2</a>)</span>
+<p>Nathan Kallus and Masatoshi Uehara. Efficiently breaking the curse of horizon in off-policy evaluation with double reinforcement learning. <em>arXiv preprint arXiv:1909.05850</em>, 2019.</p>
+</div>
+<div class="citation" id="id18" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">TFL+19</a><span class="fn-bracket">]</span></span>
+<p>Ziyang Tang, Yihao Feng, Lihong Li, Dengyong Zhou, and Qiang Liu. Doubly robust bias reduction in infinite horizon off-policy estimation. In <em>International Conference on Learning Representations</em>. 2019.</p>
+</div>
+<div class="citation" id="id17" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>TB16<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id2">1</a>,<a role="doc-backlink" href="#id3">2</a>)</span>
+<p>Philip Thomas and Emma Brunskill. Data-efficient off-policy policy evaluation for reinforcement learning. In <em>International Conference on Machine Learning</em>, 2139–2148. 2016.</p>
+</div>
+<div class="citation" id="id19" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">UHJ19</a><span class="fn-bracket">]</span></span>
+<p>Masatoshi Uehara, Jiawei Huang, and Nan Jiang. Minimax weight and q-function learning for off-policy evaluation. <em>arXiv preprint arXiv:1910.12809</em>, 2019.</p>
+</div>
+<div class="citation" id="id16" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">VLJY19</a><span class="fn-bracket">]</span></span>
+<p>Cameron Voloshin, Hoang M Le, Nan Jiang, and Yisong Yue. Empirical study of off-policy policy evaluation for reinforcement learning. <em>arXiv preprint arXiv:1911.06854</em>, 2019.</p>
+</div>
+</div>
 </div>
 </section>
 <section id="note">
@@ -680,8 +695,8 @@ Roughly speaking, this implies the algorithm is statistically most efficient.</p
 <li><p>One critical question is how to estimate the nuisance function <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span>.
 The following observation forms the basis: <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span> is the only function that satisfies the equation <span class="math notranslate nohighlight">\(\mathbb{E} L(\omega^{\pi},f)=0\)</span> for any function <span class="math notranslate nohighlight">\(f\)</span>, where <span class="math notranslate nohighlight">\(L(\omega^{\pi},f)\)</span> equals</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-17258be6-d4f3-4bd9-b707-079cb7ea85b9">
-<span class="eqno">(95)<a class="headerlink" href="#equation-17258be6-d4f3-4bd9-b707-079cb7ea85b9" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn_omega}
+<div class="amsmath math notranslate nohighlight" id="equation-bb167813-1c74-46dd-afbb-adfaa81f85bb">
+<span class="eqno">(95)<a class="headerlink" href="#equation-bb167813-1c74-46dd-afbb-adfaa81f85bb" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn_omega}
 \begin{split}
 	\Big[\mathbb{E}_{a \sim \pi(\cdot|S_{t+1})} \{\omega^{\pi}(A_{t},S_{t})
 	(\gamma f(a, S_{t+1})- f(A_{t},S_{t}) ) \}
@@ -689,8 +704,8 @@ The following observation forms the basis: <span class="math notranslate nohighl
 \end{split}
 \end{eqnarray}\]</div>
 <p>As such, <span class="math notranslate nohighlight">\(\omega^{\pi}\)</span> can be learned by solving the following mini-max problem,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6854e154-b7c1-4e07-9db1-66345b834643">
-<span class="eqno">(96)<a class="headerlink" href="#equation-6854e154-b7c1-4e07-9db1-66345b834643" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:solveL}
+<div class="amsmath math notranslate nohighlight" id="equation-957260cd-459a-4e4c-8187-ec53b4804a08">
+<span class="eqno">(96)<a class="headerlink" href="#equation-957260cd-459a-4e4c-8187-ec53b4804a08" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}\label{eqn:solveL}
 \arg \min_{\omega\in \Omega} \sup_{f\in \mathcal{F}} \{\mathbb{E} L(\omega, f)\}^2, 
 \end{eqnarray}\]</div>
 <p>for some function classes <span class="math notranslate nohighlight">\(\Omega\)</span> and <span class="math notranslate nohighlight">\(\mathcal{F}\)</span>.
@@ -728,8 +743,8 @@ with the expectation approximated by the sample mean.
               
               
               
-                <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                <footer class="prev-next-footer d-print-none">
+                  
 <div class="prev-next-area">
     <a class="left-prev"
        href="IPW_Infinite.html"
@@ -757,6 +772,7 @@ with the expectation approximated by the sample mean.
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -789,6 +805,7 @@ By Causal Decision Making Team
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright 2022.
@@ -815,8 +832,8 @@ By Causal Decision Making Team
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

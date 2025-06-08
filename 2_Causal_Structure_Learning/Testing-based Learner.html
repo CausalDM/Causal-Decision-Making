@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Testing-based Learner &#8212; Causal Decision Making</title>
   
@@ -15,19 +15,19 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
@@ -38,9 +38,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -78,28 +78,23 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -121,12 +116,20 @@ const thebe_selector_output = ".output, .cell_output"
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -141,6 +144,9 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
+  
+    
   
 
 <a class="navbar-brand logo" href="../Intro.html">
@@ -187,19 +193,19 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Structure Learning (CSL)</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Preliminaries%20of%20Causal%20Graphs.html">Preliminaries of Causal Graphs</a></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="Causal%20Discovery.html">Causal Discovery</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="Causal%20Discovery.html">Causal Discovery</a><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Testing-based Learner</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Functional-based%20Learner.html">Functional-based Learner</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Score-based%20Learner.html">Score-based Learner</a></li>
-</ul>
-</li>
+</ul><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="Causal%20Mediation%20Analysis.html">Causal Mediation Analysis</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Effect Learning (CEL)</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/Single%20Stage.html"><strong>Single Stage – Paradigm 1</strong></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/Single%20Stage.html"><strong>Single Stage – Paradigm 1</strong></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/ATE.html">ATE Estimation</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/HTE.html">HTE Estimation</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/HTE.html">HTE Estimation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/S-learner.html"><strong>1. S-learner</strong></a></li>
 
 
@@ -224,13 +230,13 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/Dragonnet.html"><strong>8. Dragon Net</strong></a></li>
 
 
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/Mediation%20Analysis.html">Mediation Analysis</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%202/underMDP.html">Markov Decision Processes – Paradigm 2</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/Panel%20Data.html">Panel Data  – Paradigm 3</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/Panel%20Data.html">Panel Data  – Paradigm 3</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/DiD.html"><strong>Difference in Difference</strong></a></li>
 
 <li class="toctree-l2"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/Synthetic%20Control.html"><strong>Synthetic Control</strong></a></li>
@@ -238,40 +244,40 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 1</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Single%20Stage.html">Single Stage</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Discrete.html">Discrete Action Space</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Discrete.html">Discrete Action Space</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Q-learning_Single.html">Q-Learning</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/A-learning_Single.html">A-Learning</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Classification/O-Learning.html">Outcome Weighted Learning</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Quantile/QuantileOTR_test.html">Quantile Optimal Treatment Regime</a></li>
 
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Continuous.html">Continuous Action Space</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Continuous.html">Continuous Action Space</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Continuous/Deep%20Jump%20Learner.html">Deep Jump Learner for Continuous Actions</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 2</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/preliminary_MDP-potential-outcome.html">Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/Evaluation.html">Policy Evaluation–Value Estimation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/Evaluation.html">Policy Evaluation–Value Estimation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/FQE.html">Fitted-Q Evaluation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/IPW_Infinite.html">Importance Sampling for Policy Evaluation (Infinite Horizon)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/DR_Infinite.html">Doubly Robust Estimator for Policy Evaluation (Infinite Horizon)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/Deeply_Debiased.html">Deeply-Debiased Off-Policy Evaluation</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/MediationRL.html">Policy Evaluation--Mediation Analysis</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/Optimization.html">Policy Optimization</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/Optimization.html">Policy Optimization</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/FQI.html">Fitted-Q Iteration</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 3</span></p>
 <ul class="nav bd-sidenav">
@@ -282,49 +288,49 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 4</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Bandits.html">Overview: Bandits ALgorithm</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/MAB/MAB.html">Multi-Armed Bandits (MAB)</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/MAB/MAB.html">Multi-Armed Bandits (MAB)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/MAB/Epsilon_Greedy.html"><span class="math notranslate nohighlight">\(\epsilon\)</span>-Greedy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/MAB/UCB.html">UCB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/MAB/TS.html">TS</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/Contextual_Bandits.html">Contextual Bandits</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/Contextual_Bandits.html">Contextual Bandits</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/LinUCB.html">LinUCB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/LinTS.html">LinTS</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/Meta_Bandits.html">Meta Bandits</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/Meta_Bandits.html">Meta Bandits</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/Meta_TS.html">Meta Thompson Sampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/MTTS.html">Multi-Task Thompson Sampling (MTTS)</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Structured_Bandit.html">Structured Bandit (Slate Recommendation)</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/Learning%20to%20rank.html">Online Learning to Rank (Cascading Bandit)</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Structured_Bandit.html">Structured Bandit (Slate Recommendation)</a><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/Learning%20to%20rank.html">Online Learning to Rank (Cascading Bandit)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/TS_Cascade.html">TS_Cascade</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/CascadeLinTS.html">CascadeLinTS</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/MTSS_Cascade.html">MTSS_Cascade</a></li>
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/Combinatorial%20Optimization.html">Online Combinatorial Optimization (Combinatorial Semi-Bandit)</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/Combinatorial%20Optimization.html">Online Combinatorial Optimization (Combinatorial Semi-Bandit)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/CombTS.html">CombTS</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/CombLinTS.html">CombLinTS</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/MTSS_Comb.html">MTSS_Comb</a></li>
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/Assortment%20Optimization.html">Dynamic Assortment Optimization (Multinomial Logit Bandit)</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/Assortment%20Optimization.html">Dynamic Assortment Optimization (Multinomial Logit Bandit)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/TS_MNL_Beta.html">TS_MNL</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/TS_Contextual_MNL.html">TS_Contextual_MNL</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/MTSS_MNL.html">MTSS_MNL</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/OnlineEval/Online%20Policy%20Evaluation.html">Online Policy Evaluation</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/OnlineEval/Online%20Policy%20Evaluation.html">Online Policy Evaluation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/OnlineEval/Direct%20Online%20Policy%20Evaluator.html">Direct Online Policy Evaluator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/OnlineEval/Inverse%20Probability%20Weighted%20Online%20Policy%20Evaluator.html">Inverse Probability Weighted Online Policy Evaluator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/OnlineEval/Doubly%20Robust%20Online%20Policy%20Evaluator.html">Doubly Robust Online Policy Evaluator</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 5</span></p>
 <ul class="nav bd-sidenav">
@@ -336,7 +342,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Case Studies</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../5_Case_Study/MIMIC3/MIMIC3_intro.html">Mimic3</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../5_Case_Study/MIMIC3/MIMIC3_intro.html">Mimic3</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../5_Case_Study/MIMIC3/MIMIC3-Demo-Ver2.html">Mimic3 Demo-Ver2</a></li>
 
 
@@ -345,8 +351,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../5_Case_Study/MIMIC3/Longitudinal.html">MIMIC III (3-Stages)</a></li>
 
 <li class="toctree-l2"><a class="reference internal" href="../5_Case_Study/MIMIC3/Infinite_Horizon.html">MIMIC III (Infinite Horizon)</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../5_Case_Study/MovieLens/MovieLens.html">MovieLens</a></li>
 </ul>
 
@@ -363,7 +369,7 @@ const thebe_selector_output = ".output, .cell_output"
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -372,7 +378,7 @@ const thebe_selector_output = ".output, .cell_output"
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
@@ -501,19 +507,21 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
@@ -568,7 +576,7 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="testing-based-learner">
 <h1>Testing-based Learner<a class="headerlink" href="#testing-based-learner" title="Permalink to this heading">#</a></h1>
@@ -601,8 +609,8 @@ document.write(`
 <section id="model-1-linear-gaussian-structural-equation-model">
 <h4>Model 1: Linear-Gaussian Structural Equation Model<a class="headerlink" href="#model-1-linear-gaussian-structural-equation-model" title="Permalink to this heading">#</a></h4>
 <p>Let <span class="math notranslate nohighlight">\(B=\{b_{i,j}\}_{1\leq i\leq d,1\leq j\leq d}\)</span> be a <span class="math notranslate nohighlight">\(d\times d\)</span> matrix, where <span class="math notranslate nohighlight">\(b_{i,j}\)</span> is the weight of the edge <span class="math notranslate nohighlight">\(Z_i\rightarrow Z_j \in \mathbf{E}\)</span>, and <span class="math notranslate nohighlight">\(b_{i,j}=0\)</span> otherwise. Then, we say that <span class="math notranslate nohighlight">\(\mathcal{G} =(\mathbf{Z},B)\)</span> is a weighted DAG with the node set <span class="math notranslate nohighlight">\(\mathbf{Z}\)</span> and the weighted adjacency matrix <span class="math notranslate nohighlight">\(B\)</span> (the edge set <span class="math notranslate nohighlight">\(\mathbf{E}\)</span> is nested in <span class="math notranslate nohighlight">\(B\)</span>). Under no unmeasured confounders, the Markov condition, the faithfulness condition, causal sufficiency assumption, and the linear structural equation model (LSEM) such that <span class="math notranslate nohighlight">\(\mathbf{Z}\)</span> characterized by the pair (<span class="math notranslate nohighlight">\(\mathcal{G}\)</span>, <span class="math notranslate nohighlight">\(\epsilon\)</span>) is generated by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e87cd20e-d925-4911-8ecc-9e3c5fb26c3c">
-<span class="eqno">(7)<a class="headerlink" href="#equation-e87cd20e-d925-4911-8ecc-9e3c5fb26c3c" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{lsem_x}
+<div class="amsmath math notranslate nohighlight" id="equation-2ff6f1f2-78fa-46ad-8449-476abba4f1de">
+<span class="eqno">(7)<a class="headerlink" href="#equation-2ff6f1f2-78fa-46ad-8449-476abba4f1de" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{lsem_x}
 \mathbf{Z}=B^\top \mathbf{Z} +\epsilon,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\epsilon \)</span> is a  random vector of jointly independent error variables. When the noise is Gaussian with equal variance, the model is identifiable (Peters and Bühlmann, 2013).</p>
@@ -619,10 +627,10 @@ document.write(`
 <h3>Generate Synthetic Datasets<a class="headerlink" href="#generate-synthetic-datasets" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">synthetic_datasets</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">utils</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">synthetic_datasets</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 <span class="n">seed</span> <span class="o">=</span> <span class="mi">1234</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 <span class="n">d</span> <span class="o">=</span> <span class="mi">8</span>
@@ -641,9 +649,9 @@ document.write(`
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
 <span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 4&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">synthetic_datasets</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span><span class="w"> </span><span class="nn">utils</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">from</span><span class="w"> </span><span class="nn">synthetic_datasets</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">1234</span>
 <span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
@@ -659,10 +667,10 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ! pip install pydot </span>
 <span class="c1"># ! pip install git+https://github.com/bd2kccd/py-causal</span>
-<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">import</span> <span class="nn">pydot</span>
-<span class="kn">from</span> <span class="nn">pycausal.pycausal</span> <span class="kn">import</span> <span class="n">pycausal</span> <span class="k">as</span> <span class="n">pc</span>
-<span class="kn">from</span> <span class="nn">pycausal</span> <span class="kn">import</span> <span class="n">search</span> <span class="k">as</span> <span class="n">s</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">utils</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pydot</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycausal.pycausal</span><span class="w"> </span><span class="kn">import</span> <span class="n">pycausal</span> <span class="k">as</span> <span class="n">pc</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycausal</span><span class="w"> </span><span class="kn">import</span> <span class="n">search</span> <span class="k">as</span> <span class="n">s</span>
 <span class="n">pc</span> <span class="o">=</span> <span class="n">pc</span><span class="p">()</span>
 <span class="n">pc</span><span class="o">.</span><span class="n">start_vm</span><span class="p">()</span> 
 <span class="n">tetrad</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">tetradrunner</span><span class="p">()</span> 
@@ -700,7 +708,7 @@ SHD: 4
 <section id="summary-of-results-under-different-causal-graph-learners">
 <h4>Summary of Results under Different Causal Graph Learners.<a class="headerlink" href="#summary-of-results-under-different-causal-graph-learners" title="Permalink to this heading">#</a></h4>
 <p>Note: The estimated graphs (after pruning) are evaluated by three metrics: the false discovery rate (FDR), the true positive rate (TPR), and the structural Hamming distance (SHD, the smallest number of edge additions, deletions, and reversals to convert the estimated graph into the true DAG). Here, the SHD takes into account both false positives and negatives and a lower SHD indicates a better estimate of the causal graph.</p>
-<table class="colwidths-auto table">
+<div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Learners</p></th>
 <th class="head"><p>FDR</p></th>
@@ -731,6 +739,7 @@ SHD: 4
 </tr>
 </tbody>
 </table>
+</div>
 </section>
 </section>
 </section>
@@ -783,8 +792,8 @@ Journal of Machine Learning Research, 2014.</p>
               
               
               
-                <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                <footer class="prev-next-footer d-print-none">
+                  
 <div class="prev-next-area">
     <a class="left-prev"
        href="Causal%20Discovery.html"
@@ -812,6 +821,7 @@ Journal of Machine Learning Research, 2014.</p>
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -858,6 +868,7 @@ By Causal Decision Making Team
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright 2022.
@@ -884,8 +895,8 @@ By Causal Decision Making Team
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

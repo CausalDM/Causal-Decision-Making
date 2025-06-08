@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Causal Inference 101 &#8212; Causal Decision Making</title>
   
@@ -15,19 +15,19 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
@@ -38,9 +38,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -74,28 +74,23 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -117,12 +112,22 @@ const thebe_selector_output = ".output, .cell_output"
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -137,6 +142,9 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
+  
+    
   
 
 <a class="navbar-brand logo" href="../Intro.html">
@@ -183,19 +191,19 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Structure Learning (CSL)</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../2_Causal_Structure_Learning/Preliminaries%20of%20Causal%20Graphs.html">Preliminaries of Causal Graphs</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../2_Causal_Structure_Learning/Causal%20Discovery.html">Causal Discovery</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../2_Causal_Structure_Learning/Causal%20Discovery.html">Causal Discovery</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../2_Causal_Structure_Learning/Testing-based%20Learner.html">Testing-based Learner</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2_Causal_Structure_Learning/Functional-based%20Learner.html">Functional-based Learner</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2_Causal_Structure_Learning/Score-based%20Learner.html">Score-based Learner</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../2_Causal_Structure_Learning/Causal%20Mediation%20Analysis.html">Causal Mediation Analysis</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Effect Learning (CEL)</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/Single%20Stage.html"><strong>Single Stage – Paradigm 1</strong></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/Single%20Stage.html"><strong>Single Stage – Paradigm 1</strong></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/ATE.html">ATE Estimation</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/HTE.html">HTE Estimation</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/HTE.html">HTE Estimation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/S-learner.html"><strong>1. S-learner</strong></a></li>
 
 
@@ -220,13 +228,13 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/Dragonnet.html"><strong>8. Dragon Net</strong></a></li>
 
 
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%201/Mediation%20Analysis.html">Mediation Analysis</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%202/underMDP.html">Markov Decision Processes – Paradigm 2</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/Panel%20Data.html">Panel Data  – Paradigm 3</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/Panel%20Data.html">Panel Data  – Paradigm 3</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/DiD.html"><strong>Difference in Difference</strong></a></li>
 
 <li class="toctree-l2"><a class="reference internal" href="../3_Causal_Effect_Learning/Scenario%203/Synthetic%20Control.html"><strong>Synthetic Control</strong></a></li>
@@ -234,40 +242,40 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 1</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Single%20Stage.html">Single Stage</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Discrete.html">Discrete Action Space</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Discrete.html">Discrete Action Space</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Q-learning_Single.html">Q-Learning</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/A-learning_Single.html">A-Learning</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Classification/O-Learning.html">Outcome Weighted Learning</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Quantile/QuantileOTR_test.html">Quantile Optimal Treatment Regime</a></li>
 
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Continuous.html">Continuous Action Space</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Continuous.html">Continuous Action Space</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario1/Continuous/Deep%20Jump%20Learner.html">Deep Jump Learner for Continuous Actions</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 2</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/preliminary_MDP-potential-outcome.html">Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/Evaluation.html">Policy Evaluation–Value Estimation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/Evaluation.html">Policy Evaluation–Value Estimation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/FQE.html">Fitted-Q Evaluation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/IPW_Infinite.html">Importance Sampling for Policy Evaluation (Infinite Horizon)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/DR_Infinite.html">Doubly Robust Estimator for Policy Evaluation (Infinite Horizon)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/Deeply_Debiased.html">Deeply-Debiased Off-Policy Evaluation</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/MediationRL.html">Policy Evaluation--Mediation Analysis</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/Optimization.html">Policy Optimization</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/Optimization.html">Policy Optimization</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario2/FQI.html">Fitted-Q Iteration</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 3</span></p>
 <ul class="nav bd-sidenav">
@@ -278,49 +286,49 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 4</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Bandits.html">Overview: Bandits ALgorithm</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/MAB/MAB.html">Multi-Armed Bandits (MAB)</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/MAB/MAB.html">Multi-Armed Bandits (MAB)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/MAB/Epsilon_Greedy.html"><span class="math notranslate nohighlight">\(\epsilon\)</span>-Greedy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/MAB/UCB.html">UCB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/MAB/TS.html">TS</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/Contextual_Bandits.html">Contextual Bandits</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/Contextual_Bandits.html">Contextual Bandits</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/LinUCB.html">LinUCB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Contextual_Bandits/LinTS.html">LinTS</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/Meta_Bandits.html">Meta Bandits</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/Meta_Bandits.html">Meta Bandits</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/Meta_TS.html">Meta Thompson Sampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Meta_Bandits/MTTS.html">Multi-Task Thompson Sampling (MTTS)</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Structured_Bandit.html">Structured Bandit (Slate Recommendation)</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/Learning%20to%20rank.html">Online Learning to Rank (Cascading Bandit)</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Structured_Bandit.html">Structured Bandit (Slate Recommendation)</a><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/Learning%20to%20rank.html">Online Learning to Rank (Cascading Bandit)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/TS_Cascade.html">TS_Cascade</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/CascadeLinTS.html">CascadeLinTS</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Cascade/MTSS_Cascade.html">MTSS_Cascade</a></li>
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/Combinatorial%20Optimization.html">Online Combinatorial Optimization (Combinatorial Semi-Bandit)</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/Combinatorial%20Optimization.html">Online Combinatorial Optimization (Combinatorial Semi-Bandit)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/CombTS.html">CombTS</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/CombLinTS.html">CombLinTS</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/Combinatorial-Semi/MTSS_Comb.html">MTSS_Comb</a></li>
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/Assortment%20Optimization.html">Dynamic Assortment Optimization (Multinomial Logit Bandit)</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/Assortment%20Optimization.html">Dynamic Assortment Optimization (Multinomial Logit Bandit)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/TS_MNL_Beta.html">TS_MNL</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/TS_Contextual_MNL.html">TS_Contextual_MNL</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/Structured_Bandits/MNL/MTSS_MNL.html">MTSS_MNL</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/OnlineEval/Online%20Policy%20Evaluation.html">Online Policy Evaluation</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/OnlineEval/Online%20Policy%20Evaluation.html">Online Policy Evaluation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/OnlineEval/Direct%20Online%20Policy%20Evaluator.html">Direct Online Policy Evaluator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/OnlineEval/Inverse%20Probability%20Weighted%20Online%20Policy%20Evaluator.html">Inverse Probability Weighted Online Policy Evaluator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4_Causal_Policy_Learning/Scenario4/OnlineEval/Doubly%20Robust%20Online%20Policy%20Evaluator.html">Doubly Robust Online Policy Evaluator</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 5</span></p>
 <ul class="nav bd-sidenav">
@@ -332,7 +340,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Case Studies</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../5_Case_Study/MIMIC3/MIMIC3_intro.html">Mimic3</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../5_Case_Study/MIMIC3/MIMIC3_intro.html">Mimic3</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../5_Case_Study/MIMIC3/MIMIC3-Demo-Ver2.html">Mimic3 Demo-Ver2</a></li>
 
 
@@ -341,8 +349,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../5_Case_Study/MIMIC3/Longitudinal.html">MIMIC III (3-Stages)</a></li>
 
 <li class="toctree-l2"><a class="reference internal" href="../5_Case_Study/MIMIC3/Infinite_Horizon.html">MIMIC III (Infinite Horizon)</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../5_Case_Study/MovieLens/MovieLens.html">MovieLens</a></li>
 </ul>
 
@@ -359,7 +367,7 @@ const thebe_selector_output = ".output, .cell_output"
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -368,7 +376,7 @@ const thebe_selector_output = ".output, .cell_output"
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
@@ -497,19 +505,21 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
@@ -554,7 +564,7 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="causal-inference-101">
 <h1>Causal Inference 101<a class="headerlink" href="#causal-inference-101" title="Permalink to this heading">#</a></h1>
@@ -633,95 +643,123 @@ then the bibliography is inserted with:</p>
 </div>
 <p>Resulting in a rendered bibliography that looks like:</p>
 <div class="docutils container" id="id2">
-<dl class="citation">
-<dt class="label" id="id17"><span class="brackets">EGW05</span></dt>
-<dd><p>Damien Ernst, Pierre Geurts, and Louis Wehenkel. Tree-based batch mode reinforcement learning. <em>Journal of Machine Learning Research</em>, 2005.</p>
-</dd>
-<dt class="label" id="id33"><span class="brackets">HZAL18</span></dt>
-<dd><p>Tuomas Haarnoja, Aurick Zhou, Pieter Abbeel, and Sergey Levine. Soft actor-critic: off-policy maximum entropy deep reinforcement learning with a stochastic actor. In <em>International conference on machine learning</em>, 1861–1870. PMLR, 2018.</p>
-</dd>
-<dt class="label" id="id19"><span class="brackets">HK20</span></dt>
-<dd><p>Yichun Hu and Nathan Kallus. Dtr bandit: learning to make response-adaptive decisions with low regret. <em>arXiv preprint arXiv:2005.02791</em>, 2020.</p>
-</dd>
-<dt class="label" id="id6"><span class="brackets">JL16</span></dt>
-<dd><p>Nan Jiang and Lihong Li. Doubly robust off-policy value evaluation for reinforcement learning. In <em>International Conference on Machine Learning</em>, 652–661. PMLR, 2016.</p>
-</dd>
-<dt class="label" id="id13"><span class="brackets">KU19</span></dt>
-<dd><p>Nathan Kallus and Masatoshi Uehara. Efficiently breaking the curse of horizon in off-policy evaluation with double reinforcement learning. <em>arXiv preprint arXiv:1909.05850</em>, 2019.</p>
-</dd>
-<dt class="label" id="id8"><span class="brackets">LVY19</span></dt>
-<dd><p>Hoang M Le, Cameron Voloshin, and Yisong Yue. Batch policy learning under constraints. <em>arXiv preprint arXiv:1903.08738</em>, 2019.</p>
-</dd>
-<dt class="label" id="id7"><span class="brackets">LLTZ18</span></dt>
-<dd><p>Qiang Liu, Lihong Li, Ziyang Tang, and Dengyong Zhou. Breaking the curse of horizon: infinite-horizon off-policy estimation. In <em>Advances in Neural Information Processing Systems</em>, 5356–5366. 2018.</p>
-</dd>
-<dt class="label" id="id25"><span class="brackets">MGKulic21</span></dt>
-<dd><p>Lingheng Meng, Rob Gorbet, and Dana Kulić. Memory-based deep reinforcement learning for pomdps. In <em>2021 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)</em>, 5619–5626. IEEE, 2021.</p>
-</dd>
-<dt class="label" id="id32"><span class="brackets">MBM+16</span></dt>
-<dd><p>Volodymyr Mnih, Adria Puigdomenech Badia, Mehdi Mirza, Alex Graves, Timothy Lillicrap, Tim Harley, David Silver, and Koray Kavukcuoglu. Asynchronous methods for deep reinforcement learning. In <em>International conference on machine learning</em>, 1928–1937. PMLR, 2016.</p>
-</dd>
-<dt class="label" id="id28"><span class="brackets">MKS+15</span></dt>
-<dd><p>Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A Rusu, Joel Veness, Marc G Bellemare, Alex Graves, Martin Riedmiller, Andreas K Fidjeland, Georg Ostrovski, and others. Human-level control through deep reinforcement learning. <em>Nature</em>, 518(7540):529–533, 2015.</p>
-</dd>
-<dt class="label" id="id4"><span class="brackets">Pre00</span></dt>
-<dd><p>Doina Precup. Eligibility traces for off-policy policy evaluation. <em>Computer Science Department Faculty Publication Series</em>, pages 80, 2000.</p>
-</dd>
-<dt class="label" id="id14"><span class="brackets">Put14</span></dt>
-<dd><p>Martin L Puterman. <em>Markov decision processes: discrete stochastic dynamic programming</em>. John Wiley &amp; Sons, 2014.</p>
-</dd>
-<dt class="label" id="id30"><span class="brackets">SLA+15</span></dt>
-<dd><p>John Schulman, Sergey Levine, Pieter Abbeel, Michael Jordan, and Philipp Moritz. Trust region policy optimization. In <em>International conference on machine learning</em>, 1889–1897. PMLR, 2015.</p>
-</dd>
-<dt class="label" id="id31"><span class="brackets">SWD+17</span></dt>
-<dd><p>John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov. Proximal policy optimization algorithms. <em>arXiv preprint arXiv:1707.06347</em>, 2017.</p>
-</dd>
-<dt class="label" id="id3"><span class="brackets">SWCS21</span></dt>
-<dd><p>Chengchun Shi, Runzhe Wan, Victor Chernozhukov, and Rui Song. Deeply-debiased off-policy interval estimation. In <em>International Conference on Machine Learning</em>, 9580–9591. PMLR, 2021.</p>
-</dd>
-<dt class="label" id="id16"><span class="brackets">SWL+20</span></dt>
-<dd><p><strong>missing journal in shi2020reinforcement</strong></p>
-</dd>
-<dt class="label" id="id21"><span class="brackets">SZLS20</span></dt>
-<dd><p>Chengchun Shi, Sheng Zhang, Wenbin Lu, and Rui Song. Statistical inference of the value function for reinforcement learning in infinite horizon settings. <em>arXiv preprint arXiv:2001.04515</em>, 2020.</p>
-</dd>
-<dt class="label" id="id20"><span class="brackets">SZY+22</span></dt>
-<dd><p>Chengchun Shi, Jin Zhu, Shen Ye, Shikai Luo, Hongtu Zhu, and Rui Song. Off-policy confidence interval estimation with confounded markov decision process. <em>Journal of the American Statistical Association</em>, pages 1–12, 2022.</p>
-</dd>
-<dt class="label" id="id27"><span class="brackets">SS96</span></dt>
-<dd><p>Satinder P Singh and Richard S Sutton. Reinforcement learning with replacing eligibility traces. <em>Machine learning</em>, 22(1-3):123–158, 1996.</p>
-</dd>
-<dt class="label" id="id23"><span class="brackets">Spa12</span></dt>
-<dd><p>Matthijs TJ Spaan. Partially observable markov decision processes. <em>Reinforcement learning: State-of-the-art</em>, pages 387–414, 2012.</p>
-</dd>
-<dt class="label" id="id26"><span class="brackets">Sut88</span></dt>
-<dd><p>Richard S Sutton. Learning to predict by the methods of temporal differences. <em>Machine learning</em>, 3:9–44, 1988.</p>
-</dd>
-<dt class="label" id="id15"><span class="brackets">SB18</span></dt>
-<dd><p>Richard S Sutton and Andrew G Barto. <em>Reinforcement learning: An introduction</em>. MIT press, 2018.</p>
-</dd>
-<dt class="label" id="id11"><span class="brackets">TFL+19</span></dt>
-<dd><p>Ziyang Tang, Yihao Feng, Lihong Li, Dengyong Zhou, and Qiang Liu. Doubly robust bias reduction in infinite horizon off-policy estimation. In <em>International Conference on Learning Representations</em>. 2019.</p>
-</dd>
-<dt class="label" id="id10"><span class="brackets">TB16</span></dt>
-<dd><p>Philip Thomas and Emma Brunskill. Data-efficient off-policy policy evaluation for reinforcement learning. In <em>International Conference on Machine Learning</em>, 2139–2148. 2016.</p>
-</dd>
-<dt class="label" id="id5"><span class="brackets">Tho15</span></dt>
-<dd><p>Philip S Thomas. Safe reinforcement learning. <em>Doctoral Dissertations at University of Massachusetts Amherst</em>, 2015.</p>
-</dd>
-<dt class="label" id="id12"><span class="brackets">UHJ19</span></dt>
-<dd><p>Masatoshi Uehara, Jiawei Huang, and Nan Jiang. Minimax weight and q-function learning for off-policy evaluation. <em>arXiv preprint arXiv:1910.12809</em>, 2019.</p>
-</dd>
-<dt class="label" id="id29"><span class="brackets">VHGS16</span></dt>
-<dd><p>Hado Van Hasselt, Arthur Guez, and David Silver. Deep reinforcement learning with double q-learning. In <em>Proceedings of the AAAI conference on artificial intelligence</em>, volume 30. 2016.</p>
-</dd>
-<dt class="label" id="id9"><span class="brackets">VLJY19</span></dt>
-<dd><p>Cameron Voloshin, Hoang M Le, Nan Jiang, and Yisong Yue. Empirical study of off-policy policy evaluation for reinforcement learning. <em>arXiv preprint arXiv:1911.06854</em>, 2019.</p>
-</dd>
-<dt class="label" id="id24"><span class="brackets">ZLPM17</span></dt>
-<dd><p>Pengfei Zhu, Xin Li, Pascal Poupart, and Guanghui Miao. On improving deep reinforcement learning for pomdps. <em>arXiv preprint arXiv:1704.07978</em>, 2017.</p>
-</dd>
-</dl>
+<div class="citation" id="id17" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>EGW05<span class="fn-bracket">]</span></span>
+<p>Damien Ernst, Pierre Geurts, and Louis Wehenkel. Tree-based batch mode reinforcement learning. <em>Journal of Machine Learning Research</em>, 2005.</p>
+</div>
+<div class="citation" id="id33" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>HZAL18<span class="fn-bracket">]</span></span>
+<p>Tuomas Haarnoja, Aurick Zhou, Pieter Abbeel, and Sergey Levine. Soft actor-critic: off-policy maximum entropy deep reinforcement learning with a stochastic actor. In <em>International conference on machine learning</em>, 1861–1870. PMLR, 2018.</p>
+</div>
+<div class="citation" id="id19" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>HK20<span class="fn-bracket">]</span></span>
+<p>Yichun Hu and Nathan Kallus. Dtr bandit: learning to make response-adaptive decisions with low regret. <em>arXiv preprint arXiv:2005.02791</em>, 2020.</p>
+</div>
+<div class="citation" id="id6" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>JL16<span class="fn-bracket">]</span></span>
+<p>Nan Jiang and Lihong Li. Doubly robust off-policy value evaluation for reinforcement learning. In <em>International Conference on Machine Learning</em>, 652–661. PMLR, 2016.</p>
+</div>
+<div class="citation" id="id13" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>KU19<span class="fn-bracket">]</span></span>
+<p>Nathan Kallus and Masatoshi Uehara. Efficiently breaking the curse of horizon in off-policy evaluation with double reinforcement learning. <em>arXiv preprint arXiv:1909.05850</em>, 2019.</p>
+</div>
+<div class="citation" id="id8" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>LVY19<span class="fn-bracket">]</span></span>
+<p>Hoang M Le, Cameron Voloshin, and Yisong Yue. Batch policy learning under constraints. <em>arXiv preprint arXiv:1903.08738</em>, 2019.</p>
+</div>
+<div class="citation" id="id7" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>LLTZ18<span class="fn-bracket">]</span></span>
+<p>Qiang Liu, Lihong Li, Ziyang Tang, and Dengyong Zhou. Breaking the curse of horizon: infinite-horizon off-policy estimation. In <em>Advances in Neural Information Processing Systems</em>, 5356–5366. 2018.</p>
+</div>
+<div class="citation" id="id25" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>MGKulic21<span class="fn-bracket">]</span></span>
+<p>Lingheng Meng, Rob Gorbet, and Dana Kulić. Memory-based deep reinforcement learning for pomdps. In <em>2021 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)</em>, 5619–5626. IEEE, 2021.</p>
+</div>
+<div class="citation" id="id32" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>MBM+16<span class="fn-bracket">]</span></span>
+<p>Volodymyr Mnih, Adria Puigdomenech Badia, Mehdi Mirza, Alex Graves, Timothy Lillicrap, Tim Harley, David Silver, and Koray Kavukcuoglu. Asynchronous methods for deep reinforcement learning. In <em>International conference on machine learning</em>, 1928–1937. PMLR, 2016.</p>
+</div>
+<div class="citation" id="id28" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>MKS+15<span class="fn-bracket">]</span></span>
+<p>Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A Rusu, Joel Veness, Marc G Bellemare, Alex Graves, Martin Riedmiller, Andreas K Fidjeland, Georg Ostrovski, and others. Human-level control through deep reinforcement learning. <em>Nature</em>, 518(7540):529–533, 2015.</p>
+</div>
+<div class="citation" id="id4" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Pre00<span class="fn-bracket">]</span></span>
+<p>Doina Precup. Eligibility traces for off-policy policy evaluation. <em>Computer Science Department Faculty Publication Series</em>, pages 80, 2000.</p>
+</div>
+<div class="citation" id="id14" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Put14<span class="fn-bracket">]</span></span>
+<p>Martin L Puterman. <em>Markov decision processes: discrete stochastic dynamic programming</em>. John Wiley &amp; Sons, 2014.</p>
+</div>
+<div class="citation" id="id30" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>SLA+15<span class="fn-bracket">]</span></span>
+<p>John Schulman, Sergey Levine, Pieter Abbeel, Michael Jordan, and Philipp Moritz. Trust region policy optimization. In <em>International conference on machine learning</em>, 1889–1897. PMLR, 2015.</p>
+</div>
+<div class="citation" id="id31" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>SWD+17<span class="fn-bracket">]</span></span>
+<p>John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov. Proximal policy optimization algorithms. <em>arXiv preprint arXiv:1707.06347</em>, 2017.</p>
+</div>
+<div class="citation" id="id3" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>SWCS21<span class="fn-bracket">]</span></span>
+<p>Chengchun Shi, Runzhe Wan, Victor Chernozhukov, and Rui Song. Deeply-debiased off-policy interval estimation. In <em>International Conference on Machine Learning</em>, 9580–9591. PMLR, 2021.</p>
+</div>
+<div class="citation" id="id16" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>SWL+20<span class="fn-bracket">]</span></span>
+<p><strong>missing journal in shi2020reinforcement</strong></p>
+</div>
+<div class="citation" id="id21" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>SZLS20<span class="fn-bracket">]</span></span>
+<p>Chengchun Shi, Sheng Zhang, Wenbin Lu, and Rui Song. Statistical inference of the value function for reinforcement learning in infinite horizon settings. <em>arXiv preprint arXiv:2001.04515</em>, 2020.</p>
+</div>
+<div class="citation" id="id20" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>SZY+22<span class="fn-bracket">]</span></span>
+<p>Chengchun Shi, Jin Zhu, Shen Ye, Shikai Luo, Hongtu Zhu, and Rui Song. Off-policy confidence interval estimation with confounded markov decision process. <em>Journal of the American Statistical Association</em>, pages 1–12, 2022.</p>
+</div>
+<div class="citation" id="id27" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>SS96<span class="fn-bracket">]</span></span>
+<p>Satinder P Singh and Richard S Sutton. Reinforcement learning with replacing eligibility traces. <em>Machine learning</em>, 22(1-3):123–158, 1996.</p>
+</div>
+<div class="citation" id="id23" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Spa12<span class="fn-bracket">]</span></span>
+<p>Matthijs TJ Spaan. Partially observable markov decision processes. <em>Reinforcement learning: State-of-the-art</em>, pages 387–414, 2012.</p>
+</div>
+<div class="citation" id="id26" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Sut88<span class="fn-bracket">]</span></span>
+<p>Richard S Sutton. Learning to predict by the methods of temporal differences. <em>Machine learning</em>, 3:9–44, 1988.</p>
+</div>
+<div class="citation" id="id15" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>SB18<span class="fn-bracket">]</span></span>
+<p>Richard S Sutton and Andrew G Barto. <em>Reinforcement learning: An introduction</em>. MIT press, 2018.</p>
+</div>
+<div class="citation" id="id11" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>TFL+19<span class="fn-bracket">]</span></span>
+<p>Ziyang Tang, Yihao Feng, Lihong Li, Dengyong Zhou, and Qiang Liu. Doubly robust bias reduction in infinite horizon off-policy estimation. In <em>International Conference on Learning Representations</em>. 2019.</p>
+</div>
+<div class="citation" id="id10" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>TB16<span class="fn-bracket">]</span></span>
+<p>Philip Thomas and Emma Brunskill. Data-efficient off-policy policy evaluation for reinforcement learning. In <em>International Conference on Machine Learning</em>, 2139–2148. 2016.</p>
+</div>
+<div class="citation" id="id5" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Tho15<span class="fn-bracket">]</span></span>
+<p>Philip S Thomas. Safe reinforcement learning. <em>Doctoral Dissertations at University of Massachusetts Amherst</em>, 2015.</p>
+</div>
+<div class="citation" id="id12" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>UHJ19<span class="fn-bracket">]</span></span>
+<p>Masatoshi Uehara, Jiawei Huang, and Nan Jiang. Minimax weight and q-function learning for off-policy evaluation. <em>arXiv preprint arXiv:1910.12809</em>, 2019.</p>
+</div>
+<div class="citation" id="id29" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>VHGS16<span class="fn-bracket">]</span></span>
+<p>Hado Van Hasselt, Arthur Guez, and David Silver. Deep reinforcement learning with double q-learning. In <em>Proceedings of the AAAI conference on artificial intelligence</em>, volume 30. 2016.</p>
+</div>
+<div class="citation" id="id9" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>VLJY19<span class="fn-bracket">]</span></span>
+<p>Cameron Voloshin, Hoang M Le, Nan Jiang, and Yisong Yue. Empirical study of off-policy policy evaluation for reinforcement learning. <em>arXiv preprint arXiv:1911.06854</em>, 2019.</p>
+</div>
+<div class="citation" id="id24" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>ZLPM17<span class="fn-bracket">]</span></span>
+<p>Pengfei Zhu, Xin Li, Pascal Poupart, and Guanghui Miao. On improving deep reinforcement learning for pomdps. <em>arXiv preprint arXiv:1704.07978</em>, 2017.</p>
+</div>
+</div>
 </div>
 </section>
 <section id="executing-code-in-your-markdown-files">
@@ -777,8 +815,8 @@ see <a class="reference external" href="https://myst-nb.readthedocs.io/">The MyS
               
               
               
-                <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                <footer class="prev-next-footer d-print-none">
+                  
 <div class="prev-next-area">
 </div>
                 </footer>
@@ -788,6 +826,7 @@ see <a class="reference external" href="https://myst-nb.readthedocs.io/">The MyS
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -824,6 +863,7 @@ By Causal Decision Making Team
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright 2022.
@@ -850,8 +890,8 @@ By Causal Decision Making Team
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

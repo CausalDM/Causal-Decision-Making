@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Dynamic Assortment Optimization (Multinomial Logit Bandit) &#8212; Causal Decision Making</title>
   
@@ -15,19 +15,19 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../../../../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="../../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
     <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
@@ -38,9 +38,9 @@
     <link rel="stylesheet" type="text/css" href="../../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
-<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
-  <script src="../../../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
     <script src="../../../../_static/jquery.js"></script>
@@ -78,28 +78,23 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -121,12 +116,20 @@ const thebe_selector_output = ".output, .cell_output"
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -141,6 +144,9 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
+  
+    
   
 
 <a class="navbar-brand logo" href="../../../../Intro.html">
@@ -187,19 +193,19 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Structure Learning (CSL)</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../../2_Causal_Structure_Learning/Preliminaries%20of%20Causal%20Graphs.html">Preliminaries of Causal Graphs</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../2_Causal_Structure_Learning/Causal%20Discovery.html">Causal Discovery</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../2_Causal_Structure_Learning/Causal%20Discovery.html">Causal Discovery</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../2_Causal_Structure_Learning/Testing-based%20Learner.html">Testing-based Learner</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../2_Causal_Structure_Learning/Functional-based%20Learner.html">Functional-based Learner</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../2_Causal_Structure_Learning/Score-based%20Learner.html">Score-based Learner</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../2_Causal_Structure_Learning/Causal%20Mediation%20Analysis.html">Causal Mediation Analysis</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Effect Learning (CEL)</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../3_Causal_Effect_Learning/Scenario%201/Single%20Stage.html"><strong>Single Stage – Paradigm 1</strong></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../3_Causal_Effect_Learning/Scenario%201/Single%20Stage.html"><strong>Single Stage – Paradigm 1</strong></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../3_Causal_Effect_Learning/Scenario%201/ATE.html">ATE Estimation</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../3_Causal_Effect_Learning/Scenario%201/HTE.html">HTE Estimation</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../3_Causal_Effect_Learning/Scenario%201/HTE.html">HTE Estimation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../../3_Causal_Effect_Learning/Scenario%201/S-learner.html"><strong>1. S-learner</strong></a></li>
 
 
@@ -224,13 +230,13 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../../../3_Causal_Effect_Learning/Scenario%201/Dragonnet.html"><strong>8. Dragon Net</strong></a></li>
 
 
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../3_Causal_Effect_Learning/Scenario%201/Mediation%20Analysis.html">Mediation Analysis</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../3_Causal_Effect_Learning/Scenario%202/underMDP.html">Markov Decision Processes – Paradigm 2</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../3_Causal_Effect_Learning/Scenario%203/Panel%20Data.html">Panel Data  – Paradigm 3</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../3_Causal_Effect_Learning/Scenario%203/Panel%20Data.html">Panel Data  – Paradigm 3</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../3_Causal_Effect_Learning/Scenario%203/DiD.html"><strong>Difference in Difference</strong></a></li>
 
 <li class="toctree-l2"><a class="reference internal" href="../../../../3_Causal_Effect_Learning/Scenario%203/Synthetic%20Control.html"><strong>Synthetic Control</strong></a></li>
@@ -238,40 +244,40 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 1</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../Scenario1/Single%20Stage.html">Single Stage</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../Scenario1/Discrete.html">Discrete Action Space</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../Scenario1/Discrete.html">Discrete Action Space</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../Scenario1/Q-learning_Single.html">Q-Learning</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../Scenario1/A-learning_Single.html">A-Learning</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../Scenario1/Classification/O-Learning.html">Outcome Weighted Learning</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../Scenario1/Quantile/QuantileOTR_test.html">Quantile Optimal Treatment Regime</a></li>
 
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../Scenario1/Continuous.html">Continuous Action Space</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../Scenario1/Continuous.html">Continuous Action Space</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../Scenario1/Continuous/Deep%20Jump%20Learner.html">Deep Jump Learner for Continuous Actions</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 2</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../Scenario2/preliminary_MDP-potential-outcome.html">Preliminary: Off-policy Evaluation and Optimization in Markov Decision Processes</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../Scenario2/Evaluation.html">Policy Evaluation–Value Estimation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../Scenario2/Evaluation.html">Policy Evaluation–Value Estimation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../Scenario2/FQE.html">Fitted-Q Evaluation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../Scenario2/IPW_Infinite.html">Importance Sampling for Policy Evaluation (Infinite Horizon)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../Scenario2/DR_Infinite.html">Doubly Robust Estimator for Policy Evaluation (Infinite Horizon)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../Scenario2/Deeply_Debiased.html">Deeply-Debiased Off-Policy Evaluation</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../Scenario2/MediationRL.html">Policy Evaluation--Mediation Analysis</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../Scenario2/Optimization.html">Policy Optimization</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../Scenario2/Optimization.html">Policy Optimization</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../Scenario2/FQI.html">Fitted-Q Iteration</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 3</span></p>
 <ul class="nav bd-sidenav">
@@ -282,49 +288,49 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 4</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../Bandits.html">Overview: Bandits ALgorithm</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../MAB/MAB.html">Multi-Armed Bandits (MAB)</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../MAB/MAB.html">Multi-Armed Bandits (MAB)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../MAB/Epsilon_Greedy.html"><span class="math notranslate nohighlight">\(\epsilon\)</span>-Greedy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../MAB/UCB.html">UCB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../MAB/TS.html">TS</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../Contextual_Bandits/Contextual_Bandits.html">Contextual Bandits</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../Contextual_Bandits/Contextual_Bandits.html">Contextual Bandits</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../Contextual_Bandits/LinUCB.html">LinUCB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../Contextual_Bandits/LinTS.html">LinTS</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../Meta_Bandits/Meta_Bandits.html">Meta Bandits</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../Meta_Bandits/Meta_Bandits.html">Meta Bandits</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../Meta_Bandits/Meta_TS.html">Meta Thompson Sampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../Meta_Bandits/MTTS.html">Multi-Task Thompson Sampling (MTTS)</a></li>
-</ul>
-</li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Structured_Bandit.html">Structured Bandit (Slate Recommendation)</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 has-children"><a class="reference internal" href="../Cascade/Learning%20to%20rank.html">Online Learning to Rank (Cascading Bandit)</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Structured_Bandit.html">Structured Bandit (Slate Recommendation)</a><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../Cascade/Learning%20to%20rank.html">Online Learning to Rank (Cascading Bandit)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../Cascade/TS_Cascade.html">TS_Cascade</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../Cascade/CascadeLinTS.html">CascadeLinTS</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../Cascade/MTSS_Cascade.html">MTSS_Cascade</a></li>
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../Combinatorial-Semi/Combinatorial%20Optimization.html">Online Combinatorial Optimization (Combinatorial Semi-Bandit)</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../Combinatorial-Semi/Combinatorial%20Optimization.html">Online Combinatorial Optimization (Combinatorial Semi-Bandit)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../Combinatorial-Semi/CombTS.html">CombTS</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../Combinatorial-Semi/CombLinTS.html">CombLinTS</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../Combinatorial-Semi/MTSS_Comb.html">MTSS_Comb</a></li>
-</ul>
-</li>
-<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">Dynamic Assortment Optimization (Multinomial Logit Bandit)</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">Dynamic Assortment Optimization (Multinomial Logit Bandit)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="TS_MNL_Beta.html">TS_MNL</a></li>
 <li class="toctree-l3"><a class="reference internal" href="TS_Contextual_MNL.html">TS_Contextual_MNL</a></li>
 <li class="toctree-l3"><a class="reference internal" href="MTSS_MNL.html">MTSS_MNL</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../OnlineEval/Online%20Policy%20Evaluation.html">Online Policy Evaluation</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</ul><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+</ul><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../OnlineEval/Online%20Policy%20Evaluation.html">Online Policy Evaluation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../OnlineEval/Direct%20Online%20Policy%20Evaluator.html">Direct Online Policy Evaluator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../OnlineEval/Inverse%20Probability%20Weighted%20Online%20Policy%20Evaluator.html">Inverse Probability Weighted Online Policy Evaluator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../OnlineEval/Doubly%20Robust%20Online%20Policy%20Evaluator.html">Doubly Robust Online Policy Evaluator</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Causal Policy Learning (CPL)--Paradigm 5</span></p>
 <ul class="nav bd-sidenav">
@@ -336,7 +342,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Case Studies</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3_intro.html">Mimic3</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3_intro.html">Mimic3</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../5_Case_Study/MIMIC3/MIMIC3-Demo-Ver2.html">Mimic3 Demo-Ver2</a></li>
 
 
@@ -345,8 +351,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../../../../5_Case_Study/MIMIC3/Longitudinal.html">MIMIC III (3-Stages)</a></li>
 
 <li class="toctree-l2"><a class="reference internal" href="../../../../5_Case_Study/MIMIC3/Infinite_Horizon.html">MIMIC III (Infinite Horizon)</a></li>
-</ul>
-</li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../5_Case_Study/MovieLens/MovieLens.html">MovieLens</a></li>
 </ul>
 
@@ -363,7 +369,7 @@ const thebe_selector_output = ".output, .cell_output"
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -372,7 +378,7 @@ const thebe_selector_output = ".output, .cell_output"
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
@@ -501,19 +507,21 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
@@ -553,7 +561,7 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="dynamic-assortment-optimization-multinomial-logit-bandit">
 <h1>Dynamic Assortment Optimization (Multinomial Logit Bandit)<a class="headerlink" href="#dynamic-assortment-optimization-multinomial-logit-bandit" title="Permalink to this heading">#</a></h1>
@@ -562,31 +570,31 @@ document.write(`
 <h2>Problem Setting<a class="headerlink" href="#problem-setting" title="Permalink to this heading">#</a></h2>
 <p><strong>Standard Offering:</strong> Suppose that, at each round t, we need to recommend at most <span class="math notranslate nohighlight">\(K\)</span> items. In assortment optimization, the agent needs to offer a subset (assortment) <span class="math notranslate nohighlight">\(A_t \in \mathcal{A} = \{A\subseteq[N]:|A|\leq K\}\)</span>, and the customer will then choose either one of them or no-purchase which is denoted as item <span class="math notranslate nohighlight">\(0\)</span>. Let <span class="math notranslate nohighlight">\(\boldsymbol{Y}_t(a)=(Y_{0,t}(a),\cdots,Y_{N,t}(a))^{T}\)</span> be an indicator vector of length <span class="math notranslate nohighlight">\(N+1\)</span>, where <span class="math notranslate nohighlight">\(Y_{i,t}(a)\)</span> equals to <span class="math notranslate nohighlight">\(1\)</span> if the item <span class="math notranslate nohighlight">\(i\)</span> would be chosen if the action <span class="math notranslate nohighlight">\(a\)</span> is offered. Let <span class="math notranslate nohighlight">\(\boldsymbol{\eta} = (\eta_0, \eta_1, \dots,\eta_{N})^{T}\)</span>, where <span class="math notranslate nohighlight">\(\eta_k\)</span> is the revenue of the item <span class="math notranslate nohighlight">\(k\)</span>.  Conventionally, <span class="math notranslate nohighlight">\(\eta_0 = 0\)</span>. The potential revenue that would be collected, if action <span class="math notranslate nohighlight">\(a\)</span> is offered in round <span class="math notranslate nohighlight">\(t\)</span>, is then <span class="math notranslate nohighlight">\(R_t(a) = \sum_{i\in a} Y_{i,t}(a) \eta_{i}\)</span>. In an MNL bandit, each item <span class="math notranslate nohighlight">\(i\)</span> has an utility factor <span class="math notranslate nohighlight">\(v_i\)</span>, and
 the choice behaviour is characterized by a multinomial distribution</p>
-<div class="amsmath math notranslate nohighlight" id="equation-110eaf44-b6db-43f3-98ac-20d649c9fea4">
-<span class="eqno">(147)<a class="headerlink" href="#equation-110eaf44-b6db-43f3-98ac-20d649c9fea4" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{MNLdist}
+<div class="amsmath math notranslate nohighlight" id="equation-9951d606-595c-48bf-9656-527dce63a83a">
+<span class="eqno">(147)<a class="headerlink" href="#equation-9951d606-595c-48bf-9656-527dce63a83a" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{MNLdist}
     \boldsymbol{Y}_t(a) \sim Multinomial(1, \frac{v_i \mathcal{I}(i \in \{0\}\cup a)}{1 + \sum_{j \in a} v_i}),
 \end{equation}\]</div>
 <p>with the convention that <span class="math notranslate nohighlight">\(v_0 = 1\)</span>. Note that <span class="math notranslate nohighlight">\(v_{i}\)</span> will be a determined via a deterministic function of the item-specific parameter <span class="math notranslate nohighlight">\(\theta_{i}\)</span>.</p>
 <p><strong>Epoch-type Offering:</strong> Alternatively, since the direct inference under the above MNL model is intractable, an epoch-based algorithmic structure is introduced [4,5,7] for computational efficiency. Specifically, for each epoch <span class="math notranslate nohighlight">\(l\)</span>, we keep offering the same assortment <span class="math notranslate nohighlight">\(A^l\)</span> until the no-purchase appears. Let <span class="math notranslate nohighlight">\(\theta_i = (v_i+1)^{-1}\)</span>. Denote the potential number of purchases for the item <span class="math notranslate nohighlight">\(i \in a\)</span> in each epoch as <span class="math notranslate nohighlight">\(Y_{i}^l(a)\)</span>, if the slate <span class="math notranslate nohighlight">\(a\)</span> is recommended. Under this setup, it is easy to show that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-100e4a54-87fb-4167-958d-55a569fc5bd2">
-<span class="eqno">(148)<a class="headerlink" href="#equation-100e4a54-87fb-4167-958d-55a569fc5bd2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ad6c8bed-b473-462b-a473-2ccebfcf31ef">
+<span class="eqno">(148)<a class="headerlink" href="#equation-ad6c8bed-b473-462b-a473-2ccebfcf31ef" title="Permalink to this equation">#</a></span>\[\begin{equation}
     Y_{i}^l(a) \sim Geometric(\theta_i), \forall i \in a,
 \end{equation}\]</div>
 <p>and then the corresponding reward of epoch <span class="math notranslate nohighlight">\(l\)</span> is <span class="math notranslate nohighlight">\(R^l(a) = \sum_{i\in a}Y_{i}^l(a)\eta_{i}\)</span> [4].</p>
 <p>No matter what offering type is employed, for each decision round <span class="math notranslate nohighlight">\(t\)</span>, when <span class="math notranslate nohighlight">\(v_i\)</span>’s are known, the optimal assortment <span class="math notranslate nohighlight">\(A_{t}\)</span> can be determined efficiently through linear programming [4], such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cee3ba13-75c8-4300-bbb6-da9753661c5b">
-<span class="eqno">(149)<a class="headerlink" href="#equation-cee3ba13-75c8-4300-bbb6-da9753661c5b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ab904125-cdd9-47d4-9a09-bd69ca26ce68">
+<span class="eqno">(149)<a class="headerlink" href="#equation-ab904125-cdd9-47d4-9a09-bd69ca26ce68" title="Permalink to this equation">#</a></span>\[\begin{equation}
     A_{t} = arg max_{a \in \mathcal{A}} E(R_t(a) \mid\boldsymbol{v})=argmax_{a \in \mathcal{A}} \frac{\sum_{i\in a}\eta_{i}v_{i}}{1+\sum_{j\in a} v_{j}}.
 \end{equation}\]</div>
 </section>
 <section id="supported-algorithms">
 <h2>Supported Algorithms<a class="headerlink" href="#supported-algorithms" title="Permalink to this heading">#</a></h2>
-<table class="colwidths-auto table">
+<div class="pst-scrollable-table-container"><table class="table">
 <thead>
-<tr class="row-odd"><th class="text-left head"><p>algorithm</p></th>
-<th class="text-center head"><p><span class="math notranslate nohighlight">\(Y_{i,t}\)</span></p></th>
-<th class="text-center head"><p>with features?</p></th>
-<th class="text-center head"><p>Advantage</p></th>
+<tr class="row-odd"><th class="head text-left"><p>algorithm</p></th>
+<th class="head text-center"><p><span class="math notranslate nohighlight">\(Y_{i,t}\)</span></p></th>
+<th class="head text-center"><p>with features?</p></th>
+<th class="head text-center"><p>Advantage</p></th>
 </tr>
 </thead>
 <tbody>
@@ -607,6 +615,7 @@ the choice behaviour is characterized by a multinomial distribution</p>
 </tr>
 </tbody>
 </table>
+</div>
 </section>
 <section id="reference">
 <h2>Reference<a class="headerlink" href="#reference" title="Permalink to this heading">#</a></h2>
@@ -649,8 +658,8 @@ the choice behaviour is characterized by a multinomial distribution</p>
               
               
               
-                <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                <footer class="prev-next-footer d-print-none">
+                  
 <div class="prev-next-area">
     <a class="left-prev"
        href="../Combinatorial-Semi/MTSS_Comb.html"
@@ -678,6 +687,7 @@ the choice behaviour is characterized by a multinomial distribution</p>
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -709,6 +719,7 @@ By Causal Decision Making Team
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright 2022.
@@ -735,8 +746,8 @@ By Causal Decision Making Team
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
-<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+  <script src="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
