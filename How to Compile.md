@@ -6,7 +6,7 @@ Refer to its documents for more details.
 To compile, we need to first install this package
 
 ```
-pip install -U jupyter-book
+pip install -U jupyter-book == 0.15.1
 ```
 
 ### Step 1: Compile a new version
